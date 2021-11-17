@@ -8,9 +8,10 @@
   padding: 10px;
 }
 .main {
-  height: 100%;
   margin-top: 60px;
   padding: 10px 50px;
+  background-color: gray;
+  height: 100vh;
 }
 #sidebarMenu {
   height: 100%;
@@ -20,15 +21,12 @@
   width: 250px;
   transform: translateX(-250px);
   transition: transform 250ms ease-in-out;
-  background: #2e86de;
+  background: #fff;
 }
 .menu {
   list-style: none;
   margin: 0;
   padding: 0;
-}
-.menu li {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 .menu li a {
   color: #fff;
@@ -37,6 +35,9 @@
   text-transform: uppercase;
   font-weight: bold;
   text-decoration: none;
+}
+li.Dashboard_link span {
+  margin-left: 20px;
 }
 #openSidebarMenu:checked ~ #sidebarMenu {
   transform: translateX(0);
@@ -76,8 +77,8 @@ input#openSidebarMenu {
   margin-top: -9px;
 }
 .menu li {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  height: 45px;
-  line-height: 3;
+  border-bottom: 2px solid rgb(177 177 177 / 28%);
+  height: 60px;
+  line-height: 4;
   padding-left: 30px;
 }

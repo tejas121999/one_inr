@@ -15,32 +15,32 @@ const Header = () => {
       </label>
       <div id="sidebarMenu">
         <ul className="menu">
-          <li>
-            <i class="fa fa-tachometer" aria-hidden="true"></i>
+          <li className="Dashboard_link">
+            <span>Dashboard</span>
           </li>
-          <li>
-            <i class="fa fa-database" aria-hidden="true"></i>
+          <li className="Dashboard_link">
+            <span>Master</span>
           </li>
-          <li>
-            <i class="fa fa-user" aria-hidden="true"></i>
+          <li className="Dashboard_link">
+            <span>Donors</span>
           </li>
-          <li>
-            <i class="fa fa-smile-o " aria-hidden="true"></i>
+          <li className="Dashboard_link">
+            <span>NGO</span>
           </li>
-          <li>
-            <i class="fa fa-clone" aria-hidden="true"></i>
+          <li className="Dashboard_link">
+            <span>Accounts</span>
           </li>
-          <li>
-            <i class="fa fa-user-circle" aria-hidden="true"></i>
+          <li className="Dashboard_link">
+            <span>Setting</span>
           </li>
-          <li>
-            <i class="fa fa-cogs" aria-hidden="true"></i>
+          <li className="Dashboard_link">
+            <span>Donar Email</span>
           </li>
-          <li>
-            <i class="fa fa-envelope" aria-hidden="true"></i>
+          <li className="Dashboard_link">
+            <span>Donar Email</span>
           </li>
-          <li>
-            <i class="fa fa-sign-out" aria-hidden="true"></i>
+          <li className="Dashboard_link">
+            <span>Log out</span>
           </li>
         </ul>
       </div>
