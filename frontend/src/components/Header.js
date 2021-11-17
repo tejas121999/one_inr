@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import "./header.css";
 import logo from "../images/logo.png";
+import Dashboard from "../images/dashboard.png";
+import Master from "../images/master.png";
+import Donors from "../images/donor.png";
+import NGO from "../images/ngo.png";
+import Project from "../images/project.png";
+import Accounts from "../images/account.png";
+import Setting from "../images/settings.png";
+import DonarEmail from "../images/email.png";
+import Logout from "../images/logout.png";
 const Header = () => {
+  const [toggleMaster, setToggleMaster] = useState(false);
+  const [toggleDonars, setToggleDonars] = useState(false);
+  const [toggleNgo, setToggleNgo] = useState(false);
+  const [toggleProject, setToggleProject] = useState(false);
+  const [toggleAccount, setToggleAccount] = useState(false);
+  const [toggleSetting, setToggleSetting] = useState(false);
   return (
     <>
       <div className="header">
@@ -15,74 +30,110 @@ const Header = () => {
       </label>
       <div id="sidebarMenu">
         <ul className="menu">
-          <li className="Dashboard_link">
-            <span>Dashboard</span>
+          <li className="Dashboard_link d-flex">
+            <div className="menu_item">
+              <img src={Dashboard} alt="Dashboard" />
+              <span>Dashboard</span>
+            </div>
+          </li>
+          <label
+            for="toggleMaster"
+            className="Dashboard_link2 d-flex justify-content-between"
+          >
+            <div className="menu_item">
+              <img src={Master} alt="Master" width="30" />
+              <span>Master</span>
+            </div>
+            <input type="checkbox" id="toggleMaster" />
+            <label for="toggleMaster" class="sidebarIconToggle">
+              <i class="fa fa-angle-up"></i>
+            </label>
+          </label>
+
+          <li
+            className="Dashboard_link d-flex justify-content-between"
+            onClick={() => {
+              setToggleDonars(!toggleDonars);
+            }}
+          >
+            <div className="menu_item">
+              <img src={Donors} alt="Donors" />
+              <span>Donors</span>
+            </div>
+            <i
+              class={`fa ${
+                toggleDonars ? "fa-angle-right" : "fa-angle-down"
+              } pr-3 pr-3`}
+            ></i>
+          </li>
+          <li
+            className="Dashboard_link d-flex justify-content-between"
+            onClick={() => {
+              setToggleNgo(!toggleNgo);
+            }}
+          >
+            <div className="menu_item">
+              <img src={NGO} alt="NGO" />
+              <span>NGO</span>
+            </div>
+            <i
+              class={`fa ${
+                toggleNgo ? "fa-angle-right" : "fa-angle-down"
+              } pr-3 pr-3`}
+            ></i>
+          </li>
+          <li
+            className="Dashboard_link d-flex justify-content-between"
+            onClick={() => {
+              setToggleProject(!toggleProject);
+            }}
+          >
+            <div className="menu_item">
+              <img src={Project} alt="Project" />
+              <span>Project</span>
+            </div>
+            <i
+              class={`fa ${
+                toggleProject ? "fa-angle-right" : "fa-angle-down"
+              } pr-3 pr-3`}
+            ></i>
+          </li>
+          <li
+            className="Dashboard_link d-flex justify-content-between"
+            onClick={() => {
+              setToggleDonars(!toggleAccount);
+            }}
+          >
+            <div className="menu_item">
+              <img src={Accounts} alt="Accounts" />
+              <span>Accounts</span>
+            </div>
+            <i
+              class={`fa ${
+                toggleAccount ? "fa-angle-right" : "fa-angle-down"
+              } pr-3 pr-3`}
+            ></i>
+          </li>
+          <li
+            className="Dashboard_link"
+            onClick={() => {
+              setToggleDonars(!toggleDonars);
+            }}
+          >
+            <div className="menu_item">
+              <img src={Setting} alt="Setting" />
+              <span>Setting</span>
+            </div>
           </li>
           <li className="Dashboard_link">
-            <span>Master</span>
-          </li>
-          <li className="Dashboard_link">
-            <span>Donors</span>
-          </li>
-          <li className="Dashboard_link">
-            <span>NGO</span>
-          </li>
-          <li className="Dashboard_link">
-            <span>Accounts</span>
-          </li>
-          <li className="Dashboard_link">
-            <span>Setting</span>
-          </li>
-          <li className="Dashboard_link">
+            <img src={DonarEmail} alt="DonarEmail" />
             <span>Donar Email</span>
           </li>
           <li className="Dashboard_link">
-            <span>Donar Email</span>
-          </li>
-          <li className="Dashboard_link">
+            <img src={Logout} alt="Logout" />
             <span>Log out</span>
           </li>
         </ul>
-      </div>
-      <div className="main">
-        <h1>Pure CSS Sidebar Toggle Menu</h1>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste
-          repellat, eos, blanditiis, unde, accusamus voluptatibus numquam
-          inventore quas voluptate consequatur consequuntur. Incidunt fugit
-          dolor dolorem praesentium quidem debitis sint quaerat perspiciatis
-          architecto quibusdam et, officia facilis impedit porro expedita
-          molestias nesciunt iste ex eveniet adipisci id non nisi aspernatur
-          inventore! Ipsa voluptates omnis modi veniam neque illo. Nihil facilis
-          eius pariatur aperiam ut porro, provident voluptas at libero sit
-          similique molestias reiciendis nobis veniam inventore modi quasi,
-          aspernatur labore quaerat incidunt in laborum? Expedita, fuga,
-          voluptas. Suscipit sunt praesentium dolore perspiciatis, ea
-          consectetur ipsum. Nostrum dolor itaque vitae quis fugit, deserunt
-          assumenda culpa in numquam impedit sunt fuga voluptates dolores
-          praesentium enim dolorem beatae, illum molestiae, atque. Eveniet
-          dolores animi mollitia quibusdam similique ab ut. Maxime obcaecati
-          dignissimos cum tenetur, quaerat molestiae laboriosam itaque,
-          explicabo nisi fugiat maiores repellendus. Molestias sed rerum, atque
-          ipsa nam excepturi eos, eveniet ex dignissimos quam inventore,
-          architecto fugit maiores veniam illo. Repellat mollitia cumque quia
-          eos iure rem quo quisquam quos maiores sint! Beatae blanditiis,
-          dolore. Quae tempora, maxime, nulla perspiciatis officia harum nisi
-          quos officiis sed reprehenderit beatae aperiam provident eum dolor
-          dignissimos a sunt sequi laudantium error, pariatur sapiente excepturi
-          quis distinctio nam! Incidunt voluptatem velit et odio laudantium,
-          eveniet, nesciunt, deserunt aut ea suscipit praesentium asperiores
-          tenetur omnis, quam deleniti officiis eius rerum temporibus. Neque
-          quis eius culpa quisquam enim nam sapiente perferendis quas,
-          laboriosam atque! Unde ipsam repellendus laudantium, eveniet excepturi
-          aliquid dolore voluptates odio! Ipsa unde suscipit, maiores quisquam
-          ducimus in pariatur esse dolore error laborum similique veniam quae
-          sint atque aspernatur possimus magnam. Dolore, voluptate, quos iusto
-          harum magni aliquam quaerat atque eos nesciunt sunt, ad dolor
-          repellendus, unde quas culpa? Fuga corporis reprehenderit ex
-          repudiandae assumenda cumque quas! Molestias modi unde vero non
-          pariatur at ipsa laborum.
-        </p>
       </div>
     </>
   );

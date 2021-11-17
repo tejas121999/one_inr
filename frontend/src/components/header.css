@@ -14,6 +14,7 @@
   height: 100vh;
 }
 #sidebarMenu {
+  border: 1px solid #8080804f;
   height: 100%;
   position: fixed;
   left: 0;
@@ -36,8 +37,15 @@
   font-weight: bold;
   text-decoration: none;
 }
+li.Dashboard_link img {
+  width: 25px;
+  position: relative;
+  bottom: 5px;
+}
 li.Dashboard_link span {
   margin-left: 20px;
+  font-weight: 700;
+  font-size: 13px;
 }
 #openSidebarMenu:checked ~ #sidebarMenu {
   transform: translateX(0);
@@ -76,9 +84,12 @@ input#openSidebarMenu {
   transform: rotate(-135deg);
   margin-top: -9px;
 }
-.menu li {
+.menu li.Dashboard_link {
   border-bottom: 2px solid rgb(177 177 177 / 28%);
   height: 60px;
   line-height: 4;
   padding-left: 30px;
+}
+li.Dashboard_link i {
+  margin-top: 22px;
 }
