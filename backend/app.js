@@ -13,9 +13,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(express.static(path.join(__dirname,'public')));
 
 //index Route
 var indexRouter = require('./routes/index');
-app.use('/', indexRouter);
+app.use('/api', indexRouter);
 
 module.exports = app;
