@@ -11,11 +11,25 @@ module.exports = (sequelize,DataTypes)=>{
         mobile: {
             type:  DataTypes.STRING,
             field: 'mobile'
+        },
+        password: {
+            type: DataTypes.STRING,
+            field: 'password'
+        },
+        createdAt : {
+            type: DataTypes.DATE,
+            field : 'created_at'
+        },
+        updatedAt : {
+            type: DataTypes.DATE,
+            field : 'updated_at'
         }
+
 
     },{
         freezeTableName : true,
-        tableName: 'users'
+        tableName: 'users',
+        timestamps: false
     })
     return users
 }
