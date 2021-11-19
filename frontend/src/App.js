@@ -1,36 +1,3 @@
-<<<<<<< HEAD
-import { STATE_LOGIN, STATE_SIGNUP } from "components/AuthForm";
-import GAListener from "components/GAListener";
-import { EmptyLayout, LayoutRoute, MainLayout } from "components/Layout";
-import PageSpinner from "components/PageSpinner";
-import AuthPage from "pages/AuthPage";
-import React from "react";
-import componentQueries from "react-component-queries";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import Tabel from "./pages/Tabel";
-import "./styles/reduction.scss";
-
-const AlertPage = React.lazy(() => import("pages/AlertPage"));
-const AuthModalPage = React.lazy(() => import("pages/AuthModalPage"));
-const BadgePage = React.lazy(() => import("pages/BadgePage"));
-const ButtonGroupPage = React.lazy(() => import("pages/ButtonGroupPage"));
-const ButtonPage = React.lazy(() => import("pages/ButtonPage"));
-const CardPage = React.lazy(() => import("pages/CardPage"));
-// const ChartPage = React.lazy(() => import('pages/ChartPage'));
-const DropdownPage = React.lazy(() => import("pages/DropdownPage"));
-const FormPage = React.lazy(() => import("pages/FormPage"));
-const InputGroupPage = React.lazy(() => import("pages/InputGroupPage"));
-const ModalPage = React.lazy(() => import("pages/ModalPage"));
-const ProgressPage = React.lazy(() => import("pages/ProgressPage"));
-const TablePage = React.lazy(() => import("pages/TablePage"));
-const TypographyPage = React.lazy(() => import("pages/TypographyPage"));
-const WidgetPage = React.lazy(() => import("pages/WidgetPage"));
-const Adddonor = React.lazy(() => import("./pages/Donor/AddDonor"));
-const AllDonors = React.lazy(() => import("./pages/Donor/Donors"));
-
-const getBasename = () => {
-  return `/${process.env.PUBLIC_URL.split("/").pop()}`;
-=======
 import { STATE_LOGIN, STATE_SIGNUP } from 'components/AuthForm';
 import GAListener from 'components/GAListener';
 import { EmptyLayout, LayoutRoute, MainLayout } from 'components/Layout';
@@ -57,10 +24,11 @@ const ProgressPage = React.lazy(() => import('pages/ProgressPage'));
 const TablePage = React.lazy(() => import('pages/TablePage'));
 const TypographyPage = React.lazy(() => import('pages/TypographyPage'));
 const WidgetPage = React.lazy(() => import('pages/WidgetPage'));
+const Adddonor = React.lazy(() => import('./pages/Donor/AddDonor'));
+const AllDonors = React.lazy(() => import('./pages/Donor/Donors'));
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
->>>>>>> 78cfd5ebfc5f9efac5b402a10593b712e739e29a
 };
 
 class App extends React.Component {
