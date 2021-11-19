@@ -1,0 +1,507 @@
+import logo200Image from 'assets/img/logo/logo_200.png';
+import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
+import SourceLink from 'components/SourceLink';
+import React from 'react';
+import {
+  MdAccountCircle,
+  MdArrowDropDownCircle,
+  MdBorderAll,
+  MdBrush,
+  MdChromeReaderMode,
+  MdDashboard,
+  MdExtension,
+  MdGroupWork,
+  MdInsertChart,
+  MdKeyboardArrowDown,
+  MdNotificationsActive,
+  MdPages,
+  MdRadioButtonChecked,
+  MdSend,
+  MdStar,
+  MdTextFields,
+  MdViewCarousel,
+  MdViewDay,
+  MdViewList,
+  MdWeb,
+  MdWidgets,
+  MdVolunteerActivism,
+  MdOutlineAdminPanelSettings,
+  MdOutlineInsertEmoticon,
+  MdAccountBalanceWallet,
+  MdAccountBalance,
+  MdOutlineSettings,
+  MdOutlineEmail,
+  MdOutlineLogout,
+  MdOutlineNavigateNext,
+} from 'react-icons/md';
+import { NavLink } from 'react-router-dom';
+import {
+  // UncontrolledTooltip,
+  Collapse,
+  Nav,
+  Navbar,
+  NavItem,
+  NavLink as BSNavLink,
+} from 'reactstrap';
+import bn from 'utils/bemnames';
+const dashboardItems = [
+  {
+    to: '/',
+    name: 'dashboard',
+    exact: true,
+    Icon: MdDashboard,
+  },
+];
+
+const masterItems = [
+  { to: 'Vendor', name: 'Vendor', exact: false, Icon: MdOutlineNavigateNext },
+  {
+    to: '/Partner',
+    name: 'Partner',
+    exact: false,
+    Icon: MdOutlineNavigateNext,
+  },
+];
+
+const donorItems = [
+  {
+    to: '/add_donnor',
+    name: 'add donnor',
+    exact: false,
+    Icon: MdOutlineNavigateNext,
+  },
+  {
+    to: '/view_all_donnor',
+    name: `view all donnor's`,
+    exact: false,
+    Icon: MdOutlineNavigateNext,
+  },
+  {
+    to: '/Upcomming_doner_renewal',
+    name: 'Upcomming doner renewal',
+    exact: false,
+    Icon: MdOutlineNavigateNext,
+  },
+  {
+    to: '/View_eceipts',
+    name: 'View Receipts',
+    exact: false,
+    Icon: MdOutlineNavigateNext,
+  },
+];
+
+const NGO_Item = [
+  {
+    to: '/Add NGO',
+    name: 'Add NGO',
+    exact: false,
+    Icon: MdOutlineNavigateNext,
+  },
+  {
+    to: `/view_all_NGO`,
+    name: `View All NGO's`,
+    exact: false,
+    Icon: MdOutlineNavigateNext,
+  },
+];
+
+const ProjectItems = [
+  {
+    to: '/add_project',
+    name: 'Add Project',
+    exact: false,
+    Icon: MdOutlineNavigateNext,
+  },
+  {
+    to: '/all_project',
+    name: 'View All Projects',
+    exact: false,
+    Icon: MdOutlineNavigateNext,
+  },
+  {
+    to: '/completed_project',
+    name: 'Completed Projects',
+    exact: false,
+    Icon: MdOutlineNavigateNext,
+  },
+  {
+    to: '/archived_project',
+    name: 'Archived Projects',
+    exact: false,
+    Icon: MdOutlineNavigateNext,
+  },
+];
+const accountsItems = [
+  {
+    to: '/payments',
+    name: 'Payments',
+    exact: true,
+    Icon: MdOutlineNavigateNext,
+  },
+];
+
+const SettingItems = [
+  {
+    to: '/my_profile',
+    name: 'my profile',
+    exact: true,
+    Icon: MdOutlineNavigateNext,
+  },
+  { to: '/roles', name: 'roles', exact: true, Icon: MdOutlineNavigateNext },
+  { to: '/users', name: 'users', exact: true, Icon: MdOutlineNavigateNext },
+  { to: '/config', name: 'config', exact: true, Icon: MdOutlineNavigateNext },
+  {
+    to: '/Razorpay_credentials',
+    name: 'Razorpay credentials',
+    exact: true,
+    Icon: MdOutlineNavigateNext,
+  },
+];
+
+const bottomRemaingItems = [
+  {
+    to: '/donor_email',
+    name: 'Donor Email',
+    exact: true,
+    Icon: MdOutlineEmail,
+  },
+  { to: '/logout', name: 'Log out', exact: true, Icon: MdOutlineLogout },
+];
+
+const bem = bn.create('sidebar');
+
+class Sidebar extends React.Component {
+  state = {
+    isOpenComponents: false,
+    isOpenContents: false,
+    isOpenPages: false,
+  };
+
+  handleClick = name => () => {
+    this.setState(prevState => {
+      const isOpen = prevState[`isOpen${name}`];
+
+      return {
+        [`isOpen${name}`]: !isOpen,
+      };
+    });
+  };
+
+  render() {
+    return (
+      <aside className={bem.b()} data-image={sidebarBgImage}>
+        <div className={bem.e('background')} />
+        <div className={bem.e('content')}>
+          <Navbar>
+            <img
+              src={logo200Image}
+              className="pr-2 logo_1INR"
+              alt="logo_1INR"
+            />
+          </Navbar>
+          <Nav vertical>
+            {dashboardItems.map(({ to, name, exact, Icon }, index) => (
+              <NavItem
+                key={index}
+                className={bem.e('nav-item myNestedListItems')}
+              >
+                <BSNavLink
+                  id={`navItem-${name}-${index}`}
+                  className="text-uppercase"
+                  tag={NavLink}
+                  to={to}
+                  activeClassName="active"
+                  exact={exact}
+                >
+                  <Icon className={bem.e('nav-item-icon')} />
+                  <span className="">{name}</span>
+                </BSNavLink>
+              </NavItem>
+            ))}
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Components')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdOutlineAdminPanelSettings
+                    className={bem.e('nav-item-icon')}
+                  />
+                  <span className=" align-self-start">Master</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenComponents
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+
+            <Collapse isOpen={this.state.isOpenComponents}>
+              {masterItems.map(({ to, name, exact, Icon }, index) => (
+                <NavItem
+                  key={index}
+                  className={bem.e('nav-item myNestedListItems')}
+                >
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className="text-uppercase"
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Contents')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdVolunteerActivism className={bem.e('nav-item-icon')} />
+                  <span className="">Donor</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenContents
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenContents}>
+              {donorItems.map(({ to, name, exact, Icon }, index) => (
+                <NavItem
+                  key={index}
+                  className={bem.e('nav-item myNestedListItems')}
+                >
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className="text-uppercase"
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Pages')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdOutlineInsertEmoticon className={bem.e('nav-item-icon')} />
+                  <span className="">NGO</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenPages
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenPages}>
+              {NGO_Item.map(({ to, name, exact, Icon }, index) => (
+                <NavItem
+                  key={index}
+                  className={bem.e('nav-item myNestedListItems')}
+                >
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className="text-uppercase"
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Components2')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdExtension className={bem.e('nav-item-icon')} />
+                  <span className="align-self-start">Projects</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenComponents2
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+
+            <Collapse isOpen={this.state.isOpenComponents2}>
+              {ProjectItems.map(({ to, name, exact, Icon }, index) => (
+                <NavItem
+                  key={index}
+                  className={bem.e('nav-item myNestedListItems')}
+                >
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className="text-uppercase"
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Components3')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdAccountBalanceWallet className={bem.e('nav-item-icon')} />
+                  <span className="align-self-start">Accounts</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenComponents3
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenComponents3}>
+              {accountsItems.map(({ to, name, exact, Icon }, index) => (
+                <NavItem
+                  key={index}
+                  className={bem.e('nav-item myNestedListItems')}
+                >
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className="text-uppercase"
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Components4')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdOutlineSettings className={bem.e('nav-item-icon')} />
+                  <span className="align-self-start">Setting</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenComponents4
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+
+            <Collapse isOpen={this.state.isOpenComponents4}>
+              {SettingItems.map(({ to, name, exact, Icon }, index) => (
+                <NavItem
+                  key={index}
+                  className={bem.e('nav-item myNestedListItems')}
+                >
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className="text-uppercase"
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+            {bottomRemaingItems.map(({ to, name, exact, Icon }, index) => (
+              <NavItem key={index} className={bem.e('nav-item')}>
+                <BSNavLink
+                  id={`navItem-${name}-${index}`}
+                  className="text-uppercase"
+                  tag={NavLink}
+                  to={to}
+                  activeClassName="active"
+                  exact={exact}
+                >
+                  <Icon className={bem.e('nav-item-icon')} />
+                  <span className="">{name}</span>
+                </BSNavLink>
+              </NavItem>
+            ))}
+          </Nav>
+        </div>
+      </aside>
+    );
+  }
+}
+
+export default Sidebar;
