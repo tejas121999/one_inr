@@ -2,9 +2,10 @@ const models = require('../../models')
 const bcrypt = require('bcrypt')
 const saltRounds = 10;
 const twinBcrypt = require('twin-bcrypt')
-
+const {generateJwtToken} = require('../../utils/tokens')
 
 //I am using twinBcrypt instead of bcrypt because its a migration project from php to node, where the password of every user has a prefix of $2y$ in the MySql DB.and twinbcrypt uses $2y$ prefix for encryption.
+//User Login 
 exports.userLogin = async (req, res) => {
     const { email, password } = req.body;
 
@@ -14,21 +15,30 @@ exports.userLogin = async (req, res) => {
             message: "User does not exists"
         })
     }
+    let id = userData.dataValues.id
 
-    // const round = await twinBcrypt.getRounds(userData.dataValues.password)
-    // console.log(`rounds is `,round)
-    // console.log(`user email is `,userData.dataValues.email)
-    // console.log(`input password is `,password)
     const result = await twinBcrypt.compareSync(password, userData.dataValues.password);
     console.log(result)
-    if(result == true){
-        return res.status(200).json({
-            message: "Password is Correct"
+    if(result == false){
+        return res.status(401).json({
+            message: "Wrong Credentials."
         })
     }
+    const token = generateJwtToken(id)
+
+    const remember_token = await models.users.update({rememberToken : token},{where :{id : id}})
+
+    if(token){
+        return res.status(200).json({
+            message : "User login successful",
+            Token : token,
+        })
+    }
+
    
 
 }
+//User Register
 exports.userRegister = async (req, res) => {
     let { name, email, mobile, role_id, password , parentId,isPriyank} = req.body
 

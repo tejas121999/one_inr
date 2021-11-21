@@ -2,11 +2,11 @@ const express = require('express')
 const router = express.Router()
 
 const {userLogin, userRegister} = require('../controllers/auth/authController')
+const {wrapper} = require('../utils/errorWrap')
 
 
-
-router.post('/',userLogin)
-router.post('/register',userRegister)
+router.post('/',wrapper(userLogin))
+router.post('/register',wrapper(userRegister))
 
 
 
