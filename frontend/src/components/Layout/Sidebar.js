@@ -154,18 +154,71 @@ const bem = bn.create('sidebar');
 
 class Sidebar extends React.Component {
   state = {
-    isOpenComponents: false,
+    isOpenMaster: false,
+    isOpenDonor: false,
+    isOpenNgo: false,
+    isOpenProjects: false,
+    isOpenAccounts: false,
+    isOpenSettings: false,
   };
 
   handleClick = name => () => {
-    console.log('name', name);
-
-    this.setState(prevState => {
-      const isOpen = prevState[`isOpen${name}`];
-      return {
-        [`isOpen${name}`]: !isOpen,
-      };
-    });
+    console.log('NAmes', name);
+    if (name == 'Master') {
+      this.setState({
+        isOpenMaster: !this.state.isOpenMaster,
+        isOpenDonor: false,
+        isOpenNgo: false,
+        isOpenProjects: false,
+        isOpenAccounts: false,
+        isOpenSettings: false,
+      });
+    } else if (name == 'Donor') {
+      this.setState({
+        isOpenMaster: false,
+        isOpenDonor: !this.state.isOpenDonor,
+        isOpenNgo: false,
+        isOpenProjects: false,
+        isOpenAccounts: false,
+        isOpenSettings: false,
+      });
+    } else if (name == 'Ngo') {
+      this.setState({
+        isOpenMaster: false,
+        isOpenDonor: false,
+        isOpenNgo: !this.state.isOpenNgo,
+        isOpenProjects: false,
+        isOpenAccounts: false,
+        isOpenSettings: false,
+      });
+    } else if (name == 'Projects') {
+      this.setState({
+        isOpenMaster: false,
+        isOpenDonor: false,
+        isOpenNgo: false,
+        isOpenProjects: !this.state.isOpenProjects,
+        isOpenAccounts: false,
+        isOpenSettings: false,
+      });
+    } else if (name == 'Accounts') {
+      this.setState({
+        isOpenMaster: false,
+        isOpenDonor: false,
+        isOpenNgo: false,
+        isOpenProjects: false,
+        isOpenAccounts: !this.state.isOpenAccounts,
+        isOpenSettings: false,
+      });
+    } else if (name == 'Settings') {
+      this.setState({
+        isOpenMaster: false,
+        isOpenDonor: false,
+        isOpenNgo: false,
+        isOpenProjects: false,
+        isOpenAccounts: false,
+        isOpenSettings: !this.state.isOpenSettings,
+      });
+    }
   };
 
   render() {
@@ -291,7 +344,7 @@ class Sidebar extends React.Component {
 
             <NavItem
               className={bem.e('nav-item')}
-              onClick={this.handleClick('NGO')}
+              onClick={this.handleClick('Ngo')}
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
@@ -302,7 +355,7 @@ class Sidebar extends React.Component {
                   className={bem.e('nav-item-icon')}
                   style={{
                     padding: 0,
-                    transform: this.state.isOpenNGO
+                    transform: this.state.isOpenNgo
                       ? 'rotate(0deg)'
                       : 'rotate(-90deg)',
                     transitionDuration: '0.3s',
@@ -311,7 +364,7 @@ class Sidebar extends React.Component {
                 />
               </BSNavLink>
             </NavItem>
-            <Collapse isOpen={this.state.isOpenNGO}>
+            <Collapse isOpen={this.state.isOpenNgo}>
               {NGO_Item.map(({ to, name, exact, Icon }, index) => (
                 <NavItem
                   key={index}
@@ -421,7 +474,7 @@ class Sidebar extends React.Component {
 
             <NavItem
               className={bem.e('nav-item')}
-              onClick={this.handleClick('Setting')}
+              onClick={this.handleClick('Settings')}
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
@@ -432,7 +485,7 @@ class Sidebar extends React.Component {
                   className={bem.e('nav-item-icon')}
                   style={{
                     padding: 0,
-                    transform: this.state.isOpenSetting
+                    transform: this.state.isOpenSettings
                       ? 'rotate(0deg)'
                       : 'rotate(-90deg)',
                     transitionDuration: '0.3s',
@@ -442,7 +495,7 @@ class Sidebar extends React.Component {
               </BSNavLink>
             </NavItem>
 
-            <Collapse isOpen={this.state.isOpenSetting}>
+            <Collapse isOpen={this.state.isOpenSettings}>
               {SettingItems.map(({ to, name, exact, Icon }, index) => (
                 <NavItem
                   key={index}
