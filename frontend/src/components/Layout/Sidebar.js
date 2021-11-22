@@ -36,12 +36,11 @@ const dashboardItems = [
 ];
 
 const masterItems = [
-  { to: '/vendor', name: 'Vendor', exact: false, Icon: MdOutlineNavigateNext },
   {
     to: '/Vendor',
     name: 'Vendor',
     exact: false,
-    Icon: MdOutlineNavigateNext
+    Icon: MdOutlineNavigateNext,
   },
   {
     to: '/partner',

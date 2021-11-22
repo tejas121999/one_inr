@@ -1,151 +1,106 @@
-import React from 'react'
-import * as yup from 'yup';
-import { ErrorMessage, Form, Formik, Field } from 'formik'
-import TextError from '../../pages/error/TextError'
-
-
-const EditDoner = () => {
-
-    const initialValues = {
-        name: '',
-        company: '',
-        phone: '',
-        email: '',
-        gst: ''
-    }
-
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        console.log('form value', initialValues)
-
-    }
-
-    const validationSchema = yup.object({
-        name: yup.string().required('Required'),
-        company: yup.string().required('required'),
-        phone: yup.string().required('required'),
-        email: yup.string().email('Invalide Email Format').required('Required'),
-        gst: yup.string().required('Required')
-    })
-
-    return (
-        <div className='container mb-3'>
-            <h4 class="mb-3">Edit Doner</h4>
-            <br />
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-            >
-                <div className="w-100 mx-auto shadow p-5">
-                    <div className='row'>
-                        <div className='col-12'>
-                            <Form>
-                                <div className='form-row'>
-                                    <div className="col form-group">
-                                        <label for="inputState">Parent</label>
-                                        <select id="inputState" class="form-control">
-                                            <option selected></option>
-                                            <option>...</option>
-                                        </select>
-                                        <ErrorMessage name='fname' component={TextError} />
-                                    </div>
-                                    <div className="col form-group">
-                                        <label>Last Name</label>
-                                        <Field
-                                            type="text"
-                                            class="form-control"
-                                            id='lname'
-                                            name="lname"
-                                        />
-                                        <ErrorMessage name='lname' component={TextError} />
-                                    </div>
-                                </div>
-                                <div className='form-row'>
-                                    <div className="col form-group">
-                                        <label>Mobile Number</label>
-                                        <Field
-                                            type="text"
-                                            class="form-control"
-                                            id='mobile'
-                                            name="mobile"
-                                        />
-                                        <ErrorMessage name='mobile' component={TextError} />
-                                    </div>
-                                    <div className="col form-group">
-                                        <label>Email Id</label>
-                                        <Field
-                                            type="text"
-                                            class="form-control"
-                                            id='email'
-                                            name="email"
-                                        />
-                                        <ErrorMessage name='email' component={TextError} />
-                                    </div>
-                                </div>
-                                <div className='form-row'>
-                                    <div className="col form-group">
-                                        <label>GST No</label>
-                                        <Field
-                                            type="text"
-                                            class="form-control"
-                                            id='gst_no'
-                                            name="gst_no"
-                                        />
-                                        <ErrorMessage name='gst_no' component={TextError} />
-                                    </div>
-                                    <div className="col form-group">
-                                        <label for="exampleFormControlFile1">GST image</label>
-                                        <input type="file" class="form-control-file" name="gst" id="exampleFormControlFile1" />
-                                        <ErrorMessage name='name' component={TextError} />
-                                    </div>
-                                </div>
-                                <div className='form-row'>
-                                    <div className="col form-group">
-                                        <label>Pan No</label>
-                                        <Field
-                                            type="text"
-                                            class="form-control"
-                                            id='pan_no'
-                                            name="pan_no"
-                                        />
-                                        <ErrorMessage name='pan_no' component={TextError} />
-                                    </div>
-                                    <div className="col form-group">
-                                        <label for="exampleFormControlFile1">Pan image</label>
-                                        <input type="file" class="form-control-file" name="pan" id="exampleFormControlFile1" />
-                                        <ErrorMessage name='pan' component={TextError} />
-                                    </div>
-                                </div>
-                                <div className='form-row'>
-                                    <div className="col form-group">
-                                        <label>Company Name</label>
-                                        <Field
-                                            type="text"
-                                            class="form-control"
-                                            id='company'
-                                            name="company"
-                                        />
-                                        <ErrorMessage name='company' component={TextError} />
-                                    </div>
-                                    <div className="col form-group">
-                                        <label>Address </label>
-                                        <Field
-                                            type="text"
-                                            class="form-control"
-                                            id='address'
-                                            name="address"
-                                        />
-                                        <ErrorMessage name='address' component={TextError} />
-                                    </div>
-                                </div>
-                                <button className="btn btn-primary" onSubmit={onSubmit}>Edit Partner</button>
-                            </Form>
-                        </div>
-                    </div>
+import React from 'react';
+import { Field, Form, Formik } from 'formik';
+const Editdonor = () => {
+  return (
+    <React.Fragment>
+      <div className="card">
+        <p
+          style={{
+            textAlign: 'left',
+            fontWeight: 'bold',
+            margin: '20px',
+            width: '100%',
+            marginLeft: '20px',
+          }}
+        >
+          EDIT DONOR
+        </p>
+      </div>
+      <div
+        style={{ backgroundColor: 'white', height: '100vh', margin: '30px' }}
+      >
+        <Formik>
+          <Form>
+            <div className="row">
+              <div className="col-6 py-3">
+                <div style={{ padding: '15px', paddingBottom: '10px' }}>
+                  <label style={{ fontWeight: 'bold' }}>Parent</label>
+                  <input
+                    type="text"
+                    placeholder="No Parent"
+                    className="form-control"
+                    list="parentList"
+                  ></input>
+                  <datalist id="parentList">
+                    <option value="No Parent">No Parent</option>
+                    <option value="Chinmay" />
+                    <option value="Abhay" />
+                    <option value="Tejas" />
+                    <option value="Rahul" />
+                  </datalist>
                 </div>
-            </Formik>
-        </div>
-    )
-}
+              </div>
+              <div className="col-6 py-3">
+                <div style={{ padding: '15px', paddingBottom: '10px' }}>
+                  <label style={{ fontWeight: 'bold' }}>First Name</label>
+                  <Field className="form-control" />
+                </div>
+              </div>
+            </div>
 
-export default EditDoner
+            <div className="row">
+              <div className="col-6 py-3">
+                <div className="input-box">
+                  <label style={{ fontWeight: 'bold' }}>Last Name</label>
+                  <Field className="form-control" />
+                </div>
+              </div>
+              <div className="col-6 py-3">
+                <div className="input-box">
+                  <label style={{ fontWeight: 'bold' }}>Mobile Number</label>
+                  <Field className="form-control" />
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-6 py-3">
+                <div className="input-box">
+                  <label style={{ fontWeight: 'bold' }}>Email Id</label>
+                  <Field className="form-control" />
+                </div>
+              </div>
+              <div className="col-6 py-3">
+                <div className="input-box">
+                  <label style={{ fontWeight: 'bold' }}>Plan Amount</label>
+                  <Field type="number" className="form-control" />
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-6 py-3">
+                <div className="input-box">
+                  <label style={{ fontWeight: 'bold' }}>Is Priyank</label>
+                  <Field component="Select" className="form-control">
+                    <option value="true">True</option>
+                    <option value="false">Fasle</option>
+                  </Field>
+                </div>
+              </div>
+              <div className="col-6 py-3">
+                <div className="input-box">
+                  <label style={{ fontWeight: 'bold' }}>Plan Amount</label>
+                  <input type="date" className="form-control" />
+                </div>
+              </div>
+            </div>
+            <button style={{ margin: '20px' }} className="btn  btn-success ">
+              Update
+            </button>
+          </Form>
+        </Formik>
+      </div>
+    </React.Fragment>
+  );
+};
+
+export default Editdonor;

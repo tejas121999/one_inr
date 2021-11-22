@@ -18,7 +18,10 @@ class Adddonor extends Component {
             ADD DONOR
           </p>
         </div>
-        <div style={{ backgroundColor: 'white', margin: '30px' }}>
+        <div
+          className="container mb-3"
+          style={{ backgroundColor: 'white', margin: '30px' }}
+        >
           <Formik>
             <Form>
               <div className="row">
