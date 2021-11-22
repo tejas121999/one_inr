@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
+import {
+  FaRegEdit,
+  FaRegEye,
+  FaRegTrashAlt,
+  FaBookOpen,
+  FaDollarSign,
+} from 'react-icons/fa';
 
 const Donors = () => {
   const [viewModal, setViewModal] = useState(false);
@@ -200,32 +207,63 @@ const Donors = () => {
         <table className="table table-striped table-hover">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Donated</th>
-              <th>Balance</th>
-              <th>Projects</th>
-              <th>Actions</th>
+              <th style={{ textAlign: 'center' }}>Name</th>
+              <th style={{ textAlign: 'center' }}>Donated</th>
+              <th style={{ textAlign: 'center' }}>Balance</th>
+              <th style={{ textAlign: 'center' }}>Projects</th>
+              <th style={{ textAlign: 'center' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
             {data.map(item => {
               return (
                 <tr>
-                  <td>{item.name}</td>
-                  <td>{item.donated}</td>
-                  <td>{item.balance}</td>
-                  <td>{item.project}</td>
-                  <td className="table-link cursor-pointer">
+                  <td style={{ textAlign: 'center' }}>{item.name}</td>
+                  <td style={{ textAlign: 'center' }}>{item.donated}</td>
+                  <td style={{ textAlign: 'center' }}>{item.balance}</td>
+                  <td style={{ textAlign: 'center' }}>{item.project}</td>
+                  <td
+                    style={{ textAlign: 'center' }}
+                    className="table-link cursor-pointer"
+                  >
                     {' '}
-                    <button onClick={() => ViewModalOpen(item)} className="btn">
-                      Edit
+                    <button
+                      data-bs-toggle="tooltip"
+                      title="View Details"
+                      className="btn"
+                      onClick={() => ViewModalOpen(item)}
+                    >
+                      <FaRegEye />
                     </button>
-                    <button className="btn">View</button>
-                    <button className="btn">Trans</button>
-                    <button onClick={() => fundModaOpen()} className="btn">
-                      Fund
+                    <button
+                      data-bs-toggle="tooltip"
+                      title="View Transactions"
+                      className="btn"
+                    >
+                      <FaBookOpen />
                     </button>
-                    <button className="btn">Delete</button>
+                    <button
+                      data-bs-toggle="tooltip"
+                      title="Edit"
+                      className="btn"
+                    >
+                      <FaRegEdit />
+                    </button>
+                    <button
+                      data-bs-toggle="tooltip"
+                      title="Add Fund"
+                      onClick={() => fundModaOpen()}
+                      className="btn"
+                    >
+                      <FaDollarSign />
+                    </button>
+                    <button
+                      data-bs-toggle="tooltip"
+                      title="Delete"
+                      className="btn"
+                    >
+                      <FaRegTrashAlt />
+                    </button>
                   </td>
                 </tr>
               );
