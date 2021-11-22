@@ -68,7 +68,8 @@ module.exports = (sequelize,DataTypes)=>{
         },
         parentId:{
             type: DataTypes.INTEGER,
-            field: 'parent_id'
+            field: 'parent_id',
+            defaultValue: 0
         },
         createdAt : {
             type: DataTypes.DATE,
@@ -87,8 +88,10 @@ module.exports = (sequelize,DataTypes)=>{
             field: 'user_id'
         },
         isPriyank:{
-            type: DataTypes.ENUM('false','true'),
-            field: 'is_priyank'
+            type: DataTypes.ENUM(),
+            values : ['false','true'],
+            defaultValue: 'false',
+            field: 'is_priyank',
         },
         balanceRenewalDate:{
             type: DataTypes.DATE,
@@ -104,6 +107,16 @@ module.exports = (sequelize,DataTypes)=>{
         freezeTableName : true,
         tableName: 'users',
         timestamps: false
-    })
+    });
+    users.associate = function(models){
+        users.hasOne(models.users,{foriegnkey: "parentId"})
+        users.belongsTo(models.users,{foriegnkey : "parentId" })
+
+    }
+
+
     return users
 }
+
+
+
