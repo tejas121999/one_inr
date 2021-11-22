@@ -62,3 +62,25 @@ exports.updateDonor = async (req, res) => {
         message: "Donor Updated Successfully",
     })
 }
+
+exports.updateDonorBalance = async (req,res) => {
+    let id = req.params.id
+    let {balance} = req.body;
+
+    let donorExists = await models.users.findOne({ where: { id: id } })
+    if (!donorExists) {
+        return res.status(400).json({
+            message: "Donor does not exists"
+        })
+    }
+    let donorUpdate = await models.users.update({balance},{where : {id : id}})
+    console.log(`data`,donorUpdate)
+    if(!donorUpdate[0]){
+        return res.status(400).json({
+            message : "Failed to update balance"
+        })
+    }
+    return res.status(200).json({
+        message : "User Balance Updated"
+    })
+}
