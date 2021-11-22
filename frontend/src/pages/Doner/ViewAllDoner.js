@@ -54,10 +54,13 @@ const ViewAllDoner = () => {
                             <td>Nimap.infotech@gmail.com</td>
                             <td>GSTNOOPINTHECHAT</td>
                             <td>
-                                <Link to='#' type="button" className="btn btn-danger">
+                                <Link to='#' type="" className="btn btn-link">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </Link>
-                                <Link to='/editpartner' type="button" className="btn btn-warning">
+                                <Link to='#' type="" className="btn btn-link">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </Link>
+                                <Link to='/edit_doner' type="" className="btn btn-link">
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </Link>
                             </td>
@@ -69,10 +72,13 @@ const ViewAllDoner = () => {
                             <td>Nimap.infotech@gmail.com</td>
                             <td>GSTNOOPINTHECHAT</td>
                             <td>
-                                <Link to='#' type="button" className="btn btn-danger">
+                                <Link to='#' type="" className="btn btn-link">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </Link>
-                                <Link to='/editvendor' type="button" className="btn btn-warning">
+                                <Link to='#' type="" className="btn btn-link">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </Link>
+                                <Link to='/edit_doner' type="" className="btn btn-link">
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </Link>
                             </td>
@@ -84,10 +90,13 @@ const ViewAllDoner = () => {
                             <td>Nimap.infotech@gmail.com</td>
                             <td>GSTNOOPINTHECHAT</td>
                             <td>
-                                <Link to='#' type="button" className="btn btn-danger">
+                                <Link to='#' type="" className="btn btn-link">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </Link>
-                                <Link to='/editvendor' type="button" className="btn btn-warning">
+                                <Link to='#' type="" className="btn btn-link">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </Link>
+                                <Link to='/edit_doner' type="" className="btn btn-link">
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </Link>
                             </td>

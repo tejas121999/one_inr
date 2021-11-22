@@ -8,6 +8,7 @@ import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import Payments from './pages/Account/Payments';
 import AddDoner from './pages/Doner/AddDoner';
+import EditDoner from './pages/Doner/EditDoner';
 import UpcomingDonerRenewal from './pages/Doner/UpcomingDonerRenewal';
 import ViewAllDoner from './pages/Doner/ViewAllDoner';
 import ViewRecept from './pages/Doner/ViewRecept';
@@ -61,7 +62,6 @@ class App extends React.Component {
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
                 <Route exact path="/" component={Tabel} />
-                <Route exact path="/login-modal" component={AuthModalPage} />
                 {/*master route*/}
                 <Route exact path="/Vendor" component={Vendor} />
                 <Route exact path="/addvendor" component={AddVendor} />
@@ -71,6 +71,7 @@ class App extends React.Component {
                 <Route exact path="/editpartner" component={EditPartner} />
                 {/*doner route*/}
                 <Route exact path="/add_doner" component={AddDoner} />
+                <Route exact path="/edit_doner" component={EditDoner} />
                 <Route exact path="/view_recept" component={ViewRecept} />
                 <Route exact path="/view_all_doner" component={ViewAllDoner} />
                 <Route exact path="/upcoming_doner_renewal" component={UpcomingDonerRenewal} />
