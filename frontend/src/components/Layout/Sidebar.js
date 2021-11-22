@@ -36,9 +36,14 @@ const dashboardItems = [
 ];
 
 const masterItems = [
-  { to: '/vendor', name: 'Vendor', exact: false, Icon: MdOutlineNavigateNext },
   {
-    to: '/Partner',
+    to: '/Vendor',
+    name: 'Vendor',
+    exact: false,
+    Icon: MdOutlineNavigateNext,
+  },
+  {
+    to: '/partner',
     name: 'Partner',
     exact: false,
     Icon: MdOutlineNavigateNext,
@@ -47,25 +52,25 @@ const masterItems = [
 
 const donorItems = [
   {
-    to: '/add_donnor',
+    to: '/add_doner',
     name: 'add donnor',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
-    to: '/view_all_donnor',
+    to: '/view_all_doner',
     name: `view all donnor's`,
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
-    to: '/Upcomming_doner_renewal',
+    to: '/upcoming_doner_renewal',
     name: 'Upcomming doner renewal',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
-    to: '/View_eceipts',
+    to: '/view_recept',
     name: 'View Receipts',
     exact: false,
     Icon: MdOutlineNavigateNext,
@@ -74,13 +79,13 @@ const donorItems = [
 
 const NGO_Item = [
   {
-    to: '/Add NGO',
+    to: '/add_ngo',
     name: 'Add NGO',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
-    to: `/view_all_NGO`,
+    to: '/view_all_ngo',
     name: `View All NGO's`,
     exact: false,
     Icon: MdOutlineNavigateNext,
@@ -95,19 +100,19 @@ const ProjectItems = [
     Icon: MdOutlineNavigateNext,
   },
   {
-    to: '/all_project',
+    to: '/view_all_project',
     name: 'View All Projects',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
-    to: '/completed_project',
+    to: '/complete_project',
     name: 'Completed Projects',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
-    to: '/archived_project',
+    to: '/archive_project',
     name: 'Archived Projects',
     exact: false,
     Icon: MdOutlineNavigateNext,
@@ -133,7 +138,7 @@ const SettingItems = [
   { to: '/users', name: 'users', exact: true, Icon: MdOutlineNavigateNext },
   { to: '/config', name: 'config', exact: true, Icon: MdOutlineNavigateNext },
   {
-    to: '/Razorpay_credentials',
+    to: '/razorpay_credentials',
     name: 'Razorpay credentials',
     exact: true,
     Icon: MdOutlineNavigateNext,
