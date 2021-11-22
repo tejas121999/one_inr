@@ -8,7 +8,7 @@ import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import Payments from './pages/Account/Payments';
 import AddDoner from './pages/Doner/AddDoner';
-import UpcomingDonerRenewal from './pages/Doner/Upcoming Doner Renewal/UpcomingDonerRenewal';
+import UpcomingDonerRenewal from './pages/Doner/UpcomingDonerRenewal';
 import ViewAllDoner from './pages/Doner/ViewAllDoner';
 import ViewRecept from './pages/Doner/ViewRecept';
 import AddPartner from './pages/master/partner/AddPartner';
