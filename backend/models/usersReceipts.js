@@ -1,36 +1,34 @@
-module.exports = (sequelize, DataTypes) => {
-    const users_receipts = sequelize.define('users_receipts', {
-        id: {
-            type: DataTypes.INTEGER,
-            field: 'id'
-        },
+const sequelize = require("sequelize")
 
-        user_id: {
+module.exports = (sequelize, DataTypes) => {
+    const usersReceipts = sequelize.define('usersReceipts', {
+
+        userId: {
             type: DataTypes.INTEGER,
             field: 'user_id'
         },
         
-        interval_id:{
+        intervalId:{
             type: DataTypes.INTEGER,
             field: 'interval_id'
         },
 
-        project_id: {
+        projectId: {
             type: DataTypes.INTEGER,
             field: 'project_id'
         },
 
-        receipt_number: {
-            type: DataTypes.VARCHAR,
+        receiptNumber: {
+            type: DataTypes.STRING,
             field: 'receipt_number'
         },
 
-        reciept: {
-            type: DataTypes.INTEGER,
-            field: 'reciept'
+        recieptPdf: {
+            type: DataTypes.TEXT,
+            field: 'receipt_pdf'
         },
 
-        ngo_id: {
+        ngoId: {
             type: DataTypes.INTEGER,
             field: 'ngo_id'
         },
@@ -40,22 +38,22 @@ module.exports = (sequelize, DataTypes) => {
             field: 'amount'
         },
 
-        transaction_type: {
-            type: DataTypes.VARCHAR,
+        transactionType: {
+            type: DataTypes.STRING,
             field: 'transaction_type'
         },
 
-        realization_no: {
+        realizationNo: {
             type: DataTypes.TEXT,
             field: 'realization_no'
         },
 
-        realization_date: {
+        realizationData: {
             type: DataTypes.DATE,
             field: 'realization_date'
         },
 
-        drawn_on_bank: {
+        drawnOnBank: {
             type: DataTypes.DATE,
             field: 'drawn_on_bank'
         },
@@ -65,13 +63,13 @@ module.exports = (sequelize, DataTypes) => {
             field: 'branch'
         },
 
-        created_at: {
-            type: DataTypes.DATETIME,
+        createdAt: {
+            type: DataTypes.DATE,
             field: 'created_at'
         },
 
-        updated_at: {
-            type: DataTypes.DATETIME,
+        updatedAt: {
+            type: DataTypes.DATE,
             field: 'updated_at'
         },
 
@@ -79,5 +77,7 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true,
         tableName: 'users_receipts'
     })
-    return users_receipts
+    return usersReceipts
 }
+
+// module.exports = sequelize.model('usersReceipts', usersReceipts);

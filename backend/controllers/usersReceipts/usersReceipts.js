@@ -1,110 +1,114 @@
+// const { compareSync } = require("bcrypt");
 const models = require("../../models")
 
 //Creating A Users Receipts
-exports.addusers_receipts = async (req, res) => {
+exports.addUsersReceipts = async (req, res) => {
+    try{
     let {
-        id,
-        user_id,
-        interval_id,
-        project_id,
-        receipt_number,
-        receipt_pdf,
-        ngo_id,
+        userId,
+        intervalId,
+        projectId,
+        receiptNumber,
+        recieptPdf,
+        ngoId,
         amount,
-        transaction_type,
-        realization_no,
-        realization_data,
-        drawn_on_bank,
+        transactionType,
+        realizationNo,
+        realizationData,
+        drawnOnBank,
         branch,
-        created_at,
-        updated_at
+    
     } = req.body;
+    // console.log(req.body);
 
-    let users_receipts = await users_receipts.create(
-    {   id,
-        user_id,
-        interval_id,
-        project_id,
-        receipt_number,
-        receipt_pdf,
-        ngo_id,
-        amount,
-        transaction_type,
-        realization_no,
-        realization_data,
-        drawn_on_bank,
-        branch,
-        created_at,
-        updated_at
+    let usersReceipts = await models.usersReceipts.create({  
+
+        userId:req.body.userId,
+        intervalId:req.body.intervalId,
+        projectId:req.body.projectId,
+        receiptNumber:req.body.receiptNumber,
+        recieptPdf:req.body.receiptPdf,
+        ngoId:req.body.ngoId,
+        amount:req.body.amount,
+        transactionType:req.body.transactionType,
+        realizationNo:req.body.realizationNo,
+        realizationData:req.body.realizationData,
+        drawnOnBank:req.body.drawnOnBank,
+        branch:req.body.branch
+        
     }
     )
 
-    if(!users_receipts){
+    if(!usersReceipts){
         return res.status(402).json({
             message: 'Failed to create Users Receipts'
-        });
+        })
     } else {
         return res.status(200).json({
             message: 'Users Receipts created successfully'
         })
     }
+    }catch(err){
+        console.log(err);
+        return res.status(400).json({message:err})
+    }
+    
 }
 
 //Updating Users Reciepts
-exports.updateusers_receipts = async (req,res)=>{
+exports.updateUsersReceipts = async (req,res)=>{
 
-    let users_receiptsId = req.params.id;
+    let usersReceiptsId = req.params.id;
 
-    console.log(`vendor id `,users_receiptsId)
+    console.log(`usersReceipts id `,usersReceiptsId)
 
-    let { id,
-        user_id,
-        interval_id,
-        project_id,
-        receipt_number,
-        receipt_pdf,
-        ngo_id,
+    let { 
+        userId,
+        intervalId,
+        projectId,
+        receiptNumber,
+        recieptPdf,
+        ngoId,
         amount,
-        transaction_type,
-        realization_no,
-        realization_data,
-        drawn_on_bank,
-        branch,
-        created_at,
-        updated_at } = req.body;
+        transactionType,
+        realizationNo,
+        realizationData,
+        drawnOnBank,
+        branch
+     } = req.body;
 
-    let users_receiptsExists = await models.users_receipts.findOne({where : {id: req.params.id}})
+    let usersReceiptsExists = await models.usersReceipts.findOne({where : {id: usersReceiptsId}})
 
-    if(!users_receiptsExists)
+    if(!usersReceiptsExists)
     {
         return res.status(402).json({
             message : "Users Receipts does not exists"
         })
     }
 
-    let users_receiptsUpdate = await models.users_receipts.update(
-    {   id,
-        user_id,
-        interval_id,
-        project_id,
-        receipt_number,
-        receipt_pdf,
-        ngo_id,
-        amount,
-        transaction_type,
-        realization_no,
-        realization_data,
-        drawn_on_bank,
-        branch,
-        created_at,
-        updated_at
+    let usersReceiptsUpdate = await models.usersReceipts.update(
+    {   
+        userId:req.body.userId,
+        intervalId:req.body.intervalId,
+        projectId:req.body.projectId,
+        receiptNumber:req.body.receiptNumber,
+        recieptPdf:req.body.receiptPdf,
+        ngoId:req.body.ngoId,
+        amount:req.body.amount,
+        transactionType:req.body.transactionType,
+        realizationNo:req.body.realizationNo,
+        realizationData:req.body.realizationData,
+        drawnOnBank:req.body.drawnOnBank,
+        branch:req.body.branch
     },
     {
-        where : {id: users_receiptsId}})
+        where : {id: usersReceiptsId}
+    })
 
-    if(users_receiptsUpdate)
+    if(usersReceiptsUpdate)
     {   
     return res.status(200).json({ messgae: `Users Receipts updated successfully` });
     }
     
 }
+

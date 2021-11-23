@@ -1,32 +1,32 @@
 const { body } = require("express-validator");
 
-exports.users_receiptsValidation = [
+exports.usersReceiptsValidation = [
 
-    body('reciept_number')
-        .exists().withMessage('Reciept number is Required')
+    body('receiptNumber')
+        .exists().withMessage('Reciept number is required')
         .notEmpty().withMessage('Reciept number is Required'),
 
     body('amount')
         .exists().withMessage('Amount is Required')
         .notEmpty().withMessage('Amount is Required'),
 
-    body('transaction_type')
+    body('transactionType')
         .exists().withMessage(' Transaction type is Required')
         .notEmpty().withMessage('Transaction type is Required'),
 
-    body('reciept_pdf')
+    body('recieptPdf')
         .exists().withMessage(' Reciept pdf is Required')
         .notEmpty().withMessage('Reciept pdf is Required'),
 
-    body('realization_no')
+    body('realizationNo')
         .exists().withMessage('Realization number is Required')
         .notEmpty().withMessage('Realization number is Required'),
         
-    body('realization_data')
+    body('realizationData')
         .exists().withMessage('Realization data is Required')
         .notEmpty().withMessage('Realization data is Required'),
 
-    body('drawn_on_bank')
+    body('drawnOnBank')
         .exists().withMessage(' Drawn On Bank is Required')
         .notEmpty().withMessage(' Drawn On Bank is Required'),
 

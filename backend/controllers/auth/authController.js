@@ -1,5 +1,5 @@
 const models = require('../../models')
-const bcrypt = require('bcrypt')
+// const bcrypt = require('bcrypt')
 const saltRounds = 10;
 const twinBcrypt = require('twin-bcrypt')
 const {generateJwtToken} = require('../../utils/tokens')
