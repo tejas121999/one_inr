@@ -66,3 +66,37 @@ exports.donorValidation = [
         })
 
 ]
+exports.updateDonorValidation = [
+    body('name')
+        .exists().withMessage('Name is Required')
+        .notEmpty().withMessage('Name is Required'),
+    body('email')
+        .exists().withMessage('Email is Required')
+        .notEmpty().withMessage('Email is Rrequired')
+        .isEmail().withMessage('Email is Required'),
+    body('mobile')
+        .exists()
+        .withMessage('Mobile number is Required')
+        .custom(async value => {
+
+            if (!/^[0-9]{10}$/i.test(value)) {
+                return Promise.reject("Invalid mobile number");
+            }
+
+        }),
+    body('parentId')
+        .custom(async (value) => {
+            if (value > 0) {
+
+                return await models.users.findOne({
+                    where: { id: value }
+                }).then(result => {
+                    if (!result) {
+                        return Promise.reject("Parent Not Found")
+                    }
+                })
+
+            }
+        })
+
+]
