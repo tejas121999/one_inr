@@ -40,7 +40,7 @@ class Adddonor extends Component {
       .required('required')
       .min(10, 'Please enter 10 digits'),
     emailId: yup.string().email('Invalid Email Format').required('Required'),
-    password: yup.string().required('Required').min(5, 'Should be 5 character'),
+    password: yup.string().required('Required').min(8, 'Should be 5 character'),
   });
   onAddDoner = async values => {
     const { parentsList } = this.state;
@@ -63,7 +63,6 @@ class Adddonor extends Component {
     await axios
       .post(url, obj)
       .then(res => {
-        console.log('AddDonor', res);
         this.props.history.push('/view_all_doner');
       })
       .catch(err => {
@@ -174,7 +173,7 @@ class Adddonor extends Component {
                       </label>
                       <Field
                         className="form-control"
-                        placeholder="Please Enter First Name"
+                        placeholder="Please Enter Mobile Number"
                         name="phoneNumber"
                         type="text"
                         autocomplete="off"
@@ -217,7 +216,7 @@ class Adddonor extends Component {
                       <label style={{ fontWeight: 'bold' }}>Password</label>
                       <Field
                         className="form-control"
-                        placeholder="Please Enter First Name"
+                        placeholder="Create Password"
                         name="password"
                         type="password"
                         required
