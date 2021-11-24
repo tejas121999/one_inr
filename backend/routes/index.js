@@ -9,10 +9,11 @@ const donor = require('./donor') //Importing Donor Module
 
 
 router.use('/vendor',vendor)
-router.use('/usersReceipts',usersReceipts)
+router.use('/userReceipts',usersReceipts)
 router.use('/fileupload',fileUpload)
 router.use('/auth',auth)
 router.use('/donor',donor)
+
 
 
 module.exports = router;

@@ -18,6 +18,10 @@ exports.usersReceiptsValidation = [
         .exists().withMessage(' Reciept pdf is Required')
         .notEmpty().withMessage('Reciept pdf is Required'),
 
+    body('mailSend')
+        .exists().withMessage(' Mail Send is Required')
+        .notEmpty().withMessage('Mail Send is Required'),
+
     body('realizationNo')
         .exists().withMessage('Realization number is Required')
         .notEmpty().withMessage('Realization number is Required'),

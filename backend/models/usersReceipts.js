@@ -24,8 +24,13 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         recieptPdf: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING,
             field: 'receipt_pdf'
+        },
+
+        mailSend: {
+            type: DataTypes.INTEGER,
+            field: 'mail_send'
         },
 
         ngoId: {
@@ -61,6 +66,11 @@ module.exports = (sequelize, DataTypes) => {
         branch: {
             type: DataTypes.TEXT,
             field: 'branch'
+        },
+
+        contactNo: {
+            type: DataTypes.STRING,
+            field: 'contact_no'
         },
 
         createdAt: {
