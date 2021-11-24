@@ -11,6 +11,7 @@ import AddDoner from './pages/Doner/AddDoner';
 import EditDoner from './pages/Doner/EditDoner';
 import UpcomingDonerRenewal from './pages/Doner/UpcomingDonerRenewal';
 import ViewAllDoner from './pages/Doner/ViewAllDoner';
+import ViewDoner from './pages/Doner/ViewDoner';
 import ViewRecept from './pages/Doner/ViewRecept';
 import AddPartner from './pages/master/partner/AddPartner';
 import EditPartner from './pages/master/partner/EditPartner';
@@ -30,6 +31,7 @@ import RazorpayCredentials from './pages/Settings/RazorpayCredentials';
 import Roles from './pages/Settings/Roles';
 import Users from './pages/Settings/Users';
 import Tabel from './pages/Tabel';
+import TablePage from './pages/TablePage';
 import './styles/reduction.scss';
 
 const getBasename = () => {
@@ -75,6 +77,7 @@ class App extends React.Component {
                 <Route exact path="/view_recept" component={ViewRecept} />
                 <Route exact path="/view_all_doner" component={ViewAllDoner} />
                 <Route exact path="/upcoming_doner_renewal" component={UpcomingDonerRenewal} />
+                <Route exact path="/view_doner" component={ViewDoner} />
                 {/*NGO route*/}
                 <Route exact path="/add_ngo" component={AddNgo} />
                 <Route exact path="/view_all_ngo" component={ViewAllNgo} />
@@ -91,6 +94,7 @@ class App extends React.Component {
                 <Route exact path="/users" component={Users} />
                 <Route exact path="/config" component={Config} />
                 <Route exact path="/razorpay_credentials" component={RazorpayCredentials} />
+          
 
 
                 {/* <Route exact path="/charts" component={ChartPage} /> */}
