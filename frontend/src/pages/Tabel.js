@@ -3,7 +3,7 @@ import React from 'react';
 const Tabel = () => {
   return (
     <React.Fragment>
-      <div style={{ backgroundColor: '#31313' }} className="container-fluid">
+      <div style={{ backgroundColor: '#31313' }}>
         <div className="card">
           <p
             style={{
@@ -11,14 +11,13 @@ const Tabel = () => {
               fontWeight: 'bold',
               margin: '20px',
               width: '100%',
-              marginLeft: '20px',
             }}
           >
             DASHBOARD
           </p>
         </div>
 
-        <div style={{ marginTop: '50px' }} className="card">
+        <div style={{ margin: '30px' }} className="card">
           <p
             style={{
               textAlign: 'left',
