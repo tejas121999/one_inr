@@ -1,5 +1,6 @@
 // const { compareSync } = require("bcrypt");
 const models = require("../../models")
+const paginationFunc = require('../../utils/pagination');
 
 //Creating A Users Receipts
 exports.addUsersReceipts = async (req, res) => {
@@ -122,7 +123,15 @@ exports.updateUsersReceipts = async (req,res)=>{
 
 exports.getAllUserReceipts = async (req, res) => {
 
-    const data = await models.users.findAndCountAll({})
+    const { search, offset, pageSize } = paginationFunc.paginationWithFromTo(
+        req.query.search,
+        req.query.from,
+        req.query.to
+    ) 
+    const data = await models.users.findAndCountAll({
+        limit:pageSize,
+        offset: offset
+    })
     if(!data) {
         return res.status(400).json({
             message: "Failed to get all data."

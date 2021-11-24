@@ -2,15 +2,9 @@
   "development": {
     "username": "root",
     "password": "root",
-<<<<<<< HEAD
     "database": "oneinrv20",
     "host": "5.189.128.116",
     "port": "7232",
-=======
-    "database": "local_oneinr",
-    "host": "127.0.0.1",
-    "port": "3306",
->>>>>>> 58d15fd5d671b687653f707ad435391b8887e880
     "dialect": "mysql"
   },
   
