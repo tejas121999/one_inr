@@ -8,7 +8,8 @@ exports.usersReceiptsValidation = [
 
     body('amount')
         .exists().withMessage('Amount is Required')
-        .notEmpty().withMessage('Amount is Required'),
+        .notEmpty().withMessage('Amount is Required')
+        .isNumeric().withMessage('Only Numbers allowed.'),
 
     body('transactionType')
         .exists().withMessage(' Transaction type is Required')
@@ -26,9 +27,9 @@ exports.usersReceiptsValidation = [
         .exists().withMessage('Realization number is Required')
         .notEmpty().withMessage('Realization number is Required'),
         
-    body('realizationData')
-        .exists().withMessage('Realization data is Required')
-        .notEmpty().withMessage('Realization data is Required'),
+    body('realizationDate')
+        .exists().withMessage('Realization date is Required')
+        .notEmpty().withMessage('Realization date is Required'),
 
     body('drawnOnBank')
         .exists().withMessage(' Drawn On Bank is Required')
@@ -38,3 +39,5 @@ exports.usersReceiptsValidation = [
         .exists().withMessage('Branch is Required')
         .notEmpty().withMessage('Branch is Required'),
 ]
+
+exports.update 

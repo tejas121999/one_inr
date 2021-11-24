@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
             field: 'realization_no'
         },
 
-        realizationData: {
+        realizationDate: {
             type: DataTypes.DATE,
             field: 'realization_date'
         },
@@ -66,11 +66,6 @@ module.exports = (sequelize, DataTypes) => {
         branch: {
             type: DataTypes.TEXT,
             field: 'branch'
-        },
-
-        contactNo: {
-            type: DataTypes.STRING,
-            field: 'contact_no'
         },
 
         createdAt: {

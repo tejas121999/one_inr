@@ -2,9 +2,9 @@
   "development": {
     "username": "root",
     "password": "root",
-    "database": "oneinrtdb",
-    "host": "127.0.0.1",
-    "port": "3306",
+    "database": "oneinrv20",
+    "host": "5.189.128.116",
+    "port": "7232",
     "dialect": "mysql"
   },
   "test": {

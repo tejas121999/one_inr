@@ -3,6 +3,7 @@ const models = require("../../models")
 
 //Creating A Users Receipts
 exports.addUsersReceipts = async (req, res) => {
+    
     try{
     let {
         userId,
@@ -15,7 +16,7 @@ exports.addUsersReceipts = async (req, res) => {
         amount,
         transactionType,
         realizationNo,
-        realizationData,
+        realizationDate,
         drawnOnBank,
         branch,
     
@@ -34,7 +35,7 @@ exports.addUsersReceipts = async (req, res) => {
         amount:req.body.amount,
         transactionType:req.body.transactionType,
         realizationNo:req.body.realizationNo,
-        realizationData:req.body.realizationData,
+        realizationDate:req.body.realizationDate,
         drawnOnBank:req.body.drawnOnBank,
         branch:req.body.branch
         
@@ -75,7 +76,7 @@ exports.updateUsersReceipts = async (req,res)=>{
         amount,
         transactionType,
         realizationNo,
-        realizationData,
+        realizationDate,
         drawnOnBank,
         branch
      } = req.body;
@@ -101,7 +102,7 @@ exports.updateUsersReceipts = async (req,res)=>{
         amount:req.body.amount,
         transactionType:req.body.transactionType,
         realizationNo:req.body.realizationNo,
-        realizationData:req.body.realizationData,
+        realizationDate:req.body.realizationDate,
         drawnOnBank:req.body.drawnOnBank,
         branch:req.body.branch
     },
@@ -115,4 +116,23 @@ exports.updateUsersReceipts = async (req,res)=>{
     }
     
 }
+
+
+//Get all details of all Users of View Reciepts in DB
+
+exports.getAllUserReceipts = async (req, res) => {
+
+    const data = await models.users.findAndCountAll({})
+    if(!data) {
+        return res.status(400).json({
+            message: "Failed to get all data."
+        })
+    }
+
+    return res.status(200).json({
+        data: data,
+        message: "Found All Data." 
+    })
+}
+
 
