@@ -1,151 +1,277 @@
-import React from 'react'
+import { Field, Form, Formik } from 'formik';
+import React, { Component } from 'react';
+import './Donor.css';
 import * as yup from 'yup';
-import { ErrorMessage, Form, Formik, Field } from 'formik'
-import TextError from '../../pages/error/TextError'
+import axios from 'axios';
+import {
+  ADD_DONOR_GET_PARENTS_URL,
+  ADD_DONOR_URL,
+  BASE_URL,
+} from '../../API/APIEndpoints';
+import { useHistory } from 'react-router-dom';
 
+class Adddonor extends Component {
+  constructor(props) {
+    super(props);
 
-const AddDoner = () => {
+    this.getParentList();
+    this.state = {
+      parentsList: [],
+    };
+  }
 
-    const initialValues = {
-        name: '',
-        company: '',
-        phone: '',
-        email: '',
-        gst: ''
-    }
+  getParentList = async () => {
+    const url = BASE_URL + ADD_DONOR_GET_PARENTS_URL;
+    const res = await axios
+      .get(url)
+      .then(res => {
+        console.log('Response');
+        this.setState({ parentsList: res.data.data });
+      })
+      .catch(err => {
+        console.log('Error', err);
+      });
+  };
+  validationSchema = yup.object({
+    fName: yup.string().required('Required'),
+    lName: yup.string().required('required'),
+    phoneNumber: yup
+      .string()
+      .required('required')
+      .min(10, 'Please enter 10 digits'),
+    emailId: yup.string().email('Invalid Email Format').required('Required'),
+    password: yup.string().required('Required').min(5, 'Should be 5 character'),
+  });
+  onAddDoner = async values => {
+    const { parentsList } = this.state;
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        console.log('form value', initialValues)
+    const parentId = parentsList.filter(data => data.name == values.parent);
 
-    }
+    let id = parentId && parentId.length ? parentId[0].id : 0;
 
-    const validationSchema = yup.object({
-        name: yup.string().required('Required'),
-        company: yup.string().required('required'),
-        phone: yup.string().required('required'),
-        email: yup.string().email('Invalide Email Format').required('Required'),
-        gst: yup.string().required('Required')
-    })
-
+    values.parent = id;
+    console.log('Aded', values);
+    const url = BASE_URL + ADD_DONOR_URL;
+    const obj = {
+      name: values.fName + values.lName,
+      email: values.emailId,
+      mobile: values.phoneNumber,
+      password: values.password,
+      parentId: id,
+      isPriyank: values.isPriyank,
+    };
+    await axios
+      .post(url, obj)
+      .then(res => {
+        console.log('AddDonor', res);
+        this.props.history.push('/view_all_doner');
+      })
+      .catch(err => {
+        alert(err);
+      });
+  };
+  render() {
+    const { parentsList } = this.state;
     return (
-        <div className='container mb-3'>
-            <h4 class="mb-3">Add Doner</h4>
-            <br />
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-            >
-                <div className="w-100 mx-auto shadow p-5">
-                    <div className='row'>
-                        <div className='col-12'>
-                            <Form>
-                                <div className='form-row'>
-                                    <div className="col form-group">
-                                        <label for="inputState">Parent</label>
-                                        <select id="inputState" class="form-control">
-                                            <option selected></option>
-                                            <option>...</option>
-                                        </select>
-                                        <ErrorMessage name='fname' component={TextError} />
-                                    </div>
-                                    <div className="col form-group">
-                                        <label>Last Name</label>
-                                        <Field
-                                            type="text"
-                                            class="form-control"
-                                            id='lname'
-                                            name="lname"
-                                        />
-                                        <ErrorMessage name='lname' component={TextError} />
-                                    </div>
-                                </div>
-                                <div className='form-row'>
-                                    <div className="col form-group">
-                                        <label>Mobile Number</label>
-                                        <Field
-                                            type="text"
-                                            class="form-control"
-                                            id='mobile'
-                                            name="mobile"
-                                        />
-                                        <ErrorMessage name='mobile' component={TextError} />
-                                    </div>
-                                    <div className="col form-group">
-                                        <label>Email Id</label>
-                                        <Field
-                                            type="text"
-                                            class="form-control"
-                                            id='email'
-                                            name="email"
-                                        />
-                                        <ErrorMessage name='email' component={TextError} />
-                                    </div>
-                                </div>
-                                <div className='form-row'>
-                                    <div className="col form-group">
-                                        <label>GST No</label>
-                                        <Field
-                                            type="text"
-                                            class="form-control"
-                                            id='gst_no'
-                                            name="gst_no"
-                                        />
-                                        <ErrorMessage name='gst_no' component={TextError} />
-                                    </div>
-                                    <div className="col form-group">
-                                        <label for="exampleFormControlFile1">GST image</label>
-                                        <input type="file" class="form-control-file" name="gst" id="exampleFormControlFile1" />
-                                        <ErrorMessage name='name' component={TextError} />
-                                    </div>
-                                </div>
-                                <div className='form-row'>
-                                    <div className="col form-group">
-                                        <label>Pan No</label>
-                                        <Field
-                                            type="text"
-                                            class="form-control"
-                                            id='pan_no'
-                                            name="pan_no"
-                                        />
-                                        <ErrorMessage name='pan_no' component={TextError} />
-                                    </div>
-                                    <div className="col form-group">
-                                        <label for="exampleFormControlFile1">Pan image</label>
-                                        <input type="file" class="form-control-file" name="pan" id="exampleFormControlFile1" />
-                                        <ErrorMessage name='pan' component={TextError} />
-                                    </div>
-                                </div>
-                                <div className='form-row'>
-                                    <div className="col form-group">
-                                        <label>Company Name</label>
-                                        <Field
-                                            type="text"
-                                            class="form-control"
-                                            id='company'
-                                            name="company"
-                                        />
-                                        <ErrorMessage name='company' component={TextError} />
-                                    </div>
-                                    <div className="col form-group">
-                                        <label>Address </label>
-                                        <Field
-                                            type="text"
-                                            class="form-control"
-                                            id='address'
-                                            name="address"
-                                        />
-                                        <ErrorMessage name='address' component={TextError} />
-                                    </div>
-                                </div>
-                                <button className="btn btn-primary" onSubmit={onSubmit}>Edit Partner</button>
-                            </Form>
-                        </div>
-                    </div>
-                </div>
-            </Formik>
+      <React.Fragment>
+        <div className="card">
+          <p
+            style={{
+              textAlign: 'left',
+              fontWeight: 'bold',
+              margin: '20px',
+              width: '100%',
+              marginLeft: '20px',
+            }}
+          >
+            ADD DONOR
+          </p>
         </div>
-    )
+        <div style={{ backgroundColor: 'white', margin: '30px' }}>
+          <Formik
+            initialValues={{
+              fName: '',
+              lName: '',
+              phoneNumber: '',
+              emailId: '',
+              password: '',
+              isPriyank: 'false',
+              parent: '',
+            }}
+            enableReinitialize={true}
+            validationSchema={this.validationSchema}
+            onSubmit={values => this.onAddDoner(values)}
+          >
+            {({ errors, values, touched }) => (
+              <Form>
+                <div className="row">
+                  <div className="col-6 ">
+                    <div style={{ padding: '15px', paddingBottom: '10px' }}>
+                      <label style={{ fontWeight: 'bold' }}>Parent</label>
+                      <Field
+                        type="search"
+                        name="parent"
+                        placeholder="No Parent"
+                        className="form-control"
+                        value={values.parent}
+                        list="parentList"
+                      />
+                      <datalist id="parentList">
+                        <option value="No Parent">No Parent</option>
+                        {parentsList &&
+                          parentsList.length > 0 &&
+                          parentsList.map(data => {
+                            return <option value={data.name} />;
+                          })}
+                      </datalist>
+                    </div>
+                  </div>
+                  <div className="col-6 ">
+                    <div style={{ padding: '15px', paddingBottom: '10px' }}>
+                      <label style={{ fontWeight: 'bold' }}>First Name</label>
+                      <Field
+                        className="form-control"
+                        placeholder="Please Enter First Name"
+                        name="fName"
+                        type="text"
+                        autocomplete="off"
+                        required
+                        value={values.fName}
+                      />
+                      {errors.fName && touched.fName && (
+                        <div className="text-left">
+                          <span style={{ color: 'red' }}>{errors.fName}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-6 ">
+                    <div className="input-box">
+                      <label style={{ fontWeight: 'bold' }}>Last Name</label>
+                      <Field
+                        className="form-control"
+                        placeholder="Please Enter Last Name"
+                        name="lName"
+                        type="text"
+                        required
+                        autocomplete="off"
+                        value={values.lName}
+                      />
+                      {errors.lName && touched.lName && (
+                        <div className="text-left">
+                          <span style={{ color: 'red' }}>{errors.lName}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="col-6 ">
+                    <div className="input-box">
+                      <label style={{ fontWeight: 'bold' }}>
+                        Mobile Number
+                      </label>
+                      <Field
+                        className="form-control"
+                        placeholder="Please Enter First Name"
+                        name="phoneNumber"
+                        type="text"
+                        autocomplete="off"
+                        maxLength={10}
+                        required
+                        value={values.phoneNumber}
+                      />
+                      {errors.phoneNumber && touched.phoneNumber && (
+                        <div className="text-left">
+                          <span style={{ color: 'red' }}>
+                            {errors.phoneNumber}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-6 ">
+                    <div className="input-box">
+                      <label style={{ fontWeight: 'bold' }}>Email Id</label>
+                      <Field
+                        className="form-control"
+                        placeholder="Please Enter Email"
+                        name="emailId"
+                        type="email"
+                        required
+                        autocomplete="off"
+                        value={values.emailId}
+                      />
+                      {errors.emailId && touched.emailId && (
+                        <div className="text-left">
+                          <span style={{ color: 'red' }}>{errors.emailId}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="col-6 ">
+                    <div className="input-box">
+                      <label style={{ fontWeight: 'bold' }}>Password</label>
+                      <Field
+                        className="form-control"
+                        placeholder="Please Enter First Name"
+                        name="password"
+                        type="password"
+                        required
+                        autocomplete="off"
+                        value={values.password}
+                      />
+                      {errors.password && touched.password && (
+                        <div className="text-left">
+                          <span style={{ color: 'red' }}>
+                            {errors.password}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-6 ">
+                    <div className="input-box">
+                      <label style={{ fontWeight: 'bold' }}>Is Priyank</label>
+                      <Field
+                        component="Select"
+                        name="isPriyank"
+                        className="form-control"
+                      >
+                        <option value="true">False</option>
+                        <option value="false">True</option>
+                      </Field>
+                    </div>
+                  </div>
+                </div>
+                <div className="input-box">
+                  <p style={{ fontWeight: 'bold' }}>
+                    Or You Can Upload CSV Only
+                  </p>
+                  <input type="file" placeholder="Browse" accept=".csv"></input>
+                </div>
+                <div className="input-box">
+                  <a href="">Download and check format of sample CSV </a>
+                  <p style={{ fontWeight: 'bold' }}>
+                    Note: Before uploading CSV, make sure that each and every
+                    row in CSV must be unique.
+                  </p>
+                  <button type="submit" className="btn btn-success">
+                    Submit
+                  </button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </React.Fragment>
+    );
+  }
 }
 
-export default AddDoner
+export default Adddonor;
