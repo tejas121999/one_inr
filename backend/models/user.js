@@ -69,7 +69,7 @@ module.exports = (sequelize,DataTypes)=>{
         parentId:{
             type: DataTypes.INTEGER,
             field: 'parent_id',
-            defaultValue: 0
+            defaultValue: 0,
         },
         createdAt : {
             type: DataTypes.DATE,
@@ -85,7 +85,8 @@ module.exports = (sequelize,DataTypes)=>{
         },
         userId: {
             type: DataTypes.INTEGER,
-            field: 'user_id'
+            field: 'user_id',
+            defaultValue : 0
         },
         isPriyank:{
             type: DataTypes.ENUM(),
@@ -108,11 +109,7 @@ module.exports = (sequelize,DataTypes)=>{
         tableName: 'users',
         timestamps: false
     });
-    users.associate = function(models){
-        users.hasOne(models.users,{foriegnkey: "parentId"})
-        users.belongsTo(models.users,{foriegnkey : "parentId" })
 
-    }
 
 
     return users
