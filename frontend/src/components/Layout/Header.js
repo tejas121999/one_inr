@@ -46,6 +46,9 @@ const MdNotificationsActiveWithBadge = withBadge({
 })(MdNotificationsActive);
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
     isOpenNotificationPopover: false,
     isNotificationConfirmed: false,

@@ -9,6 +9,9 @@ import {
   BASE_URL,
 } from '../../API/APIEndpoints';
 import { useHistory } from 'react-router-dom';
+import { getParentListAction } from '../../Redux/Actions/DonorActions';
+import { connect } from 'react-redux';
+import { constData } from '../Donor/Donors';
 
 class Adddonor extends Component {
   constructor(props) {
@@ -21,16 +24,7 @@ class Adddonor extends Component {
   }
 
   getParentList = async () => {
-    const url = BASE_URL + ADD_DONOR_GET_PARENTS_URL;
-    const res = await axios
-      .get(url)
-      .then(res => {
-        console.log('Response');
-        this.setState({ parentsList: res.data.data });
-      })
-      .catch(err => {
-        console.log('Error', err);
-      });
+    this.props.getParentListAction(constData);
   };
   validationSchema = yup.object({
     fName: yup.string().required('Required'),
@@ -53,7 +47,7 @@ class Adddonor extends Component {
     console.log('Aded', values);
     const url = BASE_URL + ADD_DONOR_URL;
     const obj = {
-      name: values.fName + values.lName,
+      name: values.fName + ' ' + values.lName,
       email: values.emailId,
       mobile: values.phoneNumber,
       password: values.password,
@@ -70,7 +64,9 @@ class Adddonor extends Component {
       });
   };
   render() {
-    const { parentsList } = this.state;
+    const { parentsList } = this.props;
+    console.log('ADD', this.props);
+
     return (
       <React.Fragment>
         <div className="card">
@@ -272,5 +268,8 @@ class Adddonor extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  parentsList: state.donor.allParent,
+});
 
-export default Adddonor;
+export default connect(mapStateToProps, { getParentListAction })(Adddonor);

@@ -22,6 +22,8 @@ const Addfund = props => {
       .put(url, obj)
       .then(res => {
         console.log('fundAtt', res);
+        props.getDonor();
+        props.onHide();
       })
       .catch(err => {
         console.log(err);
