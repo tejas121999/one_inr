@@ -32,13 +32,8 @@ import Roles from './pages/Settings/Roles';
 import Users from './pages/Settings/Users';
 import Tabel from './pages/Tabel';
 import './styles/reduction.scss';
-<<<<<<< HEAD
-import Login from './pages/Login';
-// import Login from 'src/pages/Login.js';
-=======
 import Viewdonormodal from './Modals/Donor/ViewDonorModal';
 
->>>>>>> origin/Dev_tejas
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
 };
@@ -49,7 +44,7 @@ class App extends React.Component {
       <BrowserRouter basename={getBasename()}>
         <GAListener>
           <Switch>
-            <Login />
+            {/* <Login /> */}
             {/* <LayoutRoute
               exact
               path="/login"
@@ -82,8 +77,16 @@ class App extends React.Component {
                 <Route exact path="/edit_doner" component={EditDoner} />
                 <Route exact path="/view_recept" component={ViewRecept} />
                 <Route exact path="/view_all_doner" component={Doners} />
-                <Route exact path='/view_doner_id/id' component={Viewdonormodal}/>
-                <Route exact path="/upcoming_doner_renewal" component={UpcomingDonerRenewal}/>
+                <Route
+                  exact
+                  path="/view_doner_id/id"
+                  component={Viewdonormodal}
+                />
+                <Route
+                  exact
+                  path="/upcoming_doner_renewal"
+                  component={UpcomingDonerRenewal}
+                />
                 {/*NGO route*/}
                 <Route exact path="/add_ngo" component={AddNgo} />
                 <Route exact path="/view_all_ngo" component={ViewAllNgo} />
