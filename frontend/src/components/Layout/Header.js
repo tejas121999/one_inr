@@ -5,6 +5,8 @@ import SearchInput from 'components/SearchInput';
 import { notificationsData } from 'demos/header';
 import withBadge from 'hocs/withBadge';
 import React from 'react';
+import logo200Image from 'assets/img/logo/logo_200.png';
+
 import {
   MdClearAll,
   MdExitToApp,
@@ -80,6 +82,14 @@ class Header extends React.Component {
 
     return (
       <Navbar light expand className={bem.b('bg-white')}>
+
+        <Nav navbar className="mr-2">
+          <img
+            src={logo200Image}
+            className="pr-2 logo_1INR"
+            alt="logo_1INR"
+          />
+        </Nav>
         <Nav navbar className="mr-2">
           <Button outline onClick={this.handleSidebarControlButton}>
             <MdClearAll size={25} />
@@ -130,7 +140,7 @@ class Header extends React.Component {
               className="p-0 border-0"
               style={{ minWidth: 250 }}
             >
-              <PopoverBody className="p-0 border-light">
+              <PopoverBody className="p-0 border-light PriyankUser">
                 <UserCard
                   title="Priyank"
                   subtitle="Priyank@inmapinfotech.com"
@@ -138,22 +148,22 @@ class Header extends React.Component {
                   className="border-light"
                 >
                   <ListGroup flush>
-                    <ListGroupItem tag="button" action className="border-light">
+                    <ListGroupItem tag="button" action className="">
                       <MdPersonPin /> Profile
                     </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
+                    <ListGroupItem tag="button" action className="">
                       <MdInsertChart /> Stats
                     </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
+                    <ListGroupItem tag="button" action className="">
                       <MdMessage /> Messages
                     </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
+                    <ListGroupItem tag="button" action className="">
                       <MdSettingsApplications /> Settings
                     </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
+                    <ListGroupItem tag="button" action className="">
                       <MdHelp /> Help
                     </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
+                    <ListGroupItem tag="button" action className="">
                       <MdExitToApp /> Signout
                     </ListGroupItem>
                   </ListGroup>
