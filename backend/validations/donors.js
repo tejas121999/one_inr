@@ -95,8 +95,13 @@ exports.updateDonorValidation = [
                         return Promise.reject("Parent Not Found")
                     }
                 })
-
             }
-        })
+        }),
+    body('plan')
+        .exists().withMessage('Plan is Required')
+        .notEmpty().withMessage('Plan is Required'),
+    body('balanceNextRenewDate')
+        .exists().withMessage('Renew Date is Required')
+        .notEmpty().withMessage('Renew Date is Required')
 
 ]

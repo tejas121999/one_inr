@@ -1,8 +1,17 @@
 const models = require('../../models/index')
-
+const {paginationWithFromTo} = require('../../utils/pagination')
 //Get all details of all donor in DB
 exports.getAllDonor = async (req, res) => {
-    const data = await models.users.findAndCountAll({})
+    const { search, offset, pageSize } = paginationWithFromTo(
+        req.query.search,
+        req.query.from,
+        req.query.to
+    );
+
+    const data = await models.users.findAndCountAll({
+        offset: offset,
+        limit: pageSize,
+    })
     if (!data) {
         return res.status(400).json({
             message : "Failed to get all data."
