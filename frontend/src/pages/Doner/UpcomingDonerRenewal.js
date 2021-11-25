@@ -60,7 +60,7 @@ const UpcomingDonerRenewal = () => {
                                 <Link to='#' type="" className="btn btn-link">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                 </Link>
-                                <Link to='/editvendor' type="" className="btn btn-link">
+                                <Link to='/edit_doner' type="" className="btn btn-link">
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </Link>
                             </td>
