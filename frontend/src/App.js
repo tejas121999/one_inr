@@ -11,7 +11,7 @@ import AddDoner from './pages/Doner/AddDoner';
 import EditDoner from './pages/Doner/EditDoner';
 import UpcomingDonerRenewal from './pages/Doner/UpcomingDonerRenewal';
 import Doners from './pages/Donor/Donors';
-import ViewRecept from './pages/Doner/ViewRecept';
+import ViewRecept from './pages/Donor/recept/ViewRecept';
 import AddPartner from './pages/master/partner/AddPartner';
 import EditPartner from './pages/master/partner/EditPartner';
 import Partner from './pages/master/partner/Partner';
@@ -33,6 +33,7 @@ import Tabel from './pages/Tabel';
 import TablePage from './pages/TablePage';
 import './styles/reduction.scss';
 import Viewdonormodal from './Modals/Donor/ViewDonorModal';
+
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -110,6 +111,7 @@ class App extends React.Component {
                   path="/razorpay_credentials"
                   component={RazorpayCredentials}
                 />
+                
 
                 {/* <Route exact path="/charts" component={ChartPage} /> */}
               </React.Suspense>
