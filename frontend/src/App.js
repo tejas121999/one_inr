@@ -12,6 +12,7 @@ import EditDoner from './pages/Doner/EditDoner';
 import UpcomingDonerRenewal from './pages/Doner/UpcomingDonerRenewal';
 import ViewAllDoner from './pages/Doner/ViewAllDoner';
 import ViewRecept from './pages/Doner/ViewRecept';
+import Four_Zero_Foure from './pages/Four_Zero_Foure';
 import AddPartner from './pages/master/partner/AddPartner';
 import EditPartner from './pages/master/partner/EditPartner';
 import Partner from './pages/master/partner/Partner';
@@ -50,14 +51,14 @@ class App extends React.Component {
                 <AuthPage {...props} authState={STATE_LOGIN} />
               )}
             />
-            <LayoutRoute
+            {/* <LayoutRoute
               exact
               path="/signup"
               layout={EmptyLayout}
               component={props => (
                 <AuthPage {...props} authState={STATE_SIGNUP} />
               )}
-            />
+            /> */}
 
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
@@ -111,11 +112,10 @@ class App extends React.Component {
                   path="/razorpay_credentials"
                   component={RazorpayCredentials}
                 />
-
-                {/* <Route exact path="/charts" component={ChartPage} /> */}
               </React.Suspense>
             </MainLayout>
-            <Redirect to="/" />
+            {/* <Route path="/404" component={Four_Zero_Foure} />
+            <Redirect to="/404">{Four_Zero_Foure}</Redirect> */}
           </Switch>
         </GAListener>
       </BrowserRouter>
