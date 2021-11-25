@@ -1,20 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import axios from 'axios';
+import { BASE_URL, VIEW_DONER_ID_URL } from "../../API/APIEndpoints";
 
 const Viewdonormodal = (props) => {
   console.log("Props", props.data.name);
   const [data, setData] = React.useState([])
 
-  React.useEffect(() => {
-    loadUser();
-  }, [])
-
-  const loadUser = async () => {
-    // const id = props.match.params.id
-    axios.get('' 
-    // + id
-    )
+  useEffect(() => {
+    const id = props.id;
+    axios.get(BASE_URL + `/api/donor/${id}`)
       .then(res => {
         console.log(res)
         setData([res.data])
@@ -22,8 +17,9 @@ const Viewdonormodal = (props) => {
       .catch(err => {
         console.log(err)
       })
-  };
-
+  }, [])
+  
+  console.log(data)
   return (
     <React.Fragment>
       <Modal show={props.show} onHide={props.onHide}>
@@ -40,24 +36,22 @@ const Viewdonormodal = (props) => {
                 </tr>
                 <tr>
                   <td>Email</td>
+                  <td>{user.donated}</td>
+                </tr>
+                <tr>
+                  <td>Mobile</td>
                   <td>{user.email}</td>
+                </tr>
+                <tr>
+                  <td>Total Amount Donated</td>
+                  <td>{user.donated}</td>
+                </tr>
+                <tr>
+                  <td>Balance</td>
+                  <td>{user.balance}</td>
                 </tr>
               </div>
             ))}
-
-
-            <tr>
-              <td>Mobile</td>
-              <td>{props.data.email}</td>
-            </tr>
-            <tr>
-              <td>Total Amount Donated</td>
-              <td>{props.data.donated}</td>
-            </tr>
-            <tr>
-              <td>Balance</td>
-              <td>{props.data.balance}</td>
-            </tr>
           </table>
         </Modal.Body>
       </Modal>
