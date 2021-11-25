@@ -30,10 +30,8 @@ import RazorpayCredentials from './pages/Settings/RazorpayCredentials';
 import Roles from './pages/Settings/Roles';
 import Users from './pages/Settings/Users';
 import Tabel from './pages/Tabel';
-import TablePage from './pages/TablePage';
 import './styles/reduction.scss';
 import Viewdonormodal from './Modals/Donor/ViewDonorModal';
-
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -45,22 +43,23 @@ class App extends React.Component {
       <BrowserRouter basename={getBasename()}>
         <GAListener>
           <Switch>
-            <LayoutRoute
+            {/* <Login /> */}
+            {/* <LayoutRoute
               exact
               path="/login"
               layout={EmptyLayout}
               component={props => (
                 <AuthPage {...props} authState={STATE_LOGIN} />
               )}
-            />
-            <LayoutRoute
+            /> */}
+            {/* <LayoutRoute
               exact
               path="/signup"
               layout={EmptyLayout}
               component={props => (
                 <AuthPage {...props} authState={STATE_SIGNUP} />
               )}
-            />
+            /> */}
 
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
@@ -77,8 +76,16 @@ class App extends React.Component {
                 <Route exact path="/edit_doner" component={EditDoner} />
                 <Route exact path="/view_recept" component={ViewRecept} />
                 <Route exact path="/view_all_doner" component={Doners} />
-                <Route exact path='/view_doner_id/id' component={Viewdonormodal}/>
-                <Route exact path="/upcoming_doner_renewal" component={UpcomingDonerRenewal}/>
+                <Route
+                  exact
+                  path="/view_doner_id/id"
+                  component={Viewdonormodal}
+                />
+                <Route
+                  exact
+                  path="/upcoming_doner_renewal"
+                  component={UpcomingDonerRenewal}
+                />
                 {/*NGO route*/}
                 <Route exact path="/add_ngo" component={AddNgo} />
                 <Route exact path="/view_all_ngo" component={ViewAllNgo} />
@@ -111,12 +118,10 @@ class App extends React.Component {
                   path="/razorpay_credentials"
                   component={RazorpayCredentials}
                 />
-                
-
-                {/* <Route exact path="/charts" component={ChartPage} /> */}
               </React.Suspense>
             </MainLayout>
-            <Redirect to="/" />
+            {/* <Route path="/404" component={Four_Zero_Foure} />
+            <Redirect to="/404">{Four_Zero_Foure}</Redirect> */}
           </Switch>
         </GAListener>
       </BrowserRouter>

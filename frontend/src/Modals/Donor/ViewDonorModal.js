@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { Modal } from "react-bootstrap";
+import React, { useEffect, useState } from 'react';
+import { Modal } from 'react-bootstrap';
 import axios from 'axios';
-import { BASE_URL, VIEW_DONER_ID_URL } from "../../API/APIEndpoints";
+import { BASE_URL, VIEW_DONER_ID_URL } from '../../API/APIEndpoints';
 
-const Viewdonormodal = (props) => {
-  console.log("Props", props.data.name);
-  const [data, setData] = React.useState([])
+const Viewdonormodal = props => {
+  console.log('Props', props.data.name);
+  const [data, setData] = React.useState([]);
 
   useEffect(() => {
     const id = props.id;
-    axios.get(BASE_URL + `/api/donor/${id}`)
+    axios
+      .get(BASE_URL + `/api/donor/${id}`)
       .then(res => {
-        console.log(res)
-        setData([res.data])
+        console.log(res);
+        setData([res.data]);
       })
       .catch(err => {
-        console.log(err)
-      })
-  }, [])
-  
-  console.log(data)
+        console.log(err);
+      });
+  }, []);
+
+  console.log(data);
   return (
     <React.Fragment>
       <Modal show={props.show} onHide={props.onHide}>
