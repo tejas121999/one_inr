@@ -1,8 +1,29 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
+import axios from 'axios';
 
 const Viewdonormodal = (props) => {
   console.log("Props", props.data.name);
+  const [data, setData] = React.useState([])
+
+  React.useEffect(() => {
+    loadUser();
+  }, [])
+
+  const loadUser = async () => {
+    // const id = props.match.params.id
+    axios.get('' 
+    // + id
+    )
+      .then(res => {
+        console.log(res)
+        setData([res.data])
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  };
+
   return (
     <React.Fragment>
       <Modal show={props.show} onHide={props.onHide}>
@@ -11,14 +32,20 @@ const Viewdonormodal = (props) => {
         </Modal.Header>
         <Modal.Body>
           <table className="table">
-            <tr>
-              <td>Name</td>
-              <td>{props.data.name}</td>
-            </tr>
-            <tr>
-              <td>Email</td>
-              <td>{props.data.email}</td>
-            </tr>
+            {data.map(user => (
+              <div>
+                <tr>
+                  <td>Name</td>
+                  <td>{user.name}</td>
+                </tr>
+                <tr>
+                  <td>Email</td>
+                  <td>{user.email}</td>
+                </tr>
+              </div>
+            ))}
+
+
             <tr>
               <td>Mobile</td>
               <td>{props.data.email}</td>

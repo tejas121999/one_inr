@@ -36,10 +36,6 @@ const dashboardItems = [
 ];
 
 const masterItems = [
-<<<<<<< HEAD
-
-=======
->>>>>>> 799aa02b63f0daf08f9d48aa762a48d07154bbba
   {
     to: '/Vendor',
     name: 'Vendor',

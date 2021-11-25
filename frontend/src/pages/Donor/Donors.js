@@ -21,6 +21,7 @@ import {
 import './Donor.css';
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
+import axios from 'axios';
 const data = [
   {
     id: 1,
@@ -305,6 +306,7 @@ export default function EnhancedTable() {
           DONOR DETAIL
         </p>
       </div>
+
       <div
         style={{
           margin: '20px',
