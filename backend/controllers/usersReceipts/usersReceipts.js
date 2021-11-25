@@ -123,15 +123,42 @@ exports.updateUsersReceipts = async (req,res)=>{
 
 exports.getAllUserReceipts = async (req, res) => {
 
+    //paginantion 
+
     const { search, offset, pageSize } = paginationFunc.paginationWithFromTo(
         req.query.search,
         req.query.from,
         req.query.to
     ) 
-    const data = await models.users.findAndCountAll({
-        limit:pageSize,
+    const data = await models.usersReceipts.findAndCountAll({
+        limit: pageSize,
         offset: offset
-    })
+    });
+
+    // Validation for Search query
+    // const searchQuery = {
+    //     [Op.and]: [query, {
+    //         [Op.or]: {
+    //             name: { [Op.iLike]: search + '%' },
+    //             ReceiptNo: { [Op.iLike]: search + '%' },
+    //             ProjectName: { [Op.iLike]: search + '%' },
+    //             branch: { [Op.iLike]: search + '%' },
+    //             : { [Op.iLike]: search + '%' },
+    //             : { [Op.iLike]: search + '%' },
+    //             : sequelize.where(
+    //                 sequelize.cast(sequelize.col('user.mobile'), 'varchar'),
+    //                 { [Op.iLike]: search + '%' }
+    //             ),
+    //             stoneLessPercent: sequelize.where(
+    //                 sequelize.cast(sequelize.col('user.stoneLessPercent'), 'varchar'),
+    //                 { [Op.iLike]: search + '%' }
+    //             )
+    //         },
+    //     }],
+    //     isActive: true,
+    // }
+
+
     if(!data) {
         return res.status(400).json({
             message: "Failed to get all data."

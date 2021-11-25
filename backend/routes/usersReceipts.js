@@ -14,12 +14,13 @@ const {usersReceiptsValidation} = require('../validations/usersReceipt');
 
 
 //routing modules
-// router.get('/getalluser', getAllUsersReceipts )
 
-router.get('/get-user',wrapper(getAllUserReceipts))
+// router.get('/getalluser', getAllUserReceipts )
 
-router.post('/add-user',  usersReceiptsValidation, validationError, wrapper(addUsersReceipts))
+router.get('/get-user',wrapper(getAllUserReceipts))// listing user resiepts
 
-router.put('/update-user/:id', usersReceiptsValidation, validationError, wrapper(updateUsersReceipts))
+router.post('/add-user',  usersReceiptsValidation, validationError, wrapper(addUsersReceipts))//create user receipt
+
+router.put('/update-user/:id', usersReceiptsValidation, validationError, wrapper(updateUsersReceipts))//Update User reciept
 
 module.exports = router;
