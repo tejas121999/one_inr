@@ -10,7 +10,7 @@ import Payments from './pages/Account/Payments';
 import AddDoner from './pages/Doner/AddDoner';
 import EditDoner from './pages/Doner/EditDoner';
 import UpcomingDonerRenewal from './pages/Doner/UpcomingDonerRenewal';
-import ViewAllDoner from './pages/Doner/ViewAllDoner';
+import ViewAllDoner from './pages/Donor/Donors';
 import ViewRecept from './pages/Doner/ViewRecept';
 import Four_Zero_Foure from './pages/Four_Zero_Foure';
 import AddPartner from './pages/master/partner/AddPartner';
