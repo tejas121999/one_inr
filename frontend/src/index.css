@@ -81,3 +81,31 @@ form.login {
   background-image: url('./assets/img/background/login-register.jpg') cover
     no-repeat !important;
 } */
+.css-zjtspp-MuiPaper-root {
+  box-shadow: none !important;
+}
+.navbar {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: white;
+}
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 0.5rem;
+  pointer-events: none;
+  top: 12%;
+  left: 9%;
+}
+.modal-header button.btn-close {
+  display: none;
+}
+.ReceiptRadio input {
+  margin: 0 7px;
+  position: relative;
+  top: 2px;
+}

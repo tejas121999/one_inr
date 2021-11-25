@@ -29,7 +29,6 @@ const Login = props => {
     axios
       .post(URL, values)
       .then(response => {
-        // console.log('response', response.data.Token);
         localStorage.setItem('Token', response.data.Token);
         props.history.push('/');
       })
