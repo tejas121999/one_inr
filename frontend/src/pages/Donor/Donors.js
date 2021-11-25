@@ -198,7 +198,7 @@ export default function EnhancedTable() {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - constData.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - donorList.length) : 0;
 
   return (
     <>
@@ -244,7 +244,7 @@ export default function EnhancedTable() {
           <input placeholder="Search" />
         </div>
         <Paper sx={{ width: '100%', mb: 2, height: '60vh' }}>
-          {constData && constData.length > 0 ? (
+          {donorList && donorList.length > 0 ? (
             <React.Fragment>
               <TableContainer>
                 <Table
@@ -257,10 +257,10 @@ export default function EnhancedTable() {
                     order={order}
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
-                    rowCount={constData.length}
+                    rowCount={donorList.length}
                   />
                   <TableBody>
-                    {stableSort(constData, getComparator(order, orderBy))
+                    {stableSort(donorList, getComparator(order, orderBy))
                       .slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage,
@@ -320,7 +320,7 @@ export default function EnhancedTable() {
                                 data-bs-toggle="tooltip"
                                 title="Add Fund"
                                 className="btn"
-                                onClick={row => fundModaOpen(row)}
+                                onClick={() => fundModaOpen(row)}
                               >
                                 <FaDollarSign />
                               </button>
@@ -342,7 +342,7 @@ export default function EnhancedTable() {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={constData.length}
+                count={donorList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

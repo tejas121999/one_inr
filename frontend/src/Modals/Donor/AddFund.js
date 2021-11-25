@@ -19,7 +19,7 @@ const Addfund = props => {
       balance: parseInt(balance),
     };
     await axios
-      .post(url, obj)
+      .put(url, obj)
       .then(res => {
         console.log('fundAtt', res);
       })
