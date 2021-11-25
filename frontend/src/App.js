@@ -32,7 +32,8 @@ import Roles from './pages/Settings/Roles';
 import Users from './pages/Settings/Users';
 import Tabel from './pages/Tabel';
 import './styles/reduction.scss';
-
+import Login from './pages/Login';
+// import Login from 'src/pages/Login.js';
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
 };
@@ -43,14 +44,15 @@ class App extends React.Component {
       <BrowserRouter basename={getBasename()}>
         <GAListener>
           <Switch>
-            <LayoutRoute
+            <Login />
+            {/* <LayoutRoute
               exact
               path="/login"
               layout={EmptyLayout}
               component={props => (
                 <AuthPage {...props} authState={STATE_LOGIN} />
               )}
-            />
+            /> */}
             {/* <LayoutRoute
               exact
               path="/signup"
