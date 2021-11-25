@@ -82,7 +82,7 @@ exports.updateDonorValidation = [
             if (!/^[0-9]{10}$/i.test(value)) {
                 return Promise.reject("Invalid mobile number");
             }
-
+                
         }),
     body('parentId')
         .custom(async (value) => {
@@ -104,4 +104,10 @@ exports.updateDonorValidation = [
         .exists().withMessage('Renew Date is Required')
         .notEmpty().withMessage('Renew Date is Required')
 
+]
+
+exports.updateDonorBalanceValidation = [
+    body('balance')
+    .exists().withMessage('Balance is Required')
+    .isNumeric().withMessage('Please type a numberic value')
 ]
