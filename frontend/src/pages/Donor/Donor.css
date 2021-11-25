@@ -5,3 +5,8 @@
 .table-head{
     text-align: center !important;
 }
+.Del-btn{
+    margin: 40px;
+    display: flex;
+    justify-content: space-evenly;
+}
