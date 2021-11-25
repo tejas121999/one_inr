@@ -11,7 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+a {
+  text-decoration: none !important;
+}
 .datCard {
   position: relative;
   display: flex;
@@ -69,7 +71,7 @@ code {
   position: fixed !important;
   width: 260px !important;
 }
-form {
+form.login {
   width: 500px;
   background: white;
   padding: 14% 45px;

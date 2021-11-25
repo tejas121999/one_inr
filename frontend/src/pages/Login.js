@@ -16,19 +16,22 @@ let validationSchema = yup.object().shape({
     .string()
     .required('No password provided.')
     .min(4, 'Password is too short - should be 4 chars min.')
-    .max(16, 'Password is long - should be 16 chars max.')
-    .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
+    .max(16, 'Password is long - should be 16 chars max.'),
+  // .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
 });
 
-const Login = () => {
+const Login = props => {
   let history = useHistory();
 
-  const loginHandler = async values => {
+  const loginHandler = values => {
+    console.log('values2', values);
     const URL = BASE_URL + LOGIN;
-    await axios
+    axios
       .post(URL, values)
       .then(response => {
-        console.log('response', response);
+        // console.log('response', response.data.Token);
+        localStorage.setItem('Token', response.data.Token);
+        props.history.push('/');
       })
       .catch(error => {
         console.log('error', error);
@@ -44,10 +47,11 @@ const Login = () => {
         validationSchema={validationSchema}
         onSubmit={values => {
           loginHandler(values);
+          // console.log('values', values);
         }}
       >
         {({ values, errors, touched, isSubmitting }) => (
-          <Form className="">
+          <Form className="login">
             <div className="logoimgdiv text-center">
               <img src={logo} alt="logo" title="logo" />
             </div>
@@ -72,18 +76,18 @@ const Login = () => {
                 name="password"
                 type="password"
                 placeholder="enter password"
-                className="form-control mt-3"
+                className="form-control mt-2"
               />
               {touched.password && errors.password ? (
                 <small className="text-danger ">{errors.password}</small>
               ) : null}
             </div>
 
-            <div className="text-right forgotPass">
+            <div className="text-right forgotPass mt-2 pr-5">
               <NavLink to="/Forgot">Forgot Password ?</NavLink>
             </div>
             <div className="form-group w-75 m-auto">
-              <button type="submit" className="btn btn-primary w-100 mt-3">
+              <button type="submit" className="btn btn-primary w-100 mt-2">
                 Login
               </button>
             </div>

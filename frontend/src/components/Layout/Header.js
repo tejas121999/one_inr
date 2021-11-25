@@ -48,12 +48,18 @@ const MdNotificationsActiveWithBadge = withBadge({
 })(MdNotificationsActive);
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
     isOpenNotificationPopover: false,
     isNotificationConfirmed: false,
     isOpenUserCardPopover: false,
   };
-
+  handleLogOut = () => {
+    this.props.history.push('/');
+    localStorage.removeItem('Token');
+  };
   toggleNotificationPopover = () => {
     this.setState({
       isOpenNotificationPopover: !this.state.isOpenNotificationPopover,
@@ -78,17 +84,14 @@ class Header extends React.Component {
   };
 
   render() {
+    console.log('props', this.props);
+
     const { isNotificationConfirmed } = this.state;
 
     return (
       <Navbar light expand className={bem.b('bg-white')}>
-
         <Nav navbar className="mr-2">
-          <img
-            src={logo200Image}
-            className="pr-2 logo_1INR"
-            alt="logo_1INR"
-          />
+          <img src={logo200Image} className="pr-2 logo_1INR" alt="logo_1INR" />
         </Nav>
         <Nav navbar className="mr-2">
           <Button outline onClick={this.handleSidebarControlButton}>
@@ -163,7 +166,12 @@ class Header extends React.Component {
                     <ListGroupItem tag="button" action className="">
                       <MdHelp /> Help
                     </ListGroupItem>
-                    <ListGroupItem tag="button" action className="">
+                    <ListGroupItem
+                      tag="button"
+                      action
+                      className=""
+                      onClick={this.handleLogOut}
+                    >
                       <MdExitToApp /> Signout
                     </ListGroupItem>
                   </ListGroup>
