@@ -20,7 +20,7 @@ code {
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, .125);
+  border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
   margin-top: 10% !important;
 }
@@ -57,7 +57,6 @@ code {
   z-index: 9999 !important;
   width: 100% !important;
   left: 0 !important;
-
 }
 
 .bg-gradient-theme {
@@ -65,7 +64,8 @@ code {
   box-shadow: 0 0 0 2000px rgb(0 0 0 / 0%);
 }
 
-
 .PriyankUser {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  position: fixed !important;
+  width: 260px !important;
 }
