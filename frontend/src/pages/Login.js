@@ -1,9 +1,11 @@
 import React from 'react';
 import { useFormik, Formik, Field, Form, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import logo from '../assets/images/logo/logo_200.png';
+import logo from '../assets/img/logo/logo_200.png';
 import './login.css';
 import { NavLink, useHistory } from 'react-router-dom';
+import { BASE_URL, LOGIN } from '../API/APIEndpoints';
+import axios from 'axios';
 
 let validationSchema = yup.object().shape({
   email: yup
@@ -13,29 +15,35 @@ let validationSchema = yup.object().shape({
   password: yup
     .string()
     .required('No password provided.')
-    .min(6, 'Password is too short - should be 8 chars min.')
+    .min(4, 'Password is too short - should be 4 chars min.')
     .max(16, 'Password is long - should be 16 chars max.')
     .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
 });
 
 const Login = () => {
   let history = useHistory();
-  const handleSubmit = props => {
-    history.push('/dashboard');
+
+  const loginHandler = async values => {
+    const URL = BASE_URL + LOGIN;
+    await axios
+      .post(URL, values)
+      .then(response => {
+        console.log('response', response);
+      })
+      .catch(error => {
+        console.log('error', error);
+      });
   };
   return (
-    <div className="container">
+    <div className="container loginbg">
       <Formik
         initialValues={{
           email: '',
           password: '',
         }}
         validationSchema={validationSchema}
-        onSubmit={(data, { setSubmitting }) => {
-          setTimeout(() => {
-            console.log(data);
-            setSubmitting(false);
-          }, 3000);
+        onSubmit={values => {
+          loginHandler(values);
         }}
       >
         {({ values, errors, touched, isSubmitting }) => (
@@ -75,11 +83,7 @@ const Login = () => {
               <NavLink to="/Forgot">Forgot Password ?</NavLink>
             </div>
             <div className="form-group w-75 m-auto">
-              <button
-                type="submit"
-                className="btn btn-primary w-100 mt-3"
-                onClick={handleSubmit}
-              >
+              <button type="submit" className="btn btn-primary w-100 mt-3">
                 Login
               </button>
             </div>

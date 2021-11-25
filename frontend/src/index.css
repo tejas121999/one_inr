@@ -69,3 +69,13 @@ code {
   position: fixed !important;
   width: 260px !important;
 }
+form {
+  width: 500px;
+  background: white;
+  padding: 14% 45px;
+  margin: 30px auto;
+}
+/* .loginbg {
+  background-image: url('./assets/img/background/login-register.jpg') cover
+    no-repeat !important;
+} */
