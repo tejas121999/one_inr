@@ -4,8 +4,10 @@ import * as yup from 'yup';
 import logo from '../assets/img/logo/logo_200.png';
 import './login.css';
 import { NavLink, useHistory } from 'react-router-dom';
-import { BASE_URL, LOGIN } from '../API/APIEndpoints';
+
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { loginAdmin } from '../Redux/Actions/authAction';
 
 let validationSchema = yup.object().shape({
   email: yup
@@ -21,21 +23,19 @@ let validationSchema = yup.object().shape({
 });
 
 const Login = props => {
-  let history = useHistory();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const loginHandler = values => {
     console.log('values2', values);
-    const URL = BASE_URL + LOGIN;
-    axios
-      .post(URL, values)
-      .then(response => {
-        localStorage.setItem('Token', response.data.Token);
-        props.history.push('/');
-      })
-      .catch(error => {
-        console.log('error', error);
-      });
+    if (values) {
+      dispatch(loginAdmin(values, props.history));
+    }
   };
+  // let token = localStorage.getItem('Token');
+  // if (token) {
+  //   history.push('/dashboard');
+  // }
   return (
     <div className="container loginbg">
       <Formik
