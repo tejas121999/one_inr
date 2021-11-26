@@ -10,6 +10,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
+import { GET_ALL_PARENT_URL, BASE_URL } from '../../../API/APIEndpoints';
 import { visuallyHidden } from '@mui/utils';
 import {
   FaRegEdit,
@@ -18,6 +19,7 @@ import {
   FaBookOpen,
   FaDollarSign,
 } from 'react-icons/fa';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 // import './Donor.css';
 // import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
@@ -25,104 +27,7 @@ import { Link } from 'react-router-dom';
 
 
 
-const data = [
-  {
-    id: 1,
-    name: 'a',
-    company: 'nimap infotech',
-    phone: '7854123698',
-    email: 'akshay@gmail.com',
-    gst: 'GST125436',
-  },
-  {
-    id: 2,
-    name: 'b',
-    company: 'nimap infotech',
-    phone: '7854123698',
-    email: 'akshay@gmail.com',
-    gst: 'GST125436',
-  },
-  {
-    id: 3,
-    name: 'c',
-    company: 'nimap infotech',
-    phone: '7854123698',
-    email: 'akshay@gmail.com',
-    gst: 'GST125436',
-  },
-  {
-    id: 4,
-    name: 'd',
-    company: 'nimap infotech',
-    phone: '7854123698',
-    email: 'akshay@gmail.com',
-    gst: 'GST125436',
-  },
-  {
-    id: 5,
-    name: 'e',
-    company: 'nimap infotech',
-    phone: '7854123698',
-    email: 'akshay@gmail.com',
-    gst: 'GST125436',
-  },
-  {
-    id: 6,
-    name: 'f',
-    company: 'nimap infotech',
-    phone: '7854123698',
-    email: 'akshay@gmail.com',
-    gst: 'GST125436',
-  },
-  {
-    id: 7,
-    name: 'g',
-    company: 'nimap infotech',
-    phone: '7854123698',
-    email: 'akshay@gmail.com',
-    gst: 'GST125436',
-  },
-  {
-    id: 8,
-    name: 'h',
-    company: 'nimap infotech',
-    phone: '7854123698',
-    email: 'akshay@gmail.com',
-    gst: 'GST125436',
-  },
-  {
-    id: 9,
-    name: 'i',
-    company: 'nimap infotech',
-    phone: '7854123698',
-    email: 'akshay@gmail.com',
-    gst: 'GST125436',
-  },
-  {
-    id: 10,
-    name: 'j',
-    company: 'nimap infotech',
-    phone: '7854123698',
-    email: 'akshay@gmail.com',
-    gst: 'GST125436',
-  },
-  {
-    id: 11,
-    name: 'k',
-    company: 'nimap infotech',
-    phone: '7854123698',
-    email: 'akshay@gmail.com',
-    gst: 'GST125436',
-  },
-  {
-    id: 12,
-    name: 'l',
-    company: 'nimap infotech',
-    phone: '7854123698',
-    email: 'akshay@gmail.com',
-    gst: 'GST125436',
-  },
-];
+
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -249,7 +154,7 @@ EnhancedTableHead.propTypes = {
 };
 
 export default function Partner() {
-const [data, setData] = React.useState([])
+  const [data, setData] = React.useState([])
 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -260,6 +165,24 @@ const [data, setData] = React.useState([])
   const [viewModal, setViewModal] = React.useState(false);
   const [viewData, setViewData] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
+  const [partner, setPartner] = React.useState([])
+
+  React.useEffect(() => {
+    getDonorList();
+  }, []);
+
+  const getDonorList = async () => {
+    const url = BASE_URL + GET_ALL_PARENT_URL;
+    await axios
+      .get(url)
+      .then(res => {
+        setPartner(res.data.data);
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   const ViewModalOpen = data => {
     setViewData(data);
@@ -363,17 +286,17 @@ const [data, setData] = React.useState([])
                 order={order}
                 orderBy={orderBy}
                 onRequestSort={handleRequestSort}
-                rowCount={data.length}
+                rowCount={partner.length}
               />
               <TableBody>
-                {stableSort(data, getComparator(order, orderBy))
+                {stableSort(partner, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     const isItemSelected = isSelected(row.name);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
                     return (
-                      
+
                       <TableRow
                         hover
                         aria-checked={isItemSelected}

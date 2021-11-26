@@ -4,7 +4,7 @@ import './Donor.css';
 import * as yup from 'yup';
 import axios from 'axios';
 import {
-  ADD_DONOR_GET_PARENTS_URL,
+  GET_ALL_PARENT_URL,
   ADD_DONOR_URL,
   BASE_URL,
 } from '../../API/APIEndpoints';
@@ -21,11 +21,11 @@ class Adddonor extends Component {
   }
 
   getParentList = async () => {
-    const url = BASE_URL + ADD_DONOR_GET_PARENTS_URL;
+    const url = BASE_URL + GET_ALL_PARENT_URL;
     const res = await axios
       .get(url)
       .then(res => {
-        console.log('Response');
+        console.log('Response', res);
         this.setState({ parentsList: res.data.data });
       })
       .catch(err => {

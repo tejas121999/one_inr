@@ -19,12 +19,12 @@ import {
     FaDollarSign,
 } from 'react-icons/fa';
 import '../Donor.css';
-import Viewdonormodal from '../../../Modals/Donor/ViewDonorModal';
-import Addfund from '../../../Modals/Donor/AddFund';
 import { BASE_URL, VIEW_RECEPT_URL } from '../../../API/APIEndpoints';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
+import Editdonor from '../../Doner/EditDoner';
 import Donordelete from '../../../Modals/Donor/DonorDelete';
+// import EditReceipt from '../../../Modals/EditReceipt';
 
 
 export default function ViewRecept() {
@@ -57,20 +57,13 @@ export default function ViewRecept() {
             .catch(err => {
                 console.log(err);
             });
-        
+
     };
 
-    // React.useEffect(() => {
-    //     axios.get(BASE_URL + VIEW_RECEPT_URL)
-    //     .then(res => {
-    //         console.log(res)
-    //         setReceipt(res.data)
-    //     })
-    //     .catch(err => {
-    //         console.log(err)
-    //     })
-    // })
-
+    const handlesearch = (e) => {
+        const searchTern = e.currentTarget.value
+        console.log(searchTern)
+    }
 
     const ViewModalOpen = data => {
         setViewData(data);
@@ -116,13 +109,11 @@ export default function ViewRecept() {
 
     return (
         <>
-            <Viewdonormodal
-                show={viewModal}
-                onHide={ViewModalClose}
-                data={viewData}
-            />
-            <Addfund show={fundModal} onHide={fundModaClose} data={fundModalData} />
-            <Donordelete show={deleteModal} onHide={deleteModalClose} id={deleteId} />
+        {/*<EditReceipt
+            show={viewModal}
+            onHide={ViewModalClose}
+            data={viewData}
+        />*/}
             <div className="card">
                 <p
                     style={{
@@ -133,7 +124,7 @@ export default function ViewRecept() {
                         marginLeft: '20px',
                     }}
                 >
-                    DONOR DETAIL
+                    DONOR RECEIPT LIST
                 </p>
             </div>
             <div
@@ -155,7 +146,7 @@ export default function ViewRecept() {
                     >
                         Export
                     </button>
-                    <input placeholder="Search" />
+                    <input placeholder="Search" key="search" />
                 </div>
                 <Paper sx={{ width: '100%', mb: 2, height: '60vh' }}>
                     {recept && recept.length > 0 ? (
@@ -200,7 +191,7 @@ export default function ViewRecept() {
                                                             {row.userId}
                                                         </TableCell>
                                                         <TableCell align="center">
-                                                            {row.intervalId }
+                                                            {row.intervalId}
                                                         </TableCell>
                                                         <TableCell align="center">{row.projectId}</TableCell>
                                                         <TableCell align="center">{row.receiptNumber}</TableCell>
@@ -221,7 +212,7 @@ export default function ViewRecept() {
                                                                 data-bs-toggle="tooltip"
                                                                 title="Edit"
                                                                 className="btn"
-                                                                onClick={() => history.push('/edit_doner', row)}
+                                                                onClick={() => fundModaOpen(row)}
                                                             >
                                                                 <FaRegEdit />
                                                             </button>
@@ -285,9 +276,10 @@ function stableSort(array, comparator) {
 const headCells = [
     {
         id: 'name',
-        numeric: false,
+        numeric: true,
         disablePadding: false,
         label: 'Sr No',
+        sort: true,
     },
     {
         id: 'donated',

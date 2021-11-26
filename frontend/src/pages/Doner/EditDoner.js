@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Field, Form, Formik } from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
-import { BASE_URL, ADD_DONOR_GET_PARENTS_URL } from '../../API/APIEndpoints';
+import { BASE_URL, GET_ALL_PARENT_URL } from '../../API/APIEndpoints';
 const Editdonor = props => {
   const [donarData, setDonarData] = useState([]);
   const [parentList, setParentList] = useState([]);
@@ -19,7 +19,7 @@ const Editdonor = props => {
   }, []);
 
   const getParentList = async () => {
-    const url = BASE_URL + ADD_DONOR_GET_PARENTS_URL;
+    const url = BASE_URL + GET_ALL_PARENT_URL;
     const res = await axios
       .get(url)
       .then(res => {
