@@ -11,6 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   FaRegEdit,
   FaRegEye,
@@ -25,6 +26,7 @@ import { ADD_DONOR_URL, BASE_URL } from '../../API/APIEndpoints';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
+
 export const constData = [
   {
     id: 1,
@@ -253,7 +255,7 @@ export default function EnhancedTable() {
           </button>
           <input placeholder="Search" />
         </div>
-        <Paper sx={{ width: '100%', mb: 2, height: '60vh' }}>
+        <Paper sx={{ width: '100%', mb: 2 }}>
           {donorList && donorList.length > 0 ? (
             <React.Fragment>
               <TableContainer>

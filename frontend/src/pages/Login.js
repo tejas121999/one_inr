@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormik, Formik, Field, Form, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import logo from '../assets/img/logo/logo_200.png';
 import './login.css';
 import { NavLink, useHistory } from 'react-router-dom';
-
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { loginAdmin } from '../Redux/Actions/authAction';
 
@@ -32,10 +30,7 @@ const Login = props => {
       dispatch(loginAdmin(values, props.history));
     }
   };
-  // let token = localStorage.getItem('Token');
-  // if (token) {
-  //   history.push('/dashboard');
-  // }
+
   return (
     <div className="container loginbg">
       <Formik

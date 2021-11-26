@@ -20,10 +20,7 @@ const Editdonor = props => {
     }
     onMount();
   }, []);
-  console.log(
-    'Chinmay',
-    props.location.state.balanceNextRenewDate.split('T').slice(0, 1).toString(),
-  );
+  console.log('Chinmay', props.location.state);
   let parentList = useSelector(state => state.donor.allParent);
 
   useEffect(() => {
@@ -105,9 +102,11 @@ const Editdonor = props => {
             parent: parentId && parentId.length ? parentId : '',
             plan: donarData.plan ? donarData.plan : 1,
             date: props.location.state.balanceNextRenewDate
-              .split('T')
-              .slice(0, 1)
-              .toString(),
+              ? props.location.state.balanceNextRenewDate
+                  .split('T')
+                  .slice(0, 1)
+                  .toString()
+              : '',
           }}
           validationSchema={validationSchema}
           enableReinitialize={true}

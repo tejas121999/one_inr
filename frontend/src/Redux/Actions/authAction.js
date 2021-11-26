@@ -10,7 +10,6 @@ export const loginAdmin = (body, history) => {
       .then(response => {
         console.log('response', response.data);
         localStorage.setItem('Token', response.data.Token);
-
         history.push('/dashboard');
         dispatch(getLoggedInUser(response.data));
         // window.location.reload();
@@ -23,6 +22,7 @@ export const loginAdmin = (body, history) => {
 };
 
 export const getLoggedInUser = data => {
+  console.log('reducer call', data);
   return {
     type: LOGIN,
     payload: data,

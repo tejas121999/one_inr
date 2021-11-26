@@ -229,21 +229,7 @@ class Adddonor extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-6 ">
-                    <div className="input-box">
-                      <label style={{ fontWeight: 'bold' }}>Is Priyank</label>
-                      <Field
-                        component="Select"
-                        name="isPriyank"
-                        className="form-control"
-                      >
-                        <option value="true">False</option>
-                        <option value="false">True</option>
-                      </Field>
-                    </div>
-                  </div>
-                </div>
+
                 <div className="input-box">
                   <p style={{ fontWeight: 'bold' }}>
                     Or You Can Upload CSV Only

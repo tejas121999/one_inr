@@ -1,8 +1,8 @@
-import React from "react";
-import { Modal } from "react-bootstrap";
+import React from 'react';
+import { Modal } from 'react-bootstrap';
 
-const Viewdonormodal = (props) => {
-  console.log("Props", props.data.name);
+const Viewdonormodal = props => {
+  console.log('Props', props.data.name);
   return (
     <React.Fragment>
       <Modal show={props.show} onHide={props.onHide}>
@@ -33,6 +33,11 @@ const Viewdonormodal = (props) => {
             </tr>
           </table>
         </Modal.Body>
+        <Modal.Footer>
+          <button className="btn btn-danger" onClick={() => props.onHide()}>
+            Close
+          </button>
+        </Modal.Footer>
       </Modal>
     </React.Fragment>
   );
