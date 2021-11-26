@@ -32,6 +32,11 @@ const Viewdonormodal = props => {
             </tr>
           </table>
         </Modal.Body>
+        <Modal.Footer>
+          <button className="btn btn-danger" onClick={() => props.onHide()}>
+            Close
+          </button>
+        </Modal.Footer>
       </Modal>
     </React.Fragment>
   );

@@ -10,7 +10,7 @@ import Payments from './pages/Account/Payments';
 import AddDoner from './pages/Doner/AddDoner';
 import EditDoner from './pages/Doner/EditDoner';
 import UpcomingDonerRenewal from './pages/Doner/UpcomingDonerRenewal';
-import ViewAllDoner from './pages/Donor/Donors';
+import ViewAllDoner from './pages/Doner/ViewAllDoner';
 import ViewRecept from './pages/Doner/ViewRecept';
 import Four_Zero_Foure from './pages/Four_Zero_Foure';
 import AddPartner from './pages/master/partner/AddPartner';
@@ -41,6 +41,7 @@ const getBasename = () => {
 
 class App extends React.Component {
   render() {
+    console.log('APp', this.props);
     return (
       <BrowserRouter basename={getBasename()}>
         {/* <GAListener> */}
@@ -138,4 +139,4 @@ const query = ({ width }) => {
   return { breakpoint: 'xs' };
 };
 
-export default componentQueries(query)(App);
+export default App;

@@ -25,7 +25,7 @@ import { ADD_DONOR_URL, BASE_URL } from '../../API/APIEndpoints';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
-const constData = [
+export const constData = [
   {
     id: 1,
     name: 'Chinmay Pattar',
@@ -207,8 +207,18 @@ export default function EnhancedTable() {
         onHide={ViewModalClose}
         data={viewData}
       />
-      <Addfund show={fundModal} onHide={fundModaClose} data={fundModalData} />
-      <Donordelete show={deleteModal} onHide={deleteModalClose} id={deleteId} />
+      <Addfund
+        show={fundModal}
+        onHide={fundModaClose}
+        data={fundModalData}
+        getDonor={getDonorList}
+      />
+      <Donordelete
+        show={deleteModal}
+        onHide={deleteModalClose}
+        id={deleteId}
+        getDonor={getDonorList}
+      />
       <div className="card">
         <p
           style={{

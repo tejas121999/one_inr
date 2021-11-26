@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
+import '../../pages/Doner/Donor.css';
 import { ADD_DONOR_FUND_URL, BASE_URL } from '../../API/APIEndpoints';
 
 const Addfund = props => {
@@ -21,6 +22,9 @@ const Addfund = props => {
       .put(url, obj)
       .then(res => {
         console.log('fundAtt', res);
+        setBalance(0);
+        props.getDonor();
+        props.onHide();
       })
       .catch(err => {
         console.log(err);
@@ -39,13 +43,14 @@ const Addfund = props => {
             onChange={e => setBalance(e.target.value)}
             value={balance}
           ></input>
-          <button
-            style={{ margin: '20px' }}
-            className="btn btn-primary"
-            onClick={onSubmit}
-          >
-            Add
-          </button>
+          <div className="Del-btn">
+            <button onClick={onSubmit} className="btn btn-primary">
+              Add
+            </button>
+            <button onClick={() => props.onHide()} className="btn btn-danger">
+              Close
+            </button>
+          </div>
         </Modal.Body>
       </Modal>
     </React.Fragment>

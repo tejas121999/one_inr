@@ -3,33 +3,35 @@ import { Field, Form, Formik } from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
 import { BASE_URL, ADD_DONOR_GET_PARENTS_URL } from '../../API/APIEndpoints';
+import { useDispatch, useSelector } from 'react-redux';
+import { getParentListAction } from '../../Redux/Actions/DonorActions';
+import { useHistory } from 'react-router-dom';
 const Editdonor = props => {
   const [donarData, setDonarData] = useState([]);
-  const [parentList, setParentList] = useState([]);
-  const [parentId, setParentId] = useState(0);
+  const [parentId, setParentId] = useState('');
   const [userId, setUserId] = useState(0);
-
+  const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
     async function onMount() {
-      await getParentList();
       setDonarData(props.location.state);
       setUserId(props.location.state.id);
+      await dispatch(getParentListAction());
     }
     onMount();
   }, []);
+  console.log('Chinmay', props.location.state);
+  let parentList = useSelector(state => state.donor.allParent);
 
-  const getParentList = async () => {
-    const url = BASE_URL + ADD_DONOR_GET_PARENTS_URL;
-    const res = await axios
-      .get(url)
-      .then(res => {
-        console.log('Response');
-        setParentList(res.data.data);
-      })
-      .catch(err => {
-        console.log('Error', err);
-      });
-  };
+  useEffect(() => {
+    if (parentList && parentList.length > 0) {
+      const result = parentList.filter(
+        data => data.id == props.location.state.parentId,
+      );
+      let parent = result && result.length && result[0].name;
+      setParentId(parent);
+    }
+  }, [parentList]);
 
   const validationSchema = yup.object({
     fName: yup.string().required('Required'),
@@ -45,20 +47,24 @@ const Editdonor = props => {
 
   const onUpdate = async values => {
     const url = BASE_URL + `donor/${userId}`;
+    const parentId = parentList.filter(data => data.name == values.parent);
+
+    let id = parentId && parentId.length ? parentId[0].id : 0;
 
     const obj = {
-      name: values.fName + values.lName,
+      name: values.fName + ' ' + values.lName,
       email: values.emailId,
       mobile: values.phoneNumber,
-      password: values.password,
-      parentId: values.parent,
-      isPriyank: values.isPriyank,
-      date: values.date,
+      parentId: id,
+      balanceNextRenewDate: values.date,
       plan: values.plan,
     };
+    console.log('Chinmay Update', obj);
     await axios
-      .post(url, obj)
-      .then(res => {})
+      .put(url, obj)
+      .then(res => {
+        history.push('/view_all_doner');
+      })
       .catch(err => {
         alert(err);
       });
@@ -82,17 +88,25 @@ const Editdonor = props => {
       <div
         style={{ backgroundColor: 'white', height: '100vh', margin: '30px' }}
       >
+        {console.log(
+          'render',
+          props.location.state.name.split(' ').slice(0, -1).toString(),
+        )}
         <Formik
           initialValues={{
-            fName: donarData.name,
-            lName: donarData.name,
+            fName: props.location.state.name.split(' ').slice(0, -1).toString(),
+            lName: props.location.state.name.split(' ').pop().toString(),
             phoneNumber: donarData.mobile,
             emailId: donarData.email,
             password: donarData.password,
-            isPriyank: 'false',
-            parent: donarData.parentId,
-            plan: donarData.plan,
-            date: donarData.balanceNextRenewDate,
+            parent: parentId && parentId.length ? parentId : '',
+            plan: donarData.plan ? donarData.plan : 1,
+            date: props.location.state.balanceNextRenewDate
+              ? props.location.state.balanceNextRenewDate
+                  .split('T')
+                  .slice(0, 1)
+                  .toString()
+              : '',
           }}
           validationSchema={validationSchema}
           enableReinitialize={true}
@@ -106,18 +120,19 @@ const Editdonor = props => {
                     <label style={{ fontWeight: 'bold' }}>Parent</label>
                     <Field
                       type="search"
+                      name="parent"
                       placeholder="No Parent"
                       className="form-control"
+                      value={values.parent}
                       list="parentList"
-                      value="No parent"
-                      aucomplete="off"
                     />
                     <datalist id="parentList">
                       <option value="No Parent">No Parent</option>
-                      <option value="Chinmay" />
-                      <option value="Abhay" />
-                      <option value="Tejas" />
-                      <option value="Rahul" />
+                      {parentList &&
+                        parentList.length > 0 &&
+                        parentList.map(data => {
+                          return <option value={data.name} />;
+                        })}
                     </datalist>
                   </div>
                 </div>
@@ -165,6 +180,13 @@ const Editdonor = props => {
                       value={values.phoneNumber}
                       required
                     />
+                    {errors.phoneNumber && touched.phoneNumber && (
+                      <div className="text-left">
+                        <span style={{ color: 'red' }}>
+                          {errors.phoneNumber}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -178,6 +200,11 @@ const Editdonor = props => {
                       value={values.emailId}
                       required
                     />
+                    {errors.emailId && touched.emailId && (
+                      <div className="text-left">
+                        <span style={{ color: 'red' }}>{errors.emailId}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="col-6 py-3">
@@ -199,15 +226,6 @@ const Editdonor = props => {
                 </div>
               </div>
               <div className="row">
-                <div className="col-6 py-3">
-                  <div className="input-box">
-                    <label style={{ fontWeight: 'bold' }}>Is Priyank</label>
-                    <Field component="Select" className="form-control">
-                      <option value="true">True</option>
-                      <option value="false">Fasle</option>
-                    </Field>
-                  </div>
-                </div>
                 <div className="col-6 py-3">
                   <div className="input-box">
                     <label style={{ fontWeight: 'bold' }}>
