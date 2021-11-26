@@ -27,7 +27,7 @@ import {
 import bn from 'utils/bemnames';
 const dashboardItems = [
   {
-    to: '/',
+    to: '/dashboard',
     name: 'dashboard',
     exact: true,
     Icon: MdDashboard,
