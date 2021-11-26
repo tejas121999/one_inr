@@ -55,10 +55,9 @@ const CreateReceiptForm = ({ modal, handleModal }) => {
             initialValues={{
               Project: '',
               Donar: '',
-              Amount: '',
+              Amount: 1,
               date: '',
               Transaction: 'cash',
-              Cheque: '',
             }}
             validationSchema={validationSchema}
             onSubmit={values => {
