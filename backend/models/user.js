@@ -63,7 +63,7 @@ module.exports = (sequelize,DataTypes)=>{
             field: 'auth_key'
         },
         rememberToken:{
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             field: 'remember_token'
         },
         parentId:{
