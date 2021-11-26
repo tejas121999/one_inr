@@ -136,27 +136,19 @@ exports.getAllUserReceipts = async (req, res) => {
     });
 
     // Validation for Search query
-    // const searchQuery = {
-    //     [Op.and]: [query, {
-    //         [Op.or]: {
-    //             name: { [Op.iLike]: search + '%' },
-    //             ReceiptNo: { [Op.iLike]: search + '%' },
-    //             ProjectName: { [Op.iLike]: search + '%' },
-    //             branch: { [Op.iLike]: search + '%' },
-    //             : { [Op.iLike]: search + '%' },
-    //             : { [Op.iLike]: search + '%' },
-    //             : sequelize.where(
-    //                 sequelize.cast(sequelize.col('user.mobile'), 'varchar'),
-    //                 { [Op.iLike]: search + '%' }
-    //             ),
-    //             stoneLessPercent: sequelize.where(
-    //                 sequelize.cast(sequelize.col('user.stoneLessPercent'), 'varchar'),
-    //                 { [Op.iLike]: search + '%' }
-    //             )
-    //         },
-    //     }],
-    //     isActive: true,
-    // }
+    const searchQuery = {
+        [Op.and]: [query, {
+            [Op.or]: {
+                receiptNumber: { [Op.iLike]: search + '%' },
+                amount: { [Op.iLike]: search + '%' },
+                transactionType: { [Op.iLike]: search + '%' },
+                realizationNo: { [Op.iLike]: search + '%' },
+                realizationDate: { [Op.iLike]: search + '%' },
+                transactionType: { [Op.iLike]: search + '%' },
+                branch: { [Op.iLike]: search + '%' },
+            },
+        }],
+    }
 
 
     if(!data) {
