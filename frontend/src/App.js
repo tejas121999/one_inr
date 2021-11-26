@@ -31,10 +31,13 @@ import RazorpayCredentials from './pages/Settings/RazorpayCredentials';
 import Roles from './pages/Settings/Roles';
 import Users from './pages/Settings/Users';
 import Tabel from './pages/Tabel';
+import TablePage from './pages/TablePage';
 import './styles/reduction.scss';
 import Login from './pages/Login';
 import PrivateRoute from './Routing/PrivateRoute';
 // import Login from 'src/pages/Login.js';
+import Viewdonormodal from './Modals/Donor/ViewDonorModal';
+
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
 };
