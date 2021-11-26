@@ -1,4 +1,3 @@
-import logo200Image from 'assets/img/logo/logo_200.png';
 import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
 import SourceLink from 'components/SourceLink';
 import React from 'react';
@@ -28,7 +27,7 @@ import {
 import bn from 'utils/bemnames';
 const dashboardItems = [
   {
-    to: '/',
+    to: '/dashboard',
     name: 'dashboard',
     exact: true,
     Icon: MdDashboard,
@@ -231,13 +230,6 @@ class Sidebar extends React.Component {
       <aside className={bem.b()} data-image={sidebarBgImage}>
         <div className={bem.e('background')} />
         <div className={bem.e('content')}>
-          <Navbar>
-            <img
-              src={logo200Image}
-              className="pr-2 logo_1INR"
-              alt="logo_1INR"
-            />
-          </Navbar>
           <Nav vertical>
             {dashboardItems.map(({ to, name, exact, Icon }, index) => (
               <NavItem

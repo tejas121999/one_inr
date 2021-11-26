@@ -23,7 +23,7 @@ import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
 import { ADD_DONOR_URL, BASE_URL } from '../../API/APIEndpoints';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 export const constData = [
   {
@@ -303,14 +303,17 @@ export default function EnhancedTable() {
                               {row.project ? row.projects : '20'}
                             </TableCell>
                             <TableCell align="center">
-                              <button
-                                data-bs-toggle="tooltip"
-                                title="View Details"
-                                className="btn"
-                                onClick={() => ViewModalOpen(row)}
-                              >
-                                <FaRegEye />
-                              </button>
+                              <Link to="/view_doner_id/id">
+                                <button
+                                  data-bs-toggle="tooltip"
+                                  title="View Details"
+                                  className="btn"
+
+                                  // onClick={() => ViewModalOpen(row)}
+                                >
+                                  <FaRegEye />
+                                </button>
+                              </Link>
                               <button
                                 data-bs-toggle="tooltip"
                                 title="View Transactions"
