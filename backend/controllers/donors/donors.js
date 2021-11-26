@@ -1,5 +1,7 @@
 const models = require('../../models/index')
 const {paginationWithFromTo} = require('../../utils/pagination')
+const sequelize = models.Sequelize;
+const Op = sequelize.Op;
 //Get all details of all donor in DB
 exports.getAllDonor = async (req, res) => {
     const { search, offset, pageSize } = paginationWithFromTo(
@@ -7,10 +9,20 @@ exports.getAllDonor = async (req, res) => {
         req.query.from,
         req.query.to
     );
-
+    let query = {};
+        
+    const searchQuery = {
+        [Op.and]: [query, {
+          [Op.or]: {
+            name: { [Op.like]: search + "%" },
+            balance : {[Op.like] : search + '%'}
+          },
+        }]
+      };
     const data = await models.users.findAndCountAll({
         offset: offset,
         limit: pageSize,
+        where : searchQuery
     })
     if (!data) {
         return res.status(400).json({
