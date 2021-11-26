@@ -1,6 +1,9 @@
 // const { compareSync } = require("bcrypt");
+const { sequelize } = require("../../models");
 const models = require("../../models")
 const paginationFunc = require('../../utils/pagination');
+const Sequelize = models.Sequelize
+const Op = Sequelize.Op;
 
 //Creating A Users Receipts
 exports.addUsersReceipts = async (req, res) => {
@@ -122,7 +125,7 @@ exports.updateUsersReceipts = async (req,res)=>{
 //Get all details of all Users of View Reciepts in DB
 
 exports.getAllUserReceipts = async (req, res) => {
-
+    let query = {};
     //paginantion 
 
     const { search, offset, pageSize } = paginationFunc.paginationWithFromTo(
@@ -130,26 +133,27 @@ exports.getAllUserReceipts = async (req, res) => {
         req.query.from,
         req.query.to
     ) 
-    const data = await models.usersReceipts.findAndCountAll({
-        limit: pageSize,
-        offset: offset
-    });
-
-    // Validation for Search query
+    // Search query
     const searchQuery = {
         [Op.and]: [query, {
             [Op.or]: {
-                receiptNumber: { [Op.iLike]: search + '%' },
+                receiptNumber: { [Op.like]: search + '%' },
                 amount: { [Op.iLike]: search + '%' },
-                transactionType: { [Op.iLike]: search + '%' },
-                realizationNo: { [Op.iLike]: search + '%' },
-                realizationDate: { [Op.iLike]: search + '%' },
-                transactionType: { [Op.iLike]: search + '%' },
+                transactionType: { [Op.like]: search + '%' },
+                realizationNo: { [Op.like]: search + '%' },
+                realizationDate: { [Op.like]: search + '%' },
+                transactionType: { [Op.like]: search + '%' },
                 branch: { [Op.iLike]: search + '%' },
             },
         }],
     }
 
+    const data = await models.usersReceipts.findAndCountAll({
+        limit: pageSize,
+        offset: offset
+    });
+
+    
 
     if(!data) {
         return res.status(400).json({
