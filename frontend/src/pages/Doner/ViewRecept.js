@@ -10,8 +10,9 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
-import { Button, Modal } from 'react-bootstrap';
 import { visuallyHidden } from '@mui/utils';
+import { Button } from 'react-bootstrap';
+
 import {
   FaRegEdit,
   FaRegEye,
@@ -19,6 +20,7 @@ import {
   FaBookOpen,
   FaDollarSign,
 } from 'react-icons/fa';
+
 // import '../Donor.css';
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
@@ -26,6 +28,7 @@ import { BASE_URL, VIEW_RECEPT_URL } from '../../API/APIEndpoints';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
+import CreateReceiptForm from '../../components/CreateReceiptForm';
 
 export default function ViewRecept() {
   const [order, setOrder] = React.useState('asc');
@@ -97,7 +100,7 @@ export default function ViewRecept() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
+  // const createReceiptHandler = () => {};
   const isSelected = name => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -146,95 +149,7 @@ export default function ViewRecept() {
           </button>
           <input placeholder="Search" />
         </div>
-        <Modal show={modal} onHide={handleModal}>
-          <Modal.Header closeButton>Create Receipt</Modal.Header>
-          <Modal.Body>
-            <form>
-              <div className="form-group ">
-                <label htmlFor="exampleFormControlSelect1">
-                  Select Project *
-                </label>
-                <select className="form-control" id="exampleFormControlSelect1">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </div>
-              <div className="form-group mt-2">
-                <label htmlFor="exampleFormControlSelect2">
-                  Select Donar *
-                </label>
-                <select className="form-control" id="exampleFormControlSelect2">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="exampleFormControlInput1">
-                  Donation Amount *
-                </label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="exampleFormControlInput1"
-                  placeholder="Enter donation amount"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="receipt_date">Receipt Date </label>
-                <input
-                  type="date"
-                  className="form-control"
-                  name="receipt_date"
-                  id="receipt_date"
-                  placeholder="Enter receipt date"
-                />
-              </div>
-              <div className="form-group ReceiptRadio">
-                <label htmlFor="create_type">Transaction Type *</label>
-                <br />
-                <input
-                  type="radio"
-                  id="test1"
-                  defaultvalue="cash"
-                  name="transaction_type"
-                  defaultChecked
-                />
-                <label htmlFor="test1">cash</label>
-                <input
-                  type="radio"
-                  id="test2"
-                  defaultvalue="online"
-                  name="transaction_type"
-                />
-                <label htmlFor="test2">online</label>
-                <input
-                  type="radio"
-                  id="test3"
-                  defaultvalue="neft"
-                  name="transaction_type"
-                />
-                <label htmlFor="test3">neft</label>
-                <input
-                  type="radio"
-                  id="test4"
-                  defaultvalue="Cheque"
-                  name="transaction_type"
-                />
-                <label htmlFor="test3">Cheque</label>
-              </div>
-            </form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={handleModal}>Close</Button>
-            <Button onClick={handleModal}>Save</Button>
-          </Modal.Footer>
-        </Modal>
+        <CreateReceiptForm modal={modal} handleModal={handleModal} />
         <Paper sx={{ width: '100%', mb: 2, height: '60vh' }}>
           {recept && recept.length > 0 ? (
             <React.Fragment>

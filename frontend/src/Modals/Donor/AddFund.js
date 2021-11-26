@@ -9,7 +9,6 @@ const Addfund = props => {
 
   useEffect(() => {
     setId(props.data);
-    console.log('useEffect', userId);
   }, [props]);
 
   const onSubmit = async () => {

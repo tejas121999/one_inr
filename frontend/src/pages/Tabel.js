@@ -30,9 +30,9 @@ const Tabel = () => {
             DAILY FUNDS
           </p>
         </div>
-        <div class="container">
-          <div class="row">
-            <div class="col">
+        <div className="container">
+          <div className="row">
+            <div className="col">
               {' '}
               <div className="datCard">
                 <p
@@ -58,7 +58,7 @@ const Tabel = () => {
                 </p>
               </div>
             </div>
-            <div class="col">
+            <div className="col">
               {' '}
               <div className="datCard">
                 <p
@@ -84,7 +84,7 @@ const Tabel = () => {
                 </p>
               </div>
             </div>
-            <div class="col">
+            <div className="col">
               {' '}
               <div className="datCard">
                 <p
@@ -113,9 +113,9 @@ const Tabel = () => {
           </div>
         </div>
 
-        <div class="container">
-          <div class="row">
-            <div class="col">
+        <div className="container">
+          <div className="row">
+            <div className="col">
               {' '}
               <div className="datCard">
                 <p
@@ -141,7 +141,7 @@ const Tabel = () => {
                 </p>
               </div>
             </div>
-            <div class="col">
+            <div className="col">
               {' '}
               <div className="datCard">
                 <p
@@ -167,7 +167,7 @@ const Tabel = () => {
                 </p>
               </div>
             </div>
-            <div class="col">
+            <div className="col">
               {' '}
               <div className="datCard">
                 <p

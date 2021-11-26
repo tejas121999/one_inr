@@ -93,19 +93,38 @@ form.login {
   padding: 0.5rem 1rem;
   background-color: white;
 }
+
+/* modal for create receipt */
 .modal-dialog {
   position: relative;
   width: auto;
   margin: 0.5rem;
   pointer-events: none;
-  top: 12%;
+  top: 8%;
   left: 9%;
 }
 .modal-header button.btn-close {
   display: none;
 }
-.ReceiptRadio input {
+/* .ReceiptRadio input {
   margin: 0 7px;
   position: relative;
   top: 2px;
+} */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.radioGroup {
+  display: flex;
+}
+.radioGroup .form-check {
+  margin: auto 15px;
+}
+.radioGroup .form-check input.form-check-input {
+  position: relative;
+  top: 3px;
+  left: -3pxpx;
 }
