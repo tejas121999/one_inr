@@ -128,3 +128,7 @@ input::-webkit-inner-spin-button {
   top: 3px;
   left: -3pxpx;
 }
+.mybtn button {
+  margin-left: 10px;
+  width: 150px;
+}

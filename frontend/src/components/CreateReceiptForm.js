@@ -212,8 +212,12 @@ const CreateReceiptForm = ({ modal, handleModal }) => {
                   </div>
                 ) : null}
 
-                <Button onClick={handleModal}>cancle</Button>
-                <Button type="submit">create receipt</Button>
+                <div className="text-center mybtn">
+                  <Button onClick={handleModal} className="ml-2">
+                    cancle
+                  </Button>
+                  <Button type="submit">create receipt</Button>
+                </div>
               </Form>
             )}
           </Formik>
