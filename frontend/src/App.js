@@ -1,25 +1,145 @@
-import logo from './logo.svg';
-import './App.css';
+import { STATE_LOGIN, STATE_SIGNUP } from 'components/AuthForm';
+import GAListener from 'components/GAListener';
+import { EmptyLayout, LayoutRoute, MainLayout } from 'components/Layout';
+import PageSpinner from 'components/PageSpinner';
+import AuthPage from 'pages/AuthPage';
+import React from 'react';
+import componentQueries from 'react-component-queries';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import Payments from './pages/Account/Payments';
+import AddDoner from './pages/Doner/AddDoner';
+import EditDoner from './pages/Doner/EditDoner';
+import UpcomingDonerRenewal from './pages/Doner/UpcomingDonerRenewal';
+import ViewAllDoner from './pages/Doner/ViewAllDoner';
+import ViewRecept from './pages/Doner/ViewRecept';
+import Four_Zero_Foure from './pages/Four_Zero_Foure';
+import AddPartner from './pages/master/partner/AddPartner';
+import EditPartner from './pages/master/partner/EditPartner';
+import Partner from './pages/master/partner/Partner';
+import AddVendor from './pages/master/vendor/AddVendor';
+import EditVendor from './pages/master/vendor/EditVendor';
+import Vendor from './pages/master/vendor/Vendor';
+import AddNgo from './pages/NGO/AddNgo';
+import ViewAllNgo from './pages/NGO/ViewAllNgo';
+import AddProject from './pages/projects/AddProject';
+import ArchivedProject from './pages/projects/ArchivedProject';
+import CompleteProject from './pages/projects/CompleteProject';
+import ViewAllProjects from './pages/projects/ViewAllProjects';
+import Config from './pages/Settings/Config';
+import MyProfile from './pages/Settings/MyProfile';
+import RazorpayCredentials from './pages/Settings/RazorpayCredentials';
+import Roles from './pages/Settings/Roles';
+import Users from './pages/Settings/Users';
+import Tabel from './pages/Tabel';
+import TablePage from './pages/TablePage';
+import './styles/reduction.scss';
+import Login from './pages/Login';
+import PrivateRoute from './Routing/PrivateRoute';
+// import Login from 'src/pages/Login.js';
+import Viewdonormodal from './Modals/Donor/ViewDonorModal';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const getBasename = () => {
+  return `/${process.env.PUBLIC_URL.split('/').pop()}`;
+};
+
+class App extends React.Component {
+  render() {
+    console.log('APp', this.props);
+    return (
+      <BrowserRouter basename={getBasename()}>
+        {/* <GAListener> */}
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <MainLayout breakpoint={this.props.breakpoint}>
+            <React.Suspense fallback={<PageSpinner />}>
+              <PrivateRoute exact path="/dashboard" component={Tabel} />
+
+              {/*master route*/}
+              <PrivateRoute exact path="/Vendor" component={Vendor} />
+              <PrivateRoute exact path="/addvendor" component={AddVendor} />
+              <PrivateRoute exact path="/editvendor" component={EditVendor} />
+              <PrivateRoute exact path="/partner" component={Partner} />
+              <PrivateRoute exact path="/addpartner" component={AddPartner} />
+              <PrivateRoute exact path="/editpartner" component={EditPartner} />
+              {/*doner route*/}
+              <PrivateRoute exact path="/add_doner" component={AddDoner} />
+              <PrivateRoute exact path="/edit_doner" component={EditDoner} />
+              <PrivateRoute exact path="/view_recept" component={ViewRecept} />
+              <PrivateRoute
+                exact
+                path="/view_all_doner"
+                component={ViewAllDoner}
+              />
+              <PrivateRoute
+                exact
+                path="/upcoming_doner_renewal"
+                component={UpcomingDonerRenewal}
+              />
+              {/*NGO route*/}
+              <PrivateRoute exact path="/add_ngo" component={AddNgo} />
+              <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />
+              {/*project route*/}
+              <PrivateRoute
+                exact
+                path="/complete_project"
+                component={CompleteProject}
+              />
+              <PrivateRoute exact path="/add_project" component={AddProject} />
+              <PrivateRoute
+                exact
+                path="/view_all_project"
+                component={ViewAllProjects}
+              />
+              <PrivateRoute
+                exact
+                path="/archive_project"
+                component={ArchivedProject}
+              />
+              {/*Account route*/}
+              <PrivateRoute exact path="/payments" component={Payments} />
+              {/*setting route*/}
+              <PrivateRoute exact path="/my_profile" component={MyProfile} />
+              <PrivateRoute exact path="/roles" component={Roles} />
+              <Route exact path="/users" component={Users} />
+              <Route exact path="/config" component={Config} />
+              <Route
+                exact
+                path="/razorpay_credentials"
+                component={RazorpayCredentials}
+              />
+            </React.Suspense>
+          </MainLayout>
+          {/* <Route path="/404" component={Four_Zero_Foure} />
+            <Redirect to="/404">{Four_Zero_Foure}</Redirect> */}
+        </Switch>
+        {/* </GAListener> */}
+      </BrowserRouter>
+    );
+  }
 }
+
+const query = ({ width }) => {
+  if (width < 575) {
+    return { breakpoint: 'xs' };
+  }
+
+  if (576 < width && width < 767) {
+    return { breakpoint: 'sm' };
+  }
+
+  if (768 < width && width < 991) {
+    return { breakpoint: 'md' };
+  }
+
+  if (992 < width && width < 1199) {
+    return { breakpoint: 'lg' };
+  }
+
+  if (width > 1200) {
+    return { breakpoint: 'xl' };
+  }
+
+  return { breakpoint: 'xs' };
+};
 
 export default App;
