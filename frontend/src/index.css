@@ -1,0 +1,134 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+a {
+  text-decoration: none !important;
+}
+.datCard {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  margin-top: 10% !important;
+}
+
+.cr-sidebar__content nav {
+  background-color: white;
+  position: fixed;
+  width: 224px;
+  z-index: 999;
+  padding: 6px 30px;
+}
+
+.cr-sidebar .nav {
+  margin-top: 80px !important;
+}
+
+.cr-sidebar .nav .nav-item:not(:first-child) {
+  border-top: 1px solid;
+}
+
+.myNestedListItems {
+  border-top: none !important;
+}
+
+.myNestedListItems span {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.cr-header {
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #dee2e6;
+  position: fixed !important;
+  z-index: 9999 !important;
+  width: 100% !important;
+  left: 0 !important;
+}
+
+.bg-gradient-theme {
+  background: linear-gradient(to bottom, #6a82fb, #0f131f);
+  box-shadow: 0 0 0 2000px rgb(0 0 0 / 0%);
+}
+
+.PriyankUser {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  position: fixed !important;
+  width: 260px !important;
+}
+form.login {
+  width: 500px;
+  background: white;
+  padding: 14% 45px;
+  margin: 30px auto;
+}
+/* .loginbg {
+  background-image: url('./assets/img/background/login-register.jpg') cover
+    no-repeat !important;
+} */
+.css-zjtspp-MuiPaper-root {
+  box-shadow: none !important;
+}
+.navbar {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: white;
+}
+
+/* modal for create receipt */
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 0.5rem;
+  pointer-events: none;
+  top: 8%;
+  left: 9%;
+}
+.modal-header button.btn-close {
+  display: none;
+}
+/* .ReceiptRadio input {
+  margin: 0 7px;
+  position: relative;
+  top: 2px;
+} */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.radioGroup {
+  display: flex;
+}
+.radioGroup .form-check {
+  margin: auto 15px;
+}
+.radioGroup .form-check input.form-check-input {
+  position: relative;
+  top: 3px;
+  left: -3pxpx;
+}
+.mybtn button {
+  margin-left: 10px;
+  width: 150px;
+}

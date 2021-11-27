@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,200;1,400;1,500;1,600&display=swap');
+body {
+  font-family: 'Poppins' !important;
+  background-color: #5d8fc9 !important;
+}
+/*
+#email {
+  border-radius: 30px;
+  background-color: #ebf0fc;
+  border-color: #ebf0fc;
+  color: #9da3b0;
+}
+
+#button {
+  border-radius: 30px;
+}
+
+
+#container {
+  margin-top: 25px;
+}
+
+
+*/
+.login-card {
+  width: 350px;
+  border-radius: 25px;
+  margin: 150px auto;
+  background-color: white;
+  padding: 30px;
+}
+.btn-circle.btn-sm {
+  width: 40px;
+  height: 40px;
+  padding: 2px 0px;
+  border-radius: 25px;
+  font-size: 14px;
+  text-align: center;
+
+  margin: 8px;
+}
+.cr-content.container-fluid {
+  background-color: #6a82fb;
+}
+form.w-50.m-auto {
+  background: white;
+  border-radius: 20px;
+  height: auto;
+  position: relative;
+  top: 12%;
+  padding: 60px 0px;
+}
+.btn-circle.btn-sm {
+  width: 40px;
+  height: 40px;
+  padding: 2px 0px;
+  border-radius: 25px;
+  font-size: 14px;
+  text-align: center;
+  margin: 8px;
+  border: 0.5px solid white;
+}
+.form-control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 30px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+}
+.btn:focus,
+.btn.focus {
+  outline: 0;
+  box-shadow: none !important;
+}
