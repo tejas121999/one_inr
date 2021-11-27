@@ -6,20 +6,20 @@ export const LOGIN_URL = 'auth';
 export const VIEW_RECEPT_URL = 'userReceipts/get-user';
 export const GetAllDonor = 'donor';
 export const AddUserReceipt = 'userReceipts/add-user';
-export const VIEW_DONER_ID_URL = `/api/donor/{id}`;
+export const VIEW_DONER_ID_URL = `donor/{id}`;
 
 // BIPIN (DONOR)
 
-export const REGISTER_USER_URL = '/api/auth/register';
+export const REGISTER_USER_URL = 'auth/register';
 
-export const GET_ALL_DONER_URL = '/api/donor';
+export const GET_ALL_DONER_URL = 'donor';
 
-export const GET_ALL_PARENT_URL = '/api/donor/parents';
+export const GET_ALL_PARENT_URL = 'donor/parents';
 
-export const GET_DONER_BY_ID_URL = '/api/donor/{{id}}';
+export const GET_DONER_BY_ID_URL = 'donor/{{id}}';
 
-export const UPDATE_A_DONOR_URL = '/api/donor/{{id}}';
+export const UPDATE_A_DONOR_URL = 'donor/{{id}}';
 
-export const UPDATE_DONOR_BALANCE_URL = '/api/donor/balance/{{id}}';
+export const UPDATE_DONOR_BALANCE_URL = 'donor/balance/{{id}}';
 
-export const DELETE_A_DONOR_URL = '/api/donor/{{id}}';
+export const DELETE_A_DONOR_URL = 'donor/{{id}}';

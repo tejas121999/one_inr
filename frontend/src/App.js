@@ -37,6 +37,7 @@ import Login from './pages/Login';
 import PrivateRoute from './Routing/PrivateRoute';
 // import Login from 'src/pages/Login.js';
 import Viewdonormodal from './Modals/Donor/ViewDonorModal';
+import Forgot from './pages/Forgot';
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -75,6 +76,7 @@ class App extends React.Component {
                 path="/upcoming_doner_renewal"
                 component={UpcomingDonerRenewal}
               />
+              <PrivateRoute exact path="/forgot" component={Forgot} />
               {/*NGO route*/}
               <PrivateRoute exact path="/add_ngo" component={AddNgo} />
               <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />

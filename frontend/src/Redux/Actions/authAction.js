@@ -10,9 +10,8 @@ export const loginAdmin = (body, history) => {
       .then(response => {
         console.log('response', response.data);
         localStorage.setItem('Token', response.data.Token);
-        history.push('/dashboard');
         dispatch(getLoggedInUser(response.data));
-        // window.location.reload();
+        history.push('/dashboard');
       })
       .catch(error => {
         dispatch(onLoginFailed(error));

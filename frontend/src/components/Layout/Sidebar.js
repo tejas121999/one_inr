@@ -144,26 +144,35 @@ const SettingItems = [
   },
 ];
 
-const bottomRemaingItems = [
+const DonorEmailItem = [
   {
     to: '/donor_email',
     name: 'Donor Email',
     exact: true,
     Icon: MdOutlineEmail,
   },
+];
+const LogoutItems = [
   { to: '/', name: 'Log out', exact: true, Icon: MdOutlineLogout },
 ];
 
 const bem = bn.create('sidebar');
 
 class Sidebar extends React.Component {
-  state = {
-    isOpenMaster: false,
-    isOpenDonor: false,
-    isOpenNgo: false,
-    isOpenProjects: false,
-    isOpenAccounts: false,
-    isOpenSettings: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpenMaster: false,
+      isOpenDonor: false,
+      isOpenNgo: false,
+      isOpenProjects: false,
+      isOpenAccounts: false,
+      isOpenSettings: false,
+    };
+  }
+  handleLogout = props => {
+    localStorage.removeItem('Token');
+    window.location.replace('/');
   };
 
   handleClick = name => () => {
@@ -513,7 +522,7 @@ class Sidebar extends React.Component {
               ))}
             </Collapse>
 
-            {bottomRemaingItems.map(({ to, name, exact, Icon }, index) => (
+            {DonorEmailItem.map(({ to, name, exact, Icon }, index) => (
               <NavItem key={index} className={bem.e('nav-item')}>
                 <BSNavLink
                   id={`navItem-${name}-${index}`}
@@ -522,6 +531,22 @@ class Sidebar extends React.Component {
                   to={to}
                   activeClassName="active"
                   exact={exact}
+                >
+                  <Icon className={bem.e('nav-item-icon')} />
+                  <span className="">{name}</span>
+                </BSNavLink>
+              </NavItem>
+            ))}
+            {LogoutItems.map(({ to, name, exact, Icon }, index) => (
+              <NavItem key={index} className={bem.e('nav-item')}>
+                <BSNavLink
+                  id={`navItem-${name}-${index}`}
+                  className="text-uppercase"
+                  tag={NavLink}
+                  to={to}
+                  activeClassName="active"
+                  exact={exact}
+                  onClick={this.handleLogout}
                 >
                   <Icon className={bem.e('nav-item-icon')} />
                   <span className="">{name}</span>

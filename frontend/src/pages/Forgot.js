@@ -12,15 +12,9 @@ let validationSchema = yup.object().shape({
     .string()
     .email('The email address you gave was incorrect')
     .required(),
-  password: yup
-    .string()
-    .required('No password provided.')
-    .min(4, 'Password is too short - should be 4 chars min.')
-    .max(16, 'Password is long - should be 16 chars max.'),
-  // .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
 });
 
-const Login = props => {
+const Forgot = props => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -36,7 +30,6 @@ const Login = props => {
       <Formik
         initialValues={{
           email: '',
-          password: '',
         }}
         validationSchema={validationSchema}
         onSubmit={values => {
@@ -64,19 +57,6 @@ const Login = props => {
               ) : null}
             </div>
 
-            {/* password */}
-            <div className="form-group w-75 m-auto">
-              <Field
-                name="password"
-                type="password"
-                placeholder="enter password"
-                className="form-control mt-2"
-              />
-              {touched.password && errors.password ? (
-                <small className="text-danger ">{errors.password}</small>
-              ) : null}
-            </div>
-
             <div className="text-right forgotPass mt-2 pr-5">
               <NavLink to="/forgot">Forgot Password ?</NavLink>
             </div>
@@ -92,4 +72,4 @@ const Login = props => {
   );
 };
 
-export default Login;
+export default Forgot;
