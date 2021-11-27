@@ -11,9 +11,13 @@ import { Button, Modal } from 'react-bootstrap';
 let validationSchema = yup.object().shape({
   Project: yup.string().required(),
   Donar: yup.string().required(),
-  Amount: yup.number().min(1, 'enter amount must be grater than 0.').required(),
+  Amount: yup.number().min(1, 'enter Amount must be grater than 0.').required(),
   date: yup.string().required(),
   Transaction: yup.string().required(),
+  //   Cheque: yup
+  //     .number()
+  //     .min(1, 'enter Cheque number must be grater than 0.')
+  //     .required(),
 });
 
 const CreateReceiptForm = ({ modal, handleModal }) => {
@@ -58,6 +62,7 @@ const CreateReceiptForm = ({ modal, handleModal }) => {
               Amount: 1,
               date: '',
               Transaction: 'cash',
+              //   Cheque : '',
             }}
             validationSchema={validationSchema}
             onSubmit={values => {

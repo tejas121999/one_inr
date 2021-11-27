@@ -151,7 +151,7 @@ class Header extends React.Component {
                   className="border-light"
                 >
                   <ListGroup flush>
-                    <ListGroupItem tag="button" action className="">
+                    {/* <ListGroupItem tag="button" action className="">
                       <MdPersonPin /> Profile
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="">
@@ -165,15 +165,15 @@ class Header extends React.Component {
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="">
                       <MdHelp /> Help
-                    </ListGroupItem>
-                    <ListGroupItem
+                    </ListGroupItem> */}
+                    {/* <ListGroupItem
                       tag="button"
                       action
                       className=""
                       onClick={this.handleLogOut}
                     >
                       <MdExitToApp /> Signout
-                    </ListGroupItem>
+                    </ListGroupItem> */}
                   </ListGroup>
                 </UserCard>
               </PopoverBody>

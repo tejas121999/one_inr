@@ -21,11 +21,14 @@ import {
 import './Donor.css';
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
-import { GET_ALL_DONER_URL, BASE_URL } from '../../API/APIEndpoints';
+import {
+  GET_ALL_DONER_URL,
+  BASE_URL,
+  ADD_DONOR_URL,
+} from '../../API/APIEndpoints';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
-
 
 export default function Donor() {
   const [order, setOrder] = React.useState('asc');
@@ -42,7 +45,7 @@ export default function Donor() {
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
   const history = useHistory();
-  
+
   React.useEffect(() => {
     getDonorList();
   }, []);
@@ -193,13 +196,13 @@ export default function Donor() {
                               {row.project ? row.projects : '20'}
                             </TableCell>
                             <TableCell align="center">
-                              <Link to='/view_doner_id/id'>
+                              <Link to="/view_doner_id/id">
                                 <button
                                   data-bs-toggle="tooltip"
                                   title="View Details"
                                   className="btn"
 
-                                // onClick={() => ViewModalOpen(row)}
+                                  // onClick={() => ViewModalOpen(row)}
                                 >
                                   <FaRegEye />
                                 </button>
@@ -261,7 +264,7 @@ export default function Donor() {
   );
 }
 
-export default function EnhancedTable() {
+export function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);

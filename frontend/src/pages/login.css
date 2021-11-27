@@ -40,7 +40,7 @@ body {
   margin: 8px;
 }
 .cr-content.container-fluid {
-  background-color: #6a82fb;
+  /* background-color: #6a82fb; */
 }
 form.w-50.m-auto {
   background: white;
