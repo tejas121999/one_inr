@@ -32,7 +32,7 @@ const Login = props => {
   };
 
   return (
-    <div className="container loginbg">
+    <div className="loginbg">
       <Formik
         initialValues={{
           email: '',

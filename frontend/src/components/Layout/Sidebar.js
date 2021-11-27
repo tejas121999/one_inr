@@ -151,7 +151,7 @@ const bottomRemaingItems = [
     exact: true,
     Icon: MdOutlineEmail,
   },
-  { to: '/logout', name: 'Log out', exact: true, Icon: MdOutlineLogout },
+  { to: '/', name: 'Log out', exact: true, Icon: MdOutlineLogout },
 ];
 
 const bem = bn.create('sidebar');
