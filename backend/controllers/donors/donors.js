@@ -82,7 +82,7 @@ exports.updateDonor = async (req, res) => {
             message: "Failed to update donor"
         })
     }
-    return res.status(200).json({
+    return res.status(201).json({
         message: "Donor Updated Successfully",
     })
 }

@@ -28,7 +28,7 @@ exports.userLogin = async (req, res) => {
     const remember_token = await models.users.update({ rememberToken: token }, { where: { id: id } })
 
     if (token) {
-        return res.status(200).json({
+        return res.status(201).json({
             message: "User login successful",
             Token: token,
         })
