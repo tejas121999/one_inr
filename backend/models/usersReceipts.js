@@ -1,5 +1,3 @@
-const sequelize = require("sequelize")
-
 module.exports = (sequelize, DataTypes) => {
     const usersReceipts = sequelize.define('usersReceipts', {
 
@@ -78,7 +76,8 @@ module.exports = (sequelize, DataTypes) => {
             field: 'updated_at'
         },
 
-    },{
+    },
+    {
         freezeTableName: true,
         tableName: 'users_receipts'
     })

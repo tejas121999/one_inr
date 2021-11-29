@@ -1,4 +1,4 @@
-const models = require('../../models')
+const models = require('../models')
 
 exports.userLogin = async (req, res) => {
     const { email, password } = req.body;
@@ -20,7 +20,10 @@ exports.userLogin = async (req, res) => {
     }
     const token = generateJwtToken(id)
 
-    const remember_token = await models.users.update({ rememberToken: token }, { where: { id: id } })
+    const remember_token = await models.users.update(
+        { rememberToken: token }, 
+        { where: { id: id } }
+        )
 
     if (token) {
         return res.status(200).json({

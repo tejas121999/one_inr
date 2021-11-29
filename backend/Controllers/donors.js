@@ -1,5 +1,5 @@
-const models = require('../../models/index')
-const {paginationWithFromTo} = require('../../utils/pagination')
+const models = require('../models/index')
+const {paginationWithFromTo} = require('../utils/pagination')
 const sequelize = models.Sequelize;
 const Op = sequelize.Op;
 //Get all details of all donor in DB
@@ -24,6 +24,7 @@ exports.getAllDonor = async (req, res) => {
         limit: pageSize,
         where : searchQuery
     })
+    console.log(data);
     if (!data) {
         return res.status(400).json({
             message : "Failed to get all data."
