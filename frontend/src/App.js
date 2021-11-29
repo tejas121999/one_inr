@@ -10,9 +10,8 @@ import Payments from './pages/Account/Payments';
 import AddDoner from './pages/Doner/AddDoner';
 import EditDoner from './pages/Doner/EditDoner';
 import UpcomingDonerRenewal from './pages/Doner/UpcomingDonerRenewal';
-import ViewAllDoner from './pages/Doner/ViewAllDoner';
-import ViewRecept from './pages/Doner/ViewRecept';
-import Four_Zero_Foure from './pages/Four_Zero_Foure';
+import Doners from './pages/Donor/Donors';
+import ViewRecept from './pages/Donor/recept/ViewRecept';
 import AddPartner from './pages/master/partner/AddPartner';
 import EditPartner from './pages/master/partner/EditPartner';
 import Partner from './pages/master/partner/Partner';
@@ -31,11 +30,7 @@ import RazorpayCredentials from './pages/Settings/RazorpayCredentials';
 import Roles from './pages/Settings/Roles';
 import Users from './pages/Settings/Users';
 import Tabel from './pages/Tabel';
-import TablePage from './pages/TablePage';
 import './styles/reduction.scss';
-import Login from './pages/Login';
-import PrivateRoute from './Routing/PrivateRoute';
-// import Login from 'src/pages/Login.js';
 import Viewdonormodal from './Modals/Donor/ViewDonorModal';
 import Forgot from './pages/Forgot';
 
@@ -48,70 +43,86 @@ class App extends React.Component {
     console.log('APp', this.props);
     return (
       <BrowserRouter basename={getBasename()}>
-        {/* <GAListener> */}
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <MainLayout breakpoint={this.props.breakpoint}>
-            <React.Suspense fallback={<PageSpinner />}>
-              <PrivateRoute exact path="/dashboard" component={Tabel} />
+        <GAListener>
+          <Switch>
+            {/* <Login /> */}
+            {/* <LayoutRoute
+              exact
+              path="/login"
+              layout={EmptyLayout}
+              component={props => (
+                <AuthPage {...props} authState={STATE_LOGIN} />
+              )}
+            /> */}
+            {/* <LayoutRoute
+              exact
+              path="/signup"
+              layout={EmptyLayout}
+              component={props => (
+                <AuthPage {...props} authState={STATE_SIGNUP} />
+              )}
+            /> */}
 
-              {/*master route*/}
-              <PrivateRoute exact path="/Vendor" component={Vendor} />
-              <PrivateRoute exact path="/addvendor" component={AddVendor} />
-              <PrivateRoute exact path="/editvendor" component={EditVendor} />
-              <PrivateRoute exact path="/partner" component={Partner} />
-              <PrivateRoute exact path="/addpartner" component={AddPartner} />
-              <PrivateRoute exact path="/editpartner" component={EditPartner} />
-              {/*doner route*/}
-              <PrivateRoute exact path="/add_doner" component={AddDoner} />
-              <PrivateRoute exact path="/edit_doner" component={EditDoner} />
-              <PrivateRoute exact path="/view_recept" component={ViewRecept} />
-              <PrivateRoute
-                exact
-                path="/view_all_doner"
-                component={ViewAllDoner}
-              />
-              <PrivateRoute
-                exact
-                path="/upcoming_doner_renewal"
-                component={UpcomingDonerRenewal}
-              />
-              <PrivateRoute exact path="/forgot" component={Forgot} />
-              {/*NGO route*/}
-              <PrivateRoute exact path="/add_ngo" component={AddNgo} />
-              <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />
-              {/*project route*/}
-              <PrivateRoute
-                exact
-                path="/complete_project"
-                component={CompleteProject}
-              />
-              <PrivateRoute exact path="/add_project" component={AddProject} />
-              <PrivateRoute
-                exact
-                path="/view_all_project"
-                component={ViewAllProjects}
-              />
-              <PrivateRoute
-                exact
-                path="/archive_project"
-                component={ArchivedProject}
-              />
-              {/*Account route*/}
-              <PrivateRoute exact path="/payments" component={Payments} />
-              {/*setting route*/}
-              <PrivateRoute exact path="/my_profile" component={MyProfile} />
-              <PrivateRoute exact path="/roles" component={Roles} />
-              <Route exact path="/users" component={Users} />
-              <Route exact path="/config" component={Config} />
-              <Route
-                exact
-                path="/razorpay_credentials"
-                component={RazorpayCredentials}
-              />
-            </React.Suspense>
-          </MainLayout>
-          {/* <Route path="/404" component={Four_Zero_Foure} />
+            <MainLayout breakpoint={this.props.breakpoint}>
+              <React.Suspense fallback={<PageSpinner />}>
+                <Route exact path="/" component={Tabel} />
+                {/*master route*/}
+                <Route exact path="/Vendor" component={Vendor} />
+                <Route exact path="/addvendor" component={AddVendor} />
+                <Route exact path="/editvendor" component={EditVendor} />
+                <Route exact path="/partner" component={Partner} />
+                <Route exact path="/addpartner" component={AddPartner} />
+                <Route exact path="/editpartner" component={EditPartner} />
+                {/*doner route*/}
+                <Route exact path="/add_doner" component={AddDoner} />
+                <Route exact path="/edit_doner" component={EditDoner} />
+                <Route exact path="/view_recept" component={ViewRecept} />
+                <Route exact path="/view_all_doner" component={Doners} />
+                <Route
+                  exact
+                  path="/view_doner_id/id"
+                  component={Viewdonormodal}
+                />
+                <Route
+                  exact
+                  path="/upcoming_doner_renewal"
+                  component={UpcomingDonerRenewal}
+                />
+                {/*NGO route*/}
+                <Route exact path="/add_ngo" component={AddNgo} />
+                <Route exact path="/view_all_ngo" component={ViewAllNgo} />
+                {/*project route*/}
+                <Route
+                  exact
+                  path="/complete_project"
+                  component={CompleteProject}
+                />
+                <Route exact path="/add_project" component={AddProject} />
+                <Route
+                  exact
+                  path="/view_all_project"
+                  component={ViewAllProjects}
+                />
+                <Route
+                  exact
+                  path="/archive_project"
+                  component={ArchivedProject}
+                />
+                {/*Account route*/}
+                <Route exact path="/payments" component={Payments} />
+                {/*setting route*/}
+                <Route exact path="/my_profile" component={MyProfile} />
+                <Route exact path="/roles" component={Roles} />
+                <Route exact path="/users" component={Users} />
+                <Route exact path="/config" component={Config} />
+                <Route
+                  exact
+                  path="/razorpay_credentials"
+                  component={RazorpayCredentials}
+                />
+              </React.Suspense>
+            </MainLayout>
+            {/* <Route path="/404" component={Four_Zero_Foure} />
             <Redirect to="/404">{Four_Zero_Foure}</Redirect> */}
         </Switch>
         {/* </GAListener> */}
