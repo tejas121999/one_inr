@@ -74,30 +74,6 @@ const CreateReceiptForm = ({ modal, handleModal }) => {
           >
             {({ values, errors, touched, isSubmitting }) => (
               <Form className="login2">
-                {/* Project */}
-                <div className="form-group">
-                  <label className="mb-0" htmlFor="Project">
-                    Select Project *
-                  </label>
-                  <Field as="select" name="Project" className="form-control">
-                    <option value=""> Select Project </option>
-                    <option value="1">Feed Cows with grass of Love</option>
-                    <option value="2">Paying Children education fee</option>
-                    <option value="3">Sponsoring Books for Students</option>
-                    <option value="4">
-                      Sponsoring Stationary for Students
-                    </option>
-                    <option value="5">Feeding Pigeons Grains</option>
-                    <option value="6">Pehli Roti Dayitva Ki</option>
-                    <option value="7">this is testing project..</option>
-                    <option value="8">Behatar Swaasthay, Behatar Desh</option>
-                    <option value="9">Project One</option>
-                  </Field>
-                  {touched.Project && errors.Project ? (
-                    <small className="text-danger ">{errors.Project}</small>
-                  ) : null}
-                </div>
-
                 {/* Donar */}
                 <div className="form-group">
                   <label className="mb-0" htmlFor="Donar">
