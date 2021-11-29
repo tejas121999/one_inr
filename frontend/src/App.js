@@ -11,7 +11,7 @@ import AddDoner from './pages/Doner/AddDoner';
 import EditDoner from './pages/Doner/EditDoner';
 import UpcomingDonerRenewal from './pages/Doner/UpcomingDonerRenewal';
 import Doners from './pages/Donor/Donors';
-import ViewRecept from './pages/Donor/recept/ViewRecept';
+import ViewRecept from './pages/Doner/ViewRecept';
 import AddPartner from './pages/master/partner/AddPartner';
 import EditPartner from './pages/master/partner/EditPartner';
 import Partner from './pages/master/partner/Partner';
@@ -124,8 +124,8 @@ class App extends React.Component {
             </MainLayout>
             {/* <Route path="/404" component={Four_Zero_Foure} />
             <Redirect to="/404">{Four_Zero_Foure}</Redirect> */}
-        </Switch>
-        {/* </GAListener> */}
+          </Switch>
+        </GAListener>
       </BrowserRouter>
     );
   }

@@ -29,6 +29,7 @@ import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import CreateReceiptForm from '../../components/CreateReceiptForm';
+import EditReceipt from '../../Modals/Donor/EditReceipt';
 
 export default function ViewRecept() {
   const [order, setOrder] = React.useState('asc');
@@ -44,6 +45,8 @@ export default function ViewRecept() {
   const [recept, setReceipt] = React.useState([]);
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [modal, setModal] = React.useState(false);
+  const [modal1, setModal1] = React.useState(false);
+
   const [deleteId, setDeleteID] = React.useState(0);
 
   const history = useHistory();
@@ -52,6 +55,10 @@ export default function ViewRecept() {
   }, []);
   const handleModal = () => {
     setModal(!modal);
+  };
+
+  const handleModal1 = () => {
+    setModal1(!modal1);
   };
   const getViewRecepts = async () => {
     const url = BASE_URL + VIEW_RECEPT_URL;
@@ -150,6 +157,7 @@ export default function ViewRecept() {
           <input placeholder="Search" />
         </div>
         <CreateReceiptForm modal={modal} handleModal={handleModal} />
+        <EditReceipt modal1={modal1} handleModal1={handleModal1} />
         <Paper sx={{ width: '100%', mb: 2, height: '60vh' }}>
           {recept && recept.length > 0 ? (
             <React.Fragment>
@@ -216,7 +224,8 @@ export default function ViewRecept() {
                                 data-bs-toggle="tooltip"
                                 title="Edit"
                                 className="btn"
-                                onClick={() => history.push('/edit_doner', row)}
+                                // onClick={() => history.push('/edit_doner', row)}
+                                onClick={handleModal1}
                               >
                                 <FaRegEdit />
                               </button>
