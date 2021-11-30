@@ -71,7 +71,6 @@ class MainLayout extends React.Component {
         <Sidebar />
         <Content fluid onClick={this.handleContentClick}>
           <Header props={this.props} />
-          {console.log('this.props', this.props)}
           {children}
           <Footer />
         </Content>

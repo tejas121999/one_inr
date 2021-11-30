@@ -38,11 +38,8 @@ class Adddonor extends Component {
   });
   onAddDoner = async values => {
     const { parentsList } = this.state;
-
     const parentId = parentsList.filter(data => data.name == values.parent);
-
     let id = parentId && parentId.length ? parentId[0].id : 0;
-
     values.parent = id;
     console.log('Aded', values);
     const url = BASE_URL + ADD_DONOR_URL;

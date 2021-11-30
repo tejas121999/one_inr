@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://aa9e-110-227-211-43.ngrok.io/api/';
+export const BASE_URL = 'http://d2a7-110-227-211-43.ngrok.io/api/';
 export const ADD_DONOR_GET_PARENTS_URL = 'donor/parents/';
 export const ADD_DONOR_URL = 'donor';
 export const ADD_DONOR_FUND_URL = 'donor/balance';
