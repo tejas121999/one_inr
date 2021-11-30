@@ -1,10 +1,5 @@
-const models = require('../../models')
-const saltRounds = 10;
-const twinBcrypt = require('twin-bcrypt')
-const { generateJwtToken } = require('../../utils/tokens')
+const models = require('../models')
 
-//I am using twinBcrypt instead of bcrypt because its a migration project from php to node, where the password of every user has a prefix of $2y$ in the MySql DB.and twinbcrypt uses $2y$ prefix for encryption.
-//User Login 
 exports.userLogin = async (req, res) => {
     const { email, password } = req.body;
 
@@ -25,7 +20,10 @@ exports.userLogin = async (req, res) => {
     }
     const token = generateJwtToken(id)
 
-    const remember_token = await models.users.update({ rememberToken: token }, { where: { id: id } })
+    const remember_token = await models.users.update(
+        { rememberToken: token }, 
+        { where: { id: id } }
+        )
 
     if (token) {
         return res.status(200).json({
