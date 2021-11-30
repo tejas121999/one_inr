@@ -49,7 +49,7 @@ exports.ImageUpload = async (req, res) => {
         //     return res.status(400).json({ message: "Error while uploading the file" })
         // }
         // else {
-        return res.status(200).json({
+        return res.status(201).json({
 
             url: req.file.url,
             path: baseURL+req.file.path,
