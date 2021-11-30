@@ -1,29 +1,10 @@
-import logo200Image from 'assets/img/logo/logo_200.png';
 import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
 import SourceLink from 'components/SourceLink';
 import React from 'react';
 import {
-  MdAccountCircle,
-  MdArrowDropDownCircle,
-  MdBorderAll,
-  MdBrush,
-  MdChromeReaderMode,
   MdDashboard,
   MdExtension,
-  MdGroupWork,
-  MdInsertChart,
   MdKeyboardArrowDown,
-  MdNotificationsActive,
-  MdPages,
-  MdRadioButtonChecked,
-  MdSend,
-  MdStar,
-  MdTextFields,
-  MdViewCarousel,
-  MdViewDay,
-  MdViewList,
-  MdWeb,
-  MdWidgets,
   MdVolunteerActivism,
   MdOutlineAdminPanelSettings,
   MdOutlineInsertEmoticon,
@@ -46,7 +27,7 @@ import {
 import bn from 'utils/bemnames';
 const dashboardItems = [
   {
-    to: '/',
+    to: '/dashboard',
     name: 'dashboard',
     exact: true,
     Icon: MdDashboard,
@@ -54,9 +35,14 @@ const dashboardItems = [
 ];
 
 const masterItems = [
-  { to: 'Vendor', name: 'Vendor', exact: false, Icon: MdOutlineNavigateNext },
   {
-    to: '/Partner',
+    to: '/Vendor',
+    name: 'Vendor',
+    exact: false,
+    Icon: MdOutlineNavigateNext,
+  },
+  {
+    to: '/partner',
     name: 'Partner',
     exact: false,
     Icon: MdOutlineNavigateNext,
@@ -65,25 +51,25 @@ const masterItems = [
 
 const donorItems = [
   {
-    to: '/add_donnor',
+    to: '/add_doner',
     name: 'add donnor',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
-    to: '/view_all_donnor',
+    to: '/view_all_doner',
     name: `view all donnor's`,
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
-    to: '/Upcomming_doner_renewal',
+    to: '/upcoming_doner_renewal',
     name: 'Upcomming doner renewal',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
-    to: '/View_eceipts',
+    to: '/view_recept',
     name: 'View Receipts',
     exact: false,
     Icon: MdOutlineNavigateNext,
@@ -92,13 +78,13 @@ const donorItems = [
 
 const NGO_Item = [
   {
-    to: '/Add NGO',
+    to: '/add_ngo',
     name: 'Add NGO',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
-    to: `/view_all_NGO`,
+    to: '/view_all_ngo',
     name: `View All NGO's`,
     exact: false,
     Icon: MdOutlineNavigateNext,
@@ -113,19 +99,19 @@ const ProjectItems = [
     Icon: MdOutlineNavigateNext,
   },
   {
-    to: '/all_project',
+    to: '/view_all_project',
     name: 'View All Projects',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
-    to: '/completed_project',
+    to: '/complete_project',
     name: 'Completed Projects',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
-    to: '/archived_project',
+    to: '/archive_project',
     name: 'Archived Projects',
     exact: false,
     Icon: MdOutlineNavigateNext,
@@ -151,7 +137,7 @@ const SettingItems = [
   { to: '/users', name: 'users', exact: true, Icon: MdOutlineNavigateNext },
   { to: '/config', name: 'config', exact: true, Icon: MdOutlineNavigateNext },
   {
-    to: '/Razorpay_credentials',
+    to: '/razorpay_credentials',
     name: 'Razorpay credentials',
     exact: true,
     Icon: MdOutlineNavigateNext,
@@ -165,26 +151,78 @@ const bottomRemaingItems = [
     exact: true,
     Icon: MdOutlineEmail,
   },
-  { to: '/logout', name: 'Log out', exact: true, Icon: MdOutlineLogout },
+  { to: '/', name: 'Log out', exact: true, Icon: MdOutlineLogout },
 ];
 
 const bem = bn.create('sidebar');
 
 class Sidebar extends React.Component {
   state = {
-    isOpenComponents: false,
-    isOpenContents: false,
-    isOpenPages: false,
+    isOpenMaster: false,
+    isOpenDonor: false,
+    isOpenNgo: false,
+    isOpenProjects: false,
+    isOpenAccounts: false,
+    isOpenSettings: false,
   };
 
   handleClick = name => () => {
-    this.setState(prevState => {
-      const isOpen = prevState[`isOpen${name}`];
-
-      return {
-        [`isOpen${name}`]: !isOpen,
-      };
-    });
+    console.log('NAmes', name);
+    if (name == 'Master') {
+      this.setState({
+        isOpenMaster: !this.state.isOpenMaster,
+        isOpenDonor: false,
+        isOpenNgo: false,
+        isOpenProjects: false,
+        isOpenAccounts: false,
+        isOpenSettings: false,
+      });
+    } else if (name == 'Donor') {
+      this.setState({
+        isOpenMaster: false,
+        isOpenDonor: !this.state.isOpenDonor,
+        isOpenNgo: false,
+        isOpenProjects: false,
+        isOpenAccounts: false,
+        isOpenSettings: false,
+      });
+    } else if (name == 'Ngo') {
+      this.setState({
+        isOpenMaster: false,
+        isOpenDonor: false,
+        isOpenNgo: !this.state.isOpenNgo,
+        isOpenProjects: false,
+        isOpenAccounts: false,
+        isOpenSettings: false,
+      });
+    } else if (name == 'Projects') {
+      this.setState({
+        isOpenMaster: false,
+        isOpenDonor: false,
+        isOpenNgo: false,
+        isOpenProjects: !this.state.isOpenProjects,
+        isOpenAccounts: false,
+        isOpenSettings: false,
+      });
+    } else if (name == 'Accounts') {
+      this.setState({
+        isOpenMaster: false,
+        isOpenDonor: false,
+        isOpenNgo: false,
+        isOpenProjects: false,
+        isOpenAccounts: !this.state.isOpenAccounts,
+        isOpenSettings: false,
+      });
+    } else if (name == 'Settings') {
+      this.setState({
+        isOpenMaster: false,
+        isOpenDonor: false,
+        isOpenNgo: false,
+        isOpenProjects: false,
+        isOpenAccounts: false,
+        isOpenSettings: !this.state.isOpenSettings,
+      });
+    }
   };
 
   render() {
@@ -192,13 +230,6 @@ class Sidebar extends React.Component {
       <aside className={bem.b()} data-image={sidebarBgImage}>
         <div className={bem.e('background')} />
         <div className={bem.e('content')}>
-          <Navbar>
-            <img
-              src={logo200Image}
-              className="pr-2 logo_1INR"
-              alt="logo_1INR"
-            />
-          </Navbar>
           <Nav vertical>
             {dashboardItems.map(({ to, name, exact, Icon }, index) => (
               <NavItem
@@ -221,7 +252,7 @@ class Sidebar extends React.Component {
 
             <NavItem
               className={bem.e('nav-item')}
-              onClick={this.handleClick('Components')}
+              onClick={this.handleClick('Master')}
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
@@ -234,7 +265,7 @@ class Sidebar extends React.Component {
                   className={bem.e('nav-item-icon')}
                   style={{
                     padding: 0,
-                    transform: this.state.isOpenComponents
+                    transform: this.state.isOpenMaster
                       ? 'rotate(0deg)'
                       : 'rotate(-90deg)',
                     transitionDuration: '0.3s',
@@ -244,7 +275,7 @@ class Sidebar extends React.Component {
               </BSNavLink>
             </NavItem>
 
-            <Collapse isOpen={this.state.isOpenComponents}>
+            <Collapse isOpen={this.state.isOpenMaster}>
               {masterItems.map(({ to, name, exact, Icon }, index) => (
                 <NavItem
                   key={index}
@@ -267,7 +298,7 @@ class Sidebar extends React.Component {
 
             <NavItem
               className={bem.e('nav-item')}
-              onClick={this.handleClick('Contents')}
+              onClick={this.handleClick('Donor')}
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
@@ -278,7 +309,7 @@ class Sidebar extends React.Component {
                   className={bem.e('nav-item-icon')}
                   style={{
                     padding: 0,
-                    transform: this.state.isOpenContents
+                    transform: this.state.isOpenDonor
                       ? 'rotate(0deg)'
                       : 'rotate(-90deg)',
                     transitionDuration: '0.3s',
@@ -287,7 +318,7 @@ class Sidebar extends React.Component {
                 />
               </BSNavLink>
             </NavItem>
-            <Collapse isOpen={this.state.isOpenContents}>
+            <Collapse isOpen={this.state.isOpenDonor}>
               {donorItems.map(({ to, name, exact, Icon }, index) => (
                 <NavItem
                   key={index}
@@ -310,7 +341,7 @@ class Sidebar extends React.Component {
 
             <NavItem
               className={bem.e('nav-item')}
-              onClick={this.handleClick('Pages')}
+              onClick={this.handleClick('Ngo')}
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
@@ -321,7 +352,7 @@ class Sidebar extends React.Component {
                   className={bem.e('nav-item-icon')}
                   style={{
                     padding: 0,
-                    transform: this.state.isOpenPages
+                    transform: this.state.isOpenNgo
                       ? 'rotate(0deg)'
                       : 'rotate(-90deg)',
                     transitionDuration: '0.3s',
@@ -330,7 +361,7 @@ class Sidebar extends React.Component {
                 />
               </BSNavLink>
             </NavItem>
-            <Collapse isOpen={this.state.isOpenPages}>
+            <Collapse isOpen={this.state.isOpenNgo}>
               {NGO_Item.map(({ to, name, exact, Icon }, index) => (
                 <NavItem
                   key={index}
@@ -353,7 +384,7 @@ class Sidebar extends React.Component {
 
             <NavItem
               className={bem.e('nav-item')}
-              onClick={this.handleClick('Components2')}
+              onClick={this.handleClick('Projects')}
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
@@ -364,7 +395,7 @@ class Sidebar extends React.Component {
                   className={bem.e('nav-item-icon')}
                   style={{
                     padding: 0,
-                    transform: this.state.isOpenComponents2
+                    transform: this.state.isOpenProjects
                       ? 'rotate(0deg)'
                       : 'rotate(-90deg)',
                     transitionDuration: '0.3s',
@@ -374,7 +405,7 @@ class Sidebar extends React.Component {
               </BSNavLink>
             </NavItem>
 
-            <Collapse isOpen={this.state.isOpenComponents2}>
+            <Collapse isOpen={this.state.isOpenProjects}>
               {ProjectItems.map(({ to, name, exact, Icon }, index) => (
                 <NavItem
                   key={index}
@@ -397,7 +428,7 @@ class Sidebar extends React.Component {
 
             <NavItem
               className={bem.e('nav-item')}
-              onClick={this.handleClick('Components3')}
+              onClick={this.handleClick('Accounts')}
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
@@ -408,7 +439,7 @@ class Sidebar extends React.Component {
                   className={bem.e('nav-item-icon')}
                   style={{
                     padding: 0,
-                    transform: this.state.isOpenComponents3
+                    transform: this.state.isOpenAccounts
                       ? 'rotate(0deg)'
                       : 'rotate(-90deg)',
                     transitionDuration: '0.3s',
@@ -417,7 +448,7 @@ class Sidebar extends React.Component {
                 />
               </BSNavLink>
             </NavItem>
-            <Collapse isOpen={this.state.isOpenComponents3}>
+            <Collapse isOpen={this.state.isOpenAccounts}>
               {accountsItems.map(({ to, name, exact, Icon }, index) => (
                 <NavItem
                   key={index}
@@ -440,7 +471,7 @@ class Sidebar extends React.Component {
 
             <NavItem
               className={bem.e('nav-item')}
-              onClick={this.handleClick('Components4')}
+              onClick={this.handleClick('Settings')}
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
@@ -451,7 +482,7 @@ class Sidebar extends React.Component {
                   className={bem.e('nav-item-icon')}
                   style={{
                     padding: 0,
-                    transform: this.state.isOpenComponents4
+                    transform: this.state.isOpenSettings
                       ? 'rotate(0deg)'
                       : 'rotate(-90deg)',
                     transitionDuration: '0.3s',
@@ -461,7 +492,7 @@ class Sidebar extends React.Component {
               </BSNavLink>
             </NavItem>
 
-            <Collapse isOpen={this.state.isOpenComponents4}>
+            <Collapse isOpen={this.state.isOpenSettings}>
               {SettingItems.map(({ to, name, exact, Icon }, index) => (
                 <NavItem
                   key={index}

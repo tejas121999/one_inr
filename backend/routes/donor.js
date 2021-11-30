@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
-const {userRegister} = require('../controllers/authController')
-const {getAllDonor,getAllParentDetails,getDonorById,updateDonor,updateDonorBalance,deleteDonor} =require('../controllers/donors')
+const {userRegister} = require('../controllers/auth/authController')
+const {getAllDonor,getAllParentDetails,getDonorById,updateDonor,updateDonorBalance,deleteDonor} =require('../controllers/donors/donors')
 const {wrapper} = require('../utils/errorWrap')
 const validationError =require('../middleware/validationError')
 const {donorValidation,updateDonorValidation,updateDonorBalanceValidation} =require('../validations/donors')

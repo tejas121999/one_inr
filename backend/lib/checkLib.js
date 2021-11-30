@@ -14,12 +14,3 @@ exports.isEmpty = (value) => {
 exports.isNumeric = (value) => {
     return !isNaN(parseFloat(value)) && 'undefined' !== typeof value ? parseFloat(value) : false;
 }
-
-
-exports.isPermissionGive = (value, checkValue) => {
-    if (value.includes(checkValue)) {
-        return true
-    } else {
-        return false
-    }
-}
