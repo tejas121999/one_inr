@@ -1,5 +1,5 @@
-const models = require('../../models/index')
-const {paginationWithFromTo} = require('../../utils/pagination')
+const models = require('../models')
+const {paginationWithFromTo} = require('../utils/pagination')
 const sequelize = models.Sequelize;
 const Op = sequelize.Op;
 //Get all details of all donor in DB

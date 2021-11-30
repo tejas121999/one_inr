@@ -1,4 +1,4 @@
-const models = require("../../models")
+const models = require("../models")
 
 //Creating A Vendor 
 exports.addVendor = async (req,res) => {

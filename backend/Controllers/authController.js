@@ -1,7 +1,7 @@
-const models = require('../../models')
+const models = require('../models')
 const saltRounds = 10;
 const twinBcrypt = require('twin-bcrypt')
-const { generateJwtToken } = require('../../utils/tokens')
+const { generateJwtToken } = require('../utils/tokens')
 
 //I am using twinBcrypt instead of bcrypt because its a migration project from php to node, where the password of every user has a prefix of $2y$ in the MySql DB.and twinbcrypt uses $2y$ prefix for encryption.
 //User Login 
