@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
             field: 'bank_detals'
         },
 
-        pancard: {
+        panCard: {
             type: DataTypes.STRING,
             field: 'pancard'
         },
@@ -99,5 +99,5 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     return ngo;
-    // return ngos
+    
 }
