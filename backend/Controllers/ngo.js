@@ -1,30 +1,30 @@
 const models = require('../models');
-const paginantionFunc = require('../utils/pagination');
-const Sequelize = models.Sequelize
-const Op = Sequelize.Op;
+const { paginationWithFromTo } = require('../utils/pagination');
+const sequelize = models.Sequelize
+const Op = sequelize.Op;
 
-//Creating A ngo
+//Creating ngo
 exports.addNgo = async (req, res) => {
     try {
         let addNgo = await models.ngo.create({
-            userId: req.bodyy.userId,
-            address: req.bodyy.address,
-            registrationDate: req.bodyy.registrationDate,
-            registrationNumber: req.bodyy.registrationNumber,
-            landline: req.bodyy.landline,
-            contacts: req.bodyy.contacts,
-            bankDetails: req.bodyy.bankDetails,
-            panCard: req.bodyy.panCard,
-            panNumber: req.bodyy.panNumber,
-            certificate: req.bodyy.certificate,
-            charityRegistrationCertificate: req.bodyy.charityRegistrationCertificate,
-            dead: req.bodyy.dead,
-            logo: req.bodyy.logo,
-            signature: req.bodyy.signature,
-            createdAt: req.bodyy.createdAt,
-            updatedAt: req.bodyy.updatedAt,
-            deletedAt: req.bodyy.deletedAt,
-            isKyc: req.bodyy.isKyc
+            userId: req.body.userId,
+            address: req.body.address,
+            registrationDate: req.body.registrationDate,
+            registrationNumber: req.body.registrationNumber,
+            landline: req.body.landline,
+            contacts: req.body.contacts,
+            bankDetails: req.body.bankDetails,
+            panCard: req.body.panCard,
+            panNumber: req.body.panNumber,
+            certificate: req.body.certificate,
+            charityRegistrationCertificate: req.body.charityRegistrationCertificate,
+            dead: req.body.dead,
+            logo: req.body.logo,
+            signature: req.body.signature,
+            createdAt: req.body.createdAt,
+            updatedAt: req.body.updatedAt,
+            deletedAt: req.body.deletedAt,
+            isKyc: req.body.isKyc
         })
         if (!ngo) {
             return res.status(402).json({
@@ -43,40 +43,50 @@ exports.addNgo = async (req, res) => {
 }
 
 
-//update ngo
+//updating ngo
 exports.updateNgo = async (req, res) => {
     let ngoId = req.params.id;
-    // console.log('ngo id', ngo);
 
     let ngoExists = await models.ngo.findOne(
-        { where: { id: ngoId }} )}
-
-        if(!ngoExists) {
+        { where: { id: ngoId } })
+        
+        if (!ngoExists) {
             return res.status(402).json({
                 message: "Ngo Does not exists!"
             })
         }
+        
+}
+let ngoUpdate = await models.ngo.update(
+    {
+        userId: req.body.userId,
+        address: req.body.address,
+        registrationDate: req.body.registrationDate,
+        registrationNumber: req.body.registrationNumber,
+        landline: req.body.landline,
+        contacts: req.body.contacts,
+        bankDetails: req.body.bankDetails,
+        panCard: req.body.panCard,
+        panNumber: req.body.panNumber,
+        certificate: req.body.certificate,
+        charityRegistrationCertificate: req.body.charityRegistrationCertificate,
+        dead: req.body.dead,
+        logo: req.body.logo,
+        signature: req.body.signature,
+        createdAt: req.body.createdAt,
+        updatedAt: req.body.updatedAt,
+        deletedAt: req.body.deletedAt,
+        isKyc: req.body.isKyc
+    },
 
-        let ngoUpdate = await models.ngo.update(
-            {
-                userId: req.bodyy.userId,
-            address: req.bodyy.address,
-            registrationDate: req.bodyy.registrationDate,
-            registrationNumber: req.bodyy.registrationNumber,
-            landline: req.bodyy.landline,
-            contacts: req.bodyy.contacts,
-            bankDetails: req.bodyy.bankDetails,
-            panCard: req.bodyy.panCard,
-            panNumber: req.bodyy.panNumber,
-            certificate: req.bodyy.certificate,
-            charityRegistrationCertificate: req.bodyy.charityRegistrationCertificate,
-            dead: req.bodyy.dead,
-            logo: req.bodyy.logo,
-            signature: req.bodyy.signature,
-            createdAt: req.bodyy.createdAt,
-            updatedAt: req.bodyy.updatedAt,
-            deletedAt: req.bodyy.deletedAt,
-            isKyc: req.bodyy.isKyc
-            }
-        )
-    
+    {
+        where: { id: ngoId }
+    })
+
+if (ngoUpdate) {
+    return res.status(200).json({
+        message: "Ngo Details Updated Successfuly"
+    });
+}
+
+
