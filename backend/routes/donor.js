@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router()
-const {userRegister} = require('../controllers/authController')
+const {userRegister} = require('../Controllers/authController')
 const {getAllDonor,getAllParentDetails,getDonorById,updateDonor,updateDonorBalance,deleteDonor} =require('../controllers/donors')
 const {wrapper} = require('../utils/errorWrap')
 const validationError =require('../middleware/validationError')

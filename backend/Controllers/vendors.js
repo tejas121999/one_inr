@@ -1,4 +1,4 @@
-const models = require("../models/vendor")
+const models = require("../models")
 
 //Creating A Vendor 
 exports.addVendor = async (req,res) => {
@@ -38,7 +38,7 @@ exports.updateVendor = async (req,res)=>{
 
     let vendorUpdate = await models.vendors.update({name, email, phone, gst, pan, address, company, panImage,gstImage},{where : {id: vendorId}})
     if(vendorUpdate){   
-    return res.status(200).json({ messgae: `Vendor updated successfully` });
+    return res.status(201).json({ messgae: `Vendor updated successfully` });
     }
     
 }

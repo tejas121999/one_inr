@@ -1,4 +1,4 @@
-const models = require('../models/index')
+const models = require('../models')
 const {paginationWithFromTo} = require('../utils/pagination')
 const sequelize = models.Sequelize;
 const Op = sequelize.Op;
@@ -24,7 +24,6 @@ exports.getAllDonor = async (req, res) => {
         limit: pageSize,
         where : searchQuery
     })
-    console.log(data);
     if (!data) {
         return res.status(400).json({
             message : "Failed to get all data."
@@ -83,7 +82,7 @@ exports.updateDonor = async (req, res) => {
             message: "Failed to update donor"
         })
     }
-    return res.status(200).json({
+    return res.status(201).json({
         message: "Donor Updated Successfully",
     })
 }

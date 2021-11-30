@@ -9,6 +9,9 @@ import NotificationSystem from 'react-notification-system';
 import { NOTIFICATION_SYSTEM_STYLE } from 'utils/constants';
 
 class MainLayout extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   static isSidebarOpen() {
     return document
       .querySelector('.cr-sidebar')
@@ -67,7 +70,8 @@ class MainLayout extends React.Component {
       <main className="cr-app bg-light">
         <Sidebar />
         <Content fluid onClick={this.handleContentClick}>
-          <Header />
+          <Header props={this.props} />
+          {/* {console.log('this.props', this.props)} */}
           {children}
           <Footer />
         </Content>
