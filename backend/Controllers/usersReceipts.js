@@ -119,53 +119,53 @@ exports.updateUsersReceipts = async (req, res) => {
 
 
 // View / Read user receipts
-exports.readUserReceipts = async (req, res) => {
+// exports.readUserReceipts = async (req, res) => {
 
-    try {
-        let query = {};
-        //paginantion 
+//     try {
+//         let query = {};
+//         //paginantion 
 
-        const { search, offset, pageSize } = paginationFunc.paginationWithFromTo(
-            req.query.search,
-            req.query.from,
-            req.query.to
-        )
-        // Search query
-        const searchQuery = {
-            [Op.and]: [query, {
-                [Op.or]: {
-                    receiptNumber: { [Op.like]: search + '%' },
-                    amount: { [Op.like]: search + '%' },
-                    transactionType: { [Op.like]: search + '%' },
-                    realizationNo: { [Op.like]: search + '%' },
-                    realizationDate: { [Op.like]: search + '%' },
-                    transactionType: { [Op.like]: search + '%' },
-                    branch: { [Op.like]: search + '%' },
-                },
-            }],
+//         const { search, offset, pageSize } = paginationFunc.paginationWithFromTo(
+//             req.query.search,
+//             req.query.from,
+//             req.query.to
+//         )
+//         // Search query
+//         const searchQuery = {
+//             [Op.and]: [query, {
+//                 [Op.or]: {
+//                     receiptNumber: { [Op.like]: search + '%' },
+//                     amount: { [Op.like]: search + '%' },
+//                     transactionType: { [Op.like]: search + '%' },
+//                     realizationNo: { [Op.like]: search + '%' },
+//                     realizationDate: { [Op.like]: search + '%' },
+//                     transactionType: { [Op.like]: search + '%' },
+//                     branch: { [Op.like]: search + '%' },
+//                 },
+//             }],
 
-        }
+//         }
 
-        var result = await models.usersReceipts.findAndCountAll({
-            limit: pageSize,
-            offset: offset,
-            where: searchQuery,
-            order: [
-                ['updatedAt', , 'DESC']
-            ]
-        });
-        result = await models.usersReceipts.findAll({})
-        if (result.length == 0) {
-            res.send("Data Not found")
-        }
-        else {
-            res.send(result)
-        }
-    } catch (err) {
-        console.log(err)
-        return res.send(err)
-    }
-}
+//         var result = await models.usersReceipts.findAndCountAll({
+//             limit: pageSize,
+//             offset: offset,
+//             where: searchQuery,
+//             order: [
+//                 ['updatedAt', 'DESC']
+//             ]
+//         });
+//         result = await models.usersReceipts.findAll({})
+//         if (result.length == 0) {
+//             res.send("Data Not found")
+//         }
+//         else {
+//             res.send(result)
+//         }
+//     } catch (err) {
+//         console.log(err)
+//         return res.send(err)
+//     }
+// }
 
 
 

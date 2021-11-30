@@ -1,8 +1,11 @@
 const multer = require('multer')
+
 const baseURL = "http://localhost:3000/"
+
 exports.ImageUpload = async (req, res) => {
     let fileFor = req.query.reason;
 
+    //vendor file uploads path location
     let destination;
     if (fileFor == "vendor_pan") {
         destination = `public/uploads/vendor/pan_image/`
@@ -10,9 +13,30 @@ exports.ImageUpload = async (req, res) => {
     else if (fileFor = "vendor_gst") {
         destination = `public/uploads/vendor/gst_image/`
     }
-    else if (fileFor == "") {
 
-    }
+
+    //Ngo file Uploads path location
+    else if (fileFor == "pancard") {
+        destination = 'public/ngo/pancard/pancard_image/'
+
+    } else if (fileFor == "certificate") {
+        destination = 'public/ngo/certificate/certificate_image/'
+
+    } else if (fileFor == "charityRegistrationCertificate") {
+        destination = 'public/ngo/charityRegistrationCertificate/charityRegistrationCertificate_image/'
+
+    } else if (fileFor == "dead") {
+        destination = 'public/ngo/dead/dead_image/'
+
+    } else if (fileFor == "logo" ) {
+        destination = 'public/ngo/logo/logo_image/'
+
+    } else if (fileFor == " ") {
+
+        }
+
+
+
     const storage = multer.diskStorage({
         filename: (req, file, cb) => {
             const exactName = file.originalname.split('.');
@@ -49,15 +73,16 @@ exports.ImageUpload = async (req, res) => {
         //     return res.status(400).json({ message: "Error while uploading the file" })
         // }
         // else {
+
         return res.status(201).json({
 
             url: req.file.url,
             path: baseURL+req.file.path,
             filename: req.file.filename,
-
-
             message: "File Uploaded Successfully"
         })
+        
         // }
     })
 }
+
