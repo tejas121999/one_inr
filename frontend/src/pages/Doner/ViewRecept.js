@@ -29,6 +29,7 @@ import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import CreateReceiptForm from '../../components/CreateReceiptForm';
+import Loader from '../Loader';
 
 export default function ViewRecept() {
   const [order, setOrder] = React.useState('asc');
@@ -59,7 +60,6 @@ export default function ViewRecept() {
       .get(url)
       .then(res => {
         setReceipt(res.data.data.rows);
-        console.log(recept);
       })
       .catch(err => {
         console.log(err);
@@ -175,7 +175,7 @@ export default function ViewRecept() {
                       .map((row, index) => {
                         const isItemSelected = isSelected(row.name);
                         const labelId = `enhanced-table-checkbox-${index}`;
-
+                        console.log('data', row.branch);
                         return (
                           <TableRow
                             hover
@@ -190,14 +190,72 @@ export default function ViewRecept() {
                               scope="row"
                               padding="none"
                             >
-                              {row.name}
+                              {row.id}
                             </TableCell>
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.donor_name ? row.donor_name : '-'}
+                            </TableCell>
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.receiptNumber ? row.receiptNumber : '-'}
+                            </TableCell>
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.project_name ? row.project_name : '-'}
+                            </TableCell>
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.project_name ? row.project_name : '-'}
+                            </TableCell>
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.mailSend ? row.mailSend : 'Mail not send'}
+                            </TableCell>
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.recieptPdf ? 'view' : '-'}
+                            </TableCell>
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.createdAt ? row.createdAt : '-'}
+                            </TableCell>
+                            {/*
                             <TableCell align="center">
-                              {row.donated ? row.donated : '100'}
+                              {console.log('datatest', row)}
+                              {row.receiptNumber ? row.receiptNumber : '-'}
                             </TableCell>
                             <TableCell align="center">{row.balance}</TableCell>
                             <TableCell align="center">
-                              {row.project ? row.projects : '20'}
+                              {row.receiptNumber ? row.receiptNumber : '-'}
                             </TableCell>
                             <TableCell align="center">
                               {row.project ? row.projects : '20'}
@@ -210,7 +268,7 @@ export default function ViewRecept() {
                             </TableCell>
                             <TableCell align="center">
                               {row.project ? row.projects : '20'}
-                            </TableCell>
+                            </TableCell> */}
                             <TableCell align="center">
                               <button
                                 data-bs-toggle="tooltip"
@@ -238,7 +296,7 @@ export default function ViewRecept() {
               />
             </React.Fragment>
           ) : (
-            <h2 style={{ textAlign: 'center' }}>No data found</h2>
+            <Loader />
           )}
         </Paper>
       </div>
@@ -277,57 +335,57 @@ function stableSort(array, comparator) {
   return stabilizedThis.map(el => el[0]);
 }
 
-const headCells = [
+const tableHeader = [
   {
-    id: 'name',
+    id: '1',
     numeric: false,
     disablePadding: false,
     label: 'Sr No',
   },
   {
-    id: 'donated',
+    id: '2',
     numeric: true,
     disablePadding: false,
     label: 'Donor Name',
   },
   {
-    id: 'balance',
+    id: '3',
     numeric: true,
     disablePadding: false,
     label: 'Receipt No',
   },
   {
-    id: 'projects',
+    id: '4',
     numeric: true,
     disablePadding: false,
     label: 'Project Name',
   },
   {
-    id: 'projects',
+    id: '5',
     numeric: true,
     disablePadding: false,
     label: 'NGO Name',
   },
   {
-    id: 'projects',
+    id: '6',
     numeric: true,
     disablePadding: false,
     label: 'Mail Status',
   },
   {
-    id: 'projects',
+    id: '7',
     numeric: true,
     disablePadding: false,
     label: 'Receipt',
   },
   {
-    id: 'projects',
+    id: '8',
     numeric: true,
     disablePadding: false,
     label: 'Created At',
   },
   {
-    id: 'action',
+    id: '9',
     numeric: true,
     disablePadding: false,
     label: 'Action',
@@ -351,7 +409,7 @@ function EnhancedTableHead(props) {
   return (
     <TableHead className="table-head">
       <TableRow>
-        {headCells.map(headCell => (
+        {tableHeader.map(headCell => (
           <TableCell
             key={headCell.id}
             align="center"

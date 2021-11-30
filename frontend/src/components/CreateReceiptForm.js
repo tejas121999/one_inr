@@ -54,7 +54,7 @@ const CreateReceiptForm = ({ modal, handleModal }) => {
     <Modal show={modal} onHide={handleModal}>
       <Modal.Header closeButton>Create Receipt</Modal.Header>
       <Modal.Body>
-        <div className="container loginbg">
+        <div className="container">
           <Formik
             initialValues={{
               Project: '',

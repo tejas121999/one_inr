@@ -29,6 +29,7 @@ import {
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
+import Loader from '../Loader';
 
 export default function Donor() {
   const [order, setOrder] = React.useState('asc');
@@ -256,7 +257,7 @@ export default function Donor() {
               />
             </React.Fragment>
           ) : (
-            <h2 style={{ textAlign: 'center' }}>No data found</h2>
+            <Loader />
           )}
         </Paper>
       </div>
@@ -499,7 +500,7 @@ export function EnhancedTable() {
               />
             </React.Fragment>
           ) : (
-            <h2 style={{ textAlign: 'center' }}>No data found</h2>
+            <Loader />
           )}
         </Paper>
       </div>

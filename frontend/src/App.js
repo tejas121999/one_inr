@@ -48,60 +48,55 @@ class App extends React.Component {
     console.log('APp', this.props);
     return (
       <BrowserRouter basename={getBasename()}>
-        {/* <GAListener> */}
         <Switch>
           <Route exact path="/" component={Login} />
           <MainLayout breakpoint={this.props.breakpoint}>
             <React.Suspense fallback={<PageSpinner />}>
-              <PrivateRoute exact path="/dashboard" component={Tabel} />
+              <Route exact path="/dashboard" component={Tabel} />
 
               {/*master route*/}
-              <PrivateRoute exact path="/Vendor" component={Vendor} />
-              <PrivateRoute exact path="/addvendor" component={AddVendor} />
-              <PrivateRoute exact path="/editvendor" component={EditVendor} />
-              <PrivateRoute exact path="/partner" component={Partner} />
-              <PrivateRoute exact path="/addpartner" component={AddPartner} />
-              <PrivateRoute exact path="/editpartner" component={EditPartner} />
+              <Route exact path="/Vendor" component={Vendor} />
+              <Route exact path="/addvendor" component={AddVendor} />
+              <Route exact path="/editvendor" component={EditVendor} />
+              <Route exact path="/partner" component={Partner} />
+              <Route exact path="/addpartner" component={AddPartner} />
+              <Route exact path="/editpartner" component={EditPartner} />
               {/*doner route*/}
-              <PrivateRoute exact path="/add_doner" component={AddDoner} />
-              <PrivateRoute exact path="/edit_doner" component={EditDoner} />
-              <PrivateRoute exact path="/view_recept" component={ViewRecept} />
-              <PrivateRoute
-                exact
-                path="/view_all_doner"
-                component={ViewAllDoner}
-              />
-              <PrivateRoute
+              <Route exact path="/add_doner" component={AddDoner} />
+              <Route exact path="/edit_doner" component={EditDoner} />
+              <Route exact path="/view_recept" component={ViewRecept} />
+              <Route exact path="/view_all_doner" component={ViewAllDoner} />
+              <Route
                 exact
                 path="/upcoming_doner_renewal"
                 component={UpcomingDonerRenewal}
               />
-              <PrivateRoute exact path="/forgot" component={Forgot} />
+              <Route exact path="/forgot" component={Forgot} />
               {/*NGO route*/}
-              <PrivateRoute exact path="/add_ngo" component={AddNgo} />
-              <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />
+              <Route exact path="/add_ngo" component={AddNgo} />
+              <Route exact path="/view_all_ngo" component={ViewAllNgo} />
               {/*project route*/}
-              <PrivateRoute
+              <Route
                 exact
                 path="/complete_project"
                 component={CompleteProject}
               />
-              <PrivateRoute exact path="/add_project" component={AddProject} />
-              <PrivateRoute
+              <Route exact path="/add_project" component={AddProject} />
+              <Route
                 exact
                 path="/view_all_project"
                 component={ViewAllProjects}
               />
-              <PrivateRoute
+              <Route
                 exact
                 path="/archive_project"
                 component={ArchivedProject}
               />
               {/*Account route*/}
-              <PrivateRoute exact path="/payments" component={Payments} />
+              <Route exact path="/payments" component={Payments} />
               {/*setting route*/}
-              <PrivateRoute exact path="/my_profile" component={MyProfile} />
-              <PrivateRoute exact path="/roles" component={Roles} />
+              <Route exact path="/my_profile" component={MyProfile} />
+              <Route exact path="/roles" component={Roles} />
               <Route exact path="/users" component={Users} />
               <Route exact path="/config" component={Config} />
               <Route
@@ -114,7 +109,6 @@ class App extends React.Component {
           {/* <Route path="/404" component={Four_Zero_Foure} />
             <Redirect to="/404">{Four_Zero_Foure}</Redirect> */}
         </Switch>
-        {/* </GAListener> */}
       </BrowserRouter>
     );
   }

@@ -163,7 +163,7 @@ class Sidebar extends React.Component {
     super(props);
     this.state = {
       isOpenMaster: false,
-      isOpenDonor: false,
+      isOpenDonor: true,
       isOpenNgo: false,
       isOpenProjects: false,
       isOpenAccounts: false,
@@ -177,6 +177,7 @@ class Sidebar extends React.Component {
 
   handleClick = name => () => {
     console.log('NAmes', name);
+
     if (name == 'Master') {
       this.setState({
         isOpenMaster: !this.state.isOpenMaster,

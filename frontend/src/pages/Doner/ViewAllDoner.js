@@ -22,10 +22,12 @@ import {
 import './Donor.css';
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
-import { ADD_DONOR_URL, BASE_URL } from '../../API/APIEndpoints';
+import { ADD_DONOR_URL, BASE_URL, GetAllDonor } from '../../API/APIEndpoints';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
+import Loader from '../Loader';
+import { toast, ToastContainer } from 'react-toast';
 
 export const constData = [
   {
@@ -154,7 +156,8 @@ export default function EnhancedTable() {
     await axios
       .get(url)
       .then(res => {
-        setDonorList(res.data.data.rows);
+        setDonorList(res.data.data.message);
+        toast.success('Yeay! New data is here.');
       })
       .catch(err => {
         console.log(err);
@@ -204,6 +207,10 @@ export default function EnhancedTable() {
 
   return (
     <>
+      <br />
+      <br />
+      <br />
+      <br />
       <Viewdonormodal
         show={viewModal}
         onHide={ViewModalClose}
@@ -258,6 +265,7 @@ export default function EnhancedTable() {
         <Paper sx={{ width: '100%', mb: 2 }}>
           {donorList && donorList.length > 0 ? (
             <React.Fragment>
+              <ToastContainer delay={3000} />
               <TableContainer>
                 <Table
                   sx={{ minWidth: 750 }}
@@ -362,7 +370,7 @@ export default function EnhancedTable() {
               />
             </React.Fragment>
           ) : (
-            <h2 style={{ textAlign: 'center' }}>No data found</h2>
+            <Loader />
           )}
         </Paper>
       </div>
