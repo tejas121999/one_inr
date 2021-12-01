@@ -25,9 +25,6 @@ export const AddUserReceipt_FAIL = 'AddUserReceipt_FAIL';
 export const UpdateUserReceipt = 'UpdateUserReceipt';
 export const UpdateUserReceipt_FAIL = 'UpdateUserReceipt_FAIL';
 
-export const VIEW_DONER_BY_ID = 'VIEW_DONER_BY_ID';
-export const VIEW_DONER_BY_ID_FAIL = 'VIEW_DONER_BY_ID_FAIL';
-
 export const REGISTER_USER = 'REGISTER_USER';
 export const REGISTER_USER_FAIL = 'REGISTER_USER_FAIL';
 
@@ -43,5 +40,11 @@ export const add_Donor_Fund_FAIL = 'add_Donor_Fund_FAIL';
 export const Create_Vendor = 'Create_Vendor';
 export const Create_Vendor_FAIL = 'Create_Vendor_FAIL';
 
-export const Update_Vendor_By_Id = 'Update_Vendor_By_Id';
-export const Update_Vendor_By_Id_FAIL = 'Update_Vendor_By_Id_FAIL';
+export const DELETE_DONOR_BY_ID = 'DELETE_DONOR_BY_ID';
+export const DELETE_DONOR_BY_ID_FAIL = 'DELETE_DONOR_BY_ID_FAIL';
+
+export const CREATE_VENDOR = 'CREATE_VENDOR';
+export const CREATE_VENDOR_FAIL = 'CREATE_VENDOR_FAIL';
+
+export const UPDATE_VENDOR_BY_ID = 'UPDATE_VENDOR_BY_ID';
+export const UPDATE_VENDOR_BY_ID_FAIL = 'UPDATE_VENDOR_BY_ID_FAIL';
