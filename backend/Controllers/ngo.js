@@ -7,6 +7,7 @@ const Op = sequelize.Op;
 //Creating ngo
 exports.addNgo = async (req, res) => {
         let addNgo = await models.ngo.create({
+
             userId: req.body.userId,
             address: req.body.address,
             registrationDate: req.body.registrationDate,
@@ -20,19 +21,17 @@ exports.addNgo = async (req, res) => {
             charityRegistrationCertificate: req.body.charityRegistrationCertificate,
             dead: req.body.dead,
             logo: req.body.logo,
-            signature: req.body.signature,
-            createdAt: req.body.createdAt,
-            updatedAt: req.body.updatedAt,
-            deletedAt: req.body.deletedAt,
+            signature: req.body.signature,            
             isKyc: req.body.isKyc
-        })
+        }) 
+        console.log((addNgo));
         if (!addNgo) {
-            return res.status(402).json({
-                message: 'Failed to create Users Receipts'
+            return res.status(400).json({
+                message: 'Failed to create NGO'
             })
         } else {
-            return res.status(200).json({
-                message: 'Users Receipts created successfully'
+            return res.status(201).json({
+                message: 'NGO created successfully'
             })
         }
 }
@@ -72,9 +71,6 @@ let ngoUpdate = await models.ngo.update(
         dead: req.body.dead,
         logo: req.body.logo,
         signature: req.body.signature,
-        createdAt: req.body.createdAt,
-        updatedAt: req.body.updatedAt,
-        deletedAt: req.body.deletedAt,
         isKyc: req.body.isKyc
     },
 

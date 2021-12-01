@@ -1,4 +1,6 @@
 const { body } = require('express-validator');
+const { isNumeric } = require('../lib/checkLib');
+const models = require ('../models');
 
 exports.ngoValidation = [
 
@@ -15,23 +17,14 @@ exports.ngoValidation = [
         .notEmpty().withMessage('Registration Number is required'),
 
     body('landline')
-        .exists().withMessage('land line is required')
-        .notEmpty().withMessage('land line is required')
+        .exists().withMessage('landline is required')
+        .notEmpty().withMessage('landline is required')
+        .isNumeric().withMessage('Only Numbers allowed')
+        .is
         .custom(async value => {
-            if(!/^(?(?=^[\d\-]{0,12}$)[0-9]\d{2,4}-\d{6,8})$/i.test(value)) {
-                return Promise.reject("invalid landline number");
-            }
-        })
-        .custom(async value => {
-            return await models.users.findOne({
-                where: {
-                    landline: value,
-                }
-            }).then(landline => {
-                if(landline) {
-                    return Promise.reject("landline number alredy exists!");
-                }
-            })
+            if(isNumeric > 10) {
+                return Promise.reject('Numbers Exceeding')
+            } 
         }),
 
     body('contacts')
@@ -43,7 +36,7 @@ exports.ngoValidation = [
             }
         })
         .custom(async value => {
-            return await models.users.findOne({
+            return await models.ngo.findOne({
                 where: {
                     contacts: value,
                 }
@@ -71,7 +64,7 @@ exports.ngoValidation = [
             }
         })
         .custom(async value => {
-            return await models.users.findOne({
+            return await models.ngo.findOne({
                 where: {
                     panNumber: value,
                 }
@@ -105,7 +98,4 @@ exports.ngoValidation = [
     body('isKyc')
         .exists().withMessage('KYC is required')
         .notEmpty().withMessage('KYC is required'),
-
-
-
 ]
