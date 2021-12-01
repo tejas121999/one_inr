@@ -3,32 +3,29 @@ import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import '../../pages/Doner/Donor.css';
 import { ADD_DONOR_FUND_URL, BASE_URL } from '../../API/APIEndpoints';
+import { useDispatch } from 'react-redux';
+import {
+  addDonorFundAction,
+  getViewAllDonorAction,
+} from '../../Redux/Actions/DonorActions';
 
 const Addfund = props => {
   const [balance, setBalance] = useState(0);
   const [userId, setId] = useState(0);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     setId(props.data);
   }, [props]);
 
   const onSubmit = async () => {
-    const url = BASE_URL + `donor/balance/${userId}`;
-    console.log('ModalURL', url, balance);
+    console.log('ModalURL', balance);
     const obj = {
       balance: parseInt(balance),
     };
-    await axios
-      .put(url, obj)
-      .then(res => {
-        console.log('fundAtt', res);
-        setBalance(0);
-        // props.getDonor();
-        props.onHide();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    await dispatch(addDonorFundAction(userId, obj));
+
+    setBalance(0);
+    props.onHide();
   };
   return (
     <React.Fragment>

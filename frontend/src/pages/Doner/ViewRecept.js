@@ -31,6 +31,7 @@ import Donordelete from '../../Modals/Donor/DonorDelete';
 import CreateReceiptForm from '../../components/CreateReceiptForm';
 import Loader from '../Loader';
 import { getViewReceiptDonorAction } from '../../Redux/Actions/DonorActions';
+import { useDispatch } from 'react-redux';
 
 export default function ViewRecept() {
   const [order, setOrder] = React.useState('asc');
@@ -47,10 +48,10 @@ export default function ViewRecept() {
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [modal, setModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
-
+  const dispatch = useDispatch();
   const history = useHistory();
   React.useEffect(() => {
-    dispatchEvent(getViewReceiptDonorAction());
+    dispatch(getViewReceiptDonorAction());
   }, []);
   const handleModal = () => {
     setModal(!modal);

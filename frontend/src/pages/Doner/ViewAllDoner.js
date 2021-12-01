@@ -27,10 +27,11 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import Loader from '../Loader';
-import { toast, ToastContainer } from 'react-toast';
-import { useDispatch } from 'react-redux';
-import { getViewAllDonorAction } from '../../Redux/Actions/DonorActions';
-
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getDonorByValueAction,
+  getViewAllDonorAction,
+} from '../../Redux/Actions/DonorActions';
 export const constData = [
   {
     id: 1,
@@ -133,7 +134,6 @@ export const constData = [
     email: 'akshay@gmail.com',
   },
 ];
-
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -145,7 +145,7 @@ export default function EnhancedTable() {
   const [viewData, setViewData] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
   const [fundModalData, setFundModalData] = React.useState(0);
-  const [donorList, setDonorList] = React.useState([]);
+  // const [donorList, setDonorList] = React.useState([]);
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
   const history = useHistory();
@@ -166,6 +166,9 @@ export default function EnhancedTable() {
   //       console.log(err);
   //     });
   // };
+
+  let donorList = useSelector(state => state.donor.ViewAllDonor);
+
   const ViewModalOpen = data => {
     setViewData(data);
     setViewModal(true);
@@ -207,7 +210,25 @@ export default function EnhancedTable() {
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - donorList.length) : 0;
+  // SEARCH
+  let timeout = null;
+  const handleChange = e => {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      onSearch(e.target.value);
+    }, 1000);
+  };
 
+  const onSearch = value => {
+    if (value) {
+      console.log('Seacrh', value);
+      dispatch(getDonorByValueAction(value));
+    } else {
+      dispatch(getViewAllDonorAction());
+    }
+  };
+
+  // END
   return (
     <>
       <br />
@@ -253,12 +274,11 @@ export default function EnhancedTable() {
           >
             Export
           </button>
-          <input placeholder="Search" />
+          <input placeholder="Search" onChange={e => handleChange(e)} />
         </div>
         <Paper sx={{ width: '100%', mb: 2 }}>
           {donorList && donorList.length > 0 ? (
             <React.Fragment>
-              <ToastContainer delay={3000} />
               <TableContainer>
                 <Table
                   sx={{ minWidth: 750 }}
@@ -354,12 +374,14 @@ export default function EnhancedTable() {
               </TableContainer>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
-                component="div"
+                component="datalist"
                 count={donorList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
+                showLastButton
+                showFirstButton
               />
             </React.Fragment>
           ) : (

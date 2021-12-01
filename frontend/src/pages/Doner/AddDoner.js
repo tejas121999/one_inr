@@ -9,7 +9,7 @@ import {
   addDonorAction,
 } from '../../Redux/Actions/DonorActions';
 import { connect } from 'react-redux';
-import { constData } from '../Donor/Donors';
+import { constData } from './ViewAllDoner';
 
 class Adddonor extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Adddonor extends Component {
   }
 
   getParentList = async () => {
-    this.props.getAllParentDonorAction();
+    await this.props.getAllParentDonorAction();
   };
 
   validationSchema = yup.object({
@@ -33,10 +33,10 @@ class Adddonor extends Component {
       .required('required')
       .min(10, 'Please enter 10 digits'),
     emailId: yup.string().email('Invalid Email Format').required('Required'),
-    password: yup.string().required('Required').min(8, 'Should be 5 character'),
+    password: yup.string().required('Required').min(5, 'Should be 5 character'),
   });
   onAddDoner = async values => {
-    const { parentsList } = this.state;
+    const { parentsList } = this.props;
 
     const parentId = parentsList.filter(data => data.name == values.parent);
 
@@ -52,11 +52,11 @@ class Adddonor extends Component {
       password: values.password,
       parentId: id,
     };
-    this.props.addDonorAction(obj);
+    this.props.addDonorAction(obj, this.props.history);
   };
   render() {
     const { parentsList } = this.props;
-    console.log('ADD', this.props);
+    console.log('ADD', parentsList);
 
     return (
       <React.Fragment>

@@ -34,11 +34,12 @@ import DonorServices from '../Services/DonorServices';
 
 // 2.getAllParentDonorAction
 
-export const getAllParentDonorAction = () => {
+export const getAllParentDonorAction = data => {
   return dispatch => {
     DonorServices.getAllParentDonor()
       .then(res => {
-        dispatch(getAllParentDonorList(res.data.result));
+        console.log('Parents', res.data.data);
+        dispatch(getAllParentDonorList(res.data.data));
       })
       .catch(error => {});
   };
@@ -53,12 +54,13 @@ export const getAllParentDonorList = data => {
 
 // 3.add Donor
 
-export const addDonorAction = body => {
+export const addDonorAction = (body, history) => {
   if (navigator.onLine) {
     return dispatch => {
       DonorServices.AddNewDonor(body)
         .then(res => {
           dispatch(addDonor(res));
+          history.push('/view_all_doner');
           //need to add toster here
         })
         .catch(err => {
@@ -86,16 +88,25 @@ export const addDonorFail = data => {
 
 // 4.getViewAllDonorAction
 
-export const getViewAllDonorAction = () => {
+export const getViewAllDonorAction = data => {
   return dispatch => {
     DonorServices.getViewAllDonor()
       .then(res => {
-        dispatch(getViewAllDonorList(res.data.result));
+        console.log('GetAll', res.data.data);
+        dispatch(getViewAllDonorList(res.data.data));
       })
-      .catch(error => dispatch(onViewAllDonorFail(error)));
+      .catch(error => dispatch(onViewAllDonorFail(data)));
   };
 };
 
+export const getDonorByValueAction = value => {
+  return dispatch => {
+    DonorServices.getDonorByValue(value).then(res => {
+      console.log('GetAllSearch', res.data.data);
+      dispatch(getViewAllDonorList(res.data.data));
+    });
+  };
+};
 export const getViewAllDonorList = data => {
   return {
     type: AllDonor,
@@ -138,12 +149,13 @@ export const onViewReceiptFail = data => {
 
 // 6.add Donor Fund
 
-export const addDonorFundAction = body => {
+export const addDonorFundAction = (id, body) => {
   if (navigator.onLine) {
     return dispatch => {
-      DonorServices.AddDonorfund(body)
+      DonorServices.AddDonorfund(id, body)
         .then(res => {
           dispatch(addDonor_fund(res));
+          dispatch(getViewAllDonorAction());
           //need to add toster here
         })
         .catch(err => {
@@ -390,7 +402,9 @@ export const DeleteDonorByIdAction = id => {
     return dispatch => {
       DonorServices.DeleteDonorById(id)
         .then(res => {
-          dispatch(DeleteDonorByIdData(res));
+          // dispatch(DeleteDonorByIdData(res));
+          alert('DELETED');
+          dispatch(getViewAllDonorAction());
           //need to add toster here
         })
         .catch(err => {

@@ -163,7 +163,7 @@ class Sidebar extends React.Component {
     super(props);
     this.state = {
       isOpenMaster: false,
-      isOpenDonor: true,
+      isOpenDonor: false,
       isOpenNgo: false,
       isOpenProjects: false,
       isOpenAccounts: false,
