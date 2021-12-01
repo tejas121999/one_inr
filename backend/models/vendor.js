@@ -43,7 +43,8 @@ module.exports = (sequelize,DataTypes)=>{
         
     },{
         freezeTableName: true,
-        tableName: 'vendors'
+        tableName: 'vendors',
+        timestamps: false
     })
     return Vendor
 }
