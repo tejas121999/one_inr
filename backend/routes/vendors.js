@@ -7,12 +7,12 @@ const {wrapper} = require('../utils/errorWrap')
 const {addVendor,updateVendor,getAllVendor}= require('../controllers/vendors') //Importing Vendor controller.
 
 const validationError = require('../middleware/validationError')
-const {createVendorValidation} = require('../validations/vendors')
+const {createVendorValidation,updateVendorValidation,deleteDonor} = require('../validations/vendors')
 
 
 
 router.post('/',createVendorValidation,validationError,wrapper(addVendor))
-router.put('/:id',wrapper(updateVendor))
+router.put('/:id',updateVendorValidation,validationError,wrapper(updateVendor))
 router.get('/',wrapper(getAllVendor))
-
+router.delete('',wrapper())
 module.exports = router;

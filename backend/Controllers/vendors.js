@@ -76,3 +76,26 @@ exports.updateVendor = async (req, res) => {
     }
 
 }
+
+
+
+exports.deleteVendor = async (req,res) => {
+    let id = req.params.id
+    let vendorExists = await models.vendors.findOne({ where: { id: id } })
+    if (!vendorExists) {
+        return res.status(400).json({
+            message: "Vendor does not exists"
+        })
+    }
+
+    let data = models.users.destroy({ where: { id: id } })
+    console.log(`data`, data)
+    if (!data) {
+        return res.status(200).json({
+            message: "Failed to delete a user"
+        })
+    }
+    return res.status(200).json({
+        message: "Vendor deleted scuccessfully."
+    })
+}
