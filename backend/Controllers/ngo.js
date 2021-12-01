@@ -1,11 +1,11 @@
 const models = require('../models');
-const { paginationWithFromTo } = require('../utils/pagination');
+const { paginationWithPageNumberPageSize } = require('../utils/pagination');
 const sequelize = models.Sequelize
 const Op = sequelize.Op;
 
+
 //Creating ngo
 exports.addNgo = async (req, res) => {
-    try {
         let addNgo = await models.ngo.create({
             userId: req.body.userId,
             address: req.body.address,
@@ -26,7 +26,7 @@ exports.addNgo = async (req, res) => {
             deletedAt: req.body.deletedAt,
             isKyc: req.body.isKyc
         })
-        if (!ngo) {
+        if (!addNgo) {
             return res.status(402).json({
                 message: 'Failed to create Users Receipts'
             })
@@ -35,12 +35,11 @@ exports.addNgo = async (req, res) => {
                 message: 'Users Receipts created successfully'
             })
         }
-    } catch (err) {
-        console.log(err);
-        return res.status(400).json({ message: err })
-    }
-
 }
+
+
+
+
 
 
 //updating ngo
@@ -56,7 +55,7 @@ exports.updateNgo = async (req, res) => {
             })
         }
         
-}
+
 let ngoUpdate = await models.ngo.update(
     {
         userId: req.body.userId,
@@ -89,4 +88,67 @@ if (ngoUpdate) {
     });
 }
 
+}
+
+
+
+//Read ngo details
+exports.getAllNgo = async (req, res) => {
+        let query = {};
+
+    //pagination
+    const searchQuery = {
+        [Op.and]: [query, {
+            [Op.or]: {
+                address: { [Op.like]: search + '%' },
+                landline: { [Op.like]: search + '%'},
+                contacts: { [Op.like]: search + '%'},
+                panNumber: { [Op.like]: search + '%'}
+            },
+        }],
+    }
+
+    var result = await models.ngo.findAndCountAll({
+        limit: paginationWithPageNumberPageSize,
+        offset: offset,
+        where: searchQuery,
+        order: [
+            ['updatedAt', 'DESC']
+        ]
+    });
+
+    result = await models.ngo.findAll({})
+        if (result.length == 0) {
+            res.send("Data Not found")
+        }
+        else {
+            res.send(result)
+        }
+}
+
+
+
+//Delete NGO details
+exports.deleteNgo = async (req, res) => {
+    let id = req.params.id
+
+    let ngoExists = await models.ngo.findOne({
+        where: { id: id}
+    })
+    if(!ngoExists) {
+        return res.status(400).json({
+            message: "Ngo Details does not Exists..."
+        })
+    }
+
+    let data = models.ngo.destroy({
+        where: { id : id }
+    })
+    console.log('data', data)
+    if(!data) {
+        return res.status(200).json({
+            message: "NGO details deleted successfully..."
+        })
+    }
+}
 

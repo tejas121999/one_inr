@@ -106,3 +106,4 @@ module.exports = (sequelize, DataTypes) => {
     return ngo;
     
 }
+

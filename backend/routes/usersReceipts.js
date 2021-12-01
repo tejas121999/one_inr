@@ -23,7 +23,7 @@ router.post('/add-user',  usersReceiptsValidation, validationError, wrapper(user
 
 router.put('/update-user/:id', usersReceiptsValidation, validationError, wrapper(userRecieptController.updateUsersReceipts))//Update User reciept
 
-router.get('/read-user', readUserReceipts, validationError, wrapper(userRecieptController.readUserReceipts))
-//Read User reciepts
+// router.get('/read-user', readUserReceipts, validationError, wrapper(userRecieptController.readUserReceipts))
+// //Read User reciepts
 
 module.exports = router;
