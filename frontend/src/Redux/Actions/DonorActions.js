@@ -1,31 +1,36 @@
-import { ADD_DONOR_FUND, VIEW_RECEIPT } from '../../API/APIEndpoints';
+import {
+  AddUserReceipt,
+  AddUserReceipt_FAIL,
+  ADD_DONOR,
+  ADD_DONOR_FAIL,
+  add_Donor_Fund,
+  ADD_DONOR_FUND,
+  add_Donor_Fund_FAIL,
+  ADD_DONOR_FUND_FAIL,
+  AllDonor,
+  AllDonor_FAILED,
+  CREATE_VENDOR,
+  CREATE_VENDOR_FAIL,
+  DELETE_DONOR_BY_ID,
+  DELETE_DONOR_BY_ID_FAIL,
+  Get_Donor_By_Id,
+  Get_Donor_By_Id_FAIL,
+  GET_PARENT_LIST,
+  REGISTER_USER,
+  REGISTER_USER_FAIL,
+  UpdateUserReceipt,
+  UpdateUserReceipt_FAIL,
+  Update_Donor_By_Id,
+  Update_Donor_By_Id_FAIL,
+  UPDATE_VENDOR_BY_ID,
+  Update_Vendor_By_Id,
+  UPDATE_VENDOR_BY_ID_FAIL,
+  VIEW_DONER_BY_ID,
+  VIEW_DONER_BY_ID_FAIL,
+  VIEW_RECEIPT,
+  VIEW_RECEIPT_FAILED,
+} from '../constTypes';
 import DonorServices from '../Services/DonorServices';
-
-// 1.Login
-
-export const Login = () => {
-  return dispatch => {
-    DonorServices.LoginAuth()
-      .then(res => {
-        dispatch(LoginAuthData(res.data.result));
-      })
-      .catch(error => dispatch(onParentDonorFail(error)));
-  };
-};
-
-export const LoginAuthData = data => {
-  return {
-    type: LoginAuth,
-    payload: data,
-  };
-};
-
-export const onLoginAuthFail = data => {
-  return {
-    type: LoginAuthFail,
-    payload: data,
-  };
-};
 
 // 2.getAllParentDonorAction
 
@@ -35,20 +40,13 @@ export const getAllParentDonorAction = () => {
       .then(res => {
         dispatch(getAllParentDonorList(res.data.result));
       })
-      .catch(error => dispatch(onParentDonorFail(error)));
+      .catch(error => {});
   };
 };
 
 export const getAllParentDonorList = data => {
   return {
     type: GET_PARENT_LIST,
-    payload: data,
-  };
-};
-
-export const onParentDonorFail = data => {
-  return {
-    type: GET_PARENT_LIST_FAILED,
     payload: data,
   };
 };
@@ -64,7 +62,6 @@ export const addDonorAction = body => {
           //need to add toster here
         })
         .catch(err => {
-          dispatch(addDonorFail(res));
           //need to add toster here
         });
     };
@@ -141,7 +138,7 @@ export const onViewReceiptFail = data => {
 
 // 6.add Donor Fund
 
-export const addDonorAction = body => {
+export const addDonorFundAction = body => {
   if (navigator.onLine) {
     return dispatch => {
       DonorServices.AddDonorfund(body)
@@ -150,7 +147,6 @@ export const addDonorAction = body => {
           //need to add toster here
         })
         .catch(err => {
-          dispatch(addDonor_fundFail(res));
           //need to add toster here
         });
     };
@@ -168,7 +164,7 @@ export const addDonor_fund = data => {
 
 export const addDonor_fundFail = data => {
   return {
-    type: ADD_DONOR_FUND_FAIL,
+    type: add_Donor_Fund_FAIL,
     payload: data,
   };
 };
@@ -184,7 +180,6 @@ export const AddUserReceiptAction = body => {
           //need to add toster here
         })
         .catch(err => {
-          dispatch(oncreateUserReceiptDataFail(res));
           //need to add toster here
         });
     };
@@ -208,24 +203,6 @@ export const oncreateUserReceiptDataFail = data => {
 };
 
 //7.b add user receipt
-
-export const AddUserReceiptAction = body => {
-  if (navigator.onLine) {
-    return dispatch => {
-      DonorServices.updateUserReceipt(body)
-        .then(res => {
-          dispatch(updateUserReceiptData(res));
-          //need to add toster here
-        })
-        .catch(err => {
-          dispatch(onUpdateUserReceiptDataFail(res));
-          //need to add toster here
-        });
-    };
-  } else {
-    //need to add toster here
-  }
-};
 
 export const updateUserReceiptData = data => {
   return {
@@ -252,7 +229,6 @@ export const viewDonorByIdAction = id => {
           //need to add toster here
         })
         .catch(err => {
-          dispatch(onviewDonorByIdDataFail(res));
           //need to add toster here
         });
     };
@@ -286,7 +262,6 @@ export const RegisterUserAction = body => {
           //need to add toster here
         })
         .catch(err => {
-          dispatch(onRegisterUserDataFail(res));
           //need to add toster here
         });
     };
@@ -320,7 +295,6 @@ export const GetDonorByIdAction = id => {
           //need to add toster here
         })
         .catch(err => {
-          dispatch(onGetDonorByIdDataFail(res));
           //need to add toster here
         });
     };
@@ -354,7 +328,6 @@ export const UpdateDonorByIdAction = id => {
           //need to add toster here
         })
         .catch(err => {
-          dispatch(onUpdateDonorByIdDataFail(res));
           //need to add toster here
         });
     };
@@ -388,7 +361,6 @@ export const UpdateDonorfundAction = id => {
           //need to add toster here
         })
         .catch(err => {
-          dispatch(onUpdateDonorfundDataFail(res));
           //need to add toster here
         });
     };
@@ -422,7 +394,6 @@ export const DeleteDonorByIdAction = id => {
           //need to add toster here
         })
         .catch(err => {
-          dispatch(onDeleteDonorByIdDataFail(res));
           //need to add toster here
         });
     };
@@ -433,14 +404,14 @@ export const DeleteDonorByIdAction = id => {
 
 export const DeleteDonorByIdData = data => {
   return {
-    type: Delete_Donor_By_Id,
+    type: DELETE_DONOR_BY_ID,
     payload: data,
   };
 };
 
 export const onDeleteDonorByIdDataFail = data => {
   return {
-    type: Delete_Donor_By_Id_FAIL,
+    type: DELETE_DONOR_BY_ID_FAIL,
     payload: data,
   };
 };
@@ -456,7 +427,6 @@ export const CreateVendorAction = body => {
           //need to add toster here
         })
         .catch(err => {
-          dispatch(onCreateVendorDataFail(res));
           //need to add toster here
         });
     };
@@ -467,14 +437,14 @@ export const CreateVendorAction = body => {
 
 export const CreateVendorData = data => {
   return {
-    type: Create_Vendor,
+    type: CREATE_VENDOR,
     payload: data,
   };
 };
 
 export const onCreateVendorDataFail = data => {
   return {
-    type: Create_Vendor_FAIL,
+    type: CREATE_VENDOR_FAIL,
     payload: data,
   };
 };
@@ -490,7 +460,6 @@ export const UpdateVendorByIdAction = id => {
           //need to add toster here
         })
         .catch(err => {
-          dispatch(onUpdateVendorByIdDataFail(res));
           //need to add toster here
         });
     };
@@ -501,14 +470,14 @@ export const UpdateVendorByIdAction = id => {
 
 export const UpdateVendorByIdData = data => {
   return {
-    type: Update_Vendor_By_Id,
+    type: UPDATE_VENDOR_BY_ID,
     payload: data,
   };
 };
 
 export const onUpdateVendorByIdDataFail = data => {
   return {
-    type: Update_Vendor_By_Id_FAIL,
+    type: UPDATE_VENDOR_BY_ID_FAIL,
     payload: data,
   };
 };

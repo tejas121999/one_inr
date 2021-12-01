@@ -28,6 +28,8 @@ import { useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import Loader from '../Loader';
 import { toast, ToastContainer } from 'react-toast';
+import { useDispatch } from 'react-redux';
+import { getViewAllDonorAction } from '../../Redux/Actions/DonorActions';
 
 export const constData = [
   {
@@ -147,22 +149,23 @@ export default function EnhancedTable() {
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
   const history = useHistory();
+  const dispatch = useDispatch();
   React.useEffect(() => {
-    getDonorList();
+    dispatch(getViewAllDonorAction());
   }, []);
 
-  const getDonorList = async () => {
-    const url = BASE_URL + ADD_DONOR_URL;
-    await axios
-      .get(url)
-      .then(res => {
-        setDonorList(res.data.data.message);
-        toast.success('Yeay! New data is here.');
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
+  // const getDonorList = async () => {
+  //   const url = BASE_URL + ADD_DONOR_URL;
+  //   await axios
+  //     .get(url)
+  //     .then(res => {
+  //       setDonorList(res.data.data.message);
+  //       toast.success('Yeay! New data is here.');
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
   const ViewModalOpen = data => {
     setViewData(data);
     setViewModal(true);
@@ -216,18 +219,8 @@ export default function EnhancedTable() {
         onHide={ViewModalClose}
         data={viewData}
       />
-      <Addfund
-        show={fundModal}
-        onHide={fundModaClose}
-        data={fundModalData}
-        getDonor={getDonorList}
-      />
-      <Donordelete
-        show={deleteModal}
-        onHide={deleteModalClose}
-        id={deleteId}
-        getDonor={getDonorList}
-      />
+      <Addfund show={fundModal} onHide={fundModaClose} data={fundModalData} />
+      <Donordelete show={deleteModal} onHide={deleteModalClose} id={deleteId} />
       <div className="card">
         <p
           style={{

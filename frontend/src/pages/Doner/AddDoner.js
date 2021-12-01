@@ -3,13 +3,11 @@ import React, { Component } from 'react';
 import './Donor.css';
 import * as yup from 'yup';
 import axios from 'axios';
-import {
-  GET_ALL_PARENT_URL,
-  ADD_DONOR_URL,
-  BASE_URL,
-} from '../../API/APIEndpoints';
 import { useHistory } from 'react-router-dom';
-import { getParentListAction } from '../../Redux/Actions/DonorActions';
+import {
+  getAllParentDonorAction,
+  addDonorAction,
+} from '../../Redux/Actions/DonorActions';
 import { connect } from 'react-redux';
 import { constData } from '../Donor/Donors';
 
@@ -24,17 +22,9 @@ class Adddonor extends Component {
   }
 
   getParentList = async () => {
-    const url = BASE_URL + GET_ALL_PARENT_URL;
-    const res = await axios
-      .get(url)
-      .then(res => {
-        console.log('Response', res);
-        this.setState({ parentsList: res.data.data });
-      })
-      .catch(err => {
-        console.log('Error', err);
-      });
+    this.props.getAllParentDonorAction();
   };
+
   validationSchema = yup.object({
     fName: yup.string().required('Required'),
     lName: yup.string().required('required'),
@@ -54,23 +44,15 @@ class Adddonor extends Component {
 
     values.parent = id;
     console.log('Aded', values);
-    const url = BASE_URL + ADD_DONOR_URL;
+
     const obj = {
       name: values.fName + ' ' + values.lName,
       email: values.emailId,
       mobile: values.phoneNumber,
       password: values.password,
       parentId: id,
-      isPriyank: values.isPriyank,
     };
-    await axios
-      .post(url, obj)
-      .then(res => {
-        this.props.history.push('/view_all_doner');
-      })
-      .catch(err => {
-        alert(err);
-      });
+    this.props.addDonorAction(obj);
   };
   render() {
     const { parentsList } = this.props;
@@ -271,4 +253,7 @@ const mapStateToProps = state => ({
   parentsList: state.donor.allParent,
 });
 
-export default connect(mapStateToProps, { getParentListAction })(Adddonor);
+export default connect(mapStateToProps, {
+  getAllParentDonorAction,
+  addDonorAction,
+})(Adddonor);

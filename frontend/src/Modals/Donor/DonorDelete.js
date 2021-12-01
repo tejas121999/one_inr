@@ -11,7 +11,7 @@ const Donordelete = props => {
       .delete(Url)
       .then(res => {
         alert('deleted');
-        props.getDonor();
+
         props.onHide();
       })
       .catch(err => {

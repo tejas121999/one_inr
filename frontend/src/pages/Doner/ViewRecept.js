@@ -30,6 +30,7 @@ import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import CreateReceiptForm from '../../components/CreateReceiptForm';
 import Loader from '../Loader';
+import { getViewReceiptDonorAction } from '../../Redux/Actions/DonorActions';
 
 export default function ViewRecept() {
   const [order, setOrder] = React.useState('asc');
@@ -49,22 +50,12 @@ export default function ViewRecept() {
 
   const history = useHistory();
   React.useEffect(() => {
-    getViewRecepts();
+    dispatchEvent(getViewReceiptDonorAction());
   }, []);
   const handleModal = () => {
     setModal(!modal);
   };
-  const getViewRecepts = async () => {
-    const url = BASE_URL + VIEW_RECEPT_URL;
-    await axios
-      .get(url)
-      .then(res => {
-        setReceipt(res.data.data.rows);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
+
   const ViewModalOpen = data => {
     setViewData(data);
     setViewModal(true);

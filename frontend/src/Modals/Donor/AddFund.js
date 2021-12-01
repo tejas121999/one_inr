@@ -23,7 +23,7 @@ const Addfund = props => {
       .then(res => {
         console.log('fundAtt', res);
         setBalance(0);
-        props.getDonor();
+        // props.getDonor();
         props.onHide();
       })
       .catch(err => {

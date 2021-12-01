@@ -5,7 +5,7 @@ import logo from '../assets/img/logo/logo_200.png';
 import './login.css';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { loginAdmin } from '../Redux/Actions/authAction';
+import { LoginAdmin } from '../Redux/Actions/authAction';
 
 let validationSchema = yup.object().shape({
   email: yup
@@ -21,7 +21,7 @@ const Forgot = props => {
   const loginHandler = values => {
     console.log('values2', values);
     if (values) {
-      dispatch(loginAdmin(values, props.history));
+      dispatch(LoginAdmin(values, props.history));
     }
   };
 

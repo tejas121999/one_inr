@@ -1,36 +1,30 @@
-import axios from 'axios';
-import { BASE_URL, LOGIN_URL } from '../../API/APIEndpoints';
-import { LOGIN_FAILED, LOGIN } from '../constTypes';
+import { LoginAuth, LoginAuthFail } from '../constTypes';
 
-export const loginAdmin = (body, history) => {
+// 1.Login
+
+export const LoginAdmin = () => {
   return dispatch => {
-    const URL = BASE_URL + LOGIN_URL;
-    axios
-      .post(URL, body)
-      .then(response => {
-        console.log('response', response.data);
+    DonorServices.LoginAuth()
+      .then(res => {
+        dispatch(LoginAuthData(res.data.result));
         localStorage.setItem('Token', response.data.Token);
-        dispatch(getLoggedInUser(response.data));
+        dispatch(LoginAuthData(response.data));
         history.push('/dashboard');
       })
-      .catch(error => {
-        dispatch(onLoginFailed(error));
-        console.log('error', error);
-      });
+      .catch(error => dispatch(onLoginAuthFail(error)));
   };
 };
 
-export const getLoggedInUser = data => {
-  console.log('reducer call', data);
+export const LoginAuthData = data => {
   return {
-    type: LOGIN,
+    type: LoginAuth,
     payload: data,
   };
 };
 
-export const onLoginFailed = data => {
+export const onLoginAuthFail = data => {
   return {
-    type: LOGIN_FAILED,
+    type: LoginAuthFail,
     payload: data,
   };
 };

@@ -18,7 +18,7 @@ import {
   VIEW_DONER_BY_ID_FAIL,
   VIEW_RECEIPT,
   VIEW_RECEIPT_FAILED,
-  REGISTER_USER_FAIR,
+  REGISTER_USER_FAIL,
   Get_Donor_By_Id,
   Get_Donor_By_Id_FAIL,
   Update_Donor_By_Id,
@@ -212,7 +212,7 @@ export const DonorReducer = (state = initialState, action) => {
       };
     }
 
-    case REGISTER_USER_FAIR: {
+    case REGISTER_USER_FAIL: {
       return {
         ...state,
         registeUser: action.payload,
