@@ -21,6 +21,8 @@ import {
 } from 'react-icons/fa';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { getViewAllDonorAction } from '../../../Redux/Actions/DonorActions';
+import { useDispatch } from 'react-redux';
 // import './Donor.css';
 // import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 // import Addfund from '../../Modals/Donor/AddFund';
@@ -162,23 +164,10 @@ export default function Partner() {
   const [viewData, setViewData] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
   const [partner, setPartner] = React.useState([]);
-
+  const dispatch = useDispatch();
   React.useEffect(() => {
-    getDonorList();
+    dispatch(getViewAllDonorAction());
   }, []);
-
-  const getDonorList = async () => {
-    const url = BASE_URL + GET_ALL_PARENT_URL;
-    await axios
-      .get(url)
-      .then(res => {
-        setPartner(res.data.data);
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
 
   const ViewModalOpen = data => {
     setViewData(data);
