@@ -2,6 +2,7 @@ const models = require('../models')
 const {paginationWithFromTo} = require('../utils/pagination')
 const sequelize = models.Sequelize;
 const Op = sequelize.Op;
+const moment = require('moment')
 //Get all details of all donor in DB
 exports.getAllDonor = async (req, res) => {
     const { search, offset, pageSize } = paginationWithFromTo(
@@ -19,7 +20,7 @@ exports.getAllDonor = async (req, res) => {
           },
         }]
       };
-    const data = await models.users.findAndCountAll({
+    const data = await models.users.findAll({
         offset: offset,
         limit: pageSize,
         where : searchQuery
@@ -31,8 +32,9 @@ exports.getAllDonor = async (req, res) => {
     
     }
     return res.status(200).json({
-        data: data,
         message: "Success",
+        count : data.length,
+        data: data,
 
     })
 }
@@ -129,5 +131,49 @@ exports.deleteDonor = async (req, res) => {
     }
     return res.status(200).json({
         message: "Donor deleted scuccessfully."
+    })
+}
+
+exports.getAllUpcomingDonors = async (req,res)=>{
+    const { search, offset, pageSize } = paginationWithFromTo(
+        req.query.search,
+        req.query.from,
+        req.query.to
+    );
+    let query = {};
+
+    //Using moment to get the first date of the current year
+    const startDate = moment().startOf('year'); 
+    //to get the last date of the current year 
+    const endDate = moment().endOf('year');
+
+    const searchQuery = {
+        [Op.and]: [query, {
+          [Op.or]: {
+            name: { [Op.like]: search + "%" },
+            balance : {[Op.like] : search + '%'} ,
+             }
+        }],
+        balanceNextRenewDate : { [Op.between]: [startDate ,endDate]},
+
+      };
+    
+    const data = await models.users.findAll({
+        where : searchQuery,
+        offset: offset,
+        limit: pageSize,        
+        
+    })
+    if (!data) {
+        return res.status(400).json({
+            message : "Failed to get all data."
+            
+        })
+    }
+    return res.status(200).json({
+        count : data.length,
+        message: "Success",
+        data: data,
+
     })
 }

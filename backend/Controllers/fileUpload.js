@@ -1,6 +1,6 @@
 const multer = require('multer')
 
-const baseURL = "http://localhost:3000/"
+const baseURL = process.env.BASE_URL
 
 exports.ImageUpload = async (req, res) => {
     let fileFor = req.query.reason;
