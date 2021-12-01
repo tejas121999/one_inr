@@ -17,35 +17,32 @@ exports.ngoValidation = [
         .notEmpty().withMessage('Registration Number is required'),
 
     body('landline')
-        .exists().withMessage('landline is required')
-        .notEmpty().withMessage('landline is required')
-        .isNumeric().withMessage('Only Numbers allowed')
-        .is
-        .custom(async value => {
-            if(isNumeric > 10) {
-                return Promise.reject('Numbers Exceeding')
-            } 
-        }),
+    .exists().withMessage('landline number is Required')
+    .notEmpty().withMessage('landline Number is required')
+    .custom(async (value) => {
+        return await models.vendors.findOne({
+            where: { phone: value }
+        }).then(phone => {
+            if (phone) {
+                return Promise.reject("landline Number Already Exists")
 
-    body('contacts')
-        .exists().withMessage('Contacts is required')
-        .notEmpty().withMessage('Contacts is required')
-        .custom(async value => {
-            if(!/^[0-9]{10}$/i.test(value)) {
-                return Promise.reject("invalid contact number");
             }
         })
-        .custom(async value => {
-            return await models.ngo.findOne({
-                where: {
-                    contacts: value,
-                }
-            }).then(contacts => {
-                if(contacts) {
-                    return Promise.reject("Contact number alredy exists!");
-                }
-            })
-        }),
+    }),
+
+    body('contacts')
+    .exists().withMessage('Mobile number is Required')
+    .notEmpty().withMessage('Mobile Number is required')
+    .custom(async (value) => {
+        return await models.vendors.findOne({
+            where: { phone: value }
+        }).then(phone => {
+            if (phone) {
+                return Promise.reject("Mobile Number Already Exists")
+
+            }
+        })
+    }),
 
     body('bankDetails')
         .exists().withMessage('Bank Details is required')

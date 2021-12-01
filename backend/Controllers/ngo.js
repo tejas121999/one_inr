@@ -1,5 +1,5 @@
 const models = require('../models');
-const { paginationWithPageNumberPageSize } = require('../utils/pagination');
+const paginationFunc = require('../utils/pagination');
 const sequelize = models.Sequelize
 const Op = sequelize.Op;
 
@@ -14,7 +14,7 @@ exports.addNgo = async (req, res) => {
             registrationNumber: req.body.registrationNumber,
             landline: req.body.landline,
             contacts: req.body.contacts,
-            bankDetails: req.body.bankDetails,
+            bankDetails: req.body.bankDetails, //JSON.stringify(req.body.bankDetails)
             panCard: req.body.panCard,
             panNumber: req.body.panNumber,
             certificate: req.body.certificate,
@@ -24,7 +24,8 @@ exports.addNgo = async (req, res) => {
             signature: req.body.signature,            
             isKyc: req.body.isKyc
         }) 
-        console.log((addNgo));
+        // const newNGO = addNgo.map((ele) => ele.bankDetails = JSON.str(ele.bankDetails))
+        // console.log((addNgo));
         if (!addNgo) {
             return res.status(400).json({
                 message: 'Failed to create NGO'
@@ -93,6 +94,13 @@ exports.getAllNgo = async (req, res) => {
         let query = {};
 
     //pagination
+    const { search, offset, pageSize } = paginationFunc.paginationWithFromTo(
+        req.query.search,
+        req.query.from,
+        req.query.to
+    )
+
+    //SEARCH QUERY
     const searchQuery = {
         [Op.and]: [query, {
             [Op.or]: {
@@ -105,7 +113,7 @@ exports.getAllNgo = async (req, res) => {
     }
 
     var result = await models.ngo.findAndCountAll({
-        limit: paginationWithPageNumberPageSize,
+        limit: pageSize,
         offset: offset,
         where: searchQuery,
         order: [
@@ -113,13 +121,17 @@ exports.getAllNgo = async (req, res) => {
         ]
     });
 
-    result = await models.ngo.findAll({})
-        if (result.length == 0) {
-            res.send("Data Not found")
-        }
-        else {
-            res.send(result)
-        }
+    // result = await models.ngo.findAll({})
+    if (!result) {
+        return res.status(400).json({
+            message: "Failed to get all data."
+        })
+    }
+
+    return res.status(200).json({
+        result: result ,
+        message: "Found All Data."
+    })
 }
 
 
@@ -141,10 +153,15 @@ exports.deleteNgo = async (req, res) => {
         where: { id : id }
     })
     console.log('data', data)
-    if(!data) {
+    if(data) {
         return res.status(200).json({
             message: "NGO details deleted successfully..."
         })
+    } else {
+        res.status(400).json({
+            message: err
+        })
     }
+    
 }
 
