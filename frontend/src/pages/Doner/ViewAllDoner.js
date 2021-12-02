@@ -374,14 +374,14 @@ export default function EnhancedTable() {
               </TableContainer>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
-                component="datalist"
+                component="div"
                 count={donorList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
-                showLastButton
-                showFirstButton
+                showLastButton={true}
+                showFirstButton={true}
               />
             </React.Fragment>
           ) : (
