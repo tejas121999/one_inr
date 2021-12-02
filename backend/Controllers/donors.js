@@ -124,7 +124,7 @@ exports.deleteDonor = async (req, res) => {
 
     let data = models.users.destroy({ where: { id: id } })
     if (!data) {
-        return res.status(200).json({
+        return res.status(204).json({
             message: "Failed to delete a user"
         })
     }
