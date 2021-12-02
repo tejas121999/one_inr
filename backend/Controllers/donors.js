@@ -70,7 +70,7 @@ exports.getDonorById = async (req, res) => {
 //Updating a Donor
 exports.updateDonor = async (req, res) => {
     let id = req.params.id
-    let { name, mobile, email, plan, balanceNextRenewDate } = req.body;
+    let { name, mobile, email, plan, parentId ,balanceNextRenewDate } = req.body;
     let donorExists = await models.users.findOne({ where: { id: id } })
     if (!donorExists) {
         return res.status(400).json({
@@ -78,7 +78,7 @@ exports.updateDonor = async (req, res) => {
         })
     }
 
-    let donorUpdate = await models.users.update({ name, mobile, email, plan, balanceNextRenewDate }, { where: { id: id } })
+    let donorUpdate = await models.users.update({ name, mobile, email,parentId, plan, balanceNextRenewDate }, { where: { id: id } })
     if (!donorUpdate[0]) {
         return res.status(400).json({
             message: "Failed to update donor"
@@ -123,7 +123,6 @@ exports.deleteDonor = async (req, res) => {
     }
 
     let data = models.users.destroy({ where: { id: id } })
-    console.log(`data`, data)
     if (!data) {
         return res.status(200).json({
             message: "Failed to delete a user"
