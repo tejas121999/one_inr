@@ -1,7 +1,7 @@
 const sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    const ngo = sequelize.define('ngos', {
+    const ngo = sequelize.define('ngo', {
         userId: {
             type: DataTypes.INTEGER,
             field: 'user_id'
@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
 
         bankDetails: {
             type: DataTypes.STRING,
-            field: 'bank_detals'
+            field: 'bank_details'
         },
 
         panCard: {
@@ -69,23 +69,23 @@ module.exports = (sequelize, DataTypes) => {
 
         signature: {
             type: DataTypes.STRING,
-            field: 'signaure'
+            field: 'signature'
         },
 
-        createdAt: {
-            type: DataTypes.DATE,
-            field: 'created_at'
-        },
+        // createdAt: {
+        //     type: DataTypes.DATE,
+        //     field: 'created_at'
+        // },
 
-        updatedAt: {
-            type: DataTypes.DATE,
-            fied: 'updated_at'
-        },
+        // updatedAt: {
+        //     type: DataTypes.DATE,
+        //     fied: 'updated_at'
+        // },
 
-        deletedAt: {
-            type: DataTypes.DATE,
-            field: 'deleted_at'
-        },
+        // deletedAt: {
+        //     type: DataTypes.DATE,
+        //     field: 'deleted_at'
+        // },
 
         isKyc: {
             type: DataTypes.BOOLEAN,
@@ -94,13 +94,15 @@ module.exports = (sequelize, DataTypes) => {
 
         isActive: {
             type: DataTypes.BOOLEAN,
-            field: 'is_active'
+            field: 'is_active',
+            default: true
         }
     },
     
     {
         freezeTableName: true,
         tableName: 'ngos'
+        // timestamps: true
     });
 
     return ngo;

@@ -1,4 +1,6 @@
 const { body } = require('express-validator');
+const { isNumeric } = require('../lib/checkLib');
+const models = require ('../models');
 
 exports.ngoValidation = [
 
@@ -15,44 +17,32 @@ exports.ngoValidation = [
         .notEmpty().withMessage('Registration Number is required'),
 
     body('landline')
-        .exists().withMessage('land line is required')
-        .notEmpty().withMessage('land line is required')
-        .custom(async value => {
-            if(!/^(?(?=^[\d\-]{0,12}$)[0-9]\d{2,4}-\d{6,8})$/i.test(value)) {
-                return Promise.reject("invalid landline number");
+    .exists().withMessage('landline number is Required')
+    .notEmpty().withMessage('landline Number is required')
+    .custom(async (value) => {
+        return await models.vendors.findOne({
+            where: { phone: value }
+        }).then(phone => {
+            if (phone) {
+                return Promise.reject("landline Number Already Exists")
+
             }
         })
-        .custom(async value => {
-            return await models.users.findOne({
-                where: {
-                    landline: value,
-                }
-            }).then(landline => {
-                if(landline) {
-                    return Promise.reject("landline number alredy exists!");
-                }
-            })
-        }),
+    }),
 
     body('contacts')
-        .exists().withMessage('Contacts is required')
-        .notEmpty().withMessage('Contacts is required')
-        .custom(async value => {
-            if(!/^[0-9]{10}$/i.test(value)) {
-                return Promise.reject("invalid contact number");
+    .exists().withMessage('Mobile number is Required')
+    .notEmpty().withMessage('Mobile Number is required')
+    .custom(async (value) => {
+        return await models.vendors.findOne({
+            where: { phone: value }
+        }).then(phone => {
+            if (phone) {
+                return Promise.reject("Mobile Number Already Exists")
+
             }
         })
-        .custom(async value => {
-            return await models.users.findOne({
-                where: {
-                    contacts: value,
-                }
-            }).then(contacts => {
-                if(contacts) {
-                    return Promise.reject("Contact number alredy exists!");
-                }
-            })
-        }),
+    }),
 
     body('bankDetails')
         .exists().withMessage('Bank Details is required')
@@ -71,7 +61,7 @@ exports.ngoValidation = [
             }
         })
         .custom(async value => {
-            return await models.users.findOne({
+            return await models.ngo.findOne({
                 where: {
                     panNumber: value,
                 }
@@ -105,7 +95,4 @@ exports.ngoValidation = [
     body('isKyc')
         .exists().withMessage('KYC is required')
         .notEmpty().withMessage('KYC is required'),
-
-
-
 ]

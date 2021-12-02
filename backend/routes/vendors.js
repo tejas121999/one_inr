@@ -1,18 +1,18 @@
 var express = require('express');
 var router = express.Router();
 
-
 const {wrapper} = require('../utils/errorWrap')
 
 
-const {addVendor,updateVendor}= require('../controllers/vendors') //Importing Vendor controller.
+const {addVendor,updateVendor,getAllVendor}= require('../controllers/vendors') //Importing Vendor controller.
 
 const validationError = require('../middleware/validationError')
-const {customerValidation} = require('../validations/vendors')
+const {createVendorValidation} = require('../validations/vendors')
 
 
 
-router.post('/',customerValidation,validationError,wrapper(addVendor))
-router.put('/:id',customerValidation,validationError,wrapper(updateVendor))
+router.post('/',createVendorValidation,validationError,wrapper(addVendor))
+router.put('/:id',wrapper(updateVendor))
+router.get('/',wrapper(getAllVendor))
 
 module.exports = router;
