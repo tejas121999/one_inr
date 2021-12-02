@@ -1,6 +1,6 @@
 const multer = require('multer')
 
-const baseURL = "http://localhost:3000/"
+const baseURL = process.env.BASE_URL
 
 exports.ImageUpload = async (req, res) => {
     let fileFor = req.query.reason;
@@ -22,7 +22,7 @@ exports.ImageUpload = async (req, res) => {
     } else if (fileFor == "certificate") {
         destination = 'public/ngo/certificate/certificate_image/'
 
-    } else if (fileFor == "charityRegistrationCertificate") {
+    } else if (fileFor == "charity_registration_certificate") {
         destination = 'public/ngo/charityRegistrationCertificate/charityRegistrationCertificate_image/'
 
     } else if (fileFor == "dead") {
