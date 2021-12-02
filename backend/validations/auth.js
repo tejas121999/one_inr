@@ -10,5 +10,5 @@ exports.loginValidation = [
     body('password')
         .exists().withMessage("Password is Required")
         .notEmpty().withMessage("Password is Required")
-        .isLength({ min: 8 }).withMessage("Min password length is 8"),
+        .isLength({ min: 4 }).withMessage("Min password length is 4"),
 ]
