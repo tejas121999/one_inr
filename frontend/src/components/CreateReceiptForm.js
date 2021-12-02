@@ -4,9 +4,13 @@ import * as yup from 'yup';
 import logo from '../assets/img/logo/logo_200.png';
 // import '../pages/login.css';
 import { NavLink, useHistory } from 'react-router-dom';
-import { BASE_URL, GetAllDonor, AddUserReceipt } from '../API/APIEndpoints';
-import axios from 'axios';
+
 import { Button, Modal } from 'react-bootstrap';
+import {
+  AddUserReceiptAction,
+  getViewAllDonorAction,
+} from '../Redux/Actions/DonorActions';
+import { useDispatch } from 'react-redux';
 
 let validationSchema = yup.object().shape({
   Project: yup.string().required(),
@@ -22,39 +26,34 @@ let validationSchema = yup.object().shape({
 
 const CreateReceiptForm = ({ modal, handleModal }) => {
   let history = useHistory();
+  const dispatch = useDispatch();
   const [donorList, setDonorList] = useState([]);
   useEffect(() => {
-    const URL = BASE_URL + GetAllDonor;
-    axios
-      .get(URL)
-      .then(response => {
-        // console.log('response', response.data.data.rows);
-        setDonorList(response.data.data.rows);
-        // return response.data.data.rows;
-      })
-      .catch(error => {
-        console.log('error', error);
-      });
+    async function onMount() {
+      await dispatch(getViewAllDonorAction());
+    }
+    onMount();
   }, []);
 
   const AddUserReceiptHandler = values => {
-    console.log('values2', values);
-    const URL = BASE_URL + AddUserReceipt;
-    axios
-      .post(URL, values)
-      .then(response => {
-        console.log('send', response);
-      })
-      .catch(error => {
-        console.log('error', error);
-      });
+    // console.log('values2', values);
+    // const URL = BASE_URL + AddUserReceipt;
+    // axios
+    //   .post(URL, values)
+    //   .then(response => {
+    //     console.log('send', response);
+    //   })
+    //   .catch(error => {
+    //     console.log('error', error);
+    //   });
+    dispatch(AddUserReceiptAction(values));
   };
   return (
     // console.log('test', donorList)
     <Modal show={modal} onHide={handleModal}>
       <Modal.Header closeButton>Create Receipt</Modal.Header>
       <Modal.Body>
-        <div className="container loginbg">
+        <div className="container">
           <Formik
             initialValues={{
               Project: '',
@@ -74,30 +73,6 @@ const CreateReceiptForm = ({ modal, handleModal }) => {
           >
             {({ values, errors, touched, isSubmitting }) => (
               <Form className="login2">
-                {/* Project */}
-                <div className="form-group">
-                  <label className="mb-0" htmlFor="Project">
-                    Select Project *
-                  </label>
-                  <Field as="select" name="Project" className="form-control">
-                    <option value=""> Select Project </option>
-                    <option value="1">Feed Cows with grass of Love</option>
-                    <option value="2">Paying Children education fee</option>
-                    <option value="3">Sponsoring Books for Students</option>
-                    <option value="4">
-                      Sponsoring Stationary for Students
-                    </option>
-                    <option value="5">Feeding Pigeons Grains</option>
-                    <option value="6">Pehli Roti Dayitva Ki</option>
-                    <option value="7">this is testing project..</option>
-                    <option value="8">Behatar Swaasthay, Behatar Desh</option>
-                    <option value="9">Project One</option>
-                  </Field>
-                  {touched.Project && errors.Project ? (
-                    <small className="text-danger ">{errors.Project}</small>
-                  ) : null}
-                </div>
-
                 {/* Donar */}
                 <div className="form-group">
                   <label className="mb-0" htmlFor="Donar">

@@ -22,11 +22,16 @@ import {
 import './Donor.css';
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
-import { ADD_DONOR_URL, BASE_URL } from '../../API/APIEndpoints';
+import { ADD_DONOR_URL, BASE_URL, GetAllDonor } from '../../API/APIEndpoints';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
-
+import Loader from '../Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getDonorByValueAction,
+  getViewAllDonorAction,
+} from '../../Redux/Actions/DonorActions';
 export const constData = [
   {
     id: 1,
@@ -129,7 +134,6 @@ export const constData = [
     email: 'akshay@gmail.com',
   },
 ];
-
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -141,25 +145,30 @@ export default function EnhancedTable() {
   const [viewData, setViewData] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
   const [fundModalData, setFundModalData] = React.useState(0);
-  const [donorList, setDonorList] = React.useState([]);
+  // const [donorList, setDonorList] = React.useState([]);
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
   const history = useHistory();
+  const dispatch = useDispatch();
   React.useEffect(() => {
-    getDonorList();
+    dispatch(getViewAllDonorAction());
   }, []);
 
-  const getDonorList = async () => {
-    const url = BASE_URL + ADD_DONOR_URL;
-    await axios
-      .get(url)
-      .then(res => {
-        setDonorList(res.data.data.rows);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
+  // const getDonorList = async () => {
+  //   const url = BASE_URL + ADD_DONOR_URL;
+  //   await axios
+  //     .get(url)
+  //     .then(res => {
+  //       setDonorList(res.data.data.message);
+  //       toast.success('Yeay! New data is here.');
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
+
+  let donorList = useSelector(state => state.donor.ViewAllDonor);
+
   const ViewModalOpen = data => {
     setViewData(data);
     setViewModal(true);
@@ -201,26 +210,38 @@ export default function EnhancedTable() {
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - donorList.length) : 0;
+  // SEARCH
+  let timeout = null;
+  const handleChange = e => {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      onSearch(e.target.value);
+    }, 1000);
+  };
 
+  const onSearch = value => {
+    if (value) {
+      console.log('Seacrh', value);
+      dispatch(getDonorByValueAction(value));
+    } else {
+      dispatch(getViewAllDonorAction());
+    }
+  };
+
+  // END
   return (
     <>
+      <br />
+      <br />
+      <br />
+      <br />
       <Viewdonormodal
         show={viewModal}
         onHide={ViewModalClose}
         data={viewData}
       />
-      <Addfund
-        show={fundModal}
-        onHide={fundModaClose}
-        data={fundModalData}
-        getDonor={getDonorList}
-      />
-      <Donordelete
-        show={deleteModal}
-        onHide={deleteModalClose}
-        id={deleteId}
-        getDonor={getDonorList}
-      />
+      <Addfund show={fundModal} onHide={fundModaClose} data={fundModalData} />
+      <Donordelete show={deleteModal} onHide={deleteModalClose} id={deleteId} />
       <div className="card">
         <p
           style={{
@@ -253,7 +274,7 @@ export default function EnhancedTable() {
           >
             Export
           </button>
-          <input placeholder="Search" />
+          <input placeholder="Search" onChange={e => handleChange(e)} />
         </div>
         <Paper sx={{ width: '100%', mb: 2 }}>
           {donorList && donorList.length > 0 ? (
@@ -353,16 +374,18 @@ export default function EnhancedTable() {
               </TableContainer>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
-                component="div"
+                component="datalist"
                 count={donorList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
+                showLastButton
+                showFirstButton
               />
             </React.Fragment>
           ) : (
-            <h2 style={{ textAlign: 'center' }}>No data found</h2>
+            <Loader />
           )}
         </Paper>
       </div>
