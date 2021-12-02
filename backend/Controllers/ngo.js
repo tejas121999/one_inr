@@ -1,82 +1,167 @@
 const models = require('../models');
-const paginantionFunc = require('../utils/pagination');
-const Sequelize = models.Sequelize
-const Op = Sequelize.Op;
+const paginationFunc = require('../utils/pagination');
+const sequelize = models.Sequelize
+const Op = sequelize.Op;
 
-//Creating A ngo
+
+//Creating ngo
 exports.addNgo = async (req, res) => {
-    try {
         let addNgo = await models.ngo.create({
-            userId: req.bodyy.userId,
-            address: req.bodyy.address,
-            registrationDate: req.bodyy.registrationDate,
-            registrationNumber: req.bodyy.registrationNumber,
-            landline: req.bodyy.landline,
-            contacts: req.bodyy.contacts,
-            bankDetails: req.bodyy.bankDetails,
-            panCard: req.bodyy.panCard,
-            panNumber: req.bodyy.panNumber,
-            certificate: req.bodyy.certificate,
-            charityRegistrationCertificate: req.bodyy.charityRegistrationCertificate,
-            dead: req.bodyy.dead,
-            logo: req.bodyy.logo,
-            signature: req.bodyy.signature,
-            createdAt: req.bodyy.createdAt,
-            updatedAt: req.bodyy.updatedAt,
-            deletedAt: req.bodyy.deletedAt,
-            isKyc: req.bodyy.isKyc
-        })
-        if (!ngo) {
-            return res.status(402).json({
-                message: 'Failed to create Users Receipts'
+
+            userId: req.body.userId,
+            address: req.body.address,
+            registrationDate: req.body.registrationDate,
+            registrationNumber: req.body.registrationNumber,
+            landline: req.body.landline,
+            contacts: req.body.contacts,
+            bankDetails: req.body.bankDetails, //JSON.stringify(req.body.bankDetails)
+            panCard: req.body.panCard,
+            panNumber: req.body.panNumber,
+            certificate: req.body.certificate,
+            charityRegistrationCertificate: req.body.charityRegistrationCertificate,
+            dead: req.body.dead,
+            logo: req.body.logo,
+            signature: req.body.signature,            
+            isKyc: req.body.isKyc
+        }) 
+        // const newNGO = addNgo.map((ele) => ele.bankDetails = JSON.str(ele.bankDetails))
+        // console.log((addNgo));
+        if (!addNgo) {
+            return res.status(400).json({
+                message: 'Failed to create NGO'
             })
         } else {
-            return res.status(200).json({
-                message: 'Users Receipts created successfully'
+            return res.status(201).json({
+                message: 'NGO created successfully'
             })
         }
-    } catch (err) {
-        console.log(err);
-        return res.status(400).json({ message: err })
-    }
-
 }
 
 
-//update ngo
+
+
+
+
+//updating ngo
 exports.updateNgo = async (req, res) => {
     let ngoId = req.params.id;
-    // console.log('ngo id', ngo);
 
     let ngoExists = await models.ngo.findOne(
-        { where: { id: ngoId }} )}
-
-        if(!ngoExists) {
+        { where: { id: ngoId } })
+        
+        if (!ngoExists) {
             return res.status(402).json({
                 message: "Ngo Does not exists!"
             })
         }
+        
 
-        let ngoUpdate = await models.ngo.update(
-            {
-                userId: req.bodyy.userId,
-            address: req.bodyy.address,
-            registrationDate: req.bodyy.registrationDate,
-            registrationNumber: req.bodyy.registrationNumber,
-            landline: req.bodyy.landline,
-            contacts: req.bodyy.contacts,
-            bankDetails: req.bodyy.bankDetails,
-            panCard: req.bodyy.panCard,
-            panNumber: req.bodyy.panNumber,
-            certificate: req.bodyy.certificate,
-            charityRegistrationCertificate: req.bodyy.charityRegistrationCertificate,
-            dead: req.bodyy.dead,
-            logo: req.bodyy.logo,
-            signature: req.bodyy.signature,
-            createdAt: req.bodyy.createdAt,
-            updatedAt: req.bodyy.updatedAt,
-            deletedAt: req.bodyy.deletedAt,
-            isKyc: req.bodyy.isKyc
-            }
-        )
+let ngoUpdate = await models.ngo.update(
+    {
+        userId: req.body.userId,
+        address: req.body.address,
+        registrationDate: req.body.registrationDate,
+        registrationNumber: req.body.registrationNumber,
+        landline: req.body.landline,
+        contacts: req.body.contacts,
+        bankDetails: req.body.bankDetails,
+        panCard: req.body.panCard,
+        panNumber: req.body.panNumber,
+        certificate: req.body.certificate,
+        charityRegistrationCertificate: req.body.charityRegistrationCertificate,
+        dead: req.body.dead,
+        logo: req.body.logo,
+        signature: req.body.signature,
+        isKyc: req.body.isKyc
+    },
+
+    {
+        where: { id: ngoId }
+    })
+
+if (ngoUpdate) {
+    return res.status(200).json({
+        message: "Ngo Details Updated Successfuly"
+    });
+}
+
+}
+
+
+
+//Read ngo details
+exports.getAllNgo = async (req, res) => {
+        let query = {};
+
+    //pagination
+    const { search, offset, pageSize } = paginationFunc.paginationWithFromTo(
+        req.query.search,
+        req.query.from,
+        req.query.to
+    )
+
+    //SEARCH QUERY
+    const searchQuery = {
+        [Op.and]: [query, {
+            [Op.or]: {
+                address: { [Op.like]: search + '%' },
+                landline: { [Op.like]: search + '%'},
+                contacts: { [Op.like]: search + '%'},
+                panNumber: { [Op.like]: search + '%'}
+            },
+        }],
+    }
+
+    var result = await models.ngo.findAndCountAll({
+        limit: pageSize,
+        offset: offset,
+        where: searchQuery,
+        order: [
+            ['updatedAt', 'DESC']
+        ]
+    });
+
+    // result = await models.ngo.findAll({})
+    if (!result) {
+        return res.status(400).json({
+            message: "Failed to get all data."
+        })
+    }
+
+    return res.status(200).json({
+        result: result ,
+        message: "Found All Data."
+    })
+}
+
+
+
+//Delete NGO details
+exports.deleteNgo = async (req, res) => {
+    let id = req.params.id
+
+    let ngoExists = await models.ngo.findOne({
+        where: { id: id}
+    })
+    if(!ngoExists) {
+        return res.status(400).json({
+            message: "Ngo Details does not Exists..."
+        })
+    }
+
+    let data = models.ngo.destroy({
+        where: { id : id }
+    })
+    console.log('data', data)
+    if(data) {
+        return res.status(200).json({
+            message: "NGO details deleted successfully..."
+        })
+    } else {
+        res.status(400).json({
+            message: err
+        })
+    }
     
+}
+
