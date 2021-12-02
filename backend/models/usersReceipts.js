@@ -76,10 +76,10 @@ module.exports = (sequelize, DataTypes) => {
             field: 'updated_at'
         },
 
-        isActive: {
-            type: DataTypes.BOOLEAN,
-            field: 'is_active'
-        },
+        // isActive: {
+        //     type: DataTypes.BOOLEAN,
+        //     field: 'is_active'
+        // },
 
     },
     {
