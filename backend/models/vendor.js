@@ -36,14 +36,14 @@ module.exports = (sequelize,DataTypes)=>{
             type: DataTypes.TEXT,
             field: 'gst_image'
         },
-        deletedAt:{
-            type: DataTypes.DATE,
-            field: 'deleted_at'
-        }
-        
+  
     },{
         freezeTableName: true,
-        tableName: 'vendors'
+        tableName: 'vendors',
+        paranoid : true,
+        createdAt : 'created_at',
+        updatedAt : 'updated_at',
+        deletedAt : 'deleted_at',
     })
     return Vendor
 }

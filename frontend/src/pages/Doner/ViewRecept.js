@@ -10,8 +10,9 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
-import { Button, Modal } from 'react-bootstrap';
 import { visuallyHidden } from '@mui/utils';
+import { Button } from 'react-bootstrap';
+
 import {
   FaRegEdit,
   FaRegEye,
@@ -19,6 +20,7 @@ import {
   FaBookOpen,
   FaDollarSign,
 } from 'react-icons/fa';
+
 // import '../Donor.css';
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
@@ -26,6 +28,11 @@ import { BASE_URL, VIEW_RECEPT_URL } from '../../API/APIEndpoints';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
+import CreateReceiptForm from '../../components/CreateReceiptForm';
+import Loader from '../Loader';
+import { getViewReceiptDonorAction } from '../../Redux/Actions/DonorActions';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export default function ViewRecept() {
   const [order, setOrder] = React.useState('asc');
@@ -42,26 +49,21 @@ export default function ViewRecept() {
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [modal, setModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
-
+  const dispatch = useDispatch();
   const history = useHistory();
   React.useEffect(() => {
-    getViewRecepts();
+    async function onMount() {
+      await dispatch(getViewReceiptDonorAction());
+    }
+    onMount();
   }, []);
+
+  let ViewReceipt = useSelector(state => state.donor.ViewReceipt);
+
   const handleModal = () => {
     setModal(!modal);
   };
-  const getViewRecepts = async () => {
-    const url = BASE_URL + VIEW_RECEPT_URL;
-    await axios
-      .get(url)
-      .then(res => {
-        setReceipt(res.data.data.rows);
-        console.log(recept);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
+
   const ViewModalOpen = data => {
     setViewData(data);
     setViewModal(true);
@@ -97,7 +99,7 @@ export default function ViewRecept() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
+  // const createReceiptHandler = () => {};
   const isSelected = name => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -146,97 +148,9 @@ export default function ViewRecept() {
           </button>
           <input placeholder="Search" />
         </div>
-        <Modal show={modal} onHide={handleModal}>
-          <Modal.Header closeButton>Create Receipt</Modal.Header>
-          <Modal.Body>
-            <form>
-              <div className="form-group ">
-                <label htmlFor="exampleFormControlSelect1">
-                  Select Project *
-                </label>
-                <select className="form-control" id="exampleFormControlSelect1">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </div>
-              <div className="form-group mt-2">
-                <label htmlFor="exampleFormControlSelect2">
-                  Select Donar *
-                </label>
-                <select className="form-control" id="exampleFormControlSelect2">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="exampleFormControlInput1">
-                  Donation Amount *
-                </label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="exampleFormControlInput1"
-                  placeholder="Enter donation amount"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="receipt_date">Receipt Date </label>
-                <input
-                  type="date"
-                  className="form-control"
-                  name="receipt_date"
-                  id="receipt_date"
-                  placeholder="Enter receipt date"
-                />
-              </div>
-              <div className="form-group ReceiptRadio">
-                <label htmlFor="create_type">Transaction Type *</label>
-                <br />
-                <input
-                  type="radio"
-                  id="test1"
-                  defaultvalue="cash"
-                  name="transaction_type"
-                  defaultChecked
-                />
-                <label htmlFor="test1">cash</label>
-                <input
-                  type="radio"
-                  id="test2"
-                  defaultvalue="online"
-                  name="transaction_type"
-                />
-                <label htmlFor="test2">online</label>
-                <input
-                  type="radio"
-                  id="test3"
-                  defaultvalue="neft"
-                  name="transaction_type"
-                />
-                <label htmlFor="test3">neft</label>
-                <input
-                  type="radio"
-                  id="test4"
-                  defaultvalue="Cheque"
-                  name="transaction_type"
-                />
-                <label htmlFor="test3">Cheque</label>
-              </div>
-            </form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={handleModal}>Close</Button>
-            <Button onClick={handleModal}>Save</Button>
-          </Modal.Footer>
-        </Modal>
+        <CreateReceiptForm modal={modal} handleModal={handleModal} />
         <Paper sx={{ width: '100%', mb: 2, height: '60vh' }}>
-          {recept && recept.length > 0 ? (
+          {ViewReceipt && ViewReceipt.length > 0 ? (
             <React.Fragment>
               <TableContainer>
                 <Table
@@ -249,10 +163,10 @@ export default function ViewRecept() {
                     order={order}
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
-                    rowCount={recept.length}
+                    rowCount={ViewReceipt.length}
                   />
                   <TableBody>
-                    {stableSort(recept, getComparator(order, orderBy))
+                    {stableSort(ViewReceipt, getComparator(order, orderBy))
                       .slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage,
@@ -260,7 +174,7 @@ export default function ViewRecept() {
                       .map((row, index) => {
                         const isItemSelected = isSelected(row.name);
                         const labelId = `enhanced-table-checkbox-${index}`;
-
+                        console.log('data', row);
                         return (
                           <TableRow
                             hover
@@ -275,26 +189,69 @@ export default function ViewRecept() {
                               scope="row"
                               padding="none"
                             >
-                              {row.name}
+                              {row.id}
                             </TableCell>
-                            <TableCell align="center">
-                              {row.donated ? row.donated : '100'}
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.donor_name ? row.donor_name : '-'}
                             </TableCell>
-                            <TableCell align="center">{row.balance}</TableCell>
-                            <TableCell align="center">
-                              {row.project ? row.projects : '20'}
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.receiptNumber ? row.receiptNumber : '-'}
                             </TableCell>
-                            <TableCell align="center">
-                              {row.project ? row.projects : '20'}
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.project_name ? row.project_name : '-'}
                             </TableCell>
-                            <TableCell align="center">
-                              {row.project ? row.projects : '20'}
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.project_name ? row.project_name : '-'}
                             </TableCell>
-                            <TableCell align="center">
-                              {row.project ? row.projects : '20'}
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.mailSend ? row.mailSend : 'Mail not send'}
                             </TableCell>
-                            <TableCell align="center">
-                              {row.project ? row.projects : '20'}
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.recieptPdf ? 'view' : '-'}
+                            </TableCell>
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.createdAt
+                                ? row.createdAt
+                                    .split('')
+                                    .slice(0, 10)
+                                    .join()
+                                    .replace(/,/g, '')
+                                : '-'}
                             </TableCell>
                             <TableCell align="center">
                               <button
@@ -323,7 +280,7 @@ export default function ViewRecept() {
               />
             </React.Fragment>
           ) : (
-            <h2 style={{ textAlign: 'center' }}>No data found</h2>
+            <Loader />
           )}
         </Paper>
       </div>
@@ -362,57 +319,57 @@ function stableSort(array, comparator) {
   return stabilizedThis.map(el => el[0]);
 }
 
-const headCells = [
+const tableHeader = [
   {
-    id: 'name',
+    id: '1',
     numeric: false,
     disablePadding: false,
     label: 'Sr No',
   },
   {
-    id: 'donated',
+    id: '2',
     numeric: true,
     disablePadding: false,
     label: 'Donor Name',
   },
   {
-    id: 'balance',
+    id: '3',
     numeric: true,
     disablePadding: false,
     label: 'Receipt No',
   },
   {
-    id: 'projects',
+    id: '4',
     numeric: true,
     disablePadding: false,
     label: 'Project Name',
   },
   {
-    id: 'projects',
+    id: '5',
     numeric: true,
     disablePadding: false,
     label: 'NGO Name',
   },
   {
-    id: 'projects',
+    id: '6',
     numeric: true,
     disablePadding: false,
     label: 'Mail Status',
   },
   {
-    id: 'projects',
+    id: '7',
     numeric: true,
     disablePadding: false,
     label: 'Receipt',
   },
   {
-    id: 'projects',
+    id: '8',
     numeric: true,
     disablePadding: false,
     label: 'Created At',
   },
   {
-    id: 'action',
+    id: '9',
     numeric: true,
     disablePadding: false,
     label: 'Action',
@@ -436,7 +393,7 @@ function EnhancedTableHead(props) {
   return (
     <TableHead className="table-head">
       <TableRow>
-        {headCells.map(headCell => (
+        {tableHeader.map(headCell => (
           <TableCell
             key={headCell.id}
             align="center"
@@ -465,7 +422,6 @@ function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,

@@ -3,15 +3,13 @@ import React, { Component } from 'react';
 import './Donor.css';
 import * as yup from 'yup';
 import axios from 'axios';
-import {
-  ADD_DONOR_GET_PARENTS_URL,
-  ADD_DONOR_URL,
-  BASE_URL,
-} from '../../API/APIEndpoints';
 import { useHistory } from 'react-router-dom';
-import { getParentListAction } from '../../Redux/Actions/DonorActions';
+import {
+  getAllParentDonorAction,
+  addDonorAction,
+} from '../../Redux/Actions/DonorActions';
 import { connect } from 'react-redux';
-import { constData } from '../Donor/Donors';
+import { constData } from './ViewAllDoner';
 
 class Adddonor extends Component {
   constructor(props) {
@@ -24,8 +22,9 @@ class Adddonor extends Component {
   }
 
   getParentList = async () => {
-    this.props.getParentListAction(constData);
+    await this.props.getAllParentDonorAction();
   };
+
   validationSchema = yup.object({
     fName: yup.string().required('Required'),
     lName: yup.string().required('required'),
@@ -34,38 +33,34 @@ class Adddonor extends Component {
       .required('required')
       .min(10, 'Please enter 10 digits'),
     emailId: yup.string().email('Invalid Email Format').required('Required'),
-    password: yup.string().required('Required').min(8, 'Should be 5 character'),
+    password: yup.string().required('Required').min(5, 'Should be 5 character'),
   });
   onAddDoner = async values => {
-    const { parentsList } = this.state;
+    const { parentsList } = this.props;
     const parentId = parentsList.filter(data => data.name == values.parent);
     let id = parentId && parentId.length ? parentId[0].id : 0;
     values.parent = id;
     console.log('Aded', values);
-    const url = BASE_URL + ADD_DONOR_URL;
+
     const obj = {
       name: values.fName + ' ' + values.lName,
       email: values.emailId,
       mobile: values.phoneNumber,
       password: values.password,
       parentId: id,
-      isPriyank: values.isPriyank,
     };
-    await axios
-      .post(url, obj)
-      .then(res => {
-        this.props.history.push('/view_all_doner');
-      })
-      .catch(err => {
-        alert(err);
-      });
+    this.props.addDonorAction(obj, this.props.history);
   };
   render() {
     const { parentsList } = this.props;
-    console.log('ADD', this.props);
+    console.log('ADD', parentsList);
 
     return (
       <React.Fragment>
+        <br />
+        <br />
+        <br />
+        <br />
         <div className="card">
           <p
             style={{
@@ -255,4 +250,7 @@ const mapStateToProps = state => ({
   parentsList: state.donor.allParent,
 });
 
-export default connect(mapStateToProps, { getParentListAction })(Adddonor);
+export default connect(mapStateToProps, {
+  getAllParentDonorAction,
+  addDonorAction,
+})(Adddonor);

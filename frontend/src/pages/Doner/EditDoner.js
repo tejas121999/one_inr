@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as yup from 'yup';
 import { BASE_URL, ADD_DONOR_GET_PARENTS_URL } from '../../API/APIEndpoints';
 import { useDispatch, useSelector } from 'react-redux';
-import { getParentListAction } from '../../Redux/Actions/DonorActions';
+import { getAllParentDonorAction } from '../../Redux/Actions/DonorActions';
 import { useHistory } from 'react-router-dom';
 const Editdonor = props => {
   const [donarData, setDonarData] = useState([]);
@@ -16,7 +16,7 @@ const Editdonor = props => {
     async function onMount() {
       setDonarData(props.location.state);
       setUserId(props.location.state.id);
-      await dispatch(getParentListAction());
+      await dispatch(getAllParentDonorAction());
     }
     onMount();
   }, []);

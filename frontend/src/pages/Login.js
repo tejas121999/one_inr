@@ -5,7 +5,7 @@ import logo from '../assets/img/logo/logo_200.png';
 import './login.css';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { loginAdmin } from '../Redux/Actions/authAction';
+import { LoginAdmin } from '../Redux/Actions/authAction';
 
 let validationSchema = yup.object().shape({
   email: yup
@@ -27,12 +27,12 @@ const Login = props => {
   const loginHandler = values => {
     console.log('values2', values);
     if (values) {
-      dispatch(loginAdmin(values, props.history));
+      dispatch(LoginAdmin(values, props.history));
     }
   };
 
   return (
-    <div className="container loginbg">
+    <div className="loginbg">
       <Formik
         initialValues={{
           email: '',
@@ -78,7 +78,7 @@ const Login = props => {
             </div>
 
             <div className="text-right forgotPass mt-2 pr-5">
-              <NavLink to="/Forgot">Forgot Password ?</NavLink>
+              <NavLink to="/forgot">Forgot Password ?</NavLink>
             </div>
             <div className="form-group w-75 m-auto">
               <button type="submit" className="btn btn-primary w-100 mt-2">

@@ -62,7 +62,7 @@ a {
 }
 
 .bg-gradient-theme {
-  background: linear-gradient(to bottom, #6a82fb, #0f131f);
+  /* background: linear-gradient(to bottom, #6a82fb, #0f131f); */
   box-shadow: 0 0 0 2000px rgb(0 0 0 / 0%);
 }
 
@@ -71,16 +71,31 @@ a {
   position: fixed !important;
   width: 260px !important;
 }
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  background-color: #33363f;
+  text-align: center;
+  z-index: 999;
+}
 form.login {
   width: 500px;
   background: white;
-  padding: 14% 45px;
-  margin: 30px auto;
+  padding: 10% 45px;
+  margin: auto;
+  position: relative;
+  top: 14%;
 }
-/* .loginbg {
-  background-image: url('./assets/img/background/login-register.jpg') cover
-    no-repeat !important;
-} */
+.loginbg {
+  background-image: url('./assets/img/background/login-register.jpg');
+  padding: 25px;
+  background-repeat: no-repeat;
+  background-size: auto;
+  height: 100vh;
+}
 .css-zjtspp-MuiPaper-root {
   box-shadow: none !important;
 }
@@ -93,19 +108,42 @@ form.login {
   padding: 0.5rem 1rem;
   background-color: white;
 }
+
+/* modal for create receipt */
 .modal-dialog {
   position: relative;
   width: auto;
   margin: 0.5rem;
   pointer-events: none;
-  top: 12%;
+  top: 8%;
   left: 9%;
 }
 .modal-header button.btn-close {
   display: none;
 }
-.ReceiptRadio input {
+/* .ReceiptRadio input {
   margin: 0 7px;
   position: relative;
   top: 2px;
+} */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.radioGroup {
+  display: flex;
+}
+.radioGroup .form-check {
+  margin: auto 15px;
+}
+.radioGroup .form-check input.form-check-input {
+  position: relative;
+  top: 3px;
+  left: -3pxpx;
+}
+.mybtn button {
+  margin-left: 10px;
+  width: 150px;
 }
