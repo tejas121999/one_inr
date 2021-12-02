@@ -15,12 +15,12 @@ const { addNgo, updateNgo, getAllNgo, deleteNgo } = require('../Controllers/ngo'
 
 //routing modules
 
-router.post('/create-ngo', ngoValidation, validationError, wrapper(ngoController.addNgo))//creating ngo 
+router.post('/create-ngo', wrapper(addNgo))//creating ngo 
 
-router.get('/read-ngo', wrapper(ngoController.addNgo))//listing ngo
+router.get('/read-ngo', wrapper(getAllNgo))//listing ngo
 
-router.put('/update-ngo/:id', ngoValidation, validationError, wrapper(ngoController.updateNgo))//update ngo
+router.put('/update-ngo/:id', ngoValidation, validationError, wrapper(updateNgo))//update ngo
 
-router.delete('/delete-ngo/:id', wrapper(ngoController.deleteNgo))//deleting ngo
+router.delete('/delete-ngo/:id', wrapper(deleteNgo))//deleting ngo
 
 module.exports= router;
