@@ -14,7 +14,7 @@ exports.addNgo = async (req, res) => {
             registrationNumber: req.body.registrationNumber,
             landline: req.body.landline,
             contacts: req.body.contacts,
-            bankDetails: req.body.bankDetails, //JSON.stringify(req.body.bankDetails)
+            bankDetails: req.body.bankDetails, //JSON.stringify(req.body.bankDetails),
             panCard: req.body.panCard,
             panNumber: req.body.panNumber,
             certificate: req.body.certificate,
