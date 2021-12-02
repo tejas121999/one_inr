@@ -163,7 +163,6 @@ export default function EnhancedTable() {
   //       toast.success('Yeay! New data is here.');
   //     })
   //     .catch(err => {
-  //       console.log(err);
   //     });
   // };
 
@@ -221,7 +220,6 @@ export default function EnhancedTable() {
 
   const onSearch = value => {
     if (value) {
-      console.log('Seacrh', value);
       dispatch(getDonorByValueAction(value));
     } else {
       dispatch(getViewAllDonorAction());
@@ -503,7 +501,6 @@ function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,

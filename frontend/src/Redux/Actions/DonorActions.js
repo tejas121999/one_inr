@@ -38,7 +38,6 @@ export const getAllParentDonorAction = data => {
   return dispatch => {
     DonorServices.getAllParentDonor()
       .then(res => {
-        console.log('Parents', res.data.data);
         dispatch(getAllParentDonorList(res.data.data));
       })
       .catch(error => {});
@@ -92,7 +91,6 @@ export const getViewAllDonorAction = data => {
   return dispatch => {
     DonorServices.getViewAllDonor()
       .then(res => {
-        console.log('GetAll', res.data.data);
         dispatch(getViewAllDonorList(res.data.data));
       })
       .catch(error => dispatch(onViewAllDonorFail(data)));
@@ -102,7 +100,6 @@ export const getViewAllDonorAction = data => {
 export const getDonorByValueAction = value => {
   return dispatch => {
     DonorServices.getDonorByValue(value).then(res => {
-      console.log('GetAllSearch', res.data.data);
       dispatch(getViewAllDonorList(res.data.data));
     });
   };
@@ -127,7 +124,7 @@ export const getViewReceiptDonorAction = () => {
   return dispatch => {
     DonorServices.getViewReceipt()
       .then(res => {
-        dispatch(getViewReceiptList(res.data.result));
+        dispatch(getViewReceiptList(res.data.data.rows));
       })
       .catch(error => dispatch(onViewAllDonorFail(error)));
   };
@@ -188,7 +185,7 @@ export const AddUserReceiptAction = body => {
     return dispatch => {
       DonorServices.createUserReceipt(body)
         .then(res => {
-          dispatch(createUserReceiptData(res));
+          dispatch(createUserReceiptData(res.data.data.rows));
           //need to add toster here
         })
         .catch(err => {
