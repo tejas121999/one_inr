@@ -5,25 +5,24 @@ var router = express.Router();
 //importing modules
 const { wrapper } = require('../utils/errorWrap')
 
-const userRecieptController = require('../Controllers/usersReceipts') //Importing usersReceipts controller.
+const {getAllUserReceipts, addUsersReceipts, updateUsersReceipts, getUserReceiptsById } = require('../Controllers/usersReceipts') //Importing usersReceipts controller.
 
 const validationError = require('../middleware/validationError');
 
 const { usersReceiptsValidation } = require('../validations/usersReceipt');//importing users reciept validation from controller
 
-const { readUserReceipts } = require('../Controllers/usersReceipts');//importing read user from controller
+// const { readUserReceipts } = require('../Controllers/usersReceipts');//importing read user from controller
 
 //routing modules
 
 // router.get('/getalluser', getAllUserReceipts )
 
-router.get('/get-user',wrapper(userRecieptController.getAllUserReceipts))// listing user resiepts
+router.get('/get-user',wrapper(getAllUserReceipts))// listing user resiepts
 
-router.post('/add-user',  usersReceiptsValidation, validationError, wrapper(userRecieptController.addUsersReceipts))//create user receipt
+router.get('/getUserId/:id', wrapper(getUserReceiptsById))// listing user by Id
 
-router.put('/update-user/:id', usersReceiptsValidation, validationError, wrapper(userRecieptController.updateUsersReceipts))//Update User reciept
+router.post('/add-user',  usersReceiptsValidation, validationError, wrapper(addUsersReceipts))//create user receipt
 
-// router.get('/read-user', readUserReceipts, validationError, wrapper(userRecieptController.readUserReceipts))
-// //Read User reciepts
+router.put('/update-user/:id', usersReceiptsValidation, validationError, wrapper(updateUsersReceipts))//Update User reciept
 
 module.exports = router;
