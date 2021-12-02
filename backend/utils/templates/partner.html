@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <h1 class="text-center my-3">1INR</h1>
+    <div class="w-75 m-auto">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">firstName</th>
+                    <th scope="col">lastName</th>
+                    <th scope="col">mobile</th>
+                    <th scope="col">email</th>
+                    <th scope="col">gstNumber</th>
+                    <th scope="col">panNumber</th>
+                    <th scope="col">gstImage</th>
+                    <th scope="col">panImage</th>
+                    <th scope="col">companyName</th>
+                    <th scope="col">Address</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {{#each partner}}
+                <tr>
+                    
+                    <td>{{this.dataValues.firstName}}</td>
+                    <td>{{this.dataValues.lastName}}</td>
+                    <td>{{this.dataValues.mobile}}</td>
+                    <td>{{this.dataValues.email}}</td>
+                    <td>{{this.dataValues.gstNumber}}</td>
+                    <td>{{this.dataValues.panNumber}}</td>
+                    <td>{{this.dataValues.gstImage}}</td>
+                    <td>{{this.dataValues.panImage}}</td>
+                    <td>{{this.dataValues.companyName}}</td>
+                    <td>{{this.dataValues.Address}}</td>
+                </tr>
+                {{/each}}
+
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

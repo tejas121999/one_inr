@@ -1,6 +1,10 @@
 const models = require('../models')
 const {paginationWithFromTo} = require('../utils/pagination')
+const { bulkUserUploadService } = require('../service/bulkUploadService')
 const sequelize = models.Sequelize;
+const csv = require('csvtojson')
+const twinBcrypt = require('twin-bcrypt')
+const saltRounds = 10;
 const Op = sequelize.Op;
 const moment = require('moment')
 //Get all details of all donor in DB
@@ -175,4 +179,123 @@ exports.getAllUpcomingDonors = async (req,res)=>{
         data: data,
 
     })
+}
+
+exports.addDonerThroughExcel = async (req, res, next) => {
+    try{
+
+    
+    let { path, fileExtension } = req.body
+    //const userId = "1",
+    const fileId = req.body.fileId;
+    let dataArray;
+    if (fileExtension === "csv") {
+        dataArray = await csv().fromFile(path);
+    } else {
+        return res.status(400).json({ message: "Incorrect File Format" })
+    }
+
+    const userData = await bulkUserUploadService(dataArray, fileId);
+    //console.log(userData)
+    
+    if (!userData.success) {
+        console.log("in error");
+        return res.status(userData.status).json({ message: userData.message })
+        
+    } else {
+      console.log("\n\n\nin success")
+        const userUploadData = await models.bulkUserUpload.findAll({
+            where: { fileId: fileId }
+        })
+       // console.log(userUploadData)
+
+        for (const user of userUploadData) {
+            console.log("in for lopp",user)
+            if (user.name.length > 0) {
+                console.log("in name");
+                if (user.email.length > 0) {
+                console.log("in email");
+
+                    if (user.mobile > 0) {
+                    console.log("in mobile");
+                        if (user.balance > 0) {
+                            if (user.password.length > 0) {
+                                const hash = await twinBcrypt.hashSync(user.password, saltRounds);
+
+                                let userUploading = await models.users.create({
+                                    name: user.name,
+                                    email: user.email,
+                                    mobile: user.mobile,
+                                    balance: user.balance,
+                                    password: hash
+                                })
+
+                                console.log("in if ",userUploading);
+                                if (userUploading) {
+                                    await models.bulkUserUpload.update(
+                                        { status: 'Success' },
+                                        { where: { id: user.id } }
+                                    )
+                                } else {
+                                    await models.bulkUserUpload.update(
+                                        {
+                                            status: 'Error',
+                                            message: 'fail to create user'
+                                        },
+                                        { where: { id: user.id } }
+                                    )
+                                }
+                            } else {
+                                await models.bulkUserUpload.update(
+                                    {
+                                        status: "error",
+                                        message: "Password size should be greater than zero"
+                                    },
+                                    { where: { id: user.id } }
+                                )
+                            }
+                        } else {
+                            await models.bulkUserUpload.update(
+                                {
+                                    status: "Error",
+                                    message: "Balance should be greater than zero"
+                                },
+                                { where: { id: user.id } }
+                            )
+                        }
+                    } else {
+                        await models.bulkUserUpload.update(
+                            {
+                                status: 'Error',
+                                message: "Mobile number should be greater than zero"
+                            },
+                            { where: { id: user.id } }
+                        )
+                    }
+                } else {
+                    await models.bulkUserUpload.update(
+                        {
+                            status: 'Error',
+                            message: 'email should be greaer than zero'
+                        },
+                        { where: { id: user.id } }
+                    )
+                }
+            } else {
+                await models.bulkUserUpload.update(
+                    {
+                        status: "Error",
+                        message: "Name should be greater than Zero"
+                    },
+                    { where: { id: user.id } }
+                )
+            }
+        //console.log(user)
+        }
+        return res.status(200).json({message:"data added success"});
+    }
+}
+catch(err){
+    console.log(err)
+}
 }
