@@ -28,7 +28,7 @@ const Addfund = props => {
   };
   const onAdd = async value => {
     console.log('ModalURL', value);
-    await dispatch(addDonorFundAction(userId));
+    await dispatch(addDonorFundAction(userId, value));
     props.onHide();
   };
   return (

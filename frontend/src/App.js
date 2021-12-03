@@ -70,7 +70,7 @@ function App(props) {
             <PrivateRoute exact path="/editpartner" component={EditPartner} />
             {/*doner route*/}
             <PrivateRoute exact path="/add_doner" component={AddDoner} />
-            <PrivateRoute exact path="/edit_doner/:id" component={EditDoner} />
+            <PrivateRoute exact path="/edit_doner" component={EditDoner} />
             <PrivateRoute exact path="/view_recept" component={ViewRecept} />
             <PrivateRoute
               exact
