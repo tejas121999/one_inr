@@ -217,7 +217,7 @@ export default function EnhancedTable() {
     clearTimeout(timeout);
     timeout = setTimeout(function () {
       onSearch(e.target.value);
-    }, 200);
+    }, 1000);
   };
 
   const onSearch = value => {
