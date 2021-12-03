@@ -11,7 +11,7 @@ const validationError = require('../middleware/validationError'); //importing va
 
 const { ngoValidation } = require('../validations/ngo');//importing ngo validatation
 
-const { addNgo, updateNgo, getAllNgo, deleteNgo } = require('../Controllers/ngo');//importing ngo controller operation from controller
+const { addNgo, updateNgo, getAllNgo, deleteNgo } = require('../controllers/ngo');//importing ngo controller operation from controller
 
 //routing modules
 
