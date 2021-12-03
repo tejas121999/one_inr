@@ -154,7 +154,7 @@ exports.deleteNgo = async (req, res) => {
     })
     console.log('data', data)
     if(data) {
-        return res.status(200).json({
+        return res.status(204).json({
             message: "NGO details deleted successfully..."
         })
     } else {

@@ -11,7 +11,7 @@ const {createVendorValidation,updateVendorValidation} = require('../validations/
 
 
 
-router.post('/',createVendorValidation,validationError,wrapper(addVendor))
+router.post('/',createVendorValidation,validationError,wrapper(addVendor)) 
 router.put('/:id',updateVendorValidation,validationError,wrapper(updateVendor))
 router.get('/',wrapper(getAllVendor))
 router.delete('/:id',wrapper(deleteVendor))
