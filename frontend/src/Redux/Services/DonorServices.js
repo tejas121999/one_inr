@@ -57,19 +57,6 @@ function DonorServices() {
   //13. delete donor by id
   this.DeleteDonorById = async id =>
     await axios.delete(BASE_URL + `donor/${id}`);
-
-  // *************   vendor    ****************
-
-  //14. CREATE A VENDOR
-
-  this.CreateVendor = async body => await axios.post(BASE_URL + 'vendor', body);
-
-  //15. UPDATE VENDOR by id
-
-  this.UpdateVendorById = async id =>
-    await axios.post(BASE_URL + `vendor/${id}`);
-
-  //16. SAVING IMAGE VENDOR
 }
 
 export default new DonorServices();
