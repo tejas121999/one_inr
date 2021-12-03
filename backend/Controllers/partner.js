@@ -1,4 +1,7 @@
 const models = require('../models')
+const sequelize = models.Sequelize;
+const Op = sequelize.Op;
+const {paginationWithFromTo} = require('../utils/pagination')
 const generateAllUserExcel = require('../service/allPatnerExcel')
 const generatePdf = require('../utils/generatePdf')
 const path = require('path')
@@ -20,7 +23,30 @@ exports.addPartner = async (req, res) => {
 }
 
 exports.getPartner = async (req, res) => {
-    let partnerData = await models.partners.findAll();
+    const { search, offset, pageSize } = paginationWithFromTo(
+        req.query.search,
+        req.query.from,
+        req.query.to
+    );
+    let query = {};
+    const searchQuery = {
+        [Op.and]: [query, {
+            [Op.or]: {
+                name: { [Op.like]: search + "%" },
+                email: { [Op.like]: search + '%' },
+                phone: { [Op.like]: search + '%' },
+                gst: { [Op.like]: search + '%' },
+                address : {[Op.like]: search + '%'},
+                pan: { [Op.like]: search + '%' },
+                company: { [Op.like]: search + '%' },
+            }
+        }],
+    };
+    let partnerData = await models.partners.findAll({
+      where : searchQuery,
+      offset : offset,
+      limit : pageSize
+    });
     if (!partnerData) {
         return res.status(404).json({ message: 'Data Not Found' })
     }
