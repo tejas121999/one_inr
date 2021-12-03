@@ -3,12 +3,9 @@ const { body } = require("express-validator");
 
 exports.partnerValidation = [
 
-    body('firstName')
-        .exists().withMessage('First Name is Required')
-        .notEmpty().withMessage('First Name is Required'), 
-    body('lastName')
-        .exists().withMessage('Last Name is Required')
-        .notEmpty().withMessage('Last Name is Required'),
+    body('name')
+        .exists().withMessage('name is Required')
+        .notEmpty().withMessage('name is Required'),
     body('mobile')
         .exists().withMessage('Phone number is Required')
         .notEmpty().withMessage('Phone number is Required'),
