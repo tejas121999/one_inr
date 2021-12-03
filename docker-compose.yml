@@ -6,7 +6,7 @@ services:
       container_name: one-inr-back
       image: one_inr:latest
       environment:
-        - NODE_ENV = development
+        - NODE_ENV=development
       # links:
       #   - db:db
       ports:
