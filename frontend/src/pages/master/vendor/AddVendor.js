@@ -4,7 +4,11 @@ import { ErrorMessage, Form, Formik, Field } from 'formik';
 import TextError from '../../error/TextError';
 import './vendor.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { CreateVendorAction } from '../../../Redux/Actions/MasterActions';
+import {
+  CreateVendorAction,
+  panImgAdd,
+  gstImgAdd,
+} from '../../../Redux/Actions/MasterActions';
 
 const AddVendor = () => {
   const dispatch = useDispatch();
@@ -22,13 +26,29 @@ const AddVendor = () => {
       ),
     pan: yup.string().matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
   });
-  const onPanImageAdd = e => {
+  const onPanImageAdd = imagData => {
     const data = new FormData();
-    data.append('avatar', e.target.files[0]);
-    console.log('Img Add', data);
+    data.append('avatar', imagData);
+    dispatch(panImgAdd(data));
+  };
+  const onGstImageAdd = imagData => {
+    const data = new FormData();
+    data.append('avatar', imagData);
+    dispatch(gstImgAdd(data));
   };
   const onAddVendor = values => {
-    dispatch(CreateVendorAction(values));
+    const obj = {
+      name: values.fName + ' ' + values.lName,
+      email: values.email,
+      phone: values.mobile,
+      gst: values.gst,
+      pan: values.pan,
+      address: values.address,
+      company: values.company,
+      panImage: 'undefineduploads/vendor/gst_image/1638536003674.png',
+      gstImage: 'undefineduploads/vendor/pan_image/1638535945540.png',
+    };
+    dispatch(CreateVendorAction(obj));
   };
   return (
     <>
@@ -56,8 +76,8 @@ const AddVendor = () => {
             lName: '',
             mobile: '',
             email: '',
-            gst: '',
-            pan: '',
+            gst: '22AAAAA0000A1Z5',
+            pan: 'EGZPP5822A',
             company: '',
             address: '',
           }}
@@ -193,6 +213,7 @@ const AddVendor = () => {
                             className="form-control-file"
                             name="gst_img"
                             accept=".png,.jpg,"
+                            onChange={e => onGstImageAdd(e.target.files[0])}
                           />
                           <ErrorMessage name="name" component={TextError} />
                         </div>
@@ -227,7 +248,7 @@ const AddVendor = () => {
                             className="form-control-file"
                             name="pan_img"
                             accept=".png,.jpg,"
-                            onChange={e => onPanImageAdd(e)}
+                            onChange={e => onPanImageAdd(e.target.files[0])}
                           />
                           <ErrorMessage name="pan" component={TextError} />
                         </div>

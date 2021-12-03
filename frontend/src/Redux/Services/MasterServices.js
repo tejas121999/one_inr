@@ -14,6 +14,11 @@ function MasterServices() {
   this.GetAllPartnerList = async () => await axios.get(BASE_URL + 'partner');
   this.CreatePartner = async body =>
     await axios.post(BASE_URL + 'partner', body);
+  this.addPanImage = async body =>
+    await axios.post(BASE_URL + 'fileupload?reason=vendor_pan', body);
+
+  this.addGstImage = async body =>
+    await axios.post(BASE_URL + 'fileupload?reason=vendor_gst', body);
 }
 
 export default new MasterServices();

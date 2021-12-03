@@ -298,7 +298,7 @@ export default function EnhancedTable() {
                                 data-bs-toggle="tooltip"
                                 title="Edit"
                                 className="btn"
-                                onClick={() => history.push('/edit_doner', row)}
+                                onClick={() => history.push('/editvendor', row)}
                               >
                                 <FaRegEdit />
                               </button>

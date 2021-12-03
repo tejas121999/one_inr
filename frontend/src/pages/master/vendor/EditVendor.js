@@ -41,7 +41,7 @@ const EditVendor = () => {
             marginLeft: '20px',
           }}
         >
-          ADD VENDOR
+          EDIT VENDOR
         </p>
       </div>
       <div style={{ backgroundColor: 'white', margin: '30px' }}>

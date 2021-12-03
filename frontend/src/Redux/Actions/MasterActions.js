@@ -44,6 +44,26 @@ export const CreateVendorAction = body => {
   }
 };
 
+export const panImgAdd = body => {
+  return dispatch => {
+    MasterServices.addPanImage(body)
+      .then(res => {
+        console.log('res', res);
+      })
+      .catch(err => {});
+  };
+};
+
+export const gstImgAdd = body => {
+  return dispatch => {
+    MasterServices.addGstImage(body)
+      .then(res => {
+        console.log('res', res);
+      })
+      .catch(err => {});
+  };
+};
+
 // Get All PArtner
 
 export const getAllPartnerAction = () => {
