@@ -1,54 +1,53 @@
 module.exports = (sequelize,DataTypes)=>{
     const partners = sequelize.define('partners',{
-        firstName : {
-            type : DataTypes.STRING,
-            field: 'first_name'
-        },
-        lastName : {
-            type : DataTypes.STRING,
-            field: 'last_name'
-        },
-        mobile: {
-            type:  DataTypes.BIGINT,
-            field: 'mobile'
+        name:{
+            type:  DataTypes.STRING,
+            field: 'name'
         },
         email : {
             type: DataTypes.STRING,
             field: 'email'
         },
+        mobile: {
+            type:  DataTypes.STRING,
+            field: 'mobile'
+        },
         gstNumber : {
             type : DataTypes.STRING,
-            field : 'gst_number'
+            field : 'gst'
         },
         panNumber : {
             type : DataTypes.STRING,
-            field : 'pan_number'
+            field : 'pan'
         },
-        gstImage : {
-            type : DataTypes.STRING,
-            field : 'gst_image'
+        Address : {
+            type : DataTypes.TEXT,
+            field : 'address'
         },
         panImage : {
-            type : DataTypes.STRING,
+            type : DataTypes.TEXT,
             field : 'pan_image'
+        },
+        gstImage : {
+            type : DataTypes.TEXT,
+            field : 'gst_image'
         },
         companyName : {
             type : DataTypes.STRING,
-            field : 'company_name'
-        },
-        Address : {
-            type : DataTypes.STRING,
-            field : 'address'
+            field : 'company'
         }
-
-
     },{
         freezeTableName : true,
         tableName: 'partners',
-        timestamps: false
+        paranoid : true,
+        deletedAt : 'deleted_at',
+        createdAt : 'created_at',
+        updatedAt : 'updated_at'
+
+     
     });
 
-    return partners
+    return partners;
 }
 
 
