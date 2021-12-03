@@ -11,6 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
+// import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   FaRegEdit,
   FaRegEye,
@@ -19,107 +20,324 @@ import {
   FaDollarSign,
 } from 'react-icons/fa';
 
-// import './Donor.css';
-// import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
-// import Addfund from '../../Modals/Donor/AddFund';
-const data = [
+import { Link, useHistory } from 'react-router-dom';
+
+import { useDispatch, useSelector } from 'react-redux';
+
+import { getAllVEndorAction } from '../../../Redux/Actions/MasterActions';
+import Loader from '../../Loader';
+export const constData = [
   {
     id: 1,
-    name: 'a',
-    company: 'nimap infotech',
-    phone: '7854123698',
+    name: 'Chinmay Pattar',
+    donated: 1,
+    balance: '100',
+    project: '10',
     email: 'akshay@gmail.com',
-    gst: 'GST125436',
+    plan: 1,
+    balanceNextRenewDate: '2021-03-14',
+    parentId: 0,
+    mobile: 9819312721,
   },
   {
     id: 2,
     name: 'b',
-    company: 'nimap infotech',
-    phone: '7854123698',
+    donated: 82,
+    balance: '100',
+    project: '10',
     email: 'akshay@gmail.com',
-    gst: 'GST125436',
   },
   {
     id: 3,
     name: 'c',
-    company: 'nimap infotech',
-    phone: '7854123698',
+    donated: 13,
+    balance: '100',
+    project: '10',
     email: 'akshay@gmail.com',
-    gst: 'GST125436',
   },
   {
     id: 4,
     name: 'd',
-    company: 'nimap infotech',
-    phone: '7854123698',
+    donated: 5,
+    balance: '100',
+    project: '10',
     email: 'akshay@gmail.com',
-    gst: 'GST125436',
   },
   {
     id: 5,
     name: 'e',
-    company: 'nimap infotech',
-    phone: '7854123698',
+    donated: 8,
+    balance: '100',
+    project: '10',
     email: 'akshay@gmail.com',
-    gst: 'GST125436',
   },
   {
     id: 6,
     name: 'f',
-    company: 'nimap infotech',
-    phone: '7854123698',
+    donated: 19,
+    balance: '100',
+    project: '10',
     email: 'akshay@gmail.com',
-    gst: 'GST125436',
   },
   {
     id: 7,
     name: 'g',
-    company: 'nimap infotech',
-    phone: '7854123698',
+    donated: 15,
+    balance: '100',
+    project: '10',
     email: 'akshay@gmail.com',
-    gst: 'GST125436',
   },
   {
     id: 8,
     name: 'h',
-    company: 'nimap infotech',
-    phone: '7854123698',
+    donated: 20,
+    balance: '100',
+    project: '10',
     email: 'akshay@gmail.com',
-    gst: 'GST125436',
   },
   {
     id: 9,
     name: 'i',
-    company: 'nimap infotech',
-    phone: '7854123698',
+    donated: 21,
+    balance: '100',
+    project: '10',
     email: 'akshay@gmail.com',
-    gst: 'GST125436',
   },
   {
     id: 10,
     name: 'j',
-    company: 'nimap infotech',
-    phone: '7854123698',
+    donated: 23,
+    balance: '100',
+    project: '10',
     email: 'akshay@gmail.com',
-    gst: 'GST125436',
   },
   {
     id: 11,
     name: 'k',
-    company: 'nimap infotech',
-    phone: '7854123698',
+    donated: 25,
+    balance: '100',
+    project: '10',
     email: 'akshay@gmail.com',
-    gst: 'GST125436',
   },
   {
     id: 12,
     name: 'l',
-    company: 'nimap infotech',
-    phone: '7854123698',
+    donated: 26,
+    balance: '100',
+    project: '10',
     email: 'akshay@gmail.com',
-    gst: 'GST125436',
   },
 ];
+export default function EnhancedTable() {
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('calories');
+  const [selected, setSelected] = React.useState([]);
+  const [page, setPage] = React.useState(0);
+  const [dense, setDense] = React.useState(false);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [viewModal, setViewModal] = React.useState(false);
+  const [viewData, setViewData] = React.useState('');
+  const [fundModal, setFundModal] = React.useState(false);
+  const [fundModalData, setFundModalData] = React.useState(0);
+  // const [donorList, setDonorList] = React.useState([]);
+  const [deleteModal, setDeleteModal] = React.useState(false);
+  const [deleteId, setDeleteID] = React.useState(0);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(getAllVEndorAction());
+  }, []);
+
+  let donorList = useSelector(state => state.master.vendorList);
+
+  const ViewModalOpen = data => {
+    setViewData(data);
+    setViewModal(true);
+  };
+  const ViewModalClose = () => {
+    setViewModal(false);
+  };
+  const fundModaOpen = data => {
+    setFundModalData(data.id);
+    setFundModal(true);
+  };
+  const fundModaClose = () => {
+    setFundModal(false);
+  };
+  const deleteModalOpen = data => {
+    setDeleteID(data.id);
+    setDeleteModal(true);
+  };
+  const deleteModalClose = () => {
+    setDeleteModal(false);
+  };
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const isSelected = name => selected.indexOf(name) !== -1;
+
+  // Avoid a layout jump when reaching the last page with empty rows.
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - donorList.length) : 0;
+  // SEARCH
+  let timeout = null;
+  // const handleChange = e => {
+  //   clearTimeout(timeout);
+  //   timeout = setTimeout(function () {
+  //     onSearch(e.target.value);
+  //   }, 1000);
+  // };
+
+  // const onSearch = value => {
+  //   if (value) {
+  //     dispatch(getDonorByValueAction(value));
+  //   } else {
+  //     dispatch(getViewAllDonorAction());
+  //   }
+  // };
+
+  // END
+  return (
+    <>
+      <br />
+      <br />
+      <br />
+      <br />
+
+      <nav className="navbar navbar-light">
+        <a className="navbar-brand">Vendor List</a>
+        <form className="form-inline">
+          <div className="modalClass">
+            <Link to="/addvendor" type="" className="btn btn-primary">
+              Add Doner
+            </Link>
+          </div>
+        </form>
+      </nav>
+      <div
+        style={{
+          margin: '20px',
+          backgroundColor: 'white',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            padding: '20px',
+            justifyContent: 'space-between',
+          }}
+        >
+          <button
+            style={{ alignSelf: 'flex-start' }}
+            className="btn btn-primary"
+          >
+            Export
+          </button>
+          <input placeholder="Search" />
+        </div>
+        <Paper sx={{ width: '100%', mb: 2 }}>
+          {donorList && donorList.length > 0 ? (
+            <React.Fragment>
+              <TableContainer>
+                <Table
+                  sx={{ minWidth: 750 }}
+                  aria-labelledby="tableTitle"
+                  size={dense ? 'small' : 'medium'}
+                >
+                  <EnhancedTableHead
+                    numSelected={selected.length}
+                    order={order}
+                    orderBy={orderBy}
+                    onRequestSort={handleRequestSort}
+                    rowCount={donorList.length}
+                  />
+                  <TableBody>
+                    {stableSort(donorList, getComparator(order, orderBy))
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                      .map((row, index) => {
+                        const isItemSelected = isSelected(row.name);
+                        const labelId = `enhanced-table-checkbox-${index}`;
+
+                        return (
+                          <TableRow
+                            hover
+                            aria-checked={isItemSelected}
+                            tabIndex={-1}
+                            key={row.name}
+                            selected={isItemSelected}
+                          >
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.name}
+                            </TableCell>
+                            <TableCell align="center">{row.company}</TableCell>
+                            <TableCell align="center">{row.phone}</TableCell>
+                            <TableCell align="center">{row.email}</TableCell>
+                            <TableCell align="center">{row.gst}</TableCell>
+                            <TableCell align="center">
+                              <button
+                                data-bs-toggle="tooltip"
+                                title="Edit"
+                                className="btn"
+                                onClick={() => history.push('/edit_doner', row)}
+                              >
+                                <FaRegEdit />
+                              </button>
+
+                              <button
+                                data-bs-toggle="tooltip"
+                                title="Delete"
+                                className="btn"
+                                onClick={() => deleteModalOpen(row)}
+                              >
+                                <FaRegTrashAlt />
+                              </button>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={donorList.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                showLastButton={true}
+                showFirstButton={true}
+              />
+            </React.Fragment>
+          ) : (
+            <Loader />
+          )}
+        </Paper>
+      </div>
+    </>
+  );
+}
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -140,7 +358,6 @@ function getComparator(order, orderBy) {
 // This method is created for cross-browser compatibility, if you don't
 // need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
-  console.log('Chinmay', array, comparator);
   const stabilizedThis = array.map((el, index) => [el, index]);
 
   stabilizedThis.sort((a, b) => {
@@ -150,37 +367,36 @@ function stableSort(array, comparator) {
     }
     return a[1] - b[1];
   });
-  console.log('SOrted', stabilizedThis);
   return stabilizedThis.map(el => el[0]);
 }
 
 const headCells = [
   {
     id: 'name',
-    numeric: true,
-    disablePadding: true,
+    numeric: false,
+    disablePadding: false,
     label: 'Name',
   },
   {
-    id: 'company',
+    id: 'Company Name',
     numeric: true,
     disablePadding: false,
-    label: 'Company Name',
+    label: 'company name',
   },
   {
-    id: 'phone',
+    id: 'Phone No',
     numeric: true,
     disablePadding: false,
-    label: 'PHONE NO',
+    label: 'Phone No',
   },
   {
-    id: 'email',
+    id: 'Email',
     numeric: true,
     disablePadding: false,
     label: 'Email',
   },
   {
-    id: 'gst',
+    id: 'GST',
     numeric: true,
     disablePadding: false,
     label: 'GST',
@@ -202,7 +418,7 @@ function EnhancedTableHead(props) {
     rowCount,
     onRequestSort,
   } = props;
-  console.log('test', order, orderBy);
+
   const createSortHandler = property => event => {
     onRequestSort(event, property);
   };
@@ -213,7 +429,7 @@ function EnhancedTableHead(props) {
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
+            align="center"
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -243,218 +459,3 @@ EnhancedTableHead.propTypes = {
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
-
-export default function Vendor() {
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [viewModal, setViewModal] = React.useState(false);
-  const [viewData, setViewData] = React.useState('');
-  const [fundModal, setFundModal] = React.useState(false);
-
-  const ViewModalOpen = data => {
-    setViewData(data);
-    setViewModal(true);
-  };
-  const ViewModalClose = () => {
-    setViewModal(false);
-  };
-  const fundModaOpen = () => {
-    setFundModal(true);
-  };
-  const fundModaClose = () => {
-    setFundModal(false);
-  };
-
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = event => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const isSelected = name => selected.indexOf(name) !== -1;
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
-  // const classes = useToolbarStyles();
-  return (
-    <>
-      {/* <div className="card">
-                <p
-                    style={{
-                        textAlign: 'left',
-                        fontWeight: 'bold',
-                        margin: '20px',
-                        width: '100%',
-                        marginLeft: '20px',
-                    }}
-                >
-                    DONOR DETAIL
-                </p>
-            </div>*/}
-      <nav
-        className="navbar navbar-light"
-        // style={{ backgroundColor: '#e2e2e2' }}
-      >
-        <a className="navbar-brand">PARTNER DETAILS</a>
-        <form className="form-inline">
-          <button
-            className="btn btn-outline-primary my-2 my-sm-0"
-            type="submit"
-          >
-            Add Doner
-          </button>
-        </form>
-      </nav>
-      <div
-        style={{
-          margin: '20px',
-          backgroundColor: '#fcfcfc',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            padding: '20px',
-            justifyContent: 'space-between',
-          }}
-        >
-          <button
-            style={{ alignSelf: 'flex-start' }}
-            className="btn btn-outline-primary"
-            id="dropdownMenuButton"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Export
-          </button>
-          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a className="dropdown-item" href="#">
-              csv
-            </a>
-            <a className="dropdown-item" href="#">
-              pdf
-            </a>
-            <a className="dropdown-item" href="#">
-              jpg
-            </a>
-          </div>
-          <input placeholder="Search" />
-        </div>
-        <Paper
-          sx={{ width: '100%', mb: 2 }}
-          style={{ backgroundColor: '#fcfcfc' }}
-        >
-          <TableContainer>
-            <Table
-              sx={{ minWidth: 750 }}
-              aria-labelledby="tableTitle"
-              size={dense ? 'small' : 'medium'}
-            >
-              <EnhancedTableHead
-                numSelected={selected.length}
-                order={order}
-                orderBy={orderBy}
-                onRequestSort={handleRequestSort}
-                rowCount={data.length}
-              />
-              <TableBody>
-                {stableSort(data, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    const isItemSelected = isSelected(row.name);
-                    const labelId = `enhanced-table-checkbox-${index}`;
-
-                    return (
-                      <TableRow
-                        hover
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={row.name}
-                        selected={isItemSelected}
-                      >
-                        <TableCell
-                          id={labelId}
-                          align="right"
-                          scope="row"
-                          padding="none"
-                        >
-                          {row.name}
-                        </TableCell>
-                        <TableCell align="right">{row.company}</TableCell>
-                        <TableCell align="right">{row.phone}</TableCell>
-                        <TableCell align="right">{row.email}</TableCell>
-                        <TableCell align="right">{row.gst}</TableCell>
-                        <TableCell align="right">
-                          <button
-                            data-bs-toggle="tooltip"
-                            title="View Details"
-                            className="btn"
-                            onClick={() => ViewModalOpen(row)}
-                          >
-                            <FaRegEye />
-                          </button>
-                          <button
-                            data-bs-toggle="tooltip"
-                            title="View Transactions"
-                            className="btn"
-                          >
-                            <FaBookOpen />
-                          </button>
-                          <button
-                            data-bs-toggle="tooltip"
-                            title="Edit"
-                            className="btn"
-                          >
-                            <FaRegEdit />
-                          </button>
-                          <button
-                            data-bs-toggle="tooltip"
-                            title="Add Fund"
-                            className="btn"
-                            onClick={() => fundModaOpen()}
-                          >
-                            <FaDollarSign />
-                          </button>
-                          <button
-                            data-bs-toggle="tooltip"
-                            title="Delete"
-                            className="btn"
-                          >
-                            <FaRegTrashAlt />
-                          </button>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={data.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Paper>
-      </div>
-    </>
-  );
-}

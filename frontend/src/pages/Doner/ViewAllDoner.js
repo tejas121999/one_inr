@@ -196,6 +196,8 @@ export default function EnhancedTable() {
   };
 
   const handleChangePage = (event, newPage) => {
+    console.log('ChinmayChange', newPage);
+
     setPage(newPage);
   };
 
@@ -376,6 +378,7 @@ export default function EnhancedTable() {
                 count={donorList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
+                pageSize={10}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
                 showLastButton={true}

@@ -1,2 +1,2 @@
-export const Local = 'http://localhost:3000';
+export const Local = 'http://747d-106-201-74-54.ngrok.io';
 export const BASE_URL = `${Local}/api/`;

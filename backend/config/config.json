@@ -1,19 +1,20 @@
 {
   "development": {
-    "username": "root",
+    "username": "Admin",
     "password": "root",
-    "database": "oneinrv20",
+    "database": "oneInrDb",
     "host": "5.189.128.116",
     "port": "7232",
     "dialect": "mysql"
   },
   
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
+    "username": "admin",
+    "password": "root",
+    "database": "local_oneinr",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "port": "3306"
   },
   "production": {
     "username": "root",

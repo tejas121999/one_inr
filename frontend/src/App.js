@@ -35,6 +35,7 @@ import TablePage from './pages/TablePage';
 import './styles/reduction.scss';
 import Login from './pages/Login';
 import PrivateRoute from './Routing/PrivateRoute';
+import AdminRoutes from './Routing/AdminRoutes';
 // import Login from 'src/pages/Login.js';
 import Viewdonormodal from './Modals/Donor/ViewDonorModal';
 import Forgot from './pages/Forgot';
