@@ -4,8 +4,7 @@ function generateAllUserExcel(partnerData,res) {
     const table =`<table class='order-data'>
         <tbody>
         <tr>
-            <th>firstName</th>
-            <th>lastName</th>
+            <th>name</th>
             <th>mobile</th>
             <th>email</th>
             <th>gstNumber</th>
@@ -19,8 +18,7 @@ function generateAllUserExcel(partnerData,res) {
         ${partnerData.map(singleUser=>
             `
             <tr>
-            <td>${singleUser.firstName}</td>
-            <td>${singleUser.lastName}</td>
+            <td>${singleUser.name}</td>
             <td>${singleUser.mobile}</td>
             <td>${singleUser.email}</td>
             <td>${singleUser.gstNumber}</td>

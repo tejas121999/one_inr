@@ -1,0 +1,20 @@
+version: "3"
+services: 
+    web:
+      build: ./one_inr_backend/
+      container_name: one_inr-nodejs-demo
+      image: one_inr:nodejs-demo
+      links:
+        - db:db
+      ports:
+        - "9731:3000"
+      volumes:
+        - one_inr-public-data:/usr/src/app/public/uploads
+
+    db:
+      container_name: one_inr_db
+      image: mysql
+      volumes:
+        - one_inr-data:/data/db
+      ports:
+        - "27019:27017"

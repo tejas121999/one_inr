@@ -66,13 +66,13 @@ const UpcomingDonerRenewal = () => {
                 <td>1</td>
                 <td>
                   <Link to="#" type="" className="btn btn-link">
-                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    <i className="fa fa-trash" aria-hidden="true"></i>
                   </Link>
                   <Link to="/view_doner" type="" className="btn btn-link">
-                    <i class="fa fa-eye" aria-hidden="true"></i>
+                    <i className="fa fa-eye" aria-hidden="true"></i>
                   </Link>
                   <Link to="/edit_doner" type="" className="btn btn-link">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    <i className="fa fa-pencil" aria-hidden="true"></i>
                   </Link>
                 </td>
               </tr>
@@ -84,14 +84,14 @@ const UpcomingDonerRenewal = () => {
                 <td>1</td>
                 <td>
                   <Link to="#" type="" className="btn btn-link">
-                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    <i className="fa fa-trash" aria-hidden="true"></i>
                   </Link>
                   <Link to="/view_doner" type="" className="btn btn-link">
-                    <i class="fa fa-eye" aria-hidden="true"></i>
+                    <i className="fa fa-eye" aria-hidden="true"></i>
                   </Link>
 
                   <Link to="/edit_doner" type="" className="btn btn-link">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    <i className="fa fa-pencil" aria-hidden="true"></i>
                   </Link>
                 </td>
               </tr>
@@ -103,14 +103,14 @@ const UpcomingDonerRenewal = () => {
                 <td>1</td>
                 <td>
                   <Link to="#" type="" className="btn btn-link">
-                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    <i className="fa fa-trash" aria-hidden="true"></i>
                   </Link>
                   <Link to="/view_doner" type="" className="btn btn-link">
-                    <i class="fa fa-eye" aria-hidden="true"></i>
+                    <i className="fa fa-eye" aria-hidden="true"></i>
                   </Link>
 
                   <Link to="/edit_doner" type="" className="btn btn-link">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    <i className="fa fa-pencil" aria-hidden="true"></i>
                   </Link>
                 </td>
               </tr>
