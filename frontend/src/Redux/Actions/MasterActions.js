@@ -1,11 +1,15 @@
-import { GET_ALL_PARTNERS, GET_ALL_VENDORS } from '../constTypes';
+import {
+  GET_ALL_PARTNERS,
+  GET_ALL_VENDORS,
+  GET_VENDOR_BY_ID,
+} from '../constTypes';
 import MasterServices from '../Services/MasterServices';
 
 // getAll
-export const getAllVEndorAction = () => {
+export const getAllVEndorAction = value => {
   if (navigator.onLine) {
     return dispatch => {
-      MasterServices.GetAllVendorList()
+      MasterServices.GetAllVendorList(value)
         .then(res => {
           //need to add toster here
           dispatch(GetAllVendors(res.data.data));
@@ -57,6 +61,16 @@ export const panImgAdd = body => {
 export const gstImgAdd = body => {
   return dispatch => {
     MasterServices.addGstImage(body)
+      .then(res => {})
+      .catch(err => {});
+  };
+};
+
+// get vendor by id
+
+export const getVendorByID = id => {
+  return dispatch => {
+    MasterServices.vendorById(id)
       .then(res => {
         console.log('res', res);
       })
@@ -64,6 +78,25 @@ export const gstImgAdd = body => {
   };
 };
 
+export const vendorById = data => {
+  return {
+    type: GET_VENDOR_BY_ID,
+    payload: data,
+  };
+};
+
+// delete vendor
+
+export const DeleteVendorByIdAction = id => {
+  return dispatch => {
+    MasterServices.deleteVendor(id)
+      .then(res => {
+        alert(' Vendor Deleted');
+        dispatch(getAllVEndorAction(''));
+      })
+      .catch(err => {});
+  };
+};
 // Get All PArtner
 
 export const getAllPartnerAction = () => {

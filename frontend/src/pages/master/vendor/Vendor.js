@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getAllVEndorAction } from '../../../Redux/Actions/MasterActions';
 import Loader from '../../Loader';
+import Vendordelete from '../../../Modals/Master/VendorDelete';
 export const constData = [
   {
     id: 1,
@@ -145,7 +146,7 @@ export default function EnhancedTable() {
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
-    dispatch(getAllVEndorAction());
+    dispatch(getAllVEndorAction(''));
   }, []);
 
   let donorList = useSelector(state => state.master.vendorList);
@@ -193,20 +194,20 @@ export default function EnhancedTable() {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - donorList.length) : 0;
   // SEARCH
   let timeout = null;
-  // const handleChange = e => {
-  //   clearTimeout(timeout);
-  //   timeout = setTimeout(function () {
-  //     onSearch(e.target.value);
-  //   }, 1000);
-  // };
+  const handleChange = e => {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      onSearch(e.target.value);
+    }, 1000);
+  };
 
-  // const onSearch = value => {
-  //   if (value) {
-  //     dispatch(getDonorByValueAction(value));
-  //   } else {
-  //     dispatch(getViewAllDonorAction());
-  //   }
-  // };
+  const onSearch = value => {
+    if (value) {
+      dispatch(getAllVEndorAction(value));
+    } else {
+      dispatch(getAllVEndorAction(''));
+    }
+  };
 
   // END
   return (
@@ -215,6 +216,11 @@ export default function EnhancedTable() {
       <br />
       <br />
       <br />
+      <Vendordelete
+        show={deleteModal}
+        onHide={deleteModalClose}
+        id={deleteId}
+      />
 
       <nav className="navbar navbar-light">
         <a className="navbar-brand">Vendor List</a>
@@ -245,7 +251,7 @@ export default function EnhancedTable() {
           >
             Export
           </button>
-          <input placeholder="Search" />
+          <input placeholder="Search" onChange={e => handleChange(e)} />
         </div>
         <Paper sx={{ width: '100%', mb: 2 }}>
           {donorList && donorList.length > 0 ? (

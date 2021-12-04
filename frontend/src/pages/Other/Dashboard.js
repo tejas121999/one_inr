@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Tabel = () => {
+const Dashboard = () => {
   return (
     <React.Fragment>
       <div style={{ backgroundColor: '#31313' }}>
@@ -200,4 +200,4 @@ const Tabel = () => {
   );
 };
 
-export default Tabel;
+export default Dashboard;
