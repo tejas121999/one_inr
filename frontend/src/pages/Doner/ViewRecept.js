@@ -30,9 +30,11 @@ import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import CreateReceiptForm from '../../components/CreateReceiptForm';
 import Loader from '../Loader';
-import { getViewReceiptDonorAction } from '../../Redux/Actions/DonorActions';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import {
+  getViewReceiptDonorAction,
+  SearchReceiptByValueAction,
+} from '../../Redux/Actions/DonorActions';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function ViewRecept() {
   const [order, setOrder] = React.useState('asc');
@@ -106,6 +108,25 @@ export default function ViewRecept() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - recept.length) : 0;
 
+  // SEARCH functionality start
+  let timeout = null;
+  const handleChange = e => {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      onSearch(e.target.value);
+    }, 1000);
+  };
+
+  const onSearch = value => {
+    if (value) {
+      dispatch(SearchReceiptByValueAction(value));
+    } else {
+      dispatch(getViewReceiptDonorAction());
+    }
+  };
+
+  // SEARCH functionality END
+
   return (
     <>
       <br />
@@ -146,7 +167,7 @@ export default function ViewRecept() {
           >
             Export
           </button>
-          <input placeholder="Search" />
+          <input placeholder="Search" onChange={e => handleChange(e)} />
         </div>
         <CreateReceiptForm modal={modal} handleModal={handleModal} />
         <Paper sx={{ width: '100%', mb: 2, height: '60vh' }}>
@@ -174,7 +195,6 @@ export default function ViewRecept() {
                       .map((row, index) => {
                         const isItemSelected = isSelected(row.name);
                         const labelId = `enhanced-table-checkbox-${index}`;
-                        console.log('data', row);
                         return (
                           <TableRow
                             hover

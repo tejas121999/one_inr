@@ -10,7 +10,7 @@ import {
   AddUserReceiptAction,
   getViewAllDonorAction,
 } from '../Redux/Actions/DonorActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 let validationSchema = yup.object().shape({
   Project: yup.string().required(),
@@ -31,25 +31,17 @@ const CreateReceiptForm = ({ modal, handleModal }) => {
   useEffect(() => {
     async function onMount() {
       await dispatch(getViewAllDonorAction());
+      // setDonorList()
     }
     onMount();
   }, []);
 
+  let AllDonorList = useSelector(state => state.donor.ViewAllDonor);
+
   const AddUserReceiptHandler = values => {
-    // console.log('values2', values);
-    // const URL = BASE_URL + AddUserReceipt;
-    // axios
-    //   .post(URL, values)
-    //   .then(response => {
-    //     console.log('send', response);
-    //   })
-    //   .catch(error => {
-    //     console.log('error', error);
-    //   });
     dispatch(AddUserReceiptAction(values));
   };
   return (
-    // console.log('test', donorList)
     <Modal show={modal} onHide={handleModal}>
       <Modal.Header closeButton>Create Receipt</Modal.Header>
       <Modal.Body>
@@ -58,7 +50,7 @@ const CreateReceiptForm = ({ modal, handleModal }) => {
             initialValues={{
               Project: '',
               Donar: '',
-              Amount: 1,
+              Amount: 365,
               date: '',
               Transaction: 'cash',
               //   Cheque : '',
@@ -78,19 +70,18 @@ const CreateReceiptForm = ({ modal, handleModal }) => {
                   <label className="mb-0" htmlFor="Donar">
                     Select Donar *
                   </label>
-                  <Field as="select" name="Donar" className="form-control">
+                  <Field
+                    name="Donar"
+                    className="form-control"
+                    list="parentList"
+                  />
+                  <datalist id="parentList">
                     <option value=""> Select Donar </option>
-                    {donorList &&
-                      donorList.map(e => {
-                        {
-                          return (
-                            <option key={e.id} value={e.id}>
-                              {e.name}
-                            </option>
-                          );
-                        }
+                    {AllDonorList &&
+                      AllDonorList.map(e => {
+                        return <option key={e.id} value={e.name} />;
                       })}
-                  </Field>
+                  </datalist>
                   {touched.Donar && errors.Donar ? (
                     <small className="text-danger ">{errors.Donar}</small>
                   ) : null}

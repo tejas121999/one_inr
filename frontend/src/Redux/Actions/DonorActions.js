@@ -130,6 +130,13 @@ export const getViewReceiptDonorAction = () => {
   };
 };
 
+export const SearchReceiptByValueAction = value => {
+  return dispatch => {
+    DonorServices.SearchReceiptByValue(value).then(res => {
+      dispatch(getViewReceiptList(res.data.data));
+    });
+  };
+};
 export const getViewReceiptList = data => {
   return {
     type: VIEW_RECEIPT,

@@ -35,6 +35,9 @@ function DonorServices() {
   //7.b add user receipt
   this.updateUserReceipt = async body =>
     await axios.post(BASE_URL + 'userReceipts/update-user', body);
+  //7.c search user receipt
+  this.SearchReceiptByValue = async value =>
+    await axios.get(BASE_URL + `userReceipts/get-user?search=${value}`);
 
   //8. VIEW_DONER_BY_ID
   this.viewDonorById = async id => await axios.delete(BASE_URL + `donor/${id}`);

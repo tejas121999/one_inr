@@ -5,7 +5,7 @@ var router = express.Router();
 //importing modules
 const { wrapper } = require('../utils/errorWrap')
 
-const {getAllUserReceipts, addUsersReceipts, updateUsersReceipts, getUserReceiptsById } = require('../Controllers/usersReceipts') //Importing usersReceipts controller.
+const {getAllUserReceipts, addUsersReceipts, updateUsersReceipts, getUserReceiptsById } = require('../controllers/usersReceipts') //Importing usersReceipts controller.
 
 const validationError = require('../middleware/validationError');
 
