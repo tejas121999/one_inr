@@ -63,7 +63,7 @@ exports.getDonorById = async (req, res) => {
     let data = await models.users.findOne({ where: { id: id }})
     if (!data) {
         return res.status(400).json({
-            message: "Failed to get Donor Details"
+            message: "Donor does not exist"
         })
     }
     return res.status(200).json({

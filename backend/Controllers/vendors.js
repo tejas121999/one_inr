@@ -56,6 +56,18 @@ exports.getAllVendor = async (req, res) => {
     })
 
 }
+exports.getVenorById = async (req,res) => {
+    let id = req.params.id;
+    let data = await models.vendors.findOne({ where: { id: id }})
+    if (!data) {
+        return res.status(400).json({
+            message: "Vendor does not exist"
+        })
+    }
+    return res.status(200).json({
+        data: data
+    })
+}
 
 //Updating Vendor 
 exports.updateVendor = async (req, res) => {
