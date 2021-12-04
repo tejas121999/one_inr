@@ -3,6 +3,9 @@ import React from 'react';
 const Tabel = () => {
   return (
     <React.Fragment>
+      <br />
+      <br />
+      <br />
       <div style={{ backgroundColor: '#31313' }}>
         <div className="card">
           <p

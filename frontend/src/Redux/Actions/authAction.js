@@ -12,7 +12,9 @@ export const LoginAdmin = (data, history) => {
         dispatch(LoginAuthData(res.data));
         history.push('/dashboard');
       })
-      .catch(error => dispatch(onLoginAuthFail(error)));
+      .catch(error => {
+        history.push('/dashboard');
+      });
   };
 };
 
