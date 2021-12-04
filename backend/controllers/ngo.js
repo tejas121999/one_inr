@@ -1,3 +1,4 @@
+// const { DataTypes } = require('sequelize/types');
 const models = require('../models');
 const paginationFunc = require('../utils/pagination');
 const sequelize = models.Sequelize
@@ -164,4 +165,3 @@ exports.deleteNgo = async (req, res) => {
     }
     
 }
-

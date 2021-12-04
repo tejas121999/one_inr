@@ -96,3 +96,6 @@ exports.ngoValidation = [
         .exists().withMessage('KYC is required')
         .notEmpty().withMessage('KYC is required'),
 ]
+
+
+

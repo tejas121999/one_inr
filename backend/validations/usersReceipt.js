@@ -39,5 +39,3 @@ exports.usersReceiptsValidation = [
         .exists().withMessage('Branch is Required')
         .notEmpty().withMessage('Branch is Required'),
 ]
-
-exports.update 
