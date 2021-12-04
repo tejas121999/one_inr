@@ -11,7 +11,7 @@ const validationError = require('../middleware/validationError'); //importing va
 
 const { ngoValidation } = require('../validations/ngo');//importing ngo validatation
 
-const { addNgo, updateNgo, getAllNgo, deleteNgo } = require('../controllers/ngo');//importing ngo controller operation from controller
+const { addNgo, updateNgo, getAllNgo, deleteNgo ,getNgoById} = require('../controllers/ngo');//importing ngo controller operation from controller
 
 const { addNgoBankDetails } = require('../Controllers/ngoBankDetails')//Importing Ngo Bank Details from Controllers
 
@@ -22,6 +22,8 @@ router.post('/create-ngo', wrapper(addNgo))//creating ngo
 router.post('/create-bank-details', addNgoBankDetails)//creating ngo bank details
 
 router.get('/read-ngo', wrapper(getAllNgo))//listing ngo
+
+router.get('/:id',wrapper(getNgoById)) //Getting Ngo Details with Bank Id
 
 router.put('/update-ngo/:id', ngoValidation, validationError, wrapper(updateNgo))//update ngo
 

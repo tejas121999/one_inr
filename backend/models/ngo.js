@@ -92,18 +92,22 @@ module.exports = (sequelize, DataTypes) => {
             field: 'is_kyc'
         },
 
-        isActive: {
-            type: DataTypes.BOOLEAN,
-            field: 'is_active',
-            default: true
-        }
+        // isActive: {
+        //     type: DataTypes.BOOLEAN,
+        //     field: 'is_active',
+        //     default: true
+        // }
     },
     
     {
         freezeTableName: true,
-        tableName: 'ngos'
-        // timestamps: true
+        tableName: 'ngos',
+        timestamps: false
     });
+    ngo.associate = function (models) {
+        ngo.hasMany(models.ngoBankDetails,{foreignKey : 'ngoId'})
+        
+    }
 
     return ngo;
     
