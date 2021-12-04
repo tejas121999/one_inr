@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "Admin",
+    "username": "root",
     "password": "root",
     "database": "local_oneinr",
     "host": "127.0.0.1",
@@ -9,7 +9,7 @@
   },
   
   "test": {
-    "username": "admin",
+    "username": "root",
     "password": "root",
     "database": "local_oneinr",
     "host": "127.0.0.1",
