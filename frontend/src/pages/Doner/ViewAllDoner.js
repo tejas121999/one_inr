@@ -163,7 +163,6 @@ export default function EnhancedTable() {
   //       toast.success('Yeay! New data is here.');
   //     })
   //     .catch(err => {
-  //       console.log(err);
   //     });
   // };
 
@@ -197,6 +196,8 @@ export default function EnhancedTable() {
   };
 
   const handleChangePage = (event, newPage) => {
+    console.log('ChinmayChange', newPage);
+
     setPage(newPage);
   };
 
@@ -221,7 +222,6 @@ export default function EnhancedTable() {
 
   const onSearch = value => {
     if (value) {
-      console.log('Seacrh', value);
       dispatch(getDonorByValueAction(value));
     } else {
       dispatch(getViewAllDonorAction());
@@ -374,14 +374,15 @@ export default function EnhancedTable() {
               </TableContainer>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
-                component="datalist"
+                component="div"
                 count={donorList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
+                pageSize={10}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
-                showLastButton
-                showFirstButton
+                showLastButton={true}
+                showFirstButton={true}
               />
             </React.Fragment>
           ) : (
@@ -503,7 +504,6 @@ function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,

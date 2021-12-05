@@ -10,7 +10,7 @@ module.exports = (sequelize,DataTypes)=>{
         },
         mobile: {
             type:  DataTypes.STRING,
-            field: 'mobile'
+            field: 'phone'
         },
         gstNumber : {
             type : DataTypes.STRING,

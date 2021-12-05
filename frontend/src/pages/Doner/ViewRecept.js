@@ -30,8 +30,11 @@ import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import CreateReceiptForm from '../../components/CreateReceiptForm';
 import Loader from '../Loader';
-import { getViewReceiptDonorAction } from '../../Redux/Actions/DonorActions';
-import { useDispatch } from 'react-redux';
+import {
+  getViewReceiptDonorAction,
+  SearchReceiptByValueAction,
+} from '../../Redux/Actions/DonorActions';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function ViewRecept() {
   const [order, setOrder] = React.useState('asc');
@@ -51,8 +54,14 @@ export default function ViewRecept() {
   const dispatch = useDispatch();
   const history = useHistory();
   React.useEffect(() => {
-    dispatch(getViewReceiptDonorAction());
+    async function onMount() {
+      await dispatch(getViewReceiptDonorAction());
+    }
+    onMount();
   }, []);
+
+  let ViewReceipt = useSelector(state => state.donor.ViewReceipt);
+
   const handleModal = () => {
     setModal(!modal);
   };
@@ -99,6 +108,25 @@ export default function ViewRecept() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - recept.length) : 0;
 
+  // SEARCH functionality start
+  let timeout = null;
+  const handleChange = e => {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      onSearch(e.target.value);
+    }, 1000);
+  };
+
+  const onSearch = value => {
+    if (value) {
+      dispatch(SearchReceiptByValueAction(value));
+    } else {
+      dispatch(getViewReceiptDonorAction());
+    }
+  };
+
+  // SEARCH functionality END
+
   return (
     <>
       <br />
@@ -139,11 +167,11 @@ export default function ViewRecept() {
           >
             Export
           </button>
-          <input placeholder="Search" />
+          <input placeholder="Search" onChange={e => handleChange(e)} />
         </div>
         <CreateReceiptForm modal={modal} handleModal={handleModal} />
         <Paper sx={{ width: '100%', mb: 2, height: '60vh' }}>
-          {recept && recept.length > 0 ? (
+          {ViewReceipt && ViewReceipt.length > 0 ? (
             <React.Fragment>
               <TableContainer>
                 <Table
@@ -156,10 +184,10 @@ export default function ViewRecept() {
                     order={order}
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
-                    rowCount={recept.length}
+                    rowCount={ViewReceipt.length}
                   />
                   <TableBody>
-                    {stableSort(recept, getComparator(order, orderBy))
+                    {stableSort(ViewReceipt, getComparator(order, orderBy))
                       .slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage,
@@ -167,7 +195,6 @@ export default function ViewRecept() {
                       .map((row, index) => {
                         const isItemSelected = isSelected(row.name);
                         const labelId = `enhanced-table-checkbox-${index}`;
-                        console.log('data', row.branch);
                         return (
                           <TableRow
                             hover
@@ -238,29 +265,14 @@ export default function ViewRecept() {
                               scope="row"
                               padding="none"
                             >
-                              {row.createdAt ? row.createdAt : '-'}
+                              {row.createdAt
+                                ? row.createdAt
+                                    .split('')
+                                    .slice(0, 10)
+                                    .join()
+                                    .replace(/,/g, '')
+                                : '-'}
                             </TableCell>
-                            {/*
-                            <TableCell align="center">
-                              {console.log('datatest', row)}
-                              {row.receiptNumber ? row.receiptNumber : '-'}
-                            </TableCell>
-                            <TableCell align="center">{row.balance}</TableCell>
-                            <TableCell align="center">
-                              {row.receiptNumber ? row.receiptNumber : '-'}
-                            </TableCell>
-                            <TableCell align="center">
-                              {row.project ? row.projects : '20'}
-                            </TableCell>
-                            <TableCell align="center">
-                              {row.project ? row.projects : '20'}
-                            </TableCell>
-                            <TableCell align="center">
-                              {row.project ? row.projects : '20'}
-                            </TableCell>
-                            <TableCell align="center">
-                              {row.project ? row.projects : '20'}
-                            </TableCell> */}
                             <TableCell align="center">
                               <button
                                 data-bs-toggle="tooltip"
@@ -430,7 +442,6 @@ function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,

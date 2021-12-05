@@ -38,7 +38,6 @@ export const getAllParentDonorAction = data => {
   return dispatch => {
     DonorServices.getAllParentDonor()
       .then(res => {
-        console.log('Parents', res.data.data);
         dispatch(getAllParentDonorList(res.data.data));
       })
       .catch(error => {});
@@ -92,7 +91,6 @@ export const getViewAllDonorAction = data => {
   return dispatch => {
     DonorServices.getViewAllDonor()
       .then(res => {
-        console.log('GetAll', res.data.data);
         dispatch(getViewAllDonorList(res.data.data));
       })
       .catch(error => dispatch(onViewAllDonorFail(data)));
@@ -102,7 +100,6 @@ export const getViewAllDonorAction = data => {
 export const getDonorByValueAction = value => {
   return dispatch => {
     DonorServices.getDonorByValue(value).then(res => {
-      console.log('GetAllSearch', res.data.data);
       dispatch(getViewAllDonorList(res.data.data));
     });
   };
@@ -127,12 +124,19 @@ export const getViewReceiptDonorAction = () => {
   return dispatch => {
     DonorServices.getViewReceipt()
       .then(res => {
-        dispatch(getViewReceiptList(res.data.result));
+        dispatch(getViewReceiptList(res.data.data.rows));
       })
       .catch(error => dispatch(onViewAllDonorFail(error)));
   };
 };
 
+export const SearchReceiptByValueAction = value => {
+  return dispatch => {
+    DonorServices.SearchReceiptByValue(value).then(res => {
+      dispatch(getViewReceiptList(res.data.data));
+    });
+  };
+};
 export const getViewReceiptList = data => {
   return {
     type: VIEW_RECEIPT,
@@ -188,7 +192,7 @@ export const AddUserReceiptAction = body => {
     return dispatch => {
       DonorServices.createUserReceipt(body)
         .then(res => {
-          dispatch(createUserReceiptData(res));
+          dispatch(createUserReceiptData(res.data.data.rows));
           //need to add toster here
         })
         .catch(err => {
@@ -426,72 +430,6 @@ export const DeleteDonorByIdData = data => {
 export const onDeleteDonorByIdDataFail = data => {
   return {
     type: DELETE_DONOR_BY_ID_FAIL,
-    payload: data,
-  };
-};
-
-//14. Create_Vendor
-
-export const CreateVendorAction = body => {
-  if (navigator.onLine) {
-    return dispatch => {
-      DonorServices.CreateVendor(body)
-        .then(res => {
-          dispatch(CreateVendorData(res));
-          //need to add toster here
-        })
-        .catch(err => {
-          //need to add toster here
-        });
-    };
-  } else {
-    //need to add toster here
-  }
-};
-
-export const CreateVendorData = data => {
-  return {
-    type: CREATE_VENDOR,
-    payload: data,
-  };
-};
-
-export const onCreateVendorDataFail = data => {
-  return {
-    type: CREATE_VENDOR_FAIL,
-    payload: data,
-  };
-};
-
-//15. Update_Vendor_By_Id
-
-export const UpdateVendorByIdAction = id => {
-  if (navigator.onLine) {
-    return dispatch => {
-      DonorServices.UpdateVendorById(id)
-        .then(res => {
-          dispatch(UpdateVendorByIdData(res));
-          //need to add toster here
-        })
-        .catch(err => {
-          //need to add toster here
-        });
-    };
-  } else {
-    //need to add toster here
-  }
-};
-
-export const UpdateVendorByIdData = data => {
-  return {
-    type: UPDATE_VENDOR_BY_ID,
-    payload: data,
-  };
-};
-
-export const onUpdateVendorByIdDataFail = data => {
-  return {
-    type: UPDATE_VENDOR_BY_ID_FAIL,
     payload: data,
   };
 };

@@ -197,12 +197,12 @@ exports.getAllUserReceipts = async (req, res) => {
     }
 
     const data = await models.usersReceipts.findAndCountAll({
-        limit: pageSize,
-        offset: offset,
         where: searchQuery,
         order: [
             ['updatedAt', 'DESC']
-        ]
+        ],
+        offset: offset,
+        limit: pageSize,
     });
 
     if (!data) {
@@ -215,6 +215,46 @@ exports.getAllUserReceipts = async (req, res) => {
         data: data,
         message: "Found All Data."
     })
+}
+
+
+//GET user by ID
+// exports.getUserReceiptsById = async (req, res) => {
+//     let usersReceiptsId = req.params.id;
+
+//     const data = await models.usersReceipts.findOne({ id: Id } );
+//     console.log('data',data);
+
+
+//     if (!data) {
+//         return res.status(400).json({
+//             message: "Failed to get all data."
+//         })
+//     }
+
+//     return res.status(200).json({
+//         data: data,
+//         message: "Found All Data."
+//     })
+// }
+
+
+exports.getUserReceiptsById = async(req,res)=>{
+    let dataId = req.params.id;
+
+    console.log(`dataId id `, dataId)
+
+    let data = await models.usersReceipts.findOne({where : {id : dataId}})
+
+    if (!data) {
+        return res.status(400).json({
+            message: "Users Receipts does not exists"
+        })
+    }
+    return res.status(200).json({
+                data: data,
+                message: "Found All Data."
+            })
 }
 
 

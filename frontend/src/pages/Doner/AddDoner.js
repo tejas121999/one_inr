@@ -37,11 +37,8 @@ class Adddonor extends Component {
   });
   onAddDoner = async values => {
     const { parentsList } = this.props;
-
     const parentId = parentsList.filter(data => data.name == values.parent);
-
     let id = parentId && parentId.length ? parentId[0].id : 0;
-
     values.parent = id;
     console.log('Aded', values);
 
