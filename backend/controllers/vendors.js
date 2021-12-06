@@ -1,6 +1,7 @@
 const models = require("../models")
 const sequelize = models.Sequelize;
 const Op = sequelize.Op;
+const exportToCsv = require('../utils/exportToCsv')
 const {paginationWithFromTo} = require('../utils/pagination')
 //Creating A Vendor 
 exports.addVendor = async (req, res) => {
@@ -98,4 +99,33 @@ exports.deleteVendor = async (req,res) => {
     return res.status(200).json({
         message: "Vendor deleted scuccessfully."
     })
+}
+
+exports.generateVendorPdf = async (req,res) => {
+    try {
+        let vendorData = await models.vendors.findAll();
+        if (!vendorData) {
+            res.status(404).json({ message: 'Data not found' });
+        } else {
+            generatePdf.pdfGenerator(vendorData, html)
+            res.status(200).json({ message: 'Pdf Generated' });
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+exports.generateVendorCsv = async (req,res) => {
+    try{
+        let vendorData = await models.vendors.findAll();
+        if(!vendorData){
+            res.status(404).json({message:'Data not found'})
+        }else{
+            console.log(vendorData)
+            exportToCsv.exportsToCsv(vendorData,"",res)
+            res.status(200).json({message:'Exported Data into CSV'})
+        }
+    }catch(err){
+        console.log(err)
+    }
 }

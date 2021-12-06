@@ -6,7 +6,7 @@ exports.partnerValidation = [
     body('name')
         .exists().withMessage('name is Required')
         .notEmpty().withMessage('name is Required'),
-    body('mobile')
+    body('phone')
         .exists().withMessage('Phone number is Required')
         .notEmpty().withMessage('Phone number is Required'),
     body('email')

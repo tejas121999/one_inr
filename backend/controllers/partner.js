@@ -6,6 +6,7 @@ const generateAllUserExcel = require('../service/allPatnerExcel')
 const generatePdf = require('../utils/generatePdf')
 const path = require('path')
 var fs = require("fs");
+const exportToCsv = require('../utils/exportToCsv')
 // const html = fs.readFileSync(`${__dirname}`,'..','..','utils','demo.html', "utf8");
 // const html = fs.readFileSync(`${__dirname}`,'..','..','utils','demo.html', "utf8");
 // fs.readFileSync(path.join(__dirname, '..', 'templates', 'invoiceTemplate.html'), 'utf-8');
@@ -13,9 +14,9 @@ const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'p
 
 
 exports.addPartner = async (req, res) => {
-    let { name, mobile, email, gstNumber, panNumber, gstImage, panImage, companyName, Address } = req.body;
+    let { name, phone, email, gstNumber, panNumber, gstImage, panImage, companyName, Address } = req.body;
 
-    let partner = await models.partners.create({ name, mobile, email, gstNumber, panNumber, gstImage, panImage, companyName, Address })
+    let partner = await models.partners.create({ name, phone, email, gstNumber, panNumber, gstImage, panImage, companyName, Address })
     if (!partner) {
         return res.status(400).json({ message: 'Not able to create Partner' })
     }
@@ -67,7 +68,7 @@ exports.updatePatner = async (req, res) => {
     }
     let partnerUpdate = await models.partners.update({
         name : req.body.name,
-        mobile: req.body.mobile,
+        phone: req.body.phone,
         email: req.body.email,
         gstNumber: req.body.gstNumber,
         panNumber: req.body.panNumber,
@@ -140,4 +141,17 @@ exports.pdfOfPartner = async (req, res) => {
     }
 }
 
-
+exports.exportPartnerCsv = async (req,res) => {
+    try{
+        let Partner = await models.partners.findAll({attributes: {includes:[]}});
+        if(!Partner){
+            res.status(404).json({message:'Data not found'})
+            console.log(Partner)
+        }else{
+            exportToCsv.exportsToCsv(Partner,"",res)
+            res.status(200).json({message:'Exported Data into CSV'})
+        }
+    }catch(err){
+        console.log(err)
+    }
+}

@@ -1,6 +1,7 @@
 const models = require('../models')
 const {paginationWithFromTo} = require('../utils/pagination')
 const { bulkUserUploadService } = require('../service/bulkUploadService')
+const exportToCsv = require('../utils/exportToCsv')
 const sequelize = models.Sequelize;
 const csv = require('csvtojson')
 const twinBcrypt = require('twin-bcrypt')
@@ -298,4 +299,19 @@ exports.addDonerThroughExcel = async (req, res, next) => {
 catch(err){
     console.log(err)
 }
+}
+
+
+exports.exportsDonorCsv = async (req, res) => {
+    try{
+        let Donors = await models.users.findAll();
+        if(!Donors){
+            res.status(404).json({message:'Data not found'})
+        }else{
+            exportToCsv.exportsToCsv(Donors,"",res)
+            res.status(200).json({message:'Exported Data into CSV'})
+        }
+    }catch(err){
+        console.log(err)
+    }
 }
