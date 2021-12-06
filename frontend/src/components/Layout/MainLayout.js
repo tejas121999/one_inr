@@ -1,12 +1,5 @@
 import { Content, Footer, Header, Sidebar } from 'components/Layout';
 import React from 'react';
-import {
-  MdImportantDevices,
-  // MdCardGiftcard,
-  MdLoyalty,
-} from 'react-icons/md';
-import NotificationSystem from 'react-notification-system';
-import { NOTIFICATION_SYSTEM_STYLE } from 'utils/constants';
 
 class MainLayout extends React.Component {
   constructor(props) {
@@ -75,14 +68,6 @@ class MainLayout extends React.Component {
           {children}
           <Footer />
         </Content>
-
-        <NotificationSystem
-          dismissible={false}
-          ref={notificationSystem =>
-            (this.notificationSystem = notificationSystem)
-          }
-          style={NOTIFICATION_SYSTEM_STYLE}
-        />
       </main>
     );
   }
