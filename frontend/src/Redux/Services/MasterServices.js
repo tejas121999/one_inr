@@ -12,7 +12,8 @@ function MasterServices() {
   this.UpdateVendorById = async id =>
     await axios.post(BASE_URL + `vendor/${id}`);
   this.deleteVendor = async id => await axios.delete(BASE_URL + `vendor/${id}`);
-
+  this.updateVendor = async (id, body) =>
+    await axios.put(BASE_URL + `vendor/${id}`, body);
   // Partner
   this.GetAllPartnerList = async value =>
     await axios.get(BASE_URL + `partner?search=${value}`);

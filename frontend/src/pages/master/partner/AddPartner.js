@@ -6,7 +6,7 @@ import '../vendor/vendor.css';
 import { CreatePartnerAction } from '../../../Redux/Actions/MasterActions';
 import { useDispatch } from 'react-redux';
 
-const AddPartner = () => {
+const AddPartner = props => {
   const dispatch = useDispatch();
   const validationSchema = yup.object({
     fName: yup.string().required('Required'),
@@ -23,7 +23,35 @@ const AddPartner = () => {
     pan: yup.string().matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
   });
   const onAddPartner = values => {
-    dispatch(CreatePartnerAction(values));
+    dispatch(CreatePartnerAction(values, props.history));
+  };
+
+  const onPanImageAdd = async imagData => {
+    const [panImgUrl, setPanImgUrl] = useState('');
+    const [gstImgUrl, setGstImgUrl] = useState('');
+    const data = new FormData();
+    data.append('avatar', imagData);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=vendor_pan',
+      data,
+    );
+    console.log('data1', result.data.url);
+    if (result && result.data && result.data.url) {
+      setPanImgUrl(result.data.url);
+    }
+  };
+  console.log('PanImage', panImgUrl);
+  const onGstImageAdd = async imagData => {
+    const data = new FormData();
+    data.append('avatar', imagData);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=vendor_gst',
+      data,
+    );
+    console.log('data', result.data.url);
+    if (result && result.data && result.data.url) {
+      setGstImgUrl(result.data.url);
+    }
   };
   return (
     <>
@@ -188,6 +216,7 @@ const AddPartner = () => {
                             className="form-control-file"
                             name="gst_img"
                             accept=".png,.jpg,"
+                            onChange={e => onGstImageAdd(e.target.files[0])}
                           />
                           <ErrorMessage name="name" component={TextError} />
                         </div>
@@ -222,6 +251,7 @@ const AddPartner = () => {
                             className="form-control-file"
                             name="pan_img"
                             accept=".png,.jpg,"
+                            onChange={e => onPanImageAdd(e.target.files[0])}
                           />
                           <ErrorMessage name="pan" component={TextError} />
                         </div>

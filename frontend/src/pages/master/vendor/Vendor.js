@@ -151,7 +151,7 @@ export default function EnhancedTable() {
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
-    dispatch(getAllVEndorAction(constData));
+    dispatch(getAllVEndorAction(''));
   }, []);
 
   let donorList = useSelector(state => state.master.vendorList);

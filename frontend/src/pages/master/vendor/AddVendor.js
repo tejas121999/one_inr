@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as yup from 'yup';
 import { ErrorMessage, Form, Formik, Field } from 'formik';
 import TextError from '../../error/TextError';
@@ -9,9 +9,13 @@ import {
   panImgAdd,
   gstImgAdd,
 } from '../../../Redux/Actions/MasterActions';
+import { BASE_URL } from '../../../API/APIEndpoints';
+import axios from 'axios';
 
-const AddVendor = () => {
+const AddVendor = props => {
   const dispatch = useDispatch();
+  const [panImgUrl, setPanImgUrl] = useState('');
+  const [gstImgUrl, setGstImgUrl] = useState('');
   const validationSchema = yup.object({
     fName: yup.string().required('Required'),
     lName: yup.string().required('Required'),
@@ -26,15 +30,30 @@ const AddVendor = () => {
       ),
     pan: yup.string().matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
   });
-  const onPanImageAdd = imagData => {
+  const onPanImageAdd = async imagData => {
     const data = new FormData();
     data.append('avatar', imagData);
-    dispatch(panImgAdd(data));
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=vendor_pan',
+      data,
+    );
+    console.log('data1', result.data.url);
+    if (result && result.data && result.data.url) {
+      setPanImgUrl(result.data.url);
+    }
   };
-  const onGstImageAdd = imagData => {
+  console.log('PanImage', panImgUrl);
+  const onGstImageAdd = async imagData => {
     const data = new FormData();
     data.append('avatar', imagData);
-    dispatch(gstImgAdd(data));
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=vendor_gst',
+      data,
+    );
+    console.log('data', result.data.url);
+    if (result && result.data && result.data.url) {
+      setGstImgUrl(result.data.url);
+    }
   };
   const onAddVendor = values => {
     const obj = {
@@ -45,11 +64,12 @@ const AddVendor = () => {
       pan: values.pan,
       address: values.address,
       company: values.company,
-      panImage: 'undefineduploads/vendor/gst_image/1638536003674.png',
-      gstImage: 'undefineduploads/vendor/pan_image/1638535945540.png',
+      panImage: panImgUrl,
+      gstImage: gstImgUrl,
     };
-    dispatch(CreateVendorAction(obj));
+    dispatch(CreateVendorAction(obj, props.history));
   };
+
   return (
     <>
       <br />

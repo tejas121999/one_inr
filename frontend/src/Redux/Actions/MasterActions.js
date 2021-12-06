@@ -33,12 +33,12 @@ export const GetAllVendors = data => {
 };
 
 //   Create
-export const CreateVendorAction = body => {
+export const CreateVendorAction = (body, history) => {
   if (navigator.onLine) {
     return dispatch => {
       MasterServices.CreateVendor(body)
         .then(res => {
-          //need to add toster here
+          history.push('/Vendor');
         })
         .catch(err => {
           //need to add toster here
@@ -73,6 +73,7 @@ export const getVendorByID = id => {
   return dispatch => {
     MasterServices.vendorById(id)
       .then(res => {
+        dispatch(vendorById(res.data.data));
         console.log('res', res);
       })
       .catch(err => {});
@@ -86,6 +87,16 @@ export const vendorById = data => {
   };
 };
 
+export const updateVendorById = (id, data, history) => {
+  return dispatch => {
+    MasterServices.updateVendor(id, data)
+      .then(res => {
+        console.log('res', res);
+        history.push('/Vendor');
+      })
+      .catch(err => {});
+  };
+};
 // delete vendor
 
 export const DeleteVendorByIdAction = id => {
@@ -126,12 +137,13 @@ export const GetAllPartners = data => {
   };
 };
 
-export const CreatePartnerAction = body => {
+export const CreatePartnerAction = (body, history) => {
   if (navigator.onLine) {
     return dispatch => {
       MasterServices.CreatePartner(body)
         .then(res => {
           //need to add toster here
+          history.push('/Partner');
         })
         .catch(err => {
           //need to add toster here
