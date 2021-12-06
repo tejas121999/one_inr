@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Tabel = () => {
+const Dashboard = () => {
   return (
     <React.Fragment>
       <br />
@@ -203,4 +203,4 @@ const Tabel = () => {
   );
 };
 
-export default Tabel;
+export default Dashboard;
