@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router()
-const {userRegister} = require('../controllers/authController')
-const {getAllDonor,getAllParentDetails,getDonorById,updateDonor,updateDonorBalance,deleteDonor,getAllUpcomingDonors,addDonerThroughExcel} =require('../controllers/donors')
+const {addDonor,getAllDonor,getAllParentDetails,getDonorById,updateDonor,updateDonorBalance,deleteDonor,getAllUpcomingDonors,addDonerThroughExcel} =require('../controllers/donors')
 const {wrapper} = require('../utils/errorWrap')
 const validationError =require('../middleware/validationError')
 const {donorValidation,updateDonorValidation,updateDonorBalanceValidation,} =require('../validations/donors')
@@ -9,7 +8,7 @@ const {donorValidation,updateDonorValidation,updateDonorBalanceValidation,} =req
 
 
 
-router.post('/',donorValidation,validationError,wrapper(userRegister))
+router.post('/',donorValidation,validationError,wrapper(addDonor))
 router.get('/',wrapper(getAllDonor))
 router.get('/upcoming',wrapper(getAllUpcomingDonors))
 router.get('/parents',wrapper(getAllParentDetails))
