@@ -101,12 +101,11 @@ const Footer = () => {
           <div className="row">
             <div className="col-md-6 col-lg-8">
               <p className="copyright">
-                Copyright &copy;
-                <script>document.write(new Date().getFullYear());</script> All
-                rights reserved | This template is made with by{" "}
+                Copyright &copy; All rights reserved | This template is made
+                with by
                 <a href="#" target="_blank">
                   Oneinr.com
-                </a>
+                </a>{" "}
               </p>
             </div>
             <div className="col-md-6 col-lg-4 text-md-right">

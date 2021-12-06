@@ -1,10 +1,7 @@
 import React from "react";
-import { Link, Route } from "react-router-dom";
-import SideBar from "../Account/sidebar";
-import EditProfile from "../Account/EditProfile";
-import ProfilePass from "../Account/ProfilePass";
+import { Link } from "react-router-dom";
 
-const Campaigns = () => {
+const EditProfile = () => {
   return (
     <div className="site-main">
       <div className="container">
@@ -18,10 +15,28 @@ const Campaigns = () => {
           Profile
         </div>
       </div>
+
       <div className="account-wrapper">
         <div className="container">
           <div class="row">
-            <SideBar />
+            <div className="col-lg-3">
+              <nav className="account-bar">
+                <ul style={{ paddingLeft: "0" }}>
+                  <li id="profile" className="active">
+                    <Link to="/profile">Profile Info</Link>
+                  </li>
+                  <li id="profile_password">
+                    <Link to="/profile/password">Profile Password</Link>
+                  </li>
+                  <li id="campaigns">
+                    <Link to="/backed-campaigns">Backed Campaigns</Link>
+                  </li>
+                  <li id="wallet">
+                    <Link to="/wallet">Wallet</Link>
+                  </li>
+                </ul>
+              </nav>
+            </div>
             <div className="col-lg-9">
               <div className="account-content profile">
                 <h3 className="account-title">My Profiles</h3>
@@ -29,10 +44,10 @@ const Campaigns = () => {
                   <div className="profile-box">
                     <div className="row">
                       <div className="col-lg-6">
-                        <h3>Change Password</h3>
+                        <h3>Profile Infomations</h3>
                         <form
                           method="POST"
-                          action="/profile/password"
+                          action="https://oneinr.com/profile/update"
                           accept-charset="UTF-8"
                           autocomplete="off"
                         >
@@ -43,41 +58,40 @@ const Campaigns = () => {
                             autocomplete="off"
                           />
                           <div className="form-group">
-                            <label>Current Password</label>
+                            <label>Name</label>
                             <input
-                              type="password"
-                              name="current_password"
                               className="form-control"
-                              placeholder="Current Password"
-                              required=""
-                              autocomplete="off"
-                            />
-                          </div>
-
-                          <div className="form-group">
-                            <label>New Password</label>
-                            <input
-                              type="password"
-                              name="new_password"
-                              className="form-control"
-                              placeholder="New Password"
+                              placeholder="Name"
+                              name="name"
+                              type="text"
+                              value="Tejas Talkar"
                               autocomplete="off"
                             />
                           </div>
                           <div className="form-group">
-                            <label>Confirmed Password</label>
+                            <label>Mobile</label>
                             <input
-                              type="password"
-                              name="new_password_confirmation"
                               className="form-control"
-                              placeholder="Confirmed Password"
+                              placeholder="Mobile"
+                              maxlength="10"
+                              name="mobile"
+                              type="text"
+                              value="8850618762"
                               autocomplete="off"
                             />
                           </div>
-                          <button
-                            type="submit"
-                            className="btn-primary pull-right"
-                          >
+                          <div className="form-group">
+                            <label>Email</label>
+                            <input
+                              className="form-control"
+                              placeholder="Email"
+                              name="email"
+                              type="email"
+                              value="tejas@gmail.com"
+                              autocomplete="off"
+                            />
+                          </div>
+                          <button type="submit" className="btn-primary">
                             Update
                           </button>
                         </form>
@@ -90,10 +104,8 @@ const Campaigns = () => {
           </div>
         </div>
       </div>
-      <Route path="/profile/password" component={ProfilePass} />
-      <Route path="/profile/edit" component={EditProfile} />
     </div>
   );
 };
 
-export default Campaigns;
+export default EditProfile;

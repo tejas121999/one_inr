@@ -16,8 +16,8 @@ const navbarItem = [
     exact: true,
   },
   {
-    to: "/campaninges",
-    name: "Campaninges",
+    to: "/campaigns",
+    name: "Campaigns",
     exact: true,
   },
   {

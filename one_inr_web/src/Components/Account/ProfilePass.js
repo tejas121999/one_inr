@@ -1,10 +1,7 @@
 import React from "react";
-import { Link, Route } from "react-router-dom";
-import SideBar from "../Account/sidebar";
-import EditProfile from "../Account/EditProfile";
-import ProfilePass from "../Account/ProfilePass";
+import { Link } from "react-router-dom";
 
-const Campaigns = () => {
+const ProfilePass = () => {
   return (
     <div className="site-main">
       <div className="container">
@@ -18,10 +15,28 @@ const Campaigns = () => {
           Profile
         </div>
       </div>
+
       <div className="account-wrapper">
         <div className="container">
           <div class="row">
-            <SideBar />
+            <div className="col-lg-3">
+              <nav className="account-bar">
+                <ul style={{ paddingLeft: "0" }}>
+                  <li id="profile" className="active">
+                    <Link to="/profile">Profile Info</Link>
+                  </li>
+                  <li id="profile_password">
+                    <Link to="/profile/password">Profile Password</Link>
+                  </li>
+                  <li id="campaigns">
+                    <Link to="/backed-campaigns">Backed Campaigns</Link>
+                  </li>
+                  <li id="wallet">
+                    <Link to="/wallet">Wallet</Link>
+                  </li>
+                </ul>
+              </nav>
+            </div>
             <div className="col-lg-9">
               <div className="account-content profile">
                 <h3 className="account-title">My Profiles</h3>
@@ -90,10 +105,8 @@ const Campaigns = () => {
           </div>
         </div>
       </div>
-      <Route path="/profile/password" component={ProfilePass} />
-      <Route path="/profile/edit" component={EditProfile} />
     </div>
   );
 };
 
-export default Campaigns;
+export default ProfilePass;
