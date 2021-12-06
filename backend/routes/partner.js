@@ -13,7 +13,7 @@ const user = require('../utils/exportToCsv')
 
 
 router.post('/',partnerValidation,validationError,wrapper(addPartner))
-router.get('/partner-data',getPartner)
+router.get('/partner-data',wrapper(getPartner))
 
 router.get('/get-partner-excel',getPartnerExcel)
 router.get('/get-partnerPdf',pdfOfPartner)

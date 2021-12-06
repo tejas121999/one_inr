@@ -197,12 +197,12 @@ exports.getAllUserReceipts = async (req, res) => {
     }
 
     const data = await models.usersReceipts.findAndCountAll({
-        limit: pageSize,
-        offset: offset,
         where: searchQuery,
         order: [
             ['updatedAt', 'DESC']
-        ]
+        ],
+        offset: offset,
+        limit: pageSize,
     });
 
     if (!data) {

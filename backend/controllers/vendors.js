@@ -91,7 +91,7 @@ exports.deleteVendor = async (req,res) => {
     let data = await models.vendors.destroy({ where: { id: id } })
     console.log(`data`, data)
     if (!data) {
-        return res.status(200).json({
+        return res.status(204).json({
             message: "Failed to delete a Vendor"
         })
     }

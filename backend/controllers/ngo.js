@@ -1,3 +1,4 @@
+// const { DataTypes } = require('sequelize/types');
 const models = require('../models');
 const paginationFunc = require('../utils/pagination');
 const sequelize = models.Sequelize
@@ -154,7 +155,7 @@ exports.deleteNgo = async (req, res) => {
     })
     console.log('data', data)
     if(data) {
-        return res.status(200).json({
+        return res.status(204).json({
             message: "NGO details deleted successfully..."
         })
     } else {
@@ -164,4 +165,3 @@ exports.deleteNgo = async (req, res) => {
     }
     
 }
-
