@@ -26,108 +26,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getAllPartnerAction } from '../../../Redux/Actions/MasterActions';
 import Loader from '../../Loader';
-export const constData = [
-  {
-    id: 1,
-    name: 'Chinmay Pattar',
-    donated: 1,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-    plan: 1,
-    balanceNextRenewDate: '2021-03-14',
-    parentId: 0,
-    mobile: 9819312721,
-  },
-  {
-    id: 2,
-    name: 'b',
-    donated: 82,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 3,
-    name: 'c',
-    donated: 13,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 4,
-    name: 'd',
-    donated: 5,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 5,
-    name: 'e',
-    donated: 8,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 6,
-    name: 'f',
-    donated: 19,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 7,
-    name: 'g',
-    donated: 15,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 8,
-    name: 'h',
-    donated: 20,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 9,
-    name: 'i',
-    donated: 21,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 10,
-    name: 'j',
-    donated: 23,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 11,
-    name: 'k',
-    donated: 25,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 12,
-    name: 'l',
-    donated: 26,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-];
+import { constData } from '../../../utils/colors';
+import {
+  EnhancedTableHead,
+  getComparator,
+  stableSort,
+} from '../../../components/Pagination';
+import Partnerdelete from '../../../Modals/Master/PartnerDelete';
+
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -145,10 +51,10 @@ export default function EnhancedTable() {
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
-    dispatch(getAllPartnerAction());
+    dispatch(getAllPartnerAction(constData));
   }, []);
 
-  let donorList = useSelector(state => state.master.vendorList);
+  let donorList = useSelector(state => state.master.partnerList);
 
   const ViewModalOpen = data => {
     setViewData(data);
@@ -193,21 +99,58 @@ export default function EnhancedTable() {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - donorList.length) : 0;
   // SEARCH
   let timeout = null;
-  // const handleChange = e => {
-  //   clearTimeout(timeout);
-  //   timeout = setTimeout(function () {
-  //     onSearch(e.target.value);
-  //   }, 1000);
-  // };
+  const handleChange = e => {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      onSearch(e.target.value);
+    }, 1000);
+  };
 
-  // const onSearch = value => {
-  //   if (value) {
-  //     dispatch(getDonorByValueAction(value));
-  //   } else {
-  //     dispatch(getViewAllDonorAction());
-  //   }
-  // };
-
+  const onSearch = value => {
+    if (value) {
+      dispatch(getAllPartnerAction(value));
+    } else {
+      dispatch(getAllPartnerAction(constData));
+    }
+  };
+  const headCells = [
+    {
+      id: 'name',
+      numeric: false,
+      disablePadding: false,
+      label: 'Name',
+    },
+    {
+      id: 'Company Name',
+      numeric: true,
+      disablePadding: false,
+      label: 'company name',
+    },
+    {
+      id: 'Phone No',
+      numeric: true,
+      disablePadding: false,
+      label: 'Phone No',
+    },
+    {
+      id: 'Email',
+      numeric: true,
+      disablePadding: false,
+      label: 'Email',
+    },
+    {
+      id: 'GST',
+      numeric: true,
+      disablePadding: false,
+      label: 'GST',
+    },
+    {
+      id: 'action',
+      numeric: true,
+      disablePadding: false,
+      label: 'Action',
+    },
+  ];
   // END
   return (
     <>
@@ -215,7 +158,11 @@ export default function EnhancedTable() {
       <br />
       <br />
       <br />
-
+      <Partnerdelete
+        show={deleteModal}
+        onHide={deleteModalClose}
+        id={deleteId}
+      />
       <nav className="navbar navbar-light">
         <a className="navbar-brand">Partner List</a>
         <form className="form-inline">
@@ -245,7 +192,7 @@ export default function EnhancedTable() {
           >
             Export
           </button>
-          <input placeholder="Search" />
+          <input placeholder="Search" onChange={handleChange} />
         </div>
         <Paper sx={{ width: '100%', mb: 2 }}>
           {donorList && donorList.length > 0 ? (
@@ -262,6 +209,7 @@ export default function EnhancedTable() {
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
                     rowCount={donorList.length}
+                    headCells={headCells}
                   />
                   <TableBody>
                     {stableSort(donorList, getComparator(order, orderBy))
@@ -296,35 +244,15 @@ export default function EnhancedTable() {
                             <TableCell align="center">
                               <button
                                 data-bs-toggle="tooltip"
-                                title="View Details"
-                                className="btn"
-                                onClick={() => ViewModalOpen(row)}
-                              >
-                                <FaRegEye />
-                              </button>
-                              <button
-                                data-bs-toggle="tooltip"
-                                title="View Transactions"
-                                className="btn"
-                              >
-                                <FaBookOpen />
-                              </button>
-                              <button
-                                data-bs-toggle="tooltip"
                                 title="Edit"
                                 className="btn"
-                                onClick={() => history.push('/edit_doner', row)}
+                                onClick={() =>
+                                  history.push('/editpartner', row)
+                                }
                               >
                                 <FaRegEdit />
                               </button>
-                              <button
-                                data-bs-toggle="tooltip"
-                                title="Add Fund"
-                                className="btn"
-                                onClick={() => fundModaOpen(row)}
-                              >
-                                <FaDollarSign />
-                              </button>
+
                               <button
                                 data-bs-toggle="tooltip"
                                 title="Delete"
@@ -360,124 +288,3 @@ export default function EnhancedTable() {
     </>
   );
 }
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map(el => el[0]);
-}
-
-const headCells = [
-  {
-    id: 'name',
-    numeric: false,
-    disablePadding: false,
-    label: 'Name',
-  },
-  {
-    id: 'Company Name',
-    numeric: true,
-    disablePadding: false,
-    label: 'company name',
-  },
-  {
-    id: 'Phone No',
-    numeric: true,
-    disablePadding: false,
-    label: 'Phone No',
-  },
-  {
-    id: 'Email',
-    numeric: true,
-    disablePadding: false,
-    label: 'Email',
-  },
-  {
-    id: 'GST',
-    numeric: true,
-    disablePadding: false,
-    label: 'GST',
-  },
-  {
-    id: 'action',
-    numeric: true,
-    disablePadding: false,
-    label: 'Action',
-  },
-];
-
-function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
-
-  const createSortHandler = property => event => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead className="table-head">
-      <TableRow>
-        {headCells.map(headCell => (
-          <TableCell
-            key={headCell.id}
-            align="center"
-            padding={headCell.disablePadding ? 'none' : 'normal'}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={true}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
