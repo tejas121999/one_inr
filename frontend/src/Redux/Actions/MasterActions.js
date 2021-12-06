@@ -16,6 +16,7 @@ export const getAllVEndorAction = value => {
           console.log('Vendors', res);
         })
         .catch(err => {
+          dispatch(GetAllVendors(value));
           //need to add toster here
         });
     };
@@ -99,7 +100,7 @@ export const DeleteVendorByIdAction = id => {
 };
 // Get All PArtner
 
-export const getAllPartnerAction = () => {
+export const getAllPartnerAction = data => {
   if (navigator.onLine) {
     return dispatch => {
       MasterServices.GetAllPartnerList()
@@ -109,6 +110,7 @@ export const getAllPartnerAction = () => {
           console.log('Vendors', res);
         })
         .catch(err => {
+          dispatch(GetAllPartners(data));
           //need to add toster here
         });
     };
@@ -138,4 +140,15 @@ export const CreatePartnerAction = body => {
   } else {
     //need to add toster here
   }
+};
+
+export const DeletePartnerByIdAction = id => {
+  return dispatch => {
+    MasterServices.deletePartner(id)
+      .then(res => {
+        alert(' Vendor Deleted');
+        dispatch(getAllVEndorAction(''));
+      })
+      .catch(err => {});
+  };
 };
