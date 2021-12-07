@@ -23,6 +23,20 @@ exports.addPartner = async (req, res) => {
     return res.status(200).json({ message: 'Partner Created', result: partner })
 }
 
+exports.getPartnerById = async (req, res) => {
+    let id = req.params.id;
+    let data = await models.partners.findOne({ where: { id: id }})
+    if (!data) {
+        return res.status(400).json({
+            message: "Failed to get partners Details"
+        })
+    }
+    return res.status(200).json({
+        data: data
+    })
+}
+
+
 exports.getPartner = async (req, res) => {
     const { search, offset, pageSize } = paginationWithFromTo(
         req.query.search,
