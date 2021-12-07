@@ -5,15 +5,15 @@ const fs = require('fs')
 //const { csvUpload } = require('../controllers/csvupload/csvUpload');
 
 
-let exportsToCsv = async(req,res)=>{
+let exportsToCsv = async(Data,req,res)=>{
     // let data = await models.partners.findAll()
     // if(!data){
     //     return res.status(400).json({message : "Bad Request"})
     // }        
-    const userData = await models.partners.findAll();
-    console.log(userData)
+    //const userData = await models.partners.findAll();
+    //console.log(userData)
     const ws = fs.createWriteStream("public/data.csv")
-    const userDataValues = userData.map(ele => { return ele.dataValues });
+    const userDataValues = Data.map(ele => { return ele.dataValues });
     fastCsv
         .write(userDataValues,{headers:true})
         .on('finish',function(){

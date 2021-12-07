@@ -13,7 +13,7 @@ const { ngoValidation } = require('../validations/ngo');//importing ngo validata
 
 const { addNgo, updateNgo, getAllNgo, deleteNgo } = require('../controllers/ngo');//importing ngo controller operation from controller
 
-const { addNgoBankDetails } = require('../Controllers/ngoBankDetails')//Importing Ngo Bank Details from Controllers
+const { addNgoBankDetails } = require('../controllers/ngoBankDetails')//Importing Ngo Bank Details from Controllers
 
 //routing modules
 
