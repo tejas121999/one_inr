@@ -9,7 +9,7 @@
   },
   
   "test": {
-    "username": "root",
+    "username": "admin",
     "password": "root",
     "database": "local_oneinr",
     "host": "127.0.0.1",
