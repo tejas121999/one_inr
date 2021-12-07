@@ -1,6 +1,5 @@
 const multer = require('multer')
 
-const baseURL = process.env.BASE_URL
 
 exports.ImageUpload = async (req, res) => {
     let fileFor = req.query.reason;
@@ -10,11 +9,15 @@ exports.ImageUpload = async (req, res) => {
     if (fileFor == "vendor_pan") {
         destination = `public/uploads/vendor/pan_image/`
     }
-    else if (fileFor = "vendor_gst") {
+    else if (fileFor == "vendor_gst") {
         destination = `public/uploads/vendor/gst_image/`
     }
-
-
+    else if (fileFor == "partner_gst") {
+        destination = `public/uploads/partner/gst_image/`
+    }
+    else if (fileFor == "partner_pan") {
+        destination = `public/uploads/partner/pan_image/`
+    }
     //Ngo file Uploads path location
     else if (fileFor == "pancard") {
         destination = 'public/ngo/pancard/pancard_image/'
@@ -31,9 +34,7 @@ exports.ImageUpload = async (req, res) => {
     } else if (fileFor == "logo" ) {
         destination = 'public/ngo/logo/logo_image/'
 
-    } else if (fileFor == " ") {
-
-        }
+    }
 
 
 
@@ -77,7 +78,8 @@ exports.ImageUpload = async (req, res) => {
         return res.status(201).json({
 
             url: req.file.url,
-            path: baseURL+req.file.path,
+            path: process.env.BASE_URL+req.file.path,
+            pathtoUpload : req.file.path,
             filename: req.file.filename,
             message: "File Uploaded Successfully"
         })
