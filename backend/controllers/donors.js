@@ -8,6 +8,14 @@ const twinBcrypt = require('twin-bcrypt')
 const saltRounds = 10;
 const Op = sequelize.Op;
 const moment = require('moment')
+const generatePdf = require('../utils/generatePdf')
+const path = require('path')
+var fs = require("fs");
+const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'vendor.html'), 'utf-8');
+
+
+
+
 //Get all details of all donor in DB
 exports.getAllDonor = async (req, res) => {
     const { search, offset, pageSize } = paginationWithFromTo(
@@ -301,6 +309,19 @@ catch(err){
 }
 }
 
+exports.generateDonorPdf = async (req,res) => {
+    try {
+        let donorData = await models.users.findAll();
+        if (!donorData) {
+            res.status(404).json({ message: 'Data not found' });
+        } else {
+            generatePdf.pdfGenerator(donorData, html)
+            res.status(200).json({ message: 'Pdf Generated' });
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 exports.exportsDonorCsv = async (req, res) => {
     try{

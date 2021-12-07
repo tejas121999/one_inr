@@ -2,7 +2,12 @@ const models = require("../models")
 const sequelize = models.Sequelize;
 const Op = sequelize.Op;
 const exportToCsv = require('../utils/exportToCsv')
+const generatePdf = require('../utils/generatePdf')
+const path = require('path')
+var fs = require("fs");
 const {paginationWithFromTo} = require('../utils/pagination')
+const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'vendor.html'), 'utf-8');
+
 //Creating A Vendor 
 exports.addVendor = async (req, res) => {
     let { name, email, phone, gst, pan, address, company, panImage, gstImage } = req.body;

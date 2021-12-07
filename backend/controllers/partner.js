@@ -141,17 +141,17 @@ exports.pdfOfPartner = async (req, res) => {
     }
 }
 
-exports.exportPartnerCsv = async (req,res) => {
-    try{
-        let Partner = await models.partners.findAll({attributes: {includes:[]}});
-        if(!Partner){
-            res.status(404).json({message:'Data not found'})
-            console.log(Partner)
-        }else{
-            exportToCsv.exportsToCsv(Partner,"",res)
-            res.status(200).json({message:'Exported Data into CSV'})
-        }
-    }catch(err){
-        console.log(err)
-    }
-}
+// exports.exportPartnerCsv = async (req,res) => {
+//     try{
+//         let Partner = await models.partners.findAll({attributes: {includes:[]}});
+//         if(!Partner){
+//             res.status(404).json({message:'Data not found'})
+//             console.log(Partner)
+//         }else{
+//             exportToCsv.exportsToCsv(Partner,"",res)
+//             res.status(200).json({message:'Exported Data into CSV'})
+//         }
+//     }catch(err){
+//         console.log(err)
+//     }
+// }

@@ -4,7 +4,7 @@ var router = express.Router();
 const {wrapper} = require('../utils/errorWrap')
 
 
-const {addVendor,updateVendor,getAllVendor,deleteVendor}= require('../controllers/vendors') //Importing Vendor controller.
+const {addVendor,updateVendor,getAllVendor,deleteVendor,generateVendorPdf,generateVendorCsv}= require('../controllers/vendors') //Importing Vendor controller.
 
 const validationError = require('../middleware/validationError')
 const {createVendorValidation,updateVendorValidation} = require('../validations/vendors')
@@ -14,5 +14,8 @@ const {createVendorValidation,updateVendorValidation} = require('../validations/
 router.post('/',createVendorValidation,validationError,wrapper(addVendor)) 
 router.put('/:id',updateVendorValidation,validationError,wrapper(updateVendor))
 router.get('/',wrapper(getAllVendor))
+router.get('/get-vendor-pdf',generateVendorPdf)
+router.get('/get-vendor-csv',generateVendorCsv)
+
 router.delete('/:id',wrapper(deleteVendor))
 module.exports = router;
