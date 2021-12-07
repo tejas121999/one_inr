@@ -5,7 +5,7 @@ const { ngoBankDetailsValidation }  = require('../validations/ngoBankDetails');
 
 const { wrapper } = require('../utils/errorWrap');
 
-const { addNgoBankDetails } = require('../Controllers/ngoBankDetails')//Importing Ngo Bank Details from Controllers
+const { addNgoBankDetails } = require('../controllers/ngoBankDetails')//Importing Ngo Bank Details from Controllers
 
 //routing modules
 
