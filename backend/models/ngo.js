@@ -106,6 +106,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     ngo.associate = function (models) {
         ngo.hasMany(models.ngoBankDetails,{foreignKey : 'ngoId'})
+        ngo.hasMany(models.usersReceipts,{foreignKey : 'ngoId'})
         
     }
 
