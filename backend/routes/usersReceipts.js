@@ -17,9 +17,9 @@ const { usersReceiptsValidation } = require('../validations/usersReceipt');//imp
 
 // router.get('/getalluser', getAllUserReceipts )
 
-router.get('/get-user',wrapper(getAllUserReceipts))// listing user resiepts
+router.get('/get-users',wrapper(getAllUserReceipts))// listing user resiepts
 
-router.get('/getUserId/:id', wrapper(getUserReceiptsById))// listing user by Id
+router.get('/get-user-id/:id', wrapper(getUserReceiptsById))// listing user by Id
 
 router.post('/add-user',  usersReceiptsValidation, validationError, wrapper(addUsersReceipts))//create user receipt
 
