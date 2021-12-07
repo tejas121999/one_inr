@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         receiptNumber: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             field: 'receipt_number'
         },
 
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         mailSend: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             field: 'mail_send'
         },
 
@@ -86,6 +86,15 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true,
         tableName: 'users_receipts'
     })
+
+
+    usersReceipts.associate = function (models) {
+        usersReceipts.belongsTo(models.users, {foreignKey : 'user_id'})
+        // usersReceipts.belongsTo(models.ngo, {foreignKey : 'ngo_id'}),
+        // usersReceipts.belongsTo(models.projects, {foreignKey : 'pr9899+oject_id'})
+    }
+
+    
     return usersReceipts
 }
 

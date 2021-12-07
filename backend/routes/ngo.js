@@ -5,7 +5,7 @@ var router = express.Router();
 
 const { wrapper } = require('../utils/errorWrap');
 
-const ngoController = require('../controllers/ngo');//importing ngo controller
+// const ngoController = require('../controllers/ngo');//importing ngo controller
 
 const validationError = require('../middleware/validationError'); //importing validatation error from middleware
 
@@ -13,7 +13,7 @@ const { ngoValidation } = require('../validations/ngo');//importing ngo validata
 
 const { addNgo, updateNgo, getAllNgo, deleteNgo ,getNgoById} = require('../controllers/ngo');//importing ngo controller operation from controller
 
-const { addNgoBankDetails } = require('../Controllers/ngoBankDetails')//Importing Ngo Bank Details from Controllers
+const { addNgoBankDetails } = require('../controllers/ngoBankDetails')//Importing Ngo Bank Details from Controllers
 
 //routing modules
 

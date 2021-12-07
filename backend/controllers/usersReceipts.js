@@ -2,6 +2,11 @@ const models = require('../models');
 const paginationFunc = require('../utils/pagination');
 const Sequelize = models.Sequelize
 const Op = Sequelize.Op;
+const generatePdf = require('../utils/generatePdf')
+const path = require("path")
+const fs = require("fs")
+const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'receipt.html'), 'utf-8');
+
 
 //Creating A Users Receipts
 exports.addUsersReceipts = async (req, res) => {
@@ -115,6 +120,38 @@ exports.updateUsersReceipts = async (req, res) => {
         return res.status(200).json({ messgae: `Users Receipts updated successfully` });
     }
 
+}
+
+
+exports.pdfForUserReceipt = async (req, res) => {
+    try {
+        console.log("=======================")
+        const receipt_number = req.params.receipt_number
+
+        const getReceiptDet = await models.usersReceipts.findOne({
+            where: {receipt_number },
+            attributes: ['receipt_number','amount','createdAt'],
+            // include: [
+            //     {model: models.users, attributes: ['name']}
+            // ]
+        })
+
+        console.log("=========================",getReceiptDet)
+        if(getReceiptDet){
+            generatePdf.pdfGenerator(getReceiptDet, html)
+            res.status(200).json({ message: 'Pdf Generated' });
+        }else{
+            return res.json({message: "Receipt not found"})
+        }
+        // if (!partnerData) {
+        //     res.status(404).json({ message: 'Data not found' });
+        // } else {
+        //     generatePdf.pdfGenerator(partnerData, html)
+        //     res.status(200).json({ message: 'Pdf Generated' });
+        // }
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 
