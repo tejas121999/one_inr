@@ -4,6 +4,7 @@ const Op = sequelize.Op;
 const exportToCsv = require('../utils/exportToCsv')
 const generatePdf = require('../utils/generatePdf')
 const path = require('path')
+const filePath = 'vendor';
 var fs = require("fs");
 const {paginationWithFromTo} = require('../utils/pagination')
 const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'vendor.html'), 'utf-8');
@@ -124,8 +125,8 @@ exports.generateVendorPdf = async (req,res) => {
         if (!vendorData) {
             res.status(404).json({ message: 'Data not found' });
         } else {
-            generatePdf.pdfGenerator(vendorData, html)
-            res.status(200).json({ message: 'Pdf Generated' });
+            const pdfData = await generatePdf.pdfGenerator(vendorData,filePath, html)
+            res.status(200).json({ message: 'Pdf Generated', url : `https://` + pdfData.path });
         }
     } catch (err) {
         console.log(err);
