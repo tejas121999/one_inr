@@ -5,6 +5,7 @@ const {paginationWithFromTo} = require('../utils/pagination')
 const generateAllUserExcel = require('../service/allPatnerExcel')
 const generatePdf = require('../utils/generatePdf')
 const path = require('path')
+const filePath = 'partner'
 var fs = require("fs");
 const exportToCsv = require('../utils/exportToCsv')
 // const html = fs.readFileSync(`${__dirname}`,'..','..','utils','demo.html', "utf8");
@@ -147,8 +148,8 @@ exports.pdfOfPartner = async (req, res) => {
         if (!partnerData) {
             res.status(404).json({ message: 'Data not found' });
         } else {
-            generatePdf.pdfGenerator(partnerData, html)
-            res.status(200).json({ message: 'Pdf Generated' });
+            const pdfData = await generatePdf.pdfGenerator(partnerData,filePath, html)
+            res.status(200).json({ message: 'Pdf Generated', url : 'https://' + pdfData.path });
         }
     } catch (err) {
         console.log(err);
