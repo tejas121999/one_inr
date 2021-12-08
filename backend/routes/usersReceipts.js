@@ -17,14 +17,14 @@ const { pdfForUserReceipt } = require('../controllers/usersReceipts');//importin
 
 // router.get('/getalluser', getAllUserReceipts )
 
-router.get('/get-user',wrapper(getAllUserReceipts))// listing user resiepts
+router.get('/',wrapper(getAllUserReceipts))// listing user resiepts
 
-router.get('/getUserId/:id', wrapper(getUserReceiptsById))// listing user by Id
+router.get('/:id', wrapper(getUserReceiptsById))// listing user by Id
 
-router.get('/pdfForUserReceipt/:receipt_number', wrapper(pdfForUserReceipt))
+router.get('/reciept-number/:receipt_number', wrapper(pdfForUserReceipt))//getting Reciept pdf by reciept number
 
-router.post('/add-user',  usersReceiptsValidation, validationError, wrapper(addUsersReceipts))//create user receipt
+router.post('/',  usersReceiptsValidation, validationError, wrapper(addUsersReceipts))//create user receipt
 
-router.put('/update-user/:id', usersReceiptsValidation, validationError, wrapper(updateUsersReceipts))//Update User reciept
+router.put('/:id', usersReceiptsValidation, validationError, wrapper(updateUsersReceipts))//Update User reciept
 
 module.exports = router;

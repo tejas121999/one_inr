@@ -10,30 +10,26 @@ exports.ImageUpload = async (req, res) => {
     if (fileFor == "vendor_pan") {
         destination = `public/uploads/vendor/pan_image/`
     }
-    else if (fileFor = "vendor_gst") {
+    else if (fileFor == "vendor_gst") {
         destination = `public/uploads/vendor/gst_image/`
     }
-
-
     //Ngo file Uploads path location
-    else if (fileFor == "pancard") {
-        destination = 'public/ngo/pancard/pancard_image/'
+    else if (fileFor == "ngo_pancard") {
+        destination = `public/uploads/ngo/pancard/`
 
-    } else if (fileFor == "certificate") {
-        destination = 'public/ngo/certificate/certificate_image/'
+    } else if (fileFor == "ngo_certificate") {
+        destination = `public/uploads/ngo/certificate/`
 
-    } else if (fileFor == "charity_registration_certificate") {
-        destination = 'public/ngo/charityRegistrationCertificate/charityRegistrationCertificate_image/'
+    } else if (fileFor == "ngo_charity_registration_certificate") {
+        destination = `public/uploads/ngo/charityRegistrationCertificate/`
 
-    } else if (fileFor == "dead") {
-        destination = 'public/ngo/dead/dead_image/'
+    } else if (fileFor == "ngo_dead") {
+        destination = `public/uploads/ngo/dead/`
 
-    } else if (fileFor == "logo" ) {
-        destination = 'public/ngo/logo/logo_image/'
+    } else if (fileFor == "ngo_logo" ) {
+        destination = `public/uploads/ngo/logo/`
 
-    } else if (fileFor == " ") {
-
-        }
+    } 
 
 
 

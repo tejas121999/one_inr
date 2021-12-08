@@ -70,7 +70,7 @@ exports.updateUsersReceipts = async (req, res) => {
 
     let usersReceiptsId = req.params.id;
 
-    console.log(`usersReceipts id `, usersReceiptsId)
+    // console.log(`usersReceipts id `, usersReceiptsId)
 
     let {
         userId,
@@ -122,92 +122,38 @@ exports.updateUsersReceipts = async (req, res) => {
 
 }
 
-
+//Generating PDF for User Reciepts
 exports.pdfForUserReceipt = async (req, res) => {
     try {
-        console.log("=======================")
+        
         const receipt_number = req.params.receipt_number
 
         const getReceiptDet = await models.usersReceipts.findOne({
             where: {receipt_number },
             attributes: ['receipt_number','amount','createdAt'],
-            // include: [
-            //     {model: models.users, attributes: ['name']}
-            // ]
+            include: [
+                {model: models.users, 
+                    attributes: ['name','parentId'],
+                    include:{model : models.users,attributes : ['id','name']},}
+            ]
         })
-
-        console.log("=========================",getReceiptDet)
+       
         if(getReceiptDet){
             generatePdf.pdfGenerator(getReceiptDet, html)
-            res.status(200).json({ message: 'Pdf Generated' });
+            res.status(200).json({ message: 'Pdf Generated' , data : getReceiptDet.dataValues });
         }else{
             return res.json({message: "Receipt not found"})
         }
-        // if (!partnerData) {
-        //     res.status(404).json({ message: 'Data not found' });
-        // } else {
-        //     generatePdf.pdfGenerator(partnerData, html)
-        //     res.status(200).json({ message: 'Pdf Generated' });
-        // }
+       
     } catch (err) {
         console.log(err);
     }
 }
 
 
-// View / Read user receipts
-// exports.readUserReceipts = async (req, res) => {
-
-//     try {
-//         let query = {};
-//         //paginantion 
-
-//         const { search, offset, pageSize } = paginationFunc.paginationWithFromTo(
-//             req.query.search,
-//             req.query.from,
-//             req.query.to
-//         )
-//         // Search query
-//         const searchQuery = {
-//             [Op.and]: [query, {
-//                 [Op.or]: {
-//                     receiptNumber: { [Op.like]: search + '%' },
-//                     amount: { [Op.like]: search + '%' },
-//                     transactionType: { [Op.like]: search + '%' },
-//                     realizationNo: { [Op.like]: search + '%' },
-//                     realizationDate: { [Op.like]: search + '%' },
-//                     transactionType: { [Op.like]: search + '%' },
-//                     branch: { [Op.like]: search + '%' },
-//                 },
-//             }],
-
-//         }
-
-//         var result = await models.usersReceipts.findAndCountAll({
-//             limit: pageSize,
-//             offset: offset,
-//             where: searchQuery,
-//             order: [
-//                 ['updatedAt', 'DESC']
-//             ]
-//         });
-//         result = await models.usersReceipts.findAll({})
-//         if (result.length == 0) {
-//             res.send("Data Not found")
-//         }
-//         else {
-//             res.send(result)
-//         }
-//     } catch (err) {
-//         console.log(err)
-//         return res.send(err)
-//     }
-// }
 
 
-
-//Get all details of all Users of View Reciepts in DB
-
+//Get all user receipts
 exports.getAllUserReceipts = async (req, res) => {
     let query = {};
     //paginantion 
@@ -255,31 +201,13 @@ exports.getAllUserReceipts = async (req, res) => {
 }
 
 
-//GET user by ID
-// exports.getUserReceiptsById = async (req, res) => {
-//     let usersReceiptsId = req.params.id;
-
-//     const data = await models.usersReceipts.findOne({ id: Id } );
-//     console.log('data',data);
 
 
-//     if (!data) {
-//         return res.status(400).json({
-//             message: "Failed to get all data."
-//         })
-//     }
-
-//     return res.status(200).json({
-//         data: data,
-//         message: "Found All Data."
-//     })
-// }
-
-
+//get user receipts by ID
 exports.getUserReceiptsById = async(req,res)=>{
     let dataId = req.params.id;
 
-    console.log(`dataId id `, dataId)
+    // console.log(`dataId id `, dataId)
 
     let data = await models.usersReceipts.findOne({where : {id : dataId}})
 

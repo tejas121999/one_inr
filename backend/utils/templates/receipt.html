@@ -15,24 +15,29 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">name</th>
-                    <th scope="col">email</th>
-                    <th scope="col">mobile</th>
+                    <th scope="col">RecieptNo.</th>
+                    <th scope="col">amount</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Words</th>
+
 
                 </tr>
             </thead>
             <tbody>
                 
                 <tr>
-                    
-                    <td>{{partner.dataValues.receipt_number}}</td>
-                    <td>{{partner.dataValues.amount}}</td>
-                    <td>{{partner.dataValues.createdAt}}</td>
+                    <td>{{name}}</td>
+                    <td>{{receipt_number}}</td>
+                    <td>{{amount}}</td>
+                    <td>{{createdAt}}</td>
+                    <td>{{amountInWords}}</td>
     
                 </tr>
                 
 
             </tbody>
         </table>
+        
     </div>
 </body>
 </html>

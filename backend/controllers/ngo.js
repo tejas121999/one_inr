@@ -171,7 +171,7 @@ exports.deleteNgo = async (req, res) => {
     let data = models.ngo.destroy({
         where: { id: id }
     })
-    console.log('data', data)
+    // console.log('data', data)
     if (data) {
         return res.status(204).json({
             message: "NGO details deleted successfully..."
