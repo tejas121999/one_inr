@@ -29,7 +29,7 @@ function App() {
         {/*header route */}
         <Route path="/" exact component={Home} />
         <Route path="/about" exact component={About} />
-        <Route path="/campaninges" exact component={Campaigns} />
+        <Route path="/campaigns" exact component={Campaigns} />
         <Route path="/contact" exact component={Contact} />
         <Route path="/login" exact component={Login} />
         {/*footer page routing */}

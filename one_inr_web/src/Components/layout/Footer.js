@@ -33,7 +33,7 @@ const campaningItem = [
     exact: true
   },
   {
-    to: '/campaninges',
+    to: '/campaigns',
     name: 'donate to a cause',
     exact: true
   },
@@ -92,10 +92,7 @@ const Footer = () => {
             <div className="col-md-6 col-lg-8">
               <p className="copyright">
                 Copyright &copy; All rights reserved | This template is made
-                with by
-                <a href="#" target="_blank">
-                  Oneinr.com
-                </a>{" "}
+                with by Oneinr.com
               </p>
             </div>
             <div className="col-md-6 col-lg-4 text-md-right">

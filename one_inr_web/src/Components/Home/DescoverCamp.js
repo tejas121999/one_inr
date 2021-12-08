@@ -242,11 +242,7 @@ const DescoverCamp = () => {
                     </div>
                 </div>
             </div>
-            <div className="mt-5 mb-5 text-center">
-                <Link to="/campaninges">
-                    <button type="button" class="btn btn-primary">view all Campaigns</button>
-                </Link>
-            </div>
+            
         </div>
     )
 }
