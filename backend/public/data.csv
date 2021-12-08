@@ -1,2 +1,3 @@
-id,firstName,lastName,mobile,email,gstNumber,panNumber,gstImage,panImage,companyName,Address
-1,objecsdft12,abcfdsdef,3024568974,objectfd12@gmail.com,adsdssfdf,1223sdfsd,as1223,asd2134,Nimap,Parel
+id,name,email,phone,gst,pan,address,company,panImage,gstImage,created_at,updated_at,deleted_at
+1,abedede,sadfsdf@gmail.com,1236547896,adfdsfa,sdfsad,chembur,nimap,asdfsd,asdfasdf,Mon Dec 06 2021 16:51:39 GMT+0530 (India Standard Time),Mon Dec 06 2021 16:51:39 GMT+0530 (India Standard Time),
+2,abedasdfasdede,asdf@gmail.com,7894561233,dsfasdf,asdfff,ghatkopar,nimap infotech,asdfsadfa,asasdffdfasdf,Mon Dec 06 2021 16:53:18 GMT+0530 (India Standard Time),Mon Dec 06 2021 16:53:18 GMT+0530 (India Standard Time),
