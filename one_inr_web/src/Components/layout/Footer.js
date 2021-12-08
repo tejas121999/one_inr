@@ -103,18 +103,13 @@ const Footer = () => {
         <div className="container">
           <div className="row">
             <div className="col-md-6 col-lg-8">
-              <p className="copyright">
-                Copyright &copy; template is made with by{" "}
-                <a href="#" target="_blank">
-                  Oneinr.com
-                </a>
-              </p>
+              <p className="copyright">2018 by One INR. All Rights Reserved.</p>
             </div>
             <div className="col-md-6 col-lg-4 text-md-right">
               <p className="mb-0 list-unstyled">
-                <a className="mr-md-3" href="#">
-                  back to top
-                </a>
+                <Link className="mr-md-3" to="#">
+                  back to top <i class="bi bi-arrow-up"></i>
+                </Link>
               </p>
             </div>
           </div>

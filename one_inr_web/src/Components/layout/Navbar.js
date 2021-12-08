@@ -1,5 +1,5 @@
 import React from "react";
-import oneinrlogo from "../../Images/one-inr.png";
+import oneinrlogo from "../Images/one-inr.png";
 import { Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import "./Layout.css";
@@ -38,7 +38,7 @@ const navbarItem = [
 const Header = () => {
   return (
     <React.Fragment>
-      <header className="header sticky-top">
+      <header className="header">
         <nav className="navbar navbar-expand-lg navbar-light bg-white py-1 shadow-sm">
           <div className="container">
             <a className="navbar-brand">
