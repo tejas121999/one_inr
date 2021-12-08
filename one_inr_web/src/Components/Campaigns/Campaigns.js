@@ -4,7 +4,7 @@ import DescoverCamp from "../Home/DescoverCamp";
 import TopImg_1 from "../Images/descovr_camp/Sponsoring_Books_for_Students.jpeg"
 import logo_img from "../Images/ngo_logo.png"
 
-function Campaigns() {
+const Campaigns = () => {
   return (
     <div>
       <div className="container">
@@ -50,6 +50,6 @@ function Campaigns() {
       <DescoverCamp />
     </div>
   );
-}
+};
 
 export default Campaigns;

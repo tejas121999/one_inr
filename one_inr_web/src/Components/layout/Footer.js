@@ -91,9 +91,11 @@ const Footer = () => {
           <div className="row">
             <div className="col-md-6 col-lg-8">
               <p className="copyright">
-                Copyright &copy;
-                template is made with by <a
-                  href="#" target="_blank">Oneinr.com</a>
+                Copyright &copy; All rights reserved | This template is made
+                with by
+                <a href="#" target="_blank">
+                  Oneinr.com
+                </a>{" "}
               </p>
             </div>
             <div className="col-md-6 col-lg-4 text-md-right">
