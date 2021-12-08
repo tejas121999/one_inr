@@ -232,7 +232,7 @@ export default function EnhancedTable() {
         <form className="form-inline">
           <div className="modalClass">
             <Link to="/addvendor" type="" className="btn btn-primary">
-              Add Doner
+              Add Vendor
             </Link>
           </div>
         </form>
@@ -256,7 +256,11 @@ export default function EnhancedTable() {
           >
             Export
           </button>
-          <input placeholder="Search" onChange={e => handleChange(e)} />
+          <input
+            placeholder="Search"
+            onChange={e => handleChange(e)}
+            type="search"
+          />
         </div>
         <Paper sx={{ width: '100%', mb: 2 }}>
           {donorList && donorList.length > 0 ? (

@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as yup from 'yup';
 import { ErrorMessage, Form, Formik, Field } from 'formik';
 import TextError from '../../error/TextError';
 import '../vendor/vendor.css';
 import { CreatePartnerAction } from '../../../Redux/Actions/MasterActions';
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import { BASE_URL } from '../../../API/APIEndpoints';
 
 const AddPartner = props => {
   const dispatch = useDispatch();
+  const [panImgUrl, setPanImgUrl] = useState('');
+  const [gstImgUrl, setGstImgUrl] = useState('');
   const validationSchema = yup.object({
     fName: yup.string().required('Required'),
     lName: yup.string().required('Required'),
@@ -23,16 +27,25 @@ const AddPartner = props => {
     pan: yup.string().matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
   });
   const onAddPartner = values => {
-    dispatch(CreatePartnerAction(values, props.history));
+    const obj = {
+      name: values.fName + ' ' + values.lName,
+      email: values.email,
+      phone: values.mobile,
+      gstNumber: values.gst,
+      panNumber: values.pan,
+      Address: values.address,
+      companyName: values.company,
+      panImage: panImgUrl,
+      gstImage: gstImgUrl,
+    };
+    dispatch(CreatePartnerAction(obj, props.history));
   };
 
   const onPanImageAdd = async imagData => {
-    const [panImgUrl, setPanImgUrl] = useState('');
-    const [gstImgUrl, setGstImgUrl] = useState('');
     const data = new FormData();
     data.append('avatar', imagData);
     const result = await axios.post(
-      BASE_URL + 'fileupload?reason=vendor_pan',
+      BASE_URL + 'fileupload?reason=partner_pan',
       data,
     );
     console.log('data1', result.data.url);
@@ -45,7 +58,7 @@ const AddPartner = props => {
     const data = new FormData();
     data.append('avatar', imagData);
     const result = await axios.post(
-      BASE_URL + 'fileupload?reason=vendor_gst',
+      BASE_URL + 'fileupload?reason=partner_gst',
       data,
     );
     console.log('data', result.data.url);
@@ -79,8 +92,8 @@ const AddPartner = props => {
             lName: '',
             mobile: '',
             email: '',
-            gst: '',
-            pan: '',
+            gst: '22AAAAA0000A1Z5',
+            pan: 'EGZPP5822A',
             company: '',
             address: '',
           }}

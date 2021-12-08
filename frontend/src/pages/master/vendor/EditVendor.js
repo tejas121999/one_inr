@@ -11,11 +11,15 @@ import {
 } from '../../../Redux/Actions/MasterActions';
 import { masterReducer } from '../../../Redux/Reducers/MasterReducer';
 import Loader from '../../Loader';
-
+import { Modal } from 'react-bootstrap';
+import { BASE_URL, Local } from '../../../API/APIEndpoints';
+import axios from 'axios';
 const EditVendor = props => {
   const dispatch = useDispatch();
   const [panImgUrl, setPanImgUrl] = useState('');
   const [gstImgUrl, setGstImgUrl] = useState('');
+  const [imgView, setImgView] = useState(false);
+  const [imgData, setImgData] = useState('');
   const validationSchema = yup.object({
     fName: yup.string().required('Required'),
     lName: yup.string().required('Required'),
@@ -30,6 +34,32 @@ const EditVendor = props => {
       ),
     pan: yup.string().matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
   });
+
+  const onPanImageAdd = async imagData => {
+    const data = new FormData();
+    data.append('avatar', imagData);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=vendor_pan',
+      data,
+    );
+
+    if (result && result.data && result.data.pathtoUpload) {
+      setPanImgUrl(result.data.pathtoUpload);
+    }
+  };
+
+  const onGstImageAdd = async imagData => {
+    const data = new FormData();
+    data.append('avatar', imagData);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=vendor_gst',
+      data,
+    );
+
+    if (result && result.data && result.data.pathtoUpload) {
+      setGstImgUrl(result.data.pathtoUpload);
+    }
+  };
   const onUpdateVendor = values => {
     const obj = {
       name: values.fName + ' ' + values.lName,
@@ -39,8 +69,8 @@ const EditVendor = props => {
       pan: values.pan,
       address: values.address,
       company: values.company,
-      panImage: values.panImage,
-      gstImage: values.gstImage,
+      panImage: panImgUrl.length > 0 ? panImgUrl : values.panImage,
+      gstImage: gstImgUrl.length > 0 ? gstImgUrl : values.gstImage,
     };
     dispatch(updateVendorById(props.location.state.id, obj, props.history));
   };
@@ -49,14 +79,38 @@ const EditVendor = props => {
   }, []);
 
   let vendorData = useSelector(state => state.master);
-
-  console.log('Edit', vendorData);
+  const handleModal = data => {
+    const url = Local + `/${data}`;
+    console.log('url', url);
+    setImgData(url);
+    setImgView(true);
+  };
+  const closeModal = () => {
+    setImgData('');
+    setImgView(false);
+  };
   if (vendorData.isVendorTrue) {
     return (
       <>
         <br />
         <br />
         <br />
+
+        <Modal size="sm" centered show={imgView}>
+          <Modal.Body>
+            <img
+              style={{
+                height: '200px',
+                width: '100%',
+                justifyContent: 'center',
+              }}
+              src={imgData}
+            />
+          </Modal.Body>
+          <button onClick={() => closeModal()} className="btn btn-danger">
+            Close
+          </button>
+        </Modal>
 
         <div className="card">
           <p
@@ -230,11 +284,26 @@ const EditVendor = props => {
                             <label style={{ fontWeight: 'bold' }}>
                               GST image
                             </label>
+                            {vendorData && vendorData.vendorData.gstImage ? (
+                              <span
+                                style={{
+                                  color: 'blue',
+                                  marginLeft: '5px',
+                                  cursor: 'pointer',
+                                }}
+                                onClick={() =>
+                                  handleModal(vendorData.vendorData.gstImage)
+                                }
+                              >
+                                (view)
+                              </span>
+                            ) : null}
                             <input
                               type="file"
                               className="form-control-file"
                               name="gst_img"
                               accept=".png,.jpg,"
+                              onChange={e => onGstImageAdd(e.target.files[0])}
                             />
                             <ErrorMessage name="name" component={TextError} />
                           </div>
@@ -270,11 +339,27 @@ const EditVendor = props => {
                             <label style={{ fontWeight: 'bold' }}>
                               Pan image
                             </label>
+                            {vendorData && vendorData.vendorData.panImage ? (
+                              <span
+                                style={{
+                                  color: 'blue',
+                                  marginLeft: '5px',
+                                  cursor: 'pointer',
+                                }}
+                                onClick={() =>
+                                  handleModal(vendorData.vendorData.panImage)
+                                }
+                              >
+                                (view)
+                              </span>
+                            ) : null}
+
                             <input
                               type="file"
                               className="form-control-file"
                               name="pan_img"
                               accept=".png,.jpg,"
+                              onChange={e => onPanImageAdd(e.target.files[0])}
                             />
                             <ErrorMessage name="pan" component={TextError} />
                           </div>
@@ -333,7 +418,7 @@ const EditVendor = props => {
                       </div>
                       <div className="submit-btn">
                         <button className="btn btn-success" type="submit">
-                          Add Vendor
+                          Update Vendor
                         </button>
                       </div>
                     </Form>
@@ -346,7 +431,11 @@ const EditVendor = props => {
       </>
     );
   } else {
-    return <Loader />;
+    return (
+      <div style={{ marginTop: '50%' }}>
+        <Loader />
+      </div>
+    );
   }
 };
 

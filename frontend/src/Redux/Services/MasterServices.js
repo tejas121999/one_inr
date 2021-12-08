@@ -16,16 +16,21 @@ function MasterServices() {
     await axios.put(BASE_URL + `vendor/${id}`, body);
   // Partner
   this.GetAllPartnerList = async value =>
-    await axios.get(BASE_URL + `partner?search=${value}`);
+    await axios.get(BASE_URL + `partner/partner-data?search=${value}`);
   this.CreatePartner = async body =>
     await axios.post(BASE_URL + 'partner', body);
+
+  this.UpdatePartner = async (body, id) =>
+    await axios.put(BASE_URL + `partner/update-partner/${id}`, body);
   this.deletePartner = async id =>
-    await axios.delete(BASE_URL + `partner/${id}`);
+    await axios.delete(BASE_URL + `partner/delete-partner/${id}`);
   this.addPanImage = async body =>
     await axios.post(BASE_URL + 'fileupload?reason=vendor_pan', body);
 
   this.addGstImage = async body =>
     await axios.post(BASE_URL + 'fileupload?reason=vendor_gst', body);
+  this.getPartner = async id =>
+    await axios.get(BASE_URL + `partner/get-partnerById/${id}`);
 }
 
 export default new MasterServices();

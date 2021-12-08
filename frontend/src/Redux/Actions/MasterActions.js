@@ -2,6 +2,7 @@ import {
   GET_ALL_PARTNERS,
   GET_ALL_VENDORS,
   GET_VENDOR_BY_ID,
+  GET_PARTNER_BY_ID,
 } from '../constTypes';
 import MasterServices from '../Services/MasterServices';
 
@@ -74,7 +75,6 @@ export const getVendorByID = id => {
     MasterServices.vendorById(id)
       .then(res => {
         dispatch(vendorById(res.data.data));
-        console.log('res', res);
       })
       .catch(err => {});
   };
@@ -91,7 +91,6 @@ export const updateVendorById = (id, data, history) => {
   return dispatch => {
     MasterServices.updateVendor(id, data)
       .then(res => {
-        console.log('res', res);
         history.push('/Vendor');
       })
       .catch(err => {});
@@ -111,17 +110,15 @@ export const DeleteVendorByIdAction = id => {
 };
 // Get All PArtner
 
-export const getAllPartnerAction = data => {
+export const getAllPartnerAction = value => {
   if (navigator.onLine) {
     return dispatch => {
-      MasterServices.GetAllPartnerList()
+      MasterServices.GetAllPartnerList(value)
         .then(res => {
           //need to add toster here
-          dispatch(GetAllPartners(res.data.data));
-          console.log('Vendors', res);
+          dispatch(GetAllPartners(res.data.result));
         })
         .catch(err => {
-          dispatch(GetAllPartners(data));
           //need to add toster here
         });
     };
@@ -154,6 +151,38 @@ export const CreatePartnerAction = (body, history) => {
   }
 };
 
+export const UpdatePartnerAction = (body, id, history) => {
+  if (navigator.onLine) {
+    return dispatch => {
+      MasterServices.UpdatePartner(body, id)
+        .then(res => {
+          //need to add toster here
+          history.push('/Partner');
+        })
+        .catch(err => {
+          //need to add toster here
+        });
+    };
+  } else {
+    //need to add toster here
+  }
+};
+
+export const getPartnerByID = id => {
+  return dispatch => {
+    MasterServices.getPartner(id).then(res => {
+      console.log('partner', res.data.data);
+      dispatch(partnerById(res.data.data));
+    });
+  };
+};
+
+export const partnerById = data => {
+  return {
+    type: GET_PARTNER_BY_ID,
+    payload: data,
+  };
+};
 export const DeletePartnerByIdAction = id => {
   return dispatch => {
     MasterServices.deletePartner(id)

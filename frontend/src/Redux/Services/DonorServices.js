@@ -60,6 +60,15 @@ function DonorServices() {
   //13. delete donor by id
   this.DeleteDonorById = async id =>
     await axios.delete(BASE_URL + `donor/${id}`);
+
+  // UPCOMING DONERS
+  this.getAllUpcomingDonor = async value =>
+    await axios.get(BASE_URL + `donor/upcoming?search=${value}`);
+  //6. add Upcomingdonor fund
+  this.UpcomingDonorfund = async (id, body) =>
+    await axios.put(BASE_URL + `donor/upcoming/balance/${id}`, body);
+  this.DeleteUpcomingDonorById = async id =>
+    await axios.delete(BASE_URL + `donor/upcoming/${id}`);
 }
 
 export default new DonorServices();

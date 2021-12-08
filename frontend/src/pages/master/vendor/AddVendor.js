@@ -37,12 +37,12 @@ const AddVendor = props => {
       BASE_URL + 'fileupload?reason=vendor_pan',
       data,
     );
-    console.log('data1', result.data.url);
-    if (result && result.data && result.data.url) {
-      setPanImgUrl(result.data.url);
+
+    if (result && result.data && result.data.pathtoUpload) {
+      setPanImgUrl(result.data.pathtoUpload);
     }
   };
-  console.log('PanImage', panImgUrl);
+
   const onGstImageAdd = async imagData => {
     const data = new FormData();
     data.append('avatar', imagData);
@@ -50,9 +50,9 @@ const AddVendor = props => {
       BASE_URL + 'fileupload?reason=vendor_gst',
       data,
     );
-    console.log('data', result.data.url);
-    if (result && result.data && result.data.url) {
-      setGstImgUrl(result.data.url);
+
+    if (result && result.data && result.data.pathtoUpload) {
+      setGstImgUrl(result.data.pathtoUpload);
     }
   };
   const onAddVendor = values => {

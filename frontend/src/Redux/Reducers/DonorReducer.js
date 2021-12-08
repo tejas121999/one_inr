@@ -23,6 +23,7 @@ import {
   Get_Donor_By_Id_FAIL,
   Update_Donor_By_Id,
   Update_Donor_By_Id_FAIL,
+  GET_UPCOMING_DONORS,
 } from '../constTypes';
 
 const initialState = {
@@ -39,6 +40,7 @@ const initialState = {
   GetDonorById: [],
   UpdateDonorById: [],
   isLoadding: false,
+  upComingDonors: [],
 };
 
 export const DonorReducer = (state = initialState, action) => {
@@ -256,6 +258,14 @@ export const DonorReducer = (state = initialState, action) => {
       };
     }
 
+    // UPCOMING DONORS
+
+    case GET_UPCOMING_DONORS: {
+      return {
+        ...state,
+        upComingDonors: action.payload,
+      };
+    }
     default: {
       return {
         ...state,
