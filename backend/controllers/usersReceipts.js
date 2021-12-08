@@ -2,7 +2,7 @@ const models = require('../models');
 const paginationFunc = require('../utils/pagination');
 const Sequelize = models.Sequelize
 const Op = Sequelize.Op;
-const generatePdf = require('../utils/generatePdf')
+const {recieptGenerator} = require('../utils/reciept_generate_pdf')
 const path = require("path")
 const fs = require("fs")
 const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'receipt.html'), 'utf-8');
@@ -139,7 +139,7 @@ exports.pdfForUserReceipt = async (req, res) => {
         })
        
         if(getReceiptDet){
-            generatePdf.pdfGenerator(getReceiptDet, html)
+            recieptGenerator(getReceiptDet, html)
             res.status(200).json({ message: 'Pdf Generated' , data : getReceiptDet.dataValues });
         }else{
             return res.json({message: "Receipt not found"})

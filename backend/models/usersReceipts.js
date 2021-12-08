@@ -84,6 +84,8 @@ module.exports = (sequelize, DataTypes) => {
     
     usersReceipts.associate = function(models){
         usersReceipts.belongsTo(models.ngo,{foreignKey : 'ngoId'})
+        usersReceipts.belongsTo(models.users,{foreignKey : 'userId'})
+        
     }
     
 
