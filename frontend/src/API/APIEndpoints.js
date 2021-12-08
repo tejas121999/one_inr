@@ -1,2 +1,1 @@
-export const Local = 'http://8d04-106-201-74-54.ngrok.io';
-export const BASE_URL = `${Local}/api/`;
+export const BASE_URL = `/api/`;
