@@ -5,7 +5,7 @@ var router = express.Router();
 
 const { wrapper } = require('../utils/errorWrap');
 
-const ngoController = require('../controllers/ngo');//importing ngo controller
+// const ngoController = require('../controllers/ngo');//importing ngo controller
 
 const validationError = require('../middleware/validationError'); //importing validatation error from middleware
 
