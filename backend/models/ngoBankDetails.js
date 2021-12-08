@@ -39,5 +39,8 @@ module.exports = (sequelize, DataTypes) => {
         deletedAt : 'deleted_at'
         
     })
+    ngoBankDetails.associate = function (models) {
+        ngoBankDetails.belongsTo(models.ngo,{foreignKey : 'ngoId'})
+    }
     return ngoBankDetails
 }

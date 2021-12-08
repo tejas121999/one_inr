@@ -61,3 +61,24 @@ exports.userRegister = async (req, res) => {
 
 
 }
+
+
+exports.forgotPassword = async (req,res) => {
+    const {email} = req.body;
+    let checkUser = await models.users.findOne({
+        where : { email}
+    });
+    if(!checkUser){
+        return res.status(400).json({
+            successs : false,
+            message : "User not found "
+        })
+    }
+    else{
+        const sendForgotPasswordMail = await forgotPasswordMailService(
+            checkUser.id,
+            checkUser.name,
+            email)
+    }
+
+}

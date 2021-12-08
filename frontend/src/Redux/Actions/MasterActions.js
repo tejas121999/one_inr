@@ -1,17 +1,22 @@
-import { GET_ALL_PARTNERS, GET_ALL_VENDORS } from '../constTypes';
+import {
+  GET_ALL_PARTNERS,
+  GET_ALL_VENDORS,
+  GET_VENDOR_BY_ID,
+} from '../constTypes';
 import MasterServices from '../Services/MasterServices';
 
 // getAll
-export const getAllVEndorAction = () => {
+export const getAllVEndorAction = value => {
   if (navigator.onLine) {
     return dispatch => {
-      MasterServices.GetAllVendorList()
+      MasterServices.GetAllVendorList(value)
         .then(res => {
           //need to add toster here
           dispatch(GetAllVendors(res.data.data));
           console.log('Vendors', res);
         })
         .catch(err => {
+          dispatch(GetAllVendors(value));
           //need to add toster here
         });
     };
@@ -44,9 +49,58 @@ export const CreateVendorAction = body => {
   }
 };
 
+export const panImgAdd = body => {
+  return dispatch => {
+    MasterServices.addPanImage(body)
+      .then(res => {
+        console.log('res', res);
+      })
+      .catch(err => {});
+  };
+};
+
+export const gstImgAdd = body => {
+  return dispatch => {
+    MasterServices.addGstImage(body)
+      .then(res => {})
+      .catch(err => {});
+  };
+};
+
+// get vendor by id
+
+export const getVendorByID = id => {
+  return dispatch => {
+    MasterServices.vendorById(id)
+      .then(res => {
+        console.log('res', res);
+      })
+      .catch(err => {});
+  };
+};
+
+export const vendorById = data => {
+  return {
+    type: GET_VENDOR_BY_ID,
+    payload: data,
+  };
+};
+
+// delete vendor
+
+export const DeleteVendorByIdAction = id => {
+  return dispatch => {
+    MasterServices.deleteVendor(id)
+      .then(res => {
+        alert(' Vendor Deleted');
+        dispatch(getAllVEndorAction(''));
+      })
+      .catch(err => {});
+  };
+};
 // Get All PArtner
 
-export const getAllPartnerAction = () => {
+export const getAllPartnerAction = data => {
   if (navigator.onLine) {
     return dispatch => {
       MasterServices.GetAllPartnerList()
@@ -56,6 +110,7 @@ export const getAllPartnerAction = () => {
           console.log('Vendors', res);
         })
         .catch(err => {
+          dispatch(GetAllPartners(data));
           //need to add toster here
         });
     };
@@ -85,4 +140,15 @@ export const CreatePartnerAction = body => {
   } else {
     //need to add toster here
   }
+};
+
+export const DeletePartnerByIdAction = id => {
+  return dispatch => {
+    MasterServices.deletePartner(id)
+      .then(res => {
+        alert(' Vendor Deleted');
+        dispatch(getAllVEndorAction(''));
+      })
+      .catch(err => {});
+  };
 };

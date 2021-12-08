@@ -85,8 +85,18 @@ module.exports = (sequelize, DataTypes) => {
     {
         freezeTableName: true,
         tableName: 'users_receipts'
-    })
-    return usersReceipts
+    });
+    
+    usersReceipts.associate = function(models){
+        usersReceipts.belongsTo(models.ngo,{foreignKey : 'ngoId'})
+    }
+    
+
+
+
+
+    return usersReceipts;
+
 }
 
 // module.exports = sequelize.model('usersReceipts', usersReceipts);

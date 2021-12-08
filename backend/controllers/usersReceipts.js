@@ -219,24 +219,23 @@ exports.getAllUserReceipts = async (req, res) => {
 
 
 //GET user by ID
-// exports.getUserReceiptsById = async (req, res) => {
-//     let usersReceiptsId = req.params.id;
+exports.getUserReceiptsById = async (req, res) => {
+    let id = req.params.id;
 
-//     const data = await models.usersReceipts.findOne({ id: Id } );
-//     console.log('data',data);
+    const data = await models.usersReceipts.findOne({id } );
+    
 
+    if (!data) {
+        return res.status(400).json({
+            message: "Failed to get all data."
+        })
+    }
 
-//     if (!data) {
-//         return res.status(400).json({
-//             message: "Failed to get all data."
-//         })
-//     }
-
-//     return res.status(200).json({
-//         data: data,
-//         message: "Found All Data."
-//     })
-// }
+    return res.status(200).json({
+        data: data,
+        message: "Found All Data."
+    })
+}
 
 
 exports.getUserReceiptsById = async(req,res)=>{

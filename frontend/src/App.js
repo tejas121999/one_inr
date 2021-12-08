@@ -1,8 +1,5 @@
-import { STATE_LOGIN, STATE_SIGNUP } from 'components/AuthForm';
-import GAListener from 'components/GAListener';
-import { EmptyLayout, LayoutRoute, MainLayout } from 'components/Layout';
+import { MainLayout } from 'components/Layout';
 import PageSpinner from 'components/PageSpinner';
-import AuthPage from 'pages/AuthPage';
 import React from 'react';
 import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
@@ -30,12 +27,12 @@ import MyProfile from './pages/Settings/MyProfile';
 import RazorpayCredentials from './pages/Settings/RazorpayCredentials';
 import Roles from './pages/Settings/Roles';
 import Users from './pages/Settings/Users';
-import Tabel from './pages/Tabel';
-import TablePage from './pages/TablePage';
+import Dashboard from './pages/Other/Dashboard';
+
 import './styles/reduction.scss';
 import Login from './pages/Login';
 import PrivateRoute from './Routing/PrivateRoute';
-import AdminRoutes from './Routing/AdminRoutes';
+
 // import Login from 'src/pages/Login.js';
 import Viewdonormodal from './Modals/Donor/ViewDonorModal';
 import Forgot from './pages/Forgot';
@@ -59,7 +56,7 @@ function App(props) {
         <Route exact path="/" component={Login} />
         <MainLayout breakpoint={props.breakpoint}>
           <React.Suspense fallback={<PageSpinner />}>
-            <PrivateRoute exact path="/dashboard" component={Tabel} />
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
             {/*master route*/}
             <PrivateRoute exact path="/Vendor" component={Vendor} />

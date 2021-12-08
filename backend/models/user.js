@@ -6,14 +6,17 @@ module.exports = (sequelize,DataTypes)=>{
         },
         email : {
             type: DataTypes.STRING,
+            unique : true,
             field: 'email'
         },
         mobile: {
             type:  DataTypes.BIGINT,
+            unique : true,
             field: 'mobile'
         },
         IMEI : {
             type: DataTypes.STRING,
+            unique : true,
             field: 'IMEI'
         },
         osType: {

@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as yup from 'yup';
 import { ErrorMessage, Form, Formik, Field } from 'formik';
 import TextError from '../../error/TextError';
 import './vendor.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { CreateVendorAction } from '../../../Redux/Actions/MasterActions';
+import {
+  CreateVendorAction,
+  getVendorByID,
+} from '../../../Redux/Actions/MasterActions';
+import { masterReducer } from '../../../Redux/Reducers/MasterReducer';
 
-const EditVendor = () => {
+const EditVendor = props => {
   const dispatch = useDispatch();
   const validationSchema = yup.object({
     fName: yup.string().required('Required'),
@@ -25,6 +29,12 @@ const EditVendor = () => {
   const onAddVendor = values => {
     dispatch(CreateVendorAction(values));
   };
+  useEffect(() => {
+    dispatch(getVendorByID(props.location.state.id));
+  }, []);
+
+  let vendorData = useSelector(state => state.master);
+  console.log('Edit', vendorData);
   return (
     <>
       <br />
@@ -41,7 +51,7 @@ const EditVendor = () => {
             marginLeft: '20px',
           }}
         >
-          ADD VENDOR
+          EDIT VENDOR
         </p>
       </div>
       <div style={{ backgroundColor: 'white', margin: '30px' }}>
