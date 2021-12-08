@@ -1,11 +1,12 @@
 import React from "react";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import "./Layout.css";
+import { Link } from "react-router-dom";
 
-const footerItem = [
+const ourCompanyItem = [
   {
-    to: "/",
-    name: "home",
+    to: "/about",
+    name: "About US",
     exact: true,
   },
   {
@@ -18,6 +19,34 @@ const footerItem = [
     name: "What is this",
     exact: true,
   },
+  {
+    to: "/contact",
+    name: "Contact",
+    exact: true,
+  },
+];
+
+const campaningItem = [
+  {
+    to: "/start-your-campaign",
+    name: "Start Your Campaninges",
+    exact: true,
+  },
+  {
+    to: "/campaigns",
+    name: "donate to a cause",
+    exact: true,
+  },
+  {
+    to: "/terms-of-use",
+    name: "Terms of Use",
+    exact: true,
+  },
+  {
+    to: "/privacy-policy",
+    name: "Privacy Policy",
+    exact: true,
+  },
 ];
 
 const Footer = () => {
@@ -26,57 +55,31 @@ const Footer = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-4 col-lg-4 mb-md-0 mb-4">
-            <h2 className="footer-heading">OUR COMPANy</h2>
+            <h2 className="footer-heading">OUR COMPANY</h2>
             <ul className="list-unstyled">
-              <li>
-                <a href="#" className="py-1 d-block">
-                  Buy &amp; Sell
-                </a>
-              </li>
-              <li>
-                <a href="#" className="py-1 d-block">
-                  Merchant
-                </a>
-              </li>
-              <li>
-                <a href="#" className="py-1 d-block">
-                  Giving back
-                </a>
-              </li>
-              <li>
-                <a href="#" className="py-1 d-block">
-                  Help &amp; Support
-                </a>
-              </li>
+              {ourCompanyItem.map(({ to, name, exact }, index) => (
+                <li key={index}>
+                  <Link to={to} exact={exact} className="py-1 d-block">
+                    {name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="col-md-4 col-lg-4 mb-md-0 mb-4">
             <h2 className="footer-heading">Categories</h2>
             <ul className="list-unstyled">
-              <li>
-                <a href="#" className="py-1 d-block">
-                  Buy &amp; Sell
-                </a>
-              </li>
-              <li>
-                <a href="#" className="py-1 d-block">
-                  Merchant
-                </a>
-              </li>
-              <li>
-                <a href="#" className="py-1 d-block">
-                  Giving back
-                </a>
-              </li>
-              <li>
-                <a href="#" className="py-1 d-block">
-                  Help &amp; Support
-                </a>
-              </li>
+              {campaningItem.map(({ to, name, exact }, index) => (
+                <li key={index}>
+                  <Link to={to} exact={exact} className="py-1 d-block">
+                    {name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="col-md-4 col-lg-4 mb-md-0 mb-4">
-            <h2 className="footer-heading">Subcribe</h2>
+            <h2 className="footer-heading">NEWSLETTER</h2>
             <form action="#" className="subscribe-form">
               <div className="form-group d-flex">
                 <input
@@ -96,16 +99,15 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="w-100 mt-5 border-top py-5">
+      <div className="w-100 border-top py-3 mt-3">
         <div className="container">
           <div className="row">
             <div className="col-md-6 col-lg-8">
               <p className="copyright">
-                Copyright &copy; All rights reserved | This template is made
-                with by
+                Copyright &copy; template is made with by{" "}
                 <a href="#" target="_blank">
                   Oneinr.com
-                </a>{" "}
+                </a>
               </p>
             </div>
             <div className="col-md-6 col-lg-4 text-md-right">

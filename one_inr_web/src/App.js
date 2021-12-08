@@ -11,6 +11,9 @@ import ForgotPass from "./Components/auth/ForgotPass";
 import Profile from "./Components/Account/ProfileInfo";
 import EditProfile from "./Components/Account/EditProfile";
 import ProfilePass from "./Components/Account/ProfilePass";
+import StartCampaign from "./Components/Campaigns/StartCampaign";
+import Policy from "./Components/Campaigns/Policy";
+import Terms from "./Components/Campaigns/Terms";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./App.css";
@@ -23,6 +26,9 @@ function App() {
         <Route path="/" exact component={Home} />
         <Route path="/about" component={About} />
         <Route path="/campaigns" component={Campaigns} />
+        <Route path="/start-your-campaign" component={StartCampaign} />
+        <Route path="/terms-of-use" component={Terms} />
+        <Route path="/privacy-policy" component={Policy} />
         <Route path="/contact" component={Contact} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
