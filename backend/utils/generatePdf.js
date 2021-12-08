@@ -3,7 +3,7 @@ var pdf = require("pdf-creator-node");
 // Read HTML Template
 
 
-const pdfGenerator = async (partner,html) => {
+const pdfGenerator = async (partner,filePath,html) => {
     console.log(partner)
     var options = {
         format: "A2",
@@ -52,10 +52,12 @@ const pdfGenerator = async (partner,html) => {
     
     //console.log(users);
     
+    const pathForPdf = `./public/uploads/${filePath}-${Date.now()}.pdf`;
+    const pathForStorage = `/uploads/${filePath}-${Date.now()}.pdf`;
     var document = {
         html: html,
         data: { partner: partner },
-        path: "./output.pdf",
+        path: pathForPdf,
         type: "",
     };
     
@@ -69,6 +71,9 @@ const pdfGenerator = async (partner,html) => {
         .catch((error) => {
             console.error(error);
         });
+
+
+    return { path:pathForStorage}
         
 }
 

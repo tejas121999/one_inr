@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as yup from 'yup';
 import { ErrorMessage, Form, Formik, Field } from 'formik';
 import TextError from '../../error/TextError';
 import '../vendor/vendor.css';
 import { CreatePartnerAction } from '../../../Redux/Actions/MasterActions';
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import { BASE_URL } from '../../../API/APIEndpoints';
 
-const AddPartner = () => {
+const AddPartner = props => {
   const dispatch = useDispatch();
+  const [panImgUrl, setPanImgUrl] = useState('');
+  const [gstImgUrl, setGstImgUrl] = useState('');
   const validationSchema = yup.object({
     fName: yup.string().required('Required'),
     lName: yup.string().required('Required'),
@@ -23,7 +27,44 @@ const AddPartner = () => {
     pan: yup.string().matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
   });
   const onAddPartner = values => {
-    dispatch(CreatePartnerAction(values));
+    const obj = {
+      name: values.fName + ' ' + values.lName,
+      email: values.email,
+      phone: values.mobile,
+      gstNumber: values.gst,
+      panNumber: values.pan,
+      Address: values.address,
+      companyName: values.company,
+      panImage: panImgUrl,
+      gstImage: gstImgUrl,
+    };
+    dispatch(CreatePartnerAction(obj, props.history));
+  };
+
+  const onPanImageAdd = async imagData => {
+    const data = new FormData();
+    data.append('avatar', imagData);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=partner_pan',
+      data,
+    );
+    console.log('data1', result.data.url);
+    if (result && result.data && result.data.url) {
+      setPanImgUrl(result.data.url);
+    }
+  };
+  console.log('PanImage', panImgUrl);
+  const onGstImageAdd = async imagData => {
+    const data = new FormData();
+    data.append('avatar', imagData);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=partner_gst',
+      data,
+    );
+    console.log('data', result.data.url);
+    if (result && result.data && result.data.url) {
+      setGstImgUrl(result.data.url);
+    }
   };
   return (
     <>
@@ -51,8 +92,8 @@ const AddPartner = () => {
             lName: '',
             mobile: '',
             email: '',
-            gst: '',
-            pan: '',
+            gst: '22AAAAA0000A1Z5',
+            pan: 'EGZPP5822A',
             company: '',
             address: '',
           }}
@@ -188,6 +229,7 @@ const AddPartner = () => {
                             className="form-control-file"
                             name="gst_img"
                             accept=".png,.jpg,"
+                            onChange={e => onGstImageAdd(e.target.files[0])}
                           />
                           <ErrorMessage name="name" component={TextError} />
                         </div>
@@ -222,6 +264,7 @@ const AddPartner = () => {
                             className="form-control-file"
                             name="pan_img"
                             accept=".png,.jpg,"
+                            onChange={e => onPanImageAdd(e.target.files[0])}
                           />
                           <ErrorMessage name="pan" component={TextError} />
                         </div>

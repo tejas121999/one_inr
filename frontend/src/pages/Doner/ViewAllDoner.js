@@ -162,10 +162,15 @@ export default function EnhancedTable() {
           <button
             style={{ alignSelf: 'flex-start' }}
             className="btn btn-primary"
+            onClick={() => window.print()}
           >
             Export
           </button>
-          <input placeholder="Search" onChange={e => handleChange(e)} />
+          <input
+            placeholder="Search"
+            onChange={e => handleChange(e)}
+            type="search"
+          />
         </div>
         <Paper sx={{ width: '100%', mb: 2 }}>
           {donorList && donorList.length > 0 ? (

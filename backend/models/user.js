@@ -113,6 +113,13 @@ module.exports = (sequelize,DataTypes)=>{
         timestamps: false
     });
 
+    users.associate = function (models) {
+        users.hasMany(models.usersReceipts, {foreignKey : 'user_id'}),
+        users.hasOne(models.users,{foreignKey : 'parentId'})
+        users.belongsTo(models.users,{foreignKey : 'parentId'})
+        // usersReceipts.belongsTo(models.ngo, {foreignKey : 'ngo_id'}),
+        // usersReceipts.belongsTo(models.projects, {foreignKey : 'project_id'})
+    }
 
 
     return users

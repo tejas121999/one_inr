@@ -33,6 +33,8 @@ import {
   stableSort,
 } from '../../../components/Pagination';
 import Partnerdelete from '../../../Modals/Master/PartnerDelete';
+import axios from 'axios';
+import { BASE_URL } from '../../../API/APIEndpoints';
 
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
@@ -51,10 +53,10 @@ export default function EnhancedTable() {
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
-    dispatch(getAllPartnerAction(constData));
+    dispatch(getAllPartnerAction(''));
   }, []);
 
-  let donorList = useSelector(state => state.master.partnerList);
+  let partnerList = useSelector(state => state.master.partnerList);
 
   const ViewModalOpen = data => {
     setViewData(data);
@@ -96,7 +98,7 @@ export default function EnhancedTable() {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - donorList.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - partnerList.length) : 0;
   // SEARCH
   let timeout = null;
   const handleChange = e => {
@@ -110,7 +112,7 @@ export default function EnhancedTable() {
     if (value) {
       dispatch(getAllPartnerAction(value));
     } else {
-      dispatch(getAllPartnerAction(constData));
+      dispatch(getAllPartnerAction(''));
     }
   };
   const headCells = [
@@ -152,6 +154,10 @@ export default function EnhancedTable() {
     },
   ];
   // END
+  const exportPartner = async () => {
+    await axios.get(BASE_URL + 'partner/get-partnerPdf');
+  };
+
   return (
     <>
       <br />
@@ -189,13 +195,15 @@ export default function EnhancedTable() {
           <button
             style={{ alignSelf: 'flex-start' }}
             className="btn btn-primary"
+            onClick={exportPartner}
           >
             Export
           </button>
-          <input placeholder="Search" onChange={handleChange} />
+
+          <input placeholder="Search" onChange={handleChange} type="search" />
         </div>
         <Paper sx={{ width: '100%', mb: 2 }}>
-          {donorList && donorList.length > 0 ? (
+          {partnerList && partnerList.length > 0 ? (
             <React.Fragment>
               <TableContainer>
                 <Table
@@ -208,11 +216,11 @@ export default function EnhancedTable() {
                     order={order}
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
-                    rowCount={donorList.length}
+                    rowCount={partnerList.length}
                     headCells={headCells}
                   />
                   <TableBody>
-                    {stableSort(donorList, getComparator(order, orderBy))
+                    {stableSort(partnerList, getComparator(order, orderBy))
                       .slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage,
@@ -237,10 +245,14 @@ export default function EnhancedTable() {
                             >
                               {row.name}
                             </TableCell>
-                            <TableCell align="center">{row.company}</TableCell>
+                            <TableCell align="center">
+                              {row.companyName}
+                            </TableCell>
                             <TableCell align="center">{row.phone}</TableCell>
                             <TableCell align="center">{row.email}</TableCell>
-                            <TableCell align="center">{row.gst}</TableCell>
+                            <TableCell align="center">
+                              {row.gstNumber}
+                            </TableCell>
                             <TableCell align="center">
                               <button
                                 data-bs-toggle="tooltip"
@@ -271,7 +283,7 @@ export default function EnhancedTable() {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={donorList.length}
+                count={partnerList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

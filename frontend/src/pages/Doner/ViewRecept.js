@@ -40,7 +40,7 @@ import {
   getComparator,
   stableSort,
 } from '../../components/Pagination';
-export default function ViewRecept() {
+export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -189,7 +189,7 @@ export default function ViewRecept() {
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
                     rowCount={ViewReceipt.length}
-                    headCell={tableHeader}
+                    headCell={headCells}
                   />
                   <TableBody>
                     {stableSort(ViewReceipt, getComparator(order, orderBy))
@@ -313,57 +313,33 @@ export default function ViewRecept() {
   );
 }
 
-const tableHeader = [
+const headCells = [
   {
-    id: '1',
+    id: 'name',
     numeric: false,
     disablePadding: false,
-    label: 'Sr No',
+    label: 'Name',
   },
   {
-    id: '2',
+    id: 'donated',
     numeric: true,
     disablePadding: false,
-    label: 'Donor Name',
+    label: 'Donated',
   },
   {
-    id: '3',
+    id: 'balance',
     numeric: true,
     disablePadding: false,
-    label: 'Receipt No',
+    label: 'Balance',
   },
   {
-    id: '4',
+    id: 'projects',
     numeric: true,
     disablePadding: false,
-    label: 'Project Name',
+    label: 'Projects',
   },
   {
-    id: '5',
-    numeric: true,
-    disablePadding: false,
-    label: 'NGO Name',
-  },
-  {
-    id: '6',
-    numeric: true,
-    disablePadding: false,
-    label: 'Mail Status',
-  },
-  {
-    id: '7',
-    numeric: true,
-    disablePadding: false,
-    label: 'Receipt',
-  },
-  {
-    id: '8',
-    numeric: true,
-    disablePadding: false,
-    label: 'Created At',
-  },
-  {
-    id: '9',
+    id: 'action',
     numeric: true,
     disablePadding: false,
     label: 'Action',
