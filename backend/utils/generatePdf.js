@@ -1,44 +1,68 @@
 var pdf = require("pdf-creator-node");
 //let ejs = require("ejs");
 // Read HTML Template
-const amounttowords = require("./amountotwords")
 
-const pdfGenerator = async (partner, html) => {
-    console.log(`data coming from reciept`,partner)
+
+const pdfGenerator = async (partner,filePath,html) => {
+    console.log(partner)
     var options = {
-        format: "A4",
-        orientation: "landscape",
+        format: "A2",
+        orientation: "portrait",
         border: "10mm",
         header: {
-            // height: "45mm",
+            height: "45mm",
             //contents: '<div style="text-align: center;">Author: Shyam Hajare</div>'
         },
         footer: {
+            height: "28mm",
+            contents: {
+                first: 'Cover page',
+                2: 'Second page', // Any page number is working. 1-based index
+                default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
+                last: 'Last Page'
+            }
         }
     };
-    //If the donor has a Parent then Reciept will me made in the name of parent.
-    let recieptentName = partner.user.name
-    if(partner.dataValues.user.parentId != 0){
-        recieptentName = partner.user.user.name 
-    }
-    const amountInWords = amounttowords(partner.dataValues.amount)
-
+    
+    
+    
+    //     [{
+    //         no: "1",
+    //         first: "Shyam",
+    //         last: "Ram",
+    //         handle: "asdfsdfasdf"
+    //     },
+    //     {
+    //         no: "2",
+    //         first: "Shyam",
+    //         last: "Raju",
+    //         handle: "asdfsdfasdf"
+    //     },
+    //     {
+    //         no: "3",
+    //         first: "babu",
+    //         last: "bhaiya",
+    //         handle: "asdfsdfasdf"
+    //     }
+    // ]
+    
+    
+    
+    //var ejsFile = ejs.renderFile("utils/demo.ejs",users)
+    
+    //console.log(users);
+    
+    const pathForPdf = `./public/uploads/${filePath}-${Date.now()}.pdf`;
+    const pathForStorage = `/uploads/${filePath}-${Date.now()}.pdf`;
     var document = {
         html: html,
-        data: {
-            
-            name : recieptentName,
-            receipt_number : partner.dataValues.receipt_number,
-            amount : partner.dataValues.amount,
-            createdAt :  partner.dataValues.createdAt,
-            amountInWords: amountInWords,
-            
-        },
-        path: `./${recieptentName}-${Date.now()}.pdf`,
+        data: { partner: partner },
+        path: pathForPdf,
         type: "",
     };
-
-
+    
+    console.log(document.data);
+    
     pdf
         .create(document, options)
         .then((res) => {
@@ -48,6 +72,9 @@ const pdfGenerator = async (partner, html) => {
             console.error(error);
         });
 
+
+    return { path:pathForStorage}
+        
 }
 
 
