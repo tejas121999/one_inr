@@ -333,15 +333,17 @@ export const onGetDonorByIdDataFail = data => {
 
 // 11.Update_Donor_By_Id
 
-export const UpdateDonorByIdAction = id => {
+export const UpdateDonorByIdAction = (id, data) => {
   if (navigator.onLine) {
     return dispatch => {
-      DonorServices.UpdateDonorById(id)
+      DonorServices.UpdateDonorById(id, data)
         .then(res => {
           dispatch(UpdateDonorByIdData(res));
           //need to add toster here
+          window.history.back();
         })
         .catch(err => {
+          window.history.back();
           //need to add toster here
         });
     };
@@ -440,7 +442,9 @@ export const getUpcomingDonorAction = value => {
       .then(res => {
         dispatch(UpcomingDonorList(res.data.data));
       })
-      .catch(error => {});
+      .catch(error => {
+        dispatch(UpcomingDonorList(value));
+      });
   };
 };
 
@@ -458,7 +462,7 @@ export const addUpcomingDonorFundAction = (id, body) => {
     return dispatch => {
       DonorServices.UpcomingDonorfund(id, body)
         .then(res => {
-          dispatch(getUpcomingDonorAction());
+          dispatch(getUpcomingDonorAction(''));
           //need to add toster here
         })
         .catch(err => {

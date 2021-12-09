@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 
 const ViewUpcomingdonormodal = props => {
-  console.log('Props', props.data.name);
+  console.log('Props', props.data);
   return (
     <React.Fragment>
       <Modal show={props.show} onHide={props.onHide}>

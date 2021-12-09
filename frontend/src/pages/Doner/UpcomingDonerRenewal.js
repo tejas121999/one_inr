@@ -32,6 +32,7 @@ import {
 import ViewUpcomingdonormodal from '../../Modals/Donor/ViewUpcomingDonorModal';
 import UpcomingDonorAddfund from '../../Modals/Donor/UpcomingDonorAddFund';
 import UpcomingDonordelete from '../../Modals/Donor/UpcomingDOnorDelete';
+import { constData } from '../../utils/colors';
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -212,8 +213,13 @@ export default function EnhancedTable() {
                               scope="row"
                               padding="none"
                             >
-                              {row.name}
+                              {row.balanceNextRenewDate
+                                .split('')
+                                .slice(0, 10)
+                                .join()
+                                .replace(/,/g, '')}
                             </TableCell>
+                            <TableCell align="center">{row.name}</TableCell>
                             <TableCell align="center">
                               {row.donated ? row.donated : '100'}
                             </TableCell>
@@ -291,6 +297,12 @@ export default function EnhancedTable() {
 }
 
 const headCells = [
+  {
+    id: 'balanceNextRenewDate',
+    numeric: false,
+    disablePadding: false,
+    label: 'Renewal Date',
+  },
   {
     id: 'name',
     numeric: false,
