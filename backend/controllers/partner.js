@@ -144,6 +144,8 @@ exports.getPartnerExcel = async (req, res) => {
 
 exports.pdfOfPartner = async (req, res) => {
     try {
+        const urlData = req.get('host');
+        console.log(urlData);
         let partnerData = await models.partners.findAll();
         if (!partnerData) {
             res.status(404).json({ message: 'Data not found' });
