@@ -37,6 +37,7 @@ import {
   getComparator,
   stableSort,
 } from '../../components/Pagination';
+import { DropdownButton } from 'react-bootstrap';
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -48,13 +49,14 @@ export default function EnhancedTable() {
   const [viewData, setViewData] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
   const [fundModalData, setFundModalData] = React.useState(0);
-  // const [donorList, setDonorList] = React.useState([]);
+  const [pdfUrl, setPdfUrl] = React.useState('');
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getViewAllDonorAction());
+    exportPartner();
   }, []);
 
   let donorList = useSelector(state => state.donor.ViewAllDonor);
@@ -120,6 +122,31 @@ export default function EnhancedTable() {
   };
 
   // END
+  let downloadUrl = '';
+  const exportPartner = async () => {
+    const res = await axios.get(BASE_URL + 'donor/get-partnerPdf');
+
+    if (res.data.url) {
+      downloadUrl = BASE_URL + res.data.url.slice(9);
+      setPdfUrl(downloadUrl);
+    }
+  };
+  // test
+  const downloadEmployeeData = () => {
+    fetch(pdfUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Donor.pdf';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  // end
   return (
     <>
       <br />
@@ -159,13 +186,18 @@ export default function EnhancedTable() {
             justifyContent: 'space-between',
           }}
         >
-          <button
-            style={{ alignSelf: 'flex-start' }}
-            className="btn btn-primary"
-            onClick={() => window.print()}
-          >
-            Export
-          </button>
+          <DropdownButton variant="primary" title="Export">
+            <a className="dropdown-item" href={pdfUrl} target="_self" download>
+              CSV
+            </a>
+
+            <a onClick={downloadEmployeeData} className="dropdown-item">
+              PDF{' '}
+            </a>
+            <a className="dropdown-item" target="_blank" download>
+              Excel
+            </a>
+          </DropdownButton>
           <input
             placeholder="Search"
             onChange={e => handleChange(e)}
