@@ -6,16 +6,14 @@ import {
   add_Donor_Fund,
   ADD_DONOR_FUND,
   add_Donor_Fund_FAIL,
-  ADD_DONOR_FUND_FAIL,
   AllDonor,
   AllDonor_FAILED,
-  CREATE_VENDOR,
-  CREATE_VENDOR_FAIL,
   DELETE_DONOR_BY_ID,
   DELETE_DONOR_BY_ID_FAIL,
   Get_Donor_By_Id,
   Get_Donor_By_Id_FAIL,
   GET_PARENT_LIST,
+  GET_UPCOMING_DONORS,
   REGISTER_USER,
   REGISTER_USER_FAIL,
   UpdateUserReceipt,
@@ -335,15 +333,17 @@ export const onGetDonorByIdDataFail = data => {
 
 // 11.Update_Donor_By_Id
 
-export const UpdateDonorByIdAction = id => {
+export const UpdateDonorByIdAction = (id, data) => {
   if (navigator.onLine) {
     return dispatch => {
-      DonorServices.UpdateDonorById(id)
+      DonorServices.UpdateDonorById(id, data)
         .then(res => {
           dispatch(UpdateDonorByIdData(res));
           //need to add toster here
+          window.history.back();
         })
         .catch(err => {
+          window.history.back();
           //need to add toster here
         });
     };
@@ -432,4 +432,65 @@ export const onDeleteDonorByIdDataFail = data => {
     type: DELETE_DONOR_BY_ID_FAIL,
     payload: data,
   };
+};
+
+// Upcoming Donor Renewal
+
+export const getUpcomingDonorAction = value => {
+  return dispatch => {
+    DonorServices.getAllUpcomingDonor(value)
+      .then(res => {
+        dispatch(UpcomingDonorList(res.data.data));
+      })
+      .catch(error => {
+        dispatch(UpcomingDonorList(value));
+      });
+  };
+};
+
+export const UpcomingDonorList = data => {
+  return {
+    type: GET_UPCOMING_DONORS,
+    payload: data,
+  };
+};
+
+// add Upcoming donor fund
+
+export const addUpcomingDonorFundAction = (id, body) => {
+  if (navigator.onLine) {
+    return dispatch => {
+      DonorServices.UpcomingDonorfund(id, body)
+        .then(res => {
+          dispatch(getUpcomingDonorAction(''));
+          //need to add toster here
+        })
+        .catch(err => {
+          //need to add toster here
+        });
+    };
+  } else {
+    //need to add toster here
+  }
+};
+
+// delete
+
+export const DeleteUpcomingDonorByIdAction = id => {
+  if (navigator.onLine) {
+    return dispatch => {
+      DonorServices.DeleteUpcomingDonorById(id)
+        .then(res => {
+          // dispatch(DeleteDonorByIdData(res));
+          alert('DELETED');
+          dispatch(getUpcomingDonorAction());
+          //need to add toster here
+        })
+        .catch(err => {
+          //need to add toster here
+        });
+    };
+  } else {
+    //need to add toster here
+  }
 };

@@ -52,7 +52,7 @@ export function EnhancedTableHead(props) {
     headCells,
   } = props;
 
-  console.log('props');
+  console.log('props', props);
   const createSortHandler = property => event => {
     onRequestSort(event, property);
   };
