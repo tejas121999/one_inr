@@ -151,7 +151,7 @@ exports.pdfOfPartner = async (req, res) => {
             res.status(404).json({ message: 'Data not found' });
         } else {
             const pdfData = await generatePdf.pdfGenerator(partnerData,filePath, html)
-            res.status(200).json({ message: 'Pdf Generated', url : 'http://' + `1a81-106-201-74-54.ngrok.io` + pdfData.path });
+            res.status(200).json({ message: 'Pdf Generated', url : 'http://' + urlData + pdfData.path });
             res.download(pdfData.path)
         }
     } catch (err) {
@@ -161,13 +161,14 @@ exports.pdfOfPartner = async (req, res) => {
 
 exports.exportPartnerCsv = async (req,res) => {
     try{
+        const urlData = req.get('host');
         let Partner = await models.partners.findAll({attributes: {includes:[]}});
         if(!Partner){
             res.status(404).json({message:'Data not found'})
             console.log(Partner)
         }else{
             const csvData = await exportToCsv.exportsToCsv(Partner,filePath,"",res)
-            res.status(200).json({message:'Exported Data into CSV',url : `http://` + `1a81-106-201-74-54.ngrok.io` + csvData.downloadPath})
+            res.status(200).json({message:'Exported Data into CSV',url : `http://` + urlData + csvData.downloadPath})
         }
     }catch(err){
         console.log(err)

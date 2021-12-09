@@ -335,12 +335,13 @@ exports.addDonerThroughExcel = async (req, res, next) => {
 
 exports.generateDonorPdf = async (req,res) => {
     try {
+        const urlData = req.get('host');
         let donorData = await models.users.findAll();
         if (!donorData) {
             res.status(404).json({ message: 'Data not found' });
         } else {
             const pdfData = await generatePdf.pdfGenerator(donorData,filePath, html)
-            res.status(200).json({ message: 'Donor Pdf Generated', url : 'http://' + `1a81-106-201-74-54.ngrok.io` + pdfData.path });
+            res.status(200).json({ message: 'Donor Pdf Generated', url : 'http://' + urlData + pdfData.path });
         }
     } catch (err) {
         console.log(err);
@@ -349,12 +350,13 @@ exports.generateDonorPdf = async (req,res) => {
 
 exports.exportsDonorCsv = async (req, res) => {
     try{
+        const urlData = req.get('host');
         let Donors = await models.users.findAll();
         if(!Donors){
             res.status(404).json({message:'Data not found'})
         }else{
             const csvData = await exportToCsv.exportsToCsv(Donors,filePath,"",res)
-            res.status(200).json({message:'Exported Data into CSV', url : `http://` + `1a81-106-201-74-54.ngrok.io` + csvData.downloadPath })
+            res.status(200).json({message:'Exported Data into CSV', url : `http://` + urlData + csvData.downloadPath })
         }
     }catch(err){
         console.log(err)

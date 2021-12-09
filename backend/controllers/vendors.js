@@ -121,12 +121,13 @@ exports.deleteVendor = async (req,res) => {
 
 exports.generateVendorPdf = async (req,res) => {
     try {
+        const urlData = req.get('host');
         let vendorData = await models.vendors.findAll();
         if (!vendorData) {
             res.status(404).json({ message: 'Data not found' });
         } else {
             const pdfData = await generatePdf.pdfGenerator(vendorData,filePath, html)
-            res.status(200).json({ message: 'Pdf Generated', url : `http://` + `1a81-106-201-74-54.ngrok.io` + pdfData.path });
+            res.status(200).json({ message: 'Pdf Generated', url : `http://` + urlData + pdfData.path });
         }
     } catch (err) {
         console.log(err);
@@ -135,13 +136,14 @@ exports.generateVendorPdf = async (req,res) => {
 
 exports.generateVendorCsv = async (req,res) => {
     try{
+        const urlData = req.get('host');
         let vendorData = await models.vendors.findAll();
         if(!vendorData){
             res.status(404).json({message:'Data not found'})
         }else{
             console.log(vendorData)
             const csvData = await exportToCsv.exportsToCsv(vendorData,"",res)
-            res.status(200).json({message:'Exported Data into CSV', url : `http://` + `1a81-106-201-74-54.ngrok.io` + csvData.downloadPath })
+            res.status(200).json({message:'Exported Data into CSV', url : `http://` + urlData + csvData.downloadPath })
         }
     }catch(err){
         console.log(err)
