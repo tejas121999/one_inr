@@ -9,17 +9,18 @@ const userReceipts = require('./usersReceipts')//importing User Reciepts
 const ngo = require('./ngo')//importing ngo module
 const partner = require('./partner')
 const csvUpload = require('./csvFileUploads')
+const checkAuth = require('../middleware/checkAuth')
 
 
 
-router.use('/vendor',vendor)
-router.use('/fileupload',fileUpload)
+router.use('/vendor',checkAuth,vendor)
+router.use('/fileupload',checkAuth,fileUpload)
 router.use('/auth',auth)
-router.use('/donor',donor)
-router.use('/userReceipts',userReceipts)
-router.use('/ngo',ngo)
-router.use('/partner',partner)
-router.use('/csvUserUpload',csvUpload)
+router.use('/donor',checkAuth,donor)
+router.use('/userReceipts',checkAuth,userReceipts)
+router.use('/ngo',checkAuth,ngo)
+router.use('/partner',checkAuth,partner)
+router.use('/csvUserUpload',checkAuth,csvUpload)
 
 
 
