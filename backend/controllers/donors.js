@@ -13,7 +13,7 @@ const path = require('path')
 const filePath = 'donor'
 var fs = require("fs");
 const exportToCsv = require('../utils/exportToCsv')
-const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'partner.html'), 'utf-8');
+const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'donor.html'), 'utf-8');
 
 
 //Creating a Donor 
