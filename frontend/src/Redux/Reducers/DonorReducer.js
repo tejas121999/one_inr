@@ -23,9 +23,11 @@ import {
   Get_Donor_By_Id_FAIL,
   Update_Donor_By_Id,
   Update_Donor_By_Id_FAIL,
+  GET_RECEIPT_DATA,
 } from '../constTypes';
 
 const initialState = {
+  getReciptData:[],
   loginAuth: [],
   allParent: [],
   addDonor: [],
@@ -69,6 +71,15 @@ export const DonorReducer = (state = initialState, action) => {
         allParent: action.payload,
         isLoadding: true,
       };
+    }
+    case GET_RECEIPT_DATA:{
+      return{
+        ...state,
+        getReciptData:action.payload,
+        isLoadding: true,
+
+
+      }
     }
     case GET_PARENT_LIST_FAILED: {
       return {

@@ -16,6 +16,7 @@ import {
   Get_Donor_By_Id,
   Get_Donor_By_Id_FAIL,
   GET_PARENT_LIST,
+  GET_RECEIPT_DATA,
   REGISTER_USER,
   REGISTER_USER_FAIL,
   UpdateUserReceipt,
@@ -39,10 +40,16 @@ export const getAllParentDonorAction = data => {
     DonorServices.getAllParentDonor()
       .then(res => {
         dispatch(getAllParentDonorList(res.data.data));
+        console.log("res.data.data",res.data.data);
+
+
       })
       .catch(error => {});
+
   };
 };
+
+
 
 export const getAllParentDonorList = data => {
   return {
@@ -170,7 +177,22 @@ export const addDonorFundAction = (id, body) => {
     //need to add toster here
   }
 };
+export const getReceiptbyId = () => {
+  return (dispatch) => {
+      // console.log("menuGroupCode",menuGroupCode);
 
+    
+        dispatch(getReceiptDatabyId())
+
+      
+  }
+}
+export const getReceiptDatabyId = (data) => {
+  return {
+    type: GET_RECEIPT_DATA,
+    payload: data,
+  }
+}
 export const addDonor_fund = data => {
   return {
     type: ADD_DONOR_FUND,
