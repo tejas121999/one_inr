@@ -273,7 +273,7 @@ export default function ViewRecept() {
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
                     rowCount={ViewReceipt.length}
-                    headCell={headCells}
+                    headCell={tableHeader}
                   />
                    {/* <thead>
                     <tr>
@@ -415,68 +415,62 @@ export default function ViewRecept() {
   );
 }
 
-const headCells = [
+const tableHeader = [
   {
-    id: 'name',
+    id: '1',
     numeric: false,
     disablePadding: false,
-    label: 'Name',
+    label: 'Sr No',
   },
   {
-    id: 'donated',
+    id: '2',
     numeric: true,
     disablePadding: false,
-    label: 'Donated',
+    label: 'Donor Name',
   },
   {
-    id: 'balance',
+    id: '3',
     numeric: true,
     disablePadding: false,
-    label: 'Balance',
+    label: 'Receipt No',
   },
   {
-    id: 'projects',
+    id: '4',
     numeric: true,
     disablePadding: false,
-    label: 'Projects',
+    label: 'Project Name',
   },
   {
-    id: 'action',
+    id: '5',
+    numeric: true,
+    disablePadding: false,
+    label: 'NGO Name',
+  },
+  {
+    id: '6',
+    numeric: true,
+    disablePadding: false,
+    label: 'Mail Status',
+  },
+  {
+    id: '7',
+    numeric: true,
+    disablePadding: false,
+    label: 'Receipt',
+  },
+  {
+    id: '8',
+    numeric: true,
+    disablePadding: false,
+    label: 'Created At',
+  },
+  {
+    id: '9',
     numeric: true,
     disablePadding: false,
     label: 'Action',
   },
 ];
 
-const tableHeader = [
-  {
-    id: 'name',
-    numeric: false,
-    disablePadding: false,
-    label: 'Name',
-  },
-  {
-    id: 'donated',
-    numeric: true,
-    disablePadding: false,
-    label: 'Donated',
-  },
-  {
-    id: 'balance',
-    numeric: true,
-    disablePadding: false,
-    label: 'Balance',
-  },
-  {
-    id: 'projects',
-    numeric: true,
-    disablePadding: false,
-    label: 'Projects',
-  },
-  {
-    id: 'action',
-    numeric: true,
-    disablePadding: false,
-    label: 'Action',
-  },
-];
+
+
