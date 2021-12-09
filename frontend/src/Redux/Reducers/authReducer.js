@@ -3,7 +3,7 @@ import { LoginAuth } from '../constTypes';
 const initialState = {
   user: {},
   error: '',
-  isLoggedIn: false,
+  isLoggedIn: true,
 };
 
 export const authReducer = (state = initialState, action) => {

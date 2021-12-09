@@ -5,20 +5,19 @@ const fs = require('fs')
 //const { csvUpload } = require('../controllers/csvupload/csvUpload');
 
 
-let exportsToCsv = async(req,res)=>{
+let exportsToCsv = async(Data,filePath,req,res)=>{
     // let data = await models.partners.findAll()
     // if(!data){
     //     return res.status(400).json({message : "Bad Request"})
     // }        
-    const userData = await models.partners.findAll();
-    console.log(userData)
-    const ws = fs.createWriteStream("public/data.csv")
-    const userDataValues = userData.map(ele => { return ele.dataValues });
+    //const userData = await models.partners.findAll();
+    //console.log(userData)
+    const fileName = `public/${filePath}${Date.now()}.csv`
+    const downloadPath = `/uploads/${filePath}-${Date.now()}.csv`
+    const ws = fs.createWriteStream(fileName)
+    const userDataValues = Data.map(ele => { return ele.dataValues });
     fastCsv
         .write(userDataValues,{headers:true})
-        .on('finish',function(){
-            res.send('send')
-        })
         .pipe(ws)
 
     // const CSV_STRING=[
@@ -63,7 +62,8 @@ let exportsToCsv = async(req,res)=>{
     // }).pipe(ws)
     //   return res.status(200).json({message:"Success"})
     //return res.status(200).json({message : "User Data", result : data})
-
+    console.log(fileName);
+    return {downloadPath};
 
 }
 

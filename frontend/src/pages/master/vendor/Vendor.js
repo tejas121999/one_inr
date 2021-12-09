@@ -32,6 +32,9 @@ import {
   getComparator,
   stableSort,
 } from '../../../components/Pagination';
+import axios from 'axios';
+import { BASE_URL, Local } from '../../../API/APIEndpoints';
+import { DropdownButton } from 'react-bootstrap';
 export const constData = [
   {
     id: 1,
@@ -145,13 +148,15 @@ export default function EnhancedTable() {
   const [viewData, setViewData] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
   const [fundModalData, setFundModalData] = React.useState(0);
+  const [pdfUrl, setPdfUrl] = React.useState('');
   // const [donorList, setDonorList] = React.useState([]);
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
-    dispatch(getAllVEndorAction(constData));
+    dispatch(getAllVEndorAction(''));
+    exportPartner();
   }, []);
 
   let donorList = useSelector(state => state.master.vendorList);
@@ -215,6 +220,31 @@ export default function EnhancedTable() {
   };
 
   // END
+  let downloadUrl = '';
+  const exportPartner = async () => {
+    const res = await axios.get(Local + '/vendor/get-vendor-pdf');
+
+    if (res.data.url) {
+      downloadUrl = BASE_URL + res.data.url.slice(9);
+      setPdfUrl(downloadUrl);
+    }
+  };
+  // test
+  const downloadEmployeeData = () => {
+    fetch(pdfUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Vendor.pdf';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  // end
   return (
     <>
       <br />
@@ -232,7 +262,7 @@ export default function EnhancedTable() {
         <form className="form-inline">
           <div className="modalClass">
             <Link to="/addvendor" type="" className="btn btn-primary">
-              Add Doner
+              Add Vendor
             </Link>
           </div>
         </form>
@@ -250,13 +280,29 @@ export default function EnhancedTable() {
             justifyContent: 'space-between',
           }}
         >
-          <button
+          {/* <button
             style={{ alignSelf: 'flex-start' }}
             className="btn btn-primary"
           >
             Export
-          </button>
-          <input placeholder="Search" onChange={e => handleChange(e)} />
+          </button> */}
+          <DropdownButton variant="primary" title="Export">
+            <a className="dropdown-item" href={pdfUrl} target="_self" download>
+              CSV
+            </a>
+
+            <a onClick={downloadEmployeeData} className="dropdown-item">
+              PDF{' '}
+            </a>
+            <a className="dropdown-item" target="_blank" download>
+              Excel
+            </a>
+          </DropdownButton>
+          <input
+            placeholder="Search"
+            onChange={e => handleChange(e)}
+            type="search"
+          />
         </div>
         <Paper sx={{ width: '100%', mb: 2 }}>
           {donorList && donorList.length > 0 ? (
