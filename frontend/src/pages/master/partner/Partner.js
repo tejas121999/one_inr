@@ -35,6 +35,7 @@ import {
 import Partnerdelete from '../../../Modals/Master/PartnerDelete';
 import axios from 'axios';
 import { BASE_URL } from '../../../API/APIEndpoints';
+import { Dropdown, DropdownButton } from 'react-bootstrap';
 
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
@@ -43,7 +44,7 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [viewModal, setViewModal] = React.useState(false);
+  const [pdfUrl, setPdfUrl] = React.useState('');
   const [viewData, setViewData] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
   const [fundModalData, setFundModalData] = React.useState(0);
@@ -54,24 +55,11 @@ export default function EnhancedTable() {
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getAllPartnerAction(''));
+    exportPartner();
   }, []);
 
   let partnerList = useSelector(state => state.master.partnerList);
 
-  const ViewModalOpen = data => {
-    setViewData(data);
-    setViewModal(true);
-  };
-  const ViewModalClose = () => {
-    setViewModal(false);
-  };
-  const fundModaOpen = data => {
-    setFundModalData(data.id);
-    setFundModal(true);
-  };
-  const fundModaClose = () => {
-    setFundModal(false);
-  };
   const deleteModalOpen = data => {
     setDeleteID(data.id);
     setDeleteModal(true);
@@ -154,149 +142,192 @@ export default function EnhancedTable() {
     },
   ];
   // END
+  let downloadUrl = '';
   const exportPartner = async () => {
-    await axios.get(BASE_URL + 'partner/get-partnerPdf');
+    const res = await axios.get(BASE_URL + 'partner/get-partnerPdf');
+
+    if (res.data.url) {
+      downloadUrl = BASE_URL + res.data.url.slice(9);
+      setPdfUrl(downloadUrl);
+    }
   };
+  // test
+  const downloadEmployeeData = () => {
+    fetch(pdfUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Partner.pdf';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  // end
 
   return (
-    <>
-      <br />
-      <br />
-      <br />
-      <br />
-      <Partnerdelete
-        show={deleteModal}
-        onHide={deleteModalClose}
-        id={deleteId}
-      />
-      <nav className="navbar navbar-light">
-        <a className="navbar-brand">Partner List</a>
-        <form className="form-inline">
-          <div className="modalClass">
-            <Link to="/addpartner" type="" className="btn btn-primary">
-              Add Partner
-            </Link>
-          </div>
-        </form>
-      </nav>
-      <div
-        style={{
-          margin: '20px',
-          backgroundColor: 'white',
-        }}
-      >
+    console.log('Download', pdfUrl),
+    (
+      <>
+        <br />
+        <br />
+        <br />
+        <br />
+        <Partnerdelete
+          show={deleteModal}
+          onHide={deleteModalClose}
+          id={deleteId}
+        />
+        <nav className="navbar navbar-light">
+          <a className="navbar-brand">Partner List</a>
+          <form className="form-inline">
+            <div className="modalClass">
+              <Link to="/addpartner" type="" className="btn btn-primary">
+                Add Partner
+              </Link>
+            </div>
+          </form>
+        </nav>
         <div
           style={{
-            display: 'flex',
-            padding: '20px',
-            justifyContent: 'space-between',
+            margin: '20px',
+            backgroundColor: 'white',
           }}
         >
-          <button
-            style={{ alignSelf: 'flex-start' }}
-            className="btn btn-primary"
-            onClick={exportPartner}
+          <div
+            style={{
+              display: 'flex',
+              padding: '20px',
+              justifyContent: 'space-between',
+            }}
           >
-            Export
-          </button>
+            {/* <button
+              style={{ alignSelf: 'flex-start' }}
+              className="btn btn-primary"
+              onClick={exportPartner}
+            >
+              Export
+            </button> */}
 
-          <input placeholder="Search" onChange={handleChange} type="search" />
-        </div>
-        <Paper sx={{ width: '100%', mb: 2 }}>
-          {partnerList && partnerList.length > 0 ? (
-            <React.Fragment>
-              <TableContainer>
-                <Table
-                  sx={{ minWidth: 750 }}
-                  aria-labelledby="tableTitle"
-                  size={dense ? 'small' : 'medium'}
-                >
-                  <EnhancedTableHead
-                    numSelected={selected.length}
-                    order={order}
-                    orderBy={orderBy}
-                    onRequestSort={handleRequestSort}
-                    rowCount={partnerList.length}
-                    headCells={headCells}
-                  />
-                  <TableBody>
-                    {stableSort(partnerList, getComparator(order, orderBy))
-                      .slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage,
-                      )
-                      .map((row, index) => {
-                        const isItemSelected = isSelected(row.name);
-                        const labelId = `enhanced-table-checkbox-${index}`;
+            <DropdownButton variant="primary" title="Export">
+              <a
+                className="dropdown-item"
+                href={pdfUrl}
+                target="_self"
+                download
+              >
+                CSV
+              </a>
 
-                        return (
-                          <TableRow
-                            hover
-                            aria-checked={isItemSelected}
-                            tabIndex={-1}
-                            key={row.name}
-                            selected={isItemSelected}
-                          >
-                            <TableCell
-                              id={labelId}
-                              align="center"
-                              scope="row"
-                              padding="none"
+              <a onClick={downloadEmployeeData} className="dropdown-item">
+                PDF{' '}
+              </a>
+              <a className="dropdown-item" target="_blank" download>
+                Excel
+              </a>
+            </DropdownButton>
+
+            <input placeholder="Search" onChange={handleChange} type="search" />
+          </div>
+          <Paper sx={{ width: '100%', mb: 2 }}>
+            {partnerList && partnerList.length > 0 ? (
+              <React.Fragment>
+                <TableContainer>
+                  <Table
+                    sx={{ minWidth: 750 }}
+                    aria-labelledby="tableTitle"
+                    size={dense ? 'small' : 'medium'}
+                  >
+                    <EnhancedTableHead
+                      numSelected={selected.length}
+                      order={order}
+                      orderBy={orderBy}
+                      onRequestSort={handleRequestSort}
+                      rowCount={partnerList.length}
+                      headCells={headCells}
+                    />
+                    <TableBody>
+                      {stableSort(partnerList, getComparator(order, orderBy))
+                        .slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage,
+                        )
+                        .map((row, index) => {
+                          const isItemSelected = isSelected(row.name);
+                          const labelId = `enhanced-table-checkbox-${index}`;
+
+                          return (
+                            <TableRow
+                              hover
+                              aria-checked={isItemSelected}
+                              tabIndex={-1}
+                              key={row.name}
+                              selected={isItemSelected}
                             >
-                              {row.name}
-                            </TableCell>
-                            <TableCell align="center">
-                              {row.companyName}
-                            </TableCell>
-                            <TableCell align="center">{row.phone}</TableCell>
-                            <TableCell align="center">{row.email}</TableCell>
-                            <TableCell align="center">
-                              {row.gstNumber}
-                            </TableCell>
-                            <TableCell align="center">
-                              <button
-                                data-bs-toggle="tooltip"
-                                title="Edit"
-                                className="btn"
-                                onClick={() =>
-                                  history.push('/editpartner', row)
-                                }
+                              <TableCell
+                                id={labelId}
+                                align="center"
+                                scope="row"
+                                padding="none"
                               >
-                                <FaRegEdit />
-                              </button>
+                                {row.name}
+                              </TableCell>
+                              <TableCell align="center">
+                                {row.companyName}
+                              </TableCell>
+                              <TableCell align="center">{row.phone}</TableCell>
+                              <TableCell align="center">{row.email}</TableCell>
+                              <TableCell align="center">
+                                {row.gstNumber}
+                              </TableCell>
+                              <TableCell align="center">
+                                <button
+                                  data-bs-toggle="tooltip"
+                                  title="Edit"
+                                  className="btn"
+                                  onClick={() =>
+                                    history.push('/editpartner', row)
+                                  }
+                                >
+                                  <FaRegEdit />
+                                </button>
 
-                              <button
-                                data-bs-toggle="tooltip"
-                                title="Delete"
-                                className="btn"
-                                onClick={() => deleteModalOpen(row)}
-                              >
-                                <FaRegTrashAlt />
-                              </button>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={partnerList.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                showLastButton={true}
-                showFirstButton={true}
-              />
-            </React.Fragment>
-          ) : (
-            <Loader />
-          )}
-        </Paper>
-      </div>
-    </>
+                                <button
+                                  data-bs-toggle="tooltip"
+                                  title="Delete"
+                                  className="btn"
+                                  onClick={() => deleteModalOpen(row)}
+                                >
+                                  <FaRegTrashAlt />
+                                </button>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25]}
+                  component="div"
+                  count={partnerList.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  showLastButton={true}
+                  showFirstButton={true}
+                />
+              </React.Fragment>
+            ) : (
+              <Loader />
+            )}
+          </Paper>
+        </div>
+      </>
+    )
   );
 }

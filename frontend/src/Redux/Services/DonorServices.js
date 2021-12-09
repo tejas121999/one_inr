@@ -50,8 +50,8 @@ function DonorServices() {
   this.GetDonorById = async id => await axios.delete(BASE_URL + `donor/${id}`);
 
   //11. UPDATE_DONOR_BY_ID
-  this.UpdateDonorById = async id =>
-    await axios.delete(BASE_URL + `donor/${id}`);
+  this.UpdateDonorById = async (id, body) =>
+    await axios.put(BASE_URL + `donor/${id}`, body);
 
   //12. add donor fund
   this.UpdateDonorfund = async id =>
@@ -66,9 +66,9 @@ function DonorServices() {
     await axios.get(BASE_URL + `donor/upcoming?search=${value}`);
   //6. add Upcomingdonor fund
   this.UpcomingDonorfund = async (id, body) =>
-    await axios.put(BASE_URL + `donor/upcoming/balance/${id}`, body);
+    await axios.put(BASE_URL + `donor/balance/${id}`, body);
   this.DeleteUpcomingDonorById = async id =>
-    await axios.delete(BASE_URL + `donor/upcoming/${id}`);
+    await axios.delete(BASE_URL + `donor/${id}`);
 }
 
 export default new DonorServices();
