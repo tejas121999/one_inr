@@ -28,8 +28,8 @@ exports.ImageUpload = async (req, res) => {
     } else if (fileFor == "ngo_charity_registration_certificate") {
         destination = `public/uploads/ngo/charityRegistrationCertificate/`
 
-    } else if (fileFor == "ngo_dead") {
-        destination = `public/uploads/ngo/dead/`
+    } else if (fileFor == "ngo_deed") {
+        destination = `public/uploads/ngo/deed/`
 
     } else if (fileFor == "ngo_logo" ) {
         destination = `public/uploads/ngo/logo/`

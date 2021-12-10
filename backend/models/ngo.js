@@ -57,9 +57,9 @@ module.exports = (sequelize, DataTypes) => {
             field: 'charity_registration_certificate'
         },
 
-        dead: {
+        deed: {
             type: DataTypes.STRING,
-            field: 'dead'
+            field: 'deed'
         },
 
         logo: {

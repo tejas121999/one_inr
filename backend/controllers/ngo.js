@@ -20,7 +20,7 @@ exports.addNgo = async (req, res) => {
         panNumber: req.body.panNumber,
         certificate: req.body.certificate,
         charityRegistrationCertificate: req.body.charityRegistrationCertificate,
-        dead: req.body.dead,
+        deed: req.body.deed,
         logo: req.body.logo,
         signature: req.body.signature,
         isKyc: req.body.isKyc
@@ -70,7 +70,7 @@ exports.updateNgo = async (req, res) => {
             panNumber: req.body.panNumber,
             certificate: req.body.certificate,
             charityRegistrationCertificate: req.body.charityRegistrationCertificate,
-            dead: req.body.dead,
+            deed: req.body.deed,
             logo: req.body.logo,
             signature: req.body.signature,
             isKyc: req.body.isKyc
