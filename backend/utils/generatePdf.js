@@ -4,7 +4,7 @@ var pdf = require("pdf-creator-node");
 
 
 const pdfGenerator = async (partner,filePath,html) => {
-    console.log(partner)
+    // console.log(partner[0].user.dataValues.name)
     var options = {
         format: "A2",
         orientation: "portrait",
@@ -23,34 +23,6 @@ const pdfGenerator = async (partner,filePath,html) => {
             }
         }
     };
-    
-    
-    
-    //     [{
-    //         no: "1",
-    //         first: "Shyam",
-    //         last: "Ram",
-    //         handle: "asdfsdfasdf"
-    //     },
-    //     {
-    //         no: "2",
-    //         first: "Shyam",
-    //         last: "Raju",
-    //         handle: "asdfsdfasdf"
-    //     },
-    //     {
-    //         no: "3",
-    //         first: "babu",
-    //         last: "bhaiya",
-    //         handle: "asdfsdfasdf"
-    //     }
-    // ]
-    
-    
-    
-    //var ejsFile = ejs.renderFile("utils/demo.ejs",users)
-    
-    //console.log(users);
     
     const pathForPdf = `./public/uploads/${filePath}-${Date.now()}.pdf`;
     const pathForStorage = `/uploads/${filePath}-${Date.now()}.pdf`;

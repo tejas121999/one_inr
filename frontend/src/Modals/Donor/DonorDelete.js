@@ -12,7 +12,6 @@ const Donordelete = props => {
   const dispatch = useDispatch();
   const onDelete = async () => {
     const id = props.id;
-    const Url = BASE_URL + `donor/${id}`;
     await dispatch(DeleteDonorByIdAction(id));
     props.onHide();
   };

@@ -131,11 +131,14 @@ exports.deletePartner = async (req,res) => {
 
 exports.getPartnerExcel = async (req, res) => {
     try {
+        const urlData = req.get('host');
+        console.log(urlData);
         let partnerData = await models.partners.findAll();
         if (!partnerData) {
             res.status(404).json({ message: 'Data not found' });
         } else {
-            generateAllUserExcel(partnerData, res)
+            const partnerXlsx = await generateAllUserExcel(partnerData, res)
+            res.status(200).json({ message: 'Xlsx Generated', url : 'http://' + urlData + partnerXlsx.pathToExport });
         }
     } catch (e) {
         console.log(e)
@@ -144,12 +147,14 @@ exports.getPartnerExcel = async (req, res) => {
 
 exports.pdfOfPartner = async (req, res) => {
     try {
+        const urlData = req.get('host');
+        console.log(urlData);
         let partnerData = await models.partners.findAll();
         if (!partnerData) {
             res.status(404).json({ message: 'Data not found' });
         } else {
             const pdfData = await generatePdf.pdfGenerator(partnerData,filePath, html)
-            res.status(200).json({ message: 'Pdf Generated', url : 'https://' + pdfData.path });
+            res.status(200).json({ message: 'Pdf Generated', url : 'http://' + urlData + pdfData.path });
             res.download(pdfData.path)
         }
     } catch (err) {
@@ -159,13 +164,14 @@ exports.pdfOfPartner = async (req, res) => {
 
 exports.exportPartnerCsv = async (req,res) => {
     try{
+        const urlData = req.get('host');
         let Partner = await models.partners.findAll({attributes: {includes:[]}});
         if(!Partner){
             res.status(404).json({message:'Data not found'})
             console.log(Partner)
         }else{
-            exportToCsv.exportsToCsv(Partner,filePath,"",res)
-            res.status(200).json({message:'Exported Data into CSV'})
+            const csvData = await exportToCsv.exportsToCsv(Partner,filePath,"",res)
+            res.status(200).json({message:'Exported Data into CSV',url : `http://` + urlData + csvData.downloadPath})
         }
     }catch(err){
         console.log(err)

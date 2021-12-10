@@ -4,21 +4,11 @@ const fsPath = require('fs-path');
 // const path = require('path')
 // console.log(path.dirname(__dirname))
 // console.log(__dirname.concat("/download.csv"))
-async function generateAllUserExcel(partnerData,res) {
+async function generateVendorExcel(partnerData,res) {
 
     
     const date = Date.now();
-    // var xls = json2xls(finalData);
     
-    // setTimeout(async function () {
-    //     fs.readFile(path, (err, data) => {
-
-    //         if (fs.existsSync(path)) {
-    //             fs.unlinkSync(path);
-    //         }
-    //     });
-    // }, 50000);
-
     const table =`<table class='order-data'>
         <tbody>
         <tr>
@@ -37,14 +27,14 @@ async function generateAllUserExcel(partnerData,res) {
             `
             <tr>
             <td>${singleUser.name}</td>
-            <td>${singleUser.mobile}</td>
+            <td>${singleUser.phone}</td>
             <td>${singleUser.email}</td>
-            <td>${singleUser.gstNumber}</td>
-            <td>${singleUser.panNumber}</td>
+            <td>${singleUser.gst}</td>
+            <td>${singleUser.pan}</td>
             <td>${singleUser.gstImage}</td>
             <td>${singleUser.panImage}</td>
             <td>${singleUser.companyName}</td>
-            <td>${singleUser.Address}</td>
+            <td>${singleUser.address}</td>
             </tr>
         
         `
@@ -53,8 +43,8 @@ async function generateAllUserExcel(partnerData,res) {
         </tbody>
     </table>` 
 
-    let path = `./public/uploads/${date}partner.xlsx`
-    let pathToExport = `/uploads/${date}partner.xlsx`
+    let path = `./public/uploads/${date}vendor.xlsx`
+    let pathToExport = `/uploads/${date}vendor.xlsx`
 
     const wb = XLSX.read(table,{type:'string'})
     /* generate buffer */
@@ -67,4 +57,5 @@ async function generateAllUserExcel(partnerData,res) {
     // res.status(200).json({ message: 'success', url : `http://` + pathToExport });
     return {pathToExport}
 }
-module.exports = generateAllUserExcel
+
+module.exports = generateVendorExcel

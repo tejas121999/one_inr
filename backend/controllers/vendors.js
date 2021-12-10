@@ -3,6 +3,7 @@ const sequelize = models.Sequelize;
 const Op = sequelize.Op;
 const exportToCsv = require('../utils/exportToCsv')
 const generatePdf = require('../utils/generatePdf')
+const generateVendorExcel = require('../service/allVendorExcel')
 const path = require('path')
 const filePath = 'vendor';
 var fs = require("fs");
@@ -121,12 +122,13 @@ exports.deleteVendor = async (req,res) => {
 
 exports.generateVendorPdf = async (req,res) => {
     try {
+        const urlData = req.get('host');
         let vendorData = await models.vendors.findAll();
         if (!vendorData) {
             res.status(404).json({ message: 'Data not found' });
         } else {
             const pdfData = await generatePdf.pdfGenerator(vendorData,filePath, html)
-            res.status(200).json({ message: 'Pdf Generated', url : `https://` + pdfData.path });
+            res.status(200).json({ message: 'Pdf Generated', url : `http://` + urlData + pdfData.path });
         }
     } catch (err) {
         console.log(err);
@@ -135,15 +137,32 @@ exports.generateVendorPdf = async (req,res) => {
 
 exports.generateVendorCsv = async (req,res) => {
     try{
+        const urlData = req.get('host');
         let vendorData = await models.vendors.findAll();
         if(!vendorData){
             res.status(404).json({message:'Data not found'})
         }else{
             console.log(vendorData)
-            exportToCsv.exportsToCsv(vendorData,"",res)
-            res.status(200).json({message:'Exported Data into CSV'})
+            const csvData = await exportToCsv.exportsToCsv(vendorData,"",res)
+            res.status(200).json({message:'Exported Data into CSV', url : `http://` + urlData + csvData.downloadPath })
         }
     }catch(err){
         console.log(err)
+    }
+}
+
+exports.getVendorExcel = async (req, res) => {
+    try {
+        const urlData = req.get('host');
+        console.log(urlData);
+        let vendorData = await models.vendors.findAll();
+        if (!vendorData) {
+            res.status(404).json({ message: 'Data not found' });
+        } else {
+            const partnerXlsx = await generateVendorExcel(vendorData, res)
+            res.status(200).json({ message: 'Xlsx Generated', url : 'http://' + urlData + partnerXlsx.pathToExport });
+        }
+    } catch (e) {
+        console.log(e)
     }
 }
