@@ -6,7 +6,7 @@ import logo_img from "../Images/ngo_logo.png";
 
 const Campaigns = () => {
   return (
-    <div>
+    <div className="site-main">
       <div className="container">
         <div
           className="row mb-3"

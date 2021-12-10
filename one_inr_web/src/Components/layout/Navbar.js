@@ -26,6 +26,11 @@ const navbarItem = [
     exact: true,
   },
   {
+    to: "/profile/profileinfo/profile",
+    name: "Profile",
+    exact: true,
+  },
+  {
     to: "/login",
     name: "Login",
     exact: true,

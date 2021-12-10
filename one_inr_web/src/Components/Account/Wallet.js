@@ -24,22 +24,9 @@ const Campaigns = () => {
 
   return (
     <div className="site-main">
-      <div className="container">
-        <h1>My Profile</h1>
-        <div
-          class="breadcrumbs"
-          style={{ display: "inline-flex", marginBottom: "25px" }}
-        >
-          <Link to="/">Home</Link>
-          <span>&nbsp;/&nbsp;</span>
-          Profile
-        </div>
-      </div>
-
       <div className="account-wrapper">
         <div className="container">
           <div class="row">
-            <SideBar />
             <div className="col-lg-9">
               <div className="account-content profile">
                 <h3 className="account-title">

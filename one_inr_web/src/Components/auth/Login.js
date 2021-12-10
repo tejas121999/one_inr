@@ -35,7 +35,7 @@ export default function Login({ location }) {
         <div className="container">
           <h1>Login</h1>
           <div class="breadcrumbs">
-            <ul style={{ marginLeft: "-2.5em" }}>
+            <ul>
               <li>
                 <Link to="/">Home</Link>
                 <span>/</span>

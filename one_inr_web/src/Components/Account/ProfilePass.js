@@ -3,41 +3,11 @@ import { Link } from "react-router-dom";
 
 const ProfilePass = () => {
   return (
-    <div className="site-main">
-      <div className="container">
-        <h4 style={{ margin: "0" }}>My Profile</h4>
-        <div
-          class="breadcrumbs"
-          style={{ display: "inline-flex", marginBottom: "25px" }}
-        >
-          <Link to="/">Home</Link>
-          <span>&nbsp;/&nbsp;</span>
-          Profile
-        </div>
-      </div>
-
-      <div className="account-wrapper">
-        <div className="container">
-          <div class="row">
-            <div className="col-lg-3">
-              <nav className="account-bar">
-                <ul style={{ paddingLeft: "0" }}>
-                  <li id="profile" className="active">
-                    <Link to="/profile">Profile Info</Link>
-                  </li>
-                  <li id="profile_password">
-                    <Link to="/profile/password">Profile Password</Link>
-                  </li>
-                  <li id="campaigns">
-                    <Link to="/backed-campaigns">Backed Campaigns</Link>
-                  </li>
-                  <li id="wallet">
-                    <Link to="/wallet">Wallet</Link>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-            <div className="col-lg-9">
+    <div>
+      <div className="">
+        <div className="">
+          <div class="">
+            <div className="">
               <div className="account-content profile">
                 <h3 className="account-title">My Profiles</h3>
                 <div className="account-main">

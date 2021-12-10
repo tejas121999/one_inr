@@ -1,6 +1,6 @@
 .contact-content .entry-content {
-  height: 600px;
-  border: 2px solid red;
+  height: 500px;
+  /* border: 2px solid red; */
 }
 .form-contact,
 .contact-info {
