@@ -165,7 +165,7 @@ exports.pdfOfPartner = async (req, res) => {
 exports.exportPartnerCsv = async (req,res) => {
     try{
         const urlData = req.get('host');
-        let Partner = await models.partners.findAll({attributes: {includes:[]}});
+        let Partner = await models.partners.findAll();
         if(!Partner){
             res.status(404).json({message:'Data not found'})
             console.log(Partner)
