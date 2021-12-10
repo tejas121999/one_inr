@@ -6,7 +6,10 @@ const {recieptGenerator} = require('../utils/reciept_generate_pdf')
 const path = require("path")
 const fs = require("fs")
 const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'receipt.html'), 'utf-8');
-
+// var hbs = require('hbs');
+// app.set('view engine', 'html');
+// app.engine('html', require('hbs').__express);
+// hbs.registerPartials(__dirname + '/template/views/', function (err) {})
 
 //Creating A Users Receipts
 exports.addUsersReceipts = async (req, res) => {
