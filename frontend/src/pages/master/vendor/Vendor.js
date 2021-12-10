@@ -149,14 +149,15 @@ export default function EnhancedTable() {
   const [fundModal, setFundModal] = React.useState(false);
   const [fundModalData, setFundModalData] = React.useState(0);
   const [pdfUrl, setPdfUrl] = React.useState('');
-  // const [donorList, setDonorList] = React.useState([]);
+  const [CsvUrl, setCsvUrl] = React.useState('');
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getAllVEndorAction(''));
-    exportPartner();
+    exportPdf();
+    exportCsv();
   }, []);
 
   let donorList = useSelector(state => state.master.vendorList);
@@ -220,17 +221,24 @@ export default function EnhancedTable() {
   };
 
   // END
-  let downloadUrl = '';
-  const exportPartner = async () => {
+
+  const exportPdf = async () => {
     const res = await axios.get(Local + '/vendor/get-vendor-pdf');
 
     if (res.data.url) {
-      downloadUrl = BASE_URL + res.data.url.slice(9);
+      const downloadUrl = res.data.url;
       setPdfUrl(downloadUrl);
     }
   };
+  const exportCsv = async () => {
+    const resCsv = await axios.get(Local + '/vendor/get-vendor-csv');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setCsvUrl(downloadUrl);
+    }
+  };
   // test
-  const downloadEmployeeData = () => {
+  const downloadPdf = () => {
     fetch(pdfUrl)
       .then(response => {
         response.blob().then(blob => {
@@ -238,6 +246,20 @@ export default function EnhancedTable() {
           let a = document.createElement('a');
           a.href = url;
           a.download = 'Vendor.pdf';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  const downloadCsv = () => {
+    fetch(CsvUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Vendor.csv';
           a.click();
         });
         //window.location.href = response.url;
@@ -287,11 +309,11 @@ export default function EnhancedTable() {
             Export
           </button> */}
           <DropdownButton variant="primary" title="Export">
-            <a className="dropdown-item" href={pdfUrl} target="_self" download>
+            <a className="dropdown-item" onClick={downloadCsv}>
               CSV
             </a>
 
-            <a onClick={downloadEmployeeData} className="dropdown-item">
+            <a onClick={downloadPdf} className="dropdown-item">
               PDF{' '}
             </a>
             <a className="dropdown-item" target="_blank" download>
