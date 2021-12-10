@@ -24,7 +24,6 @@ exports.addUsersReceipts = async (req, res) => {
             userId,
             intervalId,
             projectId,
-            receiptNumber,
             recieptPdf,
             mailSend,
             ngoId,
@@ -37,15 +36,16 @@ exports.addUsersReceipts = async (req, res) => {
 
         } = req.body;
         // console.log(req.body);
-
+        let findTotalReciepts = await models.usersReceipts.findAndCountAll()
+        let receiptNumber = 1000 + findTotalReciepts.count++
         let usersReceipts = await models.usersReceipts.create({
 
             userId: req.body.userId,
             intervalId: req.body.intervalId,
             projectId: req.body.projectId,
-            receiptNumber: req.body.receiptNumber,
             recieptPdf: req.body.receiptPdf,
             mailSend: req.body.mailSend,
+            receiptNumber,
             ngoId: req.body.ngoId,
             amount: req.body.amount,
             transactionType: req.body.transactionType,
@@ -109,7 +109,7 @@ exports.updateUsersReceipts = async (req, res) => {
             userId: req.body.userId,
             intervalId: req.body.intervalId,
             projectId: req.body.projectId,
-            receiptNumber: req.body.receiptNumber,
+            receiptNumber,
             recieptPdf: req.body.receiptPdf,
             mailSend: req.body.mailSend,
             ngoId: req.body.ngoId,
