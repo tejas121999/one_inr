@@ -36,7 +36,7 @@ const UpcomingDonorAddfund = props => {
         <Modal.Body>
           <Formik
             initialValues={{
-              balance: 0,
+              balance: 1,
             }}
             enableReinitialize={true}
             onSubmit={values => onAdd(values)}

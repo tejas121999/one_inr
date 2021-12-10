@@ -14,26 +14,27 @@
         <table class="table">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">name</th>
-                    <th scope="col">email</th>
-                    <th scope="col">phone</th>
-                    <th scope="col">Donated</th>
-                    <th scope="col">Balance</th>
-                    <th scope="col">Projects</th>
-
+                    <th scope="col">Donor Name</th>
+                    <th scope="col">Receipt No</th>
+                    <th scope="col">Project Name</th>
+                    <th scope="col">NGO Name</th>
+                    <th scope="col">Mail Status</th>
+                    <th scope="col">Receipt</th>
+                    <th scope="col">Created At</th>
+                    
                 </tr>
             </thead>
             <tbody>
                 {{#each partner}}
                 <tr>
                     
-                    <td>{{this.dataValues.name}}</td>
-                    <td>{{this.dataValues.email}}</td>
-                    <td>{{this.dataValues.mobile}}</td>
-                    <td>{{this.dataValues.donated}}</td>
-                    <td>{{this.dataValues.balance}}</td>
-                    <td>{{this.dataValues.Projects}}</td>
-                    
+                    <td>{{this.user.dataValues.name}}</td>
+                    <td>{{this.dataValues.receiptNumber}}</td>
+                    <td>{{this.dataValues.projectId}}</td>
+                    <td>{{this.dataValues.ngoId}}</td>
+                    <td>{{this.dataValues.mailSend}}</td>
+                    <td>{{this.dataValues.receiptNumber}}</td>
+                    <td>{{this.dataValues.createdAt}}</td>
                 </tr>
                 {{/each}}
 

@@ -6,10 +6,15 @@ const {recieptGenerator} = require('../utils/reciept_generate_pdf')
 const path = require("path")
 const fs = require("fs")
 const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'receipt.html'), 'utf-8');
-// var hbs = require('hbs');
-// app.set('view engine', 'html');
-// app.engine('html', require('hbs').__express);
-// hbs.registerPartials(__dirname + '/template/views/', function (err) {})
+const generateUserReceiptsExcel = require('../service/userReceiptsExcel')
+const generatePdf = require('../utils/generatePdf')
+
+const filePath = 'user-receipts'
+
+const exportToCsv = require('../utils/exportToCsv')
+const html1 = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'userReceipts.html'), 'utf-8');
+
+
 
 //Creating A Users Receipts
 exports.addUsersReceipts = async (req, res) => {
@@ -224,6 +229,26 @@ exports.getUserReceiptsById = async (req, res) => {
 }
 
 
+exports.getUserData = async (req, res) => {
+
+    const data = await models.usersReceipts.findAll({
+        include    : [{ model: models.users, attributes: ['name']}]
+    });
+    
+
+    if (!data) {
+        return res.status(400).json({
+            message: "Failed to get all data."
+        })
+    }
+
+    return res.status(200).json({
+        data: data,
+        message: "Found All Data."
+    })
+}
+
+
 //get user receipts by ID
 exports.getUserReceiptsById = async(req,res)=>{
     let dataId = req.params.id;
@@ -241,6 +266,78 @@ exports.getUserReceiptsById = async(req,res)=>{
                 data: data,
                 message: "Found All Data."
             })
+}
+
+
+
+
+
+
+exports.pdfOfUserReceipts = async (req, res) => {
+    try {
+        
+        const urlData = req.get('host');
+        console.log(urlData);
+        let userReceiptsData = await models.usersReceipts.findAll({
+            include    : [{ model: models.users, attributes: ['name']}]
+        });
+        // console.log(`------------>`,userReceiptsData.dataValues)
+
+        // const userDataValues = await userReceiptsData.map(ele => { return ele.dataValues });
+
+        // console.log("-----------------00000000000000",userDataValues, "-----------------00000000000000");
+
+        // const userName = await userDataValues.map(ele => { return ele.user.dataValues.name
+            
+        // })
+        // console.log(userName, '=====================================================');
+
+        if (!userReceiptsData) {
+            res.status(404).json({ message: 'Data not found' });
+        } else {
+            const pdfData = await generatePdf.pdfGenerator(userReceiptsData,filePath, html1)
+            res.status(200).json({ message: 'Pdf Generated', url : 'http://' + urlData + pdfData.path });
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+
+exports.getUserReceiptExcel = async (req, res) => {
+    try {
+        const urlData = req.get('host');
+        console.log(urlData);
+        let userReceiptsData = await models.usersReceipts.findAll({
+            include    : [{ model: models.users, attributes: ['name']}]
+        });
+        if (!userReceiptsData) {
+            res.status(404).json({ message: 'Data not found' });
+        } else {
+            const userReceiptsXlsx = await generateUserReceiptsExcel(userReceiptsData, res)
+            res.status(200).json({ message: 'Xlsx Generated', url : 'http://' + urlData + userReceiptsXlsx.pathToExport });
+        }
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+
+exports.getUserReceiptCsv = async (req,res) => {
+    try{
+        const urlData = req.get('host');
+        let userReceiptsData = await models.usersReceipts.findAll({
+            include : [{ model: models.users, attributes: ['name']}]
+        });
+        if(!userReceiptsData){
+            res.status(404).json({message:'Data not found'})
+        }else{
+            const csvData = await exportToCsv.exportsToCsv(userReceiptsData,filePath,"",res)
+            res.status(200).json({message:'Exported Data into CSV',url : `http://` + urlData + csvData.downloadPath})
+        }
+    }catch(err){
+        console.log(err)
+    }
 }
 
 

@@ -4,7 +4,7 @@ const fsPath = require('fs-path');
 // const path = require('path')
 // console.log(path.dirname(__dirname))
 // console.log(__dirname.concat("/download.csv"))
-async function generateAllUserExcel(partnerData,res) {
+async function generateUserReceiptsExcel(partnerData,res) {
 
     
     const date = Date.now();
@@ -22,29 +22,26 @@ async function generateAllUserExcel(partnerData,res) {
     const table =`<table class='order-data'>
         <tbody>
         <tr>
-            <th>name</th>
-            <th>mobile</th>
-            <th>email</th>
-            <th>gstNumber</th>
-            <th>panNumber</th>
-            <th>gstImage</th>
-            <th>panImage</th>
-            <th>companyName</th>
-            <th>Address</th>
+            <th>Donor Name</th>
+            <th>Receipt No</th>
+            <th>Project Name</th>
+            <th>NGO Name</th>
+            <th>Mail Status</th>
+            <th>Receipt</th>
+            <th>Created At</th>
         </tr>
 <!-- Using join since return value of map is array seprated with commas(,) converting it to string with delimeter as ' ' --> 
         ${partnerData.map(singleUser=>
             `
             <tr>
-            <td>${singleUser.name}</td>
-            <td>${singleUser.mobile}</td>
-            <td>${singleUser.email}</td>
-            <td>${singleUser.gstNumber}</td>
-            <td>${singleUser.panNumber}</td>
-            <td>${singleUser.gstImage}</td>
-            <td>${singleUser.panImage}</td>
-            <td>${singleUser.companyName}</td>
-            <td>${singleUser.Address}</td>
+            <td>${singleUser.user.dataValues.name}</td>
+            <td>${singleUser.receiptNumber}</td>
+            <td>${singleUser.projectId}</td>
+            <td>${singleUser.ngoId}</td>
+            <td>${singleUser.mailSend}</td>
+            <td>${singleUser.receiptNumber}</td>
+            <td>${singleUser.createdAt}</td>
+        
             </tr>
         
         `
@@ -53,8 +50,8 @@ async function generateAllUserExcel(partnerData,res) {
         </tbody>
     </table>` 
 
-    let path = `./public/uploads/${date}partner.xlsx`
-    let pathToExport = `/uploads/${date}partner.xlsx`
+    let path = `./public/uploads/${date}user-receipts.xlsx`
+    let pathToExport = `/uploads/${date}user-receipts.xlsx`
 
     const wb = XLSX.read(table,{type:'string'})
     /* generate buffer */
@@ -67,4 +64,4 @@ async function generateAllUserExcel(partnerData,res) {
     // res.status(200).json({ message: 'success', url : `http://` + pathToExport });
     return {pathToExport}
 }
-module.exports = generateAllUserExcel
+module.exports = generateUserReceiptsExcel
