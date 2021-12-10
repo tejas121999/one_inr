@@ -1,7 +1,14 @@
 const models = require("../models")
 const sequelize = models.Sequelize;
 const Op = sequelize.Op;
+const exportToCsv = require('../utils/exportToCsv')
+const generatePdf = require('../utils/generatePdf')
+const path = require('path')
+const filePath = 'vendor';
+var fs = require("fs");
 const {paginationWithFromTo} = require('../utils/pagination')
+const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'vendor.html'), 'utf-8');
+
 //Creating A Vendor 
 exports.addVendor = async (req, res) => {
     let { name, email, phone, gst, pan, address, company, panImage, gstImage } = req.body;
@@ -56,6 +63,18 @@ exports.getAllVendor = async (req, res) => {
     })
 
 }
+exports.getVenorById = async (req,res) => {
+    let id = req.params.id;
+    let data = await models.vendors.findOne({ where: { id: id }})
+    if (!data) {
+        return res.status(400).json({
+            message: "Vendor does not exist"
+        })
+    }
+    return res.status(200).json({
+        data: data
+    })
+}
 
 //Updating Vendor 
 exports.updateVendor = async (req, res) => {
@@ -98,4 +117,35 @@ exports.deleteVendor = async (req,res) => {
     return res.status(200).json({
         message: "Vendor deleted scuccessfully."
     })
+}
+
+exports.generateVendorPdf = async (req,res) => {
+    try {
+        const urlData = req.get('host');
+        let vendorData = await models.vendors.findAll();
+        if (!vendorData) {
+            res.status(404).json({ message: 'Data not found' });
+        } else {
+            const pdfData = await generatePdf.pdfGenerator(vendorData,filePath, html)
+            res.status(200).json({ message: 'Pdf Generated', url : `http://` + urlData + pdfData.path });
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+exports.generateVendorCsv = async (req,res) => {
+    try{
+        const urlData = req.get('host');
+        let vendorData = await models.vendors.findAll();
+        if(!vendorData){
+            res.status(404).json({message:'Data not found'})
+        }else{
+            console.log(vendorData)
+            const csvData = await exportToCsv.exportsToCsv(vendorData,"",res)
+            res.status(200).json({message:'Exported Data into CSV', url : `http://` + urlData + csvData.downloadPath })
+        }
+    }catch(err){
+        console.log(err)
+    }
 }

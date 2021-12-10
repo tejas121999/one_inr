@@ -26,6 +26,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getAllVEndorAction } from '../../../Redux/Actions/MasterActions';
 import Loader from '../../Loader';
+import Vendordelete from '../../../Modals/Master/VendorDelete';
+import {
+  EnhancedTableHead,
+  getComparator,
+  stableSort,
+} from '../../../components/Pagination';
+import axios from 'axios';
+import { BASE_URL, Local } from '../../../API/APIEndpoints';
+import { DropdownButton } from 'react-bootstrap';
 export const constData = [
   {
     id: 1,
@@ -139,13 +148,16 @@ export default function EnhancedTable() {
   const [viewData, setViewData] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
   const [fundModalData, setFundModalData] = React.useState(0);
-  // const [donorList, setDonorList] = React.useState([]);
+  const [pdfUrl, setPdfUrl] = React.useState('');
+  const [CsvUrl, setCsvUrl] = React.useState('');
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
-    dispatch(getAllVEndorAction());
+    dispatch(getAllVEndorAction(''));
+    exportPdf();
+    exportCsv();
   }, []);
 
   let donorList = useSelector(state => state.master.vendorList);
@@ -193,35 +205,86 @@ export default function EnhancedTable() {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - donorList.length) : 0;
   // SEARCH
   let timeout = null;
-  // const handleChange = e => {
-  //   clearTimeout(timeout);
-  //   timeout = setTimeout(function () {
-  //     onSearch(e.target.value);
-  //   }, 1000);
-  // };
+  const handleChange = e => {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      onSearch(e.target.value);
+    }, 1000);
+  };
 
-  // const onSearch = value => {
-  //   if (value) {
-  //     dispatch(getDonorByValueAction(value));
-  //   } else {
-  //     dispatch(getViewAllDonorAction());
-  //   }
-  // };
+  const onSearch = value => {
+    if (value) {
+      dispatch(getAllVEndorAction(value));
+    } else {
+      dispatch(getAllVEndorAction(''));
+    }
+  };
 
   // END
+
+  const exportPdf = async () => {
+    const res = await axios.get(Local + '/vendor/get-vendor-pdf');
+
+    if (res.data.url) {
+      const downloadUrl = res.data.url;
+      setPdfUrl(downloadUrl);
+    }
+  };
+  const exportCsv = async () => {
+    const resCsv = await axios.get(Local + '/vendor/get-vendor-csv');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setCsvUrl(downloadUrl);
+    }
+  };
+  // test
+  const downloadPdf = () => {
+    fetch(pdfUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Vendor.pdf';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  const downloadCsv = () => {
+    fetch(CsvUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Vendor.csv';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  // end
   return (
     <>
       <br />
       <br />
       <br />
       <br />
+      <Vendordelete
+        show={deleteModal}
+        onHide={deleteModalClose}
+        id={deleteId}
+      />
 
       <nav className="navbar navbar-light">
         <a className="navbar-brand">Vendor List</a>
         <form className="form-inline">
           <div className="modalClass">
             <Link to="/addvendor" type="" className="btn btn-primary">
-              Add Doner
+              Add Vendor
             </Link>
           </div>
         </form>
@@ -239,13 +302,29 @@ export default function EnhancedTable() {
             justifyContent: 'space-between',
           }}
         >
-          <button
+          {/* <button
             style={{ alignSelf: 'flex-start' }}
             className="btn btn-primary"
           >
             Export
-          </button>
-          <input placeholder="Search" />
+          </button> */}
+          <DropdownButton variant="primary" title="Export">
+            <a className="dropdown-item" onClick={downloadCsv}>
+              CSV
+            </a>
+
+            <a onClick={downloadPdf} className="dropdown-item">
+              PDF{' '}
+            </a>
+            <a className="dropdown-item" target="_blank" download>
+              Excel
+            </a>
+          </DropdownButton>
+          <input
+            placeholder="Search"
+            onChange={e => handleChange(e)}
+            type="search"
+          />
         </div>
         <Paper sx={{ width: '100%', mb: 2 }}>
           {donorList && donorList.length > 0 ? (
@@ -262,6 +341,7 @@ export default function EnhancedTable() {
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
                     rowCount={donorList.length}
+                    headCells={headCells}
                   />
                   <TableBody>
                     {stableSort(donorList, getComparator(order, orderBy))
@@ -298,7 +378,7 @@ export default function EnhancedTable() {
                                 data-bs-toggle="tooltip"
                                 title="Edit"
                                 className="btn"
-                                onClick={() => history.push('/edit_doner', row)}
+                                onClick={() => history.push('/editvendor', row)}
                               >
                                 <FaRegEdit />
                               </button>
@@ -339,37 +419,6 @@ export default function EnhancedTable() {
   );
 }
 
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map(el => el[0]);
-}
-
 const headCells = [
   {
     id: 'name',
@@ -408,54 +457,3 @@ const headCells = [
     label: 'Action',
   },
 ];
-
-function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
-
-  const createSortHandler = property => event => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead className="table-head">
-      <TableRow>
-        {headCells.map(headCell => (
-          <TableCell
-            key={headCell.id}
-            align="center"
-            padding={headCell.disablePadding ? 'none' : 'normal'}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={true}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};

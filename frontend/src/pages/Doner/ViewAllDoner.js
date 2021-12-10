@@ -22,9 +22,14 @@ import {
 import './Donor.css';
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
-import { ADD_DONOR_URL, BASE_URL, GetAllDonor } from '../../API/APIEndpoints';
+import {
+  ADD_DONOR_URL,
+  BASE_URL,
+  GetAllDonor,
+  Local,
+} from '../../API/APIEndpoints';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,108 +37,12 @@ import {
   getDonorByValueAction,
   getViewAllDonorAction,
 } from '../../Redux/Actions/DonorActions';
-export const constData = [
-  {
-    id: 1,
-    name: 'Chinmay Pattar',
-    donated: 1,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-    plan: 1,
-    balanceNextRenewDate: '2021-03-14',
-    parentId: 0,
-    mobile: 9819312721,
-  },
-  {
-    id: 2,
-    name: 'b',
-    donated: 82,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 3,
-    name: 'c',
-    donated: 13,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 4,
-    name: 'd',
-    donated: 5,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 5,
-    name: 'e',
-    donated: 8,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 6,
-    name: 'f',
-    donated: 19,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 7,
-    name: 'g',
-    donated: 15,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 8,
-    name: 'h',
-    donated: 20,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 9,
-    name: 'i',
-    donated: 21,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 10,
-    name: 'j',
-    donated: 23,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 11,
-    name: 'k',
-    donated: 25,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 12,
-    name: 'l',
-    donated: 26,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-];
+import {
+  EnhancedTableHead,
+  getComparator,
+  stableSort,
+} from '../../components/Pagination';
+import { DropdownButton } from 'react-bootstrap';
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -145,26 +54,18 @@ export default function EnhancedTable() {
   const [viewData, setViewData] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
   const [fundModalData, setFundModalData] = React.useState(0);
-  // const [donorList, setDonorList] = React.useState([]);
+  const [pdfUrl, setPdfUrl] = React.useState('');
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
+  const [CsvUrl, setCsvUrl] = React.useState('');
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getViewAllDonorAction());
-  }, []);
 
-  // const getDonorList = async () => {
-  //   const url = BASE_URL + ADD_DONOR_URL;
-  //   await axios
-  //     .get(url)
-  //     .then(res => {
-  //       setDonorList(res.data.data.message);
-  //       toast.success('Yeay! New data is here.');
-  //     })
-  //     .catch(err => {
-  //     });
-  // };
+    exportPdf();
+    exportCsv();
+  }, []);
 
   let donorList = useSelector(state => state.donor.ViewAllDonor);
 
@@ -188,6 +89,7 @@ export default function EnhancedTable() {
   };
   const deleteModalClose = () => {
     setDeleteModal(false);
+    setPage(0);
   };
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -229,6 +131,52 @@ export default function EnhancedTable() {
   };
 
   // END
+
+  const exportPdf = async () => {
+    const res = await axios.get(Local + '/donor/donor-pdf');
+
+    if (res.data.url) {
+      const downloadUrl = res.data.url;
+      setPdfUrl(downloadUrl);
+    }
+  };
+  const exportCsv = async () => {
+    const resCsv = await axios.get(Local + '/donor/donor-csv');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setCsvUrl(downloadUrl);
+    }
+  };
+  // test
+  const downloadEmployeeData = () => {
+    fetch(pdfUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Donor.pdf';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  const downloadCsv = () => {
+    fetch(CsvUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Doner.csv';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  // end
   return (
     <>
       <br />
@@ -242,19 +190,16 @@ export default function EnhancedTable() {
       />
       <Addfund show={fundModal} onHide={fundModaClose} data={fundModalData} />
       <Donordelete show={deleteModal} onHide={deleteModalClose} id={deleteId} />
-      <div className="card">
-        <p
-          style={{
-            textAlign: 'left',
-            fontWeight: 'bold',
-            margin: '20px',
-            width: '100%',
-            marginLeft: '20px',
-          }}
-        >
-          DONOR DETAIL
-        </p>
-      </div>
+      <nav className="navbar navbar-light">
+        <a className="navbar-brand">Partner List</a>
+        <form className="form-inline">
+          <div className="modalClass">
+            <Link to="/add_doner" type="" className="btn btn-primary">
+              Add Donor
+            </Link>
+          </div>
+        </form>
+      </nav>
       <div
         style={{
           margin: '20px',
@@ -268,13 +213,23 @@ export default function EnhancedTable() {
             justifyContent: 'space-between',
           }}
         >
-          <button
-            style={{ alignSelf: 'flex-start' }}
-            className="btn btn-primary"
-          >
-            Export
-          </button>
-          <input placeholder="Search" onChange={e => handleChange(e)} />
+          <DropdownButton variant="primary" title="Export">
+            <a className="dropdown-item" onClick={downloadCsv}>
+              CSV
+            </a>
+
+            <a onClick={downloadEmployeeData} className="dropdown-item">
+              PDF{' '}
+            </a>
+            <a className="dropdown-item" target="_blank" download>
+              Excel
+            </a>
+          </DropdownButton>
+          <input
+            placeholder="Search"
+            onChange={e => handleChange(e)}
+            type="search"
+          />
         </div>
         <Paper sx={{ width: '100%', mb: 2 }}>
           {donorList && donorList.length > 0 ? (
@@ -291,6 +246,7 @@ export default function EnhancedTable() {
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
                     rowCount={donorList.length}
+                    headCells={headCells}
                   />
                   <TableBody>
                     {stableSort(donorList, getComparator(order, orderBy))
@@ -394,37 +350,6 @@ export default function EnhancedTable() {
   );
 }
 
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map(el => el[0]);
-}
-
 const headCells = [
   {
     id: 'name',
@@ -457,54 +382,3 @@ const headCells = [
     label: 'Action',
   },
 ];
-
-function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
-
-  const createSortHandler = property => event => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead className="table-head">
-      <TableRow>
-        {headCells.map(headCell => (
-          <TableCell
-            key={headCell.id}
-            align="center"
-            padding={headCell.disablePadding ? 'none' : 'normal'}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={true}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};

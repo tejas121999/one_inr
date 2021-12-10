@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { BASE_URL } from '../../API/APIEndpoints';
+import axios from "../../../src/utils/interceptor";
+import { BASE_URL, BASE_URL_DONOR, BASE_URL_RECEIPT } from '../../API/APIEndpoints';
 
 function DonorServices() {
   //1. Login Auth
@@ -7,7 +7,10 @@ function DonorServices() {
 
   //2. all donor Parent list
   this.getAllParentDonor = async () =>
-    await axios.get(BASE_URL + 'donor/parents');
+    await axios.get(BASE_URL_DONOR + 'donor/parents/');
+
+  // this.getDonorData = async () =>
+  //   await axios.get(BASE_URL + 'donor/parents');  
 
   //3. add new donor
   this.AddNewDonor = async body => await axios.post(BASE_URL + 'donor', body);
@@ -22,7 +25,7 @@ function DonorServices() {
 
   //5. view receipt
   this.getViewReceipt = async () =>
-    await axios.get(BASE_URL + 'userReceipts/get-user');
+    await axios.get(BASE_URL_RECEIPT + '/');
 
   //6. add donor fund
   this.AddDonorfund = async (id, body) =>
@@ -30,7 +33,7 @@ function DonorServices() {
 
   //7.a add user receipt
   this.createUserReceipt = async body =>
-    await axios.post(BASE_URL + 'userReceipts/add-user', body);
+    await axios.post(BASE_URL + 'userReceipts/', body);
 
   //7.b add user receipt
   this.updateUserReceipt = async body =>
@@ -50,8 +53,8 @@ function DonorServices() {
   this.GetDonorById = async id => await axios.delete(BASE_URL + `donor/${id}`);
 
   //11. UPDATE_DONOR_BY_ID
-  this.UpdateDonorById = async id =>
-    await axios.delete(BASE_URL + `donor/${id}`);
+  this.UpdateDonorById = async (id, body) =>
+    await axios.put(BASE_URL + `donor/${id}`, body);
 
   //12. add donor fund
   this.UpdateDonorfund = async id =>
@@ -59,6 +62,15 @@ function DonorServices() {
 
   //13. delete donor by id
   this.DeleteDonorById = async id =>
+    await axios.delete(BASE_URL + `donor/${id}`);
+
+  // UPCOMING DONERS
+  this.getAllUpcomingDonor = async value =>
+    await axios.get(BASE_URL + `donor/upcoming?search=${value}`);
+  //6. add Upcomingdonor fund
+  this.UpcomingDonorfund = async (id, body) =>
+    await axios.put(BASE_URL + `donor/balance/${id}`, body);
+  this.DeleteUpcomingDonorById = async id =>
     await axios.delete(BASE_URL + `donor/${id}`);
 }
 
