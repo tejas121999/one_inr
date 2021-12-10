@@ -1,13 +1,19 @@
 const models = require('../models')
 const { paginationWithFromTo } = require('../utils/pagination')
 const { bulkUserUploadService } = require('../service/bulkUploadService')
-const exportToCsv = require('../utils/exportToCsv')
+// const exportToCsv = require('../utils/exportToCsv')
 const sequelize = models.Sequelize;
 const csv = require('csvtojson')
 const twinBcrypt = require('twin-bcrypt')
 const saltRounds = 10;
 const Op = sequelize.Op;
 const moment = require('moment')
+const generatePdf = require('../utils/generatePdf')
+const path = require('path')
+const filePath = 'donor'
+var fs = require("fs");
+const exportToCsv = require('../utils/exportToCsv')
+const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'donor.html'), 'utf-8');
 
 
 //Creating a Donor 
@@ -329,12 +335,13 @@ exports.addDonerThroughExcel = async (req, res, next) => {
 
 exports.generateDonorPdf = async (req,res) => {
     try {
+        const urlData = req.get('host');
         let donorData = await models.users.findAll();
         if (!donorData) {
             res.status(404).json({ message: 'Data not found' });
         } else {
-            generatePdf.pdfGenerator(donorData, html)
-            res.status(200).json({ message: 'Pdf Generated' });
+            const pdfData = await generatePdf.pdfGenerator(donorData,filePath, html)
+            res.status(200).json({ message: 'Donor Pdf Generated', url : 'http://' + urlData + pdfData.path });
         }
     } catch (err) {
         console.log(err);
@@ -343,12 +350,13 @@ exports.generateDonorPdf = async (req,res) => {
 
 exports.exportsDonorCsv = async (req, res) => {
     try{
+        const urlData = req.get('host');
         let Donors = await models.users.findAll();
         if(!Donors){
             res.status(404).json({message:'Data not found'})
         }else{
-            exportToCsv.exportsToCsv(Donors,"",res)
-            res.status(200).json({message:'Exported Data into CSV'})
+            const csvData = await exportToCsv.exportsToCsv(Donors,filePath,"",res)
+            res.status(200).json({message:'Exported Data into CSV', url : `http://` + urlData + csvData.downloadPath })
         }
     }catch(err){
         console.log(err)

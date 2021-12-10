@@ -9,6 +9,7 @@ export const ADD_DONOR_FAIL = 'ADD_DONOR_FAIL';
 
 export const AllDonor = 'AllDonor';
 export const AllDonor_FAILED = 'AllDonor_FAILED';
+export const GET_RECEIPT_DATA ="GET_RECEIPT_DATA"
 
 export const VIEW_RECEIPT = 'VIEW_RECEIPT';
 export const VIEW_RECEIPT_FAILED = 'VIEW_RECEIPT_FAILED';
