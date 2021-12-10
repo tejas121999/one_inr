@@ -8,9 +8,7 @@ import Footer from "./Components/layout/Footer";
 import Login from "./Components/auth/Login";
 import Register from "./Components/auth/Register";
 import ForgotPass from "./Components/auth/ForgotPass";
-import Profile from "./Components/Account/ProfileInfo";
-import EditProfile from "./Components/Account/EditProfile";
-import ProfilePass from "./Components/Account/ProfilePass";
+import MainProfile from "./Components/Account/Profile";
 import StartCampaign from "./Components/Campaigns/StartCampaign";
 import Policy from "./Components/Campaigns/Policy";
 import Terms from "./Components/Campaigns/Terms";
@@ -42,7 +40,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/reset" component={ForgotPass} />
-        <Route path="/profile" component={Profile} />
+        <Route path="/profile" component={MainProfile} />
         {/* <Route path="/profile/password" component={ProfilePass} />
         <Route path="/profile/edit" component={EditProfile} /> */}
         {/* <Route path="/backed-campaigns" component={BackedCampaigns} /> */}

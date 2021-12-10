@@ -262,7 +262,7 @@ export default function EnhancedTable() {
 
   return (
     <div className="site-main">
-      <div className="container">
+      {/* <div className="container">
         <h4 style={{ margin: "0" }}>My Profile</h4>
         <div
           class="breadcrumbs"
@@ -272,12 +272,11 @@ export default function EnhancedTable() {
           <span>&nbsp;/&nbsp;</span>
           Profile
         </div>
-      </div>
+      </div> */}
       <div className="account-wrapper">
         <div className="container">
           <div class="row">
-            <SideBar />
-            <div className="col-lg-9">
+            <div className="">
               <div className="account-content profile">
                 <h3 className="account-title">Backed Campaigns</h3>
                 <div className="account-main">

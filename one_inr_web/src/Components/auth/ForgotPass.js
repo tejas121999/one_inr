@@ -8,7 +8,7 @@ const ForgotPass = () => {
         <div className="container">
           <h1>Reset Password</h1>
           <div class="breadcrumbs">
-            <ul style={{ marginLeft: "-2.5em" }}>
+            <ul>
               <li>
                 <Link to="/">Home</Link>
                 <span>/</span>
