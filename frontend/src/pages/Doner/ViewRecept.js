@@ -432,39 +432,6 @@ export default function ViewRecept() {
   );
 }
 
-const headCells = [
-  {
-    id: 'name',
-    numeric: false,
-    disablePadding: false,
-    label: 'Name',
-  },
-  {
-    id: 'donated',
-    numeric: true,
-    disablePadding: false,
-    label: 'Donated',
-  },
-  {
-    id: 'balance',
-    numeric: true,
-    disablePadding: false,
-    label: 'Balance',
-  },
-  {
-    id: 'projects',
-    numeric: true,
-    disablePadding: false,
-    label: 'Projects',
-  },
-  {
-    id: 'action',
-    numeric: true,
-    disablePadding: false,
-    label: 'Action',
-  },
-];
-
 const tableHeader = [
   {
     id: '1',
@@ -521,3 +488,6 @@ const tableHeader = [
     label: 'Action',
   },
 ];
+
+
+

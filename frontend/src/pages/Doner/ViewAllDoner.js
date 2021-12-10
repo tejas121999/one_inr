@@ -22,9 +22,14 @@ import {
 import './Donor.css';
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
-import { ADD_DONOR_URL, BASE_URL, GetAllDonor } from '../../API/APIEndpoints';
+import {
+  ADD_DONOR_URL,
+  BASE_URL,
+  GetAllDonor,
+  Local,
+} from '../../API/APIEndpoints';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
@@ -37,6 +42,7 @@ import {
   getComparator,
   stableSort,
 } from '../../components/Pagination';
+import { DropdownButton } from 'react-bootstrap';
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -48,13 +54,17 @@ export default function EnhancedTable() {
   const [viewData, setViewData] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
   const [fundModalData, setFundModalData] = React.useState(0);
-  // const [donorList, setDonorList] = React.useState([]);
+  const [pdfUrl, setPdfUrl] = React.useState('');
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
+  const [CsvUrl, setCsvUrl] = React.useState('');
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getViewAllDonorAction());
+
+    exportPdf();
+    exportCsv();
   }, []);
 
   let donorList = useSelector(state => state.donor.ViewAllDonor);
@@ -79,6 +89,7 @@ export default function EnhancedTable() {
   };
   const deleteModalClose = () => {
     setDeleteModal(false);
+    setPage(0);
   };
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -120,6 +131,52 @@ export default function EnhancedTable() {
   };
 
   // END
+
+  const exportPdf = async () => {
+    const res = await axios.get(Local + '/donor/donor-pdf');
+
+    if (res.data.url) {
+      const downloadUrl = res.data.url;
+      setPdfUrl(downloadUrl);
+    }
+  };
+  const exportCsv = async () => {
+    const resCsv = await axios.get(Local + '/donor/donor-csv');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setCsvUrl(downloadUrl);
+    }
+  };
+  // test
+  const downloadEmployeeData = () => {
+    fetch(pdfUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Donor.pdf';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  const downloadCsv = () => {
+    fetch(CsvUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Doner.csv';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  // end
   return (
     <>
       <br />
@@ -133,19 +190,16 @@ export default function EnhancedTable() {
       />
       <Addfund show={fundModal} onHide={fundModaClose} data={fundModalData} />
       <Donordelete show={deleteModal} onHide={deleteModalClose} id={deleteId} />
-      <div className="card">
-        <p
-          style={{
-            textAlign: 'left',
-            fontWeight: 'bold',
-            margin: '20px',
-            width: '100%',
-            marginLeft: '20px',
-          }}
-        >
-          DONOR DETAIL
-        </p>
-      </div>
+      <nav className="navbar navbar-light">
+        <a className="navbar-brand">Partner List</a>
+        <form className="form-inline">
+          <div className="modalClass">
+            <Link to="/add_doner" type="" className="btn btn-primary">
+              Add Donor
+            </Link>
+          </div>
+        </form>
+      </nav>
       <div
         style={{
           margin: '20px',
@@ -159,13 +213,23 @@ export default function EnhancedTable() {
             justifyContent: 'space-between',
           }}
         >
-          <button
-            style={{ alignSelf: 'flex-start' }}
-            className="btn btn-primary"
-          >
-            Export
-          </button>
-          <input placeholder="Search" onChange={e => handleChange(e)} />
+          <DropdownButton variant="primary" title="Export">
+            <a className="dropdown-item" onClick={downloadCsv}>
+              CSV
+            </a>
+
+            <a onClick={downloadEmployeeData} className="dropdown-item">
+              PDF{' '}
+            </a>
+            <a className="dropdown-item" target="_blank" download>
+              Excel
+            </a>
+          </DropdownButton>
+          <input
+            placeholder="Search"
+            onChange={e => handleChange(e)}
+            type="search"
+          />
         </div>
         <Paper sx={{ width: '100%', mb: 2 }}>
           {donorList && donorList.length > 0 ? (

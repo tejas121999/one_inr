@@ -43,7 +43,7 @@ export const Create_Vendor_FAIL = 'Create_Vendor_FAIL';
 
 export const DELETE_DONOR_BY_ID = 'DELETE_DONOR_BY_ID';
 export const DELETE_DONOR_BY_ID_FAIL = 'DELETE_DONOR_BY_ID_FAIL';
-
+export const GET_UPCOMING_DONORS = ' GET_UPCOMING_DONORS';
 export const CREATE_VENDOR = 'CREATE_VENDOR';
 export const CREATE_VENDOR_FAIL = 'CREATE_VENDOR_FAIL';
 export const GET_ALL_VENDORS = 'GET_ALL_VENDORS';
@@ -51,3 +51,5 @@ export const GET_VENDOR_BY_ID = 'GET_VENDOR_BY_ID';
 export const UPDATE_VENDOR_BY_ID = 'UPDATE_VENDOR_BY_ID';
 export const UPDATE_VENDOR_BY_ID_FAIL = 'UPDATE_VENDOR_BY_ID_FAIL';
 export const GET_ALL_PARTNERS = 'GET_ALL_PARTNERS';
+
+export const GET_PARTNER_BY_ID = 'GET_PARTNER_BY_ID';

@@ -4,13 +4,9 @@ import { Modal } from 'react-bootstrap';
 import '../../pages/Doner/Donor.css';
 import { ADD_DONOR_FUND_URL, BASE_URL } from '../../API/APIEndpoints';
 import { useDispatch } from 'react-redux';
-import {
-  addDonorFundAction,
-  getViewAllDonorAction,
-} from '../../Redux/Actions/DonorActions';
+import { addUpcomingDonorFundAction } from '../../Redux/Actions/DonorActions';
 import { Field, Form, Formik } from 'formik';
-const Addfund = props => {
-  const [balance, setBalance] = useState('0');
+const UpcomingDonorAddfund = props => {
   const [userId, setId] = useState(0);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -28,7 +24,7 @@ const Addfund = props => {
   };
   const onAdd = async value => {
     console.log('ModalURL', value);
-    await dispatch(addDonorFundAction(userId, value));
+    await dispatch(addUpcomingDonorFundAction(userId, value));
     props.onHide();
   };
   return (
@@ -79,4 +75,4 @@ const Addfund = props => {
   );
 };
 
-export default Addfund;
+export default UpcomingDonorAddfund;

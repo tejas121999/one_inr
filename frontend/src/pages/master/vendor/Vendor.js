@@ -35,6 +35,9 @@ import {
   stableSort,
 } from '../../../components/Pagination';
 import VendorTable from './VendorTable';
+import axios from 'axios';
+import { BASE_URL, Local } from '../../../API/APIEndpoints';
+import { DropdownButton } from 'react-bootstrap';
 export const constData = [
   {
     id: 1,
@@ -150,7 +153,8 @@ export default function EnhancedTable() {
   const [viewData, setViewData] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
   const [fundModalData, setFundModalData] = React.useState(0);
-  // const [donorList, setDonorList] = React.useState([]);
+  const [pdfUrl, setPdfUrl] = React.useState('');
+  const [CsvUrl, setCsvUrl] = React.useState('');
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
   const [printDonorTable, setPrintDonorTable] = React.useState(false);
@@ -158,7 +162,9 @@ export default function EnhancedTable() {
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
-    dispatch(getAllVEndorAction(constData));
+    dispatch(getAllVEndorAction(''));
+    exportPdf();
+    exportCsv();
   }, []);
 
   let donorList = useSelector(state => state.master.vendorList);
@@ -252,6 +258,52 @@ export default function EnhancedTable() {
   };
 
   // END
+
+  const exportPdf = async () => {
+    const res = await axios.get(Local + '/vendor/get-vendor-pdf');
+
+    if (res.data.url) {
+      const downloadUrl = res.data.url;
+      setPdfUrl(downloadUrl);
+    }
+  };
+  const exportCsv = async () => {
+    const resCsv = await axios.get(Local + '/vendor/get-vendor-csv');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setCsvUrl(downloadUrl);
+    }
+  };
+  // test
+  const downloadPdf = () => {
+    fetch(pdfUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Vendor.pdf';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  const downloadCsv = () => {
+    fetch(CsvUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Vendor.csv';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  // end
   return (
     <>
       <br />
@@ -269,7 +321,7 @@ export default function EnhancedTable() {
         <form className="form-inline">
           <div className="modalClass">
             <Link to="/addvendor" type="" className="btn btn-primary">
-              Add Doner
+              Add Vendor
             </Link>
           </div>
         </form>
@@ -287,7 +339,7 @@ export default function EnhancedTable() {
             justifyContent: 'space-between',
           }}
         >
-         <button
+           <button
             style={{ alignSelf: 'flex-start' }}
             className="btn btn-primary"
             onClick={e => handleClick(e)}
@@ -306,20 +358,38 @@ export default function EnhancedTable() {
               <button className="export-btn w-100" onClick={() => onCopyClick()}>Copy</button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100">CSV</button>
+              <button className="export-btn w-100" onClick={downloadCsv}>CSV</button>
             </MenuItem>
             <MenuItem>
               <button className="export-btn w-100">Excel</button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100">PDF</button>
+              <button className="export-btn w-100" onClick={downloadPdf}>PDF</button>
             </MenuItem>
             <MenuItem>
               <button className="export-btn w-100" onClick={()=> onPrintClick()}>Print</button>
-            </MenuItem>
+            </MenuItem> 
             {/* <MenuItem></MenuItem> */}
           </Menu>
           <input placeholder="Search" onChange={e => handleChange(e)} />
+          {/* </button>  */}
+          {/* <DropdownButton variant="primary" title="Export">
+            <a className="dropdown-item" onClick={downloadCsv}>
+              CSV
+            </a>
+
+            <a onClick={downloadPdf} className="dropdown-item">
+              PDF{' '}
+            </a>
+            <a className="dropdown-item" target="_blank" download>
+              Excel
+            </a>
+          </DropdownButton> */}
+          <input
+            placeholder="Search"
+            onChange={e => handleChange(e)}
+            type="search"
+          />
         </div>
         <Paper sx={{ width: '100%', mb: 2 }}>
           {donorList && donorList.length > 0 ? (

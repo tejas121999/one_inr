@@ -4,15 +4,13 @@ import '../../pages/Doner/Donor.css';
 import axios from 'axios';
 import { BASE_URL } from '../../API/APIEndpoints';
 import { useDispatch } from 'react-redux';
-import {
-  DeleteDonorByIdAction,
-  getViewAllDonorAction,
-} from '../../Redux/Actions/DonorActions';
-const Donordelete = props => {
+import { DeleteUpcomingDonorByIdAction } from '../../Redux/Actions/DonorActions';
+const UpcomingDonordelete = props => {
   const dispatch = useDispatch();
   const onDelete = async () => {
     const id = props.id;
-    await dispatch(DeleteDonorByIdAction(id));
+
+    await dispatch(DeleteUpcomingDonorByIdAction(id));
     props.onHide();
   };
   return (
@@ -35,4 +33,4 @@ const Donordelete = props => {
   );
 };
 
-export default Donordelete;
+export default UpcomingDonordelete;
