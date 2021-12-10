@@ -1,10 +1,20 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 import { element } from 'prop-types';
+import axios from 'axios';
+import { BASE_URL } from '../../API/APIEndpoints';
+import { FaTimes } from 'react-icons/fa';
 
 
 const AddNgo = () => {
+
+    const [logoImgUrl, setLogoImgUrl] = useState('');
+    const [panCardImgUrl, setPanCardImgUrl] = useState('');
+    const [certificateImgUrl, setCertificateImgUrl] = useState('');
+    const [charityCertificateImgUrl, setCharityCertificateImgUrl] = useState('');
+    const [deadImgUrl, setDeadImgUrl] = useState('');
+
 
     const [addContactValues, setAddContactValues] = useState([{ name: "", designation: "", email: "", mobileNumber: "" }])
 
@@ -30,10 +40,10 @@ const AddNgo = () => {
         let newFormValues = [...addContactValues];
         newFormValues[i][e.target.name] = e.target.value;
         setAddContactValues(newFormValues);
-      }
-    
+    }
+
     let addContactFormFields = () => {
-        setAddContactValues([...addContactValues, { name: "", designation: "", email: "", mobileNumber: ""}])
+        setAddContactValues([...addContactValues, { name: "", designation: "", email: "", mobileNumber: "" }])
     }
 
     let removeContactFormFields = (i) => {
@@ -57,9 +67,86 @@ const AddNgo = () => {
         panNumber: yup.string().required('required').min(12, 'please enter 12 digits'),
     });
 
+    
+  const onlogoImageAdd = async imagData => {
+    const data = new FormData();
+    data.append('avatar', imagData);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=ngo_logo',
+      data,
+    );
+    console.log('data', result.data.url);
+    if (result && result.data && result.data.url) {
+        setLogoImgUrl(result.data.url);
+    }
+  };
+  console.log('logoImage', logoImgUrl);
+
+
+  
+  const onpanCardImageAdd = async imgData => {
+    const data = new FormData();
+    data.append('avatar', imgData);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=ngo_pancard',
+      data,
+    );
+    console.log('data', result.data.url);
+    if (result && result.data && result.data.url) {
+      setPanCardImgUrl(result.data.url);
+    }
+  };
+  console.log('panCardImage', panCardImgUrl);
+
+
+  const oncertificateImageAdd = async imgData => {
+    const data = new FormData();
+    data.append('avatar', imgData);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=ngo_certificate',
+      data,
+    );
+    console.log('data', result.data.url);
+    if (result && result.data && result.data.url) {
+      setCertificateImgUrl(result.data.url);
+    }
+  };
+  console.log('certificateImage', certificateImgUrl);
+
+
+  
+  const onCharityCertificateImageAdd = async imgData => {
+    const data = new FormData();
+    data.append('avatar', imgData);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=ngo_certificate',
+      data,
+    );
+    console.log('data', result.data.url);
+    if (result && result.data && result.data.url) {
+      setCharityCertificateImgUrl(result.data.url);
+    }
+  };
+  console.log('charityCertificateImage', charityCertificateImgUrl);
+
+  
+  const ondeadImageAdd = async imgData => {
+    const data = new FormData();
+    data.append('avatar', imgData);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=ngo_dead',
+      data,
+    );
+    console.log('data', result.data.url);
+    if (result && result.data && result.data.url) {
+      setDeadImgUrl(result.data.url);
+    }
+  };
+  console.log('deadImage', deadImgUrl);
+
     return (
         <div>
-            <br/>
+            <br />
             <br />
             <br />
             <div className="card">
@@ -75,7 +162,7 @@ const AddNgo = () => {
                     ADD NGO
                 </p>
             </div>
-            <div style={{ backgroundColor: 'white', margin: '30px' }}>
+            <div style={{ backgroundColor: 'white', margin: '30px', marginBottom: '50px' }}>
                 <Formik
                     initialValues={{
                         ngoName: '',
@@ -96,24 +183,22 @@ const AddNgo = () => {
                                 <div className="col-6 ">
                                     <div style={{ padding: '15px', paddingBottom: '10px' }}>
                                         <label style={{ fontWeight: 'bold' }}>Logo Name</label>
-                                        <Field
+                                        <input
                                             type="file"
-                                            className="form-control"
+                                            className="form-control-file"
                                             placeholder="Please Enter Logo Name"
-                                            name="logo Name"
-                                            autocomplete="off"
-                                            required
-                                            value={values.logoName}
+                                            name="logo_img"
+                                            accept=".png,.jpg,"
+                                            onChange={e => onlogoImageAdd(e.target.files[0])}
                                         />
                                         {errors.ngoName && touched.logoName && (
                                             <div className="text-left">
-                                                <span style={{ color: 'blue' }}>{errors.logoName}</span>
+                                                <span style={{ color: 'red' }}>{errors.logoName}</span>
                                             </div>
                                         )}
                                     </div>
                                 </div>
                             </div>
-
 
                             <div className="row">
                                 <div className="col-12 ">
@@ -137,7 +222,6 @@ const AddNgo = () => {
                                 </div>
                             </div>
 
-
                             <div className="row">
                                 <div className="col-12 ">
                                     <div className="input-box">
@@ -160,7 +244,6 @@ const AddNgo = () => {
                                 </div>
                             </div>
 
-
                             <div className="row">
                                 <div className="col-6 ">
                                     <div className="input-box">
@@ -181,7 +264,6 @@ const AddNgo = () => {
                                         )}
                                     </div>
                                 </div>
-
 
                                 <div className="col-6 ">
                                     <div className="input-box">
@@ -251,9 +333,6 @@ const AddNgo = () => {
                                     </div>
                                 </div>
                             </div>
-
-
-
                             <div className="row">
                                 <div className="col-6 ">
                                     <div className="input-box">
@@ -298,10 +377,7 @@ const AddNgo = () => {
                                         )}
                                     </div>
                                 </div>
-
                             </div>
-
-
                             <div className="row">
                                 <div className="col-12 ">
                                     <div className="input-box">
@@ -330,19 +406,19 @@ const AddNgo = () => {
                             <div className="row">
                                 <div className="col-3 ">
                                     <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                                        <label style={{ fontWeight: 'bold' , height: "3em"}}>Pancard</label>
-                                        <Field
+                                        <label style={{ fontWeight: 'bold', height: "3em" }}>Pancard</label>
+                                        <input
                                             type="file"
-                                            className="form-control"
+                                            className="form-control-file"
                                             placeholder="Please upload pancard image"
-                                            name="pancard"
-                                            autocomplete="off"
-                                            required
-                                            value={values.pancard}
+                                            name="pancard_img"
+                                            accept=".png,.jpg,"
+                                            value={values.Pancard}
+                                            onChange={e => onpanCardImageAdd(e.target.files[0])}
                                         />
                                         {errors.pancard && touched.pancard && (
                                             <div className="text-left">
-                                                <span style={{ color: 'blue' }}>{errors.pancard}</span>
+                                                <span style={{ color: 'blue' }}>{errors.Pancard}</span>
                                             </div>
                                         )}
                                     </div>
@@ -350,19 +426,19 @@ const AddNgo = () => {
 
                                 <div className="col-3 ">
                                     <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                                        <label style={{ fontWeight: 'bold' , height: "3em" }}>Certificate</label>
-                                        <Field
+                                        <label style={{ fontWeight: 'bold', height: "3em" }}>Certificate</label>
+                                        <input
                                             type="file"
-                                            className="form-control"
+                                            className="form-control-file"
                                             placeholder="Please upload certificate"
-                                            name="certificate"
-                                            autocomplete="off"
-                                            required
-                                            value={values.certificate}
+                                            name="certificate_img"
+                                            accept=".png,.jpg,"
+                                            values={values.Certificate}   
+                                            onChange={e => oncertificateImageAdd(e.target.files[0])}  
                                         />
                                         {errors.certificate && touched.certificate && (
                                             <div className="text-left">
-                                                <span style={{ color: 'blue' }}>{errors.certificate}</span>
+                                                <span style={{ color: 'blue' }}>{errors.Certificate}</span>
                                             </div>
                                         )}
                                     </div>
@@ -370,19 +446,19 @@ const AddNgo = () => {
 
                                 <div className="col-3 ">
                                     <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                                        <label style={{ fontWeight: 'bold' , height: "3em"}}>Charity Registration Certificate</label>
-                                        <Field
+                                        <label style={{ fontWeight: 'bold', height: "3em" }}>Charity Registration Certificate</label>
+                                        <input
                                             type="file"
-                                            className="form-control"
-                                            placeholder="Please upload charityregistrationcertificate"
-                                            name="charityregistrationcertificate"
-                                            autocomplete="off"
-                                            required
-                                            value={values.charityregistrationcertificate}
+                                            className="form-control-file"
+                                            placeholder="Please upload charityCertificate"
+                                            name="charityCertificate_img"
+                                            accept=".pnj,.jpg,"
+                                            value={values.CharitynCertificate}
+                                            onChange={e => onCharityCertificateImageAdd(e.target.files[0])}
                                         />
-                                        {errors.charityregistrationcertificate && touched.charityregistrationcertificate && (
+                                        {errors.CharityCertificate && touched.CharityCertificate && (
                                             <div className="text-left">
-                                                <span style={{ color: 'blue' }}>{errors.charityregistrationcertificate}</span>
+                                                <span style={{ color: 'blue' }}>{errors.CharityCertificate}</span>
                                             </div>
                                         )}
                                     </div>
@@ -390,213 +466,214 @@ const AddNgo = () => {
 
                                 <div className="col-3 ">
                                     <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                                        <label style={{ fontWeight: 'bold' , height: "3em" }}>Dead</label>
-                                        <Field
+                                        <label style={{ fontWeight: 'bold', height: "3em" }}>Dead</label>
+                                        <input
                                             type="file"
-                                            className="form-control"
+                                            className="form-control-file"
                                             placeholder="Please Enter dead Name"
-                                            name="dead"
-                                            autocomplete="off"
-                                            required
-                                            value={values.dead}
+                                            name="dead_img"
+                                            accept=".pnj,.jpg,"
+                                            value={values.Dead}
+                                            onChange={e => ondeadImageAdd(e.target.files[0])}
                                         />
-                                        {errors.dead && touched.dead && (
+                                        {errors.Dead && touched.Dead && (
                                             <div className="text-left">
-                                                <span style={{ color: 'blue' }}>{errors.dead}</span>
+                                                <span style={{ color: 'blue' }}>{errors.Dead}</span>
                                             </div>
                                         )}
                                     </div>
                                 </div>
                             </div>
 
-                             <br/>
+                            <br />
                             {addContactValues.map((element, index) => (
-                                
-                            <div className="row" style={{marginLeft: '4px'}}>
-                                <div className="col-2.5 ">
-                                    <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                                        <label style={{ fontWeight: 'bold'}}>Name</label>
-                                        <Field
-                                            className="form-control"
-                                            placeholder="Please enter your Name"
-                                            name="name"
-                                            autocomplete="off"
-                                            required
-                                            value={values.name}
-                                        />
-                                        {errors.name && touched.name && (
-                                            <div className="text-left">
-                                                <span style={{ color: 'blue' }}>{errors.name}</span>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
 
-                                <div className="col-2.5 ">
-                                <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                                    <label style={{ fontWeight: 'bold' }}>Designation</label>
-                                    <Field
-                                        className="form-control"
-                                        placeholder="Please enter designation"
-                                        name="designation"
-                                        autocomplete="off"
-                                        required
-                                        value={values.designation}
-                                    />
-                                    {errors.designation && touched.designation && (
-                                        <div className="text-left">
-                                            <span style={{ color: 'blue' }}>{errors.designation}</span>
+                                <div className="row" style={{ marginLeft: '4px' }}>
+                                    <div className="col-2.5 ">
+                                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
+                                            <label style={{ fontWeight: 'bold' }}>Name</label>
+                                            <Field
+                                                className="form-control"
+                                                placeholder="Please enter your Name"
+                                                name="name"
+                                                autocomplete="off"
+                                                required
+                                                value={values.name}
+                                            />
+                                            {errors.name && touched.name && (
+                                                <div className="text-left">
+                                                    <span style={{ color: 'blue' }}>{errors.name}</span>
+                                                </div>
+                                            )}
                                         </div>
-                                    )}
+                                    </div>
+
+                                    <div className="col-2.5 ">
+                                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
+                                            <label style={{ fontWeight: 'bold' }}>Designation</label>
+                                            <Field
+                                                className="form-control"
+                                                placeholder="Please enter designation"
+                                                name="designation"
+                                                autocomplete="off"
+                                                required
+                                                value={values.designation}
+                                            />
+                                            {errors.designation && touched.designation && (
+                                                <div className="text-left">
+                                                    <span style={{ color: 'blue' }}>{errors.designation}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className="col-2.5 ">
+                                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
+                                            <label style={{ fontWeight: 'bold' }}>Email</label>
+                                            <Field
+                                                className="form-control"
+                                                placeholder="Please enter email"
+                                                name="email"
+                                                autocomplete="off"
+                                                required
+                                                value={values.email}
+                                            />
+                                            {errors.email && touched.email && (
+                                                <div className="text-left">
+                                                    <span style={{ color: 'blue' }}>{errors.email}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className="col-2.5 ">
+                                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
+                                            <label style={{ fontWeight: 'bold' }}>Mobile</label>
+                                            <Field
+                                                className="form-control"
+                                                placeholder="Please enter mobile"
+                                                name="mobile"
+                                                autocomplete="off"
+                                                required
+                                                value={values.mobile}
+                                            />
+                                            {errors.mobile && touched.mobile && (
+                                                <div className="text-left">
+                                                    <span style={{ color: 'blue' }}>{errors.mobile}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <button type="delete" className="btn btn-danger" style={{ maxWidth: "1.5cm", maxHeight: "1cm", marginTop: "1.2cm" }}  onClick={() => removeContactFormFields()}>
+                                        <FaTimes />
+                                    </button>
+
                                 </div>
+                            ))}
+
+                            <div style={{ textAlign: "center" }}>
+                                <button type="add contact" className="btn btn-success" onClick={() => addContactFormFields()}>
+                                    Add Contact
+                                </button>
                             </div>
 
-                            <div className="col-2.5 ">
-                            <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                                <label style={{ fontWeight: 'bold' }}>Email</label>
-                                <Field
-                                    className="form-control"
-                                    placeholder="Please enter email"
-                                    name="email"
-                                    autocomplete="off"
-                                    required
-                                    value={values.email}
-                                />
-                                {errors.email && touched.email && (
-                                    <div className="text-left">
-                                        <span style={{ color: 'blue' }}>{errors.email}</span>
+                            < br />
+                            {addBankDetailsValues.map((element, index) => (
+                                <div className="row" style={{ marginLeft: '4px' }}>
+                                    <div className="col-2.5 ">
+                                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
+                                            <label style={{ fontWeight: 'bold' }}>Bank Name</label>
+                                            <Field
+                                                className="form-control"
+                                                placeholder="Please enter your Bank Name"
+                                                name="bankname"
+                                                autocomplete="off"
+                                                required
+                                                value={values.bankname}
+                                            />
+                                            {errors.bankname && touched.bankname && (
+                                                <div className="text-left">
+                                                    <span style={{ color: 'blue' }}>{errors.bankname}</span>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                )}
-                            </div>
-                        </div>
 
-                        <div className="col-2.5 ">
-                            <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                                <label style={{ fontWeight: 'bold' }}>Mobile</label>
-                                <Field
-                                    className="form-control"
-                                    placeholder="Please enter mobile"
-                                    name="mobile"
-                                    autocomplete="off"
-                                    required
-                                    value={values.mobile}
-                                />
-                                {errors.mobile && touched.mobile && (
-                                    <div className="text-left">
-                                        <span style={{ color: 'blue' }}>{errors.mobile}</span>
+                                    <div className="col-2.5 ">
+                                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
+                                            <label style={{ fontWeight: 'bold' }}>Account Number</label>
+                                            <Field
+                                                className="form-control"
+                                                placeholder="Please enter Account Number"
+                                                name="accountnumber"
+                                                autocomplete="off"
+                                                required
+                                                value={values.accountnumber}
+                                            />
+                                            {errors.accountnumber && touched.accountnumber && (
+                                                <div className="text-left">
+                                                    <span style={{ color: 'blue' }}>{errors.accountnumber}</span>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                )}
-                            </div>
-                        </div>
-                       
-                        <button type="delete" className="btn btn-danger" style={{maxWidth: "1.5cm", maxHeight: "1cm" , marginTop:"1.2cm"}}>
-                            <i class="fa fa-times" aria-hidden="true"/>
-                        </button>
-                       
-                        </div>
-                        ))}
 
-                        <div style={{textAlign: "center"}}>
-                          <button type="add contact" className="btn btn-success" onClick={() => addContactFormFields()}>
-                            Add Contact
-                          </button>
-                        </div>
-
-                        < br/>
-        {addBankDetailsValues.map((element,index) => (
-                        <div className="row" style={{marginLeft: '4px'}}>
-                        <div className="col-2.5 ">
-                            <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                                <label style={{ fontWeight: 'bold'}}>Bank Name</label>
-                                <Field
-                                    className="form-control"
-                                    placeholder="Please enter your Bank Name"
-                                    name="bankname"
-                                    autocomplete="off"
-                                    required
-                                    value={values.bankname}
-                                />
-                                {errors.bankname && touched.bankname && (
-                                    <div className="text-left">
-                                        <span style={{ color: 'blue' }}>{errors.bankname}</span>
+                                    <div className="col-2.5 ">
+                                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
+                                            <label style={{ fontWeight: 'bold' }}>Beneficiary Name</label>
+                                            <Field
+                                                className="form-control"
+                                                placeholder="Please enter Beneficiary Name"
+                                                name="beneficiaryName"
+                                                autocomplete="off"
+                                                required
+                                                value={values.beneficiaryName}
+                                            />
+                                            {errors.beneficiaryName && touched.beneficiaryName && (
+                                                <div className="text-left">
+                                                    <span style={{ color: 'blue' }}>{errors.beneficiaryName}</span>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                )}
-                            </div>
-                        </div>
 
-                        <div className="col-2.5 ">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                            <label style={{ fontWeight: 'bold' }}>Account Number</label>
-                            <Field
-                                className="form-control"
-                                placeholder="Please enter Account Number"
-                                name="accountnumber"
-                                autocomplete="off"
-                                required
-                                value={values.accountnumber}
-                            />
-                            {errors.accountnumber && touched.accountnumber && (
-                                <div className="text-left">
-                                    <span style={{ color: 'blue' }}>{errors.accountnumber}</span>
+                                    <div className="col-2.5 ">
+                                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
+                                            <label style={{ fontWeight: 'bold' }}>IFSC Code</label>
+                                            <Field
+                                                className="form-control"
+                                                placeholder="Please enter IFSC Code"
+                                                name="IFSCCode"
+                                                autocomplete="off"
+                                                required
+                                                value={values.IFSCCode}
+                                            />
+                                            {errors.IFSCCode && touched.IFSCCode && (
+                                                <div className="text-left">
+                                                    <span style={{ color: 'blue' }}>{errors.IFSCCode}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <button type="delete" className="btn btn-danger" style={{ maxWidth: "1.5cm", maxHeight: "1cm", marginTop: "1.2cm" }} onClick={() => removeBankDetailsFormFields()}>
+                                        <FaTimes />
+                                    </button>
+
                                 </div>
-                            )}
-                        </div>
-                    </div>
-
-                    <div className="col-2.5 ">
-                    <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                        <label style={{ fontWeight: 'bold' }}>Beneficiary Name</label>
-                        <Field
-                            className="form-control"
-                            placeholder="Please enter Beneficiary Name"
-                            name="beneficiaryName"
-                            autocomplete="off"
-                            required
-                            value={values.beneficiaryName}
-                        />
-                        {errors.beneficiaryName && touched.beneficiaryName && (
-                            <div className="text-left">
-                                <span style={{ color: 'blue' }}>{errors.beneficiaryName}</span>
+                            ))}
+                            <div style={{ textAlign: "center" }}>
+                                <button type="add bank details" className="btn btn-success" onClick={() => addBankDetailsFormFields()}>
+                                    Add Bank Details
+                                </button>
                             </div>
-                        )}
-                    </div>
-                </div>
-
-                <div className="col-2.5 ">
-                    <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                        <label style={{ fontWeight: 'bold' }}>IFSC Code</label>
-                        <Field
-                            className="form-control"
-                            placeholder="Please enter IFSC Code"
-                            name="IFSCCode"
-                            autocomplete="off"
-                            required
-                            value={values.IFSCCode}
-                        />
-                        {errors.IFSCCode && touched.IFSCCode && (
-                            <div className="text-left">
-                                <span style={{ color: 'blue' }}>{errors.IFSCCode}</span>
+                            <br />
+                            <div style={{marginLeft: '12px'}}>
+                            <button type="submit" className="btn btn-success" >
+                               Submit
+                            </button>
                             </div>
-                        )}
-                    </div>
-                </div>
-
-                <button type="delete" className="btn btn-danger" style={{maxWidth: "1.5cm", maxHeight: "1cm" , marginTop:"1.2cm"}}>
-                            <i class="fa fa-times" aria-hidden="true"/>
-                </button>
-
-                </div>
-                ))}
-                <div style={{textAlign: "center"}}>
-                <button type="add bank details" className="btn btn-success" onClick={() => addBankDetailsFormFields()}>
-                  Add Bank Details
-                </button>
-              </div>
-
-           
-              <button type="submit" className="btn btn-success">
-                                Submit
-              </button>
 
                         </Form>
                     )}
