@@ -11,6 +11,8 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 // import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   FaRegEdit,
@@ -32,6 +34,7 @@ import {
   getComparator,
   stableSort,
 } from '../../../components/Pagination';
+import VendorTable from './VendorTable';
 export const constData = [
   {
     id: 1,
@@ -135,6 +138,8 @@ export const constData = [
   },
 ];
 export default function EnhancedTable() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -148,6 +153,8 @@ export default function EnhancedTable() {
   // const [donorList, setDonorList] = React.useState([]);
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
+  const [printDonorTable, setPrintDonorTable] = React.useState(false);
+
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -163,6 +170,29 @@ export default function EnhancedTable() {
   const ViewModalClose = () => {
     setViewModal(false);
   };
+  const onPrintClick = () => {
+    console.log(printDonorTable)
+    setPrintDonorTable(true);
+    setTimeout(() => {
+      setPrintDonorValue(false);
+    }, 1000);
+  }
+
+  const setPrintDonorValue = (value) => {
+    if(printDonorTable) {
+      setPrintDonorValue(value);
+    }
+    // window.print();
+  }
+
+  const onCopyClick = () => {
+    var urlField = document.getElementById('tableDiv')   
+    var range = document.createRange()
+    range.selectNode(urlField)
+    window.getSelection().addRange(range) 
+    document.execCommand('copy')
+  }
+
   const fundModaOpen = data => {
     setFundModalData(data.id);
     setFundModal(true);
@@ -176,6 +206,13 @@ export default function EnhancedTable() {
   };
   const deleteModalClose = () => {
     setDeleteModal(false);
+  };
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    console.log('ttttttttt', anchorEl);
+    setAnchorEl(null);
   };
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -250,12 +287,38 @@ export default function EnhancedTable() {
             justifyContent: 'space-between',
           }}
         >
-          <button
+         <button
             style={{ alignSelf: 'flex-start' }}
             className="btn btn-primary"
+            onClick={e => handleClick(e)}
           >
             Export
           </button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            style={{ top: '30px', left: '-8px' }}
+          >
+            <MenuItem>
+              <button className="export-btn w-100" onClick={() => onCopyClick()}>Copy</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100">CSV</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100">Excel</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100">PDF</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100" onClick={()=> onPrintClick()}>Print</button>
+            </MenuItem>
+            {/* <MenuItem></MenuItem> */}
+          </Menu>
           <input placeholder="Search" onChange={e => handleChange(e)} />
         </div>
         <Paper sx={{ width: '100%', mb: 2 }}>
@@ -346,6 +409,15 @@ export default function EnhancedTable() {
             <Loader />
           )}
         </Paper>
+        <VendorTable
+          printDonorTable={printDonorTable}
+          tableData={stableSort(donorList, getComparator(order, orderBy))
+            .slice(
+              page * rowsPerPage,
+              page * rowsPerPage + rowsPerPage,
+            )}
+            setPrintDonorValue={setPrintDonorValue}
+        ></VendorTable>
       </div>
     </>
   );
