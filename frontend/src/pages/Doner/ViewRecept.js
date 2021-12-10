@@ -14,7 +14,7 @@ import { visuallyHidden } from '@mui/utils';
 import { Button } from 'react-bootstrap';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import "./viewreciept.css"
+import './viewreciept.css';
 
 import {
   FaRegEdit,
@@ -46,11 +46,12 @@ import {
   stableSort,
 } from '../../components/Pagination';
 import { color } from '@mui/system';
+import DonarTable from './DonorTable';
 export default function ViewRecept() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const [order, setOrder] = React.useState('asc');
-  const[id,setId]=React.useState("");
+  const [id, setId] = React.useState('');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
@@ -64,12 +65,12 @@ export default function ViewRecept() {
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [modal, setModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
-  const [type, setType] = React.useState("");
+  const [type, setType] = React.useState('');
+  const [printDonorTable, setPrintDonorTable] = React.useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
 
-  
   React.useEffect(() => {
     async function onMount() {
       await dispatch(getViewReceiptDonorAction());
@@ -78,33 +79,28 @@ export default function ViewRecept() {
   }, []);
 
   let ViewReceipt = useSelector(state => state.donor.ViewReceipt);
-  console.log("ViewReceipt",ViewReceipt);
+  console.log('ViewReceipt', ViewReceipt);
 
-  const handleModal = (type,row) => {
-    if(type=="edit reciept"){
-      getDonorbyId(row.id)
-
+  const handleModal = (type, row) => {
+    if (type == 'edit reciept') {
+      getDonorbyId(row.id);
     }
-    console.log("sada",row);
-    setId(row)
-    setType(type)
+    console.log('sada', row);
+    setId(row);
+    setType(type);
     setModal(!modal);
   };
 
-
-  const handleClick = (event) => {
+  const handleClick = event => {
     setAnchorEl(event.currentTarget);
-    
   };
   const handleClose = () => {
-    console.log("ttttttttt",anchorEl)
+    console.log('ttttttttt', anchorEl);
     setAnchorEl(null);
   };
   // const handleClick = (event) => {
   //   setAnchorEl(event.currentTarget);
   // };
-
-
 
   const ViewModalOpen = data => {
     setViewData(data);
@@ -164,23 +160,44 @@ export default function ViewRecept() {
       dispatch(getViewReceiptDonorAction());
     }
   };
-  const getDonorbyId=async(id)=>{
-    let getViewUrl=`http://newoneinr.nimapinfotech.com/api/userReceipts/${id}`
-    await axios.get(getViewUrl).then((response)=>{
-      dispatch(getReceiptDatabyId(response.data.data))
-      console.log("response.data",response.data)
+  const getDonorbyId = async id => {
+    let getViewUrl = `http://newoneinr.nimapinfotech.com/api/userReceipts/${id}`;
+    await axios
+      .get(getViewUrl)
+      .then(response => {
+        dispatch(getReceiptDatabyId(response.data.data));
+        console.log('response.data', response.data);
 
-      // setResData(response.data)
+        // setResData(response.data)
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
+  };
 
-    }).catch((err)=>{
-      console.log("err",err)
-    })
+  const onPrintClick = () => {
+    console.log(printDonorTable)
+    setPrintDonorTable(true);
+    setTimeout(() => {
+      setPrintDonorValue(false);
+    }, 1000);
   }
 
-  
+  const setPrintDonorValue = (value) => {
+    if(printDonorTable) {
+      setPrintDonorValue(value);
+    }
+    // window.print();
+  }
 
-  
-    
+  const onCopyClick = () => {
+    var urlField = document.getElementById('tableDiv')   
+    var range = document.createRange()
+    range.selectNode(urlField)
+    window.getSelection().addRange(range) 
+    document.execCommand('copy')
+  }
+
   // SEARCH functionality END
 
   return (
@@ -200,7 +217,9 @@ export default function ViewRecept() {
         <a className="navbar-brand"> DONOR RECEIPT LIST</a>
         <form className="form-inline">
           <div className="modalClass">
-            <Button onClick={()=>handleModal("create receipt")}>Create Receipt</Button>
+            <Button onClick={() => handleModal('create receipt')}>
+              Create Receipt
+            </Button>
           </div>
         </form>
       </nav>
@@ -220,48 +239,47 @@ export default function ViewRecept() {
           <button
             style={{ alignSelf: 'flex-start' }}
             className="btn btn-primary"
-            onClick={(e)=>handleClick(e)}>
-          
+            onClick={e => handleClick(e)}
+          >
             Export
-         
           </button>
-          <Menu 
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                    style={{top: "30px", left:"-8px"}}
-                  >
-                    <MenuItem >
-                    <button className="export-btn w-100">Copy</button>
-                   
-                    </MenuItem>
-                    <MenuItem >
-                    <button className="export-btn w-100">CSV</button>
-                   
-                    </MenuItem>
-                    <MenuItem >
-                    <button className="export-btn w-100">Excel</button>
-                   
-                    </MenuItem>
-                    <MenuItem >
-                    <button className="export-btn w-100">PDF</button>
-                   
-                    </MenuItem>
-                    <MenuItem >
-                    <button className="export-btn w-100">Print</button>
-                   
-                    </MenuItem>
-                    {/* <MenuItem></MenuItem> */}
-                  </Menu>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            style={{ top: '30px', left: '-8px' }}
+          >
+            <MenuItem>
+              <button className="export-btn w-100" onClick={() => onCopyClick()}>Copy</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100">CSV</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100">Excel</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100">PDF</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100" onClick={()=> onPrintClick()}>Print</button>
+            </MenuItem>
+            {/* <MenuItem></MenuItem> */}
+          </Menu>
           <input placeholder="Search" onChange={e => handleChange(e)} />
         </div>
-        <CreateReceiptForm modal={modal} type= {type} id ={id} handleModal={handleModal} />
-        <Paper sx={{ width: '100%', mb: 2 }}>
+        <CreateReceiptForm
+          modal={modal}
+          type={type}
+          id={id}
+          handleModal={handleModal}
+        />
+        <Paper sx={{ width: '100%', mb: 2 }} >
           {ViewReceipt && ViewReceipt.length > 0 ? (
             <React.Fragment>
-              <TableContainer>
+              <TableContainer id="tableDiv">
                 <Table
                   sx={{ minWidth: 750 }}
                   aria-labelledby="tableTitle"
@@ -273,22 +291,8 @@ export default function ViewRecept() {
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
                     rowCount={ViewReceipt.length}
-                    headCell={tableHeader}
+                    headCells={tableHeader}
                   />
-                   {/* <thead>
-                    <tr>
-                      <th>Sr No</th>
-                      <th>Donor Name</th>
-                      <th>Receipt No</th>
-                      <th>Project Name</th>
-                      <th>NGO Name</th>
-                      <th>Mail status</th>
-                      <th>Receipt</th>
-                      <th>Created At</th>
-                      <th>Action</th>
-
-                    </tr>
-            </thead> */}
                   <TableBody>
                     {stableSort(ViewReceipt, getComparator(order, orderBy))
                       .slice(
@@ -355,7 +359,7 @@ export default function ViewRecept() {
                               {row.mailSend ? row.mailSend : 'Mail not send'}
                             </TableCell>
                             <TableCell
-                            className="view-pdf"
+                              className="view-pdf"
                               id={labelId}
                               align="center"
                               scope="row"
@@ -385,7 +389,11 @@ export default function ViewRecept() {
                                 className="btn"
                                 // onClick={() => history.push('/edit_doner', row)}
                               >
-                                <FaRegEdit onClick={()=>handleModal("edit reciept",row)} />
+                                <FaRegEdit
+                                  onClick={() =>
+                                    handleModal('edit reciept', row)
+                                  }
+                                />
                               </button>
                             </TableCell>
                           </TableRow>
@@ -410,6 +418,15 @@ export default function ViewRecept() {
             <Loader />
           )}
         </Paper>
+        <DonarTable
+          printDonorTable={printDonorTable}
+          tableData={stableSort(ViewReceipt, getComparator(order, orderBy))
+            .slice(
+              page * rowsPerPage,
+              page * rowsPerPage + rowsPerPage,
+            )}
+            setPrintDonorValue={setPrintDonorValue}
+        ></DonarTable>
       </div>
     </>
   );

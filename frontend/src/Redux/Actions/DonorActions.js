@@ -140,7 +140,7 @@ export const getViewReceiptDonorAction = () => {
 export const SearchReceiptByValueAction = value => {
   return dispatch => {
     DonorServices.SearchReceiptByValue(value).then(res => {
-      dispatch(getViewReceiptList(res.data.data));
+      dispatch(getViewReceiptList(res.data.data.rows));
     });
   };
 };
