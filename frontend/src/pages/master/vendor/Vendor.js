@@ -152,12 +152,14 @@ export default function EnhancedTable() {
   const [CsvUrl, setCsvUrl] = React.useState('');
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
+  const [XlsUrl, setXlsUrl] = React.useState('');
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getAllVEndorAction(''));
     exportPdf();
     exportCsv();
+    exportXls();
   }, []);
 
   let donorList = useSelector(state => state.master.vendorList);
@@ -237,6 +239,13 @@ export default function EnhancedTable() {
       setCsvUrl(downloadUrl);
     }
   };
+  const exportXls = async () => {
+    const resCsv = await axios.get(Local + '/vendor/get-vendor-excel');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setXlsUrl(downloadUrl);
+    }
+  };
   // test
   const downloadPdf = () => {
     fetch(pdfUrl)
@@ -260,6 +269,20 @@ export default function EnhancedTable() {
           let a = document.createElement('a');
           a.href = url;
           a.download = 'Vendor.csv';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  const downloadXls = () => {
+    fetch(XlsUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Vendor.xlsx';
           a.click();
         });
         //window.location.href = response.url;
@@ -316,7 +339,7 @@ export default function EnhancedTable() {
             <a onClick={downloadPdf} className="dropdown-item">
               PDF{' '}
             </a>
-            <a className="dropdown-item" target="_blank" download>
+            <a className="dropdown-item" onClick={downloadXls}>
               Excel
             </a>
           </DropdownButton>
