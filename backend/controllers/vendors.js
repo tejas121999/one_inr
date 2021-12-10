@@ -3,6 +3,7 @@ const sequelize = models.Sequelize;
 const Op = sequelize.Op;
 const exportToCsv = require('../utils/exportToCsv')
 const generatePdf = require('../utils/generatePdf')
+const generateVendorExcel = require('../service/allVendorExcel')
 const path = require('path')
 const filePath = 'vendor';
 var fs = require("fs");
@@ -147,5 +148,21 @@ exports.generateVendorCsv = async (req,res) => {
         }
     }catch(err){
         console.log(err)
+    }
+}
+
+exports.getVendorExcel = async (req, res) => {
+    try {
+        const urlData = req.get('host');
+        console.log(urlData);
+        let vendorData = await models.vendors.findAll();
+        if (!vendorData) {
+            res.status(404).json({ message: 'Data not found' });
+        } else {
+            const partnerXlsx = await generateVendorExcel(vendorData, res)
+            res.status(200).json({ message: 'Xlsx Generated', url : 'http://' + urlData + partnerXlsx.pathToExport });
+        }
+    } catch (e) {
+        console.log(e)
     }
 }
