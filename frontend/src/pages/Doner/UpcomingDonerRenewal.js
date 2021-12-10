@@ -33,7 +33,12 @@ import ViewUpcomingdonormodal from '../../Modals/Donor/ViewUpcomingDonorModal';
 import UpcomingDonorAddfund from '../../Modals/Donor/UpcomingDonorAddFund';
 import UpcomingDonordelete from '../../Modals/Donor/UpcomingDOnorDelete';
 import { constData } from '../../utils/colors';
+import UpcomingDonorRenewalTable from './UpcomingDonorRenewalTable copy';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 export default function EnhancedTable() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -46,6 +51,8 @@ export default function EnhancedTable() {
   const [fundModalData, setFundModalData] = React.useState(0);
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
+  const [printDonorTable, setPrintDonorTable] = React.useState(false);
+
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -115,6 +122,36 @@ export default function EnhancedTable() {
       dispatch(getUpcomingDonorAction(''));
     }
   };
+  const onPrintClick = () => {
+    console.log(printDonorTable)
+    setPrintDonorTable(true);
+    setTimeout(() => {
+      setPrintDonorValue(false);
+    }, 1000);
+  }
+
+  const setPrintDonorValue = (value) => {
+    if(printDonorTable) {
+      setPrintDonorValue(value);
+    }
+    // window.print();
+  }
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    console.log('ttttttttt', anchorEl);
+    setAnchorEl(null);
+  };
+
+  const onCopyClick = () => {
+    var urlField = document.getElementById('tableDiv')   
+    var range = document.createRange()
+    range.selectNode(urlField)
+    window.getSelection().addRange(range) 
+    document.execCommand('copy')
+  }
+
 
   // END
   return (
@@ -164,9 +201,35 @@ export default function EnhancedTable() {
           <button
             style={{ alignSelf: 'flex-start' }}
             className="btn btn-primary"
+            onClick={e => handleClick(e)}
           >
             Export
           </button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            style={{ top: '30px', left: '-8px' }}
+          >
+            <MenuItem>
+              <button className="export-btn w-100" onClick={() => onCopyClick()}>Copy</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100"  >CSV</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100">Excel</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100" >PDF</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100" onClick={()=> onPrintClick()}>Print</button>
+            </MenuItem> 
+            {/* <MenuItem></MenuItem> */}
+          </Menu>
           <input
             placeholder="Search"
             onChange={e => handleChange(e)}
@@ -176,7 +239,7 @@ export default function EnhancedTable() {
         <Paper sx={{ width: '100%', mb: 2 }}>
           {UpcomingdonorList && UpcomingdonorList.length > 0 ? (
             <React.Fragment>
-              <TableContainer>
+              <TableContainer id="tableDiv">
                 <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
                   <EnhancedTableHead
                     numSelected={selected.length}
@@ -291,6 +354,15 @@ export default function EnhancedTable() {
             <Loader />
           )}
         </Paper>
+        <UpcomingDonorRenewalTable
+          printDonorTable={printDonorTable}
+          tableData={stableSort(UpcomingdonorList, getComparator(order, orderBy))
+            .slice(
+              page * rowsPerPage,
+              page * rowsPerPage + rowsPerPage,
+            )}
+            setPrintDonorValue={setPrintDonorValue}
+        ></UpcomingDonorRenewalTable>
       </div>
     </>
   );

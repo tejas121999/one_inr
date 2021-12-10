@@ -394,7 +394,7 @@ export default function EnhancedTable() {
         <Paper sx={{ width: '100%', mb: 2 }}>
           {donorList && donorList.length > 0 ? (
             <React.Fragment>
-              <TableContainer>
+              <TableContainer id="tableDiv">
                 <Table
                   sx={{ minWidth: 750 }}
                   aria-labelledby="tableTitle"

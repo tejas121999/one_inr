@@ -46,7 +46,9 @@ import {
   stableSort,
 } from '../../components/Pagination';
 import { color } from '@mui/system';
-import DonarTable from './DonorTable';
+// import DonarTable from './ViewReceiptTable';
+// import ViewReceiptTable from './ViewReceiptTable';
+import DonorTable from './DonorTable';
 export default function ViewRecept() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -194,7 +196,9 @@ export default function ViewRecept() {
     var urlField = document.getElementById('tableDiv')   
     var range = document.createRange()
     range.selectNode(urlField)
-    window.getSelection().addRange(range) 
+    window.getSelection().addRange(range)
+    // sel.removeAllRanges();
+    
     document.execCommand('copy')
   }
 
@@ -418,7 +422,7 @@ export default function ViewRecept() {
             <Loader />
           )}
         </Paper>
-        <DonarTable
+        <DonorTable
           printDonorTable={printDonorTable}
           tableData={stableSort(ViewReceipt, getComparator(order, orderBy))
             .slice(
@@ -426,7 +430,7 @@ export default function ViewRecept() {
               page * rowsPerPage + rowsPerPage,
             )}
             setPrintDonorValue={setPrintDonorValue}
-        ></DonarTable>
+        ></DonorTable>
       </div>
     </>
   );
