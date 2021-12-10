@@ -371,7 +371,7 @@ export default function EnhancedTable() {
             </MenuItem> 
             {/* <MenuItem></MenuItem> */}
           </Menu>
-          <input placeholder="Search" onChange={e => handleChange(e)} />
+          {/* <input placeholder="Search" onChange={e => handleChange(e)} /> */}
           {/* </button>  */}
           {/* <DropdownButton variant="primary" title="Export">
             <a className="dropdown-item" onClick={downloadCsv}>
