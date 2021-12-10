@@ -45,17 +45,19 @@ export default function EnhancedTable() {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [pdfUrl, setPdfUrl] = React.useState('');
-  const [viewData, setViewData] = React.useState('');
+  const [CsvUrl, setCsvUrl] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
   const [fundModalData, setFundModalData] = React.useState(0);
-  // const [donorList, setDonorList] = React.useState([]);
+  const [XlsUrl, setXlsUrl] = React.useState('');
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getAllPartnerAction(''));
-    exportPartner();
+    exportPdf();
+    exportCsv();
+    exportXls();
   }, []);
 
   let partnerList = useSelector(state => state.master.partnerList);
@@ -142,17 +144,31 @@ export default function EnhancedTable() {
     },
   ];
   // END
-  let downloadUrl = '';
-  const exportPartner = async () => {
+
+  const exportPdf = async () => {
     const res = await axios.get(BASE_URL + 'partner/get-partnerPdf');
 
     if (res.data.url) {
-      downloadUrl = BASE_URL + res.data.url.slice(9);
+      const downloadUrl = res.data.url;
       setPdfUrl(downloadUrl);
     }
   };
+  const exportCsv = async () => {
+    const resCsv = await axios.get(BASE_URL + 'partner/get-partner-csv');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setCsvUrl(downloadUrl);
+    }
+  };
+  const exportXls = async () => {
+    const resCsv = await axios.get(BASE_URL + 'partner/get-partner-excel');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setXlsUrl(downloadUrl);
+    }
+  };
   // test
-  const downloadEmployeeData = () => {
+  const downloadPdf = () => {
     fetch(pdfUrl)
       .then(response => {
         response.blob().then(blob => {
@@ -160,6 +176,35 @@ export default function EnhancedTable() {
           let a = document.createElement('a');
           a.href = url;
           a.download = 'Partner.pdf';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+
+  const downloadCsv = () => {
+    fetch(CsvUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Partner.csv';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  const downloadXls = () => {
+    fetch(XlsUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Partner.xlsx';
           a.click();
         });
         //window.location.href = response.url;
@@ -213,19 +258,14 @@ export default function EnhancedTable() {
             </button> */}
 
             <DropdownButton variant="primary" title="Export">
-              <a
-                className="dropdown-item"
-                href={pdfUrl}
-                target="_self"
-                download
-              >
+              <a className="dropdown-item" onClick={downloadCsv}>
                 CSV
               </a>
 
-              <a onClick={downloadEmployeeData} className="dropdown-item">
+              <a onClick={downloadPdf} className="dropdown-item">
                 PDF{' '}
               </a>
-              <a className="dropdown-item" target="_blank" download>
+              <a className="dropdown-item" onClick={downloadXls}>
                 Excel
               </a>
             </DropdownButton>
