@@ -13,6 +13,7 @@ import {
   Get_Donor_By_Id,
   Get_Donor_By_Id_FAIL,
   GET_PARENT_LIST,
+  GET_RECEIPT_DATA,
   GET_UPCOMING_DONORS,
   REGISTER_USER,
   REGISTER_USER_FAIL,
@@ -37,10 +38,16 @@ export const getAllParentDonorAction = data => {
     DonorServices.getAllParentDonor()
       .then(res => {
         dispatch(getAllParentDonorList(res.data.data));
+        console.log("res.data.data",res.data.data);
+
+
       })
       .catch(error => {});
+
   };
 };
+
+
 
 export const getAllParentDonorList = data => {
   return {
@@ -131,7 +138,7 @@ export const getViewReceiptDonorAction = () => {
 export const SearchReceiptByValueAction = value => {
   return dispatch => {
     DonorServices.SearchReceiptByValue(value).then(res => {
-      dispatch(getViewReceiptList(res.data.data));
+      dispatch(getViewReceiptList(res.data.data.rows));
     });
   };
 };
@@ -168,7 +175,22 @@ export const addDonorFundAction = (id, body) => {
     //need to add toster here
   }
 };
+export const getReceiptbyId = () => {
+  return (dispatch) => {
+      // console.log("menuGroupCode",menuGroupCode);
 
+    
+        dispatch(getReceiptDatabyId())
+
+      
+  }
+}
+export const getReceiptDatabyId = (data) => {
+  return {
+    type: GET_RECEIPT_DATA,
+    payload: data,
+  }
+}
 export const addDonor_fund = data => {
   return {
     type: ADD_DONOR_FUND,

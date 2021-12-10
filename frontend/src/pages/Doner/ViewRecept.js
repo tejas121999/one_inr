@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -12,6 +12,9 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
 import { Button } from 'react-bootstrap';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import './viewreciept.css';
 
 import {
   FaRegEdit,
@@ -31,6 +34,8 @@ import Donordelete from '../../Modals/Donor/DonorDelete';
 import CreateReceiptForm from '../../components/CreateReceiptForm';
 import Loader from '../Loader';
 import {
+  getAllParentDonorAction,
+  getReceiptDatabyId,
   getViewReceiptDonorAction,
   SearchReceiptByValueAction,
 } from '../../Redux/Actions/DonorActions';
@@ -40,8 +45,15 @@ import {
   getComparator,
   stableSort,
 } from '../../components/Pagination';
-export default function EnhancedTable() {
+import { color } from '@mui/system';
+// import DonarTable from './ViewReceiptTable';
+// import ViewReceiptTable from './ViewReceiptTable';
+import DonorTable from './DonorTable';
+export default function ViewRecept() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const [order, setOrder] = React.useState('asc');
+  const [id, setId] = React.useState('');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
@@ -55,8 +67,12 @@ export default function EnhancedTable() {
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [modal, setModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
+  const [type, setType] = React.useState('');
+  const [printDonorTable, setPrintDonorTable] = React.useState(false);
+
   const dispatch = useDispatch();
   const history = useHistory();
+
   React.useEffect(() => {
     async function onMount() {
       await dispatch(getViewReceiptDonorAction());
@@ -65,10 +81,28 @@ export default function EnhancedTable() {
   }, []);
 
   let ViewReceipt = useSelector(state => state.donor.ViewReceipt);
+  console.log('ViewReceipt', ViewReceipt);
 
-  const handleModal = () => {
+  const handleModal = (type, row) => {
+    if (type == 'edit reciept') {
+      getDonorbyId(row.id);
+    }
+    console.log('sada', row);
+    setId(row);
+    setType(type);
     setModal(!modal);
   };
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    console.log('ttttttttt', anchorEl);
+    setAnchorEl(null);
+  };
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
   const ViewModalOpen = data => {
     setViewData(data);
@@ -128,6 +162,45 @@ export default function EnhancedTable() {
       dispatch(getViewReceiptDonorAction());
     }
   };
+  const getDonorbyId = async id => {
+    let getViewUrl = `http://newoneinr.nimapinfotech.com/api/userReceipts/${id}`;
+    await axios
+      .get(getViewUrl)
+      .then(response => {
+        dispatch(getReceiptDatabyId(response.data.data));
+        console.log('response.data', response.data);
+
+        // setResData(response.data)
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
+  };
+
+  const onPrintClick = () => {
+    console.log(printDonorTable)
+    setPrintDonorTable(true);
+    setTimeout(() => {
+      setPrintDonorValue(false);
+    }, 1000);
+  }
+
+  const setPrintDonorValue = (value) => {
+    if(printDonorTable) {
+      setPrintDonorValue(value);
+    }
+    // window.print();
+  }
+
+  const onCopyClick = () => {
+    var urlField = document.getElementById('tableDiv')   
+    var range = document.createRange()
+    range.selectNode(urlField)
+    window.getSelection().addRange(range)
+    // sel.removeAllRanges();
+    
+    document.execCommand('copy')
+  }
 
   // SEARCH functionality END
 
@@ -148,7 +221,9 @@ export default function EnhancedTable() {
         <a className="navbar-brand"> DONOR RECEIPT LIST</a>
         <form className="form-inline">
           <div className="modalClass">
-            <Button onClick={handleModal}>Create Receipt</Button>
+            <Button onClick={() => handleModal('create receipt')}>
+              Create Receipt
+            </Button>
           </div>
         </form>
       </nav>
@@ -168,16 +243,47 @@ export default function EnhancedTable() {
           <button
             style={{ alignSelf: 'flex-start' }}
             className="btn btn-primary"
+            onClick={e => handleClick(e)}
           >
             Export
           </button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            style={{ top: '30px', left: '-8px' }}
+          >
+            <MenuItem>
+              <button className="export-btn w-100" onClick={() => onCopyClick()}>Copy</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100">CSV</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100">Excel</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100">PDF</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100" onClick={()=> onPrintClick()}>Print</button>
+            </MenuItem>
+            {/* <MenuItem></MenuItem> */}
+          </Menu>
           <input placeholder="Search" onChange={e => handleChange(e)} />
         </div>
-        <CreateReceiptForm modal={modal} handleModal={handleModal} />
-        <Paper sx={{ width: '100%', mb: 2, height: '60vh' }}>
+        <CreateReceiptForm
+          modal={modal}
+          type={type}
+          id={id}
+          handleModal={handleModal}
+        />
+        <Paper sx={{ width: '100%', mb: 2 }} >
           {ViewReceipt && ViewReceipt.length > 0 ? (
             <React.Fragment>
-              <TableContainer>
+              <TableContainer id="tableDiv">
                 <Table
                   sx={{ minWidth: 750 }}
                   aria-labelledby="tableTitle"
@@ -189,7 +295,7 @@ export default function EnhancedTable() {
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
                     rowCount={ViewReceipt.length}
-                    headCell={headCells}
+                    headCells={tableHeader}
                   />
                   <TableBody>
                     {stableSort(ViewReceipt, getComparator(order, orderBy))
@@ -257,10 +363,12 @@ export default function EnhancedTable() {
                               {row.mailSend ? row.mailSend : 'Mail not send'}
                             </TableCell>
                             <TableCell
+                              className="view-pdf"
                               id={labelId}
                               align="center"
                               scope="row"
                               padding="none"
+                              // style={color="lightblue"}
                             >
                               {row.recieptPdf ? 'view' : '-'}
                             </TableCell>
@@ -283,9 +391,13 @@ export default function EnhancedTable() {
                                 data-bs-toggle="tooltip"
                                 title="Edit"
                                 className="btn"
-                                onClick={() => history.push('/edit_doner', row)}
+                                // onClick={() => history.push('/edit_doner', row)}
                               >
-                                <FaRegEdit />
+                                <FaRegEdit
+                                  onClick={() =>
+                                    handleModal('edit reciept', row)
+                                  }
+                                />
                               </button>
                             </TableCell>
                           </TableRow>
@@ -297,51 +409,89 @@ export default function EnhancedTable() {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={recept.length}
+                count={ViewReceipt.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
+                showLastButton={true}
+                showFirstButton={true}
               />
             </React.Fragment>
           ) : (
             <Loader />
           )}
         </Paper>
+        <DonorTable
+          printDonorTable={printDonorTable}
+          tableData={stableSort(ViewReceipt, getComparator(order, orderBy))
+            .slice(
+              page * rowsPerPage,
+              page * rowsPerPage + rowsPerPage,
+            )}
+            setPrintDonorValue={setPrintDonorValue}
+        ></DonorTable>
       </div>
     </>
   );
 }
 
-const headCells = [
+const tableHeader = [
   {
-    id: 'name',
+    id: '1',
     numeric: false,
     disablePadding: false,
-    label: 'Name',
+    label: 'Sr No',
   },
   {
-    id: 'donated',
+    id: '2',
     numeric: true,
     disablePadding: false,
-    label: 'Donated',
+    label: 'Donor Name',
   },
   {
-    id: 'balance',
+    id: '3',
     numeric: true,
     disablePadding: false,
-    label: 'Balance',
+    label: 'Receipt No',
   },
   {
-    id: 'projects',
+    id: '4',
     numeric: true,
     disablePadding: false,
-    label: 'Projects',
+    label: 'Project Name',
   },
   {
-    id: 'action',
+    id: '5',
+    numeric: true,
+    disablePadding: false,
+    label: 'NGO Name',
+  },
+  {
+    id: '6',
+    numeric: true,
+    disablePadding: false,
+    label: 'Mail Status',
+  },
+  {
+    id: '7',
+    numeric: true,
+    disablePadding: false,
+    label: 'Receipt',
+  },
+  {
+    id: '8',
+    numeric: true,
+    disablePadding: false,
+    label: 'Created At',
+  },
+  {
+    id: '9',
     numeric: true,
     disablePadding: false,
     label: 'Action',
   },
 ];
+
+
+

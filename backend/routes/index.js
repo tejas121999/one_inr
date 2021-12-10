@@ -9,6 +9,7 @@ const userReceipts = require('./usersReceipts')//importing User Reciepts
 const ngo = require('./ngo')//importing ngo module
 const partner = require('./partner')
 const csvUpload = require('./csvFileUploads')
+const checkAuth = require('../middleware/checkAuth')
 
 
 

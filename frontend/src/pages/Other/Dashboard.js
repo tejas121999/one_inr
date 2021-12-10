@@ -118,7 +118,37 @@ const Dashboard = () => {
 
         <div className="container">
           <div className="row">
+          <div className="col">
+              {' '}
+              <div className="datCard">
+                <p
+                  style={{
+                    textAlign: 'left',
+
+                    marginTop: '20px',
+                    width: '80%',
+                    padding: '20px',
+                  }}
+                >
+                  Upcoming Donor Renewal
+                </p>
+
+                <p
+                  style={{
+                    textAlign: 'center',
+                    marginTop: '25px',
+                    padding: '20px',
+                  }}
+                >
+                  169
+                </p>
+              </div>
+            </div>
+          <div className="col">
+              {' '}</div>
             <div className="col">
+              {' '}</div>
+            {/* <div className="col">
               {' '}
               <div className="datCard">
                 <p
@@ -169,33 +199,8 @@ const Dashboard = () => {
                   169
                 </p>
               </div>
-            </div>
-            <div className="col">
-              {' '}
-              <div className="datCard">
-                <p
-                  style={{
-                    textAlign: 'left',
-
-                    marginTop: '20px',
-                    width: '80%',
-                    padding: '20px',
-                  }}
-                >
-                  Upcoming Donor Renewal
-                </p>
-
-                <p
-                  style={{
-                    textAlign: 'center',
-                    marginTop: '25px',
-                    padding: '20px',
-                  }}
-                >
-                  169
-                </p>
-              </div>
-            </div>
+            </div> */}
+         
           </div>
         </div>
       </div>

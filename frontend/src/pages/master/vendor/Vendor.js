@@ -11,6 +11,8 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 // import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   FaRegEdit,
@@ -32,6 +34,7 @@ import {
   getComparator,
   stableSort,
 } from '../../../components/Pagination';
+import VendorTable from './VendorTable';
 import axios from 'axios';
 import { BASE_URL, Local } from '../../../API/APIEndpoints';
 import { DropdownButton } from 'react-bootstrap';
@@ -138,6 +141,8 @@ export const constData = [
   },
 ];
 export default function EnhancedTable() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -153,6 +158,8 @@ export default function EnhancedTable() {
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
   const [XlsUrl, setXlsUrl] = React.useState('');
+  const [printDonorTable, setPrintDonorTable] = React.useState(false);
+
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -171,6 +178,29 @@ export default function EnhancedTable() {
   const ViewModalClose = () => {
     setViewModal(false);
   };
+  const onPrintClick = () => {
+    console.log(printDonorTable);
+    setPrintDonorTable(true);
+    setTimeout(() => {
+      setPrintDonorValue(false);
+    }, 1000);
+  };
+
+  const setPrintDonorValue = value => {
+    if (printDonorTable) {
+      setPrintDonorValue(value);
+    }
+    // window.print();
+  };
+
+  const onCopyClick = () => {
+    var urlField = document.getElementById('tableDiv');
+    var range = document.createRange();
+    range.selectNode(urlField);
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+  };
+
   const fundModaOpen = data => {
     setFundModalData(data.id);
     setFundModal(true);
@@ -184,6 +214,13 @@ export default function EnhancedTable() {
   };
   const deleteModalClose = () => {
     setDeleteModal(false);
+  };
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    console.log('ttttttttt', anchorEl);
+    setAnchorEl(null);
   };
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -325,13 +362,55 @@ export default function EnhancedTable() {
             justifyContent: 'space-between',
           }}
         >
-          {/* <button
+          <button
             style={{ alignSelf: 'flex-start' }}
             className="btn btn-primary"
+            onClick={e => handleClick(e)}
           >
             Export
-          </button> */}
-          <DropdownButton variant="primary" title="Export">
+          </button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            style={{ top: '30px', left: '-8px' }}
+          >
+            <MenuItem>
+              <button
+                className="export-btn w-100"
+                onClick={() => onCopyClick()}
+              >
+                Copy
+              </button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100" onClick={downloadCsv}>
+                CSV
+              </button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100">Excel</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100" onClick={downloadPdf}>
+                PDF
+              </button>
+            </MenuItem>
+            <MenuItem>
+              <button
+                className="export-btn w-100"
+                onClick={() => onPrintClick()}
+              >
+                Print
+              </button>
+            </MenuItem>
+            {/* <MenuItem></MenuItem> */}
+          </Menu>
+          {/* <input placeholder="Search" onChange={e => handleChange(e)} /> */}
+          {/* </button>  */}
+          {/* <DropdownButton variant="primary" title="Export">
             <a className="dropdown-item" onClick={downloadCsv}>
               CSV
             </a>
@@ -342,7 +421,7 @@ export default function EnhancedTable() {
             <a className="dropdown-item" onClick={downloadXls}>
               Excel
             </a>
-          </DropdownButton>
+          </DropdownButton> */}
           <input
             placeholder="Search"
             onChange={e => handleChange(e)}
@@ -352,7 +431,7 @@ export default function EnhancedTable() {
         <Paper sx={{ width: '100%', mb: 2 }}>
           {donorList && donorList.length > 0 ? (
             <React.Fragment>
-              <TableContainer>
+              <TableContainer id="tableDiv">
                 <Table
                   sx={{ minWidth: 750 }}
                   aria-labelledby="tableTitle"
@@ -437,6 +516,14 @@ export default function EnhancedTable() {
             <Loader />
           )}
         </Paper>
+        <VendorTable
+          printDonorTable={printDonorTable}
+          tableData={stableSort(donorList, getComparator(order, orderBy)).slice(
+            page * rowsPerPage,
+            page * rowsPerPage + rowsPerPage,
+          )}
+          setPrintDonorValue={setPrintDonorValue}
+        ></VendorTable>
       </div>
     </>
   );
