@@ -343,6 +343,7 @@ exports.generateDonorPdf = async (req,res) => {
         } else {
             const pdfData = await generatePdf.pdfGenerator(donorData,filePath, html)
             res.status(200).json({ message: 'Donor Pdf Generated', url : 'http://' + urlData + pdfData.path });
+            res.download(pdfData.path)
         }
     } catch (err) {
         console.log(err);
