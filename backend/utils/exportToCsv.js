@@ -12,8 +12,8 @@ let exportsToCsv = async(Data,filePath,req,res)=>{
     // }        
     //const userData = await models.partners.findAll();
     //console.log(userData)
-    const fileName = `public/${filePath}${Date.now()}.csv`
-    const downloadPath = `/uploads/${filePath}-${Date.now()}.csv`
+    const fileName = `public/uploads/${filePath}${Date.now()}.csv`
+    const downloadPath = `/uploads/${filePath}${Date.now()}.csv`
     const ws = fs.createWriteStream(fileName)
     const userDataValues = Data.map(ele => { return ele.dataValues });
     fastCsv

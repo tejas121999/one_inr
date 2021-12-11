@@ -129,6 +129,7 @@ exports.generateVendorPdf = async (req,res) => {
         } else {
             const pdfData = await generatePdf.pdfGenerator(vendorData,filePath, html)
             res.status(200).json({ message: 'Pdf Generated', url : `http://` + urlData + pdfData.path });
+            res.download(pdfData.path)
         }
     } catch (err) {
         console.log(err);
@@ -142,8 +143,8 @@ exports.generateVendorCsv = async (req,res) => {
         if(!vendorData){
             res.status(404).json({message:'Data not found'})
         }else{
-            console.log(vendorData)
-            const csvData = await exportToCsv.exportsToCsv(vendorData,"",res)
+            //console.log(vendorData)
+            const csvData = await exportToCsv.exportsToCsv(vendorData,filePath,"",res)
             res.status(200).json({message:'Exported Data into CSV', url : `http://` + urlData + csvData.downloadPath })
         }
     }catch(err){
