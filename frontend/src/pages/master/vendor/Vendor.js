@@ -391,7 +391,9 @@ export default function EnhancedTable() {
               </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100">Excel</button>
+              <button className="export-btn w-100" onClick={downloadXls}>
+                Excel
+              </button>
             </MenuItem>
             <MenuItem>
               <button className="export-btn w-100" onClick={downloadPdf}>
