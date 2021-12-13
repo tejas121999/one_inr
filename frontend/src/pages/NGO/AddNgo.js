@@ -1,19 +1,23 @@
 import React, { useState } from 'react'
-import { Field, Form, Formik } from 'formik';
+import {ErrorMessage, Field, Form, Formik } from 'formik';
+import TextError from '../error/TextError';
 import * as yup from 'yup';
 import { element } from 'prop-types';
 import axios from 'axios';
 import { BASE_URL } from '../../API/APIEndpoints';
 import { FaTimes } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { createNGOAction } from '../../Redux/Actions/NgoActions';
 
 
-const AddNgo = () => {
-
+const AddNgo = (props) => {
+    
+    const dispatch = useDispatch();
     const [logoImgUrl, setLogoImgUrl] = useState('');
     const [panCardImgUrl, setPanCardImgUrl] = useState('');
     const [certificateImgUrl, setCertificateImgUrl] = useState('');
     const [charityCertificateImgUrl, setCharityCertificateImgUrl] = useState('');
-    const [deadImgUrl, setDeadImgUrl] = useState('');
+    const [deedImgUrl, setDeedImgUrl] = useState('');
 
 
     const [addContactValues, setAddContactValues] = useState([{ name: "", designation: "", email: "", mobileNumber: "" }])
@@ -62,15 +66,15 @@ const AddNgo = () => {
             .string()
             .required('required')
             .min(10, 'Please enter 10 digits'),
-        landline: yup.string().required('required').min(10, 'please enter 10 digits'),
+        landlineNumber: yup.string().required('required').min(10, 'please enter 10 digits'),
         password: yup.string().required('Required').min(7, 'Should be 7 character'),
-        panNumber: yup.string().required('required').min(12, 'please enter 12 digits'),
+        panNumber: yup.string().required('required').matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
     });
 
     
-  const onlogoImageAdd = async imagData => {
+  const onlogoImageAdd = async imgData => {
     const data = new FormData();
-    data.append('avatar', imagData);
+    data.append('avatar', imgData);
     const result = await axios.post(
       BASE_URL + 'fileupload?reason=ngo_logo',
       data,
@@ -83,8 +87,8 @@ const AddNgo = () => {
   console.log('logoImage', logoImgUrl);
 
 
-  
-  const onpanCardImageAdd = async imgData => {
+
+  const onPanCardImageAdd = async imgData => {
     const data = new FormData();
     data.append('avatar', imgData);
     const result = await axios.post(
@@ -99,7 +103,7 @@ const AddNgo = () => {
   console.log('panCardImage', panCardImgUrl);
 
 
-  const oncertificateImageAdd = async imgData => {
+  const onCertificateImageAdd = async imgData => {
     const data = new FormData();
     data.append('avatar', imgData);
     const result = await axios.post(
@@ -130,7 +134,7 @@ const AddNgo = () => {
   console.log('charityCertificateImage', charityCertificateImgUrl);
 
   
-  const ondeadImageAdd = async imgData => {
+  const onDeedImageAdd = async imgData => {
     const data = new FormData();
     data.append('avatar', imgData);
     const result = await axios.post(
@@ -139,10 +143,30 @@ const AddNgo = () => {
     );
     console.log('data', result.data.url);
     if (result && result.data && result.data.url) {
-      setDeadImgUrl(result.data.url);
+      setDeedImgUrl(result.data.url);
     }
   };
-  console.log('deadImage', deadImgUrl);
+  console.log('deadImage', deedImgUrl);
+
+  const onAddNgo = values => {
+    const obj = {
+      logoname: values.logoImgUrl,  
+      ngoname: values.ngoName,
+      address: values.address,
+      emailId: values.emailId,
+      registrationDate: '',
+      registrationNumber: '',
+      mobileNumber: '',
+      landlineNumber: '',
+      password: '',
+      panCardNumber: values.panCard,
+      panCardImage: panCardImgUrl,
+      certificateImage: certificateImgUrl,
+      charityCertificateImage: charityCertificateImgUrl,
+      deedImage: deedImgUrl,
+    };
+    dispatch(createNGOAction(obj, props.history));
+  };
 
     return (
         <div>
@@ -171,10 +195,13 @@ const AddNgo = () => {
                         registrationDate: '',
                         registrationNumber: '',
                         mobileNumber: '',
-                        landline: '',
+                        landlineNumber: '',
                         password: '',
                         panNumber: '',
                     }}
+                    validationSchema={validationSchema}
+                    onSubmit={values => onAddNgo(values)}
+                       enableReinitialize={true}
                 >
                     {({ errors, values, touched }) => (
                         <Form>
@@ -191,11 +218,7 @@ const AddNgo = () => {
                                             accept=".png,.jpg,"
                                             onChange={e => onlogoImageAdd(e.target.files[0])}
                                         />
-                                        {errors.ngoName && touched.logoName && (
-                                            <div className="text-left">
-                                                <span style={{ color: 'red' }}>{errors.logoName}</span>
-                                            </div>
-                                        )}
+                                        <ErrorMessage name="logo_img" component={TextError} />
                                     </div>
                                 </div>
                             </div>
@@ -215,7 +238,7 @@ const AddNgo = () => {
                                         />
                                         {errors.ngoName && touched.ngoName && (
                                             <div className="text-left">
-                                                <span style={{ color: 'blue' }}>{errors.ngoName}</span>
+                                                <span style={{ color: 'red' }}>{errors.ngoName}</span>
                                             </div>
                                         )}
                                     </div>
@@ -228,7 +251,7 @@ const AddNgo = () => {
                                         <label style={{ fontWeight: 'bold' }}>Address</label>
                                         <Field
                                             className="form-control"
-                                            placeholder="Please Enter Address"
+                                            placeholder="Please Enter ddress"
                                             name="address"
                                             type="text"
                                             required
@@ -237,7 +260,7 @@ const AddNgo = () => {
                                         />
                                         {errors.address && touched.address && (
                                             <div className="text-left">
-                                                <span style={{ color: 'blue' }}>{errors.address}</span>
+                                                <span style={{ color: 'red' }}>{errors.address}</span>
                                             </div>
                                         )}
                                     </div>
@@ -259,7 +282,7 @@ const AddNgo = () => {
                                         />
                                         {errors.emailId && touched.emailId && (
                                             <div className="text-left">
-                                                <span style={{ color: 'blue' }}>{errors.emailId}</span>
+                                                <span style={{ color: 'red' }}>{errors.emailId}</span>
                                             </div>
                                         )}
                                     </div>
@@ -278,7 +301,7 @@ const AddNgo = () => {
                                         />
                                         {errors.registrationDate && touched.registrationDate && (
                                             <div className="text-left">
-                                                <span style={{ color: 'blue' }}>
+                                                <span style={{ color: 'red' }}>
                                                     {errors.registrationDate}
                                                 </span>
                                             </div>
@@ -303,7 +326,7 @@ const AddNgo = () => {
                                         />
                                         {errors.registrationNumber && touched.registrationNumber && (
                                             <div className="text-left">
-                                                <span style={{ color: 'blue' }}>
+                                                <span style={{ color: 'red' }}>
                                                     {errors.registrationNumber}
                                                 </span>
                                             </div>
@@ -325,7 +348,7 @@ const AddNgo = () => {
                                         />
                                         {errors.mobileNumber && touched.mobileNumber && (
                                             <div className="text-left">
-                                                <span style={{ color: 'blue' }}>
+                                                <span style={{ color: 'red' }}>
                                                     {errors.mobileNumber}
                                                 </span>
                                             </div>
@@ -349,7 +372,7 @@ const AddNgo = () => {
                                         />
                                         {errors.landlineNumber && touched.landlineNumber && (
                                             <div className="text-left">
-                                                <span style={{ color: 'blue' }}>
+                                                <span style={{ color: 'red' }}>
                                                     {errors.landlineNumber}
                                                 </span>
                                             </div>
@@ -370,7 +393,7 @@ const AddNgo = () => {
                                         />
                                         {errors.password && touched.password && (
                                             <div className="text-left">
-                                                <span style={{ color: 'blue' }}>
+                                                <span style={{ color: 'red' }}>
                                                     {errors.password}
                                                 </span>
                                             </div>
@@ -394,7 +417,7 @@ const AddNgo = () => {
                                         />
                                         {errors.panNumber && touched.panNumber && (
                                             <div className="text-left">
-                                                <span style={{ color: 'blue' }}>
+                                                <span style={{ color: 'red' }}>
                                                     {errors.panNumber}
                                                 </span>
                                             </div>
@@ -414,13 +437,9 @@ const AddNgo = () => {
                                             name="pancard_img"
                                             accept=".png,.jpg,"
                                             value={values.Pancard}
-                                            onChange={e => onpanCardImageAdd(e.target.files[0])}
+                                            onChange={e => onPanCardImageAdd(e.target.files[0])}
                                         />
-                                        {errors.pancard && touched.pancard && (
-                                            <div className="text-left">
-                                                <span style={{ color: 'blue' }}>{errors.Pancard}</span>
-                                            </div>
-                                        )}
+                                        <ErrorMessage name="pancard_img" component={TextError} />
                                     </div>
                                 </div>
 
@@ -434,13 +453,9 @@ const AddNgo = () => {
                                             name="certificate_img"
                                             accept=".png,.jpg,"
                                             values={values.Certificate}   
-                                            onChange={e => oncertificateImageAdd(e.target.files[0])}  
+                                            onChange={e => onCertificateImageAdd(e.target.files[0])}  
                                         />
-                                        {errors.certificate && touched.certificate && (
-                                            <div className="text-left">
-                                                <span style={{ color: 'blue' }}>{errors.Certificate}</span>
-                                            </div>
-                                        )}
+                                        <ErrorMessage name="certificate_img" component={TextError} />
                                     </div>
                                 </div>
 
@@ -456,31 +471,23 @@ const AddNgo = () => {
                                             value={values.CharitynCertificate}
                                             onChange={e => onCharityCertificateImageAdd(e.target.files[0])}
                                         />
-                                        {errors.CharityCertificate && touched.CharityCertificate && (
-                                            <div className="text-left">
-                                                <span style={{ color: 'blue' }}>{errors.CharityCertificate}</span>
-                                            </div>
-                                        )}
+                                        <ErrorMessage name="charityCertificate_img" component={TextError} />
                                     </div>
                                 </div>
 
                                 <div className="col-3 ">
                                     <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                                        <label style={{ fontWeight: 'bold', height: "3em" }}>Dead</label>
+                                        <label style={{ fontWeight: 'bold', height: "3em" }}>Deed</label>
                                         <input
                                             type="file"
                                             className="form-control-file"
-                                            placeholder="Please Enter dead Name"
-                                            name="dead_img"
+                                            placeholder="Please Enter deed Name"
+                                            name="deed_img"
                                             accept=".pnj,.jpg,"
-                                            value={values.Dead}
-                                            onChange={e => ondeadImageAdd(e.target.files[0])}
+                                            value={values.Deed}
+                                            onChange={e => onDeedImageAdd(e.target.files[0])}
                                         />
-                                        {errors.Dead && touched.Dead && (
-                                            <div className="text-left">
-                                                <span style={{ color: 'blue' }}>{errors.Dead}</span>
-                                            </div>
-                                        )}
+                                        <ErrorMessage name="deed_img" component={TextError} />
                                     </div>
                                 </div>
                             </div>
@@ -502,7 +509,7 @@ const AddNgo = () => {
                                             />
                                             {errors.name && touched.name && (
                                                 <div className="text-left">
-                                                    <span style={{ color: 'blue' }}>{errors.name}</span>
+                                                    <span style={{ color: 'blue' }}>{errors.Name}</span>
                                                 </div>
                                             )}
                                         </div>
@@ -517,11 +524,11 @@ const AddNgo = () => {
                                                 name="designation"
                                                 autocomplete="off"
                                                 required
-                                                value={values.designation}
+                                                value={values.Designation}
                                             />
                                             {errors.designation && touched.designation && (
                                                 <div className="text-left">
-                                                    <span style={{ color: 'blue' }}>{errors.designation}</span>
+                                                    <span style={{ color: 'blue' }}>{errors.Designation}</span>
                                                 </div>
                                             )}
                                         </div>
@@ -540,7 +547,7 @@ const AddNgo = () => {
                                             />
                                             {errors.email && touched.email && (
                                                 <div className="text-left">
-                                                    <span style={{ color: 'blue' }}>{errors.email}</span>
+                                                    <span style={{ color: 'blue' }}>{errors.Email}</span>
                                                 </div>
                                             )}
                                         </div>
@@ -555,11 +562,11 @@ const AddNgo = () => {
                                                 name="mobile"
                                                 autocomplete="off"
                                                 required
-                                                value={values.mobile}
+                                                value={values.Mobile}
                                             />
                                             {errors.mobile && touched.mobile && (
                                                 <div className="text-left">
-                                                    <span style={{ color: 'blue' }}>{errors.mobile}</span>
+                                                    <span style={{ color: 'blue' }}>{errors.Mobile}</span>
                                                 </div>
                                             )}
                                         </div>
@@ -587,14 +594,14 @@ const AddNgo = () => {
                                             <Field
                                                 className="form-control"
                                                 placeholder="Please enter your Bank Name"
-                                                name="bankname"
+                                                name="bankName"
                                                 autocomplete="off"
                                                 required
-                                                value={values.bankname}
+                                                value={values.BankName}
                                             />
-                                            {errors.bankname && touched.bankname && (
+                                            {errors.BankName && touched.BankName && (
                                                 <div className="text-left">
-                                                    <span style={{ color: 'blue' }}>{errors.bankname}</span>
+                                                    <span style={{ color: 'blue' }}>{errors.BankName}</span>
                                                 </div>
                                             )}
                                         </div>
@@ -606,14 +613,14 @@ const AddNgo = () => {
                                             <Field
                                                 className="form-control"
                                                 placeholder="Please enter Account Number"
-                                                name="accountnumber"
+                                                name="accountNumber"
                                                 autocomplete="off"
                                                 required
-                                                value={values.accountnumber}
+                                                value={values.AccountNumber}
                                             />
                                             {errors.accountnumber && touched.accountnumber && (
                                                 <div className="text-left">
-                                                    <span style={{ color: 'blue' }}>{errors.accountnumber}</span>
+                                                    <span style={{ color: 'blue' }}>{errors.AccountNumber}</span>
                                                 </div>
                                             )}
                                         </div>
@@ -628,11 +635,11 @@ const AddNgo = () => {
                                                 name="beneficiaryName"
                                                 autocomplete="off"
                                                 required
-                                                value={values.beneficiaryName}
+                                                value={values.BeneficiaryName}
                                             />
-                                            {errors.beneficiaryName && touched.beneficiaryName && (
+                                            {errors.BeneficiaryName && touched.BeneficiaryName && (
                                                 <div className="text-left">
-                                                    <span style={{ color: 'blue' }}>{errors.beneficiaryName}</span>
+                                                    <span style={{ color: 'blue' }}>{errors.BeneficiaryName}</span>
                                                 </div>
                                             )}
                                         </div>
