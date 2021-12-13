@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 
 const Campaigns = () => {
   const [navLink, setNavLink] = useState(1);
+  const [plan, setPlan] = useState("select");
 
   const {
     register,
@@ -18,9 +19,13 @@ const Campaigns = () => {
   const handleMoneyAdd = (data) => {
     setNavLink(data);
   };
+  const handleSelectPlan = (type) => {
+    setPlan(type);
+    // setType(type);
+  };
 
   console.log(navLink);
-  const plan = watch("plan");
+  //   const plan = watch("plan");
 
   return (
     <div className="site-main">
@@ -74,7 +79,9 @@ const Campaigns = () => {
                                 type="radio"
                                 id="inlineRadio1"
                                 value="select"
+                                defaultChecked
                                 className="form-check-input"
+                                onClick={() => handleSelectPlan("select")}
                                 {...register("plan", {
                                   required: "Plan type is required",
                                 })}
@@ -96,6 +103,7 @@ const Campaigns = () => {
                                 id="custom"
                                 value="custom"
                                 className="form-check-input"
+                                onClick={() => handleSelectPlan("custom")}
                                 {...register("plan", {
                                   required: "Plan type is required",
                                 })}

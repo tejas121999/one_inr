@@ -7,7 +7,7 @@ import "./Layout.css";
 const navbarItem = [
   {
     to: "/",
-    name: "home",
+    name: "Home",
     exact: true,
   },
   {
