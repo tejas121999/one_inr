@@ -17,7 +17,7 @@ export const getAllVEndorAction = value => {
           console.log('Vendors', res);
         })
         .catch(err => {
-          dispatch(GetAllVendors(value));
+          // dispatch(GetAllVendors(value));
           //need to add toster here
         });
     };
