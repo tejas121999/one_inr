@@ -14,6 +14,9 @@ import { BASE_URL, Local } from '../../../API/APIEndpoints';
 import axios from 'axios';
 import Loader from '../../Loader';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const EditPartner = props => {
   const dispatch = useDispatch();
   const [imgView, setImgView] = useState(false);
@@ -89,6 +92,7 @@ const EditPartner = props => {
         <br />
         <br />
         <br />
+        <ToastContainer hideProgressBar />
         <Modal size="sm" centered show={imgView}>
           <Modal.Body>
             <img

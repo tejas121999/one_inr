@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import {
   AddUserReceipt,
   AddUserReceipt_FAIL,
@@ -21,9 +22,6 @@ import {
   UpdateUserReceipt_FAIL,
   Update_Donor_By_Id,
   Update_Donor_By_Id_FAIL,
-  UPDATE_VENDOR_BY_ID,
-  Update_Vendor_By_Id,
-  UPDATE_VENDOR_BY_ID_FAIL,
   VIEW_DONER_BY_ID,
   VIEW_DONER_BY_ID_FAIL,
   VIEW_RECEIPT,
@@ -58,8 +56,15 @@ export const addDonorAction = (body, history) => {
     return dispatch => {
       DonorServices.AddNewDonor(body)
         .then(res => {
-          dispatch(addDonor(res));
-          history.push('/view_all_doner');
+          console.log('Created', res);
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+          setTimeout(function () {
+            history.push('/view_all_doner');
+          }, 2000);
+
           //need to add toster here
         })
         .catch(err => {
@@ -158,6 +163,11 @@ export const addDonorFundAction = (id, body) => {
     return dispatch => {
       DonorServices.AddDonorfund(id, body)
         .then(res => {
+          console.log('Funded', res.data);
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
           dispatch(addDonor_fund(res));
           dispatch(getViewAllDonorAction());
           //need to add toster here
@@ -353,8 +363,15 @@ export const UpdateDonorByIdAction = (id, data) => {
       DonorServices.UpdateDonorById(id, data)
         .then(res => {
           dispatch(UpdateDonorByIdData(res));
+          console.log('Updated', res.data);
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+          setTimeout(function () {
+            window.history.back();
+          }, 2000);
           //need to add toster here
-          window.history.back();
         })
         .catch(err => {
           window.history.back();
@@ -420,8 +437,10 @@ export const DeleteDonorByIdAction = id => {
     return dispatch => {
       DonorServices.DeleteDonorById(id)
         .then(res => {
-          // dispatch(DeleteDonorByIdData(res));
-          alert('DELETED');
+          toast.success('Donor Deleted', {
+            position: 'top-center',
+            autoClose: 3000,
+          });
           dispatch(getViewAllDonorAction());
           //need to add toster here
         })
@@ -476,6 +495,10 @@ export const addUpcomingDonorFundAction = (id, body) => {
     return dispatch => {
       DonorServices.UpcomingDonorfund(id, body)
         .then(res => {
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
           dispatch(getUpcomingDonorAction(''));
           //need to add toster here
         })
@@ -496,8 +519,12 @@ export const DeleteUpcomingDonorByIdAction = id => {
       DonorServices.DeleteUpcomingDonorById(id)
         .then(res => {
           // dispatch(DeleteDonorByIdData(res));
-          alert('DELETED');
-          dispatch(getUpcomingDonorAction());
+
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+          dispatch(getUpcomingDonorAction(''));
           //need to add toster here
         })
         .catch(err => {

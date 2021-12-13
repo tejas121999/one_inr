@@ -33,6 +33,7 @@
     "react-simple-maps": "^0.12.1",
     "react-sizeme": "^2.5.2",
     "react-toast": "^1.0.3",
+    "react-toastify": "^8.1.0",
     "reactstrap": "^7.1.0",
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",

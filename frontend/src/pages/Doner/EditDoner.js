@@ -9,6 +9,8 @@ import {
   UpdateDonorByIdAction,
 } from '../../Redux/Actions/DonorActions';
 import { useHistory } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Editdonor = props => {
   const [donarData, setDonarData] = useState([]);
   const [parentId, setParentId] = useState('');
@@ -71,6 +73,7 @@ const Editdonor = props => {
       <br />
       <br />
       <br />
+      <ToastContainer hideProgressBar />
 
       <nav className="navbar navbar-light">
         <a className="navbar-brand">Edit Donor</a>

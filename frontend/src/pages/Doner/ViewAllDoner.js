@@ -46,6 +46,8 @@ import { DropdownButton } from 'react-bootstrap';
 import ViewAllDonorTable from './ViewAllDonorTable';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function EnhancedTable() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -248,6 +250,8 @@ export default function EnhancedTable() {
         onHide={ViewModalClose}
         data={viewData}
       />
+
+      <ToastContainer hideProgressBar />
       <Addfund show={fundModal} onHide={fundModaClose} data={fundModalData} />
       <Donordelete show={deleteModal} onHide={deleteModalClose} id={deleteId} />
       <nav className="navbar navbar-light">

@@ -4,13 +4,11 @@ import { ErrorMessage, Form, Formik, Field } from 'formik';
 import TextError from '../../error/TextError';
 import './vendor.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  CreateVendorAction,
-  panImgAdd,
-  gstImgAdd,
-} from '../../../Redux/Actions/MasterActions';
+import { CreateVendorAction } from '../../../Redux/Actions/MasterActions';
 import { BASE_URL } from '../../../API/APIEndpoints';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddVendor = props => {
   const dispatch = useDispatch();
@@ -21,7 +19,7 @@ const AddVendor = props => {
     lName: yup.string().required('Required'),
     company: yup.string().required('required'),
     email: yup.string().email('Invalide Email Format').required('Required'),
-    mobile: yup.string().required('required').min(10, 'Please enter 10 digits'),
+    mobile: yup.number().required('required').min(10, 'Please enter 10 digits'),
     gst: yup
       .string()
       .matches(
@@ -37,8 +35,13 @@ const AddVendor = props => {
       BASE_URL + 'fileupload?reason=vendor_pan',
       data,
     );
+    console.log('Pan Response', result.data.message);
 
     if (result && result.data && result.data.pathtoUpload) {
+      toast.success(result.data.message, {
+        position: 'top-center',
+        autoClose: 2000,
+      });
       setPanImgUrl(result.data.pathtoUpload);
     }
   };
@@ -50,8 +53,13 @@ const AddVendor = props => {
       BASE_URL + 'fileupload?reason=vendor_gst',
       data,
     );
+    console.log('gst Response', result);
 
     if (result && result.data && result.data.pathtoUpload) {
+      toast.success(result.data.message, {
+        position: 'top-center',
+        autoClose: 2000,
+      });
       setGstImgUrl(result.data.pathtoUpload);
     }
   };
@@ -75,7 +83,7 @@ const AddVendor = props => {
       <br />
       <br />
       <br />
-
+      <ToastContainer hideProgressBar />
       <div className="card">
         <p
           style={{

@@ -8,6 +8,9 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { BASE_URL } from '../../../API/APIEndpoints';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const AddPartner = props => {
   const dispatch = useDispatch();
   const [panImgUrl, setPanImgUrl] = useState('');
@@ -71,6 +74,7 @@ const AddPartner = props => {
       <br />
       <br />
       <br />
+      <ToastContainer hideProgressBar />
 
       <div className="card">
         <p

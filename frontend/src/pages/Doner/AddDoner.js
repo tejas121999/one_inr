@@ -12,6 +12,9 @@ import { connect } from 'react-redux';
 
 import { BASE_URL } from '../../API/APIEndpoints';
 
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 class Adddonor extends Component {
   constructor(props) {
     super(props);
@@ -22,6 +25,7 @@ class Adddonor extends Component {
       isCsv: false,
       csvUrl: '',
       isForm: false,
+      csvId: 0,
       isPasswordVisble: false,
     };
   }
@@ -57,14 +61,23 @@ class Adddonor extends Component {
     const parentId = parentsList.filter(data => data.name == values.parent);
     let id = parentId && parentId.length ? parentId[0].id : 0;
 
-    if ((this.state.isCsv && values.fName) || values.lName || values.mobile) {
-      alert('Cant upload both');
+    if (this.state.isCsv && (values.fName || values.lName || values.mobile)) {
+      console.log(
+        'panni',
+        this.state.isCsv && (values.fName || values.lName || values.mobile),
+      );
+      toast.error("Can't Upload both CSV and Form", {
+        position: 'top-center',
+        autoClose: 2000,
+      });
     } else {
       let obj = {};
       if (this.state.isCsv) {
         alert('File');
         obj = {
-          url: this.state.csvUrl,
+          path: this.state.csvUrl,
+          fileExtension: 'csv',
+          fileId: this.state.csvId,
         };
         axios.post(BASE_URL + 'donor/bulkDonor-upload', obj);
       } else {
@@ -79,7 +92,7 @@ class Adddonor extends Component {
       }
       console.log('Aded', obj);
 
-      // this.props.addDonorAction(obj, this.props.history);
+      this.props.addDonorAction(obj, this.props.history);
     }
   };
 
@@ -102,7 +115,11 @@ class Adddonor extends Component {
     console.log('Chinmay', result.data.uploadFile);
 
     if (result && result.data.uploadFile) {
-      this.setState({ isCsv: true, csvUrl: result.data.uploadFile.url });
+      this.setState({
+        isCsv: true,
+        csvUrl: result.data.uploadFile.url,
+        csvId: result.data.uploadFile.id,
+      });
     }
   };
 
@@ -154,10 +171,10 @@ class Adddonor extends Component {
     if (!this.state.isCsv) {
       if (!value) {
         error = 'Required';
-      } else if (!new RegExp(/^([a-z0-9])$/).test(value)) {
+      } else if (!new RegExp(/^([0-9]{10})$/).test(value)) {
         error = 'Invalid Format';
-      } else if (value.length > 50) {
-        error = 'Max limit is 50 characters';
+      } else if (value.length > 10) {
+        error = 'Max limit is 10 Digits';
       }
     }
 
@@ -194,6 +211,7 @@ class Adddonor extends Component {
         <br />
         <br />
         <br />
+        <ToastContainer hideProgressBar />
         <div className="card">
           <p
             style={{

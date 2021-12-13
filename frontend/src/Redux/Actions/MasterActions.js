@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import {
   GET_ALL_PARTNERS,
   GET_ALL_VENDORS,
@@ -14,7 +15,6 @@ export const getAllVEndorAction = value => {
         .then(res => {
           //need to add toster here
           dispatch(GetAllVendors(res.data.data));
-          console.log('Vendors', res);
         })
         .catch(err => {
           // dispatch(GetAllVendors(value));
@@ -36,12 +36,19 @@ export const GetAllVendors = data => {
 //   Create
 export const CreateVendorAction = (body, history) => {
   if (navigator.onLine) {
-    return dispatch => {
+    return async dispatch => {
       MasterServices.CreateVendor(body)
         .then(res => {
-          history.push('/Vendor');
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+          setTimeout(function () {
+            history.push('/Vendor');
+          }, 2000);
         })
         .catch(err => {
+          console.log('Vendor add', err);
           //need to add toster here
         });
     };
@@ -53,9 +60,7 @@ export const CreateVendorAction = (body, history) => {
 export const panImgAdd = body => {
   return dispatch => {
     MasterServices.addPanImage(body)
-      .then(res => {
-        console.log('res', res);
-      })
+      .then(res => {})
       .catch(err => {});
   };
 };
@@ -91,7 +96,13 @@ export const updateVendorById = (id, data, history) => {
   return dispatch => {
     MasterServices.updateVendor(id, data)
       .then(res => {
-        history.push('/Vendor');
+        toast.success(res.data.messgae, {
+          position: 'top-center',
+          autoClose: 2000,
+        });
+        setTimeout(function () {
+          history.push('/Vendor');
+        }, 2000);
       })
       .catch(err => {});
   };
@@ -102,7 +113,10 @@ export const DeleteVendorByIdAction = id => {
   return dispatch => {
     MasterServices.deleteVendor(id)
       .then(res => {
-        alert(' Vendor Deleted');
+        toast.success(res.data.message, {
+          position: 'top-center',
+          autoClose: 2000,
+        });
         dispatch(getAllVEndorAction(''));
       })
       .catch(err => {});
@@ -140,7 +154,14 @@ export const CreatePartnerAction = (body, history) => {
       MasterServices.CreatePartner(body)
         .then(res => {
           //need to add toster here
-          history.push('/Partner');
+          console.log('Created', res.data);
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+          setTimeout(function () {
+            history.push('/Partner');
+          }, 2000);
         })
         .catch(err => {
           //need to add toster here
@@ -157,8 +178,16 @@ export const UpdatePartnerAction = (body, id, history) => {
       MasterServices.UpdatePartner(body, id)
         .then(res => {
           //need to add toster here
-          history.push('/Partner');
+
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+          setTimeout(function () {
+            history.push('/Partner');
+          }, 2000);
         })
+
         .catch(err => {
           //need to add toster here
         });
@@ -171,7 +200,6 @@ export const UpdatePartnerAction = (body, id, history) => {
 export const getPartnerByID = id => {
   return dispatch => {
     MasterServices.getPartner(id).then(res => {
-      console.log('partner', res.data.data);
       dispatch(partnerById(res.data.data));
     });
   };
@@ -187,7 +215,11 @@ export const DeletePartnerByIdAction = id => {
   return dispatch => {
     MasterServices.deletePartner(id)
       .then(res => {
-        alert(' Vendor Deleted');
+        console.log(' Vendor Deleted', res.data);
+        toast.success(res.data.messgae, {
+          position: 'top-center',
+          autoClose: 2000,
+        });
         dispatch(getAllVEndorAction(''));
       })
       .catch(err => {});

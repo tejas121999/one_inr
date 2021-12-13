@@ -11,19 +11,20 @@ export const LoginAdmin = (data, history) => {
         dispatch(LoginAuthData(res.data.result));
         localStorage.setItem('Token', res.data.Token);
         dispatch(LoginAuthData(res.data));
+
         toast.success(res.data.message, {
           position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
+          autoClose: 2000,
         });
         history.push('/dashboard');
       })
       .catch(error => {
-        history.push('/dashboard');
+        console.log('LOgin', error);
+        toast.error('Wrong Credentials.', {
+          position: 'top-center',
+          autoClose: 4000,
+        });
+        // history.push('/dashboard');
       });
   };
 };

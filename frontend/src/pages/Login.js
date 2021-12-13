@@ -6,6 +6,8 @@ import './login.css';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { LoginAdmin } from '../Redux/Actions/authAction';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 let validationSchema = yup.object().shape({
   email: yup
@@ -33,73 +35,76 @@ const Login = props => {
   };
 
   return (
-    <div className="loginbg">
-      <Formik
-        initialValues={{
-          email: '',
-          password: '',
-        }}
-        validationSchema={validationSchema}
-        onSubmit={values => {
-          loginHandler(values);
-          // console.log('values', values);
-        }}
-      >
-        {({ values, errors, touched, isSubmitting }) => (
-          <Form className="login">
-            <div className="logoimgdiv text-center">
-              <img src={logo} alt="logo" title="logo" />
-            </div>
+    <>
+      <ToastContainer hideProgressBar />
+      <div className="loginbg">
+        <Formik
+          initialValues={{
+            email: '',
+            password: '',
+          }}
+          validationSchema={validationSchema}
+          onSubmit={values => {
+            loginHandler(values);
+            // console.log('values', values);
+          }}
+        >
+          {({ values, errors, touched, isSubmitting }) => (
+            <Form className="login">
+              <div className="logoimgdiv text-center">
+                <img src={logo} alt="logo" title="logo" />
+              </div>
 
-            {/* email */}
-            <div className="form-group w-75 m-auto">
-              <Field
-                name="email"
-                type="email"
-                placeholder="enter email"
-                className="form-control mt-3"
-                autoComplete="off"
-              />
-              {touched.email && errors.email ? (
-                <small className="text-danger ">{errors.email}</small>
-              ) : null}
-            </div>
+              {/* email */}
+              <div className="form-group w-75 m-auto">
+                <Field
+                  name="email"
+                  type="email"
+                  placeholder="enter email"
+                  className="form-control mt-3"
+                  autoComplete="off"
+                />
+                {touched.email && errors.email ? (
+                  <small className="text-danger ">{errors.email}</small>
+                ) : null}
+              </div>
 
-            {/* password */}
-            <div className="form-group w-75 m-auto">
-              <Field
-                name="password"
-                type={isPasswordVisble ? 'text' : 'password'}
-                placeholder="enter password"
-                className="p-2 mt-2 border-0 w-100 input-border psw-feild"
-              />
-              <i
-                className={`fa ${
-                  isPasswordVisble ? 'fa-eye-slash' : 'fa-eye'
-                } `}
-                id="togglePassword"
-                style={{ marginLeft: '-30px', cursor: 'pointer' }}
-                onMouseDown={() =>
-                  setIsPasswordVisble(isPasswordVisble ? false : true)
-                }
-              ></i>
-              {touched.password && errors.password ? (
-                <small className="text-danger ">{errors.password}</small>
-              ) : null}
-            </div>
+              {/* password */}
+              <div className="form-group w-75 m-auto">
+                <Field
+                  name="password"
+                  type={isPasswordVisble ? 'text' : 'password'}
+                  placeholder="enter password"
+                  className="p-2 mt-2 border-0 w-100 input-border psw-feild"
+                />
+                <i
+                  className={`fa ${
+                    isPasswordVisble ? 'fa-eye-slash' : 'fa-eye'
+                  } `}
+                  id="togglePassword"
+                  style={{ marginLeft: '-30px', cursor: 'pointer' }}
+                  onMouseDown={() =>
+                    setIsPasswordVisble(isPasswordVisble ? false : true)
+                  }
+                ></i>
+                {touched.password && errors.password ? (
+                  <small className="text-danger ">{errors.password}</small>
+                ) : null}
+              </div>
 
-            <div className="text-right forgotPass mt-2 pr-5">
-              <NavLink to="/forgot_password">Forgot Password ?</NavLink>
-            </div>
-            <div className="form-group w-75 m-auto">
-              <button type="submit" className="btn btn-primary w-100 mt-2">
-                Login
-              </button>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </div>
+              <div className="text-right forgotPass mt-2 pr-5">
+                <NavLink to="/forgot_password">Forgot Password ?</NavLink>
+              </div>
+              <div className="form-group w-75 m-auto">
+                <button type="submit" className="btn btn-primary w-100 mt-2">
+                  Login
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </>
   );
 };
 
