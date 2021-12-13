@@ -262,7 +262,7 @@ export default function EnhancedTable() {
   // END
 
   const exportPdf = async () => {
-    const res = await axios.get(Local + '/vendor/get-vendor-pdf');
+    const res = await axios.get(BASE_URL + 'vendor/get-vendor-pdf');
 
     if (res.data.url) {
       const downloadUrl = res.data.url;
@@ -270,14 +270,14 @@ export default function EnhancedTable() {
     }
   };
   const exportCsv = async () => {
-    const resCsv = await axios.get(Local + '/vendor/get-vendor-csv');
+    const resCsv = await axios.get(BASE_URL + 'vendor/get-vendor-csv');
     if (resCsv.data.url) {
       const downloadUrl = resCsv.data.url;
       setCsvUrl(downloadUrl);
     }
   };
   const exportXls = async () => {
-    const resCsv = await axios.get(Local + '/vendor/get-vendor-excel');
+    const resCsv = await axios.get(BASE_URL + 'vendor/get-vendor-excel');
     if (resCsv.data.url) {
       const downloadUrl = resCsv.data.url;
       setXlsUrl(downloadUrl);

@@ -3,7 +3,7 @@ import { useFormik, Formik, Field, Form, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import logo from '../assets/img/logo/logo_200.png';
 import './login.css';
-import { NavLink, useHistory } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { LoginAdmin } from '../Redux/Actions/authAction';
 
@@ -57,13 +57,15 @@ const Forgot = props => {
               ) : null}
             </div>
 
-            <div className="text-right forgotPass mt-2 pr-5">
-              <NavLink to="/forgot">Forgot Password ?</NavLink>
-            </div>
-            <div className="form-group w-75 m-auto">
+            <div className="form-group w-75 m-auto mt-3">
               <button type="submit" className="btn btn-primary w-100 mt-2">
                 Login
               </button>
+            </div>
+            <div className="form-group w-75 m-auto mt-3">
+              <Link to="/" className="btn btn-danger w-100 mt-2">
+                Back
+              </Link>
             </div>
           </Form>
         )}

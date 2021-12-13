@@ -1,5 +1,6 @@
 import { LoginAuth, LoginAuthFail } from '../constTypes';
 import DonorServices from '../Services/DonorServices';
+import { toast } from 'react-toastify';
 
 // 1.Login
 
@@ -10,6 +11,15 @@ export const LoginAdmin = (data, history) => {
         dispatch(LoginAuthData(res.data.result));
         localStorage.setItem('Token', res.data.Token);
         dispatch(LoginAuthData(res.data));
+        toast.success(res.data.message, {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+        });
         history.push('/dashboard');
       })
       .catch(error => {

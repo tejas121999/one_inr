@@ -68,19 +68,13 @@ const Editdonor = props => {
 
   return (
     <React.Fragment>
-      <div className="card">
-        <p
-          style={{
-            textAlign: 'left',
-            fontWeight: 'bold',
-            margin: '20px',
-            width: '100%',
-            marginLeft: '20px',
-          }}
-        >
-          EDIT DONOR
-        </p>
-      </div>
+      <br />
+      <br />
+      <br />
+
+      <nav className="navbar navbar-light">
+        <a className="navbar-brand">Edit Donor</a>
+      </nav>
       <div
         style={{ backgroundColor: 'white', height: '100vh', margin: '30px' }}
       >

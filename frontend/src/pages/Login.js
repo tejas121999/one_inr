@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik, Formik, Field, Form, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import logo from '../assets/img/logo/logo_200.png';
@@ -23,6 +23,7 @@ let validationSchema = yup.object().shape({
 const Login = props => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [isPasswordVisble, setIsPasswordVisble] = useState(false);
 
   const loginHandler = values => {
     console.log('values2', values);
@@ -68,17 +69,27 @@ const Login = props => {
             <div className="form-group w-75 m-auto">
               <Field
                 name="password"
-                type="password"
+                type={isPasswordVisble ? 'text' : 'password'}
                 placeholder="enter password"
-                className="form-control mt-2"
+                className="p-2 mt-2 border-0 w-100 input-border psw-feild"
               />
+              <i
+                className={`fa ${
+                  isPasswordVisble ? 'fa-eye-slash' : 'fa-eye'
+                } `}
+                id="togglePassword"
+                style={{ marginLeft: '-30px', cursor: 'pointer' }}
+                onMouseDown={() =>
+                  setIsPasswordVisble(isPasswordVisble ? false : true)
+                }
+              ></i>
               {touched.password && errors.password ? (
                 <small className="text-danger ">{errors.password}</small>
               ) : null}
             </div>
 
             <div className="text-right forgotPass mt-2 pr-5">
-              <NavLink to="/forgot">Forgot Password ?</NavLink>
+              <NavLink to="/forgot_password">Forgot Password ?</NavLink>
             </div>
             <div className="form-group w-75 m-auto">
               <button type="submit" className="btn btn-primary w-100 mt-2">

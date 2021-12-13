@@ -38,7 +38,7 @@ export const getAllParentDonorAction = data => {
     DonorServices.getAllParentDonor()
       .then(res => {
         dispatch(getAllParentDonorList(res.data.data));
-        console.log('res.data.data', res.data.data);
+        // console.log('res.data.data', res.data.data);
       })
       .catch(error => {});
   };

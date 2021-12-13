@@ -54,6 +54,7 @@ function App(props) {
     <BrowserRouter basename={getBasename()}>
       <Switch>
         <Route exact path="/" component={Login} />
+        <Route exact path="/forgot_password" component={Forgot} />
         <MainLayout breakpoint={props.breakpoint}>
           <React.Suspense fallback={<PageSpinner />}>
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
@@ -79,7 +80,7 @@ function App(props) {
               path="/upcoming_doner_renewal"
               component={UpcomingDonerRenewal}
             />
-            <PrivateRoute exact path="/forgot" component={Forgot} />
+
             {/*NGO route*/}
             <PrivateRoute exact path="/add_ngo" component={AddNgo} />
             <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />
