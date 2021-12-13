@@ -63,6 +63,7 @@ export default function EnhancedTable() {
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
   const [CsvUrl, setCsvUrl] = React.useState('');
+  const [XlsUrl, setXlsUrl] = React.useState('');
   const [printDonorTable, setPrintDonorTable] = React.useState(false);
 
   const history = useHistory();
@@ -72,6 +73,7 @@ export default function EnhancedTable() {
 
     exportPdf();
     exportCsv();
+    exportXls();
   }, []);
 
   let donorList = useSelector(state => state.donor.ViewAllDonor);
@@ -154,6 +156,13 @@ export default function EnhancedTable() {
       setCsvUrl(downloadUrl);
     }
   };
+  const exportXls = async () => {
+    const resCsv = await axios.get(Local + '/donor/donor-excel');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setXlsUrl(downloadUrl);
+    }
+  };
   // test
   const downloadEmployeeData = () => {
     fetch(pdfUrl)
@@ -183,20 +192,34 @@ export default function EnhancedTable() {
       })
       .catch(err => {});
   };
+  const downloadXls = () => {
+    fetch(XlsUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Partner.xlsx';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
   const onPrintClick = () => {
-    console.log(printDonorTable)
+    console.log(printDonorTable);
     setPrintDonorTable(true);
     setTimeout(() => {
       setPrintDonorValue(false);
     }, 1000);
-  }
+  };
 
-  const setPrintDonorValue = (value) => {
-    if(printDonorTable) {
+  const setPrintDonorValue = value => {
+    if (printDonorTable) {
       setPrintDonorValue(value);
     }
     // window.print();
-  }
+  };
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -206,12 +229,12 @@ export default function EnhancedTable() {
   };
 
   const onCopyClick = () => {
-    var urlField = document.getElementById('tableDiv')   
-    var range = document.createRange()
-    range.selectNode(urlField)
-    window.getSelection().addRange(range) 
-    document.execCommand('copy')
-  }
+    var urlField = document.getElementById('tableDiv');
+    var range = document.createRange();
+    range.selectNode(urlField);
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+  };
 
   // end
   return (
@@ -250,14 +273,14 @@ export default function EnhancedTable() {
             justifyContent: 'space-between',
           }}
         >
-            <button
+          <button
             style={{ alignSelf: 'flex-start' }}
             className="btn btn-primary"
             onClick={e => handleClick(e)}
           >
             Export
           </button>
-           <Menu
+          <Menu
             id="simple-menu"
             anchorEl={anchorEl}
             keepMounted
@@ -266,20 +289,39 @@ export default function EnhancedTable() {
             style={{ top: '30px', left: '-8px' }}
           >
             <MenuItem>
-              <button className="export-btn w-100" onClick={() => onCopyClick()}>Copy</button>
+              <button
+                className="export-btn w-100"
+                onClick={() => onCopyClick()}
+              >
+                Copy
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100" onClick={downloadCsv}>CSV</button>
+              <button className="export-btn w-100" onClick={downloadCsv}>
+                CSV
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100">Excel</button>
+              <button className="export-btn w-100" onClick={downloadXls}>
+                Excel
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100"onClick={downloadEmployeeData} >PDF</button>
+              <button
+                className="export-btn w-100"
+                onClick={downloadEmployeeData}
+              >
+                PDF
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100" onClick={()=> onPrintClick()}>Print</button>
-            </MenuItem> 
+              <button
+                className="export-btn w-100"
+                onClick={() => onPrintClick()}
+              >
+                Print
+              </button>
+            </MenuItem>
             {/* <MenuItem></MenuItem> */}
           </Menu>
 
@@ -291,7 +333,7 @@ export default function EnhancedTable() {
             <a onClick={downloadEmployeeData} className="dropdown-item">
               PDF{' '}
             </a>
-            <a className="dropdown-item" target="_blank" download>
+            <a className="dropdown-item" onClick={downloadXls}>
               Excel
             </a>
           </DropdownButton> */}
@@ -417,12 +459,11 @@ export default function EnhancedTable() {
         </Paper>
         <ViewAllDonorTable
           printDonorTable={printDonorTable}
-          tableData={stableSort(donorList, getComparator(order, orderBy))
-            .slice(
-              page * rowsPerPage,
-              page * rowsPerPage + rowsPerPage,
-            )}
-            setPrintDonorValue={setPrintDonorValue}
+          tableData={stableSort(donorList, getComparator(order, orderBy)).slice(
+            page * rowsPerPage,
+            page * rowsPerPage + rowsPerPage,
+          )}
+          setPrintDonorValue={setPrintDonorValue}
         ></ViewAllDonorTable>
       </div>
     </>
