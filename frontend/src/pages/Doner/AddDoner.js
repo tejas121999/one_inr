@@ -26,13 +26,23 @@ class Adddonor extends Component {
   };
 
   validationSchema = yup.object({
-    fName: yup.string().required('Required'),
-    lName: yup.string().required('required'),
+    fName: yup
+      .string()
+      .required('Required')
+      .max(50, 'Max limit is 50 characters'),
+    lName: yup
+      .string()
+      .required('required')
+      .max(50, 'Max limit is 50 characters'),
     phoneNumber: yup
       .string()
       .required('required')
       .min(10, 'Please enter 10 digits'),
-    emailId: yup.string().email('Invalid Email Format').required('Required'),
+    emailId: yup
+      .string()
+      .email('Invalid Email Format')
+      .required('Required')
+      .max(50, 'Max limit is 50 characters'),
     password: yup.string().required('Required').min(5, 'Should be 5 character'),
   });
   onAddDoner = async values => {

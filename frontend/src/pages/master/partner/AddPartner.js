@@ -48,9 +48,9 @@ const AddPartner = props => {
       BASE_URL + 'fileupload?reason=partner_pan',
       data,
     );
-    console.log('data1', result.data.url);
-    if (result && result.data && result.data.url) {
-      setPanImgUrl(result.data.url);
+    console.log('data1', result.data.pathtoUpload);
+    if (result && result.data && result.data.pathtoUpload) {
+      setPanImgUrl(result.data.pathtoUpload);
     }
   };
   console.log('PanImage', panImgUrl);
@@ -61,9 +61,9 @@ const AddPartner = props => {
       BASE_URL + 'fileupload?reason=partner_gst',
       data,
     );
-    console.log('data', result.data.url);
-    if (result && result.data && result.data.url) {
-      setGstImgUrl(result.data.url);
+    console.log('data', result.data.pathtoUpload);
+    if (result && result.data && result.data.pathtoUpload) {
+      setGstImgUrl(result.data.pathtoUpload);
     }
   };
   return (

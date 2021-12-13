@@ -22,12 +22,12 @@ exports.partnerValidation = [
     body('gstImage')
         .exists().withMessage('GST image is Required')
         .notEmpty().withMessage('GST image is Required'),
-    body('panImage')
-        .exists().withMessage('Pan image is Required')
-        .notEmpty().withMessage('Pan image is Required'),
-    body('companyName')
-        .exists().withMessage('Company is Required')
-        .notEmpty().withMessage('Company is Required'),
+    // body('panImage')
+    //     .exists().withMessage('Pan image is Required')
+    //     .notEmpty().withMessage('Pan image is Required'),
+    // body('companyName')
+    //     .exists().withMessage('Company is Required')
+    //     .notEmpty().withMessage('Company is Required'),
     body('Address')
         .exists().withMessage('Address is Required')
         .notEmpty().withMessage('Address is Required')

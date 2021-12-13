@@ -23,4 +23,6 @@ router.get('/get-all-users-csv',user.exportsToCsv)
 router.put('/update-partner/:id',updatePatner)
 router.delete('/delete-patner/:id',deletePartner)
 
+
+
 module.exports = router;

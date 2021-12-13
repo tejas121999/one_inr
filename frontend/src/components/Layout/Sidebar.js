@@ -51,19 +51,19 @@ const masterItems = [
 const donorItems = [
   {
     to: '/add_doner',
-    name: 'add donnor',
+    name: 'add donor',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
     to: '/view_all_doner',
-    name: `view all donnor's`,
+    name: `view all donor's`,
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
     to: '/upcoming_doner_renewal',
-    name: 'Upcomming doner renewal',
+    name: 'Upcomming donor renewal',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },

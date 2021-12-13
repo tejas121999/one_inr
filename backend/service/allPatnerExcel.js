@@ -1,6 +1,24 @@
 
 const XLSX = require('xlsx')
-function generateAllUserExcel(partnerData,res) {
+const fsPath = require('fs-path');
+// const path = require('path')
+// console.log(path.dirname(__dirname))
+// console.log(__dirname.concat("/download.csv"))
+async function generateAllUserExcel(partnerData,res) {
+
+    
+    const date = Date.now();
+    // var xls = json2xls(finalData);
+    
+    // setTimeout(async function () {
+    //     fs.readFile(path, (err, data) => {
+
+    //         if (fs.existsSync(path)) {
+    //             fs.unlinkSync(path);
+    //         }
+    //     });
+    // }, 50000);
+
     const table =`<table class='order-data'>
         <tbody>
         <tr>
@@ -35,10 +53,18 @@ function generateAllUserExcel(partnerData,res) {
         </tbody>
     </table>` 
 
+    let path = `./public/uploads/${date}partner.xlsx`
+    let pathToExport = `/uploads/${date}partner.xlsx`
+
     const wb = XLSX.read(table,{type:'string'})
     /* generate buffer */
     const buf = XLSX.write(wb, {type:'buffer', bookType:"xlsx"});
     /* send to client */
-	return res.status(200).send(buf);
+	// return res.status(200).send(buf);
+    // res.download(__dirname);
+    
+    let file = await fsPath.writeFileSync(path, buf, 'binary');
+    // res.status(200).json({ message: 'success', url : `http://` + pathToExport });
+    return {pathToExport}
 }
 module.exports = generateAllUserExcel

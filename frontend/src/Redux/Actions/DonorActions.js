@@ -38,16 +38,11 @@ export const getAllParentDonorAction = data => {
     DonorServices.getAllParentDonor()
       .then(res => {
         dispatch(getAllParentDonorList(res.data.data));
-        console.log("res.data.data",res.data.data);
-
-
+        console.log('res.data.data', res.data.data);
       })
       .catch(error => {});
-
   };
 };
-
-
 
 export const getAllParentDonorList = data => {
   return {
@@ -98,7 +93,7 @@ export const getViewAllDonorAction = data => {
       .then(res => {
         dispatch(getViewAllDonorList(res.data.data));
       })
-      .catch(error => dispatch(onViewAllDonorFail(data)));
+      .catch(error => {});
   };
 };
 
@@ -138,7 +133,7 @@ export const getViewReceiptDonorAction = () => {
 export const SearchReceiptByValueAction = value => {
   return dispatch => {
     DonorServices.SearchReceiptByValue(value).then(res => {
-      dispatch(getViewReceiptList(res.data.data));
+      dispatch(getViewReceiptList(res.data.data.rows));
     });
   };
 };
@@ -176,21 +171,18 @@ export const addDonorFundAction = (id, body) => {
   }
 };
 export const getReceiptbyId = () => {
-  return (dispatch) => {
-      // console.log("menuGroupCode",menuGroupCode);
+  return dispatch => {
+    // console.log("menuGroupCode",menuGroupCode);
 
-    
-        dispatch(getReceiptDatabyId())
-
-      
-  }
-}
-export const getReceiptDatabyId = (data) => {
+    dispatch(getReceiptDatabyId());
+  };
+};
+export const getReceiptDatabyId = data => {
   return {
     type: GET_RECEIPT_DATA,
     payload: data,
-  }
-}
+  };
+};
 export const addDonor_fund = data => {
   return {
     type: ADD_DONOR_FUND,

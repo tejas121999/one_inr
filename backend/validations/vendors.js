@@ -30,7 +30,7 @@ exports.createVendorValidation = [
                 where: { phone: value }
             }).then(phone => {
                 if (phone) {
-                    return Promise.reject("Mobile Number Already Exists")
+                    return Promise.reject("Phone number already exist")
 
                 }
             })
@@ -67,12 +67,7 @@ exports.createVendorValidation = [
     body('company')
         .exists().withMessage('Company is Required')
         .notEmpty().withMessage('Company is Required'),
-    body('panImage')
-        .exists().withMessage('Pan image is Required')
-        .notEmpty().withMessage('Pan image is Required'),
-    body('gstImage')
-        .exists().withMessage('GST image is Required')
-        .notEmpty().withMessage('GST image is Required'),
+   
 
 
 ]

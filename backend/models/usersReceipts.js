@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         receiptNumber: {
             type: DataTypes.INTEGER,
             field: 'receipt_number'
+            
         },
 
         recieptPdf: {

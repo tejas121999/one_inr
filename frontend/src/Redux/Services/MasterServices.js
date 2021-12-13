@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../../src/utils/interceptor';
 import { BASE_URL } from '../../API/APIEndpoints';
 
 function MasterServices() {

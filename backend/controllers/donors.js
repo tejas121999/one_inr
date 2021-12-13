@@ -13,6 +13,7 @@ const path = require('path')
 const filePath = 'donor'
 var fs = require("fs");
 const exportToCsv = require('../utils/exportToCsv')
+const generateDonorExcel = require('../service/allDonorExcel')
 const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'donor.html'), 'utf-8');
 
 
@@ -342,6 +343,7 @@ exports.generateDonorPdf = async (req,res) => {
         } else {
             const pdfData = await generatePdf.pdfGenerator(donorData,filePath, html)
             res.status(200).json({ message: 'Donor Pdf Generated', url : 'http://' + urlData + pdfData.path });
+            res.download(pdfData.path)
         }
     } catch (err) {
         console.log(err);
@@ -360,5 +362,21 @@ exports.exportsDonorCsv = async (req, res) => {
         }
     }catch(err){
         console.log(err)
+    }
+}
+
+exports.getDonorExcel = async (req, res) => {
+    try {
+        const urlData = req.get('host');
+        console.log(urlData);
+        let donorData = await models.users.findAll();
+        if (!donorData) {
+            res.status(404).json({ message: 'Data not found' });
+        } else {
+            const donorXlsx = await generateDonorExcel(donorData, res)
+            res.status(200).json({ message: 'Xlsx Generated', url : 'http://' + urlData + donorXlsx.pathToExport });
+        }
+    } catch (e) {
+        console.log(e)
     }
 }

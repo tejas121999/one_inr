@@ -49,17 +49,17 @@ export function EnhancedTableHead(props) {
     numSelected,
     rowCount,
     onRequestSort,
-    headCell,
+    headCells,
   } = props;
 
-  console.log('props',props);
+  console.log('props', props);
   const createSortHandler = property => event => {
     onRequestSort(event, property);
   };
   return (
     <TableHead className="table-head">
       <TableRow>
-        {headCell &&headCell.length>0?headCell.map(headCell => (
+        {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
             align="center"
@@ -79,7 +79,7 @@ export function EnhancedTableHead(props) {
               ) : null}
             </TableSortLabel>
           </TableCell>
-        )):""}
+        ))}
       </TableRow>
     </TableHead>
   );

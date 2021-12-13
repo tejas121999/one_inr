@@ -131,11 +131,14 @@ exports.deletePartner = async (req,res) => {
 
 exports.getPartnerExcel = async (req, res) => {
     try {
+        const urlData = req.get('host');
+        console.log(urlData);
         let partnerData = await models.partners.findAll();
         if (!partnerData) {
             res.status(404).json({ message: 'Data not found' });
         } else {
-            generateAllUserExcel(partnerData, res)
+            const partnerXlsx = await generateAllUserExcel(partnerData, res)
+            res.status(200).json({ message: 'Xlsx Generated', url : 'http://' + urlData + partnerXlsx.pathToExport });
         }
     } catch (e) {
         console.log(e)
@@ -162,7 +165,7 @@ exports.pdfOfPartner = async (req, res) => {
 exports.exportPartnerCsv = async (req,res) => {
     try{
         const urlData = req.get('host');
-        let Partner = await models.partners.findAll({attributes: {includes:[]}});
+        let Partner = await models.partners.findAll();
         if(!Partner){
             res.status(404).json({message:'Data not found'})
             console.log(Partner)

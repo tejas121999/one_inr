@@ -43,7 +43,12 @@ import {
   stableSort,
 } from '../../components/Pagination';
 import { DropdownButton } from 'react-bootstrap';
+import ViewAllDonorTable from './ViewAllDonorTable';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 export default function EnhancedTable() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -58,6 +63,9 @@ export default function EnhancedTable() {
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
   const [CsvUrl, setCsvUrl] = React.useState('');
+  const [XlsUrl, setXlsUrl] = React.useState('');
+  const [printDonorTable, setPrintDonorTable] = React.useState(false);
+
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -65,6 +73,7 @@ export default function EnhancedTable() {
 
     exportPdf();
     exportCsv();
+    exportXls();
   }, []);
 
   let donorList = useSelector(state => state.donor.ViewAllDonor);
@@ -147,6 +156,13 @@ export default function EnhancedTable() {
       setCsvUrl(downloadUrl);
     }
   };
+  const exportXls = async () => {
+    const resCsv = await axios.get(Local + '/donor/donor-excel');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setXlsUrl(downloadUrl);
+    }
+  };
   // test
   const downloadEmployeeData = () => {
     fetch(pdfUrl)
@@ -176,6 +192,50 @@ export default function EnhancedTable() {
       })
       .catch(err => {});
   };
+  const downloadXls = () => {
+    fetch(XlsUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Partner.xlsx';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  const onPrintClick = () => {
+    console.log(printDonorTable);
+    setPrintDonorTable(true);
+    setTimeout(() => {
+      setPrintDonorValue(false);
+    }, 1000);
+  };
+
+  const setPrintDonorValue = value => {
+    if (printDonorTable) {
+      setPrintDonorValue(value);
+    }
+    // window.print();
+  };
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    console.log('ttttttttt', anchorEl);
+    setAnchorEl(null);
+  };
+
+  const onCopyClick = () => {
+    var urlField = document.getElementById('tableDiv');
+    var range = document.createRange();
+    range.selectNode(urlField);
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+  };
+
   // end
   return (
     <>
@@ -213,7 +273,59 @@ export default function EnhancedTable() {
             justifyContent: 'space-between',
           }}
         >
-          <DropdownButton variant="primary" title="Export">
+          <button
+            style={{ alignSelf: 'flex-start' }}
+            className="btn btn-primary"
+            onClick={e => handleClick(e)}
+          >
+            Export
+          </button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            style={{ top: '30px', left: '-8px' }}
+          >
+            <MenuItem>
+              <button
+                className="export-btn w-100"
+                onClick={() => onCopyClick()}
+              >
+                Copy
+              </button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100" onClick={downloadCsv}>
+                CSV
+              </button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100" onClick={downloadXls}>
+                Excel
+              </button>
+            </MenuItem>
+            <MenuItem>
+              <button
+                className="export-btn w-100"
+                onClick={downloadEmployeeData}
+              >
+                PDF
+              </button>
+            </MenuItem>
+            <MenuItem>
+              <button
+                className="export-btn w-100"
+                onClick={() => onPrintClick()}
+              >
+                Print
+              </button>
+            </MenuItem>
+            {/* <MenuItem></MenuItem> */}
+          </Menu>
+
+          {/* <DropdownButton variant="primary" title="Export">
             <a className="dropdown-item" onClick={downloadCsv}>
               CSV
             </a>
@@ -221,10 +333,10 @@ export default function EnhancedTable() {
             <a onClick={downloadEmployeeData} className="dropdown-item">
               PDF{' '}
             </a>
-            <a className="dropdown-item" target="_blank" download>
+            <a className="dropdown-item" onClick={downloadXls}>
               Excel
             </a>
-          </DropdownButton>
+          </DropdownButton> */}
           <input
             placeholder="Search"
             onChange={e => handleChange(e)}
@@ -234,7 +346,7 @@ export default function EnhancedTable() {
         <Paper sx={{ width: '100%', mb: 2 }}>
           {donorList && donorList.length > 0 ? (
             <React.Fragment>
-              <TableContainer>
+              <TableContainer id="tableDiv">
                 <Table
                   sx={{ minWidth: 750 }}
                   aria-labelledby="tableTitle"
@@ -345,6 +457,14 @@ export default function EnhancedTable() {
             <Loader />
           )}
         </Paper>
+        <ViewAllDonorTable
+          printDonorTable={printDonorTable}
+          tableData={stableSort(donorList, getComparator(order, orderBy)).slice(
+            page * rowsPerPage,
+            page * rowsPerPage + rowsPerPage,
+          )}
+          setPrintDonorValue={setPrintDonorValue}
+        ></ViewAllDonorTable>
       </div>
     </>
   );
