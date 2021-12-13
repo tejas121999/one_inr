@@ -1,5 +1,4 @@
 import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
-import SourceLink from 'components/SourceLink';
 import React from 'react';
 import {
   MdDashboard,
@@ -52,19 +51,19 @@ const masterItems = [
 const donorItems = [
   {
     to: '/add_doner',
-    name: 'add donnor',
+    name: 'add donor',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
     to: '/view_all_doner',
-    name: `view all donnor's`,
+    name: `view all donor's`,
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
     to: '/upcoming_doner_renewal',
-    name: 'Upcomming doner renewal',
+    name: 'Upcomming donor renewal',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
@@ -177,6 +176,7 @@ class Sidebar extends React.Component {
 
   handleClick = name => () => {
     console.log('NAmes', name);
+
     if (name == 'Master') {
       this.setState({
         isOpenMaster: !this.state.isOpenMaster,

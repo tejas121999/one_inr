@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -12,6 +12,9 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
 import { Button } from 'react-bootstrap';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import './viewreciept.css';
 
 import {
   FaRegEdit,
@@ -32,7 +35,10 @@ import CreateReceiptForm from '../../components/CreateReceiptForm';
 import EditReceipt from '../../Modals/Donor/EditReceipt';
 
 export default function ViewRecept() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const [order, setOrder] = React.useState('asc');
+  const [id, setId] = React.useState('');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
@@ -48,12 +54,29 @@ export default function ViewRecept() {
   const [modal1, setModal1] = React.useState(false);
 
   const [deleteId, setDeleteID] = React.useState(0);
+  const [type, setType] = React.useState('');
+  const [printDonorTable, setPrintDonorTable] = React.useState(false);
 
+  const dispatch = useDispatch();
   const history = useHistory();
+
   React.useEffect(() => {
-    getViewRecepts();
+    async function onMount() {
+      await dispatch(getViewReceiptDonorAction());
+    }
+    onMount();
   }, []);
-  const handleModal = () => {
+
+  let ViewReceipt = useSelector(state => state.donor.ViewReceipt);
+  console.log('ViewReceipt', ViewReceipt);
+
+  const handleModal = (type, row) => {
+    if (type == 'edit reciept') {
+      getDonorbyId(row.id);
+    }
+    console.log('sada', row);
+    setId(row);
+    setType(type);
     setModal(!modal);
   };
 
@@ -72,6 +95,10 @@ export default function ViewRecept() {
         console.log(err);
       });
   };
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+
   const ViewModalOpen = data => {
     setViewData(data);
     setViewModal(true);
@@ -114,6 +141,64 @@ export default function ViewRecept() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - recept.length) : 0;
 
+  // SEARCH functionality start
+  let timeout = null;
+  const handleChange = e => {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      onSearch(e.target.value);
+    }, 1000);
+  };
+
+  const onSearch = value => {
+    if (value) {
+      dispatch(SearchReceiptByValueAction(value));
+    } else {
+      dispatch(getViewReceiptDonorAction());
+    }
+  };
+  const getDonorbyId = async id => {
+    let getViewUrl = `http://newoneinr.nimapinfotech.com/api/userReceipts/${id}`;
+    await axios
+      .get(getViewUrl)
+      .then(response => {
+        dispatch(getReceiptDatabyId(response.data.data));
+        console.log('response.data', response.data);
+
+        // setResData(response.data)
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
+  };
+
+  const onPrintClick = () => {
+    console.log(printDonorTable)
+    setPrintDonorTable(true);
+    setTimeout(() => {
+      setPrintDonorValue(false);
+    }, 1000);
+  }
+
+  const setPrintDonorValue = (value) => {
+    if(printDonorTable) {
+      setPrintDonorValue(value);
+    }
+    // window.print();
+  }
+
+  const onCopyClick = () => {
+    var urlField = document.getElementById('tableDiv')   
+    var range = document.createRange()
+    range.selectNode(urlField)
+    window.getSelection().addRange(range)
+    // sel.removeAllRanges();
+    
+    document.execCommand('copy')
+  }
+
+  // SEARCH functionality END
+
   return (
     <>
       <br />
@@ -131,7 +216,9 @@ export default function ViewRecept() {
         <a className="navbar-brand"> DONOR RECEIPT LIST</a>
         <form className="form-inline">
           <div className="modalClass">
-            <Button onClick={handleModal}>Create Receipt</Button>
+            <Button onClick={() => handleModal('create receipt')}>
+              Create Receipt
+            </Button>
           </div>
         </form>
       </nav>
@@ -151,17 +238,43 @@ export default function ViewRecept() {
           <button
             style={{ alignSelf: 'flex-start' }}
             className="btn btn-primary"
+            onClick={e => handleClick(e)}
           >
             Export
           </button>
-          <input placeholder="Search" />
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            style={{ top: '30px', left: '-8px' }}
+          >
+            <MenuItem>
+              <button className="export-btn w-100" onClick={() => onCopyClick()}>Copy</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100">CSV</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100">Excel</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100">PDF</button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100" onClick={()=> onPrintClick()}>Print</button>
+            </MenuItem>
+            {/* <MenuItem></MenuItem> */}
+          </Menu>
+          <input placeholder="Search" onChange={e => handleChange(e)} />
         </div>
         <CreateReceiptForm modal={modal} handleModal={handleModal} />
         <EditReceipt modal1={modal1} handleModal1={handleModal1} />
         <Paper sx={{ width: '100%', mb: 2, height: '60vh' }}>
           {recept && recept.length > 0 ? (
             <React.Fragment>
-              <TableContainer>
+              <TableContainer id="tableDiv">
                 <Table
                   sx={{ minWidth: 750 }}
                   aria-labelledby="tableTitle"
@@ -172,10 +285,11 @@ export default function ViewRecept() {
                     order={order}
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
-                    rowCount={recept.length}
+                    rowCount={ViewReceipt.length}
+                    headCells={tableHeader}
                   />
                   <TableBody>
-                    {stableSort(recept, getComparator(order, orderBy))
+                    {stableSort(ViewReceipt, getComparator(order, orderBy))
                       .slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage,
@@ -183,7 +297,6 @@ export default function ViewRecept() {
                       .map((row, index) => {
                         const isItemSelected = isSelected(row.name);
                         const labelId = `enhanced-table-checkbox-${index}`;
-
                         return (
                           <TableRow
                             hover
@@ -198,26 +311,71 @@ export default function ViewRecept() {
                               scope="row"
                               padding="none"
                             >
-                              {row.name}
+                              {row.id}
                             </TableCell>
-                            <TableCell align="center">
-                              {row.donated ? row.donated : '100'}
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.donor_name ? row.donor_name : '-'}
                             </TableCell>
-                            <TableCell align="center">{row.balance}</TableCell>
-                            <TableCell align="center">
-                              {row.project ? row.projects : '20'}
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.receiptNumber ? row.receiptNumber : '-'}
                             </TableCell>
-                            <TableCell align="center">
-                              {row.project ? row.projects : '20'}
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.project_name ? row.project_name : '-'}
                             </TableCell>
-                            <TableCell align="center">
-                              {row.project ? row.projects : '20'}
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.project_name ? row.project_name : '-'}
                             </TableCell>
-                            <TableCell align="center">
-                              {row.project ? row.projects : '20'}
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.mailSend ? row.mailSend : 'Mail not send'}
                             </TableCell>
-                            <TableCell align="center">
-                              {row.project ? row.projects : '20'}
+                            <TableCell
+                              className="view-pdf"
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                              // style={color="lightblue"}
+                            >
+                              {row.recieptPdf ? 'view' : '-'}
+                            </TableCell>
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.createdAt
+                                ? row.createdAt
+                                    .split('')
+                                    .slice(0, 10)
+                                    .join()
+                                    .replace(/,/g, '')
+                                : '-'}
                             </TableCell>
                             <TableCell align="center">
                               <button
@@ -227,7 +385,11 @@ export default function ViewRecept() {
                                 // onClick={() => history.push('/edit_doner', row)}
                                 onClick={handleModal1}
                               >
-                                <FaRegEdit />
+                                <FaRegEdit
+                                  onClick={() =>
+                                    handleModal('edit reciept', row)
+                                  }
+                                />
                               </button>
                             </TableCell>
                           </TableRow>
@@ -239,158 +401,89 @@ export default function ViewRecept() {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={recept.length}
+                count={ViewReceipt.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
+                showLastButton={true}
+                showFirstButton={true}
               />
             </React.Fragment>
           ) : (
-            <h2 style={{ textAlign: 'center' }}>No data found</h2>
+            <Loader />
           )}
         </Paper>
+        <DonorTable
+          printDonorTable={printDonorTable}
+          tableData={stableSort(ViewReceipt, getComparator(order, orderBy))
+            .slice(
+              page * rowsPerPage,
+              page * rowsPerPage + rowsPerPage,
+            )}
+            setPrintDonorValue={setPrintDonorValue}
+        ></DonorTable>
       </div>
     </>
   );
 }
 
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map(el => el[0]);
-}
-
-const headCells = [
+const tableHeader = [
   {
-    id: 'name',
+    id: '1',
     numeric: false,
     disablePadding: false,
     label: 'Sr No',
   },
   {
-    id: 'donated',
+    id: '2',
     numeric: true,
     disablePadding: false,
     label: 'Donor Name',
   },
   {
-    id: 'balance',
+    id: '3',
     numeric: true,
     disablePadding: false,
     label: 'Receipt No',
   },
   {
-    id: 'projects',
+    id: '4',
     numeric: true,
     disablePadding: false,
     label: 'Project Name',
   },
   {
-    id: 'projects',
+    id: '5',
     numeric: true,
     disablePadding: false,
     label: 'NGO Name',
   },
   {
-    id: 'projects',
+    id: '6',
     numeric: true,
     disablePadding: false,
     label: 'Mail Status',
   },
   {
-    id: 'projects',
+    id: '7',
     numeric: true,
     disablePadding: false,
     label: 'Receipt',
   },
   {
-    id: 'projects',
+    id: '8',
     numeric: true,
     disablePadding: false,
     label: 'Created At',
   },
   {
-    id: 'action',
+    id: '9',
     numeric: true,
     disablePadding: false,
     label: 'Action',
   },
 ];
 
-function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
 
-  const createSortHandler = property => event => {
-    onRequestSort(event, property);
-  };
 
-  return (
-    <TableHead className="table-head">
-      <TableRow>
-        {headCells.map(headCell => (
-          <TableCell
-            key={headCell.id}
-            align="center"
-            padding={headCell.disablePadding ? 'none' : 'normal'}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={true}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};

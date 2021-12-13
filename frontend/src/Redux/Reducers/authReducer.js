@@ -1,28 +1,20 @@
-import { LOGIN, LOGIN_FAILED } from '../constTypes';
+import { LoginAuth } from '../constTypes';
 
 const initialState = {
   user: {},
   error: '',
-  isLoggedIn: false,
+  isLoggedIn: true,
 };
 
 export const authReducer = (state = initialState, action) => {
   console.log('reducer', action.type);
   switch (action.type) {
-    case LOGIN: {
+    case LoginAuth: {
       return {
         ...state,
         user: action.payload,
         error: null,
         isLoggedIn: true,
-      };
-    }
-    case LOGIN_FAILED: {
-      return {
-        ...state,
-        user: action.payload,
-        error: null,
-        isLoggedIn: false,
       };
     }
     default: {
