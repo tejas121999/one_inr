@@ -11,7 +11,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import { BASE_URL, Local } from '../../../API/APIEndpoints';
-import axios from 'axios';
+import axios from '../../../utils/interceptor';
 import Loader from '../../Loader';
 
 import { ToastContainer } from 'react-toastify';

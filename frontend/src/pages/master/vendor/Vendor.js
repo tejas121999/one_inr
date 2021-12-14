@@ -35,7 +35,7 @@ import {
   stableSort,
 } from '../../../components/Pagination';
 import VendorTable from './VendorTable';
-import axios from 'axios';
+import axios from '../../../utils/interceptor';
 import { BASE_URL, Local } from '../../../API/APIEndpoints';
 
 import { ToastContainer } from 'react-toastify';

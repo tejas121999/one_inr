@@ -33,7 +33,7 @@ import {
   stableSort,
 } from '../../../components/Pagination';
 import Partnerdelete from '../../../Modals/Master/PartnerDelete';
-import axios from 'axios';
+import axios from '../../../utils/interceptor';
 import { BASE_URL } from '../../../API/APIEndpoints';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import PartnerTable from './PartnerTable';

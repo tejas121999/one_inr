@@ -60,7 +60,7 @@ const Login = props => {
                 <Field
                   name="email"
                   type="email"
-                  placeholder="enter email"
+                  placeholder="Enter email"
                   className="form-control mt-3"
                   autoComplete="off"
                 />
@@ -74,7 +74,7 @@ const Login = props => {
                 <Field
                   name="password"
                   type={isPasswordVisble ? 'text' : 'password'}
-                  placeholder="enter password"
+                  placeholder="Enter password"
                   className="p-2 mt-2 border-0 w-100 input-border psw-feild"
                 />
                 <i

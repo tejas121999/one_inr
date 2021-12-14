@@ -5,7 +5,7 @@ import TextError from '../../error/TextError';
 import '../vendor/vendor.css';
 import { CreatePartnerAction } from '../../../Redux/Actions/MasterActions';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
+import axios from '../../../utils/interceptor';
 import { BASE_URL } from '../../../API/APIEndpoints';
 
 import { ToastContainer } from 'react-toastify';

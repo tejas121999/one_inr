@@ -52,6 +52,7 @@ export const getAllParentDonorList = data => {
 // 3.add Donor
 
 export const addDonorAction = (body, history) => {
+  console.log('Chinmay', body);
   if (navigator.onLine) {
     return dispatch => {
       DonorServices.AddNewDonor(body)
@@ -90,6 +91,32 @@ export const addDonorFail = data => {
   };
 };
 
+// BUlk upload
+export const addDonorBulkAction = (body, history) => {
+  console.log('Chinmay', body);
+  if (navigator.onLine) {
+    return dispatch => {
+      DonorServices.AddNewBulkDonor(body)
+        .then(res => {
+          console.log('Created', res);
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+          setTimeout(function () {
+            history.push('/view_all_doner');
+          }, 2000);
+
+          //need to add toster here
+        })
+        .catch(err => {
+          //need to add toster here
+        });
+    };
+  } else {
+    //need to add toster here
+  }
+};
 // 4.getViewAllDonorAction
 
 export const getViewAllDonorAction = data => {

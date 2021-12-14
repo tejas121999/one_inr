@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
-import { useFormik, Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Field, Form } from 'formik';
 import * as yup from 'yup';
 import logo from '../assets/img/logo/logo_200.png';
 import './login.css';
-import { Link, NavLink, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { LoginAdmin } from '../Redux/Actions/authAction';
+import { RequestOTP } from '../Redux/Actions/authAction';
+
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 let validationSchema = yup.object().shape({
-  email: yup
-    .string()
-    .email('The email address you gave was incorrect')
-    .required(),
+  email: yup.string().email('Invalid Email Format').required(),
 });
 
 const Forgot = props => {
@@ -19,14 +19,15 @@ const Forgot = props => {
   const history = useHistory();
 
   const loginHandler = values => {
-    console.log('values2', values);
+    console.log('valuesFor', values);
     if (values) {
-      dispatch(LoginAdmin(values, props.history));
+      dispatch(RequestOTP(values, props.history));
     }
   };
 
   return (
     <div className="loginbg">
+      <ToastContainer hideProgressBar />
       <Formik
         initialValues={{
           email: '',
@@ -59,8 +60,11 @@ const Forgot = props => {
 
             <div className="form-group w-75 m-auto mt-3">
               <button type="submit" className="btn btn-primary w-100 mt-2">
-                Login
+                Submit
               </button>
+              {/* <Link to="/otp" className="btn btn-danger w-100 mt-2">
+                OTP
+              </Link> */}
             </div>
             <div className="form-group w-75 m-auto mt-3">
               <Link to="/" className="btn btn-danger w-100 mt-2">

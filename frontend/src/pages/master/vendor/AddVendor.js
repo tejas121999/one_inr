@@ -6,7 +6,7 @@ import './vendor.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { CreateVendorAction } from '../../../Redux/Actions/MasterActions';
 import { BASE_URL } from '../../../API/APIEndpoints';
-import axios from 'axios';
+import axios from '../../../utils/interceptor';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

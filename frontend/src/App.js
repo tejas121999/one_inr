@@ -38,6 +38,8 @@ import Viewdonormodal from './Modals/Donor/ViewDonorModal';
 import Forgot from './pages/Forgot';
 import store from './Redux/store';
 import { LoginAuthData } from './Redux/Actions/authAction';
+import OTPScreen from './pages/Other/OTP';
+import ChangePassword from './pages/Other/changePassword';
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -55,68 +57,72 @@ function App(props) {
       <Switch>
         <Route exact path="/" component={Login} />
         <Route exact path="/forgot_password" component={Forgot} />
-        <MainLayout breakpoint={props.breakpoint}>
-          <React.Suspense fallback={<PageSpinner />}>
-            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/otp" component={OTPScreen} />
+        <Route exact path="/changePassword" component={ChangePassword} />
+        <div>
+          <MainLayout breakpoint={props.breakpoint}>
+            <React.Suspense fallback={<PageSpinner />}>
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
-            {/*master route*/}
-            <PrivateRoute exact path="/Vendor" component={Vendor} />
-            <PrivateRoute exact path="/addvendor" component={AddVendor} />
-            <PrivateRoute exact path="/editvendor" component={EditVendor} />
-            <PrivateRoute exact path="/partner" component={Partner} />
-            <PrivateRoute exact path="/addpartner" component={AddPartner} />
-            <PrivateRoute exact path="/editpartner" component={EditPartner} />
-            {/*doner route*/}
-            <PrivateRoute exact path="/add_doner" component={AddDoner} />
-            <PrivateRoute exact path="/edit_doner" component={EditDoner} />
-            <PrivateRoute exact path="/view_recept" component={ViewRecept} />
-            <PrivateRoute
-              exact
-              path="/view_all_doner"
-              component={ViewAllDoner}
-            />
-            <PrivateRoute
-              exact
-              path="/upcoming_doner_renewal"
-              component={UpcomingDonerRenewal}
-            />
+              {/*master route*/}
+              <PrivateRoute exact path="/Vendor" component={Vendor} />
+              <PrivateRoute exact path="/addvendor" component={AddVendor} />
+              <PrivateRoute exact path="/editvendor" component={EditVendor} />
+              <PrivateRoute exact path="/partner" component={Partner} />
+              <PrivateRoute exact path="/addpartner" component={AddPartner} />
+              <PrivateRoute exact path="/editpartner" component={EditPartner} />
+              {/*doner route*/}
+              <PrivateRoute exact path="/add_doner" component={AddDoner} />
+              <PrivateRoute exact path="/edit_doner" component={EditDoner} />
+              <PrivateRoute exact path="/view_recept" component={ViewRecept} />
+              <PrivateRoute
+                exact
+                path="/view_all_doner"
+                component={ViewAllDoner}
+              />
+              <PrivateRoute
+                exact
+                path="/upcoming_doner_renewal"
+                component={UpcomingDonerRenewal}
+              />
 
-            {/*NGO route*/}
-            <PrivateRoute exact path="/add_ngo" component={AddNgo} />
-            <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />
-            {/*project route*/}
-            <PrivateRoute
-              exact
-              path="/complete_project"
-              component={CompleteProject}
-            />
-            <PrivateRoute exact path="/add_project" component={AddProject} />
-            <PrivateRoute
-              exact
-              path="/view_all_project"
-              component={ViewAllProjects}
-            />
-            <PrivateRoute
-              exact
-              path="/archive_project"
-              component={ArchivedProject}
-            />
-            {/*Account route*/}
-            <PrivateRoute exact path="/payments" component={Payments} />
-            {/*setting route*/}
-            <PrivateRoute exact path="/my_profile" component={MyProfile} />
-            <PrivateRoute exact path="/roles" component={Roles} />
-            <PrivateRoute exact path="/users" component={Users} />
-            <PrivateRoute exact path="/config" component={Config} />
-            <PrivateRoute
-              exact
-              path="/razorpay_credentials"
-              component={RazorpayCredentials}
-            />
-          </React.Suspense>
-        </MainLayout>
-        {/* <Route path="/404" component={Four_Zero_Foure} />
-            <Redirect to="/404">{Four_Zero_Foure}</Redirect> */}
+              {/*NGO route*/}
+              <PrivateRoute exact path="/add_ngo" component={AddNgo} />
+              <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />
+              {/*project route*/}
+              <PrivateRoute
+                exact
+                path="/complete_project"
+                component={CompleteProject}
+              />
+              <PrivateRoute exact path="/add_project" component={AddProject} />
+              <PrivateRoute
+                exact
+                path="/view_all_project"
+                component={ViewAllProjects}
+              />
+              <PrivateRoute
+                exact
+                path="/archive_project"
+                component={ArchivedProject}
+              />
+              {/*Account route*/}
+              <PrivateRoute exact path="/payments" component={Payments} />
+              {/*setting route*/}
+              <PrivateRoute exact path="/my_profile" component={MyProfile} />
+              <PrivateRoute exact path="/roles" component={Roles} />
+              <PrivateRoute exact path="/users" component={Users} />
+              <PrivateRoute exact path="/config" component={Config} />
+              <PrivateRoute
+                exact
+                path="/razorpay_credentials"
+                component={RazorpayCredentials}
+              />
+            </React.Suspense>
+          </MainLayout>
+          {/* <Route path="/404" component={Four_Zero_Foure} />
+          <Redirect to="/404">{Four_Zero_Foure}</Redirect> */}
+        </div>
       </Switch>
     </BrowserRouter>
   );

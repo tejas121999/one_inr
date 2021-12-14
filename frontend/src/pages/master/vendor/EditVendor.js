@@ -13,7 +13,7 @@ import { masterReducer } from '../../../Redux/Reducers/MasterReducer';
 import Loader from '../../Loader';
 import { Modal } from 'react-bootstrap';
 import { BASE_URL, Local } from '../../../API/APIEndpoints';
-import axios from 'axios';
+import axios from '../../../utils/interceptor';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const EditVendor = props => {

@@ -2,11 +2,12 @@ import { Field, Form, Formik } from 'formik';
 import React, { Component } from 'react';
 import './Donor.css';
 import * as yup from 'yup';
-import axios from 'axios';
+import axios from '../../utils/interceptor';
 import { useHistory } from 'react-router-dom';
 import {
   getAllParentDonorAction,
   addDonorAction,
+  addDonorBulkAction,
 } from '../../Redux/Actions/DonorActions';
 import { connect } from 'react-redux';
 
@@ -25,7 +26,7 @@ class Adddonor extends Component {
       isCsv: false,
       csvUrl: '',
       isForm: false,
-      csvId: 0,
+      csvId: '',
       isPasswordVisble: false,
     };
   }
@@ -71,28 +72,25 @@ class Adddonor extends Component {
         autoClose: 2000,
       });
     } else {
-      let obj = {};
       if (this.state.isCsv) {
         alert('File');
-        obj = {
+        const obj = {
           path: this.state.csvUrl,
           fileExtension: 'csv',
           fileId: this.state.csvId,
         };
-        axios.post(BASE_URL + 'donor/bulkDonor-upload', obj);
+        this.props.addDonorBulkAction(obj, this.props.history);
       } else {
         values.parent = id;
-        obj = {
+        const obj = {
           name: values.fName + ' ' + values.lName,
           email: values.emailId,
           mobile: values.phoneNumber,
           password: values.password,
           parentId: id,
         };
+        this.props.addDonorAction(obj, this.props.history);
       }
-      console.log('Aded', obj);
-
-      this.props.addDonorAction(obj, this.props.history);
     }
   };
 
@@ -423,4 +421,5 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   getAllParentDonorAction,
   addDonorAction,
+  addDonorBulkAction,
 })(Adddonor);

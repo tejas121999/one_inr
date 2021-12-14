@@ -28,7 +28,7 @@ import {
   GetAllDonor,
   Local,
 } from '../../API/APIEndpoints';
-import axios from 'axios';
+import axios from '../../utils/interceptor';
 import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import Loader from '../Loader';
@@ -329,18 +329,6 @@ export default function EnhancedTable() {
             {/* <MenuItem></MenuItem> */}
           </Menu>
 
-          {/* <DropdownButton variant="primary" title="Export">
-            <a className="dropdown-item" onClick={downloadCsv}>
-              CSV
-            </a>
-
-            <a onClick={downloadEmployeeData} className="dropdown-item">
-              PDF{' '}
-            </a>
-            <a className="dropdown-item" onClick={downloadXls}>
-              Excel
-            </a>
-          </DropdownButton> */}
           <input
             placeholder="Search"
             onChange={e => handleChange(e)}
