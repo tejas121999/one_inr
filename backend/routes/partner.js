@@ -20,6 +20,7 @@ router.get('/get-partnerById/:id',getPartnerById)
 router.get('/get-partner-excel',getPartnerExcel)
 router.get('/get-partnerPdf',pdfOfPartner)
 router.get('/get-all-users-csv',user.exportsToCsv)
+router.put('/update-partner/:id',updatePatner)
 router.delete('/delete-partner/:id',deletePartner)
 
 
