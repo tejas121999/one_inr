@@ -3,7 +3,7 @@ import {ErrorMessage, Field, Form, Formik } from 'formik';
 import TextError from '../error/TextError';
 import * as yup from 'yup';
 import { element } from 'prop-types';
-import axios from 'axios';
+import axios from '../../utils/interceptor';
 import { BASE_URL } from '../../API/APIEndpoints';
 import { FaTimes } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
@@ -291,10 +291,10 @@ const AddNgo = (props) => {
                                 <div className="col-6 ">
                                     <div className="input-box">
                                         <label style={{ fontWeight: 'bold' }}>RegistrationDate</label>
-                                        <Field
+                                        <Field 
                                             className="form-control"
                                             name="registrationDate"
-                                            type="registrationDate"
+                                            type="date"
                                             required
                                             autocomplete="off"
                                             value={values.registrationDate}
