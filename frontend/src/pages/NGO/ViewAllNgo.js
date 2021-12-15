@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -19,19 +20,13 @@ import {
   FaBookOpen,
   FaPlusCircle,
 } from 'react-icons/fa';
-import '../Doner/Donor.css';
-import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
-import Addfund from '../../Modals/Donor/AddFund';
-import { ADD_DONOR_URL, BASE_URL, GetAllDonor } from '../../API/APIEndpoints';
+// import '../Ngo/Ngo.css';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
-import Donordelete from '../../Modals/Donor/DonorDelete';
+import {Link, useHistory } from 'react-router-dom';
 import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getDonorByValueAction,
-  getViewAllDonorAction,
-} from '../../Redux/Actions/DonorActions';
+import { getAllNGOAction } from '../../Redux/Actions/NgoActions';
+
 
 const ViewAllNgo = () => {
 
@@ -45,28 +40,35 @@ const ViewAllNgo = () => {
   const [viewData, setViewData] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
   const [fundModalData, setFundModalData] = React.useState(0);
-  // const [donorList, setDonorList] = React.useState([]);
+  // const [NgoList, setNgoList] = React.useState([]);
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
+  const [pdfUrl, setPdfUrl] = React.useState('');
+  const [CsvUrl, setCsvUrl] = React.useState('');
+  const [XlsUrl, setXlsUrl] = React.useState('');
+  const [printNgoTable, setPrintNgoTable] = React.useState(false);
+
+
   const history = useHistory();
   const dispatch = useDispatch();
-  React.useEffect(() => {
-    dispatch(getViewAllDonorAction());
+  useEffect(() => {
+    dispatch(getAllNGOAction());
   }, []);
 
-  // const getDonorList = async () => {
-  //   const url = BASE_URL + ADD_DONOR_URL;
+  let ngoList = useSelector(state => state.ngoList);
+  console.log(ngoList);
+
+  // const getNgoList = async () => {
+  //   const url = BASE_URL + ADD_NGO_URL;
   //   await axios
   //     .get(url)
   //     .then(res => {
-  //       setDonorList(res.data.data.message);
+  //       setNgoList(res.data.data.message);
   //       toast.success('Yeay! New data is here.');
   //     })
   //     .catch(err => {
   //     });
   // };
-
-  let donorList = useSelector(state => state.donor.ViewAllDonor);
 
   const ViewModalOpen = data => {
     setViewData(data);
@@ -110,7 +112,7 @@ const ViewAllNgo = () => {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - donorList.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - ngoList.length) : 0;
   // SEARCH
   let timeout = null;
   const handleChange = e => {
@@ -122,12 +124,48 @@ const ViewAllNgo = () => {
 
   const onSearch = value => {
     if (value) {
-      dispatch(getDonorByValueAction(value));
+      // dispatch(getNgoByValueAction(value));
     } else {
-      dispatch(getViewAllDonorAction());
+      // dispatch(getViewAllNgoAction());
     }
   };  
 
+  const headCells = [
+    {
+      id: 'name',
+      numeric: false,
+      disablePadding: false,
+      label: 'Name',
+    },
+    {
+      id: 'pending',
+      numeric: true,
+      disablePadding: false,
+      label: 'Pending',
+    },
+    {
+      id: 'active',
+      numeric: true,
+      disablePadding: false,
+      label: 'Active',
+    },
+    {
+      id: 'actionRequired',
+      numeric: true,
+      disablePadding: false,
+      label: 'ActionRequired',
+    },
+    {
+      id: 'action',
+      numeric: true,
+      disablePadding: false,
+      label: 'Action',
+    },
+    
+  ];
+  // END
+
+  
     const constData = [
         {
           id: 1,
@@ -218,7 +256,7 @@ const ViewAllNgo = () => {
           >
             Export
           </button>
-          <input placeholder="Search" onChange={e => handleChange(e)} />
+          <input type="search" placeholder="Search" onChange={e => handleChange(e)} />
         </div>
         <Paper sx={{ width: '100%', mb: 2 }}>
             <>
