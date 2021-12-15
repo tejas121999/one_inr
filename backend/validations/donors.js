@@ -14,18 +14,19 @@ exports.donorValidation = [
         .notEmpty().withMessage('Email is Required')
         .isEmail().withMessage('Email is Required')
         .isLength({min: 5 ,max : 50}).withMessage('Max length of emails is 50')
-        .custom(async (value) => {
-            return await models.users.findOne({
-                where: {
-                    email: value
-                }
-            }).then(email => {
-                if (email) {
-                    return Promise.reject("Email Already Exists")
+        // .custom(async (value) => {
+        //     return await models.users.findOne({
+        //         where: {
+        //             email: value
+        //         }
+        //     }).then(email => {
+        //         if (email) {
+        //             return Promise.reject("Email Already Exists")
 
-                }
-            })
-        }),
+        //         }
+        //     })
+        // })
+        ,
     body('mobile')
         .exists()
         .withMessage('Mobile number is Required')
@@ -37,17 +38,18 @@ exports.donorValidation = [
             }
 
         })
-        .custom(async value => {
-            return await models.users.findOne({
-                where: {
-                    mobile: value,
-                }
-            }).then(mobile => {
-                if (mobile) {
-                    return Promise.reject("Mobile Number Already Exists!");
-                }
-            })
-        }),
+        // .custom(async value => {
+        //     return await models.users.findOne({
+        //         where: {
+        //             mobile: value,
+        //         }
+        //     }).then(mobile => {
+        //         if (mobile) {
+        //             return Promise.reject("Mobile Number Already Exists!");
+        //         }
+        //     })
+        // })
+        ,
     body('password')
         .exists().withMessage("Passoword is Required")
         .notEmpty().withMessage("Password is Required")

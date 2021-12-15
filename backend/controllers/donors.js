@@ -79,7 +79,7 @@ exports.getAllDonor = async (req, res) => {
 //Get api for getting parent details 
 exports.getAllParentDetails = async (req, res) => {
     const data = await models.users.findAll({
-        attributes: ['name', 'id']
+        attributes: ['name', 'id','email']
 
     })
     if (!data) {

@@ -30,11 +30,13 @@ module.exports = (sequelize,DataTypes)=>{
         },
         panImage:{
             type: DataTypes.TEXT,
-            field: 'pan_image'
+            field: 'pan_image',
+            allowNull: true
         },
         gstImage:{
             type: DataTypes.TEXT,
-            field: 'gst_image'
+            field: 'gst_image',
+            allowNull: true
         },
   
     },{

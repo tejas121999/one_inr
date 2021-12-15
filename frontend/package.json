@@ -15,6 +15,7 @@
     "d3-geo": "^1.11.3",
     "faker": "^4.1.0",
     "formik": "^2.2.9",
+    "material-ui": "^0.20.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.2",
