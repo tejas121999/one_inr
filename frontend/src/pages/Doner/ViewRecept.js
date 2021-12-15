@@ -69,6 +69,9 @@ export default function ViewRecept() {
   const [deleteId, setDeleteID] = React.useState(0);
   const [type, setType] = React.useState('');
   const [printDonorTable, setPrintDonorTable] = React.useState(false);
+  const [XlsUrl, setXlsUrl] = React.useState('');
+  const [pdfUrl, setPdfUrl] = React.useState('');
+  const [CsvUrl, setCsvUrl] = React.useState('');
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -76,18 +79,20 @@ export default function ViewRecept() {
   React.useEffect(() => {
     async function onMount() {
       await dispatch(getViewReceiptDonorAction());
+      exportPdf();
+      exportCsv();
+      exportXls();
     }
     onMount();
   }, []);
 
   let ViewReceipt = useSelector(state => state.donor.ViewReceipt);
-  console.log('ViewReceipt', ViewReceipt);
 
   const handleModal = (type, row) => {
     if (type == 'edit reciept') {
       getDonorbyId(row.id);
     }
-    console.log('sada', row);
+
     setId(row);
     setType(type);
     setModal(!modal);
@@ -97,12 +102,8 @@ export default function ViewRecept() {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
-    console.log('ttttttttt', anchorEl);
     setAnchorEl(null);
   };
-  // const handleClick = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
 
   const ViewModalOpen = data => {
     setViewData(data);
@@ -204,6 +205,76 @@ export default function ViewRecept() {
 
   // SEARCH functionality END
 
+  // EXPORT
+  const exportPdf = async () => {
+    const res = await axios.get(
+      BASE_URL + 'userReceipts/get-user-receipts-pdf',
+    );
+
+    if (res.data.url) {
+      const downloadUrl = res.data.url;
+      setPdfUrl(downloadUrl);
+    }
+  };
+  const exportCsv = async () => {
+    const resCsv = await axios.get(BASE_URL + 'partner/get-partner-csv');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setCsvUrl(downloadUrl);
+    }
+  };
+  const exportXls = async () => {
+    const resCsv = await axios.get(BASE_URL + 'partner/get-partner-excel');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setXlsUrl(downloadUrl);
+    }
+  };
+  // test
+  const downloadPdf = () => {
+    fetch(pdfUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Receipt.pdf';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+
+  const downloadCsv = () => {
+    fetch(CsvUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Receipt.csv';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  const downloadXls = () => {
+    fetch(XlsUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Receipt.xlsx';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+
   return (
     <>
       <br />
@@ -270,7 +341,9 @@ export default function ViewRecept() {
               <button className="export-btn w-100">Excel</button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100">PDF</button>
+              <button className="export-btn w-100" onClick={downloadPdf}>
+                PDF
+              </button>
             </MenuItem>
             <MenuItem>
               <button
