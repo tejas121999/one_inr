@@ -28,7 +28,7 @@ import {
   GetAllDonor,
   Local,
 } from '../../API/APIEndpoints';
-import axios from 'axios';
+import axios from '../../utils/interceptor';
 import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import Loader from '../Loader';
@@ -46,6 +46,8 @@ import { DropdownButton } from 'react-bootstrap';
 import ViewAllDonorTable from './ViewAllDonorTable';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function EnhancedTable() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -54,7 +56,7 @@ export default function EnhancedTable() {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(50);
   const [viewModal, setViewModal] = React.useState(false);
   const [viewData, setViewData] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
@@ -142,7 +144,7 @@ export default function EnhancedTable() {
   // END
 
   const exportPdf = async () => {
-    const res = await axios.get(Local + '/donor/donor-pdf');
+    const res = await axios.get(BASE_URL + '/donor/donor-pdf');
 
     if (res.data.url) {
       const downloadUrl = res.data.url;
@@ -150,14 +152,14 @@ export default function EnhancedTable() {
     }
   };
   const exportCsv = async () => {
-    const resCsv = await axios.get(Local + '/donor/donor-csv');
+    const resCsv = await axios.get(BASE_URL + '/donor/donor-csv');
     if (resCsv.data.url) {
       const downloadUrl = resCsv.data.url;
       setCsvUrl(downloadUrl);
     }
   };
   const exportXls = async () => {
-    const resCsv = await axios.get(Local + '/donor/donor-excel');
+    const resCsv = await axios.get(BASE_URL + '/donor/donor-xlsx');
     if (resCsv.data.url) {
       const downloadUrl = resCsv.data.url;
       setXlsUrl(downloadUrl);
@@ -199,7 +201,7 @@ export default function EnhancedTable() {
           let url = window.URL.createObjectURL(blob);
           let a = document.createElement('a');
           a.href = url;
-          a.download = 'Partner.xlsx';
+          a.download = 'Donor.xlsx';
           a.click();
         });
         //window.location.href = response.url;
@@ -248,10 +250,12 @@ export default function EnhancedTable() {
         onHide={ViewModalClose}
         data={viewData}
       />
+
+      <ToastContainer hideProgressBar />
       <Addfund show={fundModal} onHide={fundModaClose} data={fundModalData} />
       <Donordelete show={deleteModal} onHide={deleteModalClose} id={deleteId} />
       <nav className="navbar navbar-light">
-        <a className="navbar-brand">Partner List</a>
+        <a className="navbar-brand">Donor List</a>
         <form className="form-inline">
           <div className="modalClass">
             <Link to="/add_doner" type="" className="btn btn-primary">
@@ -325,18 +329,6 @@ export default function EnhancedTable() {
             {/* <MenuItem></MenuItem> */}
           </Menu>
 
-          {/* <DropdownButton variant="primary" title="Export">
-            <a className="dropdown-item" onClick={downloadCsv}>
-              CSV
-            </a>
-
-            <a onClick={downloadEmployeeData} className="dropdown-item">
-              PDF{' '}
-            </a>
-            <a className="dropdown-item" onClick={downloadXls}>
-              Excel
-            </a>
-          </DropdownButton> */}
           <input
             placeholder="Search"
             onChange={e => handleChange(e)}
@@ -441,7 +433,7 @@ export default function EnhancedTable() {
                 </Table>
               </TableContainer>
               <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={[50, 100, 150]}
                 component="div"
                 count={donorList.length}
                 rowsPerPage={rowsPerPage}

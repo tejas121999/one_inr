@@ -80,6 +80,8 @@ a {
   background-color: #33363f;
   text-align: center;
   z-index: 999;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 form.login {
   width: 500px;

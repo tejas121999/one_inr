@@ -7,3 +7,8 @@
     display: flex;
     justify-content: space-evenly;
 }
+.psw-feild{
+    outline: 0px;
+    border-Radius: 30px;
+    padding-Left:12px !important;
+}

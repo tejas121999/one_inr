@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import '../../pages/Doner/Donor.css';
@@ -27,7 +26,6 @@ const Addfund = props => {
     return error;
   };
   const onAdd = async value => {
-    console.log('ModalURL', value);
     await dispatch(addDonorFundAction(userId, value));
     props.onHide();
   };

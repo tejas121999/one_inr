@@ -28,7 +28,7 @@ import {
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
 import { BASE_URL, VIEW_RECEPT_URL } from '../../API/APIEndpoints';
-import axios from 'axios';
+import axios from '../../utils/interceptor';
 import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import CreateReceiptForm from '../../components/CreateReceiptForm';
@@ -178,29 +178,29 @@ export default function ViewRecept() {
   };
 
   const onPrintClick = () => {
-    console.log(printDonorTable)
+    console.log(printDonorTable);
     setPrintDonorTable(true);
     setTimeout(() => {
       setPrintDonorValue(false);
     }, 1000);
-  }
+  };
 
-  const setPrintDonorValue = (value) => {
-    if(printDonorTable) {
+  const setPrintDonorValue = value => {
+    if (printDonorTable) {
       setPrintDonorValue(value);
     }
     // window.print();
-  }
+  };
 
   const onCopyClick = () => {
-    var urlField = document.getElementById('tableDiv')   
-    var range = document.createRange()
-    range.selectNode(urlField)
-    window.getSelection().addRange(range)
+    var urlField = document.getElementById('tableDiv');
+    var range = document.createRange();
+    range.selectNode(urlField);
+    window.getSelection().addRange(range);
     // sel.removeAllRanges();
-    
-    document.execCommand('copy')
-  }
+
+    document.execCommand('copy');
+  };
 
   // SEARCH functionality END
 
@@ -256,7 +256,12 @@ export default function ViewRecept() {
             style={{ top: '30px', left: '-8px' }}
           >
             <MenuItem>
-              <button className="export-btn w-100" onClick={() => onCopyClick()}>Copy</button>
+              <button
+                className="export-btn w-100"
+                onClick={() => onCopyClick()}
+              >
+                Copy
+              </button>
             </MenuItem>
             <MenuItem>
               <button className="export-btn w-100">CSV</button>
@@ -268,7 +273,12 @@ export default function ViewRecept() {
               <button className="export-btn w-100">PDF</button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100" onClick={()=> onPrintClick()}>Print</button>
+              <button
+                className="export-btn w-100"
+                onClick={() => onPrintClick()}
+              >
+                Print
+              </button>
             </MenuItem>
             {/* <MenuItem></MenuItem> */}
           </Menu>
@@ -280,7 +290,7 @@ export default function ViewRecept() {
           id={id}
           handleModal={handleModal}
         />
-        <Paper sx={{ width: '100%', mb: 2 }} >
+        <Paper sx={{ width: '100%', mb: 2 }}>
           {ViewReceipt && ViewReceipt.length > 0 ? (
             <React.Fragment>
               <TableContainer id="tableDiv">
@@ -424,12 +434,11 @@ export default function ViewRecept() {
         </Paper>
         <DonorTable
           printDonorTable={printDonorTable}
-          tableData={stableSort(ViewReceipt, getComparator(order, orderBy))
-            .slice(
-              page * rowsPerPage,
-              page * rowsPerPage + rowsPerPage,
-            )}
-            setPrintDonorValue={setPrintDonorValue}
+          tableData={stableSort(
+            ViewReceipt,
+            getComparator(order, orderBy),
+          ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+          setPrintDonorValue={setPrintDonorValue}
         ></DonorTable>
       </div>
     </>
@@ -492,6 +501,3 @@ const tableHeader = [
     label: 'Action',
   },
 ];
-
-
-

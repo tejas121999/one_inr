@@ -63,7 +63,7 @@ const donorItems = [
   },
   {
     to: '/upcoming_doner_renewal',
-    name: 'Upcomming donor renewal',
+    name: 'Upcoming donor renewal',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
