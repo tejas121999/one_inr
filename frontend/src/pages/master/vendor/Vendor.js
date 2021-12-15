@@ -35,124 +35,21 @@ import {
   stableSort,
 } from '../../../components/Pagination';
 import VendorTable from './VendorTable';
-import axios from 'axios';
+import axios from '../../../utils/interceptor';
 import { BASE_URL, Local } from '../../../API/APIEndpoints';
-import { DropdownButton } from 'react-bootstrap';
-export const constData = [
-  {
-    id: 1,
-    name: 'Chinmay Pattar',
-    donated: 1,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-    plan: 1,
-    balanceNextRenewDate: '2021-03-14',
-    parentId: 0,
-    mobile: 9819312721,
-  },
-  {
-    id: 2,
-    name: 'b',
-    donated: 82,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 3,
-    name: 'c',
-    donated: 13,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 4,
-    name: 'd',
-    donated: 5,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 5,
-    name: 'e',
-    donated: 8,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 6,
-    name: 'f',
-    donated: 19,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 7,
-    name: 'g',
-    donated: 15,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 8,
-    name: 'h',
-    donated: 20,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 9,
-    name: 'i',
-    donated: 21,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 10,
-    name: 'j',
-    donated: 23,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 11,
-    name: 'k',
-    donated: 25,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-  {
-    id: 12,
-    name: 'l',
-    donated: 26,
-    balance: '100',
-    project: '10',
-    email: 'akshay@gmail.com',
-  },
-];
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function EnhancedTable() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
+
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [viewModal, setViewModal] = React.useState(false);
-  const [viewData, setViewData] = React.useState('');
-  const [fundModal, setFundModal] = React.useState(false);
-  const [fundModalData, setFundModalData] = React.useState(0);
   const [pdfUrl, setPdfUrl] = React.useState('');
   const [CsvUrl, setCsvUrl] = React.useState('');
   const [deleteModal, setDeleteModal] = React.useState(false);
@@ -171,13 +68,6 @@ export default function EnhancedTable() {
 
   let donorList = useSelector(state => state.master.vendorList);
 
-  const ViewModalOpen = data => {
-    setViewData(data);
-    setViewModal(true);
-  };
-  const ViewModalClose = () => {
-    setViewModal(false);
-  };
   const onPrintClick = () => {
     console.log(printDonorTable);
     setPrintDonorTable(true);
@@ -201,13 +91,6 @@ export default function EnhancedTable() {
     document.execCommand('copy');
   };
 
-  const fundModaOpen = data => {
-    setFundModalData(data.id);
-    setFundModal(true);
-  };
-  const fundModaClose = () => {
-    setFundModal(false);
-  };
   const deleteModalOpen = data => {
     setDeleteID(data.id);
     setDeleteModal(true);
@@ -237,8 +120,6 @@ export default function EnhancedTable() {
     setPage(0);
   };
 
-  const isSelected = name => selected.indexOf(name) !== -1;
-
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - donorList.length) : 0;
@@ -262,7 +143,7 @@ export default function EnhancedTable() {
   // END
 
   const exportPdf = async () => {
-    const res = await axios.get(Local + '/vendor/get-vendor-pdf');
+    const res = await axios.get(BASE_URL + 'vendor/get-vendor-pdf');
 
     if (res.data.url) {
       const downloadUrl = res.data.url;
@@ -270,14 +151,14 @@ export default function EnhancedTable() {
     }
   };
   const exportCsv = async () => {
-    const resCsv = await axios.get(Local + '/vendor/get-vendor-csv');
+    const resCsv = await axios.get(BASE_URL + 'vendor/get-vendor-csv');
     if (resCsv.data.url) {
       const downloadUrl = resCsv.data.url;
       setCsvUrl(downloadUrl);
     }
   };
   const exportXls = async () => {
-    const resCsv = await axios.get(Local + '/vendor/get-vendor-excel');
+    const resCsv = await axios.get(BASE_URL + 'vendor/get-vendor-xlsx');
     if (resCsv.data.url) {
       const downloadUrl = resCsv.data.url;
       setXlsUrl(downloadUrl);
@@ -338,6 +219,7 @@ export default function EnhancedTable() {
         onHide={deleteModalClose}
         id={deleteId}
       />
+      <ToastContainer hideProgressBar />
 
       <nav className="navbar navbar-light">
         <a className="navbar-brand">Vendor List</a>
@@ -434,13 +316,8 @@ export default function EnhancedTable() {
           {donorList && donorList.length > 0 ? (
             <React.Fragment>
               <TableContainer id="tableDiv">
-                <Table
-                  sx={{ minWidth: 750 }}
-                  aria-labelledby="tableTitle"
-                  size={dense ? 'small' : 'medium'}
-                >
+                <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
                   <EnhancedTableHead
-                    numSelected={selected.length}
                     order={order}
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
@@ -454,17 +331,10 @@ export default function EnhancedTable() {
                         page * rowsPerPage + rowsPerPage,
                       )
                       .map((row, index) => {
-                        const isItemSelected = isSelected(row.name);
                         const labelId = `enhanced-table-checkbox-${index}`;
 
                         return (
-                          <TableRow
-                            hover
-                            aria-checked={isItemSelected}
-                            tabIndex={-1}
-                            key={row.name}
-                            selected={isItemSelected}
-                          >
+                          <TableRow hover tabIndex={-1} key={row.name}>
                             <TableCell
                               id={labelId}
                               align="center"

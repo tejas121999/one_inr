@@ -33,12 +33,14 @@ import {
   stableSort,
 } from '../../../components/Pagination';
 import Partnerdelete from '../../../Modals/Master/PartnerDelete';
-import axios from 'axios';
+import axios from '../../../utils/interceptor';
 import { BASE_URL } from '../../../API/APIEndpoints';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import PartnerTable from './PartnerTable';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function EnhancedTable() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -81,19 +83,19 @@ export default function EnhancedTable() {
     setOrderBy(property);
   };
   const onPrintClick = () => {
-    console.log(printDonorTable)
+    console.log(printDonorTable);
     setPrintDonorTable(true);
     setTimeout(() => {
       setPrintDonorValue(false);
     }, 1000);
-  }
+  };
 
-  const setPrintDonorValue = (value) => {
-    if(printDonorTable) {
+  const setPrintDonorValue = value => {
+    if (printDonorTable) {
       setPrintDonorValue(value);
     }
     // window.print();
-  }
+  };
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -103,13 +105,12 @@ export default function EnhancedTable() {
   };
 
   const onCopyClick = () => {
-    var urlField = document.getElementById('tableDiv')   
-    var range = document.createRange()
-    range.selectNode(urlField)
-    window.getSelection().addRange(range) 
-    document.execCommand('copy')
-  }
-
+    var urlField = document.getElementById('tableDiv');
+    var range = document.createRange();
+    range.selectNode(urlField);
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -257,6 +258,7 @@ export default function EnhancedTable() {
         <br />
         <br />
         <br />
+        <ToastContainer hideProgressBar />
         <Partnerdelete
           show={deleteModal}
           onHide={deleteModalClose}
@@ -285,51 +287,54 @@ export default function EnhancedTable() {
               justifyContent: 'space-between',
             }}
           >
-              <button
-            style={{ alignSelf: 'flex-start' }}
-            className="btn btn-primary"
-            onClick={e => handleClick(e)}
-          >
-            Export
-          </button>
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-            style={{ top: '30px', left: '-8px' }}
-          >
-            <MenuItem>
-              <button className="export-btn w-100" onClick={() => onCopyClick()}>Copy</button>
-            </MenuItem>
-            <MenuItem>
-              <button className="export-btn w-100" onClick={downloadCsv}>CSV</button>
-            </MenuItem>
-            <MenuItem>
-              <button className="export-btn w-100"onClick={downloadXls}>Excel</button>
-            </MenuItem>
-            <MenuItem>
-              <button className="export-btn w-100" onClick={downloadPdf}>PDF</button>
-            </MenuItem>
-            <MenuItem>
-              <button className="export-btn w-100" onClick={()=> onPrintClick()}>Print</button>
-            </MenuItem> 
-            {/* <MenuItem></MenuItem> */}
-          </Menu>
-
-            {/* <DropdownButton variant="primary" title="Export">
-              <a className="dropdown-item" onClick={downloadCsv}>
-                CSV
-              </a>
-
-              <a onClick={downloadPdf} className="dropdown-item">
-                PDF{' '}
-              </a>
-              <a className="dropdown-item" onClick={downloadXls}>
-                Excel
-              </a>
-            </DropdownButton> */}
+            <button
+              style={{ alignSelf: 'flex-start' }}
+              className="btn btn-primary"
+              onClick={e => handleClick(e)}
+            >
+              Export
+            </button>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+              style={{ top: '30px', left: '-8px' }}
+            >
+              <MenuItem>
+                <button
+                  className="export-btn w-100"
+                  onClick={() => onCopyClick()}
+                >
+                  Copy
+                </button>
+              </MenuItem>
+              <MenuItem>
+                <button className="export-btn w-100" onClick={downloadCsv}>
+                  CSV
+                </button>
+              </MenuItem>
+              <MenuItem>
+                <button className="export-btn w-100" onClick={downloadXls}>
+                  Excel
+                </button>
+              </MenuItem>
+              <MenuItem>
+                <button className="export-btn w-100" onClick={downloadPdf}>
+                  PDF
+                </button>
+              </MenuItem>
+              <MenuItem>
+                <button
+                  className="export-btn w-100"
+                  onClick={() => onPrintClick()}
+                >
+                  Print
+                </button>
+              </MenuItem>
+              {/* <MenuItem></MenuItem> */}
+            </Menu>
 
             <input placeholder="Search" onChange={handleChange} type="search" />
           </div>
@@ -428,14 +433,13 @@ export default function EnhancedTable() {
             )}
           </Paper>
           <PartnerTable
-          printDonorTable={printDonorTable}
-          tableData={stableSort(partnerList, getComparator(order, orderBy))
-            .slice(
-              page * rowsPerPage,
-              page * rowsPerPage + rowsPerPage,
-            )}
+            printDonorTable={printDonorTable}
+            tableData={stableSort(
+              partnerList,
+              getComparator(order, orderBy),
+            ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
             setPrintDonorValue={setPrintDonorValue}
-        ></PartnerTable>
+          ></PartnerTable>
         </div>
       </>
     )

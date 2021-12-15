@@ -1,8 +1,10 @@
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
 
 const Dashboard = () => {
   return (
     <React.Fragment>
+      <ToastContainer hideProgressBar />
       <br />
       <br />
       <br />
@@ -118,7 +120,7 @@ const Dashboard = () => {
 
         <div className="container">
           <div className="row">
-          <div className="col">
+            <div className="col">
               {' '}
               <div className="datCard">
                 <p
@@ -144,10 +146,8 @@ const Dashboard = () => {
                 </p>
               </div>
             </div>
-          <div className="col">
-              {' '}</div>
-            <div className="col">
-              {' '}</div>
+            <div className="col"> </div>
+            <div className="col"> </div>
             {/* <div className="col">
               {' '}
               <div className="datCard">
@@ -200,7 +200,6 @@ const Dashboard = () => {
                 </p>
               </div>
             </div> */}
-         
           </div>
         </div>
       </div>
