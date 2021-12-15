@@ -55,8 +55,8 @@ const ViewAllNgo = () => {
     dispatch(getAllNGOAction());
   }, []);
 
-  let ngoList = useSelector(state => state.ngoList);
-  console.log(ngoList);
+  let allNgoList = useSelector(state => state.ngo.ngoList);
+  console.log(allNgoList);
 
   // const getNgoList = async () => {
   //   const url = BASE_URL + ADD_NGO_URL;
@@ -112,7 +112,7 @@ const ViewAllNgo = () => {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - ngoList.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - allNgoList.length) : 0;
   // SEARCH
   let timeout = null;
   const handleChange = e => {
@@ -302,7 +302,9 @@ const ViewAllNgo = () => {
                             <TableCell align="center">
                               {row.pending}
                             </TableCell>
-                            <TableCell align="center">{row.active}</TableCell>
+                            <TableCell align="center">
+                              {row.active}
+                            </TableCell>
                             <TableCell align="center">
                               {row.actionRequired}
                             </TableCell>
