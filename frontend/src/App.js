@@ -40,6 +40,8 @@ import store from './Redux/store';
 import { LoginAuthData } from './Redux/Actions/authAction';
 import OTPScreen from './pages/Other/OTP';
 import ChangePassword from './pages/Other/changePassword';
+import EditNgo from './pages/NGO/EditNgo';
+import ViewSingleNgo from './pages/NGO/ViewSingleNgo';
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -89,6 +91,8 @@ function App(props) {
               {/*NGO route*/}
               <PrivateRoute exact path="/add_ngo" component={AddNgo} />
               <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />
+              <PrivateRoute exact path="/edit_ngo" component={EditNgo} />
+              <PrivateRoute exact path="/view_single_ngo" component={ViewSingleNgo} />
               {/*project route*/}
               <PrivateRoute
                 exact

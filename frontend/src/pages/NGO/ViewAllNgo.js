@@ -305,6 +305,22 @@ const ViewAllNgo = () => {
                               className="btn"
                               onClick={() => history.push('/add_project', row)}
                             >
+                              <FaRegEye />
+                            </button>
+                            <button
+                              data-bs-toggle="tooltip"
+                              title="Edit"
+                              className="btn"
+                              onClick={() => history.push('/edit_ngo', row)}
+                            >
+                              <FaRegEdit />
+                            </button>
+                            <button
+                              data-bs-toggle="tooltip"
+                              title="Add Fund"
+                              className="btn"
+                              onClick={() => fundModaOpen(row)}
+                            >
                               <FaPlusCircle />
                             </button>
                             <button
