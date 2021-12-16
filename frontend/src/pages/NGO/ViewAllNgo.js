@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -22,14 +22,13 @@ import {
 } from 'react-icons/fa';
 // import '../Ngo/Ngo.css';
 import axios from 'axios';
-import {Link, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllNGOAction } from '../../Redux/Actions/NgoActions';
-
+import NGOdelete from '../../Modals/ngo/ngoDelete';
 
 const ViewAllNgo = () => {
-
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -48,11 +47,10 @@ const ViewAllNgo = () => {
   const [XlsUrl, setXlsUrl] = React.useState('');
   const [printNgoTable, setPrintNgoTable] = React.useState(false);
 
-
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAllNGOAction());
+    dispatch(getAllNGOAction(''));
   }, []);
 
   let allNgoList = useSelector(state => state.ngo.ngoList);
@@ -124,11 +122,11 @@ const ViewAllNgo = () => {
 
   const onSearch = value => {
     if (value) {
-      // dispatch(getNgoByValueAction(value));
+      dispatch(getAllNGOAction(value));
     } else {
-      // dispatch(getViewAllNgoAction());
+      dispatch(getAllNGOAction(''));
     }
-  };  
+  };
 
   const headCells = [
     {
@@ -161,82 +159,61 @@ const ViewAllNgo = () => {
       disablePadding: false,
       label: 'Action',
     },
-    
   ];
   // END
 
-  
-    const constData = [
-        {
-          id: 1,
-          name: 'shivani',
-          pending: 0,
-          active: '0',
-          actionrequired: '0',
-          action: '',
-         
-          
-        },
-        {
-          id: 2,
-          name: 'b',
-          pending: 0,
-          active: '0',
-          actionrequired: '0',
-          action: '',
-         
-        },
-        {
-          id: 3,
-          name: 'c',
-          pending: 0,
-          active: '0',
-          actionrequired: '0',
-          action: '',
-        },
-        {
-          id: 4,
-          name: 'd',
-          pending: 0,
-          active: '0',
-          actionrequired: '0',
-          action: '',
-        },
-       
-      ];
+  const constData = [
+    {
+      id: 1,
+      name: 'shivani',
+      pending: 0,
+      active: '0',
+      actionrequired: '0',
+      action: '',
+    },
+    {
+      id: 2,
+      name: 'b',
+      pending: 0,
+      active: '0',
+      actionrequired: '0',
+      action: '',
+    },
+    {
+      id: 3,
+      name: 'c',
+      pending: 0,
+      active: '0',
+      actionrequired: '0',
+      action: '',
+    },
+    {
+      id: 4,
+      name: 'd',
+      pending: 0,
+      active: '0',
+      actionrequired: '0',
+      action: '',
+    },
+  ];
 
-    return (
-      <>
+  return (
+    <>
       <br />
       <br />
       <br />
       <br />
-      <div className="card">
-      <div
-      style={{
-        display: 'flex',
-        padding: '20px',
-        justifyContent: 'space-between',
-      }}
-    >
-    <p
-        style={{
-          textAlign: 'left',
-          fontWeight: 'bold',
-          margin: '20px',
-          marginLeft: '20px',
-        }}
-      >
-        LIST OF ALL NGO
-      </p>
-      <button
-        style={{ alignSelf: 'flex-start' }}
-        className="btn btn-primary"
-      >
-        Add NGO
-      </button>
-      </div>
-    </div>
+      <NGOdelete show={deleteModal} onHide={deleteModalClose} id={deleteId} />
+      <nav className="navbar navbar-light">
+        <a className="navbar-brand">LIST OF ALL NGO</a>
+        <form className="form-inline">
+          <div className="modalClass">
+            <Link to="/add_ngo" type="" className="btn btn-primary">
+              ADD NGO
+            </Link>
+          </div>
+        </form>
+      </nav>
       <div
         style={{
           margin: '20px',
@@ -256,116 +233,113 @@ const ViewAllNgo = () => {
           >
             Export
           </button>
-          <input type="search" placeholder="Search" onChange={e => handleChange(e)} />
+          <input
+            type="search"
+            placeholder="Search"
+            onChange={e => handleChange(e)}
+          />
         </div>
         <Paper sx={{ width: '100%', mb: 2 }}>
-            <>
-              <TableContainer>
-                <Table
-                  sx={{ minWidth: 750 }}
-                  aria-labelledby="tableTitle"
-                  size={dense ? 'small' : 'medium'}
-                >
-                  <EnhancedTableHead
-                    numSelected={selected.length}
-                    order={order}
-                    orderBy={orderBy}
-                    onRequestSort={handleRequestSort}
-                    rowCount={constData.length}
-                  />
-                  <TableBody>
-                    {stableSort(constData, getComparator(order, orderBy))
-                      .slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage,
-                      )
-                      .map((row, index) => {
-                        const isItemSelected = isSelected(row.name);
-                        const labelId = `enhanced-table-checkbox-${index}`;
+          <>
+            <TableContainer>
+              <Table
+                sx={{ minWidth: 750 }}
+                aria-labelledby="tableTitle"
+                size={dense ? 'small' : 'medium'}
+              >
+                <EnhancedTableHead
+                  numSelected={selected.length}
+                  order={order}
+                  orderBy={orderBy}
+                  onRequestSort={handleRequestSort}
+                  rowCount={constData.length}
+                />
+                <TableBody>
+                  {stableSort(constData, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      const isItemSelected = isSelected(row.name);
+                      const labelId = `enhanced-table-checkbox-${index}`;
 
-                        return (
-                          <TableRow
-                            hover
-                            aria-checked={isItemSelected}
-                            tabIndex={-1}
-                            key={row.name}
-                            selected={isItemSelected}
+                      return (
+                        <TableRow
+                          hover
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={row.name}
+                          selected={isItemSelected}
+                        >
+                          <TableCell
+                            id={labelId}
+                            align="center"
+                            scope="row"
+                            padding="none"
                           >
-                            <TableCell
-                              id={labelId}
-                              align="center"
-                              scope="row"
-                              padding="none"
+                            {row.name}
+                          </TableCell>
+                          <TableCell align="center">{row.pending}</TableCell>
+                          <TableCell align="center">{row.active}</TableCell>
+                          <TableCell align="center">
+                            {row.actionRequired}
+                          </TableCell>
+                          <TableCell align="center">
+                            <button
+                              data-bs-toggle="tooltip"
+                              title="View Details"
+                              className="btn"
+                              onClick={() => ViewModalOpen(row)}
                             >
-                              {row.name}
-                            </TableCell>
-                            <TableCell align="center">
-                              {row.pending}
-                            </TableCell>
-                            <TableCell align="center">
-                              {row.active}
-                            </TableCell>
-                            <TableCell align="center">
-                              {row.actionRequired}
-                            </TableCell>
-                            <TableCell align="center">
-                              <button
-                                data-bs-toggle="tooltip"
-                                title="View Details"
-                                className="btn"
-                                onClick={() => ViewModalOpen(row)}
-                              >
-                                <FaRegEye />
-                              </button>
-                              <button
-                                data-bs-toggle="tooltip"
-                                title="Edit"
-                                className="btn"
-                                onClick={() => history.push('/edit_ngo', row)}
-                              >
-                                <FaRegEdit />
-                              </button>
-                              <button
-                                data-bs-toggle="tooltip"
-                                title="Add Fund"
-                                className="btn"
-                                onClick={() => fundModaOpen(row)}
-                              >
-                                <FaPlusCircle />
-                              </button>
-                              <button
-                                data-bs-toggle="tooltip"
-                                title="Delete"
-                                className="btn"
-                                onClick={() => deleteModalOpen(row)}
-                              >
-                                <FaRegTrashAlt />
-                              </button>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={constData.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                pageSize={10}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                showLastButton={true}
-                showFirstButton={true}
-              />
-            </>
+                              <FaRegEye />
+                            </button>
+                            <button
+                              data-bs-toggle="tooltip"
+                              title="Edit"
+                              className="btn"
+                              onClick={() => history.push('/edit_ngo', row)}
+                            >
+                              <FaRegEdit />
+                            </button>
+                            <button
+                              data-bs-toggle="tooltip"
+                              title="Add Project"
+                              className="btn"
+                              onClick={() => history.push('/add_project', row)}
+                            >
+                              <FaPlusCircle />
+                            </button>
+                            <button
+                              data-bs-toggle="tooltip"
+                              title="Delete"
+                              className="btn"
+                              onClick={() => deleteModalOpen(row)}
+                            >
+                              <FaRegTrashAlt />
+                            </button>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={constData.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              pageSize={10}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              showLastButton={true}
+              showFirstButton={true}
+            />
+          </>
         </Paper>
-        </div>
-      </>
-    )
-}
+      </div>
+    </>
+  );
+};
 
 export default ViewAllNgo;
 
@@ -476,11 +450,10 @@ function EnhancedTableHead(props) {
   );
 }
 
-EnhancedTableHead.propTypes = {    
+EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
-
