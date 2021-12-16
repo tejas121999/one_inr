@@ -217,14 +217,18 @@ export default function ViewRecept() {
     }
   };
   const exportCsv = async () => {
-    const resCsv = await axios.get(BASE_URL + 'partner/get-partner-csv');
+    const resCsv = await axios.get(
+      BASE_URL + 'userReceipts/get-user-receipts-csv',
+    );
     if (resCsv.data.url) {
       const downloadUrl = resCsv.data.url;
       setCsvUrl(downloadUrl);
     }
   };
   const exportXls = async () => {
-    const resCsv = await axios.get(BASE_URL + 'partner/get-partner-excel');
+    const resCsv = await axios.get(
+      BASE_URL + 'userReceipts/get-user-receipts-xlsx',
+    );
     if (resCsv.data.url) {
       const downloadUrl = resCsv.data.url;
       setXlsUrl(downloadUrl);
@@ -274,6 +278,8 @@ export default function ViewRecept() {
       })
       .catch(err => {});
   };
+
+  // Export End
 
   return (
     <>
@@ -335,10 +341,14 @@ export default function ViewRecept() {
               </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100">CSV</button>
+              <button className="export-btn w-100" onClick={downloadCsv}>
+                CSV
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100">Excel</button>
+              <button className="export-btn w-100" onClick={downloadXls}>
+                Excel
+              </button>
             </MenuItem>
             <MenuItem>
               <button className="export-btn w-100" onClick={downloadPdf}>

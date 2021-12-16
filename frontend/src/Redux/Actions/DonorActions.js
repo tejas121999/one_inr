@@ -503,7 +503,7 @@ export const getUpcomingDonorAction = value => {
         dispatch(UpcomingDonorList(res.data.data));
       })
       .catch(error => {
-        dispatch(UpcomingDonorList(value));
+        // dispatch(UpcomingDonorList(value));
       });
   };
 };

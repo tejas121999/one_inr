@@ -38,6 +38,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from '../../utils/interceptor';
+import { BASE_URL } from '../../API/APIEndpoints';
 export default function EnhancedTable() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -54,11 +56,17 @@ export default function EnhancedTable() {
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
   const [printDonorTable, setPrintDonorTable] = React.useState(false);
+  const [XlsUrl, setXlsUrl] = React.useState('');
+  const [pdfUrl, setPdfUrl] = React.useState('');
+  const [CsvUrl, setCsvUrl] = React.useState('');
 
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getUpcomingDonorAction(''));
+    exportPdf();
+    exportCsv();
+    exportXls();
   }, []);
 
   let UpcomingdonorList = useSelector(state => state.donor.upComingDonors);
@@ -155,6 +163,77 @@ export default function EnhancedTable() {
   };
 
   // END
+
+  // EXPORT
+  const exportPdf = async () => {
+    const res = await axios.get(BASE_URL + 'donor/upcoming-donor-pdf');
+
+    if (res.data.url) {
+      const downloadUrl = res.data.url;
+      setPdfUrl(downloadUrl);
+    }
+  };
+  const exportCsv = async () => {
+    const resCsv = await axios.get(BASE_URL + 'donor/upcoming-donor-csv');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setCsvUrl(downloadUrl);
+    }
+  };
+  const exportXls = async () => {
+    const resCsv = await axios.get(BASE_URL + 'donor/upcoming-donor-xlsx');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setXlsUrl(downloadUrl);
+    }
+  };
+  // test
+  const downloadPdf = () => {
+    fetch(pdfUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'UpcomingDonorRenewal.pdf';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+
+  const downloadCsv = () => {
+    fetch(CsvUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'UpcomingDonorRenewal.csv';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  const downloadXls = () => {
+    fetch(XlsUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'UpcomingDonorRenewal.xlsx';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+
+  // Export End
+
   return (
     <>
       <br />
@@ -224,13 +303,19 @@ export default function EnhancedTable() {
               </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100">CSV</button>
+              <button className="export-btn w-100" onClick={downloadCsv}>
+                CSV
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100">Excel</button>
+              <button className="export-btn w-100" onClick={downloadXls}>
+                Excel
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100">PDF</button>
+              <button className="export-btn w-100" onClick={downloadPdf}>
+                PDF
+              </button>
             </MenuItem>
             <MenuItem>
               <button
