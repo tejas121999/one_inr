@@ -34,7 +34,7 @@ async function generateUserReceiptsExcel(partnerData,res) {
         ${partnerData.map(singleUser=>
             `
             <tr>
-            <td>${singleUser.user.dataValues.name}</td>
+            <td>${singleUser.user ? singleUser.user.dataValues.name : ''}</td>
             <td>${singleUser.receiptNumber}</td>
             <td>${singleUser.projectId}</td>
             <td>${singleUser.ngoId}</td>
