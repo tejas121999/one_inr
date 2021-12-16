@@ -1,7 +1,6 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import '../../pages/Doner/Donor.css';
-import axios from 'axios';
 import { BASE_URL } from '../../API/APIEndpoints';
 import { useDispatch } from 'react-redux';
 import {
