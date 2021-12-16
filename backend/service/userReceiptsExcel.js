@@ -6,7 +6,7 @@ const fsPath = require('fs-path');
 // console.log(__dirname.concat("/download.csv"))
 async function generateUserReceiptsExcel(partnerData,res) {
 
-    
+    //console.log(partnerData,"+++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     const date = Date.now();
     // var xls = json2xls(finalData);
     
