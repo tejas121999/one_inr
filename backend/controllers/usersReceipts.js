@@ -8,9 +8,7 @@ const fs = require("fs")
 const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'receipt.html'), 'utf-8');
 const generateUserReceiptsExcel = require('../service/userReceiptsExcel')
 const generatePdf = require('../utils/generatePdf')
-
 const filePath = 'user-receipts'
-
 const exportToCsv = require('../utils/exportToCsv')
 const html1 = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'userReceipts.html'), 'utf-8');
 
@@ -36,7 +34,8 @@ exports.addUsersReceipts = async (req, res) => {
 
         } = req.body;
         // console.log(req.body);
-        let findTotalReciepts = await models.usersReceipts.findAndCountAll()
+        let findTotalReciepts = await models.usersReceipts.count()
+        // console.log(findTotalReciepts);rs
         let receiptNumber = 1000 + findTotalReciepts.count++
         let usersReceipts = await models.usersReceipts.create({
 
@@ -58,7 +57,7 @@ exports.addUsersReceipts = async (req, res) => {
         )
 
         if (!usersReceipts) {
-            return res.status(402).json({
+            return res.status(400).json({
                 message: 'Failed to create Users Receipts'
             })
         } else {
