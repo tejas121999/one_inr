@@ -15,7 +15,6 @@ import { Button } from 'react-bootstrap';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import './viewreciept.css';
-
 import {
   FaRegEdit,
   FaRegEye,
@@ -32,8 +31,23 @@ import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import CreateReceiptForm from '../../components/CreateReceiptForm';
-import EditReceipt from '../../Modals/Donor/EditReceipt';
-
+import Loader from '../Loader';
+import {
+  getAllParentDonorAction,
+  getReceiptDatabyId,
+  getViewReceiptDonorAction,
+  SearchReceiptByValueAction,
+} from '../../Redux/Actions/DonorActions';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  EnhancedTableHead,
+  getComparator,
+  stableSort,
+} from '../../components/Pagination';
+import { color } from '@mui/system';
+// import DonarTable from './ViewReceiptTable';
+// import ViewReceiptTable from './ViewReceiptTable';
+import DonorTable from './DonorTable';
 export default function ViewRecept() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -95,9 +109,9 @@ export default function ViewRecept() {
         console.log(err);
       });
   };
-  // const handleClick = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
   const ViewModalOpen = data => {
     setViewData(data);
@@ -181,19 +195,19 @@ export default function ViewRecept() {
   }
 
   const setPrintDonorValue = (value) => {
-    if(printDonorTable) {
+    if (printDonorTable) {
       setPrintDonorValue(value);
     }
     // window.print();
   }
 
   const onCopyClick = () => {
-    var urlField = document.getElementById('tableDiv')   
+    var urlField = document.getElementById('tableDiv')
     var range = document.createRange()
     range.selectNode(urlField)
     window.getSelection().addRange(range)
     // sel.removeAllRanges();
-    
+
     document.execCommand('copy')
   }
 
@@ -247,7 +261,7 @@ export default function ViewRecept() {
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
-            onClose={handleClose}
+            // onClose={handleClose}
             style={{ top: '30px', left: '-8px' }}
           >
             <MenuItem>
@@ -263,14 +277,14 @@ export default function ViewRecept() {
               <button className="export-btn w-100">PDF</button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100" onClick={()=> onPrintClick()}>Print</button>
+              <button className="export-btn w-100" onClick={() => onPrintClick()}>Print</button>
             </MenuItem>
             {/* <MenuItem></MenuItem> */}
           </Menu>
           <input placeholder="Search" onChange={e => handleChange(e)} />
         </div>
         <CreateReceiptForm modal={modal} handleModal={handleModal} />
-        <EditReceipt modal1={modal1} handleModal1={handleModal1} />
+        {/*<EditReceipt modal1={modal1} handleModal1={handleModal1} /> */}
         <Paper sx={{ width: '100%', mb: 2, height: '60vh' }}>
           {recept && recept.length > 0 ? (
             <React.Fragment>
@@ -359,7 +373,7 @@ export default function ViewRecept() {
                               align="center"
                               scope="row"
                               padding="none"
-                              // style={color="lightblue"}
+                            // style={color="lightblue"}
                             >
                               {row.recieptPdf ? 'view' : '-'}
                             </TableCell>
@@ -371,10 +385,10 @@ export default function ViewRecept() {
                             >
                               {row.createdAt
                                 ? row.createdAt
-                                    .split('')
-                                    .slice(0, 10)
-                                    .join()
-                                    .replace(/,/g, '')
+                                  .split('')
+                                  .slice(0, 10)
+                                  .join()
+                                  .replace(/,/g, '')
                                 : '-'}
                             </TableCell>
                             <TableCell align="center">
@@ -383,6 +397,7 @@ export default function ViewRecept() {
                                 title="Edit"
                                 className="btn"
                                 // onClick={() => history.push('/edit_doner', row)}
+
                                 onClick={handleModal1}
                               >
                                 <FaRegEdit
@@ -421,7 +436,7 @@ export default function ViewRecept() {
               page * rowsPerPage,
               page * rowsPerPage + rowsPerPage,
             )}
-            setPrintDonorValue={setPrintDonorValue}
+          setPrintDonorValue={setPrintDonorValue}
         ></DonorTable>
       </div>
     </>

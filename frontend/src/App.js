@@ -7,7 +7,7 @@ import Payments from './pages/Account/Payments';
 import AddDoner from './pages/Doner/AddDoner';
 import EditDoner from './pages/Doner/EditDoner';
 import UpcomingDonerRenewal from './pages/Doner/UpcomingDonerRenewal';
-import Doners from './pages/Donor/Donors';
+// import Doners from './pages/Donor/Donors';
 import ViewRecept from './pages/Doner/ViewRecept';
 import AddPartner from './pages/master/partner/AddPartner';
 import EditPartner from './pages/master/partner/EditPartner';
@@ -37,6 +37,9 @@ import Viewdonormodal from './Modals/Donor/ViewDonorModal';
 import Forgot from './pages/Forgot';
 import store from './Redux/store';
 import { LoginAuthData } from './Redux/Actions/authAction';
+import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
+// import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
+import ViewAllDoner from './pages/Doner/ViewAllDoner'
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
