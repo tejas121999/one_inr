@@ -71,7 +71,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             field: 'signature'
         },
-        
         isKyc: {
             type: DataTypes.BOOLEAN,
             field: 'is_kyc'
@@ -81,8 +80,9 @@ module.exports = (sequelize, DataTypes) => {
     {
         freezeTableName: true,
         tableName: 'ngos',
-        timestamps: true,
-        paranoid: true
+        paranoid: true,
+        deletedAt : 'deleted_at',
+        timeStamp : true,
     });
 
     ngo.associate = function (models) {
