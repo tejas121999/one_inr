@@ -1,9 +1,12 @@
 import React from 'react'
+import './project.css'
 
 const ViewAllProjects = () => {
     return (
-        <div>
-            <h1>view all project</h1>
+        <div className='ViewAll'>
+            <div className='white-box'>
+                <h1>helo view all ngo </h1>
+            </div>
         </div>
     )
 }

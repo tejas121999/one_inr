@@ -97,6 +97,7 @@ export default function ViewRecept() {
   const handleModal1 = () => {
     setModal1(!modal1);
   };
+  
   const getViewRecepts = async () => {
     const url = BASE_URL + VIEW_RECEPT_URL;
     await axios
@@ -109,6 +110,7 @@ export default function ViewRecept() {
         console.log(err);
       });
   };
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };

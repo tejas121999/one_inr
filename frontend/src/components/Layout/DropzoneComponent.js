@@ -64,6 +64,7 @@ function DropzoneComponent(props) {
             <img
                 src={file.preview}
                 alt={file.name}
+                style={{width: '100px', height: '100px'}}
             />
         </div>
     ));

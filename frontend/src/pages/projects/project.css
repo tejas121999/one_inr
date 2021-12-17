@@ -1,9 +1,15 @@
-.AddDoner   {
+.AddDoner {
   padding: 40px;
   margin: 40px;
 }
-.white-box{
-    background-color: #fefefe;
-    padding: 25px;
-    margin-bottom: 30px;
+.white-box {
+  background-color: #fefefe;
+  max-width: 100%;
+  padding: 25px;
+  margin: 25px;
+  margin-bottom: 30px;
+}
+.ViewAll {
+  padding: 40px;
+  margin: 40px;
 }
