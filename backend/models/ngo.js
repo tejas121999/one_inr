@@ -8,12 +8,12 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         address: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             field: 'address'
         },
 
         registrationDate: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DATE,
             field: 'registration_date'
         },
 
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         landline: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             field: 'landline'
         },
 
@@ -57,9 +57,9 @@ module.exports = (sequelize, DataTypes) => {
             field: 'charity_registration_certificate'
         },
 
-        dead: {
+        deed: {
             type: DataTypes.STRING,
-            field: 'dead'
+            field: 'deed'
         },
 
         logo: {
@@ -71,43 +71,24 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             field: 'signature'
         },
-
-        // createdAt: {
-        //     type: DataTypes.DATE,
-        //     field: 'created_at'
-        // },
-
-        // updatedAt: {
-        //     type: DataTypes.DATE,
-        //     fied: 'updated_at'
-        // },
-
-        // deletedAt: {
-        //     type: DataTypes.DATE,
-        //     field: 'deleted_at'
-        // },
-
+        
         isKyc: {
             type: DataTypes.BOOLEAN,
             field: 'is_kyc'
         },
-
-        // isActive: {
-        //     type: DataTypes.BOOLEAN,
-        //     field: 'is_active',
-        //     default: true
-        // }
     },
     
     {
         freezeTableName: true,
         tableName: 'ngos',
-        timestamps: false
+        timestamps: true,
+        paranoid: true
     });
 
     ngo.associate = function (models) {
         ngo.hasMany(models.ngoBankDetails,{foreignKey : 'ngoId'})
         ngo.hasMany(models.usersReceipts,{foreignKey : 'ngoId'})
+        ngo.belongsTo(models.users,{foreignKey: 'userId'})
         
     }
 

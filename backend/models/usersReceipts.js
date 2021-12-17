@@ -75,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
         updatedAt: {
             type: DataTypes.DATEONLY,
             field: 'updated_at'
-        },
+        },  
 
     },
     {
@@ -88,13 +88,7 @@ module.exports = (sequelize, DataTypes) => {
         usersReceipts.belongsTo(models.users,{foreignKey : 'userId'})
         
     }
-    
-
-
-
-
     return usersReceipts;
-
 }
 
 // module.exports = sequelize.model('usersReceipts', usersReceipts);

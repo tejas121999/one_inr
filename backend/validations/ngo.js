@@ -80,9 +80,9 @@ exports.ngoValidation = [
         .exists().withMessage('Charity Registration Certificate is required is required')
         .notEmpty().withMessage('Charity Registration Certificate is required is required'),
 
-    body('dead')
-        .exists().withMessage('dead is required')
-        .notEmpty().withMessage('dead is required'),
+    body('deed')
+        .exists().withMessage('deed is required')
+        .notEmpty().withMessage('deed is required'),
 
     body('logo')
         .exists().withMessage('Logo Image is required')

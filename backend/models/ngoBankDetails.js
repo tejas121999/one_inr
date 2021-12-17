@@ -36,7 +36,8 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true,
         tableName: 'ngo_bank_details',
         paranoid : true,
-        deletedAt : 'deleted_at'
+        deletedAt : 'deleted_at',
+        timestamp: true
         
     })
     ngoBankDetails.associate = function (models) {

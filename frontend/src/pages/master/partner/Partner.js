@@ -181,7 +181,7 @@ export default function EnhancedTable() {
     },
   ];
   // END
-
+  // EXPORT
   const exportPdf = async () => {
     const res = await axios.get(BASE_URL + 'partner/get-partnerPdf');
 
