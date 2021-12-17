@@ -283,7 +283,8 @@ exports.pdfOfUserReceipts = async (req, res) => {
         });
         // console.log(`------------>`,userReceiptsData.dataValues)
 
-        // const userDataValues = await userReceiptsData.map(ele => { return ele.dataValues });
+        const userDataValues = await userReceiptsData.map(ele => { return ele.dataValues });
+        console.log((userDataValues[0]))
 
         // console.log("-----------------00000000000000",userDataValues, "-----------------00000000000000");
 
@@ -311,10 +312,15 @@ exports.getUserReceiptExcel = async (req, res) => {
         let userReceiptsData = await models.usersReceipts.findAll({
             include    : [{ model: models.users, attributes: ['name']}]
         });
+
+        const userDataValues = await userReceiptsData.map(ele => { return ele.dataValues });
+        // console.log(userDataValues[0].user.dataValues.name);
+        // res.json({userDataValues: userDataValues})
+
         if (!userReceiptsData) {
             res.status(404).json({ message: 'Data not found' });
         } else {
-            const userReceiptsXlsx = await generateUserReceiptsExcel(userReceiptsData, res)
+            const userReceiptsXlsx = await generateUserReceiptsExcel(userDataValues, res)
             res.status(200).json({ message: 'Xlsx Generated', url : 'http://' + urlData + userReceiptsXlsx.pathToExport });
         }
     } catch (e) {

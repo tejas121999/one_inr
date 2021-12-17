@@ -1,5 +1,5 @@
 .cr-header {
-  margin-bottom: $spacer * .5;
+  margin-bottom: $spacer * 0.5;
   border-bottom: $border-width solid $border-color;
 
   &__nav-right {
@@ -17,4 +17,17 @@
   //     cursor: pointer;
   //   }
   // }
+}
+
+.nav-item .nav-link.active {
+  color: black;
+  background: rgba(255, 255, 255, 0.23);
+  opacity: 1;
+}
+.nav-tabs .nav-link {
+  margin-bottom: -1px;
+  background: 0 0;
+  border: 1px solid transparent;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
 }
