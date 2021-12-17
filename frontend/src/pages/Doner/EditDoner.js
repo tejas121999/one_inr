@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Field, Form, Formik } from 'formik';
-import axios from 'axios';
+
 import * as yup from 'yup';
 import { BASE_URL, ADD_DONOR_GET_PARENTS_URL } from '../../API/APIEndpoints';
 import { useDispatch, useSelector } from 'react-redux';
-import { getParentListAction } from '../../Redux/Actions/DonorActions';
+import {
+  getAllParentDonorAction,
+  UpdateDonorByIdAction,
+} from '../../Redux/Actions/DonorActions';
 import { useHistory } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Editdonor = props => {
   const [donarData, setDonarData] = useState([]);
   const [parentId, setParentId] = useState('');
@@ -16,7 +21,7 @@ const Editdonor = props => {
     async function onMount() {
       setDonarData(props.location.state);
       setUserId(props.location.state.id);
-      await dispatch(getParentListAction());
+      await dispatch(getAllParentDonorAction());
     }
     onMount();
   }, []);
@@ -60,31 +65,19 @@ const Editdonor = props => {
       plan: values.plan,
     };
     console.log('Chinmay Update', obj);
-    await axios
-      .put(url, obj)
-      .then(res => {
-        history.push('/view_all_doner');
-      })
-      .catch(err => {
-        alert(err);
-      });
+    dispatch(UpdateDonorByIdAction(userId, obj, props.history));
   };
 
   return (
     <React.Fragment>
-      <div className="card">
-        <p
-          style={{
-            textAlign: 'left',
-            fontWeight: 'bold',
-            margin: '20px',
-            width: '100%',
-            marginLeft: '20px',
-          }}
-        >
-          EDIT DONOR
-        </p>
-      </div>
+      <br />
+      <br />
+      <br />
+      <ToastContainer hideProgressBar />
+
+      <nav className="navbar navbar-light">
+        <a className="navbar-brand">Edit Donor</a>
+      </nav>
       <div
         style={{ backgroundColor: 'white', height: '100vh', margin: '30px' }}
       >

@@ -1,22 +1,18 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import '../../pages/Doner/Donor.css';
-import axios from 'axios';
 import { BASE_URL } from '../../API/APIEndpoints';
+import { useDispatch } from 'react-redux';
+import {
+  DeleteDonorByIdAction,
+  getViewAllDonorAction,
+} from '../../Redux/Actions/DonorActions';
 const Donordelete = props => {
+  const dispatch = useDispatch();
   const onDelete = async () => {
     const id = props.id;
-    const Url = BASE_URL + `donor/${id}`;
-    await axios
-      .delete(Url)
-      .then(res => {
-        alert('deleted');
-        props.getDonor();
-        props.onHide();
-      })
-      .catch(err => {
-        alert('err');
-      });
+    await dispatch(DeleteDonorByIdAction(id));
+    props.onHide();
   };
   return (
     <React.Fragment>

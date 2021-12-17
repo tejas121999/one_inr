@@ -2,16 +2,19 @@ import { Field, Form, Formik } from 'formik';
 import React, { Component } from 'react';
 import './Donor.css';
 import * as yup from 'yup';
-import axios from 'axios';
-import {
-  GET_ALL_PARENT_URL,
-  ADD_DONOR_URL,
-  BASE_URL,
-} from '../../API/APIEndpoints';
+import axios from '../../utils/interceptor';
 import { useHistory } from 'react-router-dom';
-import { getParentListAction } from '../../Redux/Actions/DonorActions';
+import {
+  getAllParentDonorAction,
+  addDonorAction,
+  addDonorBulkAction,
+} from '../../Redux/Actions/DonorActions';
 import { connect } from 'react-redux';
-import { constData } from '../Donor/Donors';
+
+import { BASE_URL } from '../../API/APIEndpoints';
+
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Adddonor extends Component {
   constructor(props) {
@@ -20,64 +23,193 @@ class Adddonor extends Component {
     this.getParentList();
     this.state = {
       parentsList: [],
+      isCsv: false,
+      csvUrl: '',
+      isForm: false,
+      csvId: '',
+      isPasswordVisble: false,
     };
   }
 
   getParentList = async () => {
-    const url = BASE_URL + GET_ALL_PARENT_URL;
-    const res = await axios
-      .get(url)
-      .then(res => {
-        console.log('Response', res);
-        this.setState({ parentsList: res.data.data });
-      })
-      .catch(err => {
-        console.log('Error', err);
-      });
+    await this.props.getAllParentDonorAction();
   };
+
   validationSchema = yup.object({
-    fName: yup.string().required('Required'),
-    lName: yup.string().required('required'),
+    fName: yup
+      .string()
+      .required('Required')
+      .max(50, 'Max limit is 50 characters'),
+    lName: yup
+      .string()
+      .required('required')
+      .max(50, 'Max limit is 50 characters'),
     phoneNumber: yup
       .string()
       .required('required')
       .min(10, 'Please enter 10 digits'),
-    emailId: yup.string().email('Invalid Email Format').required('Required'),
-    password: yup.string().required('Required').min(8, 'Should be 5 character'),
+    emailId: yup
+      .string()
+      .email('Invalid Email Format')
+      .required('Required')
+      .max(50, 'Max limit is 50 characters'),
+    password: yup.string().required('Required').min(5, 'Should be 5 character'),
   });
+
+  // Submit
   onAddDoner = async values => {
-    const { parentsList } = this.state;
-
+    const { parentsList } = this.props;
     const parentId = parentsList.filter(data => data.name == values.parent);
-
     let id = parentId && parentId.length ? parentId[0].id : 0;
 
-    values.parent = id;
-    console.log('Aded', values);
-    const url = BASE_URL + ADD_DONOR_URL;
-    const obj = {
-      name: values.fName + ' ' + values.lName,
-      email: values.emailId,
-      mobile: values.phoneNumber,
-      password: values.password,
-      parentId: id,
-      isPriyank: values.isPriyank,
-    };
-    await axios
-      .post(url, obj)
-      .then(res => {
-        this.props.history.push('/view_all_doner');
-      })
-      .catch(err => {
-        alert(err);
+    if (this.state.isCsv && (values.fName || values.lName || values.mobile)) {
+      console.log(
+        'panni',
+        this.state.isCsv && (values.fName || values.lName || values.mobile),
+      );
+      toast.error("Can't Upload both CSV and Form", {
+        position: 'top-center',
+        autoClose: 2000,
       });
+    } else {
+      if (this.state.isCsv) {
+        alert('File');
+        const obj = {
+          path: this.state.csvUrl,
+          fileExtension: 'csv',
+          fileId: this.state.csvId,
+        };
+        this.props.addDonorBulkAction(obj, this.props.history);
+      } else {
+        values.parent = id;
+        const obj = {
+          name: values.fName + ' ' + values.lName,
+          email: values.emailId,
+          mobile: values.phoneNumber,
+          password: values.password,
+          parentId: id,
+        };
+        this.props.addDonorAction(obj, this.props.history);
+      }
+    }
+  };
+
+  // END
+
+  onCsvAdd = async fileData => {
+    if (fileData == undefined) {
+      this.setState({ isCsv: false });
+    } else {
+      this.setState({ isCsv: true });
+    }
+
+    console.log('data1Csv', fileData);
+    const data = new FormData();
+    data.append('avatar', fileData);
+    const result = await axios.post(
+      BASE_URL + 'csvUserUpload/csv-upload',
+      data,
+    );
+    console.log('Chinmay', result.data.uploadFile);
+
+    if (result && result.data.uploadFile) {
+      this.setState({
+        isCsv: true,
+        csvUrl: result.data.uploadFile.url,
+        csvId: result.data.uploadFile.id,
+      });
+    }
+  };
+
+  validateEmail = value => {
+    let error;
+    if (!this.state.isCsv) {
+      if (!value) {
+        error = 'Required';
+      } else if (
+        !new RegExp(/^([a-z0-9]+)@([a-z0-9]+)\.([a-z]{2,3})$/).test(value)
+      ) {
+        error = 'Invalid email id';
+      } else if (value.length > 50) {
+        error = 'Max limit is 50 characters';
+      }
+    }
+
+    // }
+    return error;
+  };
+  validateFname = value => {
+    let error;
+    if (!this.state.isCsv) {
+      if (!value) {
+        error = 'Required';
+      } else if (value.length > 50) {
+        error = 'Max limit is 50 characters';
+      }
+    }
+
+    // }
+    return error;
+  };
+  validateLname = value => {
+    let error;
+    if (!this.state.isCsv) {
+      if (!value) {
+        error = 'Required';
+      } else if (value.length > 50) {
+        error = 'Max limit is 50 characters';
+      }
+    }
+
+    // }
+    return error;
+  };
+  validateMobile = value => {
+    let error;
+    if (!this.state.isCsv) {
+      if (!value) {
+        error = 'Required';
+      } else if (!new RegExp(/^([0-9]{10})$/).test(value)) {
+        error = 'Invalid Format';
+      } else if (value.length > 10) {
+        error = 'Max limit is 10 Digits';
+      }
+    }
+
+    // }
+    return error;
+  };
+  validatePassword = value => {
+    let error;
+    if (!this.state.isCsv) {
+      if (!value) {
+        error = 'Required';
+      } else if (value.length > 50) {
+        error = 'Max limit is 50 characters';
+      }
+    }
+
+    // }
+    return error;
+  };
+  validateParent = value => {
+    const { parentsList } = this.props;
+    const data = parentsList.filter(item => item.name == value);
+  };
+  handleMouseDownPassword = () => {
+    this.setState({ isPasswordVisble: !this.state.isPasswordVisble });
   };
   render() {
     const { parentsList } = this.props;
-    console.log('ADD', this.props);
+    console.log('ADD', this.state.isCsv);
 
     return (
       <React.Fragment>
+        <br />
+        <br />
+        <br />
+        <br />
+        <ToastContainer hideProgressBar />
         <div className="card">
           <p
             style={{
@@ -99,12 +231,13 @@ class Adddonor extends Component {
               phoneNumber: '',
               emailId: '',
               password: '',
-              isPriyank: 'false',
               parent: '',
             }}
             enableReinitialize={true}
-            validationSchema={this.validationSchema}
-            onSubmit={values => this.onAddDoner(values)}
+            // validationSchema={this.validationSchema}
+            onSubmit={values => {
+              this.onAddDoner(values);
+            }}
           >
             {({ errors, values, touched }) => (
               <Form>
@@ -119,6 +252,8 @@ class Adddonor extends Component {
                         className="form-control"
                         value={values.parent}
                         list="parentList"
+                        autocomplete="off"
+                        validate={this.validateParent}
                       />
                       <datalist id="parentList">
                         <option value="No Parent">No Parent</option>
@@ -139,8 +274,8 @@ class Adddonor extends Component {
                         name="fName"
                         type="text"
                         autocomplete="off"
-                        required
                         value={values.fName}
+                        validate={this.validateFname}
                       />
                       {errors.fName && touched.fName && (
                         <div className="text-left">
@@ -160,9 +295,9 @@ class Adddonor extends Component {
                         placeholder="Please Enter Last Name"
                         name="lName"
                         type="text"
-                        required
                         autocomplete="off"
                         value={values.lName}
+                        validate={this.validateLname}
                       />
                       {errors.lName && touched.lName && (
                         <div className="text-left">
@@ -183,7 +318,7 @@ class Adddonor extends Component {
                         type="text"
                         autocomplete="off"
                         maxLength={10}
-                        required
+                        validate={this.validateMobile}
                         value={values.phoneNumber}
                       />
                       {errors.phoneNumber && touched.phoneNumber && (
@@ -205,8 +340,8 @@ class Adddonor extends Component {
                         placeholder="Please Enter Email"
                         name="emailId"
                         type="email"
-                        required
                         autocomplete="off"
+                        validate={this.validateEmail}
                         value={values.emailId}
                       />
                       {errors.emailId && touched.emailId && (
@@ -220,14 +355,25 @@ class Adddonor extends Component {
                     <div className="input-box">
                       <label style={{ fontWeight: 'bold' }}>Password</label>
                       <Field
-                        className="form-control"
+                        className="p-2  border-0 w-100 input-border psw-feild"
+                        aria-invalid="false"
                         placeholder="Create Password"
                         name="password"
-                        type="password"
-                        required
+                        type={this.state.isPasswordVisble ? 'text' : 'password'}
                         autocomplete="off"
+                        validate={this.validatePassword}
                         value={values.password}
                       />
+                      <i
+                        className={`fa ${
+                          this.state.isPasswordVisble
+                            ? 'fa-eye-slash'
+                            : 'fa-eye'
+                        } `}
+                        id="togglePassword"
+                        style={{ marginLeft: '-30px', cursor: 'pointer' }}
+                        onMouseDown={this.handleMouseDownPassword}
+                      ></i>
                       {errors.password && touched.password && (
                         <div className="text-left">
                           <span style={{ color: 'red' }}>
@@ -243,7 +389,12 @@ class Adddonor extends Component {
                   <p style={{ fontWeight: 'bold' }}>
                     Or You Can Upload CSV Only
                   </p>
-                  <input type="file" placeholder="Browse" accept=".csv"></input>
+                  <input
+                    onChange={e => this.onCsvAdd(e.target.files[0])}
+                    type="file"
+                    placeholder="Browse"
+                    accept=".csv"
+                  ></input>
                 </div>
                 <div className="input-box">
                   <a href="">Download and check format of sample CSV </a>
@@ -267,4 +418,8 @@ const mapStateToProps = state => ({
   parentsList: state.donor.allParent,
 });
 
-export default connect(mapStateToProps, { getParentListAction })(Adddonor);
+export default connect(mapStateToProps, {
+  getAllParentDonorAction,
+  addDonorAction,
+  addDonorBulkAction,
+})(Adddonor);

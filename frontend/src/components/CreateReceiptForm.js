@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import axios from '../utils/interceptor';
+
 import { useFormik, Formik, Field, Form, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import logo from '../assets/img/logo/logo_200.png';
 // import '../pages/login.css';
 import { NavLink, useHistory } from 'react-router-dom';
-import { BASE_URL, GetAllDonor, AddUserReceipt } from '../API/APIEndpoints';
-import axios from 'axios';
+
 import { Button, Modal } from 'react-bootstrap';
+import {
+  AddUserReceiptAction,
+  getAllParentDonorAction,
+  getViewAllDonorAction,
+} from '../Redux/Actions/DonorActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { BASE_URL } from '../API/APIEndpoints';
 
 let validationSchema = yup.object().shape({
-  Project: yup.string().required(),
+  // Project: yup.string().required(),
   Donar: yup.string().required(),
   Amount: yup.number().min(1, 'enter Amount must be grater than 0.').required(),
   date: yup.string().required(),
@@ -20,102 +28,151 @@ let validationSchema = yup.object().shape({
   //     .required(),
 });
 
-const CreateReceiptForm = ({ modal, handleModal }) => {
+const CreateReceiptForm = ({ modal, handleModal, type, id }) => {
+  const [respData, setResData] = useState('');
   let history = useHistory();
+  const dispatch = useDispatch();
   const [donorList, setDonorList] = useState([]);
+
   useEffect(() => {
-    const URL = BASE_URL + GetAllDonor;
-    axios
-      .get(URL)
-      .then(response => {
-        // console.log('response', response.data.data.rows);
-        setDonorList(response.data.data.rows);
-        // return response.data.data.rows;
-      })
-      .catch(error => {
-        console.log('error', error);
-      });
+    async function onMount() {
+      await dispatch(getViewAllDonorAction());
+      // setDonorList()
+    }
+    onMount();
   }, []);
 
+  useEffect(() => {
+    async function onMount() {
+      await dispatch(getAllParentDonorAction());
+      // setDonorList()
+    }
+    onMount();
+  }, []);
+
+  let AllDonorList = useSelector(state => state.donor.allParent);
+  console.log('AllDonorList', AllDonorList);
+
   const AddUserReceiptHandler = values => {
-    console.log('values2', values);
-    const URL = BASE_URL + AddUserReceipt;
-    axios
-      .post(URL, values)
-      .then(response => {
-        console.log('send', response);
-      })
-      .catch(error => {
-        console.log('error', error);
-      });
+    dispatch(AddUserReceiptAction(values));
   };
+  // useEffect(()=>{
+  //   getDonorbyId()
+
+  // },[])
+
+  let ReciptData = useSelector(state => {
+    return state.donor.getReciptData;
+  });
+
+  const CreateReceiptSubmit = async values => {
+    if (type == 'edit reciept') {
+      const CreateReceiptEditBody = {
+        Donar: values && values.Donar ? values.Donar : null,
+        Project: null,
+        ngoId: null,
+        Amount: values && values.Amount ? values.Amount : null, // values?.amount,
+        Transaction: values && values.Transaction ? values.Transaction : null, // values?.Transaction,
+        realizationNo:
+          values && values.realizationNo ? values.realizationNo : null, //values?.realizationNo,
+        date: values && values.date ? values.date : null,
+        drawnOnBank: '',
+        branch: '',
+        receiptNumber: '',
+      };
+      let editUrl = `http://newoneinr.nimapinfotech.com/api/userReceipts/${id}`;
+      await axios
+        .put(editUrl, CreateReceiptEditBody)
+        .then(res => {
+          return res.data;
+        })
+        .catch(err => {
+          // console.log('err ', err?.response);
+        });
+    } else {
+      const CreateReceiptpBody = {
+        Donar: values && values.Donar ? values.Donar : null,
+        Project: null,
+        ngoId: null,
+        Amount: values && values.Amount ? values.Amount : null, // values?.amount,
+        Transaction: values && values.Transaction ? values.Transaction : null, // values?.Transaction,
+        realizationNo:
+          values && values.realizationNo ? values.realizationNo : null, //values?.realizationNo,
+        date: values && values.date ? values.date : null,
+        drawnOnBank: '',
+        branch: '',
+        receiptNumber: '',
+      };
+      let url = BASE_URL + 'userReceipts/';
+      await axios
+        .post(url, CreateReceiptpBody)
+        .then(res => {
+          return res.data;
+        })
+        .catch(err => {
+          // console.log('err ', err?.response);
+        });
+    }
+  };
+
   return (
-    // console.log('test', donorList)
     <Modal show={modal} onHide={handleModal}>
-      <Modal.Header closeButton>Create Receipt</Modal.Header>
+      <Modal.Header closeButton>
+        {type == 'create receipt' ? 'Create recipt' : 'Edit recipt'}
+      </Modal.Header>
       <Modal.Body>
         <div className="container">
           <Formik
             initialValues={{
-              Project: '',
-              Donar: '',
-              Amount: 1,
+              // Project: '',
+              Donar: type == 'edit reciept' ? ReciptData.userId : '',
+              Amount: type == 'edit reciept' ? ReciptData.amount : '',
               date: '',
-              Transaction: 'cash',
+              Transaction:
+                type == 'edit reciept' ? ReciptData.transactionType : '',
               //   Cheque : '',
             }}
             validationSchema={validationSchema}
+            enableReinitialize={true}
             onSubmit={values => {
-              //   loginHandler(values);
+              console.log('asd');
+              CreateReceiptSubmit(values);
+              // loginHandler(values);
               console.log('values', values);
               AddUserReceiptHandler(values);
               handleModal();
             }}
           >
-            {({ values, errors, touched, isSubmitting }) => (
-              <Form className="login2">
-                {/* Project */}
-                <div className="form-group">
-                  <label className="mb-0" htmlFor="Project">
-                    Select Project *
-                  </label>
-                  <Field as="select" name="Project" className="form-control">
-                    <option value=""> Select Project </option>
-                    <option value="1">Feed Cows with grass of Love</option>
-                    <option value="2">Paying Children education fee</option>
-                    <option value="3">Sponsoring Books for Students</option>
-                    <option value="4">
-                      Sponsoring Stationary for Students
-                    </option>
-                    <option value="5">Feeding Pigeons Grains</option>
-                    <option value="6">Pehli Roti Dayitva Ki</option>
-                    <option value="7">this is testing project..</option>
-                    <option value="8">Behatar Swaasthay, Behatar Desh</option>
-                    <option value="9">Project One</option>
-                  </Field>
-                  {touched.Project && errors.Project ? (
-                    <small className="text-danger ">{errors.Project}</small>
-                  ) : null}
-                </div>
-
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              isSubmitting,
+              handleBlur,
+              handleSubmit,
+            }) => (
+              <form className="login2" onSubmit={handleSubmit}>
                 {/* Donar */}
                 <div className="form-group">
                   <label className="mb-0" htmlFor="Donar">
                     Select Donar *
                   </label>
-                  <Field as="select" name="Donar" className="form-control">
+                  <Field
+                    name="Donar"
+                    className="form-control"
+                    list="parentList"
+                    value={values.Donar}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <datalist id="parentList">
                     <option value=""> Select Donar </option>
-                    {donorList &&
-                      donorList.map(e => {
-                        {
-                          return (
-                            <option key={e.id} value={e.id}>
-                              {e.name}
-                            </option>
-                          );
-                        }
+                    {AllDonorList &&
+                      AllDonorList.map(e => {
+                        return <option key={e.id} value={e.name} />;
                       })}
-                  </Field>
+                  </datalist>
                   {touched.Donar && errors.Donar ? (
                     <small className="text-danger ">{errors.Donar}</small>
                   ) : null}
@@ -132,6 +189,9 @@ const CreateReceiptForm = ({ modal, handleModal }) => {
                     placeholder="enter Amount"
                     className="form-control"
                     autoComplete="off"
+                    value={values.Amount}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
                   {touched.Amount && errors.Amount ? (
                     <small className="text-danger ">{errors.Amount}</small>
@@ -148,6 +208,9 @@ const CreateReceiptForm = ({ modal, handleModal }) => {
                     placeholder="enter date"
                     className="form-control"
                     autoComplete="off"
+                    value={values.date}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
                   {touched.date && errors.date ? (
                     <small className="text-danger ">{errors.date}</small>
@@ -163,6 +226,9 @@ const CreateReceiptForm = ({ modal, handleModal }) => {
                         type="radio"
                         className="form-check-input"
                         value="cash"
+                        // value={values.Transaction}
+                        // onChange={handleChange}
+                        // onBlur={handleBlur}
                       />
                       <label className="form-check-label ml-1">cash</label>
                     </div>
@@ -172,6 +238,9 @@ const CreateReceiptForm = ({ modal, handleModal }) => {
                         type="radio"
                         className="form-check-input"
                         value="online"
+                        // value={values.Transaction}
+                        // onChange={handleChange}
+                        // onBlur={handleBlur}
                       />
                       <label className="form-check-label ml-1">online</label>
                     </div>
@@ -181,6 +250,9 @@ const CreateReceiptForm = ({ modal, handleModal }) => {
                         type="radio"
                         className="form-check-input"
                         value="neft"
+                        // value={values.Transaction}
+                        // onChange={handleChange}
+                        // onBlur={handleBlur}
                       />
                       <label className="form-check-label ml-1">neft</label>
                     </div>
@@ -190,6 +262,9 @@ const CreateReceiptForm = ({ modal, handleModal }) => {
                         type="radio"
                         className="form-check-input"
                         value="Cheque"
+                        // value={values.Transaction}
+                        // onChange={handleChange}
+                        // onBlur={handleBlur}
                       />
                       <label className="form-check-label ml-1">Cheque</label>
                     </div>
@@ -219,11 +294,14 @@ const CreateReceiptForm = ({ modal, handleModal }) => {
 
                 <div className="text-center mybtn">
                   <Button onClick={handleModal} className="ml-2">
-                    cancle
+                    Cancel
                   </Button>
-                  <Button type="submit">create receipt</Button>
+                  <Button type="submit">
+                    {type == 'create receipt' ? 'Create ' : 'Edit '}
+                  </Button>
+                  {/* <button type="submit">create</button> */}
                 </div>
-              </Form>
+              </form>
             )}
           </Formik>
         </div>

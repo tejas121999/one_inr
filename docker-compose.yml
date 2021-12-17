@@ -1,0 +1,39 @@
+version: "3"
+services: 
+    web:
+      restart: always
+      build: ./backend/
+      container_name: one-inr-back
+      image: one_inr:latest
+      environment:
+        - NODE_ENV=test
+      # links:
+      #   - db:db
+      ports:
+        - "8900:3000"
+      volumes:
+        - /home/sonatan/new-one-inr/public/uploads/:/usr/src/app/public/uploads
+        - /home/sonatan/new-one-inr/npmLogs/:/root/.npm/_logs
+
+    # db:
+    #   container_name: one_inr_db
+    #   image: mysql
+    #   volumes:
+    #     - one_inr-data:/data/db
+    #   ports:
+    #     - "27019:27017"
+
+    nginxApp:
+      restart: always
+      container_name:  one-inr-front
+      image:  one-inr-front:latest
+      build: ./frontend/
+      environment:
+        - ENV=development
+      volumes:
+        - ./logs/:/new-one-inr/logs
+      ports:
+        - '8905:80'
+      links:
+        - web:web
+

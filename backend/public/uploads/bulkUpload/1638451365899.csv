@@ -1,0 +1,6 @@
+name,email,mobile,IMEI,os_type,balance,razorpay_payment_id,razorpay_payment_date,plan,role_id,email_verified_at,password,invoice_id,profile_image,auth_key,parent_id,created_at,deleted_at,user_id,is_priyank,balance_renew_date,balance_next_renew_date
+Anil K,sunil@nimap.com,3444945934,,,10,,,null,,,anil123,,,,,,,,,,
+Sangeet D,sangeet@nimap.com,8343455289,,,10,,,null,,,adminlte,,,,,,,,,,
+Priyank R,priyank@nimap.com,8667555566,,,10,,,null,,,admin,,,,,,,,,,
+test email,test@email.com,1111223344,,,10,,,null,,,testuser,,,,,,,,,,
+last user,last@user.com,5988976665,,,20,,,null,,,lastuser,,,,,,,,,,

@@ -30,20 +30,24 @@ module.exports = (sequelize,DataTypes)=>{
         },
         panImage:{
             type: DataTypes.TEXT,
-            field: 'pan_image'
+            field: 'pan_image',
+            allowNull: true
         },
         gstImage:{
             type: DataTypes.TEXT,
-            field: 'gst_image'
+            field: 'gst_image',
+            allowNull: true
         },
-        deletedAt:{
-            type: DataTypes.DATE,
-            field: 'deleted_at'
-        }
-        
+  
     },{
         freezeTableName: true,
-        tableName: 'vendors'
+        tableName: 'vendors',
+        paranoid : true,
+        createdAt : 'created_at',
+        updatedAt : 'updated_at',
+        deletedAt : 'deleted_at',
     })
     return Vendor
 }
+
+
