@@ -14,7 +14,7 @@ const projects = sequelize .define('projects', {
 
     slogan: {
         type: DataTypes.STRING,
-        field: 'slogan',
+        field: 'slug',
         
     },
 
@@ -26,7 +26,7 @@ const projects = sequelize .define('projects', {
 
     longDesc: {
         type: DataTypes.STRING,
-        field: 'long_desc'
+        field: 'long_description'
     },
 
     videoLink: {
@@ -86,7 +86,10 @@ const projects = sequelize .define('projects', {
         freezeTableName: true,
         tableName: 'projects',
         paranoid: true,
-        timestamp: true
+        timestamp: true,
+        createdAt : 'created_at',
+        updatedAt : 'updated_at',
+        deletedAt : 'deleted_at'
     });
 
     // projects.associate = function(models) {
