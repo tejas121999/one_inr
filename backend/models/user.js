@@ -117,6 +117,7 @@ module.exports = (sequelize,DataTypes)=>{
         users.hasMany(models.usersReceipts, {foreignKey : 'user_id'}),
         users.hasOne(models.users,{foreignKey : 'parentId'})
         users.belongsTo(models.users,{foreignKey : 'parentId'})
+        users.hasOne(models.ngo,{foreignKey: 'userId'})
         // usersReceipts.belongsTo(models.ngo, {foreignKey : 'ngo_id'}),
         // usersReceipts.belongsTo(models.projects, {foreignKey : 'project_id'})
     }

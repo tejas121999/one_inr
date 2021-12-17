@@ -6,13 +6,13 @@ exports.ngoBankDetailsValidation = [
         .exists().withMessage('Bank Name is required')
         .notEmpty().withMessage('Bank Name is required'),
 
-    check('aaccontNumber')
+    body('accontNumber')
         .exists().withMessage('Account Number required')
-        .notEmpty()
-        .bail()
-        .not()
-        .custom((val) => /^(?:[0-9]{11}|[0-9]{2}-[0-9]{3}-[0-9]{6})$/g.test(val))
-        .withMessage("Invalid Number"),
+        .notEmpty().withMessage('cannot be empty')
+        // .custom((val) => /^(?:[0-9]{11}|[0-9]{2}-[0-9]{3}-[0-9]{6})$/g.test(val))
+        // .withMessage("Invalid Number")\
+        .isLength({min : 8 ,max :16}).withMessage('Please check account number correctly!')
+        .isNumeric().withMessage('Please enter only numbers...'),
 
     // body('accountNumber')
     //     .exists().withMessage('Account Number required')

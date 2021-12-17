@@ -20,7 +20,7 @@ exports.addNgo = async (req, res) => {
         panNumber: req.body.panNumber,
         certificate: req.body.certificate,
         charityRegistrationCertificate: req.body.charityRegistrationCertificate,
-        dead: req.body.dead,
+        deed: req.body.deed,
         logo: req.body.logo,
         signature: req.body.signature,
         isKyc: req.body.isKyc
@@ -70,7 +70,7 @@ exports.updateNgo = async (req, res) => {
             panNumber: req.body.panNumber,
             certificate: req.body.certificate,
             charityRegistrationCertificate: req.body.charityRegistrationCertificate,
-            dead: req.body.dead,
+            deed: req.body.deed,
             logo: req.body.logo,
             signature: req.body.signature,
             isKyc: req.body.isKyc
@@ -113,13 +113,17 @@ exports.getAllNgo = async (req, res) => {
         }],
     }
 
-    var result = await models.ngo.findAll({
+    var result = await models.ngo.findAndCountAll({
 
         limit: pageSize,
         offset: offset,
         where: searchQuery,
+        include: [{
+            model : models.users 
+        }
+        ],
         order: [
-            ['updatedAt', 'DESC']
+            ['id', 'DESC']
         ]
     });
 
@@ -135,6 +139,10 @@ exports.getAllNgo = async (req, res) => {
         message: "Found All Data."
     })
 }
+
+
+
+
 exports.getNgoById = async (req, res) => {
     let id = req.params.id
     let data = await models.ngo.findOne({
@@ -168,11 +176,12 @@ exports.deleteNgo = async (req, res) => {
         })
     }
 
-    let data = models.ngo.destroy({
+    let data = await models.ngo.destroy({
         where: { id: id }
     })
-    // console.log('data', data)
+    console.log('data', data)
     if (data) {
+
         return res.status(204).json({
             message: "NGO details deleted successfully..."
         })
