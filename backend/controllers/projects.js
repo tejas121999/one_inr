@@ -1,5 +1,6 @@
 const { sequelize } = require('../models');
 const models = require('../models');
+const {paginationWithFromTo} = require('../utils/pagination')
 const Sequelize = models.Sequelize;
 const Op = Sequelize.Op;
 
@@ -58,5 +59,39 @@ exports.addProjects = async (req, res) => {
         return res.status(400).json({
             message: err
         })
+    }
+}
+
+
+
+exports.getAllProjects = async (req, res) => {
+    const { search, offset, pageSize } = paginationWithFromTo(
+        req.query.search,
+        req.query.from,
+        req.query.to
+    );
+    // let query = {};
+    // const searchQuery = {
+    //     [Op.and]: [query, {
+    //         [Op.or]: {
+    //             name: { [Op.like]: search + "%" },
+    //             email: { [Op.like]: search + '%' },
+    //             phone: { [Op.like]: search + '%' },
+    //             gst: { [Op.like]: search + '%' },
+    //             address : {[Op.like]: search + '%'},
+    //             pan: { [Op.like]: search + '%' },
+    //             company: { [Op.like]: search + '%' },
+    //         }
+    //     }],
+    // };
+    const project = await models.projects.findAll({
+        
+        offset : offset,
+        limit : pageSize
+    });
+    if(!project) {
+        return res.status(400).json({message : "No data Found"})
+    }else{
+        return res.status(200).json({message : "All Projects", result : project})
     }
 }

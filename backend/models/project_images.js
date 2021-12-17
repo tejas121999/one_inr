@@ -10,7 +10,7 @@ module.exports = (sequelize, Datatypes) => {
 
         projectImage: {
             type: Datatypes.STRING,
-            field: 'project_image'
+            field: 'name'
         },
 
         ImageType: {
@@ -22,7 +22,10 @@ module.exports = (sequelize, Datatypes) => {
         freezeTableName: true,
         tableName: 'project_images',
         paranoid: true,
-        timestamp: true
+        timestamp: true,
+        createdAt : 'created_at',
+        updatedAt : 'updated_at',
+        deletedAt : 'deleted_at'
     });
 
     // projectImages.associate = function(models) {
