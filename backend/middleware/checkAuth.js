@@ -6,7 +6,7 @@ const models = require('../models');
 
 module.exports = async (req, res, next) => {
     try {
-      const checkToken = req.headers.authorization;
+      const checkToken = req.headers.authorization; 
       if (checkToken == undefined) {
         return res.status(401).send({ message: 'Unauthorized' });
       } else {
@@ -28,7 +28,7 @@ module.exports = async (req, res, next) => {
       }
     } catch (err) {
       console.error(err);
-      return res.status(401).send({ message: 'Unauthorized' });
+      return res.send(err);
     }
   };
   
