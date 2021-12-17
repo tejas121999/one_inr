@@ -287,25 +287,20 @@ const ViewAllNgo = () => {
                               data-bs-toggle="tooltip"
                               title="View Details"
                               className="btn"
-                              onClick={() => ViewModalOpen(row)}
+                              onClick={() =>
+                                history.push('/view_single_ngo', row)
+                              }
                             >
                               <FaRegEye />
                             </button>
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="Edit"
-                              className="btn"
-                              onClick={() => history.push('/edit_ngo', row)}
-                            >
-                              <FaRegEdit />
-                            </button>
+
                             <button
                               data-bs-toggle="tooltip"
                               title="Add Project"
                               className="btn"
                               onClick={() => history.push('/add_project', row)}
                             >
-                              <FaRegEye />
+                              <FaPlusCircle />
                             </button>
                             <button
                               data-bs-toggle="tooltip"
@@ -315,14 +310,7 @@ const ViewAllNgo = () => {
                             >
                               <FaRegEdit />
                             </button>
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="Add Fund"
-                              className="btn"
-                              onClick={() => fundModaOpen(row)}
-                            >
-                              <FaPlusCircle />
-                            </button>
+
                             <button
                               data-bs-toggle="tooltip"
                               title="Delete"

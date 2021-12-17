@@ -3,3 +3,11 @@
     display: flex;
     justify-content: space-evenly;
 }
+
+.image-upload>input {
+    display: none;
+  }
+  .AttachImage {
+    margin-left: 10px;
+    height: 100px
+  }
