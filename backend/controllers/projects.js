@@ -95,3 +95,16 @@ exports.getAllProjects = async (req, res) => {
         return res.status(200).json({message : "All Projects", result : project})
     }
 }
+
+exports.getProjectById = async (req, res)=>{
+    const id = req.params.id;
+
+    const project = await models.projects.findOne({where: { id: id }})
+
+    if(!project){
+        return res.status(400).json({message : "No data Found"})
+    }else{
+        return res.status(200).json({message : "All Projects", result : project})
+    }
+
+}
