@@ -15,7 +15,6 @@ import { Button } from 'react-bootstrap';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import './viewreciept.css';
-
 import {
   FaRegEdit,
   FaRegEye,
@@ -66,6 +65,8 @@ export default function ViewRecept() {
   const [recept, setReceipt] = React.useState([]);
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [modal, setModal] = React.useState(false);
+  const [modal1, setModal1] = React.useState(false);
+
   const [deleteId, setDeleteID] = React.useState(0);
   const [type, setType] = React.useState('');
   const [printDonorTable, setPrintDonorTable] = React.useState(false);
@@ -98,8 +99,8 @@ export default function ViewRecept() {
     setModal(!modal);
   };
 
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
+  const handleModal1 = () => {
+    setModal1(!modal1);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -329,7 +330,7 @@ export default function ViewRecept() {
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
-            onClose={handleClose}
+            // onClose={handleClose}
             style={{ top: '30px', left: '-8px' }}
           >
             <MenuItem>
@@ -485,6 +486,8 @@ export default function ViewRecept() {
                                 title="Edit"
                                 className="btn"
                                 // onClick={() => history.push('/edit_doner', row)}
+
+                                onClick={handleModal1}
                               >
                                 <FaRegEdit
                                   onClick={() =>

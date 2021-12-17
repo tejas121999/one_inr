@@ -1,0 +1,59 @@
+.contact-content .entry-content {
+  height: 500px;
+  /* border: 2px solid red; */
+}
+.form-contact,
+.contact-info {
+  background-color: #f5f6f6;
+  padding: 42px 25px;
+  border-radius: 3px;
+  max-height: 550px;
+}
+.form-contact input,
+.form-contact textarea {
+  width: 100%;
+  background-color: #fff !important;
+}
+.form-contact input {
+  height: 46px;
+}
+.form-contact textarea {
+  height: 100px;
+  margin-bottom: 20px;
+  padding: 0 15px;
+}
+input[placeholder],
+textarea[placeholder] {
+  font-style: normal;
+  border: 1px solid #000 !important;
+}
+form .field {
+  margin-bottom: 26px;
+}
+form .align-left {
+  float: left;
+  width: 50%;
+  padding-right: 15px;
+}
+form .align-right {
+  float: right;
+  width: 50%;
+  padding-left: 15px;
+}
+select,
+.field input {
+  width: 100%;
+  height: 46px;
+  padding: 0 15px;
+  z-index: 1;
+  position: relative;
+}
+.btn-primary {
+  background-color: #00a6eb;
+  padding: 0 20px;
+  height: 46px;
+  line-height: 46px;
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
