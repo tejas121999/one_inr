@@ -10,8 +10,7 @@ module.exports = (sequelize, Datatypes) => {
 
         projectImage: {
             type: Datatypes.STRING,
-            field: 'project_image',
-            defaultValue: "hii"
+            field: 'project_image'
         },
 
         ImageType: {
