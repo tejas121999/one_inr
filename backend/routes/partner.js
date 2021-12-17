@@ -21,7 +21,7 @@ router.get('/get-partner-excel',getPartnerExcel)
 router.get('/get-partnerPdf',pdfOfPartner)
 router.get('/get-all-users-csv',user.exportsToCsv)
 router.put('/update-partner/:id',updatePatner)
-router.delete('/delete-patner/:id',deletePartner)
+router.delete('/delete-partner/:id',deletePartner)
 
 
 

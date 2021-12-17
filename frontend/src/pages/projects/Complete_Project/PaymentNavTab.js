@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -11,79 +13,25 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
-// import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { FcMoneyTransfer } from 'react-icons/fc';
-import { RiRefund2Line } from 'react-icons/ri';
-import { BsArchive, BsEye } from 'react-icons/bs';
-import '../Doner/Donor.css';
-import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
-import Addfund from '../../Modals/Donor/AddFund';
-import { ADD_DONOR_URL, BASE_URL, GetAllDonor } from '../../API/APIEndpoints';
-import axios from 'axios';
-import { useHistory } from 'react-router-dom';
-import Donordelete from '../../Modals/Donor/DonorDelete';
-import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getDonorByValueAction,
-  getViewAllDonorAction,
-} from '../../Redux/Actions/DonorActions';
+// import {
+//   getDonorByValueAction,
+//   getViewAllDonorAction,
+// } from '../../Redux/Actions/DonorActions';
 
-const CompleteProject = () => {
+function PaymentNavTab() {
+  const [key, setKey] = useState('donor');
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [viewModal, setViewModal] = React.useState(false);
-  const [viewData, setViewData] = React.useState('');
-  const [fundModal, setFundModal] = React.useState(false);
-  const [fundModalData, setFundModalData] = React.useState(0);
-  // const [donorList, setDonorList] = React.useState([]);
-  const [deleteModal, setDeleteModal] = React.useState(false);
-  const [deleteId, setDeleteID] = React.useState(0);
-  const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
-    dispatch(getViewAllDonorAction());
+    // dispatch(getViewAllDonorAction());
   }, []);
 
-  // const getDonorList = async () => {
-  //   const url = BASE_URL + ADD_DONOR_URL;
-  //   await axios
-  //     .get(url)
-  //     .then(res => {
-  //       setDonorList(res.data.data.message);
-  //       toast.success('Yeay! New data is here.');
-  //     })
-  //     .catch(err => {
-  //     });
-  // };
-
-  let donorList = useSelector(state => state.donor.ViewAllDonor);
-
-  const ViewModalOpen = data => {
-    setViewData(data);
-    setViewModal(true);
-  };
-  const ViewModalClose = () => {
-    setViewModal(false);
-  };
-  const fundModaOpen = data => {
-    setFundModalData(data.id);
-    setFundModal(true);
-  };
-  const fundModaClose = () => {
-    setFundModal(false);
-  };
-  const deleteModalOpen = data => {
-    setDeleteID(data.id);
-    setDeleteModal(true);
-  };
-  const deleteModalClose = () => {
-    setDeleteModal(false);
-  };
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -102,8 +50,8 @@ const CompleteProject = () => {
   const isSelected = name => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - donorList.length) : 0;
+  //   const emptyRows =
+  //     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - donorList.length) : 0;
   // SEARCH
   let timeout = null;
   const handleChange = e => {
@@ -115,85 +63,33 @@ const CompleteProject = () => {
 
   const onSearch = value => {
     if (value) {
-      dispatch(getDonorByValueAction(value));
+      //   dispatch(getDonorByValueAction(value));
     } else {
-      dispatch(getViewAllDonorAction());
+      //   dispatch(getViewAllDonorAction());
     }
   };
 
   const constData = [
     {
       id: 1,
-      title: 'Behatar Swaasthay, Behatar Desh',
-      date: '08 May 2020 To 08 May 2020',
-      goal: '456',
-      funded: '287',
-      paid: '13',
-      status: 'Half Paid',
-      action: '',
+      donor: 'Rahul Jain',
+      amount: '08 May 2020',
     },
     {
       id: 2,
-      title: 'Feed Cows with grass of Love',
-      date: '23 Oct 2019 To 23 Oct 2019',
-      goal: '114',
-      funded: '5',
-      paid: '0',
-      status: 'Refunded',
-      action: '',
-    },
-    {
-      id: 3,
-      title: 'pahli roti dayittv ki',
-      date: '27 Nov 2019 To 27 Nov 2019',
-      goal: '338',
-      funded: '29',
-      paid: '0',
-      status: 'Action Required',
-      action: '',
-    },
-    {
-      id: 4,
-      title: 'Feeding Pigeons Grains',
-      date: '08 Feb 2020 To 08 Feb 2020',
-      goal: '582',
-      funded: '582',
-      paid: '100',
-      status: 'Half Paid',
-      action: '',
+      donor: 'Prakash Mishra',
+      amount: '15 June 2019',
     },
   ];
 
   return (
-    <>
-      <br />
-      <br />
-      <br />
-      <br />
-      <div className="card" style={{ border: '0' }}>
-        <div
-          style={{
-            display: 'flex',
-            padding: '15px',
-          }}
-        >
-          <p
-            style={{
-              textAlign: 'left',
-              fontSize: '1.25rem',
-              marginBottom: '0',
-            }}
-          >
-            COMPLETED PROJECTS
-          </p>
-        </div>
-      </div>
-      <div
-        style={{
-          margin: '20px',
-          backgroundColor: 'white',
-        }}
-      >
+    <Tabs
+      //   id="controlled-tab-example"
+      activeKey={key}
+      onSelect={k => setKey(k)}
+      className="mb-3"
+    >
+      <Tab eventKey="donor" title="Donors List">
         <div
           style={{
             display: 'flex',
@@ -211,6 +107,7 @@ const CompleteProject = () => {
             />
           </label>
         </div>
+        <hr style={{ margin: '0' }} />
         <Paper sx={{ width: '100%', mb: 2 }}>
           <>
             <TableContainer>
@@ -247,47 +144,9 @@ const CompleteProject = () => {
                             scope="row"
                             padding="none"
                           >
-                            {row.title}
+                            {row.donor}
                           </TableCell>
-                          <TableCell align="center">{row.date}</TableCell>
-                          <TableCell align="center">{row.goal}</TableCell>
-                          <TableCell align="center">{row.funded}</TableCell>
-                          <TableCell align="center">{row.paid}</TableCell>
-                          <TableCell align="center">{row.status}</TableCell>
-                          <TableCell align="center">
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="Archive"
-                              className="btn"
-                              //   onClick={() => history.push('/edit_ngo', row)}
-                            >
-                              <BsArchive size={20} />
-                            </button>
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="Refund"
-                              className="btn"
-                              //   onClick={() => fundModaOpen(row)}
-                            >
-                              <RiRefund2Line size={23} />
-                            </button>
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="Transfer"
-                              className="btn"
-                              //   onClick={() => history.push('/payments', row)}
-                            >
-                              <FcMoneyTransfer size={21} />
-                            </button>
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="View"
-                              className="btn"
-                              onClick={() => history.push('/payments', row)}
-                            >
-                              <BsEye size={21} />
-                            </button>
-                          </TableCell>
+                          <TableCell>{row.amount}</TableCell>
                         </TableRow>
                       );
                     })}
@@ -308,12 +167,113 @@ const CompleteProject = () => {
             />
           </>
         </Paper>
-      </div>
-    </>
+      </Tab>
+      <Tab eventKey="vendor" title="Vendor Payment History">
+        <Paper sx={{ width: '100%', mb: 2 }}>
+          <>
+            <TableContainer>
+              <table class="table table-responsive">
+                <tbody>
+                  <tr>
+                    <th class="text-center" style={{ width: '18rem' }}>
+                      Company Name
+                    </th>
+                    <th class="text-center" style={{ width: '18rem' }}>
+                      Vendor Name
+                    </th>
+                    <th class="text-center">Amount Paid</th>
+                    <th class="text-center" style={{ width: '21rem' }}>
+                      Description
+                    </th>
+                    <th class="text-center" style={{ width: '13rem' }}>
+                      Date
+                    </th>
+                  </tr>
+                  <tr>
+                    <td class="text-center">Softkraft Solutions</td>
+                    <td class="text-center">Sagar Nagda</td>
+                    <td class="text-center">55</td>
+                    <td class="text-center">donation</td>
+                    <td class="text-center">23 Oct 2020</td>
+                  </tr>
+                </tbody>
+              </table>
+            </TableContainer>
+            <hr style={{ margin: '0' }} />
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, 50, 100]}
+              component="div"
+              count={constData.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              pageSize={10}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              showLastButton={true}
+              showFirstButton={true}
+            />
+          </>
+        </Paper>
+      </Tab>
+      <Tab eventKey="partner" title="Partner Payment History">
+        <Paper sx={{ width: '100%', mb: 2 }}>
+          <>
+            <TableContainer>
+              <table class="table table-responsive">
+                <tbody>
+                  <tr>
+                    <th class="text-center" style={{ width: '18rem' }}>
+                      Company Name
+                    </th>
+                    <th class="text-center" style={{ width: '18rem' }}>
+                      Partner Name
+                    </th>
+                    <th class="text-center">Amount Paid</th>
+                    <th class="text-center" style={{ width: '21rem' }}>
+                      Description
+                    </th>
+                    <th class="text-center" style={{ width: '13rem' }}>
+                      Date
+                    </th>
+                  </tr>
+                  <tr>
+                    <td class="text-center">Nimap Infotech LLP</td>
+                    <td class="text-center">Priyank Ranka</td>
+                    <td class="text-center">99</td>
+                    <td class="text-center">donation</td>
+                    <td class="text-center">23 Oct 2019</td>
+                  </tr>
+                  <tr>
+                    <td class="text-center">Lenovo Infotech LLP</td>
+                    <td class="text-center">Carry Lane</td>
+                    <td class="text-center">59</td>
+                    <td class="text-center">donation</td>
+                    <td class="text-center">10 Jan 2020</td>
+                  </tr>
+                </tbody>
+              </table>
+            </TableContainer>
+            <hr style={{ margin: '0' }} />
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, 50, 100]}
+              component="div"
+              count={constData.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              pageSize={10}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              showLastButton={true}
+              showFirstButton={true}
+            />
+          </>
+        </Paper>
+      </Tab>
+    </Tabs>
   );
-};
+}
 
-export default CompleteProject;
+export default PaymentNavTab;
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -331,8 +291,6 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
 
@@ -348,43 +306,17 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'title',
+    id: 'donor',
     numeric: false,
     // disablePadding: true,
-    label: 'Title',
+    label: 'Donor Name',
   },
   {
-    id: 'date',
+    id: 'amount',
     numeric: true,
-    label: 'Date',
-  },
-  {
-    id: 'goal',
-    numeric: true,
-    label: 'Goal',
-  },
-  {
-    id: 'funded',
-    numeric: true,
-    label: 'Funded',
-  },
-  {
-    id: 'paid',
-    numeric: true,
-    label: 'Paid',
-  },
-  {
-    id: 'status',
-    numeric: false,
-    label: 'Status',
-  },
-  {
-    id: 'action',
-    numeric: false,
-    label: 'Action',
+    label: 'Donated Amount',
   },
 ];
-
 function EnhancedTableHead(props) {
   const {
     onSelectAllClick,
@@ -405,7 +337,8 @@ function EnhancedTableHead(props) {
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
-            align="center"
+            // align="center"
+            style={{ fontWeight: '600' }}
             // padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >

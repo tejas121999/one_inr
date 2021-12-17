@@ -15,10 +15,12 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">name</th>
-                    <th scope="col">companyName</th>
-                    <th scope="col">mobile</th>
                     <th scope="col">email</th>
-                    <th scope="col">gstNumber</th>
+                    <th scope="col">phone</th>
+                    <th scope="col">Donated</th>
+                    <th scope="col">Balance</th>
+                    <th scope="col">Projects</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -26,11 +28,12 @@
                 <tr>
                     
                     <td>{{this.dataValues.name}}</td>
-                    <td>{{this.dataValues.companyName}}</td>
-                    <td>{{this.dataValues.phone}}</td>
                     <td>{{this.dataValues.email}}</td>
-                    <td>{{this.dataValues.gstNumber}}</td>
-            
+                    <td>{{this.dataValues.mobile}}</td>
+                    <td>{{this.dataValues.donated}}</td>
+                    <td>{{this.dataValues.balance}}</td>
+                    <td>{{this.dataValues.Projects}}</td>
+                    
                 </tr>
                 {{/each}}
 

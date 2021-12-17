@@ -53,3 +53,7 @@ export const UPDATE_VENDOR_BY_ID_FAIL = 'UPDATE_VENDOR_BY_ID_FAIL';
 export const GET_ALL_PARTNERS = 'GET_ALL_PARTNERS';
 
 export const GET_PARTNER_BY_ID = 'GET_PARTNER_BY_ID';
+
+export const ADD_NGO = 'ADD_NGO';
+export const ADD_NGO_FAIL = 'ADD_NGO_FAIL';
+export const GET_ALL_NGOS = 'GET_ALL_NGOS';

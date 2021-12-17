@@ -28,7 +28,7 @@ import {
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
 import { BASE_URL, VIEW_RECEPT_URL } from '../../API/APIEndpoints';
-import axios from 'axios';
+import axios from '../../utils/interceptor';
 import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import CreateReceiptForm from '../../components/CreateReceiptForm';
@@ -69,6 +69,9 @@ export default function ViewRecept() {
   const [deleteId, setDeleteID] = React.useState(0);
   const [type, setType] = React.useState('');
   const [printDonorTable, setPrintDonorTable] = React.useState(false);
+  const [XlsUrl, setXlsUrl] = React.useState('');
+  const [pdfUrl, setPdfUrl] = React.useState('');
+  const [CsvUrl, setCsvUrl] = React.useState('');
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -76,18 +79,20 @@ export default function ViewRecept() {
   React.useEffect(() => {
     async function onMount() {
       await dispatch(getViewReceiptDonorAction());
+      exportPdf();
+      exportCsv();
+      exportXls();
     }
     onMount();
   }, []);
 
   let ViewReceipt = useSelector(state => state.donor.ViewReceipt);
-  console.log('ViewReceipt', ViewReceipt);
 
   const handleModal = (type, row) => {
     if (type == 'edit reciept') {
       getDonorbyId(row.id);
     }
-    console.log('sada', row);
+
     setId(row);
     setType(type);
     setModal(!modal);
@@ -97,12 +102,8 @@ export default function ViewRecept() {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
-    console.log('ttttttttt', anchorEl);
     setAnchorEl(null);
   };
-  // const handleClick = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
 
   const ViewModalOpen = data => {
     setViewData(data);
@@ -178,31 +179,107 @@ export default function ViewRecept() {
   };
 
   const onPrintClick = () => {
-    console.log(printDonorTable)
+    console.log(printDonorTable);
     setPrintDonorTable(true);
     setTimeout(() => {
       setPrintDonorValue(false);
     }, 1000);
-  }
+  };
 
-  const setPrintDonorValue = (value) => {
-    if(printDonorTable) {
+  const setPrintDonorValue = value => {
+    if (printDonorTable) {
       setPrintDonorValue(value);
     }
     // window.print();
-  }
+  };
 
   const onCopyClick = () => {
-    var urlField = document.getElementById('tableDiv')   
-    var range = document.createRange()
-    range.selectNode(urlField)
-    window.getSelection().addRange(range)
+    var urlField = document.getElementById('tableDiv');
+    var range = document.createRange();
+    range.selectNode(urlField);
+    window.getSelection().addRange(range);
     // sel.removeAllRanges();
-    
-    document.execCommand('copy')
-  }
+
+    document.execCommand('copy');
+  };
 
   // SEARCH functionality END
+
+  // EXPORT
+  const exportPdf = async () => {
+    const res = await axios.get(
+      BASE_URL + 'userReceipts/get-user-receipts-pdf',
+    );
+
+    if (res.data.url) {
+      const downloadUrl = res.data.url;
+      setPdfUrl(downloadUrl);
+    }
+  };
+  const exportCsv = async () => {
+    const resCsv = await axios.get(
+      BASE_URL + 'userReceipts/get-user-receipts-csv',
+    );
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setCsvUrl(downloadUrl);
+    }
+  };
+  const exportXls = async () => {
+    const resCsv = await axios.get(
+      BASE_URL + 'userReceipts/get-user-receipts-xlsx',
+    );
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setXlsUrl(downloadUrl);
+    }
+  };
+  // test
+  const downloadPdf = () => {
+    fetch(pdfUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Receipt.pdf';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+
+  const downloadCsv = () => {
+    fetch(CsvUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Receipt.csv';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  const downloadXls = () => {
+    fetch(XlsUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Receipt.xlsx';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+
+  // Export End
 
   return (
     <>
@@ -256,19 +333,35 @@ export default function ViewRecept() {
             style={{ top: '30px', left: '-8px' }}
           >
             <MenuItem>
-              <button className="export-btn w-100" onClick={() => onCopyClick()}>Copy</button>
+              <button
+                className="export-btn w-100"
+                onClick={() => onCopyClick()}
+              >
+                Copy
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100">CSV</button>
+              <button className="export-btn w-100" onClick={downloadCsv}>
+                CSV
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100">Excel</button>
+              <button className="export-btn w-100" onClick={downloadXls}>
+                Excel
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100">PDF</button>
+              <button className="export-btn w-100" onClick={downloadPdf}>
+                PDF
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100" onClick={()=> onPrintClick()}>Print</button>
+              <button
+                className="export-btn w-100"
+                onClick={() => onPrintClick()}
+              >
+                Print
+              </button>
             </MenuItem>
             {/* <MenuItem></MenuItem> */}
           </Menu>
@@ -280,7 +373,7 @@ export default function ViewRecept() {
           id={id}
           handleModal={handleModal}
         />
-        <Paper sx={{ width: '100%', mb: 2 }} >
+        <Paper sx={{ width: '100%', mb: 2 }}>
           {ViewReceipt && ViewReceipt.length > 0 ? (
             <React.Fragment>
               <TableContainer id="tableDiv">
@@ -424,12 +517,11 @@ export default function ViewRecept() {
         </Paper>
         <DonorTable
           printDonorTable={printDonorTable}
-          tableData={stableSort(ViewReceipt, getComparator(order, orderBy))
-            .slice(
-              page * rowsPerPage,
-              page * rowsPerPage + rowsPerPage,
-            )}
-            setPrintDonorValue={setPrintDonorValue}
+          tableData={stableSort(
+            ViewReceipt,
+            getComparator(order, orderBy),
+          ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+          setPrintDonorValue={setPrintDonorValue}
         ></DonorTable>
       </div>
     </>
@@ -492,6 +584,3 @@ const tableHeader = [
     label: 'Action',
   },
 ];
-
-
-

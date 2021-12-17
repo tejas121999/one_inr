@@ -14,15 +14,15 @@ const projects = require('./projects')
 
 
 
-router.use('/vendor',vendor)
-router.use('/fileupload',fileUpload)
+router.use('/vendor',checkAuth,vendor)
+router.use('/fileupload',checkAuth,fileUpload)
 router.use('/auth',auth)
-router.use('/donor',donor)
+router.use('/donor',checkAuth,donor)
 router.use('/userReceipts',userReceipts)
-router.use('/ngo',ngo)
-router.use('/partner',partner)
-router.use('/csvUserUpload',csvUpload)
 router.use('/projects', projects)
+router.use('/ngo',checkAuth,ngo)
+router.use('/partner',checkAuth,partner)
+router.use('/csvUserUpload',checkAuth,csvUpload)
 
 
 
