@@ -58,7 +58,7 @@ const donorItems = [
   {
     to: '/view_all_doner',
     name: `view all donor's`,
-    exact: false,
+    exact: true,
     Icon: MdOutlineNavigateNext,
   },
   {

@@ -2,7 +2,6 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 
 const Viewdonormodal = props => {
-  console.log('Props', props.data.name);
   return (
     <React.Fragment>
       <Modal show={props.show} onHide={props.onHide}>
