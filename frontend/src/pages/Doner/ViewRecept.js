@@ -88,7 +88,9 @@ export default function ViewRecept() {
   }, []);
 
   let ViewReceipt = useSelector(state => state.donor.ViewReceipt);
-
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
   const handleModal = (type, row) => {
     if (type == 'edit reciept') {
       getDonorbyId(row.id);

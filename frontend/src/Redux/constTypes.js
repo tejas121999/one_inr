@@ -9,7 +9,7 @@ export const ADD_DONOR_FAIL = 'ADD_DONOR_FAIL';
 
 export const AllDonor = 'AllDonor';
 export const AllDonor_FAILED = 'AllDonor_FAILED';
-export const GET_RECEIPT_DATA ="GET_RECEIPT_DATA"
+export const GET_RECEIPT_DATA = 'GET_RECEIPT_DATA';
 
 export const VIEW_RECEIPT = 'VIEW_RECEIPT';
 export const VIEW_RECEIPT_FAILED = 'VIEW_RECEIPT_FAILED';
@@ -52,10 +52,12 @@ export const UPDATE_VENDOR_BY_ID = 'UPDATE_VENDOR_BY_ID';
 export const UPDATE_VENDOR_BY_ID_FAIL = 'UPDATE_VENDOR_BY_ID_FAIL';
 export const GET_ALL_PARTNERS = 'GET_ALL_PARTNERS';
 
-
 export const GET_PARTNER_BY_ID = 'GET_PARTNER_BY_ID';
 
 export const ADD_NGO = 'ADD_NGO';
 export const ADD_NGO_FAIL = 'ADD_NGO_FAIL';
 export const GET_ALL_NGOS = 'GET_ALL_NGOS';
 export const UPDATE_NGO_BY_ID = 'UPDATE_NGO_BY_ID';
+
+export const GET_ALL_PROJECTS = 'GET_ALL_PROJECTS';
+export const GET_PROJECT_BY_ID = 'GET_PROJECT_BY_ID';
