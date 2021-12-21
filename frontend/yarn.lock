@@ -2785,6 +2785,11 @@
   "resolved" "https://registry.npmjs.org/bootstrap/-/bootstrap-4.3.1.tgz"
   "version" "4.3.1"
 
+"bootstrap4-toggle@^3.6.1":
+  "integrity" "sha512-eRejcTc9YurhZ64nHY9Ii9DQn+F9/R74H9RPoeANVM3N1+C2lZ2tUuFCx1w3orOJ1y/iG4A7iCwdDZphMDIrYg=="
+  "resolved" "https://registry.npmjs.org/bootstrap4-toggle/-/bootstrap4-toggle-3.6.1.tgz"
+  "version" "3.6.1"
+
 "bowser@^1.7.3":
   "integrity" "sha512-9IdMmj2KjigRq6oWhmwv1W36pDuA4STQZ8q6YO9um+x07xgYNCD3Oou+WP/3L1HNz7iqythGet3/p4wvc8AAwQ=="
   "resolved" "https://registry.npmjs.org/bowser/-/bowser-1.9.4.tgz"

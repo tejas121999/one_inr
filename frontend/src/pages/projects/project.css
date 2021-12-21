@@ -1,6 +1,7 @@
 .AddDoner {
-  padding: 40px;
-  margin: 40px;
+  /* padding: 40px;
+  margin: 40px; */
+  margin-top: 40px;
 }
 .white-box {
   background-color: #fefefe;
@@ -10,6 +11,16 @@
   margin-bottom: 30px;
 }
 .ViewAll {
-  padding: 40px;
-  margin: 40px;
+  /* padding: 40px; */
+  /* margin: 40px;  */
+  margin-top: 40px;
+}
+.btn {
+  margin-left: 1;
+}
+.search-btn {
+  padding: 10px;
+}
+.projectDetails {
+  margin-top: 10px;
 }
