@@ -101,4 +101,5 @@ form.w-50.m-auto {
   outline: 0px;
   border-radius: 30px;
   padding-left: 12px !important;
+  border: 1px solid #ced4da !important;
 }

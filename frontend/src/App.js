@@ -40,6 +40,12 @@ import { LoginAuthData } from './Redux/Actions/authAction';
 import OTPScreen from './pages/Other/OTP';
 import ChangePassword from './pages/Other/changePassword';
 import EditProfile from './pages/Settings/EditProfile';
+import EditNgo from './pages/NGO/EditNgo';
+import ViewSingleNgo from './pages/NGO/ViewSingleNgo';
+import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
+// import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
+import ViewAllDoner from './pages/Doner/ViewAllDoner';
+import Four_Zero_Foure from './pages/Four_Zero_Foure';
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -59,6 +65,7 @@ function App(props) {
         <Route exact path="/forgot_password" component={Forgot} />
         <Route exact path="/otp" component={OTPScreen} />
         <Route exact path="/changePassword" component={ChangePassword} />
+        <Route path="/404" component={Four_Zero_Foure} />
         <div>
           <MainLayout breakpoint={props.breakpoint}>
             <React.Suspense fallback={<PageSpinner />}>
@@ -89,6 +96,12 @@ function App(props) {
               {/*NGO route*/}
               <PrivateRoute exact path="/add_ngo" component={AddNgo} />
               <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />
+              <PrivateRoute exact path="/edit_ngo" component={EditNgo} />
+              <PrivateRoute
+                exact
+                path="/view_single_ngo"
+                component={ViewSingleNgo}
+              />
               {/*project route*/}
               <PrivateRoute
                 exact
@@ -121,9 +134,8 @@ function App(props) {
               />
             </React.Suspense>
           </MainLayout>
-          {/* <Route path="/404" component={Four_Zero_Foure} />
-          <Redirect to="/404">{Four_Zero_Foure}</Redirect> */}
         </div>
+        <Redirect to="/404" />
       </Switch>
     </BrowserRouter>
   );

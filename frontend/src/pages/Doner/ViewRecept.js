@@ -82,8 +82,9 @@ export default function ViewRecept() {
   }, []);
 
   let ViewReceipt = useSelector(state => state.donor.ViewReceipt);
-  console.log('ViewReceipt', ViewReceipt);
-
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
   const handleModal = (type, row) => {
     if (type == 'edit reciept') {
       getDonorbyId(row.id);
@@ -97,22 +98,8 @@ export default function ViewRecept() {
   const handleModal1 = () => {
     setModal1(!modal1);
   };
-
-  const getViewRecepts = async () => {
-    const url = BASE_URL + VIEW_RECEPT_URL;
-    await axios
-      .get(url)
-      .then(res => {
-        setReceipt(res.data.data.rows);
-        console.log(recept);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   const ViewModalOpen = data => {
@@ -295,10 +282,14 @@ export default function ViewRecept() {
           </Menu>
           <input placeholder="Search" onChange={e => handleChange(e)} />
         </div>
-        <CreateReceiptForm modal={modal} handleModal={handleModal} />
-        {/*<EditReceipt modal1={modal1} handleModal1={handleModal1} /> */}
-        <Paper sx={{ width: '100%', mb: 2, height: '60vh' }}>
-          {recept && recept.length > 0 ? (
+        <CreateReceiptForm
+          modal={modal}
+          type={type}
+          id={id}
+          handleModal={handleModal}
+        />
+        <Paper sx={{ width: '100%', mb: 2 }}>
+          {ViewReceipt && ViewReceipt.length > 0 ? (
             <React.Fragment>
               <TableContainer id="tableDiv">
                 <Table
@@ -387,7 +378,13 @@ export default function ViewRecept() {
                               padding="none"
                               // style={color="lightblue"}
                             >
-                              {row.recieptPdf ? 'view' : '-'}
+                              {row.recieptPdf ? (
+                                <a href={row.recieptPdf} target="_blank">
+                                  View
+                                </a>
+                              ) : (
+                                '-'
+                              )}
                             </TableCell>
                             <TableCell
                               id={labelId}

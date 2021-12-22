@@ -28,6 +28,7 @@ import {
   getDonorByValueAction,
   getViewAllDonorAction,
 } from '../../Redux/Actions/DonorActions';
+import { getAllCompletedProjectAction } from '../../Redux/Actions/ProjectActions';
 
 const CompleteProject = () => {
   const [order, setOrder] = React.useState('asc');
@@ -46,22 +47,10 @@ const CompleteProject = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
-    dispatch(getViewAllDonorAction());
+    dispatch(getAllCompletedProjectAction());
   }, []);
 
-  // const getDonorList = async () => {
-  //   const url = BASE_URL + ADD_DONOR_URL;
-  //   await axios
-  //     .get(url)
-  //     .then(res => {
-  //       setDonorList(res.data.data.message);
-  //       toast.success('Yeay! New data is here.');
-  //     })
-  //     .catch(err => {
-  //     });
-  // };
-
-  let donorList = useSelector(state => state.donor.ViewAllDonor);
+  let donorList = useSelector(state => state.project.completedProjectList);
 
   const ViewModalOpen = data => {
     setViewData(data);
