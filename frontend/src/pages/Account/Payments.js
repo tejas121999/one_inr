@@ -31,6 +31,7 @@ import {
 } from '../../Redux/Actions/DonorActions';
 import PaymentInfo from '../projects/Complete_Project/PaymentInfo';
 import PaymentNavTab from '../projects/Complete_Project/PaymentNavTab';
+import PaymentDistribution from '../projects/Complete_Project/PaymentDistribution';
 
 const Payments = () => {
   const [navLink, setNavLink] = useState();
@@ -196,14 +197,23 @@ const Payments = () => {
           </p>
         </div>
       </div>
-      <div
-        style={{
-          marginLeft: '20px',
-          marginTop: '20px',
-          width: '50%',
-        }}
-      >
-        <PaymentInfo />
+      <div className="row" style={{ flexWrap: 'nowrap', margin: '0' }}>
+        <div
+          className="col-md-6"
+          style={{
+            marginTop: '20px',
+          }}
+        >
+          <PaymentInfo />
+        </div>
+        <div
+          className="col-md-6"
+          style={{
+            marginTop: '20px',
+          }}
+        >
+          <PaymentDistribution />
+        </div>
       </div>
       <div
         style={{
