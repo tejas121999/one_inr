@@ -466,7 +466,13 @@ export default function ViewRecept() {
                               padding="none"
                               // style={color="lightblue"}
                             >
-                              {row.recieptPdf ? 'view' : '-'}
+                              {row.recieptPdf ? (
+                                <a href={row.recieptPdf} target="_blank">
+                                  View
+                                </a>
+                              ) : (
+                                '-'
+                              )}
                             </TableCell>
                             <TableCell
                               id={labelId}

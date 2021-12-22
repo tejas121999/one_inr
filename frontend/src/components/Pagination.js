@@ -62,7 +62,7 @@ export function EnhancedTableHead(props) {
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
-            align="center"
+            align={headCell.numeric ? 'left' : 'center'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -70,6 +70,7 @@ export function EnhancedTableHead(props) {
               active={true}
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
+              style={{ fontWeight: 'bold' }}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
