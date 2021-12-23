@@ -3,10 +3,13 @@ module.exports = (sequelize,DataTypes)=>{
         name:{
             type: DataTypes.STRING,
             field : 'name'
-        },
+        }, 
+        
     },    {
         freezeTableName: true,
-        tableName: 'roles'
+        tableName: 'roles',
+        paranoid : true,
+        deletedAt : 'deleted_at'
     })
     return roles
 }

@@ -8,12 +8,13 @@ module.exports = (sequelize,DataTypes)=>{
             type : DataTypes.STRING,
             field: 'permission_id'
         }
-
-
     },
     {
         freezeTableName: true,
-        tableName: 'role_has_permissions'
+        tableName: 'role_has_permissions',
+        paranoid : true,
+        deletedAt : 'deleted_at'
+
     })
     return roleHasPermissions
 }
