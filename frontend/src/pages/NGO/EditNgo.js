@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import TextError from '../error/TextError';
 import * as yup from 'yup';
 import { element } from 'prop-types';
@@ -7,11 +7,12 @@ import axios from '../../utils/interceptor';
 import { BASE_URL } from '../../API/APIEndpoints';
 import { FaTimes } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
-import { createNGOAction , updateNgoAction} from '../../Redux/Actions/NgoActions';
+import { createNGOAction, updateNgoAction } from '../../Redux/Actions/NgoActions';
+//import uploadImage from '../../assets/uploadImage.png';
 
 
 const EditNgo = (props) => {
-    
+
     const dispatch = useDispatch();
     const [logoImgUrl, setLogoImgUrl] = useState('');
     const [panCardImgUrl, setPanCardImgUrl] = useState('');
@@ -71,102 +72,102 @@ const EditNgo = (props) => {
         panNumber: yup.string().required('required').matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
     });
 
-    
-  const onlogoImageAdd = async imgData => {
-    const data = new FormData();
-    data.append('avatar', imgData);
-    const result = await axios.post(
-      BASE_URL + 'fileupload?reason=ngo_logo',
-      data,
-    );
-    console.log('data', result.data.url);
-    if (result && result.data && result.data.url) {
-        setLogoImgUrl(result.data.url);
-    }
-  };
-  console.log('logoImage', logoImgUrl);
 
-
-
-  const onPanCardImageAdd = async imgData => {
-    const data = new FormData();
-    data.append('avatar', imgData);
-    const result = await axios.post(
-      BASE_URL + 'fileupload?reason=ngo_pancard',
-      data,
-    );
-    console.log('data', result.data.url);
-    if (result && result.data && result.data.url) {
-      setPanCardImgUrl(result.data.url);
-    }
-  };
-  console.log('panCardImage', panCardImgUrl);
-
-
-  const onCertificateImageAdd = async imgData => {
-    const data = new FormData();
-    data.append('avatar', imgData);
-    const result = await axios.post(
-      BASE_URL + 'fileupload?reason=ngo_certificate',
-      data,
-    );
-    console.log('data', result.data.url);
-    if (result && result.data && result.data.url) {
-      setCertificateImgUrl(result.data.url);
-    }
-  };
-  console.log('certificateImage', certificateImgUrl);
-
-
-  
-  const onCharityCertificateImageAdd = async imgData => {
-    const data = new FormData();
-    data.append('avatar', imgData);
-    const result = await axios.post(
-      BASE_URL + 'fileupload?reason=ngo_certificate',
-      data,
-    );
-    console.log('data', result.data.url);
-    if (result && result.data && result.data.url) {
-      setCharityCertificateImgUrl(result.data.url);
-    }
-  };
-  console.log('charityCertificateImage', charityCertificateImgUrl);
-
-  
-  const onDeedImageAdd = async imgData => {
-    const data = new FormData();
-    data.append('avatar', imgData);
-    const result = await axios.post(
-      BASE_URL + 'fileupload?reason=ngo_dead',
-      data,
-    );
-    console.log('data', result.data.url);
-    if (result && result.data && result.data.url) {
-      setDeedImgUrl(result.data.url);
-    }
-  };
-  console.log('deadImage', deedImgUrl);
-
-  const onEditNgo = values => {
-    const obj = {
-      logoname: logoImgUrl,  
-      ngoname: values.ngoName,
-      address: values.address,
-      emailId: values.emailId,
-      registrationDate: '',
-      registrationNumber: '',
-      mobileNumber: '',
-      landlineNumber: '',
-      password: '',
-      panCardNumber: values.panCard,
-      panCardImage: panCardImgUrl,
-      certificateImage: certificateImgUrl,
-      charityCertificateImage: charityCertificateImgUrl,
-      deedImage: deedImgUrl,
+    const onlogoImageAdd = async imgData => {
+        const data = new FormData();
+        data.append('avatar', imgData);
+        const result = await axios.post(
+            BASE_URL + 'fileupload?reason=ngo_logo',
+            data,
+        );
+        console.log('data', result.data.url);
+        if (result && result.data && result.data.url) {
+            setLogoImgUrl(result.data.url);
+        }
     };
-    dispatch(createNGOAction(obj, props.history));
-  };
+    console.log('logoImage', logoImgUrl);
+
+
+
+    const onPanCardImageAdd = async imgData => {
+        const data = new FormData();
+        data.append('avatar', imgData);
+        const result = await axios.post(
+            BASE_URL + 'fileupload?reason=ngo_pancard',
+            data,
+        );
+        console.log('data', result.data.url);
+        if (result && result.data && result.data.url) {
+            setPanCardImgUrl(result.data.url);
+        }
+    };
+    console.log('panCardImage', panCardImgUrl);
+
+
+    const onCertificateImageAdd = async imgData => {
+        const data = new FormData();
+        data.append('avatar', imgData);
+        const result = await axios.post(
+            BASE_URL + 'fileupload?reason=ngo_certificate',
+            data,
+        );
+        console.log('data', result.data.url);
+        if (result && result.data && result.data.url) {
+            setCertificateImgUrl(result.data.url);
+        }
+    };
+    console.log('certificateImage', certificateImgUrl);
+
+
+
+    const onCharityCertificateImageAdd = async imgData => {
+        const data = new FormData();
+        data.append('avatar', imgData);
+        const result = await axios.post(
+            BASE_URL + 'fileupload?reason=ngo_certificate',
+            data,
+        );
+        console.log('data', result.data.url);
+        if (result && result.data && result.data.url) {
+            setCharityCertificateImgUrl(result.data.url);
+        }
+    };
+    console.log('charityCertificateImage', charityCertificateImgUrl);
+
+
+    const onDeedImageAdd = async imgData => {
+        const data = new FormData();
+        data.append('avatar', imgData);
+        const result = await axios.post(
+            BASE_URL + 'fileupload?reason=ngo_dead',
+            data,
+        );
+        console.log('data', result.data.url);
+        if (result && result.data && result.data.url) {
+            setDeedImgUrl(result.data.url);
+        }
+    };
+    console.log('deadImage', deedImgUrl);
+
+    const onEditNgo = values => {
+        const obj = {
+            logoname: logoImgUrl,
+            ngoname: values.ngoName,
+            address: values.address,
+            emailId: values.emailId,
+            registrationDate: '',
+            registrationNumber: '',
+            mobileNumber: '',
+            landlineNumber: '',
+            password: '',
+            panCardNumber: values.panCard,
+            panCardImage: panCardImgUrl,
+            certificateImage: certificateImgUrl,
+            charityCertificateImage: charityCertificateImgUrl,
+            deedImage: deedImgUrl,
+        };
+        dispatch(createNGOAction(obj, props.history));
+    };
 
     return (
         <div>
@@ -201,7 +202,7 @@ const EditNgo = (props) => {
                     }}
                     validationSchema={validationSchema}
                     onSubmit={values => onEditNgo(values)}
-                       enableReinitialize={true}
+                    enableReinitialize={true}
                 >
                     {({ errors, values, touched }) => (
                         <Form>
@@ -220,6 +221,8 @@ const EditNgo = (props) => {
                                         />
                                         <ErrorMessage name="logo_img" component={TextError} />
                                     </div>
+
+
                                 </div>
                             </div>
 
@@ -291,7 +294,7 @@ const EditNgo = (props) => {
                                 <div className="col-6 ">
                                     <div className="input-box">
                                         <label style={{ fontWeight: 'bold' }}>RegistrationDate</label>
-                                        <Field 
+                                        <Field
                                             className="form-control"
                                             name="registrationDate"
                                             type="date"
@@ -452,8 +455,8 @@ const EditNgo = (props) => {
                                             placeholder="Please upload certificate"
                                             name="certificate_img"
                                             accept=".png,.jpg,"
-                                            values={values.Certificate}   
-                                            onChange={e => onCertificateImageAdd(e.target.files[0])}  
+                                            values={values.Certificate}
+                                            onChange={e => onCertificateImageAdd(e.target.files[0])}
                                         />
                                         <ErrorMessage name="certificate_img" component={TextError} />
                                     </div>
@@ -572,7 +575,7 @@ const EditNgo = (props) => {
                                         </div>
                                     </div>
 
-                                    <button type="delete" className="btn btn-danger" style={{ maxWidth: "1.5cm", maxHeight: "1cm", marginTop: "1.2cm" }}  onClick={() => removeContactFormFields()}>
+                                    <button type="delete" className="btn btn-danger" style={{ maxWidth: "1.5cm", maxHeight: "1cm", marginTop: "1.2cm" }} onClick={() => removeContactFormFields()}>
                                         <FaTimes />
                                     </button>
 
@@ -676,10 +679,10 @@ const EditNgo = (props) => {
                                 </button>
                             </div>
                             <br />
-                            <div style={{marginLeft: '12px'}}>
-                            <button type="submit" className="btn btn-success" >
-                               Update Ngo
-                            </button>
+                            <div style={{ marginLeft: '12px' }}>
+                                <button type="submit" className="btn btn-success" >
+                                    Update Ngo
+                                </button>
                             </div>
 
                         </Form>

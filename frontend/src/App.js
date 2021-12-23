@@ -42,6 +42,8 @@ import OTPScreen from './pages/Other/OTP';
 import ChangePassword from './pages/Other/changePassword';
 import EditNgo from './pages/NGO/EditNgo';
 import ViewSingleNgo from './pages/NGO/ViewSingleNgo';
+import SingleProjectDetails from './pages/projects/SingleProjectDetails';
+//import EditSingleProjectDetails from './pages/projects/EditSingleProjectDetails';
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -110,6 +112,12 @@ function App(props) {
                 path="/archive_project"
                 component={ArchivedProject}
               />
+              <PrivateRoute
+                exact
+                path="/single_project_detail"
+                component={SingleProjectDetails}
+              />
+
               {/*Account route*/}
               <PrivateRoute exact path="/payments" component={Payments} />
               {/*setting route*/}
