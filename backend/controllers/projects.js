@@ -106,3 +106,8 @@ exports.getProjectById = async (req, res)=>{
     }
 
 }
+
+
+exports.updateProjectBalance = async (req,res)=> {
+   
+}
