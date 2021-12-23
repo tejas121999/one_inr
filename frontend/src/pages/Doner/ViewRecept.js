@@ -27,7 +27,7 @@ import {
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
 import { BASE_URL, VIEW_RECEPT_URL } from '../../API/APIEndpoints';
-import axios from '../../utils/interceptor';
+import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import CreateReceiptForm from '../../components/CreateReceiptForm';
@@ -70,9 +70,6 @@ export default function ViewRecept() {
   const [deleteId, setDeleteID] = React.useState(0);
   const [type, setType] = React.useState('');
   const [printDonorTable, setPrintDonorTable] = React.useState(false);
-  const [XlsUrl, setXlsUrl] = React.useState('');
-  const [pdfUrl, setPdfUrl] = React.useState('');
-  const [CsvUrl, setCsvUrl] = React.useState('');
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -80,9 +77,6 @@ export default function ViewRecept() {
   React.useEffect(() => {
     async function onMount() {
       await dispatch(getViewReceiptDonorAction());
-      exportPdf();
-      exportCsv();
-      exportXls();
     }
     onMount();
   }, []);
@@ -95,7 +89,7 @@ export default function ViewRecept() {
     if (type == 'edit reciept') {
       getDonorbyId(row.id);
     }
-
+    console.log('sada', row);
     setId(row);
     setType(type);
     setModal(!modal);
@@ -208,82 +202,6 @@ export default function ViewRecept() {
 
   // SEARCH functionality END
 
-  // EXPORT
-  const exportPdf = async () => {
-    const res = await axios.get(
-      BASE_URL + 'userReceipts/get-user-receipts-pdf',
-    );
-
-    if (res.data.url) {
-      const downloadUrl = res.data.url;
-      setPdfUrl(downloadUrl);
-    }
-  };
-  const exportCsv = async () => {
-    const resCsv = await axios.get(
-      BASE_URL + 'userReceipts/get-user-receipts-csv',
-    );
-    if (resCsv.data.url) {
-      const downloadUrl = resCsv.data.url;
-      setCsvUrl(downloadUrl);
-    }
-  };
-  const exportXls = async () => {
-    const resCsv = await axios.get(
-      BASE_URL + 'userReceipts/get-user-receipts-xlsx',
-    );
-    if (resCsv.data.url) {
-      const downloadUrl = resCsv.data.url;
-      setXlsUrl(downloadUrl);
-    }
-  };
-  // test
-  const downloadPdf = () => {
-    fetch(pdfUrl)
-      .then(response => {
-        response.blob().then(blob => {
-          let url = window.URL.createObjectURL(blob);
-          let a = document.createElement('a');
-          a.href = url;
-          a.download = 'Receipt.pdf';
-          a.click();
-        });
-        //window.location.href = response.url;
-      })
-      .catch(err => {});
-  };
-
-  const downloadCsv = () => {
-    fetch(CsvUrl)
-      .then(response => {
-        response.blob().then(blob => {
-          let url = window.URL.createObjectURL(blob);
-          let a = document.createElement('a');
-          a.href = url;
-          a.download = 'Receipt.csv';
-          a.click();
-        });
-        //window.location.href = response.url;
-      })
-      .catch(err => {});
-  };
-  const downloadXls = () => {
-    fetch(XlsUrl)
-      .then(response => {
-        response.blob().then(blob => {
-          let url = window.URL.createObjectURL(blob);
-          let a = document.createElement('a');
-          a.href = url;
-          a.download = 'Receipt.xlsx';
-          a.click();
-        });
-        //window.location.href = response.url;
-      })
-      .catch(err => {});
-  };
-
-  // Export End
-
   return (
     <>
       <br />
@@ -344,19 +262,13 @@ export default function ViewRecept() {
               </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100" onClick={downloadCsv}>
-                CSV
-              </button>
+              <button className="export-btn w-100">CSV</button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100" onClick={downloadXls}>
-                Excel
-              </button>
+              <button className="export-btn w-100">Excel</button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100" onClick={downloadPdf}>
-                PDF
-              </button>
+              <button className="export-btn w-100">PDF</button>
             </MenuItem>
             <MenuItem>
               <button

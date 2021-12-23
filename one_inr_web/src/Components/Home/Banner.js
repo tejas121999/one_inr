@@ -15,10 +15,19 @@ const Banner = () => {
           />
           <div
             className="carousel-caption d-md-block text-left"
-            style={{ right: "45%", bottom: "35%", left: "10%" }}
+            style={{
+              right: "50%",
+              bottom: "35%",
+              left: "10%",
+              paddingBottom: "5em",
+            }}
           >
-            <h1 style={{ marginBottom: "2rem" }}>Pehli Roti Dayitva Ki</h1>
-            <h4 style={{ marginBottom: "2rem" }}>
+            <h1
+              style={{ marginBottom: "2rem", color: "white", fontSize: "45px" }}
+            >
+              Pehli Roti Dayitva Ki
+            </h1>
+            <h4 style={{ marginBottom: "2rem", color: "white" }}>
               1INR has collaborated with Hunger Project by Lions Club of
               Millennials and Lions Club of Churchgate Mumbai supported by Roti
               Bank.
@@ -29,7 +38,7 @@ const Banner = () => {
                 aria-valuenow="60"
                 aria-valuemin="0"
                 aria-valuemax="100"
-                style={{ width: "75%" }}
+                style={{ width: "50%" }}
                 className="progress-bar progress-bar-striped progress-bar-animated rounded-pill"
               ></div>
             </div>

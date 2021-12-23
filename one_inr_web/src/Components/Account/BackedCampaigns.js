@@ -273,15 +273,15 @@ export default function EnhancedTable() {
           Profile
         </div>
       </div> */}
-      <div className="account-wrapper">
-        <div className="container">
-          <div class="row">
+      <div className="">
+        <div className="">
+          <div class="">
             <div className="">
               <div className="account-content profile">
                 <h3 className="account-title">Backed Campaigns</h3>
                 <div className="account-main">
                   <Box sx={{ width: "100%" }}>
-                    <Paper sx={{ width: "100%", mb: 2 }}>
+                    <Paper sx={{ width: "100%" }}>
                       <div
                         style={{
                           display: "flex",
@@ -300,10 +300,13 @@ export default function EnhancedTable() {
                         </label>
                       </div>
                       <hr style={{ margin: "0" }} />
-                      <TableContainer>
+                      <TableContainer
+                        style={{ height: "350px", overflow: "auto" }}
+                      >
                         <Table
                           sx={{ minWidth: 700 }}
                           aria-labelledby="tableTitle"
+                          style={{ position: "relative" }}
                         >
                           <EnhancedTableHead
                             order={order}

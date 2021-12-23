@@ -7,7 +7,7 @@ import Payments from './pages/Account/Payments';
 import AddDoner from './pages/Doner/AddDoner';
 import EditDoner from './pages/Doner/EditDoner';
 import UpcomingDonerRenewal from './pages/Doner/UpcomingDonerRenewal';
-// import Doners from './pages/Donor/Donors';
+import ViewAllDoner from './pages/Doner/ViewAllDoner';
 import ViewRecept from './pages/Doner/ViewRecept';
 import AddPartner from './pages/master/partner/AddPartner';
 import EditPartner from './pages/master/partner/EditPartner';
@@ -39,6 +39,7 @@ import store from './Redux/store';
 import { LoginAuthData } from './Redux/Actions/authAction';
 import OTPScreen from './pages/Other/OTP';
 import ChangePassword from './pages/Other/changePassword';
+import EditProfile from './pages/Settings/EditProfile';
 import EditNgo from './pages/NGO/EditNgo';
 import ViewSingleNgo from './pages/NGO/ViewSingleNgo';
 import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
@@ -122,6 +123,7 @@ function App(props) {
               <PrivateRoute exact path="/payments" component={Payments} />
               {/*setting route*/}
               <PrivateRoute exact path="/my_profile" component={MyProfile} />
+              <PrivateRoute exact path="/editProfile" component={EditProfile} />
               <PrivateRoute exact path="/roles" component={Roles} />
               <PrivateRoute exact path="/users" component={Users} />
               <PrivateRoute exact path="/config" component={Config} />

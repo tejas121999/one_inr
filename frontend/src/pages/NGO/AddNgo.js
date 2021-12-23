@@ -159,7 +159,7 @@ const AddNgo = props => {
 
   const onAddNgo = values => {
     const obj = {
-      logoname: logoImgUrl,
+      logoname: values.logoImgUrl,
       ngoname: values.ngoName,
       address: values.address,
       emailId: values.emailId,
@@ -179,7 +179,6 @@ const AddNgo = props => {
 
   return (
     <div>
-      <h1>add ngos</h1>
       <br />
       <br />
       <br />

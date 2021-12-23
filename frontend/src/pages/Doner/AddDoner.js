@@ -355,7 +355,7 @@ class Adddonor extends Component {
                     <div className="input-box">
                       <label style={{ fontWeight: 'bold' }}>Password</label>
                       <Field
-                        className="p-2   w-100 input-border psw-feild"
+                        className="p-2 w-100"
                         aria-invalid="false"
                         placeholder="Create Password"
                         name="password"

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const ProfilePass = () => {
   return (
-    <div>
+    <div className="site-main">
       <div className="">
         <div className="">
           <div class="">
