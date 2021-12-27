@@ -118,7 +118,7 @@ export default function Login({ location }) {
                         Login
                       </button>
                     </Link>
-                    <p style={{ marginTop: "-3rem" }}>
+                    <p>
                       <Link to="/reset">Forgot your password?</Link>
                     </p>
                     <br />

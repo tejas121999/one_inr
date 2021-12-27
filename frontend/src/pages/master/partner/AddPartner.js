@@ -5,8 +5,11 @@ import TextError from '../../error/TextError';
 import '../vendor/vendor.css';
 import { CreatePartnerAction } from '../../../Redux/Actions/MasterActions';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
+import axios from '../../../utils/interceptor';
 import { BASE_URL } from '../../../API/APIEndpoints';
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddPartner = props => {
   const dispatch = useDispatch();
@@ -48,7 +51,7 @@ const AddPartner = props => {
       BASE_URL + 'fileupload?reason=partner_pan',
       data,
     );
-    console.log('data1', result.data.url);
+    console.log('data1', result.data.pathtoUpload);
     if (result && result.data && result.data.pathtoUpload) {
       setPanImgUrl(result.data.pathtoUpload);
     }
@@ -61,7 +64,7 @@ const AddPartner = props => {
       BASE_URL + 'fileupload?reason=partner_gst',
       data,
     );
-    console.log('data', result.data.url);
+    console.log('data', result.data.pathtoUpload);
     if (result && result.data && result.data.pathtoUpload) {
       setGstImgUrl(result.data.pathtoUpload);
     }
@@ -71,6 +74,7 @@ const AddPartner = props => {
       <br />
       <br />
       <br />
+      <ToastContainer hideProgressBar />
 
       <div className="card">
         <p

@@ -269,7 +269,7 @@ select,
   list-style: none;
 }
 .account-content .account-main {
-  padding: 40px 30px;
+  padding: 30px 30px;
 }
 .account-content .account-title {
   background-color: #ededed;
@@ -296,4 +296,10 @@ select,
 .profile-box li .profile-text {
   width: 80%;
   float: left;
+}
+
+.css-15wwp11-MuiTableHead-root {
+  position: sticky;
+  top: 0;
+  background-color: white;
 }

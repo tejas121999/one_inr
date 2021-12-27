@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../utils/interceptor';
 
 import { useFormik, Formik, Field, Form, ErrorMessage } from 'formik';
 import * as yup from 'yup';
@@ -28,8 +28,8 @@ let validationSchema = yup.object().shape({
   //     .required(),
 });
 
-const CreateReceiptForm = ({ modal, handleModal,type,id }) => {
-  const[respData,setResData]=useState("")
+const CreateReceiptForm = ({ modal, handleModal, type, id }) => {
+  const [respData, setResData] = useState('');
   let history = useHistory();
   const dispatch = useDispatch();
   const [donorList, setDonorList] = useState([]);
@@ -58,33 +58,29 @@ const CreateReceiptForm = ({ modal, handleModal,type,id }) => {
   };
   // useEffect(()=>{
   //   getDonorbyId()
-   
-   
+
   // },[])
 
-  let ReciptData = useSelector((state)=>{
-    return state.donor.getReciptData
+  let ReciptData = useSelector(state => {
+    return state.donor.getReciptData;
+  });
 
-  })
- 
-
-  
-  const CreateReceiptSubmit = async (values) => {
-
-    if(type=="edit reciept"){
+  const CreateReceiptSubmit = async values => {
+    if (type == 'edit reciept') {
       const CreateReceiptEditBody = {
         Donar: values && values.Donar ? values.Donar : null,
         Project: null,
         ngoId: null,
-        Amount: values && values.Amount ? values.Amount : null,// values?.amount,
-        Transaction: values && values.Transaction ? values.Transaction : null,// values?.Transaction,
-        realizationNo: values && values.realizationNo ? values.realizationNo : null, //values?.realizationNo,
+        Amount: values && values.Amount ? values.Amount : null, // values?.amount,
+        Transaction: values && values.Transaction ? values.Transaction : null, // values?.Transaction,
+        realizationNo:
+          values && values.realizationNo ? values.realizationNo : null, //values?.realizationNo,
         date: values && values.date ? values.date : null,
         drawnOnBank: '',
         branch: '',
         receiptNumber: '',
       };
-      let editUrl = `http://newoneinr.nimapinfotech.com/api/userReceipts/${id}`
+      let editUrl = `http://newoneinr.nimapinfotech.com/api/userReceipts/${id}`;
       await axios
         .put(editUrl, CreateReceiptEditBody)
         .then(res => {
@@ -93,57 +89,55 @@ const CreateReceiptForm = ({ modal, handleModal,type,id }) => {
         .catch(err => {
           // console.log('err ', err?.response);
         });
-
+    } else {
+      const CreateReceiptpBody = {
+        Donar: values && values.Donar ? values.Donar : null,
+        Project: null,
+        ngoId: null,
+        Amount: values && values.Amount ? values.Amount : null, // values?.amount,
+        Transaction: values && values.Transaction ? values.Transaction : null, // values?.Transaction,
+        realizationNo:
+          values && values.realizationNo ? values.realizationNo : null, //values?.realizationNo,
+        date: values && values.date ? values.date : null,
+        drawnOnBank: '',
+        branch: '',
+        receiptNumber: '',
+      };
+      let url = BASE_URL + 'userReceipts/';
+      await axios
+        .post(url, CreateReceiptpBody)
+        .then(res => {
+          return res.data;
+        })
+        .catch(err => {
+          // console.log('err ', err?.response);
+        });
     }
-    
-  
-
-else{
-  const CreateReceiptpBody = {
-    Donar: values && values.Donar ? values.Donar : null,
-    Project: null,
-    ngoId: null,
-    Amount: values && values.Amount ? values.Amount : null,// values?.amount,
-    Transaction: values && values.Transaction ? values.Transaction : null,// values?.Transaction,
-    realizationNo: values && values.realizationNo ? values.realizationNo : null, //values?.realizationNo,
-    date: values && values.date ? values.date : null,
-    drawnOnBank: '',
-    branch: '',
-    receiptNumber: '',
-  };
-  let url = BASE_URL+'userReceipts/';
-  await axios
-    .post(url, CreateReceiptpBody)
-    .then(res => {
-      return res.data;
-    })
-    .catch(err => {
-      // console.log('err ', err?.response);
-    });
-}    
-
   };
 
   return (
     <Modal show={modal} onHide={handleModal}>
-      <Modal.Header closeButton>{type == 'create receipt' ? 'Create recipt' : 'Edit recipt'}</Modal.Header>
+      <Modal.Header closeButton>
+        {type == 'create receipt' ? 'Create recipt' : 'Edit recipt'}
+      </Modal.Header>
       <Modal.Body>
         <div className="container">
           <Formik
             initialValues={{
               // Project: '',
-              Donar: type =="edit reciept"? ReciptData.userId:"",
-              Amount: type =="edit reciept"? ReciptData.amount:"",
+              Donar: type == 'edit reciept' ? ReciptData.userId : '',
+              Amount: type == 'edit reciept' ? ReciptData.amount : '',
               date: '',
-              Transaction: type =="edit reciept"? ReciptData.transactionType:"",
+              Transaction:
+                type == 'edit reciept' ? ReciptData.transactionType : '',
               //   Cheque : '',
             }}
             validationSchema={validationSchema}
-            enableReinitialize= {true}
+            enableReinitialize={true}
             onSubmit={values => {
-              console.log("asd")
+              console.log('asd');
               CreateReceiptSubmit(values);
-                // loginHandler(values);
+              // loginHandler(values);
               console.log('values', values);
               AddUserReceiptHandler(values);
               handleModal();
@@ -198,7 +192,6 @@ else{
                     value={values.Amount}
                     onChange={handleChange}
                     onBlur={handleBlur}
-
                   />
                   {touched.Amount && errors.Amount ? (
                     <small className="text-danger ">{errors.Amount}</small>
@@ -218,7 +211,6 @@ else{
                     value={values.date}
                     onChange={handleChange}
                     onBlur={handleBlur}
-
                   />
                   {touched.date && errors.date ? (
                     <small className="text-danger ">{errors.date}</small>
@@ -304,9 +296,10 @@ else{
                   <Button onClick={handleModal} className="ml-2">
                     Cancel
                   </Button>
-                  <Button type="submit">{type == 'create receipt' ? 'Create ' : 'Edit '}</Button>
+                  <Button type="submit">
+                    {type == 'create receipt' ? 'Create ' : 'Edit '}
+                  </Button>
                   {/* <button type="submit">create</button> */}
-
                 </div>
               </form>
             )}

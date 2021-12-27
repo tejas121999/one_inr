@@ -28,7 +28,7 @@ import {
   GetAllDonor,
   Local,
 } from '../../API/APIEndpoints';
-import axios from 'axios';
+import axios from '../../utils/interceptor';
 import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import Loader from '../Loader';
@@ -46,6 +46,9 @@ import { DropdownButton } from 'react-bootstrap';
 import ViewAllDonorTable from './ViewAllDonorTable';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Details from '../../Modals/Donor/DonorDetails/Details';
 export default function EnhancedTable() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -54,15 +57,17 @@ export default function EnhancedTable() {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(50);
   const [viewModal, setViewModal] = React.useState(false);
   const [viewData, setViewData] = React.useState('');
+  const [viewDetails, setViewDetails] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
   const [fundModalData, setFundModalData] = React.useState(0);
   const [pdfUrl, setPdfUrl] = React.useState('');
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
   const [CsvUrl, setCsvUrl] = React.useState('');
+  const [XlsUrl, setXlsUrl] = React.useState('');
   const [printDonorTable, setPrintDonorTable] = React.useState(false);
 
   const history = useHistory();
@@ -72,6 +77,7 @@ export default function EnhancedTable() {
 
     exportPdf();
     exportCsv();
+    exportXls();
   }, []);
 
   let donorList = useSelector(state => state.donor.ViewAllDonor);
@@ -82,6 +88,14 @@ export default function EnhancedTable() {
   };
   const ViewModalClose = () => {
     setViewModal(false);
+  };
+
+  const ViewDetailModalOpen = data => {
+    setViewData(data);
+    setViewDetails(true);
+  };
+  const ViewDetailModalClose = () => {
+    setViewDetails(false);
   };
   const fundModaOpen = data => {
     setFundModalData(data.id);
@@ -140,7 +154,7 @@ export default function EnhancedTable() {
   // END
 
   const exportPdf = async () => {
-    const res = await axios.get(Local + '/donor/donor-pdf');
+    const res = await axios.get(BASE_URL + '/donor/donor-pdf');
 
     if (res.data.url) {
       const downloadUrl = res.data.url;
@@ -148,10 +162,17 @@ export default function EnhancedTable() {
     }
   };
   const exportCsv = async () => {
-    const resCsv = await axios.get(Local + '/donor/donor-csv');
+    const resCsv = await axios.get(BASE_URL + '/donor/donor-csv');
     if (resCsv.data.url) {
       const downloadUrl = resCsv.data.url;
       setCsvUrl(downloadUrl);
+    }
+  };
+  const exportXls = async () => {
+    const resCsv = await axios.get(BASE_URL + '/donor/donor-xlsx');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setXlsUrl(downloadUrl);
     }
   };
   // test
@@ -183,20 +204,34 @@ export default function EnhancedTable() {
       })
       .catch(err => {});
   };
+  const downloadXls = () => {
+    fetch(XlsUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'Donor.xlsx';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
   const onPrintClick = () => {
-    console.log(printDonorTable)
+    console.log(printDonorTable);
     setPrintDonorTable(true);
     setTimeout(() => {
       setPrintDonorValue(false);
     }, 1000);
-  }
+  };
 
-  const setPrintDonorValue = (value) => {
-    if(printDonorTable) {
+  const setPrintDonorValue = value => {
+    if (printDonorTable) {
       setPrintDonorValue(value);
     }
     // window.print();
-  }
+  };
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -206,12 +241,12 @@ export default function EnhancedTable() {
   };
 
   const onCopyClick = () => {
-    var urlField = document.getElementById('tableDiv')   
-    var range = document.createRange()
-    range.selectNode(urlField)
-    window.getSelection().addRange(range) 
-    document.execCommand('copy')
-  }
+    var urlField = document.getElementById('tableDiv');
+    var range = document.createRange();
+    range.selectNode(urlField);
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+  };
 
   // end
   return (
@@ -225,10 +260,12 @@ export default function EnhancedTable() {
         onHide={ViewModalClose}
         data={viewData}
       />
+      <Details show={viewDetails} onHide={ViewDetailModalClose} />
+      <ToastContainer hideProgressBar />
       <Addfund show={fundModal} onHide={fundModaClose} data={fundModalData} />
       <Donordelete show={deleteModal} onHide={deleteModalClose} id={deleteId} />
       <nav className="navbar navbar-light">
-        <a className="navbar-brand">Partner List</a>
+        <a className="navbar-brand">Donor List</a>
         <form className="form-inline">
           <div className="modalClass">
             <Link to="/add_doner" type="" className="btn btn-primary">
@@ -250,14 +287,14 @@ export default function EnhancedTable() {
             justifyContent: 'space-between',
           }}
         >
-            <button
+          <button
             style={{ alignSelf: 'flex-start' }}
             className="btn btn-primary"
             onClick={e => handleClick(e)}
           >
             Export
           </button>
-           <Menu
+          <Menu
             id="simple-menu"
             anchorEl={anchorEl}
             keepMounted
@@ -266,35 +303,42 @@ export default function EnhancedTable() {
             style={{ top: '30px', left: '-8px' }}
           >
             <MenuItem>
-              <button className="export-btn w-100" onClick={() => onCopyClick()}>Copy</button>
+              <button
+                className="export-btn w-100"
+                onClick={() => onCopyClick()}
+              >
+                Copy
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100" onClick={downloadCsv}>CSV</button>
+              <button className="export-btn w-100" onClick={downloadCsv}>
+                CSV
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100">Excel</button>
+              <button className="export-btn w-100" onClick={downloadXls}>
+                Excel
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100"onClick={downloadEmployeeData} >PDF</button>
+              <button
+                className="export-btn w-100"
+                onClick={downloadEmployeeData}
+              >
+                PDF
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100" onClick={()=> onPrintClick()}>Print</button>
-            </MenuItem> 
+              <button
+                className="export-btn w-100"
+                onClick={() => onPrintClick()}
+              >
+                Print
+              </button>
+            </MenuItem>
             {/* <MenuItem></MenuItem> */}
           </Menu>
 
-          {/* <DropdownButton variant="primary" title="Export">
-            <a className="dropdown-item" onClick={downloadCsv}>
-              CSV
-            </a>
-
-            <a onClick={downloadEmployeeData} className="dropdown-item">
-              PDF{' '}
-            </a>
-            <a className="dropdown-item" target="_blank" download>
-              Excel
-            </a>
-          </DropdownButton> */}
           <input
             placeholder="Search"
             onChange={e => handleChange(e)}
@@ -364,6 +408,7 @@ export default function EnhancedTable() {
                                 data-bs-toggle="tooltip"
                                 title="View Transactions"
                                 className="btn"
+                                onClick={() => ViewDetailModalOpen(row)}
                               >
                                 <FaBookOpen />
                               </button>
@@ -399,7 +444,7 @@ export default function EnhancedTable() {
                 </Table>
               </TableContainer>
               <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={[50, 100, 150]}
                 component="div"
                 count={donorList.length}
                 rowsPerPage={rowsPerPage}
@@ -417,12 +462,11 @@ export default function EnhancedTable() {
         </Paper>
         <ViewAllDonorTable
           printDonorTable={printDonorTable}
-          tableData={stableSort(donorList, getComparator(order, orderBy))
-            .slice(
-              page * rowsPerPage,
-              page * rowsPerPage + rowsPerPage,
-            )}
-            setPrintDonorValue={setPrintDonorValue}
+          tableData={stableSort(donorList, getComparator(order, orderBy)).slice(
+            page * rowsPerPage,
+            page * rowsPerPage + rowsPerPage,
+          )}
+          setPrintDonorValue={setPrintDonorValue}
         ></ViewAllDonorTable>
       </div>
     </>

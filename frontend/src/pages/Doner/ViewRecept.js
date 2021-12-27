@@ -82,8 +82,9 @@ export default function ViewRecept() {
   }, []);
 
   let ViewReceipt = useSelector(state => state.donor.ViewReceipt);
-  console.log('ViewReceipt', ViewReceipt);
-
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
   const handleModal = (type, row) => {
     if (type == 'edit reciept') {
       getDonorbyId(row.id);
@@ -189,29 +190,29 @@ export default function ViewRecept() {
   };
 
   const onPrintClick = () => {
-    console.log(printDonorTable)
+    console.log(printDonorTable);
     setPrintDonorTable(true);
     setTimeout(() => {
       setPrintDonorValue(false);
     }, 1000);
-  }
+  };
 
-  const setPrintDonorValue = (value) => {
+  const setPrintDonorValue = value => {
     if (printDonorTable) {
       setPrintDonorValue(value);
     }
     // window.print();
-  }
+  };
 
   const onCopyClick = () => {
-    var urlField = document.getElementById('tableDiv')
-    var range = document.createRange()
-    range.selectNode(urlField)
-    window.getSelection().addRange(range)
+    var urlField = document.getElementById('tableDiv');
+    var range = document.createRange();
+    range.selectNode(urlField);
+    window.getSelection().addRange(range);
     // sel.removeAllRanges();
 
-    document.execCommand('copy')
-  }
+    document.execCommand('copy');
+  };
 
   // SEARCH functionality END
 
@@ -267,7 +268,12 @@ export default function ViewRecept() {
             style={{ top: '30px', left: '-8px' }}
           >
             <MenuItem>
-              <button className="export-btn w-100" onClick={() => onCopyClick()}>Copy</button>
+              <button
+                className="export-btn w-100"
+                onClick={() => onCopyClick()}
+              >
+                Copy
+              </button>
             </MenuItem>
             <MenuItem>
               <button className="export-btn w-100">CSV</button>
@@ -279,16 +285,25 @@ export default function ViewRecept() {
               <button className="export-btn w-100">PDF</button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100" onClick={() => onPrintClick()}>Print</button>
+              <button
+                className="export-btn w-100"
+                onClick={() => onPrintClick()}
+              >
+                Print
+              </button>
             </MenuItem>
             {/* <MenuItem></MenuItem> */}
           </Menu>
           <input placeholder="Search" onChange={e => handleChange(e)} />
         </div>
-        <CreateReceiptForm modal={modal} handleModal={handleModal} />
-        {/*<EditReceipt modal1={modal1} handleModal1={handleModal1} /> */}
-        <Paper sx={{ width: '100%', mb: 2, height: '60vh' }}>
-          {recept && recept.length > 0 ? (
+        <CreateReceiptForm
+          modal={modal}
+          type={type}
+          id={id}
+          handleModal={handleModal}
+        />
+        <Paper sx={{ width: '100%', mb: 2 }}>
+          {ViewReceipt && ViewReceipt.length > 0 ? (
             <React.Fragment>
               <TableContainer id="tableDiv">
                 <Table
@@ -375,9 +390,15 @@ export default function ViewRecept() {
                               align="center"
                               scope="row"
                               padding="none"
-                            // style={color="lightblue"}
+                              // style={color="lightblue"}
                             >
-                              {row.recieptPdf ? 'view' : '-'}
+                              {row.recieptPdf ? (
+                                <a href={row.recieptPdf} target="_blank">
+                                  View
+                                </a>
+                              ) : (
+                                '-'
+                              )}
                             </TableCell>
                             <TableCell
                               id={labelId}
@@ -387,10 +408,10 @@ export default function ViewRecept() {
                             >
                               {row.createdAt
                                 ? row.createdAt
-                                  .split('')
-                                  .slice(0, 10)
-                                  .join()
-                                  .replace(/,/g, '')
+                                    .split('')
+                                    .slice(0, 10)
+                                    .join()
+                                    .replace(/,/g, '')
                                 : '-'}
                             </TableCell>
                             <TableCell align="center">
@@ -433,11 +454,10 @@ export default function ViewRecept() {
         </Paper>
         <DonorTable
           printDonorTable={printDonorTable}
-          tableData={stableSort(ViewReceipt, getComparator(order, orderBy))
-            .slice(
-              page * rowsPerPage,
-              page * rowsPerPage + rowsPerPage,
-            )}
+          tableData={stableSort(
+            ViewReceipt,
+            getComparator(order, orderBy),
+          ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
           setPrintDonorValue={setPrintDonorValue}
         ></DonorTable>
       </div>
@@ -501,6 +521,3 @@ const tableHeader = [
     label: 'Action',
   },
 ];
-
-
-

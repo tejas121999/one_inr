@@ -36,6 +36,10 @@ import { constData } from '../../utils/colors';
 import UpcomingDonorRenewalTable from './UpcomingDonorRenewalTable copy';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from '../../utils/interceptor';
+import { BASE_URL } from '../../API/APIEndpoints';
 export default function EnhancedTable() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -44,7 +48,7 @@ export default function EnhancedTable() {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(50);
   const [viewModal, setViewModal] = React.useState(false);
   const [viewData, setViewData] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
@@ -52,11 +56,17 @@ export default function EnhancedTable() {
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
   const [printDonorTable, setPrintDonorTable] = React.useState(false);
+  const [XlsUrl, setXlsUrl] = React.useState('');
+  const [pdfUrl, setPdfUrl] = React.useState('');
+  const [CsvUrl, setCsvUrl] = React.useState('');
 
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getUpcomingDonorAction(''));
+    exportPdf();
+    exportCsv();
+    exportXls();
   }, []);
 
   let UpcomingdonorList = useSelector(state => state.donor.upComingDonors);
@@ -123,19 +133,19 @@ export default function EnhancedTable() {
     }
   };
   const onPrintClick = () => {
-    console.log(printDonorTable)
+    console.log(printDonorTable);
     setPrintDonorTable(true);
     setTimeout(() => {
       setPrintDonorValue(false);
     }, 1000);
-  }
+  };
 
-  const setPrintDonorValue = (value) => {
-    if(printDonorTable) {
+  const setPrintDonorValue = value => {
+    if (printDonorTable) {
       setPrintDonorValue(value);
     }
     // window.print();
-  }
+  };
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -145,21 +155,92 @@ export default function EnhancedTable() {
   };
 
   const onCopyClick = () => {
-    var urlField = document.getElementById('tableDiv')   
-    var range = document.createRange()
-    range.selectNode(urlField)
-    window.getSelection().addRange(range) 
-    document.execCommand('copy')
-  }
-
+    var urlField = document.getElementById('tableDiv');
+    var range = document.createRange();
+    range.selectNode(urlField);
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+  };
 
   // END
+
+  // EXPORT
+  const exportPdf = async () => {
+    const res = await axios.get(BASE_URL + 'donor/upcoming-donor-pdf');
+
+    if (res.data.url) {
+      const downloadUrl = res.data.url;
+      setPdfUrl(downloadUrl);
+    }
+  };
+  const exportCsv = async () => {
+    const resCsv = await axios.get(BASE_URL + 'donor/upcoming-donor-csv');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setCsvUrl(downloadUrl);
+    }
+  };
+  const exportXls = async () => {
+    const resCsv = await axios.get(BASE_URL + 'donor/upcoming-donor-xlsx');
+    if (resCsv.data.url) {
+      const downloadUrl = resCsv.data.url;
+      setXlsUrl(downloadUrl);
+    }
+  };
+  // test
+  const downloadPdf = () => {
+    fetch(pdfUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'UpcomingDonorRenewal.pdf';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+
+  const downloadCsv = () => {
+    fetch(CsvUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'UpcomingDonorRenewal.csv';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+  const downloadXls = () => {
+    fetch(XlsUrl)
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'UpcomingDonorRenewal.xlsx';
+          a.click();
+        });
+        //window.location.href = response.url;
+      })
+      .catch(err => {});
+  };
+
+  // Export End
+
   return (
     <>
       <br />
       <br />
       <br />
       <br />
+      <ToastContainer hideProgressBar />
       <ViewUpcomingdonormodal
         show={viewModal}
         onHide={ViewModalClose}
@@ -214,20 +295,36 @@ export default function EnhancedTable() {
             style={{ top: '30px', left: '-8px' }}
           >
             <MenuItem>
-              <button className="export-btn w-100" onClick={() => onCopyClick()}>Copy</button>
+              <button
+                className="export-btn w-100"
+                onClick={() => onCopyClick()}
+              >
+                Copy
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100"  >CSV</button>
+              <button className="export-btn w-100" onClick={downloadCsv}>
+                CSV
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100">Excel</button>
+              <button className="export-btn w-100" onClick={downloadXls}>
+                Excel
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100" >PDF</button>
+              <button className="export-btn w-100" onClick={downloadPdf}>
+                PDF
+              </button>
             </MenuItem>
             <MenuItem>
-              <button className="export-btn w-100" onClick={()=> onPrintClick()}>Print</button>
-            </MenuItem> 
+              <button
+                className="export-btn w-100"
+                onClick={() => onPrintClick()}
+              >
+                Print
+              </button>
+            </MenuItem>
             {/* <MenuItem></MenuItem> */}
           </Menu>
           <input
@@ -338,7 +435,7 @@ export default function EnhancedTable() {
                 </Table>
               </TableContainer>
               <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={[50, 100, 150]}
                 component="div"
                 count={UpcomingdonorList.length}
                 rowsPerPage={rowsPerPage}
@@ -356,12 +453,11 @@ export default function EnhancedTable() {
         </Paper>
         <UpcomingDonorRenewalTable
           printDonorTable={printDonorTable}
-          tableData={stableSort(UpcomingdonorList, getComparator(order, orderBy))
-            .slice(
-              page * rowsPerPage,
-              page * rowsPerPage + rowsPerPage,
-            )}
-            setPrintDonorValue={setPrintDonorValue}
+          tableData={stableSort(
+            UpcomingdonorList,
+            getComparator(order, orderBy),
+          ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+          setPrintDonorValue={setPrintDonorValue}
         ></UpcomingDonorRenewalTable>
       </div>
     </>

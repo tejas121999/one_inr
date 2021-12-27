@@ -1,8 +1,20 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 const Dashboard = () => {
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const url = 'http://localhost:3001/getLang';
+    const res = await axios.get(url);
+    console.log('Chinmay', res);
+  };
   return (
     <React.Fragment>
+      <ToastContainer hideProgressBar />
       <br />
       <br />
       <br />
@@ -118,7 +130,7 @@ const Dashboard = () => {
 
         <div className="container">
           <div className="row">
-          <div className="col">
+            <div className="col">
               {' '}
               <div className="datCard">
                 <p
@@ -144,10 +156,8 @@ const Dashboard = () => {
                 </p>
               </div>
             </div>
-          <div className="col">
-              {' '}</div>
-            <div className="col">
-              {' '}</div>
+            <div className="col"> </div>
+            <div className="col"> </div>
             {/* <div className="col">
               {' '}
               <div className="datCard">
@@ -200,7 +210,6 @@ const Dashboard = () => {
                 </p>
               </div>
             </div> */}
-         
           </div>
         </div>
       </div>

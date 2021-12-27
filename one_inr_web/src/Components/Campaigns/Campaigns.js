@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { scrollTop } from "../layout/Footer";
 import DescoverCamp from "../Home/DescoverCamp";
 import TopImg_1 from "../Images/descovr_camp/Sponsoring_Books_for_Students.jpeg";
 import logo_img from "../Images/ngo_logo.png";
@@ -13,7 +14,7 @@ const Campaigns = () => {
           // style={{ maxWidth: "540cm", maxHeight: "450cm" }}
         >
           <div className="col-6">
-            <Link to="/sponsoring_books">
+            <Link to="/sponsoring_books" onClick={scrollTop}>
               <img src={TopImg_1} className="img-fluid rounded-start" />
             </Link>
           </div>
@@ -40,10 +41,10 @@ const Campaigns = () => {
             >
               <div
                 role="progressbar"
-                aria-valuenow="60"
+                aria-valuenow="20"
                 aria-valuemin="0"
                 aria-valuemax="100"
-                style={{ width: "60%" }}
+                style={{ width: "20%" }}
                 className="progress-bar progress-bar-striped progress-bar-animated rounded-pill"
               ></div>
             </div>

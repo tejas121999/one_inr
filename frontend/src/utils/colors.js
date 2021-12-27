@@ -55,6 +55,8 @@ export const constData = [
     balanceNextRenewDate: '2021-03-14',
     parentId: 0,
     mobile: 9819312721,
+    projectName: 'Pehli Roti Dayitva Ki',
+    ngo: 'dummy NGO',
   },
   {
     id: 2,
@@ -63,6 +65,9 @@ export const constData = [
     balance: '100',
     project: '10',
     email: 'akshay@gmail.com',
+    projectName: 'Pehli Roti Dayitva Ki',
+    ngo: 'dummy NGO',
+    balanceNextRenewDate: '2021-03-14',
   },
   {
     id: 3,
@@ -71,6 +76,9 @@ export const constData = [
     balance: '100',
     project: '10',
     email: 'akshay@gmail.com',
+    projectName: 'Pehli Roti Dayitva Ki',
+    ngo: 'dummy NGO',
+    balanceNextRenewDate: '2021-03-14',
   },
   {
     id: 4,
@@ -79,6 +87,9 @@ export const constData = [
     balance: '100',
     project: '10',
     email: 'akshay@gmail.com',
+    projectName: 'Pehli Roti Dayitva Ki',
+    ngo: 'dummy NGO',
+    balanceNextRenewDate: '2021-03-14',
   },
   {
     id: 5,
@@ -87,6 +98,9 @@ export const constData = [
     balance: '100',
     project: '10',
     email: 'akshay@gmail.com',
+    projectName: 'Pehli Roti Dayitva Ki',
+    ngo: 'dummy NGO',
+    balanceNextRenewDate: '2021-03-14',
   },
   {
     id: 6,
@@ -95,6 +109,9 @@ export const constData = [
     balance: '100',
     project: '10',
     email: 'akshay@gmail.com',
+    projectName: 'Pehli Roti Dayitva Ki',
+    ngo: 'dummy NGO',
+    balanceNextRenewDate: '2021-03-14',
   },
   {
     id: 7,
@@ -103,6 +120,9 @@ export const constData = [
     balance: '100',
     project: '10',
     email: 'akshay@gmail.com',
+    projectName: 'Pehli Roti Dayitva Ki',
+    ngo: 'dummy NGO',
+    balanceNextRenewDate: '2021-03-14',
   },
   {
     id: 8,
@@ -111,6 +131,9 @@ export const constData = [
     balance: '100',
     project: '10',
     email: 'akshay@gmail.com',
+    projectName: 'Pehli Roti Dayitva Ki',
+    ngo: 'dummy NGO',
+    balanceNextRenewDate: '2021-03-14',
   },
   {
     id: 9,
@@ -119,6 +142,9 @@ export const constData = [
     balance: '100',
     project: '10',
     email: 'akshay@gmail.com',
+    projectName: 'Pehli Roti Dayitva Ki',
+    ngo: 'dummy NGO',
+    balanceNextRenewDate: '2021-03-14',
   },
   {
     id: 10,
@@ -127,6 +153,9 @@ export const constData = [
     balance: '100',
     project: '10',
     email: 'akshay@gmail.com',
+    projectName: 'Pehli Roti Dayitva Ki',
+    ngo: 'dummy NGO',
+    balanceNextRenewDate: '2021-03-14',
   },
   {
     id: 11,
@@ -135,6 +164,9 @@ export const constData = [
     balance: '100',
     project: '10',
     email: 'akshay@gmail.com',
+    projectName: 'Pehli Roti Dayitva Ki',
+    ngo: 'dummy NGO',
+    balanceNextRenewDate: '2021-03-14',
   },
   {
     id: 12,
@@ -143,5 +175,8 @@ export const constData = [
     balance: '100',
     project: '10',
     email: 'akshay@gmail.com',
+    projectName: 'Pehli Roti Dayitva Ki',
+    ngo: 'dummy NGO',
+    balanceNextRenewDate: '2021-03-14',
   },
 ];

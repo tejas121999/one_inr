@@ -10,11 +10,13 @@ const Op = sequelize.Op;
 const moment = require('moment')
 const generatePdf = require('../utils/generatePdf')
 const path = require('path')
-const filePath = 'donor'
+const filePath = 'upcomingDonor'
 var fs = require("fs");
 const exportToCsv = require('../utils/exportToCsv')
 const generateDonorExcel = require('../service/allDonorExcel')
+const generateUpcomingDonorExcel = require('../service/upcomingDonorExcel')
 const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'donor.html'), 'utf-8');
+const html1 = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'upcomingDonor.html'), 'utf-8');
 
 
 //Creating a Donor 
@@ -79,7 +81,7 @@ exports.getAllDonor = async (req, res) => {
 //Get api for getting parent details 
 exports.getAllParentDetails = async (req, res) => {
     const data = await models.users.findAll({
-        attributes: ['name', 'id']
+        attributes: ['name', 'id','email']
 
     })
     if (!data) {
@@ -378,5 +380,129 @@ exports.getDonorExcel = async (req, res) => {
         }
     } catch (e) {
         console.log(e)
+    }
+}
+
+
+exports.getAllUpcomingDonorsPdf = async (req, res) => {
+    const { search, offset, pageSize } = paginationWithFromTo(
+        req.query.search,
+        req.query.from,
+        req.query.to
+    );
+    const urlData = req.get('host');
+
+    let query = {};
+
+    //Using moment to get the first date of the current year
+    const startDate = moment().startOf('year');
+    //to get the last date of the current year 
+    const endDate = moment().endOf('year');
+
+    const searchQuery = {
+        [Op.and]: [query, {
+            [Op.or]: {
+                name: { [Op.like]: search + "%" },
+                balance: { [Op.like]: search + '%' },
+            }
+        }],
+        balanceNextRenewDate: { [Op.between]: [startDate, endDate] },
+
+    };
+
+    const data = await models.users.findAll({
+        where: searchQuery,
+        offset: offset,
+        limit: pageSize,
+
+    })
+    if (!data) {
+        res.status(404).json({ message: 'Data not found' });
+    } else {
+        const pdfData = await generatePdf.pdfGenerator(data,filePath, html1)
+        res.status(200).json({ message: 'Donor Pdf Generated', url : 'http://' + urlData + pdfData.path });
+        res.download(pdfData.path)
+    }
+}
+
+
+exports.getAllUpcomingDonorsCsv = async (req, res) => {
+    const { search, offset, pageSize } = paginationWithFromTo(
+        req.query.search,
+        req.query.from,
+        req.query.to
+    );
+    const urlData = req.get('host');
+
+    let query = {};
+
+    //Using moment to get the first date of the current year
+    const startDate = moment().startOf('year');
+    //to get the last date of the current year 
+    const endDate = moment().endOf('year');
+
+    const searchQuery = {
+        [Op.and]: [query, {
+            [Op.or]: {
+                name: { [Op.like]: search + "%" },
+                balance: { [Op.like]: search + '%' },
+            }
+        }],
+        balanceNextRenewDate: { [Op.between]: [startDate, endDate] },
+
+    };
+
+    const data = await models.users.findAll({
+        where: searchQuery,
+        offset: offset,
+        limit: pageSize,
+
+    })
+    if(!data){
+        res.status(404).json({message:'Data not found'})
+    }else{
+        const csvData = await exportToCsv.exportsToCsv(data,filePath,"",res)
+        res.status(200).json({message:'Exported Data into CSV', url : `http://` + urlData + csvData.downloadPath })
+    }
+}
+
+
+exports.getAllUpcomingDonorsExcel = async (req, res) => {
+    const { search, offset, pageSize } = paginationWithFromTo(
+        req.query.search,
+        req.query.from,
+        req.query.to
+    );
+    const urlData = req.get('host');
+
+    let query = {};
+
+    //Using moment to get the first date of the current year
+    const startDate = moment().startOf('year');
+    //to get the last date of the current year 
+    const endDate = moment().endOf('year');
+
+    const searchQuery = {
+        [Op.and]: [query, {
+            [Op.or]: {
+                name: { [Op.like]: search + "%" },
+                balance: { [Op.like]: search + '%' },
+            }
+        }],
+        balanceNextRenewDate: { [Op.between]: [startDate, endDate] },
+
+    };
+
+    const data = await models.users.findAll({
+        where: searchQuery,
+        offset: offset,
+        limit: pageSize,
+
+    })
+    if (!data) {
+        res.status(404).json({ message: 'Data not found' });
+    } else {
+        const donorXlsx = await generateUpcomingDonorExcel(data, res)
+        res.status(200).json({ message: 'Xlsx Generated', url : 'http://' + urlData + donorXlsx.pathToExport });
     }
 }
