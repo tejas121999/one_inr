@@ -231,7 +231,7 @@ const ViewAllProjects = () => {
                                                             data-bs-toggle="tooltip"
                                                             title="Edit"
                                                             className="btn"
-                                                            onClick={() => history.push('#', row)}
+                                                            onClick={() => history.push('/edit_project', row)}
                                                         >
                                                             <FaRegEdit />
                                                         </button>

@@ -70,7 +70,11 @@ const ProjectDetails = () => {
                                                         <br />
                                                     </b>
                                                     <p className='p1'>
-                                                        <span style={{}}></span>
+                                                        <span style={{
+                                                            boxSizing: "inherit", border: '0px', fontSize: "11pt", margin: '0px', outline: '0px',
+                                                            padding: '0px', verticalAlign: 'baseline', fontFamily: 'Arial', color: '#000000', backgroundColor: 'transparent',
+                                                            fontVariantNumeric: 'normal', fontVariantEastAsian: 'normal', whiteSpace: 'pre-wrap'
+                                                        }}>The campaign -</span>
                                                     </p>
                                                 </Tab>
                                             </Tabs>

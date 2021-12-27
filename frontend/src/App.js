@@ -41,6 +41,7 @@ import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
 // import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
 import ViewAllDoner from './pages/Doner/ViewAllDoner'
 import ProjectDetails from './pages/projects/ProjectDetails';
+import EditProject from './pages/projects/EditProject';
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -97,6 +98,11 @@ function App(props) {
               exact
               path="/view_all_project"
               component={ViewAllProjects}
+            />
+            <PrivateRoute
+              exact
+              path="/edit_project"
+              component={EditProject}
             />
             <PrivateRoute
               exact
