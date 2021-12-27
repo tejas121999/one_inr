@@ -24,3 +24,15 @@
 .projectDetails {
   margin-top: 10px;
 }
+.p1 {
+  box-sizing: inherit;
+  margin: 0px 0px 20px;
+  border: 0px;
+  font-size: 14px;
+  outline: 0px;
+  padding: 0px;
+  vertical-align: baseline;
+  color: #555555;
+  font-family: Rubik, sans-serif;
+  text-align: justify;
+}
