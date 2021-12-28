@@ -7,6 +7,7 @@ const auth = require('./auth') //Importing Authorization Module
 const donor = require('./donor') //Importing Donor Module 
 const userReceipts = require('./usersReceipts')//importing User Reciepts
 const ngo = require('./ngo')//importing ngo module
+const users = require('./users') //Importing users 
 const partner = require('./partner')
 const csvUpload = require('./csvFileUploads')
 const checkAuth = require('../middleware/checkAuth')
@@ -23,6 +24,7 @@ router.use('/projects', projects)
 router.use('/ngo',checkAuth,ngo)
 router.use('/partner',checkAuth,partner)
 router.use('/csvUserUpload',checkAuth,csvUpload)
+router.use('/user',checkAuth,users)
 
 
 
