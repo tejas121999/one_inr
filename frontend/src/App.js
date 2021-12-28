@@ -44,7 +44,7 @@ import EditNgo from './pages/NGO/EditNgo';
 import ViewSingleNgo from './pages/NGO/ViewSingleNgo';
 import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
 // import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
-import ViewAllDoner from './pages/Doner/ViewAllDoner'
+// import ViewAllDoner from './pages/Doner/ViewAllDoner'
 import ProjectDetails from './pages/projects/ProjectDetails';
 import EditProject from './pages/projects/EditProject';
 
@@ -66,7 +66,7 @@ function App(props) {
         <Route exact path="/forgot_password" component={Forgot} />
         <Route exact path="/otp" component={OTPScreen} />
         <Route exact path="/changePassword" component={ChangePassword} />
-        <Route path="/404" component={Four_Zero_Foure} />
+        
         <div>
           <MainLayout breakpoint={props.breakpoint}>
             <React.Suspense fallback={<PageSpinner />}>
