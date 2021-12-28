@@ -10,7 +10,6 @@ import { useDispatch } from 'react-redux';
 import { createNGOAction } from '../../Redux/Actions/NgoActions';
 import uploadImage from '../../assets/img/logo/uploadImage.jpg';
 
-
 const AddNgo = (props) => {
 
     const dispatch = useDispatch();

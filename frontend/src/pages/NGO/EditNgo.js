@@ -21,9 +21,9 @@ const EditNgo = (props) => {
     const [deedImgUrl, setDeedImgUrl] = useState('');
 
 
-    const [addContactValues, setAddContactValues] = useState([{ name: "", designation: "", email: "", mobileNumber: "" }])
+    const [addContactValues, setAddContactValues] = useState([])
 
-    const [addBankDetailsValues, setAddBankDetailsValues] = useState([{ bankName: "", accountNumber: "", beneficiaryName: "", ifscCode: "" }])
+    const [addBankDetailsValues, setAddBankDetailsValues] = useState([])
 
     let handleChangeForAddBankDetails = (i, e) => {
         let newFormValues = [...addBankDetailsValues];

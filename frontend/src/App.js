@@ -44,6 +44,7 @@ import EditNgo from './pages/NGO/EditNgo';
 import ViewSingleNgo from './pages/NGO/ViewSingleNgo';
 import SingleProjectDetails from './pages/projects/SingleProjectDetails';
 //import EditSingleProjectDetails from './pages/projects/EditSingleProjectDetails';
+import DonorDetails from './pages/DonorEmail/DonorDetails';
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -95,6 +96,10 @@ function App(props) {
               <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />
               <PrivateRoute exact path="/edit_ngo" component={EditNgo} />
               <PrivateRoute exact path="/view_single_ngo" component={ViewSingleNgo} />
+
+              {/*Donor Email */}
+              <PrivateRoute exact path="/donor_details" component={DonorDetails} />
+
               {/*project route*/}
               <PrivateRoute
                 exact
@@ -117,7 +122,11 @@ function App(props) {
                 path="/single_project_detail"
                 component={SingleProjectDetails}
               />
-
+              <PrivateRoute
+                exact
+                path="/donor_email"
+                component={DonorDetails}
+              />
               {/*Account route*/}
               <PrivateRoute exact path="/payments" component={Payments} />
               {/*setting route*/}
