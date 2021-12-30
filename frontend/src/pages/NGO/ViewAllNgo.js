@@ -26,7 +26,8 @@ import { Link, useHistory } from 'react-router-dom';
 import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllNGOAction } from '../../Redux/Actions/NgoActions';
-import NGOdelete from '../../Modals/ngo/ngoDelete';
+import DeleteNgo from './NgoModals/DeleteNgo';
+
 
 const ViewAllNgo = () => {
   const [order, setOrder] = React.useState('asc');
@@ -203,17 +204,33 @@ const ViewAllNgo = () => {
       <br />
       <br />
       <br />
-      <NGOdelete show={deleteModal} onHide={deleteModalClose} id={deleteId} />
-      <nav className="navbar navbar-light">
-        <a className="navbar-brand">LIST OF ALL NGO</a>
-        <form className="form-inline">
-          <div className="modalClass">
-            <Link to="/add_ngo" type="" className="btn btn-primary">
-              ADD NGO
-            </Link>
-          </div>
-        </form>
-      </nav>
+      <DeleteNgo show={deleteModal} onHide={deleteModalClose} id={deleteId} />
+      <div className="card">
+        <div
+          style={{
+            display: 'flex',
+            padding: '20px',
+            justifyContent: 'space-between',
+          }}
+        >
+          <p
+            style={{
+              textAlign: 'left',
+              fontWeight: 'bold',
+              margin: '20px',
+              marginLeft: '20px',
+            }}
+          >
+            LIST OF ALL NGO
+          </p>
+          <button
+            style={{ alignSelf: 'flex-start' }}
+            className="btn btn-primary"
+          >
+            Add NGO
+          </button>
+        </div>
+      </div>
       <div
         style={{
           margin: '20px',
@@ -304,9 +321,9 @@ const ViewAllNgo = () => {
                             </button>
                             <button
                               data-bs-toggle="tooltip"
-                              title="Edit"
+                              title="Add project"
                               className="btn"
-                              onClick={() => history.push('/edit_ngo', row)}
+                              onClick={() => history.push('/add_project', row)}
                             >
                               <FaRegEdit />
                             </button>
@@ -440,7 +457,7 @@ function EnhancedTableHead(props) {
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
             >
-              {headCell.label}
+              <b>{headCell.label}</b>
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
