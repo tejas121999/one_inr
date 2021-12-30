@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,18 +12,21 @@ import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
 import { BsArchive } from 'react-icons/bs';
 import { FaRegFileArchive } from 'react-icons/fa';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllArchivedProjectAction } from '../../Redux/Actions/ProjectActions';
 
 const ArchivedProject = () => {
-
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false)
+  const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const dispatch = useDispatch();
 
-
+  useEffect(() => {
+    dispatch(getAllArchivedProjectAction());
+  }, []);
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -47,7 +50,6 @@ const ArchivedProject = () => {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - constData.length) : 0;
 
-
   // SEARCH functionality starts
 
   let timeout = null;
@@ -66,6 +68,7 @@ const ArchivedProject = () => {
     }
   };
 
+  let projectList = useSelector(state => state.project.archivedProjectList);
   const headCells = [
     {
       id: 'title',
@@ -109,11 +112,8 @@ const ArchivedProject = () => {
       disablePadding: false,
       label: 'Action',
     },
-
-
   ];
   //end
-
 
   const constData = [
     {
@@ -191,10 +191,7 @@ const ArchivedProject = () => {
           justifyContent: 'space-between',
         }}
       >
-        <button
-          style={{ alignSelf: 'flex-start' }}
-          className="btn btn-primary"
-        >
+        <button style={{ alignSelf: 'flex-start' }} className="btn btn-primary">
           Export
         </button>
         <input placeholder="Search" onChange={e => handleChange(e)} />
@@ -217,15 +214,10 @@ const ArchivedProject = () => {
               />
               <TableBody>
                 {stableSort(constData, getComparator(order, orderBy))
-                  .slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage,
-                  )
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     const isItemSelected = isSelected(row.name);
                     const labelId = `enhanced-table-checkbox-${index}`;
-
-
 
                     return (
                       <TableRow
@@ -243,19 +235,11 @@ const ArchivedProject = () => {
                         >
                           {row.title}
                         </TableCell>
-                        <TableCell align="center">
-                          {row.date}
-                        </TableCell>
+                        <TableCell align="center">{row.date}</TableCell>
                         <TableCell align="center">{row.goal}</TableCell>
-                        <TableCell align="center">
-                          {row.funded}
-                        </TableCell>
-                        <TableCell align="center">
-                          {row.paid}
-                        </TableCell>
-                        <TableCell align="center">
-                          {row.status}
-                        </TableCell>
+                        <TableCell align="center">{row.funded}</TableCell>
+                        <TableCell align="center">{row.paid}</TableCell>
+                        <TableCell align="center">{row.status}</TableCell>
 
                         <TableCell>
                           {row.action}
@@ -263,11 +247,10 @@ const ArchivedProject = () => {
                             data-bs-toggle="tooltip"
                             title="Archive"
                             className="btn"
-                          // onClick={() => deleteModalOpen(row)}
+                            // onClick={() => deleteModalOpen(row)}
                           >
                             <FaRegFileArchive />
                           </button>
-
                         </TableCell>
                       </TableRow>
                     );
@@ -290,11 +273,10 @@ const ArchivedProject = () => {
         </>
       </Paper>
     </>
-  )
+  );
+};
 
-}
-
-export default ArchivedProject
+export default ArchivedProject;
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {

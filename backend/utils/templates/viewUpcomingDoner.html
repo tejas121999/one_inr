@@ -14,20 +14,21 @@
         <table class="table">
             <thead class="thead-dark">
                 <tr>
+                    <th scope="col">Renewal Date</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Donted</th>
+                    <th scope="col">Donated</th>
                     <th scope="col">Balance</th>
-                    <th scope="col">Project</th>
+                    
                 </tr>
             </thead>
             <tbody>
                 {{#each partner}}
                 <tr>
                     
+                    <td>{{this.dataValues.balanceRenewalDate}}</td>
                     <td>{{this.dataValues.name}}</td>
-                    <td>{{this.dataValues.donated}}</td>
+                    <td>{{this.dataValues.mobile}}</td>
                     <td>{{this.dataValues.balance}}</td>
-                    <td>{{this.dataValues.project}}</td>
             
                 </tr>
                 {{/each}}

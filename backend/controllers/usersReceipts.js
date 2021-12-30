@@ -8,9 +8,7 @@ const fs = require("fs")
 const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'receipt.html'), 'utf-8');
 const generateUserReceiptsExcel = require('../service/userReceiptsExcel')
 const generatePdf = require('../utils/generatePdf')
-
 const filePath = 'user-receipts'
-
 const exportToCsv = require('../utils/exportToCsv')
 const html1 = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'userReceipts.html'), 'utf-8');
 
@@ -36,7 +34,8 @@ exports.addUsersReceipts = async (req, res) => {
 
         } = req.body;
         // console.log(req.body);
-        let findTotalReciepts = await models.usersReceipts.findAndCountAll()
+        let findTotalReciepts = await models.usersReceipts.count()
+        // console.log(findTotalReciepts);rs
         let receiptNumber = 1000 + findTotalReciepts.count++
         let usersReceipts = await models.usersReceipts.create({
 
@@ -58,7 +57,7 @@ exports.addUsersReceipts = async (req, res) => {
         )
 
         if (!usersReceipts) {
-            return res.status(402).json({
+            return res.status(400).json({
                 message: 'Failed to create Users Receipts'
             })
         } else {
@@ -283,7 +282,8 @@ exports.pdfOfUserReceipts = async (req, res) => {
         });
         // console.log(`------------>`,userReceiptsData.dataValues)
 
-        // const userDataValues = await userReceiptsData.map(ele => { return ele.dataValues });
+        const userDataValues = await userReceiptsData.map(ele => { return ele.dataValues });
+        console.log((userDataValues[0]))
 
         // console.log("-----------------00000000000000",userDataValues, "-----------------00000000000000");
 
@@ -311,10 +311,15 @@ exports.getUserReceiptExcel = async (req, res) => {
         let userReceiptsData = await models.usersReceipts.findAll({
             include    : [{ model: models.users, attributes: ['name']}]
         });
+
+        const userDataValues = await userReceiptsData.map(ele => { return ele.dataValues });
+        // console.log(userDataValues[0].user.dataValues.name);
+        // res.json({userDataValues: userDataValues})
+
         if (!userReceiptsData) {
             res.status(404).json({ message: 'Data not found' });
         } else {
-            const userReceiptsXlsx = await generateUserReceiptsExcel(userReceiptsData, res)
+            const userReceiptsXlsx = await generateUserReceiptsExcel(userDataValues, res)
             res.status(200).json({ message: 'Xlsx Generated', url : 'http://' + urlData + userReceiptsXlsx.pathToExport });
         }
     } catch (e) {

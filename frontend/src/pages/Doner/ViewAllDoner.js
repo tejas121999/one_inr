@@ -48,6 +48,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Details from '../../Modals/Donor/DonorDetails/Details';
 export default function EnhancedTable() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -59,6 +60,7 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(50);
   const [viewModal, setViewModal] = React.useState(false);
   const [viewData, setViewData] = React.useState('');
+  const [viewDetails, setViewDetails] = React.useState('');
   const [fundModal, setFundModal] = React.useState(false);
   const [fundModalData, setFundModalData] = React.useState(0);
   const [pdfUrl, setPdfUrl] = React.useState('');
@@ -86,6 +88,14 @@ export default function EnhancedTable() {
   };
   const ViewModalClose = () => {
     setViewModal(false);
+  };
+
+  const ViewDetailModalOpen = data => {
+    setViewData(data);
+    setViewDetails(true);
+  };
+  const ViewDetailModalClose = () => {
+    setViewDetails(false);
   };
   const fundModaOpen = data => {
     setFundModalData(data.id);
@@ -250,7 +260,7 @@ export default function EnhancedTable() {
         onHide={ViewModalClose}
         data={viewData}
       />
-
+      <Details show={viewDetails} onHide={ViewDetailModalClose} />
       <ToastContainer hideProgressBar />
       <Addfund show={fundModal} onHide={fundModaClose} data={fundModalData} />
       <Donordelete show={deleteModal} onHide={deleteModalClose} id={deleteId} />
@@ -398,6 +408,7 @@ export default function EnhancedTable() {
                                 data-bs-toggle="tooltip"
                                 title="View Transactions"
                                 className="btn"
+                                onClick={() => ViewDetailModalOpen(row)}
                               >
                                 <FaBookOpen />
                               </button>

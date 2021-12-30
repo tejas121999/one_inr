@@ -15,7 +15,6 @@ import { Button } from 'react-bootstrap';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import './viewreciept.css';
-
 import {
   FaRegEdit,
   FaRegEye,
@@ -28,7 +27,7 @@ import {
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
 import { BASE_URL, VIEW_RECEPT_URL } from '../../API/APIEndpoints';
-import axios from '../../utils/interceptor';
+import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
 import CreateReceiptForm from '../../components/CreateReceiptForm';
@@ -66,6 +65,8 @@ export default function ViewRecept() {
   const [recept, setReceipt] = React.useState([]);
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [modal, setModal] = React.useState(false);
+  const [modal1, setModal1] = React.useState(false);
+
   const [deleteId, setDeleteID] = React.useState(0);
   const [type, setType] = React.useState('');
   const [printDonorTable, setPrintDonorTable] = React.useState(false);
@@ -81,8 +82,9 @@ export default function ViewRecept() {
   }, []);
 
   let ViewReceipt = useSelector(state => state.donor.ViewReceipt);
-  console.log('ViewReceipt', ViewReceipt);
-
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
   const handleModal = (type, row) => {
     if (type == 'edit reciept') {
       getDonorbyId(row.id);
@@ -93,16 +95,12 @@ export default function ViewRecept() {
     setModal(!modal);
   };
 
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
+  const handleModal1 = () => {
+    setModal1(!modal1);
   };
   const handleClose = () => {
-    console.log('ttttttttt', anchorEl);
     setAnchorEl(null);
   };
-  // const handleClick = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
 
   const ViewModalOpen = data => {
     setViewData(data);
@@ -252,7 +250,7 @@ export default function ViewRecept() {
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
-            onClose={handleClose}
+            // onClose={handleClose}
             style={{ top: '30px', left: '-8px' }}
           >
             <MenuItem>
@@ -380,7 +378,13 @@ export default function ViewRecept() {
                               padding="none"
                               // style={color="lightblue"}
                             >
-                              {row.recieptPdf ? 'view' : '-'}
+                              {row.recieptPdf ? (
+                                <a href={row.recieptPdf} target="_blank">
+                                  View
+                                </a>
+                              ) : (
+                                '-'
+                              )}
                             </TableCell>
                             <TableCell
                               id={labelId}
@@ -402,6 +406,8 @@ export default function ViewRecept() {
                                 title="Edit"
                                 className="btn"
                                 // onClick={() => history.push('/edit_doner', row)}
+
+                                onClick={handleModal1}
                               >
                                 <FaRegEdit
                                   onClick={() =>

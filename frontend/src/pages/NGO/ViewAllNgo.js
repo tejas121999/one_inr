@@ -30,7 +30,6 @@ import DeleteNgo from './NgoModals/DeleteNgo';
 
 
 const ViewAllNgo = () => {
-
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -49,11 +48,10 @@ const ViewAllNgo = () => {
   const [XlsUrl, setXlsUrl] = React.useState('');
   const [printNgoTable, setPrintNgoTable] = React.useState(false);
 
-
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAllNGOAction());
+    dispatch(getAllNGOAction(''));
   }, []);
 
   let allNgoList = useSelector(state => state.ngo.ngoList);
@@ -125,9 +123,9 @@ const ViewAllNgo = () => {
 
   const onSearch = value => {
     if (value) {
-      // dispatch(getNgoByValueAction(value));
+      dispatch(getAllNGOAction(value));
     } else {
-      // dispatch(getViewAllNgoAction());
+      dispatch(getAllNGOAction(''));
     }
   };
 
@@ -162,10 +160,8 @@ const ViewAllNgo = () => {
       disablePadding: false,
       label: 'Action',
     },
-
   ];
   // END
-
 
   const constData = [
     {
@@ -175,8 +171,6 @@ const ViewAllNgo = () => {
       active: '0',
       actionrequired: '0',
       action: '',
-
-
     },
     {
       id: 2,
@@ -185,7 +179,6 @@ const ViewAllNgo = () => {
       active: '0',
       actionrequired: '0',
       action: '',
-
     },
     {
       id: 3,
@@ -203,7 +196,6 @@ const ViewAllNgo = () => {
       actionrequired: '0',
       action: '',
     },
-
   ];
 
   return (
@@ -258,7 +250,11 @@ const ViewAllNgo = () => {
           >
             Export
           </button>
-          <input type="search" placeholder="Search" onChange={e => handleChange(e)} />
+          <input
+            type="search"
+            placeholder="Search"
+            onChange={e => handleChange(e)}
+          />
         </div>
         <Paper sx={{ width: '100%', mb: 2 }}>
           <>
@@ -277,10 +273,7 @@ const ViewAllNgo = () => {
                 />
                 <TableBody>
                   {stableSort(constData, getComparator(order, orderBy))
-                    .slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage,
-                    )
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
                       const isItemSelected = isSelected(row.name);
                       const labelId = `enhanced-table-checkbox-${index}`;
@@ -301,12 +294,8 @@ const ViewAllNgo = () => {
                           >
                             {row.name}
                           </TableCell>
-                          <TableCell align="center">
-                            {row.pending}
-                          </TableCell>
-                          <TableCell align="center">
-                            {row.active}
-                          </TableCell>
+                          <TableCell align="center">{row.pending}</TableCell>
+                          <TableCell align="center">{row.active}</TableCell>
                           <TableCell align="center">
                             {row.actionRequired}
                           </TableCell>
@@ -315,17 +304,20 @@ const ViewAllNgo = () => {
                               data-bs-toggle="tooltip"
                               title="View Details"
                               className="btn"
-                              onClick={() => history.push('/view_single_ngo')}
+                              onClick={() =>
+                                history.push('/view_single_ngo', row)
+                              }
                             >
                               <FaRegEye />
                             </button>
+
                             <button
                               data-bs-toggle="tooltip"
-                              title="Edit"
+                              title="Add Project"
                               className="btn"
-                              onClick={() => history.push('/edit_ngo', row)}
+                              onClick={() => history.push('/add_project', row)}
                             >
-                              <FaRegEdit />
+                              <FaPlusCircle />
                             </button>
                             <button
                               data-bs-toggle="tooltip"
@@ -333,8 +325,9 @@ const ViewAllNgo = () => {
                               className="btn"
                               onClick={() => history.push('/add_project', row)}
                             >
-                              <FaPlusCircle />
+                              <FaRegEdit />
                             </button>
+
                             <button
                               data-bs-toggle="tooltip"
                               title="Delete"
@@ -366,8 +359,8 @@ const ViewAllNgo = () => {
         </Paper>
       </div>
     </>
-  )
-}
+  );
+};
 
 export default ViewAllNgo;
 
@@ -485,4 +478,3 @@ EnhancedTableHead.propTypes = {
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
-
