@@ -18,6 +18,9 @@
 .editproject {
   margin-top: 40px;
 }
+.payment {
+  margin-top: 40px;
+}
 .btn {
   margin-left: 1;
 }
@@ -39,7 +42,6 @@
   font-family: Rubik, sans-serif;
   text-align: justify;
 }
-.input-box{
+.input-box {
   padding: 15px;
- 
 }

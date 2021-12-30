@@ -1,12 +1,25 @@
-import { Field, Form, Formik } from 'formik'
+import { Field, Form, Formik, ErrorMessage } from 'formik'
+import * as yup from 'yup';
 import React, { useState } from 'react'
 import DropzoneComponent from '../../components/Layout/DropzoneComponent'
 import './project.css'
 import TextEditor from './TextEditor'
+import TextField from '@material-ui/core/TextField';
+import TextError from '../error/TextError';
+import DatePicker from 'react-date-picker';
+
 
 const AddProject = () => {
+    const [value, onChange] = useState(new Date());
+    const [key, setKey] = React.useState('no');
 
-    const [value, setValue] = useState()
+
+    const validationSchema = yup.object({
+        title: yup.string().required('Required'),
+        description: yup.string().required('Required'),
+        gole: yup.string().required('Required')
+    })
+
 
     return (
         <div>
@@ -34,7 +47,7 @@ const AddProject = () => {
                     </p>
                 </div>
             </div>
-            <div className='AddDoner'>
+            <div className='AddDoner mb-3'>
                 <div className='row'>
                     <div className='col-md-12'>
                         <div className='white-box'>
@@ -42,29 +55,40 @@ const AddProject = () => {
                                 <div className='col-sm-12 col-xs-12'>
                                     <Formik
                                         initialValues={{
-                                            recurring: 'no'
+                                            title: '',
+                                            description: '',
+                                            gole: '',
+                                            startDate: '',
+                                            endDate: ''
                                         }}
+                                        validationSchema={validationSchema}
+                                        onSelect={(k) => setKey(k)}
                                     >
-                                        {({ values }) => (
+                                        {({ values, errors, touched }) => (
                                             <Form>
                                                 <div className='row'>
                                                     <div className='col-sm-12 col-xs-12'>
                                                         <label style={{ fontWeight: 'bold' }}>Title:</label>
                                                         <Field
                                                             type="text"
-                                                            name="parent"
+                                                            name="title"
                                                             placeholder="No Parent"
                                                             className="form-control"
                                                             // value={values.parent}
                                                             list="parentList"
                                                         />
+                                                        {errors.title && touched.title && (
+                                                            <div className="text-left">
+                                                                <span style={{ color: 'red' }}>{errors.title}</span>
+                                                            </div>
+                                                        )}
                                                     </div>
 
                                                     <div className='col-sm-12 col-xs-12 mt-3'>
                                                         <label style={{ fontWeight: 'bold' }}>Description: (Max 144 char)</label>
                                                         <textarea
                                                             type="textarea"
-                                                            name="parent"
+                                                            name="description"
                                                             row="2"
                                                             col="50"
                                                             // placeholder="No Parent"
@@ -72,16 +96,16 @@ const AddProject = () => {
                                                             // value={values.parent}
                                                             list="parentList"
                                                         />
+                                                        <ErrorMessage name="logo_img" component={TextError} />
                                                     </div>
                                                     <div className='col-sm-12 col-xs-12 mt-3'>
                                                         <label style={{ fontWeight: 'bold' }}>Is this project recurring?</label>
                                                         <label style={{ marginLeft: '3cm' }}>
-                                                            <Field type="radio" name="recurring" value="yes" id='1' />
-                                                            Yes
+                                                            <Field type="radio" name="recurring" value="yes" eventKey="yes" />
+
                                                         </label>
                                                         <label style={{ marginLeft: '5px' }}>
-                                                            <Field type="radio" name="recurring" value="no" id='2' />
-                                                            No
+                                                            <Field type="radio" name="recurring" value="no" eventKey="no" />    
                                                         </label>
 
                                                         <div style={{ visibility: "visible" }}>
@@ -94,40 +118,50 @@ const AddProject = () => {
                                                                 <label>Gole:</label>
                                                                 <Field
                                                                     type="text"
-                                                                    name="parent"
+                                                                    name="gole"
                                                                     placeholder="No Parent"
                                                                     className="form-control"
                                                                     // value={values.parent}
                                                                     list="parentList"
                                                                 />
+                                                                {errors.gole && touched.gole && (
+                                                                    <div className="text-left">
+                                                                        <span style={{ color: 'red' }}>{errors.gole}</span>
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                             <div className='col-sm-4 col-xs-12'>
                                                                 <label>Start Date:</label>
-                                                                <Field
-                                                                    type="text"
-                                                                    name="parent"
-                                                                    placeholder="No Parent"
+                                                                <br />
+                                                                <DatePicker
                                                                     className="form-control"
-                                                                    // value={values.parent}
-                                                                    list="parentList"
+                                                                    onChange={onChange}
+                                                                    value={value}
                                                                 />
+                                                                {errors.startDate && touched.startDate && (
+                                                                    <div className="text-left">
+                                                                        <span style={{ color: 'red' }}>{errors.startDate}</span>
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                             <div className='col-sm-4 col-xs-12'>
                                                                 <label>End Date:</label>
-                                                                <Field
-                                                                    type="text"
-                                                                    name="parent"
-                                                                    placeholder="No Parent"
+                                                                <DatePicker
                                                                     className="form-control"
-                                                                    // value={values.parent}
-                                                                    list="parentList"
+                                                                    onChange={onChange}
+                                                                // value={value}
                                                                 />
+                                                                {errors.endDate && touched.endDate && (
+                                                                    <div className="text-left">
+                                                                        <span style={{ color: 'red' }}>{errors.endDate}</span>
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                             <div className='col-sm-12 col-xs-12 mt-3'>
                                                                 <label style={{ fontWeight: 'bold' }}>Video Embed Link:</label>
                                                                 <Field
                                                                     type="text"
-                                                                    name="parent"
+                                                                    name="videoLink"
                                                                     placeholder="No Parent"
                                                                     className="form-control"
                                                                     // value={values.parent}
@@ -215,6 +249,11 @@ const AddProject = () => {
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div style={{ marginLeft: '12px', marginTop: '20px' }}>
+                                                    <button type="submit" className="btn btn-success">
+                                                        Submit
+                                                    </button>
                                                 </div>
                                             </Form>
                                         )}

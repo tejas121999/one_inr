@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Tab, Tabs } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import TextEditor from '../TextEditor';
 import { Field, Form, Formik } from 'formik';
 import NumericInput from 'react-numeric-input';

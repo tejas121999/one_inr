@@ -1,8 +1,6 @@
-import { Field, Form, Formik } from 'formik';
-import NumericInput from 'react-numeric-input';
 import React from 'react'
+import * as yup from 'yup';
 import { Button, Tab, Tabs } from 'react-bootstrap'
-import TextEditor from './TextEditor';
 import Details from './tabContent/Details';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 
@@ -37,7 +35,6 @@ const EditProject = () => {
             </div>
             <div className='editproject'>
                 <div className='white-box'>
-
                     <Tabs
                         id="controlled-tab-example"
                         activeKey={key}
@@ -119,7 +116,6 @@ const EditProject = () => {
                             <div className='input-box'>
                                 <Button variant="success">Update</Button>
                             </div>
-
                         </Tab>
                     </Tabs>
                 </div>

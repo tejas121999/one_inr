@@ -97,6 +97,7 @@ export default function EnhancedTable() {
   const ViewDetailModalClose = () => {
     setViewDetails(false);
   };
+  
   const fundModaOpen = data => {
     setFundModalData(data.id);
     setFundModal(true);
@@ -188,7 +189,7 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => {});
+      .catch(err => { });
   };
   const downloadCsv = () => {
     fetch(CsvUrl)
@@ -202,7 +203,7 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => {});
+      .catch(err => { });
   };
   const downloadXls = () => {
     fetch(XlsUrl)
@@ -216,7 +217,7 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => {});
+      .catch(err => { });
   };
   const onPrintClick = () => {
     console.log(printDonorTable);
