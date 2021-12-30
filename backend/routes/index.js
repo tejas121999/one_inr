@@ -11,18 +11,23 @@ const partner = require('./partner')
 const csvUpload = require('./csvFileUploads')
 const checkAuth = require('../middleware/checkAuth')
 const projects = require('./projects')
+const config = require('./configs')
+const razorpayCredentials = require('./razorpayCredential')
 
 
 
 router.use('/vendor',checkAuth,vendor)
 router.use('/fileupload',checkAuth,fileUpload)
 router.use('/auth',auth)
-router.use('/donor',checkAuth,donor)
+router.use('/donor',donor)
 router.use('/userReceipts',userReceipts)
 router.use('/projects', projects)
 router.use('/ngo',checkAuth,ngo)
 router.use('/partner',checkAuth,partner)
 router.use('/csvUserUpload',checkAuth,csvUpload)
+router.use('/configs',config)
+router.use('/razorpayCredentials',razorpayCredentials)
+
 
 
 
