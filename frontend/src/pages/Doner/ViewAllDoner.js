@@ -97,6 +97,7 @@ export default function EnhancedTable() {
   const ViewDetailModalClose = () => {
     setViewDetails(false);
   };
+  
   const fundModaOpen = data => {
     setFundModalData(data.id);
     setFundModal(true);

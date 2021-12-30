@@ -129,40 +129,6 @@ const ViewAllNgo = () => {
     }
   };
 
-  const headCells = [
-    {
-      id: 'name',
-      numeric: false,
-      disablePadding: false,
-      label: 'Name',
-    },
-    {
-      id: 'pending',
-      numeric: true,
-      disablePadding: false,
-      label: 'Pending',
-    },
-    {
-      id: 'active',
-      numeric: true,
-      disablePadding: false,
-      label: 'Active',
-    },
-    {
-      id: 'actionRequired',
-      numeric: true,
-      disablePadding: false,
-      label: 'ActionRequired',
-    },
-    {
-      id: 'action',
-      numeric: true,
-      disablePadding: false,
-      label: 'Action',
-    },
-  ];
-  // END
-
   const constData = [
     {
       id: 1,
@@ -171,6 +137,8 @@ const ViewAllNgo = () => {
       active: '0',
       actionrequired: '0',
       action: '',
+
+
     },
     {
       id: 2,
@@ -179,6 +147,7 @@ const ViewAllNgo = () => {
       active: '0',
       actionrequired: '0',
       action: '',
+
     },
     {
       id: 3,
@@ -196,6 +165,7 @@ const ViewAllNgo = () => {
       actionrequired: '0',
       action: '',
     },
+
   ];
 
   return (
@@ -204,13 +174,12 @@ const ViewAllNgo = () => {
       <br />
       <br />
       <br />
-      <DeleteNgo show={deleteModal} onHide={deleteModalClose} id={deleteId} />
       <div className="card">
         <div
           style={{
             display: 'flex',
             padding: '20px',
-            justifyContent: 'space-between',
+            justifyContent: 'space-betwee n',
           }}
         >
           <p
@@ -273,7 +242,10 @@ const ViewAllNgo = () => {
                 />
                 <TableBody>
                   {stableSort(constData, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage,
+                    )
                     .map((row, index) => {
                       const isItemSelected = isSelected(row.name);
                       const labelId = `enhanced-table-checkbox-${index}`;
@@ -294,7 +266,9 @@ const ViewAllNgo = () => {
                           >
                             {row.name}
                           </TableCell>
-                          <TableCell align="center">{row.pending}</TableCell>
+                          <TableCell align="center">
+                            {row.pending}
+                          </TableCell>
                           <TableCell align="center">{row.active}</TableCell>
                           <TableCell align="center">
                             {row.actionRequired}
@@ -304,30 +278,26 @@ const ViewAllNgo = () => {
                               data-bs-toggle="tooltip"
                               title="View Details"
                               className="btn"
-                              onClick={() =>
-                                history.push('/view_single_ngo', row)
-                              }
+                              onClick={() => ViewModalOpen(row)}
                             >
                               <FaRegEye />
                             </button>
-
                             <button
                               data-bs-toggle="tooltip"
-                              title="Add Project"
+                              title="Edit"
                               className="btn"
-                              onClick={() => history.push('/add_project', row)}
-                            >
-                              <FaPlusCircle />
-                            </button>
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="Add project"
-                              className="btn"
-                              onClick={() => history.push('/add_project', row)}
+                              onClick={() => history.push('/edit_ngo', row)}
                             >
                               <FaRegEdit />
                             </button>
-
+                            <button
+                              data-bs-toggle="tooltip"
+                              title="Add Fund"
+                              className="btn"
+                              onClick={() => fundModaOpen(row)}
+                            >
+                              <FaPlusCircle />
+                            </button>
                             <button
                               data-bs-toggle="tooltip"
                               title="Delete"
@@ -359,8 +329,8 @@ const ViewAllNgo = () => {
         </Paper>
       </div>
     </>
-  );
-};
+  )
+}
 
 export default ViewAllNgo;
 
