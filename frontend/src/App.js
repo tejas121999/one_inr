@@ -124,6 +124,16 @@ function App(props) {
                 path="/archive_project"
                 component={ArchivedProject}
               />
+              <PrivateRoute
+                exact
+                path="/single_project_detail"
+                component={SingleProjectDetails}
+              />
+              <PrivateRoute
+                exact
+                path="/donor_email"
+                component={DonorDetails}
+              />
               {/*Account route*/}
               <PrivateRoute exact path="/payments" component={Payments} />
               {/*setting route*/}
