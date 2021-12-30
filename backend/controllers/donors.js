@@ -15,6 +15,7 @@ var fs = require("fs");
 const exportToCsv = require('../utils/exportToCsv')
 const generateDonorExcel = require('../service/allDonorExcel')
 const generateUpcomingDonorExcel = require('../service/upcomingDonorExcel')
+const sendEmail = require('../service/sendEmail')
 const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'donor.html'), 'utf-8');
 const html1 = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'upcomingDonor.html'), 'utf-8');
 
@@ -504,5 +505,30 @@ exports.getAllUpcomingDonorsExcel = async (req, res) => {
     } else {
         const donorXlsx = await generateUpcomingDonorExcel(data, res)
         res.status(200).json({ message: 'Xlsx Generated', url : 'http://' + urlData + donorXlsx.pathToExport });
+    }
+}
+
+
+exports.sendMailToDonors = async (req,res) => {
+    // let donorData = await models.users.findAll({attibutes: ['email']});
+    // let donorEmail = await donorData.map(ele=>{ return ele.email });
+    const toEmail = [
+        'shubhamkale008@gmail.com',
+        'bipin@nimapinfotech.com',
+        'navikbipin@gmail.com',
+        'shubhamkale@nimapinfotech.com'
+    ]
+    if(!toEmail) {
+        return res.status(404).json({ message: 'Donor Emails Not Found'})
+    }else{
+        const data = {
+            subject: req.body.subject,
+            text : req.body.text,
+            attachments : {
+                path : req.body.path
+            }
+        }
+        const email = await sendEmail.sendEmailWithAttachment(toEmail,data)
+        return res.status(200).json({message : 'mail send..'})
     }
 }
