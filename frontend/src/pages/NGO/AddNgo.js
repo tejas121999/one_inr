@@ -9,6 +9,7 @@ import { FaTimes } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { createNGOAction } from '../../Redux/Actions/NgoActions';
 import uploadImage from '../../assets/img/logo/uploadImage.jpg';
+import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 
 const AddNgo = (props) => {
 
@@ -207,18 +208,11 @@ const AddNgo = (props) => {
                         <Form>
 
                             <div className="row">
-                                <div className="col-6 ">
+                                <div className="col-3 ">
                                     <div style={{ padding: '15px', paddingBottom: '10px' }}>
                                         <label style={{ fontWeight: 'bold' }}>Logo </label>
                                         <div className="image-upload">
-                                            <label for="file-input">
-                                                <img className="AttachImage" src={uploadImage} />
-                                            </label>
-                                            <input
-                                                id="file-input"
-                                                type="file"
-                                                accept=".jpg,.jpeg,.png"
-                                            />
+                                            <DropzoneComponent />
                                         </div>
                                     </div>
                                 </div>
@@ -431,15 +425,8 @@ const AddNgo = (props) => {
                                 <div className="col-3">
                                     <div style={{ padding: '15px', paddingBottom: '10px' }}>
                                         <label style={{ fontWeight: 'bold' }}>Pancard </label>
-                                        <div className="image-upload">
-                                            <label for="file-input">
-                                                <img className="AttachImage" src={uploadImage} />
-                                            </label>
-                                            <input
-                                                id="file-input"
-                                                type="file"
-                                                accept=".jpg,.jpeg,.png"
-                                            />
+                                        <div className="image-upload mt-4">
+                                            <DropzoneComponent />
                                         </div>
                                     </div>
                                 </div>
@@ -448,15 +435,8 @@ const AddNgo = (props) => {
                                 <div className="col-3 ">
                                     <div style={{ padding: '15px', paddingBottom: '10px' }}>
                                         <label style={{ fontWeight: 'bold' }}> Certificate </label>
-                                        <div className="image-upload">
-                                            <label for="file-input">
-                                                <img className="AttachImage" src={uploadImage} />
-                                            </label>
-                                            <input
-                                                id="file-input"
-                                                type="file"
-                                                accept=".jpg,.jpeg,.png"
-                                            />
+                                        <div className="image-upload mt-4">
+                                            <DropzoneComponent />
                                         </div>
                                     </div>
                                 </div>
@@ -466,14 +446,7 @@ const AddNgo = (props) => {
                                     <div style={{ padding: '15px', paddingBottom: '10px' }}>
                                         <label style={{ fontWeight: 'bold' }}>Charity Registration Certificate </label>
                                         <div className="image-upload">
-                                            <label for="file-input">
-                                                <img className="AttachImage" src={uploadImage} />
-                                            </label>
-                                            <input
-                                                id="file-input"
-                                                type="file"
-                                                accept=".jpg,.jpeg,.png"
-                                            />
+                                            <DropzoneComponent />
                                         </div>
                                     </div>
                                 </div>
@@ -481,86 +454,12 @@ const AddNgo = (props) => {
                                 <div className="col-3 ">
                                     <div style={{ padding: '15px', paddingBottom: '10px' }}>
                                         <label style={{ fontWeight: 'bold' }}> Deed </label>
-                                        <div className="image-upload">
-                                            <label for="file-input">
-                                                <img className="AttachImage" src={uploadImage} />
-                                            </label>
-                                            <input
-                                                id="file-input"
-                                                type="file"
-                                                accept=".jpg,.jpeg,.png"
-                                            />
+                                        <div className="image-upload mt-4">
+                                            <DropzoneComponent />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
-                            {   /*        <div className="row">
-                                <div className="col-3 ">
-                                    <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                                        <label style={{ fontWeight: 'bold', height: "3em" }}>Pancard</label>
-                                        <input
-                                            type="file"
-                                            className="form-control-file"
-                                            placeholder="Please upload pancard image"
-                                            name="pancard_img"
-                                            accept=".png,.jpg,"
-                                            value={values.Pancard}
-                                            onChange={e => onPanCardImageAdd(e.target.files[0])}
-                                        />
-                                        <ErrorMessage name="pancard_img" component={TextError} />
-                                    </div>
-                                </div>
-
-                                <div className="col-3 ">
-                                    <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                                        <label style={{ fontWeight: 'bold', height: "3em" }}>Certificate</label>
-                                        <input
-                                            type="file"
-                                            className="form-control-file"
-                                            placeholder="Please upload certificate"
-                                            name="certificate_img"
-                                            accept=".png,.jpg,"
-                                            values={values.Certificate}
-                                            onChange={e => onCertificateImageAdd(e.target.files[0])}
-                                        />
-                                        <ErrorMessage name="certificate_img" component={TextError} />
-                                    </div>
-                                </div>
-
-                                <div className="col-3 ">
-                                    <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                                        <label style={{ fontWeight: 'bold', height: "3em" }}>Charity Registration Certificate</label>
-                                        <input
-                                            type="file"
-                                            className="form-control-file"
-                                            placeholder="Please upload charityCertificate"
-                                            name="charityCertificate_img"
-                                            accept=".pnj,.jpg,"
-                                            value={values.CharitynCertificate}
-                                            onChange={e => onCharityCertificateImageAdd(e.target.files[0])}
-                                        />
-                                        <ErrorMessage name="charityCertificate_img" component={TextError} />
-                                    </div>
-                                </div>
-
-                                <div className="col-3 ">
-                                    <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                                        <label style={{ fontWeight: 'bold', height: "3em" }}>Deed</label>
-                                        <input
-                                            type="file"
-                                            className="form-control-file"
-                                            placeholder="Please Enter deed Name"
-                                            name="deed_img"
-                                            accept=".pnj,.jpg,"
-                                            value={values.Deed}
-                                            onChange={e => onDeedImageAdd(e.target.files[0])}
-                                        />
-                                        <ErrorMessage name="deed_img" component={TextError} />
-                                    </div>
-                                </div>
-                                        </div>                             */   }
 
                             <br />
                             {addContactValues.map((element, index) => (

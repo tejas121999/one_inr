@@ -24,6 +24,7 @@ import {
 } from 'react-icons/fa';
 import { Switch } from '@mui/material';
 import uploadImage from '../../assets/img/logo/uploadImage.jpg';
+import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 
 const ViewSingleNgo = () => {
     const [key, setKey] = React.useState('details');
@@ -87,6 +88,61 @@ const ViewSingleNgo = () => {
             // dispatch(getViewAllNgoAction());
         }
     };
+
+    //headcells
+    const tempCells = [
+        {
+            id: 'pending',
+            numeric: false,
+            disablePadding: false,
+            label: 'Pending',
+        },
+        {
+            id: 'active',
+            numeric: false,
+            disablePadding: false,
+            label: 'Active',
+        },
+        {
+            id: 'fullfilled',
+            numeric: false,
+            disablePadding: false,
+            label: 'Fullfilled',
+        },
+        {
+            id: 'partial fullfilled',
+            numeric: false,
+            disablePadding: false,
+            label: 'Partial Fullfilled',
+        },
+        {
+            id: 'unfullfilled',
+            numeric: false,
+            disablePadding: false,
+            label: 'Unfullfilled',
+        },
+        {
+            id: 'action required',
+            numeric: false,
+            disablePadding: false,
+            label: 'Action Require',
+        }
+    ];
+    //END headcells
+
+    //data of headcells
+    const headcellsconstdata = [
+        {
+            id: 1,
+            pending: '4',
+            active: '1',
+            fullfilled: '1',
+            partialFullfilled: '1',
+            unfullfilled: '',
+            actionRequired: '0',
+        }
+    ];
+
 
     //project headcells
     const projectheadCells = [
@@ -217,6 +273,8 @@ const ViewSingleNgo = () => {
         },
     ];
 
+
+
     return (
 
         <>
@@ -248,13 +306,14 @@ const ViewSingleNgo = () => {
                         className="mb-3"
                     >
                         <Tab eventKey="details" title="Details" >
-                            <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                                <label style={{ fontWeight: 'bold' }}>Logo </label>
-                                <div className="image-upload">
-                                    <label for="file-input">
-                                        <img className="AttachImage" src={uploadImage} />
-                                    </label>
-
+                            <div className="row">
+                                <div className="col-3 ">
+                                    <div style={{ padding: '15px', paddingBottom: '10px' }}>
+                                        <label style={{ fontWeight: 'bold' }}>Logo </label>
+                                        <div className="image-upload">
+                                            <DropzoneComponent />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -266,10 +325,7 @@ const ViewSingleNgo = () => {
                                             Pancard
                                         </label>
                                         <div className="image-upload">
-                                            <label for="file-input">
-                                                <img className="AttachImage" src={uploadImage} />
-                                            </label>
-
+                                            <DropzoneComponent />
                                         </div>
 
                                     </div>
@@ -280,12 +336,8 @@ const ViewSingleNgo = () => {
                                         <label style={{ fontWeight: 'bold', height: '3em' }}>
                                             Certificate
                                         </label>
-
                                         <div className="image-upload">
-                                            <label for="file-input">
-                                                <img className="AttachImage" src={uploadImage} />
-                                            </label>
-
+                                            <DropzoneComponent />
                                         </div>
 
                                     </div>
@@ -296,12 +348,8 @@ const ViewSingleNgo = () => {
                                         <label style={{ fontWeight: 'bold', height: '3em' }}>
                                             Charity Registration Certificate
                                         </label>
-
                                         <div className="image-upload">
-                                            <label for="file-input">
-                                                <img className="AttachImage" src={uploadImage} />
-                                            </label>
-
+                                            <DropzoneComponent />
                                         </div>
 
                                     </div>
@@ -312,13 +360,8 @@ const ViewSingleNgo = () => {
                                         <label style={{ fontWeight: 'bold', height: '3em' }}>
                                             Deed
                                         </label>
-
-
                                         <div className="image-upload">
-                                            <label for="file-input">
-                                                <img className="AttachImage" src={uploadImage} />
-                                            </label>
-
+                                            <DropzoneComponent />
                                         </div>
 
                                     </div>
@@ -572,7 +615,78 @@ const ViewSingleNgo = () => {
                         <Tab eventKey="project" title="Project">
                             <br />
                             <br />
+                            <div>
+                                <Paper sx={{ width: '100%', mb: 2 }}>
 
+                                    <>
+                                        <TableContainer>
+                                            <Table
+                                                sx={{ minWidth: 750 }}
+                                                aria-labelledby="tableTitle"
+                                                size={dense ? 'small' : 'medium'}
+                                            >
+                                                <EnhancedTableHead
+                                                    numSelected={selected.length}
+                                                    order={order}
+                                                    orderBy={orderBy}
+                                                    onRequestSort={handleRequestSort}
+                                                    rowCount={headcellsconstdata.length}
+                                                    headCells={tempCells}
+                                                />
+                                                <TableBody>
+                                                    {stableSort(headcellsconstdata, getComparator(order, orderBy))
+                                                        .slice(
+                                                            page * rowsPerPage,
+                                                            page * rowsPerPage + rowsPerPage,
+                                                        )
+                                                        .map((row, index) => {
+                                                            const isItemSelected = isSelected(row.name);
+                                                            const labelId = `enhanced-table-checkbox-${index}`;
+
+                                                            return (
+                                                                <TableRow
+                                                                    hover
+                                                                    aria-checked={isItemSelected}
+                                                                    tabIndex={-1}
+                                                                    key={row.name}
+                                                                    selected={isItemSelected}
+                                                                >
+                                                                    <TableCell
+                                                                        id={labelId}
+                                                                        align="center"
+                                                                        scope="row"
+                                                                        padding="none"
+                                                                    >
+                                                                        {row.pending}
+                                                                    </TableCell>
+                                                                    <TableCell align="center">
+                                                                        {row.active}
+                                                                    </TableCell>
+                                                                    <TableCell align="center">
+                                                                        {row.fullfilled}
+                                                                    </TableCell>
+                                                                    <TableCell align="center">
+                                                                        {row.partialFullfilled}
+                                                                    </TableCell>
+                                                                    <TableCell align="center">
+                                                                        {row.unFullfilled}
+                                                                    </TableCell>
+                                                                    <TableCell align="center">
+                                                                        {row.actionRequire}
+                                                                    </TableCell>
+
+                                                                </TableRow>
+                                                            );
+                                                        })}
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </>
+                                </Paper>
+                            </div>
+
+                            <br />
+                            <br />
                             <div
                                 style={{
                                     display: 'flex',
@@ -603,6 +717,7 @@ const ViewSingleNgo = () => {
                                                 orderBy={orderBy}
                                                 onRequestSort={handleRequestSort}
                                                 rowCount={constData.length}
+                                                headCells={projectheadCells}
                                             />
                                             <TableBody>
                                                 {stableSort(projectconstData, getComparator(order, orderBy))
@@ -737,6 +852,7 @@ function stableSort(array, comparator) {
     return stabilizedThis.map(el => el[0]);
 }
 
+
 const projectheadCells = [
     {
         id: 'title',
@@ -789,6 +905,8 @@ const projectheadCells = [
 
 ];
 
+
+
 function EnhancedTableHead(props) {
     const {
         onSelectAllClick,
@@ -797,6 +915,7 @@ function EnhancedTableHead(props) {
         numSelected,
         rowCount,
         onRequestSort,
+        headCells
     } = props;
 
     const createSortHandler = property => event => {
@@ -806,7 +925,7 @@ function EnhancedTableHead(props) {
     return (
         <TableHead className="table-head">
             <TableRow>
-                {projectheadCells.map(headCell => (
+                {headCells.map(headCell => (
                     <TableCell
                         key={headCell.id}
                         align="center"
@@ -838,5 +957,6 @@ EnhancedTableHead.propTypes = {
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
+    headCells: PropTypes.array.isRequired
 };
 

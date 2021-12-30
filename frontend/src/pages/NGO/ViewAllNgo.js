@@ -327,9 +327,9 @@ const ViewAllNgo = () => {
                             </button>
                             <button
                               data-bs-toggle="tooltip"
-                              title="Add Fund"
+                              title="Add project"
                               className="btn"
-                              onClick={() => fundModaOpen(row)}
+                              onClick={() => history.push('/add_project', row)}
                             >
                               <FaPlusCircle />
                             </button>

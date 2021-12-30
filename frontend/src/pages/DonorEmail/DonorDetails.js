@@ -17,6 +17,8 @@ import { Link, useHistory } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import TextEditor from './TextEditor';
 import uploadImage from '../../assets/img/logo/uploadImage.jpg';
+import DropzoneComponent from '../../components/Layout/DropzoneComponent';
+import Checkbox from '@mui/material/Checkbox';
 
 
 const DonorDetails = (props) => {
@@ -57,7 +59,35 @@ const DonorDetails = (props) => {
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - constData.length) : 0;
 
+    //Checkbox
+    const handleSelectAllClick = (event) => {
+        if (event.target.checked) {
+            const newSelecteds = constData.map((n) => n.name);
+            setSelected(newSelecteds);
+            return;
+        }
+        setSelected([]);
+    };
 
+    const handleClick = (event, name) => {
+        const selectedIndex = selected.indexOf(name);
+        let newSelected = [];
+
+        if (selectedIndex === -1) {
+            newSelected = newSelected.concat(selected, name);
+        } else if (selectedIndex === 0) {
+            newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+            newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+            newSelected = newSelected.concat(
+                selected.slice(0, selectedIndex),
+                selected.slice(selectedIndex + 1),
+            );
+        }
+
+        setSelected(newSelected);
+    };
 
 
     const constData = [
@@ -196,6 +226,7 @@ const DonorDetails = (props) => {
                                     orderBy={orderBy}
                                     onRequestSort={handleRequestSort}
                                     rowCount={constData.length}
+                                    onSelectAllClick={handleSelectAllClick}
                                 />
                                 <TableBody>
                                     {stableSort(constData, getComparator(order, orderBy))
@@ -210,12 +241,23 @@ const DonorDetails = (props) => {
                                             return (
                                                 <TableRow
                                                     hover
+                                                    onClick={(event) => handleClick(event, row.name)}
+                                                    role="checkbox"
                                                     aria-checked={isItemSelected}
                                                     tabIndex={-1}
                                                     key={row.name}
                                                     selected={isItemSelected}
                                                 >
 
+                                                    <TableCell padding="checkbox">
+                                                        <Checkbox
+                                                            color="primary"
+                                                            checked={isItemSelected}
+                                                            inputProps={{
+                                                                'aria-labelledby': labelId,
+                                                            }}
+                                                        />
+                                                    </TableCell>
                                                     <TableCell
                                                         id={labelId}
                                                         align="center"
@@ -277,21 +319,12 @@ const DonorDetails = (props) => {
                     <div className='col-12  mt-3' >
                         <label style={{ fontWeight: 'bold' }}> Image: </label>
                     </div>
-
-                    <div className="row">
-                        <div className="col-6 ">
-                            <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                                <label style={{ fontWeight: 'bold' }}></label>
-                                <div className="image-upload">
-                                    <label for="file-input">
-                                        <img className="AttachImage" src={uploadImage} />
-                                    </label>
-                                    <input
-                                        id="file-input"
-                                        type="file"
-                                        accept=".jpg,.jpeg,.png"
-                                    />
-                                </div>
+                </div>
+                <div className="row">
+                    <div className="col-3 ">
+                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
+                            <div className="image-upload">
+                                <DropzoneComponent />
                             </div>
                         </div>
                     </div>
@@ -374,6 +407,8 @@ const headCells = [
     },
 ];
 
+
+
 function EnhancedTableHead(props) {
     const {
         onSelectAllClick,
@@ -391,6 +426,17 @@ function EnhancedTableHead(props) {
     return (
         <TableHead className="table-head">
             <TableRow>
+                <TableCell padding="checkbox">
+                    <Checkbox
+                        color="primary"
+                        indeterminate={numSelected > 0 && numSelected < rowCount}
+                        checked={rowCount > 0 && numSelected === rowCount}
+                        onChange={onSelectAllClick}
+                        inputProps={{
+                            'aria-label': 'select all desserts',
+                        }}
+                    />
+                </TableCell>
                 {headCells.map(headCell => (
                     <TableCell
                         key={headCell.id}

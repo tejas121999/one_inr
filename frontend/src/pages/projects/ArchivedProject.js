@@ -125,7 +125,36 @@ const ArchivedProject = () => {
       paid: '0',
       status: 'Refunded',
       action: '',
-
+    },
+    {
+      id: 2,
+      title: 'Feed Cows with grass of Love',
+      date: '07 May 2020 To 07 May 2020',
+      goal: '114',
+      funded: '29',
+      paid: '0',
+      status: 'Action Required',
+      action: '',
+    },
+    {
+      id: 3,
+      title: 'Feed Cows with grass of Love',
+      date: '08 May 2020 To 08 May 2020',
+      goal: '114',
+      funded: '114',
+      paid: '100',
+      status: 'Full Paid',
+      action: '',
+    },
+    {
+      id: 4,
+      title: 'Feeding Pigeons Grains',
+      date: '07 May 2020 To 07 May 2020',
+      goal: '120	',
+      funded: '29',
+      paid: '0',
+      status: 'Refunded',
+      action: '',
     },
   ];
 
