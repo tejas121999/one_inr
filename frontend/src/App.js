@@ -7,9 +7,8 @@ import Payments from './pages/Account/Payments';
 import AddDoner from './pages/Doner/AddDoner';
 import EditDoner from './pages/Doner/EditDoner';
 import UpcomingDonerRenewal from './pages/Doner/UpcomingDonerRenewal';
-import ViewAllDoner from './pages/Doner/ViewAllDoner';
+  
 import ViewRecept from './pages/Doner/ViewRecept';
-import Four_Zero_Foure from './pages/Four_Zero_Foure';
 import AddPartner from './pages/master/partner/AddPartner';
 import EditPartner from './pages/master/partner/EditPartner';
 import Partner from './pages/master/partner/Partner';
@@ -40,6 +39,14 @@ import store from './Redux/store';
 import { LoginAuthData } from './Redux/Actions/authAction';
 import OTPScreen from './pages/Other/OTP';
 import ChangePassword from './pages/Other/changePassword';
+import EditProfile from './pages/Settings/EditProfile';
+import EditNgo from './pages/NGO/EditNgo';
+import ViewSingleNgo from './pages/NGO/ViewSingleNgo';
+import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
+// import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
+// import ViewAllDoner from './pages/Doner/ViewAllDoner'
+import ProjectDetails from './pages/projects/ProjectDetails';
+import EditProject from './pages/projects/EditProject';
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -59,6 +66,7 @@ function App(props) {
         <Route exact path="/forgot_password" component={Forgot} />
         <Route exact path="/otp" component={OTPScreen} />
         <Route exact path="/changePassword" component={ChangePassword} />
+        
         <div>
           <MainLayout breakpoint={props.breakpoint}>
             <React.Suspense fallback={<PageSpinner />}>
@@ -85,7 +93,7 @@ function App(props) {
                 path="/upcoming_doner_renewal"
                 component={UpcomingDonerRenewal}
               />
-
+              <PrivateRoute exact path="/forgot" component={Forgot} />
               {/*NGO route*/}
               <PrivateRoute exact path="/add_ngo" component={AddNgo} />
               <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />
@@ -103,8 +111,28 @@ function App(props) {
               />
               <PrivateRoute
                 exact
+                path="/edit_project"
+                component={EditProject}
+              />
+              <PrivateRoute
+                exact
+                path="/project_details"
+                component={ProjectDetails}
+              />
+              <PrivateRoute
+                exact
                 path="/archive_project"
                 component={ArchivedProject}
+              />
+              <PrivateRoute
+                exact
+                path="/single_project_detail"
+                component={SingleProjectDetails}
+              />
+              <PrivateRoute
+                exact
+                path="/donor_email"
+                component={DonorDetails}
               />
               {/*Account route*/}
               <PrivateRoute exact path="/payments" component={Payments} />
@@ -120,9 +148,9 @@ function App(props) {
               />
             </React.Suspense>
           </MainLayout>
-          {/* <Route path="/404" component={Four_Zero_Foure} />
-          <Redirect to="/404">{Four_Zero_Foure}</Redirect> */}
         </div>
+        {/* <Route path="/404" component={Four_Zero_Foure} />
+            <Redirect to="/404">{Four_Zero_Foure}</Redirect> */}
       </Switch>
     </BrowserRouter>
   );

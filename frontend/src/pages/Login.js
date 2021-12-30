@@ -75,7 +75,7 @@ const Login = props => {
                   name="password"
                   type={isPasswordVisble ? 'text' : 'password'}
                   placeholder="Enter password"
-                  className="p-2 mt-2 border-0 w-100 input-border psw-feild"
+                  className=" form-control mt-3 w-100"
                 />
                 <i
                   className={`fa ${
@@ -92,7 +92,7 @@ const Login = props => {
                 ) : null}
               </div>
 
-              <div className="text-right forgotPass mt-2 pr-5">
+              <div className="text-right forgotPass pr-5">
                 <NavLink to="/forgot_password">Forgot Password ?</NavLink>
               </div>
               <div className="form-group w-75 m-auto">

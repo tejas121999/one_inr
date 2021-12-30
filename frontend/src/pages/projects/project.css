@@ -1,0 +1,47 @@
+.AddDoner {
+  /* padding: 40px;
+  margin: 40px; */
+  margin-top: 40px;
+}
+.white-box {
+  background-color: #fefefe;
+  max-width: 100%;
+  padding: 25px;
+  margin: 25px;
+  margin-bottom: 30px;
+}
+.ViewAll {
+  /* padding: 40px; */
+  /* margin: 40px;  */
+  margin-top: 40px;
+}
+.editproject {
+  margin-top: 40px;
+}
+.payment {
+  margin-top: 40px;
+}
+.btn {
+  margin-left: 1;
+}
+.search-btn {
+  padding: 10px;
+}
+.projectDetails {
+  margin-top: 10px;
+}
+.p1 {
+  box-sizing: inherit;
+  margin: 0px 0px 20px;
+  border: 0px;
+  font-size: 14px;
+  outline: 0px;
+  padding: 0px;
+  vertical-align: baseline;
+  color: #555555;
+  font-family: Rubik, sans-serif;
+  text-align: justify;
+}
+.input-box {
+  padding: 15px;
+}

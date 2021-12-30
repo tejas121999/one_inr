@@ -1,0 +1,54 @@
+.profileInfo {
+  background-color: rgb(245, 245, 245);
+  padding-bottom: 2rem;
+
+  &__sec {
+    display: grid;
+    grid-template-rows: repeat(4, minmax(50px, 90px));
+    background-color: rgb(245, 245, 245);
+  }
+
+  &__nav {
+    grid-row: -2/-1;
+    display: grid;
+    grid-auto-flow: column;
+  }
+
+  &__ul {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-auto-flow: column;
+  }
+
+  &__li {
+    &-2 {
+      display: grid;
+      grid-column: 1/2;
+      padding-left: 2rem;
+      align-content: center;
+    }
+  }
+  &__link {
+    width: 70px;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    background-color: #3db2ff;
+    color: white;
+
+    &:hover {
+      text-decoration: none;
+      background-color: #319ce4;
+      color: white;
+    }
+  }
+}
+
+.link {
+  background-color: rgb(245, 245, 245);
+
+  &__hide {
+    visibility: hidden;
+  }
+}

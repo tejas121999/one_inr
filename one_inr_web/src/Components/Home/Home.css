@@ -1,0 +1,9 @@
+.steps {
+  position: absolute;
+  margin-top: 5cm;
+}
+
+.sideshow {
+  background: url("../Images/imgHome.jpeg");
+  background-size: cover !important;
+}

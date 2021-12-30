@@ -114,22 +114,20 @@ exports.getAllProjects = async (req, res) => {
         req.query.from,
         req.query.to
     );
-    // let query = {};
-    // const searchQuery = {
-    //     [Op.and]: [query, {
-    //         [Op.or]: {
-    //             name: { [Op.like]: search + "%" },
-    //             email: { [Op.like]: search + '%' },
-    //             phone: { [Op.like]: search + '%' },
-    //             gst: { [Op.like]: search + '%' },
-    //             address : {[Op.like]: search + '%'},
-    //             pan: { [Op.like]: search + '%' },
-    //             company: { [Op.like]: search + '%' },
-    //         }
-    //     }],
-    // };
+    let query = {};
+    const searchQuery = {
+        [Op.and]: [query, {
+            [Op.or]: {
+                title: { [Op.like]: "%" + search + "%" },
+                goal: { [Op.like]: "%" +  search + '%' },
+                target: { [Op.like]: "%" + search + '%' },
+                funded: { [Op.like]: "%" + search + '%' },
+                endDate : {[Op.like]: "%" +  search + '%'},
+            }
+        }],
+    };
     const project = await models.projects.findAll({
-        
+        where : searchQuery,
         offset : offset,
         limit : pageSize
     });
