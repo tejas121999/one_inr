@@ -12,7 +12,7 @@ const {donorValidation,updateDonorValidation,updateDonorBalanceValidation,} =req
 
 router.post('/',donorValidation,validationError,wrapper(addDonor))
 router.get('/',wrapper(getAllDonor))
-router.get('/donor-csv',wrapper(exportsDonorCsv))
+router.get('/donor-csv',wrapper(exportsDonorCsv)) 
 router.get('/donor-xlsx',wrapper(getDonorExcel))
 router.get('/donor-pdf',wrapper(generateDonorPdf))
 router.get('/upcoming-donor-pdf',wrapper(getAllUpcomingDonorsPdf))

@@ -12,8 +12,9 @@ const partner = require('./partner')
 const csvUpload = require('./csvFileUploads')
 const checkAuth = require('../middleware/checkAuth')
 const projects = require('./projects')
-
-
+const entity = require('./entity');
+const permissions = require('./permissions');
+const roles = require('./roles')
 
 router.use('/vendor',checkAuth,vendor)
 router.use('/fileupload',checkAuth,fileUpload)
@@ -25,6 +26,9 @@ router.use('/ngo',checkAuth,ngo)
 router.use('/partner',checkAuth,partner)
 router.use('/csvUserUpload',checkAuth,csvUpload)
 router.use('/user',checkAuth,users)
+router.use('/entity',checkAuth, entity )
+router.use('/permissions',checkAuth,permissions)
+router.use('/roles',checkAuth,roles)
 
 
 

@@ -4,7 +4,7 @@ exports.ImageUpload = async (req, res) => {
     let fileFor = req.query.reason;
 
 
-    
+
 
     //an object specifying the size limit of the following optional properties, now we have created a object where i have storage
     // and limit of te file size. In case coming file size is greater then defined size
@@ -49,26 +49,28 @@ exports.ImageUpload = async (req, res) => {
     } else if (fileFor == "ngo_deed") {
         destination = `public/uploads/ngo/deed/`
 
-    } else if (fileFor == "ngo_logo" ) {
+    } else if (fileFor == "ngo_logo") {
         destination = `public/uploads/ngo/logo/`
-    } 
+    }
 
 
 
     // Project Images Upload
-      else if (fileFor == "banner") {
+    else if (fileFor == "banner") {
         destination = `public/uploads/project_image/banner/`
-        
+
     } else if (fileFor == "cover") {
-        destination = `public/uploads/project_image/cover/` 
-    
+        destination = `public/uploads/project_image/cover/`
+
     } else if (fileFor == "mobile") {
         destination = `public/uploads/project_image/mobile/`
 
     } else if (fileFor == "slider") {
         destination = `public/uploads/project_image/slider/`
     }
-
+    else if (fileFor == "profile_image") {
+        destination = `public/uploads/users/profile/`
+    }
 
     // The next thing will be to define a storage location for our files. Multer gives the option of storing files to disk, as shown below.
     //  Here, we set up a directory where all our files will be saved, and we’ll also give the files a new identifier.
@@ -84,8 +86,8 @@ exports.ImageUpload = async (req, res) => {
 
     //set this to a function to control which files should be uploaded and which should be skipped
     let fileFilter = function (req, file, cb) {
-        var allowedMimes = ['image/jpeg', 'image/png','image/jpg'];
-        if(allowedMimes.includes(file.mimetype)) {
+        var allowedMimes = ['image/jpeg', 'image/png', 'image/jpg'];
+        if (allowedMimes.includes(file.mimetype)) {
             cb(null, true);
         } else {
             cb({
@@ -95,7 +97,7 @@ exports.ImageUpload = async (req, res) => {
         }
     };
 
-    
+
     var obj = {
         storage,
         limits: {
@@ -104,7 +106,7 @@ exports.ImageUpload = async (req, res) => {
     };
 
     //now we have to add our created object 'obj' into multer and called method single with param 'file'. here file is param of request body.
-    const uploads = multer( obj ).single('avatar');
+    const uploads = multer(obj).single('avatar');
 
     // When encountering an error, Multer will delegate the error to Express. 
     // You can display a nice error page using the standard express way.
@@ -137,12 +139,12 @@ exports.ImageUpload = async (req, res) => {
         return res.status(201).json({
             type: fileFor,
             url: req.file.url,
-            path: process.env.BASE_URL+req.file.path,
-            pathtoUpload : req.file.path,
+            path: process.env.BASE_URL + req.file.path,
+            pathtoUpload: req.file.path,
             filename: req.file.filename,
             message: "File Uploaded Successfully"
         })
-        
+
         // }
     })
 }
