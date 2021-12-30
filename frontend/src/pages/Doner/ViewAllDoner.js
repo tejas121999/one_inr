@@ -178,7 +178,7 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => {});
+      .catch(err => { });
   };
   const downloadCsv = () => {
     fetch(CsvUrl)
@@ -192,7 +192,7 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => {});
+      .catch(err => { });
   };
   const downloadXls = () => {
     fetch(XlsUrl)
@@ -206,7 +206,7 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => {});
+      .catch(err => { });
   };
   const onPrintClick = () => {
     console.log(printDonorTable);

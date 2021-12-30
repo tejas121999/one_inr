@@ -26,6 +26,7 @@ import { Link, useHistory } from 'react-router-dom';
 import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllNGOAction } from '../../Redux/Actions/NgoActions';
+import DeleteNgo from './NgoModals/DeleteNgo';
 
 
 const ViewAllNgo = () => {
@@ -211,6 +212,7 @@ const ViewAllNgo = () => {
       <br />
       <br />
       <br />
+      <DeleteNgo show={deleteModal} onHide={deleteModalClose} id={deleteId} />
       <div className="card">
         <div
           style={{
