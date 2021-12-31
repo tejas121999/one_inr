@@ -42,10 +42,9 @@ import ChangePassword from './pages/Other/changePassword';
 import EditProfile from './pages/Settings/EditProfile';
 import EditNgo from './pages/NGO/EditNgo';
 import ViewSingleNgo from './pages/NGO/ViewSingleNgo';
-import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
-// import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
-import ViewAllDoner from './pages/Doner/ViewAllDoner';
 import Four_Zero_Foure from './pages/Four_Zero_Foure';
+import AddRazorpay from './pages/Settings/AddRazorpay';
+import EditRazorpay from './pages/Settings/EditRazorpay';
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -132,6 +131,12 @@ function App(props) {
                 path="/razorpay_credentials"
                 component={RazorpayCredentials}
               />
+              <PrivateRoute
+                exact
+                path="/razorpay_credentials/create"
+                component={AddRazorpay}
+              />
+              <PrivateRoute exact path="/id/edit" component={EditRazorpay} />
             </React.Suspense>
           </MainLayout>
         </div>
