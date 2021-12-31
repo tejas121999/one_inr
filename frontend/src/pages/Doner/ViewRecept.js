@@ -98,9 +98,23 @@ export default function ViewRecept() {
   const handleModal1 = () => {
     setModal1(!modal1);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
+  
+  const getViewRecepts = async () => {
+    const url = BASE_URL + VIEW_RECEPT_URL;
+    await axios
+      .get(url)
+      .then(res => {
+        setReceipt(res.data.data.rows);
+        console.log(recept);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
+
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
   const ViewModalOpen = data => {
     setViewData(data);

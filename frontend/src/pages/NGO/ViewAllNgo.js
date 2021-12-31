@@ -26,7 +26,8 @@ import { Link, useHistory } from 'react-router-dom';
 import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllNGOAction } from '../../Redux/Actions/NgoActions';
-import NGOdelete from '../../Modals/ngo/ngoDelete';
+import DeleteNgo from './NgoModals/DeleteNgo';
+
 
 const ViewAllNgo = () => {
   const [order, setOrder] = React.useState('asc');
@@ -128,40 +129,6 @@ const ViewAllNgo = () => {
     }
   };
 
-  const headCells = [
-    {
-      id: 'name',
-      numeric: false,
-      disablePadding: false,
-      label: 'Name',
-    },
-    {
-      id: 'pending',
-      numeric: true,
-      disablePadding: false,
-      label: 'Pending',
-    },
-    {
-      id: 'active',
-      numeric: true,
-      disablePadding: false,
-      label: 'Active',
-    },
-    {
-      id: 'actionRequired',
-      numeric: true,
-      disablePadding: false,
-      label: 'ActionRequired',
-    },
-    {
-      id: 'action',
-      numeric: true,
-      disablePadding: false,
-      label: 'Action',
-    },
-  ];
-  // END
-
   const constData = [
     {
       id: 1,
@@ -170,6 +137,8 @@ const ViewAllNgo = () => {
       active: '0',
       actionrequired: '0',
       action: '',
+
+
     },
     {
       id: 2,
@@ -178,6 +147,7 @@ const ViewAllNgo = () => {
       active: '0',
       actionrequired: '0',
       action: '',
+
     },
     {
       id: 3,
@@ -195,6 +165,7 @@ const ViewAllNgo = () => {
       actionrequired: '0',
       action: '',
     },
+
   ];
 
   return (
@@ -203,17 +174,32 @@ const ViewAllNgo = () => {
       <br />
       <br />
       <br />
-      <NGOdelete show={deleteModal} onHide={deleteModalClose} id={deleteId} />
-      <nav className="navbar navbar-light">
-        <a className="navbar-brand">LIST OF ALL NGO</a>
-        <form className="form-inline">
-          <div className="modalClass">
-            <Link to="/add_ngo" type="" className="btn btn-primary">
-              ADD NGO
-            </Link>
-          </div>
-        </form>
-      </nav>
+      <div className="card">
+        <div
+          style={{
+            display: 'flex',
+            padding: '20px',
+            justifyContent: 'space-betwee n',
+          }}
+        >
+          <p
+            style={{
+              textAlign: 'left',
+              fontWeight: 'bold',
+              margin: '20px',
+              marginLeft: '20px',
+            }}
+          >
+            LIST OF ALL NGO
+          </p>
+          <button
+            style={{ alignSelf: 'flex-start' }}
+            className="btn btn-primary"
+          >
+            Add NGO
+          </button>
+        </div>
+      </div>
       <div
         style={{
           margin: '20px',
@@ -256,7 +242,10 @@ const ViewAllNgo = () => {
                 />
                 <TableBody>
                   {stableSort(constData, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage,
+                    )
                     .map((row, index) => {
                       const isItemSelected = isSelected(row.name);
                       const labelId = `enhanced-table-checkbox-${index}`;
@@ -277,7 +266,9 @@ const ViewAllNgo = () => {
                           >
                             {row.name}
                           </TableCell>
-                          <TableCell align="center">{row.pending}</TableCell>
+                          <TableCell align="center">
+                            {row.pending}
+                          </TableCell>
                           <TableCell align="center">{row.active}</TableCell>
                           <TableCell align="center">
                             {row.actionRequired}
@@ -287,20 +278,9 @@ const ViewAllNgo = () => {
                               data-bs-toggle="tooltip"
                               title="View Details"
                               className="btn"
-                              onClick={() =>
-                                history.push('/view_single_ngo', row)
-                              }
+                              onClick={() => ViewModalOpen(row)}
                             >
                               <FaRegEye />
-                            </button>
-
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="Add Project"
-                              className="btn"
-                              onClick={() => history.push('/add_project', row)}
-                            >
-                              <FaPlusCircle />
                             </button>
                             <button
                               data-bs-toggle="tooltip"
@@ -310,7 +290,14 @@ const ViewAllNgo = () => {
                             >
                               <FaRegEdit />
                             </button>
-
+                            <button
+                              data-bs-toggle="tooltip"
+                              title="Add Fund"
+                              className="btn"
+                              onClick={() => fundModaOpen(row)}
+                            >
+                              <FaPlusCircle />
+                            </button>
                             <button
                               data-bs-toggle="tooltip"
                               title="Delete"
@@ -342,8 +329,8 @@ const ViewAllNgo = () => {
         </Paper>
       </div>
     </>
-  );
-};
+  )
+}
 
 export default ViewAllNgo;
 
@@ -440,7 +427,7 @@ function EnhancedTableHead(props) {
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
             >
-              {headCell.label}
+              <b>{headCell.label}</b>
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
