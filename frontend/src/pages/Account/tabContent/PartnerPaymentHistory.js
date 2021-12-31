@@ -21,9 +21,10 @@ import {
     FaBookOpen,
     FaPlusCircle,
 } from 'react-icons/fa';
-import './project.css'
+import EditPayment from '../EditPayment';
 
-const ViewAllProjects = () => {
+
+const PartnerPaymentHistory = () => {
 
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
@@ -31,17 +32,22 @@ const ViewAllProjects = () => {
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [editModal, setEditModal] = React.useState(false);
     const [viewModal, setViewModal] = React.useState(false);
     const [viewData, setViewData] = React.useState('');
     const [fundModal, setFundModal] = React.useState(false);
     const [fundModalData, setFundModalData] = React.useState(0);
     // const [donorList, setDonorList] = React.useState([]);
-    const [deleteModal, setDeleteModal] = React.useState(false);
-    const [deleteId, setDeleteID] = React.useState(0);
     const history = useHistory();
     const dispatch = useDispatch();
 
-
+    const fundModaOpen = data => {
+        setFundModalData(data.id);
+        setFundModal(true);
+    };
+    const fundModaClose = () => {
+        setFundModal(false);
+    };
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -66,26 +72,30 @@ const ViewAllProjects = () => {
     const constData = [
         {
             id: 1,
-            title: 'shivani',
-            gole: 0,
-            target: '0',
-            funded: '0',
-            days_left: '0',
-            recurring: '$1',
-            status: '',
-            home_project: '',
+            sr_no: 1,
+            date: "10-12-2020",
+            amount_pade: 50,
+            partner_name: 'tejas talkar',
+            partner_company: 'nimap infotech',
+            ngo: '1INR',
+            project: 'feeding pigeons grain',
+            project_date: '8-feb-2020 to 15-may-2020',
+            description: 'hgscce',
+            receipt: '--',
             action: ''
         },
         {
             id: 1,
-            title: 'shivani',
-            gole: 0,
-            target: '0',
-            funded: '0',
-            days_left: '0',
-            recurring: '$1',
-            status: '',
-            home_project: '',
+            sr_no: 1,
+            date: "10-12-2020",
+            amount_pade: 50,
+            partner_name: 'tejas talkar',
+            partner_company: 'nimap infotech',
+            ngo: '1INR',
+            project: 'feeding pigeons grain',
+            project_date: '8-feb-2020 to 15-may-2020',
+            description: 'hgscce',
+            receipt: '--',
             action: ''
         },
     ];
@@ -93,68 +103,12 @@ const ViewAllProjects = () => {
 
     return (
         <div>
-            <br />
-            <br />
-            <br />
-            <div className="card">
-                <div
-                    style={{
-                        display: 'flex',
-                        padding: '2px',
-                        justifyContent: 'space-betwee n',
-                    }}
-                >
-                    <p
-                        style={{
-                            textAlign: 'left',
-                            fontWeight: 'bold',
-                            margin: '20px',
-                            marginLeft: '20px',
-                        }}
-                    >
-                        LIST OF ALL NGO
-                    </p>
-                </div>
-            </div>
-            <div className='ViewAll'>
-                <div className='white-box'>
+            <EditPayment show={fundModal} onHide={fundModaClose} data={fundModalData} />
+
+            <div className=''>
+                <div className=''>
                     <div className='row'>
-                        <div className="col-2">
-                            <div className="input-box">
-                                <TextField
-                                    id="date"
-                                    label="start date"
-                                    type="date"
-                                    defaultValue="YY-DD-MM"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                />
-                            </div>
-                        </div>
-                        <div className="col-2">
-                            <div className="input-box">
-                                <TextField
-                                    id="date"
-                                    label="end date"
-                                    type="date"
-                                    defaultValue="YY-DD-MM"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                />
-                            </div>
-                        </div>
-                        <div className='col-2 search-btn'>
-                            <button type="button" className="btn btn-primary">Search</button>
-                        </div>
-                    </div>
-                    <hr />
-                    <div className='row'>
-                        <div className='col-6'>
-                            <button type="button" className="btn btn-primary">Export</button>
-                        </div>
-                        <div className='col-6 btn'>
+                        <div className='col-6' style={{ marginLeft: '24cm' }}>
                             <label>Search</label>&nbsp;&nbsp;
                             <input type='search' />
                         </div>
@@ -188,7 +142,7 @@ const ViewAllProjects = () => {
                                                     hover
                                                     aria-checked={isItemSelected}
                                                     tabIndex={-1}
-                                                    key={row.title}
+                                                    key={row.sr_no}
                                                     selected={isItemSelected}
                                                 >
                                                     <TableCell
@@ -197,59 +151,27 @@ const ViewAllProjects = () => {
                                                         scope="row"
                                                         padding="none"
                                                     >
-                                                        {row.title}
+                                                        {row.sr_no}
                                                     </TableCell>
                                                     <TableCell align="center">
-                                                        {row.gole}
+                                                        {row.date}
                                                     </TableCell>
-                                                    <TableCell align="center">{row.target}</TableCell>
-                                                    <TableCell align="center">{row.funded}</TableCell>
-                                                    <TableCell align="center">{row.days_left}</TableCell>
-                                                    <TableCell align="center">{row.recurring}</TableCell>
+                                                    <TableCell align="center">{row.amount_pade}</TableCell>
+                                                    <TableCell align="center">{row.partner_name}</TableCell>
+                                                    <TableCell align="center">{row.partner_company}</TableCell>
+                                                    <TableCell align="center">{row.ngo}</TableCell>
+                                                    <TableCell align="center">{row.project}</TableCell>
+                                                    <TableCell align="center">{row.project_date}</TableCell>
+                                                    <TableCell align="center">{row.description}</TableCell>
+                                                    <TableCell align="center">{row.receipt}</TableCell>
                                                     <TableCell align="center">
-                                                        <div className="custom-control custom-switch">
-                                                            <input type="checkbox" className="custom-control-input" id="customSwitch1" />
-                                                            <label className="custom-control-label" for="customSwitch1" />
-                                                        </div>
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        <div className="custom-control custom-switch">
-                                                            <input type="checkbox" className="custom-control-input" id="customSwitch2" />
-                                                            <label className="custom-control-label" for="customSwitch2" />
-                                                        </div>
-                                                    </TableCell>
-                                                    <TableCell align="center">
-                                                        <button
-                                                            data-bs-toggle="tooltip"
-                                                            title="View Details"
-                                                            className="btn"
-                                                            onClick={() => history.push('/project_details', row)}
-                                                        >
-                                                            <FaRegEye />
-                                                        </button>
                                                         <button
                                                             data-bs-toggle="tooltip"
                                                             title="Edit"
                                                             className="btn"
-                                                            onClick={() => history.push('/edit_project', row)}
+                                                            onClick={() => fundModaOpen(row)}
                                                         >
                                                             <FaRegEdit />
-                                                        </button>
-                                                        <button
-                                                            data-bs-toggle="tooltip"
-                                                            title="Add Fund"
-                                                            className="btn"
-                                                        // onClick={() => fundModaOpen(row)}
-                                                        >
-                                                            <FaPlusCircle />
-                                                        </button>
-                                                        <button
-                                                            data-bs-toggle="tooltip"
-                                                            title="Delete"
-                                                            className="btn"
-                                                        // onClick={() => deleteModalOpen(row)}
-                                                        >
-                                                            <FaRegTrashAlt />
                                                         </button>
                                                     </TableCell>
                                                 </TableRow>
@@ -277,7 +199,7 @@ const ViewAllProjects = () => {
     )
 }
 
-export default ViewAllProjects
+export default PartnerPaymentHistory
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -312,52 +234,64 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'title',
+        id: 'sr_no',
         numeric: false,
         disablePadding: false,
-        label: 'Title',
+        label: 'sr_no',
     },
     {
-        id: 'gole',
+        id: 'date',
         numeric: true,
         disablePadding: false,
-        label: 'Gole',
+        label: 'date',
     },
     {
-        id: 'target',
+        id: 'amount_pade',
         numeric: true,
         disablePadding: false,
-        label: 'Target',
+        label: 'Amount Pade',
     },
     {
-        id: 'funded',
+        id: 'partner_name',
         numeric: true,
         disablePadding: false,
-        label: 'Funded',
+        label: 'Partner Name',
     },
     {
-        id: 'days_left',
+        id: 'partner_company',
         numeric: true,
         disablePadding: false,
-        label: 'Days Left',
+        label: 'Partner Company',
     },
     {
-        id: 'recurring',
+        id: 'ngo',
         numeric: true,
         disablePadding: false,
-        label: 'Recurring',
+        label: 'ngo',
     },
     {
-        id: 'status',
+        id: 'project',
         numeric: true,
         disablePadding: false,
-        label: 'Status',
+        label: 'project',
     },
     {
-        id: 'home_project',
+        id: 'project_date',
         numeric: true,
         disablePadding: false,
-        label: 'Home Project',
+        label: 'Project Date',
+    },
+    {
+        id: 'description',
+        numeric: true,
+        disablePadding: false,
+        label: 'description',
+    },
+    {
+        id: 'receipt',
+        numeric: true,
+        disablePadding: false,
+        label: 'receipt',
     },
     {
         id: 'action',

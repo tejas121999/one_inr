@@ -42,9 +42,11 @@ import ChangePassword from './pages/Other/changePassword';
 import EditProfile from './pages/Settings/EditProfile';
 import EditNgo from './pages/NGO/EditNgo';
 import ViewSingleNgo from './pages/NGO/ViewSingleNgo';
-import SingleProjectDetails from './pages/projects/SingleProjectDetails';
-//import EditSingleProjectDetails from './pages/projects/EditSingleProjectDetails';
-import DonorDetails from './pages/DonorEmail/DonorDetails';
+import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
+// import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
+// import ViewAllDoner from './pages/Doner/ViewAllDoner'
+import ProjectDetails from './pages/projects/ProjectDetails';
+import EditProject from './pages/projects/EditProject';
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -90,16 +92,10 @@ function App(props) {
                 path="/upcoming_doner_renewal"
                 component={UpcomingDonerRenewal}
               />
-
+              <PrivateRoute exact path="/forgot" component={Forgot} />
               {/*NGO route*/}
               <PrivateRoute exact path="/add_ngo" component={AddNgo} />
               <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />
-              <PrivateRoute exact path="/edit_ngo" component={EditNgo} />
-              <PrivateRoute exact path="/view_single_ngo" component={ViewSingleNgo} />
-
-              {/*Donor Email */}
-              <PrivateRoute exact path="/donor_details" component={DonorDetails} />
-
               {/*project route*/}
               <PrivateRoute
                 exact
@@ -111,6 +107,16 @@ function App(props) {
                 exact
                 path="/view_all_project"
                 component={ViewAllProjects}
+              />
+              <PrivateRoute
+                exact
+                path="/edit_project"
+                component={EditProject}
+              />
+              <PrivateRoute
+                exact
+                path="/project_details"
+                component={ProjectDetails}
               />
               <PrivateRoute
                 exact
@@ -131,7 +137,6 @@ function App(props) {
               <PrivateRoute exact path="/payments" component={Payments} />
               {/*setting route*/}
               <PrivateRoute exact path="/my_profile" component={MyProfile} />
-              <PrivateRoute exact path="/editProfile" component={EditProfile} />
               <PrivateRoute exact path="/roles" component={Roles} />
               <PrivateRoute exact path="/users" component={Users} />
               <PrivateRoute exact path="/config" component={Config} />
@@ -143,7 +148,8 @@ function App(props) {
             </React.Suspense>
           </MainLayout>
         </div>
-        <Redirect to="/404" />
+        {/* <Route path="/404" component={Four_Zero_Foure} />
+            <Redirect to="/404">{Four_Zero_Foure}</Redirect> */}
       </Switch>
     </BrowserRouter>
   );
