@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
 
     RolePermission.associate = function(models) {
         RolePermission.belongsTo(models.role, { foreignKey: 'roleId', as: 'role' });
-        RolePermission.belongsTo(models.permission, { foreignKey: 'permissions' });
+        // RolePermission.belongsTo(models.permission, { foreignKey: 'permissions' });
     }
     
     return RolePermission;
