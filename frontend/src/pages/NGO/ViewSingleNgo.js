@@ -14,7 +14,7 @@ import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import './Ngo.css'
+import './ngo.css'
 import { Link, useHistory } from 'react-router-dom';
 import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
