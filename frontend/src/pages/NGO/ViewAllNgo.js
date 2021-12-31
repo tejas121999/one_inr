@@ -20,7 +20,7 @@ import {
   FaBookOpen,
   FaPlusCircle,
 } from 'react-icons/fa';
-// import '../Ngo/Ngo.css';
+import './ngo.css';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Loader from '../Loader';
@@ -323,7 +323,7 @@ const ViewAllNgo = () => {
                               data-bs-toggle="tooltip"
                               title="Add project"
                               className="btn"
-                              onClick={() => history.push('/add_project', row)}
+                              onClick={() => history.push('/', row)}
                             >
                               <FaRegEdit />
                             </button>
