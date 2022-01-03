@@ -6,12 +6,11 @@ const {addDonor,getAllDonor,getAllParentDetails,getDonorById,updateDonor,updateD
 const {wrapper} = require('../utils/errorWrap')
 const validationError =require('../middleware/validationError')
 const {donorValidation,updateDonorValidation,updateDonorBalanceValidation,} =require('../validations/donors')
-
-
+const checkRolesAndPermissions = require('../middleware/checkRolesAndPermissions')
 
 
 router.post('/',donorValidation,validationError,wrapper(addDonor))
-router.get('/',wrapper(getAllDonor))
+router.get('/',checkRolesAndPermissions,wrapper(getAllDonor))
 router.get('/donor-csv',wrapper(exportsDonorCsv)) 
 router.get('/donor-xlsx',wrapper(getDonorExcel))
 router.get('/donor-pdf',wrapper(generateDonorPdf))

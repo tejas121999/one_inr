@@ -34,7 +34,7 @@ exports.updateProfile = async (req,res)=>{
 }
 
 
-exports.updateProfilePassword = async (req,res)=>{
+exports.        updateProfilePassword = async (req,res)=>{
     const id = req.userData.id
     const {currentPassword , newPassword } = req.body;
     console.log(newPassword,currentPassword)

@@ -33,9 +33,10 @@ module.exports = (sequelize, DataTypes) => {
  
 
     Role.associate = function(models) {
+        Role.hasMany(models.rolePermission,{foreignKey : 'roleId'});
         // Role.belongsToMany(models.user,{through: models.userRole});
         // Role.belongsToMany(models.module,{through: models.roleModule});
-        Role.belongsToMany(models.permission,{through: models.rolePermission});
+        // Role.belongsToMany(models.permission,{through: models.rolePermission});
         // Role.belongsTo(models.user,{ foreignKey: 'createdBy', as: 'createdByUser' });
         // Role.belongsTo(models.user,{ foreignKey: 'updatedBy', as: 'updatedByUser' });
     }
