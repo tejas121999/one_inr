@@ -44,12 +44,13 @@ import EditNgo from './pages/NGO/EditNgo';
 import ViewSingleNgo from './pages/NGO/ViewSingleNgo';
 import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
 // import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
-// import ViewAllDoner from './pages/Doner/ViewAllDoner'
+import ViewAllDoner from './pages/Doner/ViewAllDoner';
 import ProjectDetails from './pages/projects/ProjectDetails';
 import EditProject from './pages/projects/EditProject';
 import Four_Zero_Foure from './pages/Four_Zero_Foure';
 import AddRazorpay from './pages/Settings/AddRazorpay';
 import EditRazorpay from './pages/Settings/EditRazorpay';
+import DonorDetails from './pages/DonorEmail/DonorDetails';
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -130,7 +131,7 @@ function App(props) {
               <PrivateRoute
                 exact
                 path="/single_project_detail"
-                component={SingleProjectDetails}
+                // component={SingleProjectDetails}
               />
               <PrivateRoute
                 exact
@@ -141,6 +142,7 @@ function App(props) {
               <PrivateRoute exact path="/payments" component={Payments} />
               {/*setting route*/}
               <PrivateRoute exact path="/my_profile" component={MyProfile} />
+              <PrivateRoute exact path="/editProfile" component={EditProfile} />
               <PrivateRoute exact path="/roles" component={Roles} />
               <PrivateRoute exact path="/users" component={Users} />
               <PrivateRoute exact path="/config" component={Config} />
