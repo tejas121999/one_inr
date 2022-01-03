@@ -7,7 +7,7 @@ function NgoServices() {
     await axios.post(BASE_URL + 'ngo/create-ngo', body);
 
   // Service For View All Ngo
-  this.getAllNGOList = async value =>
+  this.getAllNGOList = async value => 
     await axios.get(BASE_URL + `ngo/read-ngo?search=${value}`);
 
   this.GetAllNgoList = async value =>

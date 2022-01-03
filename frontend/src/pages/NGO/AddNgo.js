@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { createNGOAction } from '../../Redux/Actions/NgoActions';
 
 const AddNgo = props => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   const [logoImgUrl, setLogoImgUrl] = useState('');
   const [panCardImgUrl, setPanCardImgUrl] = useState('');
   const [certificateImgUrl, setCertificateImgUrl] = useState('');
