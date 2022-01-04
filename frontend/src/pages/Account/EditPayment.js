@@ -7,10 +7,17 @@ const Addfund = props => {
         <React.Fragment>
             <Modal show={props.show} onHide={props.onHide}>
                 <Modal.Header closeButton>
-                    <Modal.Title>edit vendor</Modal.Title>
+                    <Modal.Title>Upload Receipt</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h1>edit vender</h1>
+                    <form>
+                        <div className='form-group'>
+                            <label>Receipt</label>
+                            <input type='file' class="form-control" />
+                        </div>
+                        <button type="button" class="btn btn-light">close</button>
+                        <button type="submit" class="btn btn-primary">save change</button>
+                    </form>
                 </Modal.Body>
             </Modal>
         </React.Fragment>

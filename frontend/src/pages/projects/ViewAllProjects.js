@@ -112,7 +112,7 @@ const ViewAllProjects = () => {
                             marginLeft: '20px',
                         }}
                     >
-                        LIST OF ALL NGO
+                        VIEW ALL PROJECT
                     </p>
                 </div>
             </div>
