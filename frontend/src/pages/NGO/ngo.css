@@ -1,0 +1,19 @@
+.viewNgo   {
+    padding: 40px;
+    margin: 40px;
+    background-color: white;
+  }
+  .white-box{
+      background-color: #fefefe;
+      padding: 25px;
+      margin-bottom: 30px;
+  }
+
+/* For image in add ngo */
+  .image-upload>input {
+    display: none;
+  }
+  .AttachImage {
+    margin-left: 10px;
+    height: 100px
+  }
