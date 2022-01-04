@@ -82,11 +82,23 @@ const projects = sequelize .define('projects', {
         field: 'display_on_home_status'
     },
 
-    days: {
+    date: {
         type : DataTypes.VIRTUAL,
         get(){
             const rawValue = `${this.startDate} to ${this.endDate}`;
             return rawValue;
+        }
+    },
+    
+    recurring : {
+        type : DataTypes.VIRTUAL,
+        get(){
+            const isRecurring = this.recurringDays;
+            if(isRecurring==0){
+                return "No"
+            }else{
+                return 'Yes'
+            }
         }
     }
 
@@ -101,10 +113,10 @@ const projects = sequelize .define('projects', {
         deletedAt : 'deleted_at'
     });
 
-    // projects.associate = function(models) {
-    //     projects.hasMany(models.project_images, {foreignKey: 'user_id'})
-    //     projects.belongsTo(models.ngo, {foreignKey: 'userId'})
-    // }
+    projects.associate = function(models) {
+        projects.hasMany(models.project_images, {foreignKey: 'user_id'})
+        projects.belongsTo(models.ngo, {foreignKey: 'userId'})
+    }
 
 
     projects.afterFind(function(projects,options,cb){

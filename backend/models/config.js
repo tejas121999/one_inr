@@ -6,7 +6,7 @@ module.exports = (sequelize,DataTypes)=>{
             allowNull : false
         },
         value:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             field : 'value',
             allowNull : false
         },

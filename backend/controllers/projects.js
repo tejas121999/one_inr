@@ -181,3 +181,22 @@ exports.getProjectById = async (req, res)=>{
 
 }
 
+exports.updateStatus = async (req,res)=>{
+    const id = req.params.id;
+    const project = await models.projects.update({status : req.body.status},{where : {id:id}})
+    if(!project){
+        return res.status(404).json({message:"Not Found"})
+    }else{
+        return res.status(200).json({message : "Status Updated Successfully"})
+    }
+}
+
+exports.setHomeProject = async (req,res) => {
+    let id = req.params.id;
+    let {setHomeProjet} = req.body;
+    const data = await models.projects.update({displayOnHomeStatus:0},{where:{displayOnHomeStatus: 1}})
+    const project = await models.projects.update({displayOnHomeStatus:1},{where : {id:id}});
+    return res.status(200).json({project : project, data: data});
+}
+
+
