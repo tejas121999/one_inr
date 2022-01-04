@@ -124,6 +124,7 @@ const RazorpayCredentials = () => {
         style={{
           margin: '20px',
           backgroundColor: 'white',
+          marginBottom: '5em',
         }}
       >
         <div
@@ -138,12 +139,13 @@ const RazorpayCredentials = () => {
             <input
               type="search"
               placeholder="Search"
-              style={{ marginLeft: '0.5em' }}
+              style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
               onChange={e => handleChange(e)}
             />
           </label>
         </div>
-        <Paper sx={{ width: '100%', mb: 2 }}>
+        <hr style={{ margin: '0' }} />
+        <Paper sx={{ width: '100%' }}>
           <>
             <TableContainer>
               <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">

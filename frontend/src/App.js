@@ -51,6 +51,9 @@ import Four_Zero_Foure from './pages/Four_Zero_Foure';
 import AddRazorpay from './pages/Settings/AddRazorpay';
 import EditRazorpay from './pages/Settings/EditRazorpay';
 import DonorDetails from './pages/DonorEmail/DonorDetails';
+import Transfer from './pages/projects/Complete_Project/Transfer';
+import SingleProjectDetails from './pages/projects/SingleProjectDetails';
+import ViewCompleteProject from './pages/projects/Complete_Project/ViewCompleteProject';
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -107,6 +110,16 @@ function App(props) {
                 path="/complete_project"
                 component={CompleteProject}
               />
+              <PrivateRoute
+                exact
+                path="/payments/transfer"
+                component={Transfer}
+              />
+              <PrivateRoute
+                exact
+                path={`/payments/view`}
+                component={ViewCompleteProject}
+              />
               <PrivateRoute exact path="/add_project" component={AddProject} />
               <PrivateRoute
                 exact
@@ -131,7 +144,7 @@ function App(props) {
               <PrivateRoute
                 exact
                 path="/single_project_detail"
-                // component={SingleProjectDetails}
+                component={SingleProjectDetails}
               />
               <PrivateRoute
                 exact

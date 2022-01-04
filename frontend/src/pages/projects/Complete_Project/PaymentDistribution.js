@@ -154,7 +154,14 @@ function PaymentDistribution() {
                       value={values.vendor}
                       onChange={handleChange}
                       isValid={touched.vendor && !errors.vendor}
-                      style={{ height: '2.5em', width: '100%' }}
+                      style={{
+                        height: '2.5em',
+                        width: '100%',
+                        border: '1px solid #ced4da',
+                        // transition:
+                        //   'border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out',
+                        borderRadius: '0.25rem',
+                      }}
                     >
                       <option>Open this select menu</option>
                       <option value="1">One</option>
@@ -223,7 +230,12 @@ function PaymentDistribution() {
                       value={values.vendor}
                       onChange={handleChange}
                       isValid={touched.vendor && !errors.vendor}
-                      style={{ height: '2.5em', width: '100%' }}
+                      style={{
+                        height: '2.5em',
+                        width: '100%',
+                        border: '1px solid #ced4da',
+                        borderRadius: '0.25rem',
+                      }}
                     >
                       <option>Open this select menu</option>
                       <option value="1">One</option>
