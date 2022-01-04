@@ -510,14 +510,14 @@ exports.getAllUpcomingDonorsExcel = async (req, res) => {
 
 
 exports.sendMailToDonors = async (req,res) => {
-    let donorData = await models.users.findAll({attibutes: ['email']});
-    let toEmail = await donorData.map(ele=>{ return ele.email });
-    // const toEmail = [
-    //     'shubhamkale008@gmail.com',
-    //     'bipin@nimapinfotech.com',
-    //     'navikbipin@gmail.com',
-    //     'shubhamkale@nimapinfotech.com'
-    // ]
+    // let donorData = await models.users.findAll({attibutes: ['email']});
+    // let toEmail = await donorData.map(ele=>{ return ele.email });
+    const toEmail = [
+        'shubhamkale008@gmail.com',
+        'bipin@nimapinfotech.com',
+        'navikbipin@gmail.com',
+        'shubhamkale@nimapinfotech.com'
+    ]
     if(!toEmail) {
         return res.status(404).json({ message: 'Donor Emails Not Found'})
     }else{
