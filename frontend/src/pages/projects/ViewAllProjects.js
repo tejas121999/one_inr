@@ -67,7 +67,7 @@ const ViewAllProjects = () => {
         {
             id: 1,
             title: 'shivani',
-            gole: 0,
+            goal: 0,
             target: '0',
             funded: '0',
             days_left: '0',
@@ -79,7 +79,7 @@ const ViewAllProjects = () => {
         {
             id: 1,
             title: 'shivani',
-            gole: 0,
+            goal: 0,
             target: '0',
             funded: '0',
             days_left: '0',
@@ -200,7 +200,7 @@ const ViewAllProjects = () => {
                                                         {row.title}
                                                     </TableCell>
                                                     <TableCell align="center">
-                                                        {row.gole}
+                                                        {row.goal}
                                                     </TableCell>
                                                     <TableCell align="center">{row.target}</TableCell>
                                                     <TableCell align="center">{row.funded}</TableCell>
@@ -318,10 +318,10 @@ const headCells = [
         label: 'Title',
     },
     {
-        id: 'gole',
+        id: 'goal',
         numeric: true,
         disablePadding: false,
-        label: 'Gole',
+        label: 'Goal',
     },
     {
         id: 'target',

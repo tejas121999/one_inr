@@ -57,7 +57,7 @@ const AddProject = () => {
                                         initialValues={{
                                             title: '',
                                             description: '',
-                                            gole: '',
+                                            goal: '',
                                             startDate: '',
                                             endDate: ''
                                         }}
@@ -115,10 +115,10 @@ const AddProject = () => {
                                                         </div>
                                                         <div className='row mt-3'>
                                                             <div className='col-sm-4 col-xs-12'>
-                                                                <label>Gole:</label>
+                                                                <label>Goal:</label>
                                                                 <Field
                                                                     type="text"
-                                                                    name="gole"
+                                                                    name="goal"
                                                                     placeholder="No Parent"
                                                                     className="form-control"
                                                                     // value={values.parent}
