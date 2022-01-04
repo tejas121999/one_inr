@@ -13,10 +13,13 @@
 .ViewAll {
   /* padding: 40px; */
   /* margin: 40px;  */
-  margin-top: 40px;
+  margin: 10px;
 }
 .editproject {
   margin-top: 40px;
+}
+.autoDonate {
+  margin: 10px;
 }
 .payment {
   margin-top: 40px;

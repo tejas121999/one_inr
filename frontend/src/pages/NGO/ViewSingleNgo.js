@@ -774,7 +774,7 @@ const ViewSingleNgo = () => {
                                                                         data-bs-toggle="tooltip"
                                                                         title="View projects"
                                                                         className="btn"
-                                                                        onClick={() => history.push('/single_project_detail')}
+                                                                        onClick={() => history.push('/project_details')}
                                                                     >
                                                                         <FaRegEye />
                                                                     </button>
@@ -782,7 +782,7 @@ const ViewSingleNgo = () => {
                                                                         data-bs-toggle="tooltip"
                                                                         title="Edit"
                                                                         className="btn"
-                                                                    //  onClick={() => history.push('/edit_ngo', row)}
+                                                                        onClick={() => history.push('/edit_project', row)}
                                                                     >
                                                                         <FaRegEdit />
                                                                     </button>

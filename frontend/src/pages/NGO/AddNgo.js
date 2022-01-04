@@ -175,7 +175,7 @@ const AddNgo = props => {
     dispatch(createNGOAction(obj, props.history));
   };
 
-const AddNgo = () => {
+// const AddNgo = () => {
   return (
     <div>
       <br />

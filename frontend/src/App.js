@@ -47,6 +47,8 @@ import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
 // import ViewAllDoner from './pages/Doner/ViewAllDoner'
 import ProjectDetails from './pages/projects/ProjectDetails';
 import EditProject from './pages/projects/EditProject';
+import AutoDonate from './pages/projects/AutoDonate';
+import Contributors from './pages/projects/Contributors';
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -96,6 +98,8 @@ function App(props) {
               {/*NGO route*/}
               <PrivateRoute exact path="/add_ngo" component={AddNgo} />
               <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />
+              <PrivateRoute exact path="/edit_ngo" component={EditNgo} />
+              <PrivateRoute exact path="/view_single_ngo" component={ViewSingleNgo} />
               {/*project route*/}
               <PrivateRoute
                 exact
@@ -103,16 +107,10 @@ function App(props) {
                 component={CompleteProject}
               />
               <PrivateRoute exact path="/add_project" component={AddProject} />
-              <PrivateRoute
-                exact
-                path="/view_all_project"
-                component={ViewAllProjects}
-              />
-              <PrivateRoute
-                exact
-                path="/edit_project"
-                component={EditProject}
-              />
+              <PrivateRoute exact path="/view_all_project" component={ViewAllProjects} />
+              <PrivateRoute exact path="/edit_project" component={EditProject} />
+              <PrivateRoute exact path="/auto_donate" component={AutoDonate} />
+              <PrivateRoute exact path="/Contributors" component={Contributors} />
               <PrivateRoute
                 exact
                 path="/project_details"
@@ -123,7 +121,7 @@ function App(props) {
                 path="/archive_project"
                 component={ArchivedProject}
               />
-              
+
               {/*Account route*/}
               <PrivateRoute exact path="/payments" component={Payments} />
               {/*setting route*/}

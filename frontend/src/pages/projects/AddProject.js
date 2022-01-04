@@ -133,11 +133,7 @@ const AddProject = () => {
                                                             <div className='col-sm-4 col-xs-12'>
                                                                 <label>Start Date:</label>
                                                                 <br />
-                                                                <DatePicker
-                                                                    className="form-control"
-                                                                    onChange={onChange}
-                                                                    value={value}
-                                                                />
+                                                                <input type='date' className='form-control' value={value}/>
                                                                 {errors.startDate && touched.startDate && (
                                                                     <div className="text-left">
                                                                         <span style={{ color: 'red' }}>{errors.startDate}</span>
@@ -146,11 +142,7 @@ const AddProject = () => {
                                                             </div>
                                                             <div className='col-sm-4 col-xs-12'>
                                                                 <label>End Date:</label>
-                                                                <DatePicker
-                                                                    className="form-control"
-                                                                    onChange={onChange}
-                                                                // value={value}
-                                                                />
+                                                                <input type='date' className='form-control'/>
                                                                 {errors.endDate && touched.endDate && (
                                                                     <div className="text-left">
                                                                         <span style={{ color: 'red' }}>{errors.endDate}</span>
