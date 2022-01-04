@@ -184,24 +184,31 @@ const EditNgo = props => {
       <br />
       <br />
       <br />
-      <div className="card">
-        <p
+      <br />
+      <div className="card" style={{ border: '0' }}>
+        <div
           style={{
-            textAlign: 'left',
-            fontWeight: 'bold',
-            margin: '20px',
-            width: '100%',
-            marginLeft: '20px',
+            display: 'flex',
+            padding: '15px',
+            justifyContent: 'space-between',
           }}
         >
-          EDIT NGO
-        </p>
+          <p
+            style={{
+              textAlign: 'left',
+              fontSize: '1.25rem',
+              marginTop: '5px',
+            }}
+          >
+            EDIT NGO
+          </p>
+        </div>
       </div>
       <div
         style={{
           backgroundColor: 'white',
           margin: '30px',
-          marginBottom: '50px',
+          marginBottom: '5em',
         }}
       >
         <Formik
@@ -222,7 +229,10 @@ const EditNgo = props => {
         >
           {({ errors, values, touched }) => (
             <Form>
-              <div className="row">
+              <div
+                className="row"
+                style={{ paddingLeft: '1em', paddingTop: '1em' }}
+              >
                 <div className="col-3">
                   {/* <div style={{ padding: '15px', paddingBottom: '10px' }}>
                                         //
@@ -731,7 +741,7 @@ const EditNgo = props => {
               </div>
               <br />
 
-              <div style={{ marginLeft: '12px' }}>
+              <div style={{ marginLeft: '2em', paddingBottom: '2em' }}>
                 <button type="submit" className="btn btn-success">
                   Update Ngo
                 </button>

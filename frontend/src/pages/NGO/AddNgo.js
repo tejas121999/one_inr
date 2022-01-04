@@ -180,24 +180,31 @@ const AddNgo = props => {
       <br />
       <br />
       <br />
-      <div className="card">
-        <p
+      <br />
+      <div className="card" style={{ border: '0' }}>
+        <div
           style={{
-            textAlign: 'left',
-            fontWeight: 'bold',
-            margin: '20px',
-            width: '100%',
-            marginLeft: '20px',
+            display: 'flex',
+            padding: '15px',
+            justifyContent: 'space-between',
           }}
         >
-          ADD NGO
-        </p>
+          <p
+            style={{
+              textAlign: 'left',
+              fontSize: '1.25rem',
+              marginTop: '5px',
+            }}
+          >
+            ADD NGO
+          </p>
+        </div>
       </div>
       <div
         style={{
           backgroundColor: 'white',
           margin: '30px',
-          marginBottom: '50px',
+          marginBottom: '5em',
         }}
       >
         <Formik
@@ -707,7 +714,7 @@ const AddNgo = props => {
                 </button>
               </div>
               <br />
-              <div style={{ marginLeft: '12px' }}>
+              <div style={{ marginLeft: '2em', paddingBottom: '2em' }}>
                 <button type="submit" className="btn btn-success">
                   Submit
                 </button>
