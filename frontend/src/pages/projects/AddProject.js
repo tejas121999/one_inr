@@ -54,7 +54,7 @@ const AddProject = () => {
                     initialValues={{
                       title: '',
                       description: '',
-                      gole: '',
+                      goal: '',
                       startDate: '',
                       endDate: '',
                     }}
@@ -130,10 +130,10 @@ const AddProject = () => {
                             </div>
                             <div className="row mt-3">
                               <div className="col-sm-4 col-xs-12">
-                                <label>Gole:</label>
+                                <label>Goal:</label>
                                 <Field
                                   type="text"
-                                  name="gole"
+                                  name="goal"
                                   placeholder="No Parent"
                                   className="form-control"
                                   // value={values.parent}
@@ -150,9 +150,9 @@ const AddProject = () => {
                               <div className="col-sm-4 col-xs-12">
                                 <label>Start Date:</label>
                                 <br />
-                                <DatePicker
+                                <input
+                                  type="date"
                                   className="form-control"
-                                  onChange={onChange}
                                   value={value}
                                 />
                                 {errors.startDate && touched.startDate && (
@@ -165,11 +165,7 @@ const AddProject = () => {
                               </div>
                               <div className="col-sm-4 col-xs-12">
                                 <label>End Date:</label>
-                                <DatePicker
-                                  className="form-control"
-                                  onChange={onChange}
-                                  // value={value}
-                                />
+                                <input type="date" className="form-control" />
                                 {errors.endDate && touched.endDate && (
                                   <div className="text-left">
                                     <span style={{ color: 'red' }}>

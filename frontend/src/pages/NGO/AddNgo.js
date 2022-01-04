@@ -8,6 +8,7 @@ import { BASE_URL } from '../../API/APIEndpoints';
 import { FaTimes } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { createNGOAction } from '../../Redux/Actions/NgoActions';
+import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 
 const AddNgo = props => {
   const dispatch = useDispatch();
@@ -17,13 +18,9 @@ const AddNgo = props => {
   const [charityCertificateImgUrl, setCharityCertificateImgUrl] = useState('');
   const [deedImgUrl, setDeedImgUrl] = useState('');
 
-  const [addContactValues, setAddContactValues] = useState([
-    { name: '', designation: '', email: '', mobileNumber: '' },
-  ]);
+  const [addContactValues, setAddContactValues] = useState([]);
 
-  const [addBankDetailsValues, setAddBankDetailsValues] = useState([
-    { bankName: '', accountNumber: '', beneficiaryName: '', ifscCode: '' },
-  ]);
+  const [addBankDetailsValues, setAddBankDetailsValues] = useState([]);
 
   let handleChangeForAddBankDetails = (i, e) => {
     let newFormValues = [...addBankDetailsValues];
@@ -177,6 +174,7 @@ const AddNgo = props => {
     dispatch(createNGOAction(obj, props.history));
   };
 
+  // const AddNgo = () => {
   return (
     <div>
       <br />
@@ -221,17 +219,10 @@ const AddNgo = props => {
           {({ errors, values, touched }) => (
             <Form>
               <div className="row">
-                <div className="col-6 ">
+                <div className="col-3 ">
                   <div style={{ padding: '15px', paddingBottom: '10px' }}>
                     <label style={{ fontWeight: 'bold' }}>Logo Name</label>
-                    <input
-                      type="file"
-                      className="form-control-file"
-                      placeholder="Please Enter Logo Name"
-                      name="logo_img"
-                      accept=".png,.jpg,"
-                      onChange={e => onlogoImageAdd(e.target.files[0])}
-                    />
+                    <DropzoneComponent />
                     <ErrorMessage name="logo_img" component={TextError} />
                   </div>
                 </div>
@@ -453,15 +444,7 @@ const AddNgo = props => {
                     <label style={{ fontWeight: 'bold', height: '3em' }}>
                       Pancard
                     </label>
-                    <input
-                      type="file"
-                      className="form-control-file"
-                      placeholder="Please upload pancard image"
-                      name="pancard_img"
-                      accept=".png,.jpg,"
-                      value={values.Pancard}
-                      onChange={e => onPanCardImageAdd(e.target.files[0])}
-                    />
+                    <DropzoneComponent />
                     <ErrorMessage name="pancard_img" component={TextError} />
                   </div>
                 </div>
@@ -471,15 +454,7 @@ const AddNgo = props => {
                     <label style={{ fontWeight: 'bold', height: '3em' }}>
                       Certificate
                     </label>
-                    <input
-                      type="file"
-                      className="form-control-file"
-                      placeholder="Please upload certificate"
-                      name="certificate_img"
-                      accept=".png,.jpg,"
-                      values={values.Certificate}
-                      onChange={e => onCertificateImageAdd(e.target.files[0])}
-                    />
+                    <DropzoneComponent />
                     <ErrorMessage
                       name="certificate_img"
                       component={TextError}
@@ -492,17 +467,7 @@ const AddNgo = props => {
                     <label style={{ fontWeight: 'bold', height: '3em' }}>
                       Charity Registration Certificate
                     </label>
-                    <input
-                      type="file"
-                      className="form-control-file"
-                      placeholder="Please upload charityCertificate"
-                      name="charityCertificate_img"
-                      accept=".pnj,.jpg,"
-                      value={values.CharitynCertificate}
-                      onChange={e =>
-                        onCharityCertificateImageAdd(e.target.files[0])
-                      }
-                    />
+                    <DropzoneComponent />
                     <ErrorMessage
                       name="charityCertificate_img"
                       component={TextError}
@@ -515,15 +480,7 @@ const AddNgo = props => {
                     <label style={{ fontWeight: 'bold', height: '3em' }}>
                       Deed
                     </label>
-                    <input
-                      type="file"
-                      className="form-control-file"
-                      placeholder="Please Enter deed Name"
-                      name="deed_img"
-                      accept=".pnj,.jpg,"
-                      value={values.Deed}
-                      onChange={e => onDeedImageAdd(e.target.files[0])}
-                    />
+                    <DropzoneComponent />
                     <ErrorMessage name="deed_img" component={TextError} />
                   </div>
                 </div>

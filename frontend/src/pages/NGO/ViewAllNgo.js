@@ -20,7 +20,7 @@ import {
   FaBookOpen,
   FaPlusCircle,
 } from 'react-icons/fa';
-// import '../Ngo/Ngo.css';
+import './ngo.css';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Loader from '../Loader';
@@ -174,6 +174,7 @@ const ViewAllNgo = () => {
       <br />
       <br />
       <br />
+      <DeleteNgo show={deleteModal} onHide={deleteModalClose} id={deleteId} />
       <div className="card">
         <div
           style={{
@@ -278,7 +279,7 @@ const ViewAllNgo = () => {
                               data-bs-toggle="tooltip"
                               title="View Details"
                               className="btn"
-                              onClick={() => ViewModalOpen(row)}
+                              onClick={() => history.push('/view_single_ngo', row)}
                             >
                               <FaRegEye />
                             </button>
@@ -292,9 +293,9 @@ const ViewAllNgo = () => {
                             </button>
                             <button
                               data-bs-toggle="tooltip"
-                              title="Add Fund"
+                              title="Add project"
                               className="btn"
-                              onClick={() => fundModaOpen(row)}
+                              onClick={() => history.push('/add_project', row)}
                             >
                               <FaPlusCircle />
                             </button>

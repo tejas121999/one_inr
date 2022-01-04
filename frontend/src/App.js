@@ -52,8 +52,10 @@ import AddRazorpay from './pages/Settings/AddRazorpay';
 import EditRazorpay from './pages/Settings/EditRazorpay';
 import DonorDetails from './pages/DonorEmail/DonorDetails';
 import Transfer from './pages/projects/Complete_Project/Transfer';
-import SingleProjectDetails from './pages/projects/SingleProjectDetails';
+// import SingleProjectDetails from './pages/projects/SingleProjectDetails';
 import ViewCompleteProject from './pages/projects/Complete_Project/ViewCompleteProject';
+import AutoDonate from './pages/projects/AutoDonate';
+import Contributors from './pages/projects/Contributors';
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -73,7 +75,6 @@ function App(props) {
         <Route exact path="/forgot_password" component={Forgot} />
         <Route exact path="/otp" component={OTPScreen} />
         <Route exact path="/changePassword" component={ChangePassword} />
-
         <div>
           <MainLayout breakpoint={props.breakpoint}>
             <React.Suspense fallback={<PageSpinner />}>
@@ -104,6 +105,12 @@ function App(props) {
               {/*NGO route*/}
               <PrivateRoute exact path="/add_ngo" component={AddNgo} />
               <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />
+              <PrivateRoute exact path="/edit_ngo" component={EditNgo} />
+              <PrivateRoute
+                exact
+                path="/view_single_ngo"
+                component={ViewSingleNgo}
+              />
               {/*project route*/}
               <PrivateRoute
                 exact
@@ -131,6 +138,12 @@ function App(props) {
                 path="/edit_project"
                 component={EditProject}
               />
+              <PrivateRoute exact path="/auto_donate" component={AutoDonate} />
+              <PrivateRoute
+                exact
+                path="/Contributors"
+                component={Contributors}
+              />
               <PrivateRoute
                 exact
                 path="/project_details"
@@ -141,19 +154,10 @@ function App(props) {
                 path="/archive_project"
                 component={ArchivedProject}
               />
-              <PrivateRoute
-                exact
-                path="/single_project_detail"
-                component={SingleProjectDetails}
-              />
-              <PrivateRoute
-                exact
-                path="/donor_email"
-                component={DonorDetails}
-              />
+
               {/*Account route*/}
               <PrivateRoute exact path="/payments" component={Payments} />
-              {/*setting route*/}
+              {/*Setting route*/}
               <PrivateRoute exact path="/my_profile" component={MyProfile} />
               <PrivateRoute exact path="/editProfile" component={EditProfile} />
               <PrivateRoute exact path="/roles" component={Roles} />
@@ -170,6 +174,12 @@ function App(props) {
                 component={AddRazorpay}
               />
               <PrivateRoute exact path="/id/edit" component={EditRazorpay} />
+              {/*Donor Email route*/}
+              <PrivateRoute
+                exact
+                path="/donor_email"
+                component={DonorDetails}
+              />
             </React.Suspense>
           </MainLayout>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import TextError from '../error/TextError';
 import * as yup from 'yup';
@@ -11,8 +11,9 @@ import {
   createNGOAction,
   updateNgoAction,
 } from '../../Redux/Actions/NgoActions';
-//import uploadImage from '../../assets/uploadImage.png';
-
+import uploadImage from '../../assets/uploadImage.png';
+import './ngo.css';
+import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 const EditNgo = props => {
   const dispatch = useDispatch();
   const [logoImgUrl, setLogoImgUrl] = useState('');
@@ -21,9 +22,16 @@ const EditNgo = props => {
   const [charityCertificateImgUrl, setCharityCertificateImgUrl] = useState('');
   const [deedImgUrl, setDeedImgUrl] = useState('');
 
+  const textInput = useRef(null);
   const [addContactValues, setAddContactValues] = useState([]);
 
   const [addBankDetailsValues, setAddBankDetailsValues] = useState([]);
+
+  let handleChangeForAddBankDetails = (i, e) => {
+    let newFormValues = [...addBankDetailsValues];
+    newFormValues[i][e.target.name] = e.target.value;
+    setAddBankDetailsValues(newFormValues);
+  };
 
   let addBankDetailsFormFields = () => {
     setAddBankDetailsValues([
@@ -215,18 +223,22 @@ const EditNgo = props => {
           {({ errors, values, touched }) => (
             <Form>
               <div className="row">
-                <div className="col-6 ">
-                  <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                    <label style={{ fontWeight: 'bold' }}>Logo Name</label>
-                    <input
-                      type="file"
-                      className="form-control-file"
-                      placeholder="Please Enter Logo Name"
-                      name="logo_img"
-                      accept=".png,.jpg,"
-                      onChange={e => onlogoImageAdd(e.target.files[0])}
-                    />
-                    <ErrorMessage name="logo_img" component={TextError} />
+                <div className="col-3">
+                  {/* <div style={{ padding: '15px', paddingBottom: '10px' }}>
+                                        //
+                                        <input
+                                            type="file"
+                                            className="form-control-file"
+                                            placeholder="Please Enter Logo Name"
+                                            name="logo_img"
+                                            accept=".png,.jpg,"
+                                            onChange={e => onlogoImageAdd(e.target.files[0])}
+                                        />
+                                        <ErrorMessage name="logo_img" component={TextError} />
+                                    </div> */}
+                  <label style={{ fontWeight: 'bold' }}>Logo </label>
+                  <div className="image-upload">
+                    <DropzoneComponent />
                   </div>
                 </div>
               </div>
@@ -447,15 +459,9 @@ const EditNgo = props => {
                     <label style={{ fontWeight: 'bold', height: '3em' }}>
                       Pancard
                     </label>
-                    <input
-                      type="file"
-                      className="form-control-file"
-                      placeholder="Please upload pancard image"
-                      name="pancard_img"
-                      accept=".png,.jpg,"
-                      value={values.Pancard}
-                      onChange={e => onPanCardImageAdd(e.target.files[0])}
-                    />
+                    <div className="image-upload">
+                      <DropzoneComponent />
+                    </div>
                     <ErrorMessage name="pancard_img" component={TextError} />
                   </div>
                 </div>
@@ -465,15 +471,9 @@ const EditNgo = props => {
                     <label style={{ fontWeight: 'bold', height: '3em' }}>
                       Certificate
                     </label>
-                    <input
-                      type="file"
-                      className="form-control-file"
-                      placeholder="Please upload certificate"
-                      name="certificate_img"
-                      accept=".png,.jpg,"
-                      values={values.Certificate}
-                      onChange={e => onCertificateImageAdd(e.target.files[0])}
-                    />
+                    <div className="image-upload">
+                      <DropzoneComponent />
+                    </div>
                     <ErrorMessage
                       name="certificate_img"
                       component={TextError}
@@ -486,17 +486,9 @@ const EditNgo = props => {
                     <label style={{ fontWeight: 'bold', height: '3em' }}>
                       Charity Registration Certificate
                     </label>
-                    <input
-                      type="file"
-                      className="form-control-file"
-                      placeholder="Please upload charityCertificate"
-                      name="charityCertificate_img"
-                      accept=".pnj,.jpg,"
-                      value={values.CharitynCertificate}
-                      onChange={e =>
-                        onCharityCertificateImageAdd(e.target.files[0])
-                      }
-                    />
+                    <div className="image-upload">
+                      <DropzoneComponent />
+                    </div>
                     <ErrorMessage
                       name="charityCertificate_img"
                       component={TextError}
@@ -509,15 +501,9 @@ const EditNgo = props => {
                     <label style={{ fontWeight: 'bold', height: '3em' }}>
                       Deed
                     </label>
-                    <input
-                      type="file"
-                      className="form-control-file"
-                      placeholder="Please Enter deed Name"
-                      name="deed_img"
-                      accept=".pnj,.jpg,"
-                      value={values.Deed}
-                      onChange={e => onDeedImageAdd(e.target.files[0])}
-                    />
+                    <div className="image-upload">
+                      <DropzoneComponent />
+                    </div>
                     <ErrorMessage name="deed_img" component={TextError} />
                   </div>
                 </div>
@@ -744,9 +730,14 @@ const EditNgo = props => {
                 </button>
               </div>
               <br />
+
               <div style={{ marginLeft: '12px' }}>
                 <button type="submit" className="btn btn-success">
                   Update Ngo
+                </button>
+
+                <button type="submit" className="btn btn-success ml-2">
+                  Cancel
                 </button>
               </div>
             </Form>
