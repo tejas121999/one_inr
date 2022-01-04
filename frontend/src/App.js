@@ -66,7 +66,6 @@ function App(props) {
         <Route exact path="/forgot_password" component={Forgot} />
         <Route exact path="/otp" component={OTPScreen} />
         <Route exact path="/changePassword" component={ChangePassword} />
-        
         <div>
           <MainLayout breakpoint={props.breakpoint}>
             <React.Suspense fallback={<PageSpinner />}>

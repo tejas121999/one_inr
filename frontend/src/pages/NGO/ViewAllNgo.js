@@ -20,7 +20,7 @@ import {
   FaBookOpen,
   FaPlusCircle,
 } from 'react-icons/fa';
-// import '../Ngo/Ngo.css';
+import './ngo.css';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Loader from '../Loader';
