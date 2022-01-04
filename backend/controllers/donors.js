@@ -511,7 +511,7 @@ exports.getAllUpcomingDonorsExcel = async (req, res) => {
 
 exports.sendMailToDonors = async (req,res) => {
     // let donorData = await models.users.findAll({attibutes: ['email']});
-    // let donorEmail = await donorData.map(ele=>{ return ele.email });
+    // let toEmail = await donorData.map(ele=>{ return ele.email });
     const toEmail = [
         'shubhamkale008@gmail.com',
         'bipin@nimapinfotech.com',
