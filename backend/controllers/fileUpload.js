@@ -1,4 +1,4 @@
-const multer = require('multer');
+const multer = require("multer");
 
 exports.ImageUpload = async (req, res) => {
     let fileFor = req.query.reason;

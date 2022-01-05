@@ -70,12 +70,12 @@ form.w-50.m-auto {
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
-  border-radius: 30px;
+  /* border-radius: 30px; */
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  -webkit-border-radius: 30px;
+  /* -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
   -ms-border-radius: 30px;
-  -o-border-radius: 30px;
+  -o-border-radius: 30px; */
 }
 .btn:focus,
 .btn.focus {
@@ -97,8 +97,9 @@ form.w-50.m-auto {
   justify-content: space-around;
   margin-top: 20px;
 }
-.psw-feild{
+.psw-feild {
   outline: 0px;
-  border-Radius: 30px;
-  padding-Left:12px !important;
+  border-radius: 30px;
+  padding-left: 12px !important;
+  border: 1px solid #ced4da !important;
 }

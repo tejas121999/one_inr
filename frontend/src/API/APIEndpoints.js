@@ -1,3 +1,9 @@
+export const Local = 'http://newoneinr.nimapinfotech.com';
+export const BASE_URL = `${Local}/api/`;
+export const BASE_URL_RECEIPT =
+  'http://newoneinr.nimapinfotech.com/api/userReceipts';
+export const BASE_URL_DONOR = 'http://newoneinr.nimapinfotech.com/api/';
+
 // export const BASE_URL = 'http://3ebb-110-227-211-43.ngrok.io/api/';
 export const ADD_DONOR_GET_PARENTS_URL = 'donor/parents/';
 export const ADD_DONOR_URL = 'donor';
@@ -24,8 +30,3 @@ export const UPDATE_A_DONOR_URL = 'donor/{{id}}';
 export const UPDATE_DONOR_BALANCE_URL = 'donor/balance/{{id}}';
 
 export const DELETE_A_DONOR_URL = 'donor/{{id}}';
-export const Local = 'http://newoneinr.nimapinfotech.com';
-export const BASE_URL = `${Local}/api/`;
-export const BASE_URL_RECEIPT =
-  'http://newoneinr.nimapinfotech.com/api/userReceipts';
-export const BASE_URL_DONOR = 'http://newoneinr.nimapinfotech.com/api/';

@@ -1,13 +1,19 @@
-.Del-btn{
-    margin: 40px;
-    display: flex;
-    justify-content: space-evenly;
+.viewNgo {
+  padding: 40px;
+  margin: 40px;
+  background-color: white;
+}
+.white-box {
+  background-color: white;
+  padding: 25px;
+  margin-bottom: 30px;
 }
 
-.image-upload>input {
-    display: none;
-  }
-  .AttachImage {
-    margin-left: 10px;
-    height: 100px
-  }
+/* For image in add ngo */
+.image-upload > input {
+  display: none;
+}
+.AttachImage {
+  margin-left: 10px;
+  height: 100px;
+}

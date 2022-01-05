@@ -20,13 +20,13 @@ import {
   FaBookOpen,
   FaPlusCircle,
 } from 'react-icons/fa';
-// import '../Ngo/Ngo.css';
+import './ngo.css';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllNGOAction } from '../../Redux/Actions/NgoActions';
-import NGOdelete from '../../Modals/ngo/ngoDelete';
+import DeleteNgo from './NgoModals/DeleteNgo';
 
 const ViewAllNgo = () => {
   const [order, setOrder] = React.useState('asc');
@@ -128,40 +128,6 @@ const ViewAllNgo = () => {
     }
   };
 
-  const headCells = [
-    {
-      id: 'name',
-      numeric: false,
-      disablePadding: false,
-      label: 'Name',
-    },
-    {
-      id: 'pending',
-      numeric: true,
-      disablePadding: false,
-      label: 'Pending',
-    },
-    {
-      id: 'active',
-      numeric: true,
-      disablePadding: false,
-      label: 'Active',
-    },
-    {
-      id: 'actionRequired',
-      numeric: true,
-      disablePadding: false,
-      label: 'ActionRequired',
-    },
-    {
-      id: 'action',
-      numeric: true,
-      disablePadding: false,
-      label: 'Action',
-    },
-  ];
-  // END
-
   const constData = [
     {
       id: 1,
@@ -203,21 +169,32 @@ const ViewAllNgo = () => {
       <br />
       <br />
       <br />
-      <NGOdelete show={deleteModal} onHide={deleteModalClose} id={deleteId} />
-      <nav className="navbar navbar-light">
-        <a className="navbar-brand">LIST OF ALL NGO</a>
-        <form className="form-inline">
-          <div className="modalClass">
-            <Link to="/add_ngo" type="" className="btn btn-primary">
-              ADD NGO
-            </Link>
-          </div>
-        </form>
-      </nav>
+      <DeleteNgo show={deleteModal} onHide={deleteModalClose} id={deleteId} />
+      <div className="card" style={{ border: '0' }}>
+        <div
+          style={{
+            display: 'flex',
+            padding: '20px',
+            justifyContent: 'space-between',
+          }}
+        >
+          <p
+            style={{
+              textAlign: 'left',
+              fontSize: '1.25rem',
+              marginTop: '5px',
+            }}
+          >
+            LIST OF ALL NGO
+          </p>
+          <button className="btn btn-primary">Add NGO</button>
+        </div>
+      </div>
       <div
         style={{
           margin: '20px',
           backgroundColor: 'white',
+          marginBottom: '5em',
         }}
       >
         <div
@@ -233,13 +210,18 @@ const ViewAllNgo = () => {
           >
             Export
           </button>
-          <input
-            type="search"
-            placeholder="Search"
-            onChange={e => handleChange(e)}
-          />
+          <label style={{ fontWeight: '500', marginTop: '0.5em' }}>
+            Search :
+            <input
+              type="search"
+              placeholder="Search"
+              style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
+              onChange={e => handleChange(e)}
+            />
+          </label>
         </div>
-        <Paper sx={{ width: '100%', mb: 2 }}>
+        <hr style={{ margin: '0' }} />
+        <Paper sx={{ width: '100%' }}>
           <>
             <TableContainer>
               <Table
@@ -293,15 +275,6 @@ const ViewAllNgo = () => {
                             >
                               <FaRegEye />
                             </button>
-
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="Add Project"
-                              className="btn"
-                              onClick={() => history.push('/add_project', row)}
-                            >
-                              <FaPlusCircle />
-                            </button>
                             <button
                               data-bs-toggle="tooltip"
                               title="Edit"
@@ -310,7 +283,14 @@ const ViewAllNgo = () => {
                             >
                               <FaRegEdit />
                             </button>
-
+                            <button
+                              data-bs-toggle="tooltip"
+                              title="Add project"
+                              className="btn"
+                              onClick={() => history.push('/add_project', row)}
+                            >
+                              <FaPlusCircle />
+                            </button>
                             <button
                               data-bs-toggle="tooltip"
                               title="Delete"
@@ -440,7 +420,7 @@ function EnhancedTableHead(props) {
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
             >
-              {headCell.label}
+              <b>{headCell.label}</b>
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}

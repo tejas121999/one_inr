@@ -1,7 +1,8 @@
 import React from "react";
 import DraftsIcon from "@mui/icons-material/Drafts";
-import "./Layout.css";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { Link } from "react-router-dom";
+import "./Layout.css";
 
 const ourCompanyItem = [
   {
@@ -49,6 +50,13 @@ const campaningItem = [
   },
 ];
 
+export const scrollTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
+
 const Footer = () => {
   return (
     <footer className="footer-04">
@@ -59,7 +67,12 @@ const Footer = () => {
             <ul className="list-unstyled">
               {ourCompanyItem.map(({ to, name, exact }, index) => (
                 <li key={index}>
-                  <Link to={to} exact={exact} className="py-1 d-block">
+                  <Link
+                    to={to}
+                    exact={exact}
+                    className="py-1 d-block"
+                    onClick={scrollTop}
+                  >
                     {name}
                   </Link>
                 </li>
@@ -71,7 +84,12 @@ const Footer = () => {
             <ul className="list-unstyled">
               {campaningItem.map(({ to, name, exact }, index) => (
                 <li key={index}>
-                  <Link to={to} exact={exact} className="py-1 d-block">
+                  <Link
+                    to={to}
+                    exact={exact}
+                    className="py-1 d-block"
+                    onClick={scrollTop}
+                  >
                     {name}
                   </Link>
                 </li>
@@ -107,8 +125,16 @@ const Footer = () => {
             </div>
             <div className="col-md-6 col-lg-4 text-md-right">
               <p className="mb-0 list-unstyled">
-                <Link className="mr-md-3" to="#">
-                  back to top <i class="bi bi-arrow-up"></i>
+                <Link
+                  className="mr-md-3"
+                  to="#"
+                  onClick={scrollTop}
+                  style={{ display: "flex", justifyContent: "end" }}
+                >
+                  back to top{" "}
+                  <ArrowUpwardIcon
+                    style={{ fontSize: "25px", color: "cornflowerblue" }}
+                  />
                 </Link>
               </p>
             </div>

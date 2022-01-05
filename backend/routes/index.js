@@ -15,11 +15,15 @@ const projects = require('./projects')
 const entity = require('./entity');
 const permissions = require('./permissions');
 const roles = require('./roles')
+const config = require('./configs')
+const razorpayCredentials = require('./razorpayCredential')
+
+
 
 router.use('/vendor',checkAuth,vendor)
 router.use('/fileupload',checkAuth,fileUpload)
 router.use('/auth',auth)
-router.use('/donor',checkAuth,donor)
+router.use('/donor',donor)
 router.use('/userReceipts',userReceipts)
 router.use('/projects', projects)
 router.use('/ngo',checkAuth,ngo)
@@ -29,6 +33,9 @@ router.use('/user',checkAuth,users)
 router.use('/entity',checkAuth, entity )
 router.use('/permissions',checkAuth,permissions)
 router.use('/roles',checkAuth,roles)
+router.use('/configs',config)
+router.use('/razorpayCredentials',razorpayCredentials)
+
 
 
 

@@ -28,6 +28,7 @@ import {
   getDonorByValueAction,
   getViewAllDonorAction,
 } from '../../Redux/Actions/DonorActions';
+import { getAllCompletedProjectAction } from '../../Redux/Actions/ProjectActions';
 
 const CompleteProject = () => {
   const [order, setOrder] = React.useState('asc');
@@ -46,22 +47,10 @@ const CompleteProject = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   React.useEffect(() => {
-    dispatch(getViewAllDonorAction());
+    dispatch(getAllCompletedProjectAction());
   }, []);
 
-  // const getDonorList = async () => {
-  //   const url = BASE_URL + ADD_DONOR_URL;
-  //   await axios
-  //     .get(url)
-  //     .then(res => {
-  //       setDonorList(res.data.data.message);
-  //       toast.success('Yeay! New data is here.');
-  //     })
-  //     .catch(err => {
-  //     });
-  // };
-
-  let donorList = useSelector(state => state.donor.ViewAllDonor);
+  let donorList = useSelector(state => state.project.completedProjectList);
 
   const ViewModalOpen = data => {
     setViewData(data);
@@ -206,19 +195,16 @@ const CompleteProject = () => {
             <input
               type="search"
               placeholder="Search"
-              style={{ marginLeft: '0.5em' }}
+              style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
               onChange={e => handleChange(e)}
             />
           </label>
         </div>
-        <Paper sx={{ width: '100%', mb: 2 }}>
+        <hr style={{ margin: '0' }} />
+        <Paper sx={{ width: '100%' }}>
           <>
             <TableContainer>
-              <Table
-                sx={{ minWidth: 750 }}
-                aria-labelledby="tableTitle"
-                size={dense ? 'small' : 'medium'}
-              >
+              <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
                 <EnhancedTableHead
                   numSelected={selected.length}
                   order={order}
@@ -275,7 +261,9 @@ const CompleteProject = () => {
                               data-bs-toggle="tooltip"
                               title="Transfer"
                               className="btn"
-                              //   onClick={() => history.push('/payments', row)}
+                              onClick={() =>
+                                history.push('/payments/transfer', row)
+                              }
                             >
                               <FcMoneyTransfer size={21} />
                             </button>
@@ -283,7 +271,10 @@ const CompleteProject = () => {
                               data-bs-toggle="tooltip"
                               title="View"
                               className="btn"
-                              onClick={() => history.push('/payments', row)}
+                              onClick={
+                                () => history.push(`/payments/view`, row)
+                                // history.push(`/payments/${id}`, row)
+                              }
                             >
                               <BsEye size={21} />
                             </button>

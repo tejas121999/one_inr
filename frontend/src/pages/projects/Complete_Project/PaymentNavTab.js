@@ -84,10 +84,9 @@ function PaymentNavTab() {
 
   return (
     <Tabs
-      //   id="controlled-tab-example"
       activeKey={key}
       onSelect={k => setKey(k)}
-      className="mb-3"
+      className={key == 'donor' ? 'mb-0' : 'mb-5'}
     >
       <Tab eventKey="donor" title="Donors List">
         <div
@@ -102,13 +101,13 @@ function PaymentNavTab() {
             <input
               type="search"
               placeholder="Search"
-              style={{ marginLeft: '0.5em' }}
+              style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
               onChange={e => handleChange(e)}
             />
           </label>
         </div>
         <hr style={{ margin: '0' }} />
-        <Paper sx={{ width: '100%', mb: 2 }}>
+        <Paper sx={{ width: '100%' }}>
           <>
             <TableContainer>
               <Table
@@ -169,7 +168,7 @@ function PaymentNavTab() {
         </Paper>
       </Tab>
       <Tab eventKey="vendor" title="Vendor Payment History">
-        <Paper sx={{ width: '100%', mb: 2 }}>
+        <Paper sx={{ width: '100%' }}>
           <>
             <TableContainer>
               <table class="table table-responsive">
@@ -216,7 +215,7 @@ function PaymentNavTab() {
         </Paper>
       </Tab>
       <Tab eventKey="partner" title="Partner Payment History">
-        <Paper sx={{ width: '100%', mb: 2 }}>
+        <Paper sx={{ width: '100%' }}>
           <>
             <TableContainer>
               <table class="table table-responsive">
