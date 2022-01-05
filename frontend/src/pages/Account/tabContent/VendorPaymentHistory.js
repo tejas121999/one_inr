@@ -21,7 +21,7 @@ import {
     FaBookOpen,
     FaPlusCircle,
 } from 'react-icons/fa';
-import EditPayment from '../EditPayment';
+import EditPayment from '../EditPayment'
 
 
 const VendorPaymentHistory = () => {
