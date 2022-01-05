@@ -14,8 +14,6 @@ import {
 import uploadImage from '../../assets/uploadImage.png';
 import './ngo.css';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
-
-
 const EditNgo = props => {
   const dispatch = useDispatch();
   const [logoImgUrl, setLogoImgUrl] = useState('');
