@@ -161,6 +161,14 @@ const ViewAllNgo = () => {
       actionrequired: '0',
       action: '',
     },
+    {
+      id: 5,
+      name: 'e',
+      pending: 0,
+      active: '0',
+      actionrequired: '0',
+      action: '',
+    },
   ];
 
   return (
@@ -278,6 +286,14 @@ const ViewAllNgo = () => {
                             <button
                               data-bs-toggle="tooltip"
                               title="Edit"
+                              className="btn"
+                              onClick={() => history.push('/add_project', row)}
+                            >
+                              <FaPlusCircle />
+                            </button>
+                            <button
+                              data-bs-toggle="tooltip"
+                              title="Edit Ngo"
                               className="btn"
                               onClick={() => history.push('/edit_ngo', row)}
                             >

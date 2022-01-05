@@ -154,7 +154,6 @@ function App(props) {
                 path="/archive_project"
                 component={ArchivedProject}
               />
-
               {/*Account route*/}
               <PrivateRoute exact path="/payments" component={Payments} />
               {/*Setting route*/}
