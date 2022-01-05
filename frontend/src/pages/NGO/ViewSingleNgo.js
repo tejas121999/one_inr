@@ -140,6 +140,15 @@ const ViewSingleNgo = () => {
             partialFullfilled: '1',
             unfullfilled: '',
             actionRequired: '0',
+        },
+        {
+            id: 2,
+            pending: '2',
+            active: '1',
+            fullfilled: '1',
+            partialFullfilled: '0',
+            unfullfilled: '',
+            actionRequired: '0',
         }
     ];
 
