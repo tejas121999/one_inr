@@ -7,7 +7,7 @@ import Payments from './pages/Account/Payments';
 import AddDoner from './pages/Doner/AddDoner';
 import EditDoner from './pages/Doner/EditDoner';
 import UpcomingDonerRenewal from './pages/Doner/UpcomingDonerRenewal';
-import ViewAllDoner from './pages/Doner/ViewAllDoner';
+// import ViewAllDoner from './pages/Doner/ViewAllDoner';
 import ViewRecept from './pages/Doner/ViewRecept';
 import AddPartner from './pages/master/partner/AddPartner';
 import EditPartner from './pages/master/partner/EditPartner';
@@ -44,9 +44,16 @@ import EditNgo from './pages/NGO/EditNgo';
 import ViewSingleNgo from './pages/NGO/ViewSingleNgo';
 import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
 // import ViewAllDonorTable from './pages/Doner/ViewAllDonorTable';
-// import ViewAllDoner from './pages/Doner/ViewAllDoner'
+import ViewAllDoner from './pages/Doner/ViewAllDoner';
 import ProjectDetails from './pages/projects/ProjectDetails';
 import EditProject from './pages/projects/EditProject';
+import Four_Zero_Foure from './pages/Four_Zero_Foure';
+import AddRazorpay from './pages/Settings/AddRazorpay';
+import EditRazorpay from './pages/Settings/EditRazorpay';
+import DonorDetails from './pages/DonorEmail/DonorDetails';
+import Transfer from './pages/projects/Complete_Project/Transfer';
+// import SingleProjectDetails from './pages/projects/SingleProjectDetails';
+import ViewCompleteProject from './pages/projects/Complete_Project/ViewCompleteProject';
 import AutoDonate from './pages/projects/AutoDonate';
 import Contributors from './pages/projects/Contributors';
 
@@ -99,18 +106,44 @@ function App(props) {
               <PrivateRoute exact path="/add_ngo" component={AddNgo} />
               <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />
               <PrivateRoute exact path="/edit_ngo" component={EditNgo} />
-              <PrivateRoute exact path="/view_single_ngo" component={ViewSingleNgo} />
+              <PrivateRoute
+                exact
+                path="/view_single_ngo"
+                component={ViewSingleNgo}
+              />
               {/*project route*/}
               <PrivateRoute
                 exact
                 path="/complete_project"
                 component={CompleteProject}
               />
+              <PrivateRoute
+                exact
+                path="/payments/transfer"
+                component={Transfer}
+              />
+              <PrivateRoute
+                exact
+                path={`/payments/view`}
+                component={ViewCompleteProject}
+              />
               <PrivateRoute exact path="/add_project" component={AddProject} />
-              <PrivateRoute exact path="/view_all_project" component={ViewAllProjects} />
-              <PrivateRoute exact path="/edit_project" component={EditProject} />
+              <PrivateRoute
+                exact
+                path="/view_all_project"
+                component={ViewAllProjects}
+              />
+              <PrivateRoute
+                exact
+                path="/edit_project"
+                component={EditProject}
+              />
               <PrivateRoute exact path="/auto_donate" component={AutoDonate} />
-              <PrivateRoute exact path="/Contributors" component={Contributors} />
+              <PrivateRoute
+                exact
+                path="/Contributors"
+                component={Contributors}
+              />
               <PrivateRoute
                 exact
                 path="/project_details"
@@ -121,11 +154,11 @@ function App(props) {
                 path="/archive_project"
                 component={ArchivedProject}
               />
-
               {/*Account route*/}
               <PrivateRoute exact path="/payments" component={Payments} />
-              {/*setting route*/}
+              {/*Setting route*/}
               <PrivateRoute exact path="/my_profile" component={MyProfile} />
+              <PrivateRoute exact path="/editProfile" component={EditProfile} />
               <PrivateRoute exact path="/roles" component={Roles} />
               <PrivateRoute exact path="/users" component={Users} />
               <PrivateRoute exact path="/config" component={Config} />
@@ -133,6 +166,18 @@ function App(props) {
                 exact
                 path="/razorpay_credentials"
                 component={RazorpayCredentials}
+              />
+              <PrivateRoute
+                exact
+                path="/razorpay_credentials/create"
+                component={AddRazorpay}
+              />
+              <PrivateRoute exact path="/id/edit" component={EditRazorpay} />
+              {/*Donor Email route*/}
+              <PrivateRoute
+                exact
+                path="/donor_email"
+                component={DonorDetails}
               />
             </React.Suspense>
           </MainLayout>

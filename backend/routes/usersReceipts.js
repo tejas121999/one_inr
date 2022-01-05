@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const checkAuth = require('../middleware/checkAuth')
 
 
 //importing modules
@@ -17,24 +18,24 @@ const { pdfForUserReceipt } = require('../controllers/usersReceipts');//importin
 
 // router.get('/getalluser', getAllUserReceipts )
 
-router.get('/get-user-receipts-pdf',pdfOfUserReceipts)
+router.get('/get-user-receipts-pdf',checkAuth,pdfOfUserReceipts)
 
-router.get('/get-user-receipts-xlsx',getUserReceiptExcel)
+router.get('/get-user-receipts-xlsx',checkAuth,getUserReceiptExcel)
 
-router.get('/get-user-receipts-csv',getUserReceiptCsv)
+router.get('/get-user-receipts-csv',checkAuth,getUserReceiptCsv)
 
-router.get('/userData',getUserData)
-
-
-router.get('/',wrapper(getAllUserReceipts))// listing user resiepts
-
-router.get('/:id', wrapper(getUserReceiptsById))// listing user by Id
+router.get('/userData',checkAuth,getUserData)
 
 
-router.get('/reciept-number/:receipt_number', wrapper(pdfForUserReceipt))//getting Reciept pdf by reciept number
+router.get('/',checkAuth,wrapper(getAllUserReceipts))// listing user resiepts
 
-router.post('/',  usersReceiptsValidation, wrapper(addUsersReceipts))//create user receipt
+router.get('/:id',checkAuth,wrapper(getUserReceiptsById))// listing user by Id
 
-router.put('/:id', usersReceiptsValidation, wrapper(updateUsersReceipts))//Update User reciept
+
+router.get('/reciept-number/:receipt_number',checkAuth,wrapper(pdfForUserReceipt))//getting Reciept pdf by reciept number
+
+router.post('/',checkAuth,usersReceiptsValidation, wrapper(addUsersReceipts))//create user receipt
+
+router.put('/:id',checkAuth,usersReceiptsValidation, wrapper(updateUsersReceipts))//Update User reciept
 
 module.exports = router;

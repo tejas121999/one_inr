@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+const checkAuth = require('../middleware/checkAuth')
 //importing modules
 
 const { wrapper } = require('../utils/errorWrap');
@@ -17,16 +17,16 @@ const { addNgoBankDetails } = require('../controllers/ngoBankDetails')//Importin
 
 //routing modules
 
-router.post('/create-ngo', wrapper(addNgo))//creating ngo 
+router.post('/create-ngo',checkAuth,wrapper(addNgo))//creating ngo 
 
-router.post('/create-bank-details', addNgoBankDetails)//creating ngo bank details
+router.post('/create-bank-details',checkAuth,addNgoBankDetails)//creating ngo bank details
 
-router.get('/read-ngo', wrapper(getAllNgo))//listing ngo
+router.get('/read-ngo', checkAuth,wrapper(getAllNgo))//listing ngo
 
-router.get('/:id',wrapper(getNgoById)) //Getting Ngo Details with Bank Id
+router.get('/:id',checkAuth,wrapper(getNgoById)) //Getting Ngo Details with Bank Id
 
-router.put('/update-ngo/:id', ngoValidation, validationError, wrapper(updateNgo))//update ngo
+router.put('/update-ngo/:id',checkAuth, ngoValidation, validationError, wrapper(updateNgo))//update ngo
 
-router.delete('/delete-ngo/:id', wrapper(deleteNgo))//deleting ngo
+router.delete('/delete-ngo/:id',checkAuth, wrapper(deleteNgo))//deleting ngo
 
 module.exports= router;

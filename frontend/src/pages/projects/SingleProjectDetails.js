@@ -95,6 +95,14 @@ const SingleProjectDetails = (props) => {
             completion: '0.oo1%',
 
         },
+        {
+            id: 2,
+            date: '26-Dec-2021 To 27-Dec-2021',
+            goal: '140',
+            funded: '0',
+            completion: '0.oo1%',
+
+        },
     ];
 
     return (

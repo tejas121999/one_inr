@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import TextError from '../error/TextError';
@@ -63,25 +62,25 @@ const AddNgo = props => {
 
   const validationSchema = yup.object({
     ngoName: yup.string().required('Required'),
-    address: yup.string().required('required'),
+    address: yup.string().required('Required'),
     emailId: yup.string().email('Invalid Email Format').required('Required'),
-    registrationDate: yup.string().required('required'),
+    registrationDate: yup.string().required('Required'),
     registrationNumber: yup
       .string()
-      .required('required')
+      .required('Required')
       .min(12, 'please enter 12 digits'),
     mobileNumber: yup
       .string()
-      .required('required')
+      .required('Required')
       .min(10, 'Please enter 10 digits'),
     landlineNumber: yup
       .string()
-      .required('required')
+      .required('Required')
       .min(10, 'please enter 10 digits'),
     password: yup.string().required('Required').min(7, 'Should be 7 character'),
     panNumber: yup
       .string()
-      .required('required')
+      .required('Required')
       .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
   });
 
@@ -175,30 +174,37 @@ const AddNgo = props => {
     dispatch(createNGOAction(obj, props.history));
   };
 
-// const AddNgo = () => {
+  // const AddNgo = () => {
   return (
     <div>
       <br />
       <br />
       <br />
-      <div className="card">
-        <p
+      <br />
+      <div className="card" style={{ border: '0' }}>
+        <div
           style={{
-            textAlign: 'left',
-            fontWeight: 'bold',
-            margin: '20px',
-            width: '100%',
-            marginLeft: '20px',
+            display: 'flex',
+            padding: '15px',
+            justifyContent: 'space-between',
           }}
         >
-          ADD NGO
-        </p>
+          <p
+            style={{
+              textAlign: 'left',
+              fontSize: '1.25rem',
+              marginTop: '5px',
+            }}
+          >
+            ADD NGO
+          </p>
+        </div>
       </div>
       <div
         style={{
           backgroundColor: 'white',
           margin: '30px',
-          marginBottom: '50px',
+          marginBottom: '5em',
         }}
       >
         <Formik
@@ -708,7 +714,7 @@ const AddNgo = props => {
                 </button>
               </div>
               <br />
-              <div style={{ marginLeft: '12px' }}>
+              <div style={{ marginLeft: '2em', paddingBottom: '2em' }}>
                 <button type="submit" className="btn btn-success">
                   Submit
                 </button>
@@ -721,4 +727,4 @@ const AddNgo = props => {
   );
 };
 
-export default AddNgo
+export default AddNgo;

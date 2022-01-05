@@ -18,34 +18,41 @@ const Dashboard = () => {
       <br />
       <br />
       <br />
+      <br />
       <div style={{ backgroundColor: '#31313' }}>
-        <div className="card">
-          <p
+        <div className="card" style={{ border: '0' }}>
+          <div
             style={{
-              textAlign: 'left',
-              fontWeight: 'bold',
-              margin: '20px',
-              width: '100%',
+              display: 'flex',
+              padding: '15px',
             }}
           >
-            DASHBOARD
-          </p>
+            <p
+              style={{
+                textAlign: 'left',
+                // fontWeight: 'bold',
+                fontSize: 'x-large',
+                marginBottom: '0',
+              }}
+            >
+              DASHBOARD
+            </p>
+          </div>
         </div>
-
-        <div style={{ margin: '30px' }} className="card">
+        <div style={{ margin: '30px', marginBottom: '0' }} className="card">
           <p
             style={{
               textAlign: 'left',
               fontWeight: 'bold',
-              margin: '20px',
               width: '100%',
-              padding: '25px',
+              padding: '30px',
+              fontSize: 'xx-large',
             }}
           >
             DAILY FUNDS
           </p>
         </div>
-        <div className="container">
+        <div style={{ margin: '0px 30px' }}>
           <div className="row">
             <div className="col">
               {' '}
@@ -53,10 +60,9 @@ const Dashboard = () => {
                 <p
                   style={{
                     textAlign: 'left',
-
-                    marginTop: '20px',
+                    fontSize: 'x-large',
                     width: '80%',
-                    padding: '25px',
+                    padding: '30px',
                   }}
                 >
                   Total Funds
@@ -65,8 +71,9 @@ const Dashboard = () => {
                 <p
                   style={{
                     textAlign: 'center',
-                    marginTop: '25px',
-                    padding: '20px',
+                    fontSize: 'x-large',
+                    padding: '30px',
+                    fontWeight: 'bold',
                   }}
                 >
                   169
@@ -79,10 +86,9 @@ const Dashboard = () => {
                 <p
                   style={{
                     textAlign: 'left',
-
-                    marginTop: '20px',
+                    fontSize: 'x-large',
                     width: '80%',
-                    padding: '20px',
+                    padding: '30px',
                   }}
                 >
                   Pending Funds
@@ -91,8 +97,9 @@ const Dashboard = () => {
                 <p
                   style={{
                     textAlign: 'center',
-                    marginTop: '25px',
-                    padding: '20px',
+                    fontSize: 'x-large',
+                    padding: '30px',
+                    fontWeight: 'bold',
                   }}
                 >
                   169
@@ -105,10 +112,9 @@ const Dashboard = () => {
                 <p
                   style={{
                     textAlign: 'left',
-
-                    marginTop: '20px',
+                    fontSize: 'x-large',
                     width: '80%',
-                    padding: '20px',
+                    padding: '30px',
                   }}
                 >
                   Used Funds
@@ -117,8 +123,9 @@ const Dashboard = () => {
                 <p
                   style={{
                     textAlign: 'center',
-                    marginTop: '25px',
-                    padding: '20px',
+                    fontSize: 'x-large',
+                    padding: '30px',
+                    fontWeight: 'bold',
                   }}
                 >
                   169
@@ -128,18 +135,17 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="container">
-          <div className="row">
-            <div className="col">
+        <div style={{ margin: '0px 30px' }}>
+          <div className="row" style={{ marginBottom: '5rem' }}>
+            <div className="col-4">
               {' '}
-              <div className="datCard">
+              <div className="datCard" style={{ marginTop: '0% !important' }}>
                 <p
                   style={{
                     textAlign: 'left',
-
-                    marginTop: '20px',
+                    fontSize: 'x-large',
                     width: '80%',
-                    padding: '20px',
+                    padding: '30px',
                   }}
                 >
                   Upcoming Donor Renewal
@@ -148,68 +154,15 @@ const Dashboard = () => {
                 <p
                   style={{
                     textAlign: 'center',
-                    marginTop: '25px',
-                    padding: '20px',
+                    fontSize: 'x-large',
+                    padding: '30px',
+                    fontWeight: 'bold',
                   }}
                 >
                   169
                 </p>
               </div>
             </div>
-            <div className="col"> </div>
-            <div className="col"> </div>
-            {/* <div className="col">
-              {' '}
-              <div className="datCard">
-                <p
-                  style={{
-                    textAlign: 'left',
-
-                    marginTop: '20px',
-                    width: '80%',
-                    padding: '20px',
-                  }}
-                >
-                  Priyank Donor
-                </p>
-
-                <p
-                  style={{
-                    textAlign: 'center',
-                    marginTop: '25px',
-                    padding: '20px',
-                  }}
-                >
-                  169
-                </p>
-              </div>
-            </div>
-            <div className="col">
-              {' '}
-              <div className="datCard">
-                <p
-                  style={{
-                    textAlign: 'left',
-
-                    marginTop: '20px',
-                    width: '80%',
-                    padding: '20px',
-                  }}
-                >
-                  Non Priyank Donor
-                </p>
-
-                <p
-                  style={{
-                    textAlign: 'center',
-                    marginTop: '25px',
-                    padding: '20px',
-                  }}
-                >
-                  169
-                </p>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

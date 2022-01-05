@@ -10,6 +10,11 @@ module.exports = async (req, res, next) => {
       if (checkToken == undefined) {
         return res.status(401).send({ message: 'Unauthorized' });
       } else {
+        // let checkTokenInDb = await models.users.findOne({where : { rememberToken : checkToken }})
+        // console.log(`check Token `,checkTokenInDb)
+        // if(!checkTokenInDb){
+        //     res.status(401).send({message : 'Invalid Token '})
+        // }
         let token = req.headers.authorization.split(' ')[1];
         const decode = jwt.verify(token, process.env.TOKEN_SECRET_KEY);
         let userDetails = await models.users.findOne({

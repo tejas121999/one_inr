@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const {ImageUpload} = require('../controllers/fileUpload')
+const checkAuth = require('../middleware/checkAuth')
 
-
-router.post("/",ImageUpload);
+router.post("/",checkAuth,ImageUpload);
 
 
 

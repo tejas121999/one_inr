@@ -81,6 +81,27 @@ const projects = sequelize .define('projects', {
         type: DataTypes.INTEGER,
         field: 'display_on_home_status'
     },
+
+    date: {
+        type : DataTypes.VIRTUAL,
+        get(){
+            const rawValue = `${this.startDate} to ${this.endDate}`;
+            return rawValue;
+        }
+    },
+    
+    recurring : {
+        type : DataTypes.VIRTUAL,
+        get(){
+            const isRecurring = this.recurringDays;
+            if(isRecurring==0){
+                return "No"
+            }else{
+                return 'Yes'
+            }
+        }
+    }
+
 },
     {
         freezeTableName: true,
@@ -92,9 +113,28 @@ const projects = sequelize .define('projects', {
         deletedAt : 'deleted_at'
     });
 
-    // projects.associate = function(models) {
-    //     projects.hasMany(models.project_images, {foreignKey: 'user_id'})
-    //     projects.belongsTo(models.ngo, {foreignKey: 'userId'})
-    // }
+    projects.associate = function(models) {
+        projects.hasMany(models.project_images, {foreignKey: 'user_id'})
+        projects.belongsTo(models.ngo, {foreignKey: 'userId'})
+    }
+
+
+    projects.afterFind(function(projects,options,cb){
+        let newData = Array.isArray(projects)?[...projects]:{...projects};
+        return new Promise((resolve,reject)=>{
+            if(Array.isArray(newData)){
+                for(let ele of newData){
+                    Object.assign(ele.dataValues,{DaysLeft : null})
+                }
+            }else{
+                if(newData.dataValues){
+                    Object.assign(newData.dataValues,{DaysLeft : null});
+                }
+            }
+            return resolve(newData,options);
+        })
+    })
+
     return projects
 }
+

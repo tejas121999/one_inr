@@ -1,28 +1,40 @@
 var express = require('express');
 var router = express.Router();
 
-const vendor = require('./vendors') //Importing Vendor Module
-const fileUpload = require('./fileUpload') //Importing File Upload Module 
-const auth = require('./auth') //Importing Authorization Module
-const donor = require('./donor') //Importing Donor Module 
-const userReceipts = require('./usersReceipts')//importing User Reciepts
-const ngo = require('./ngo')//importing ngo module
-const partner = require('./partner')
+const vendor = require('./vendors') 
+const fileUpload = require('./fileUpload')
+const auth = require('./auth') 
+const donor = require('./donor') 
+const userReceipts = require('./usersReceipts')
+const ngo = require('./ngo')
+const users = require('./users') 
+const partner = require('./partner') 
 const csvUpload = require('./csvFileUploads')
-const checkAuth = require('../middleware/checkAuth')
-const projects = require('./projects')
+const projects = require('./projects') 
+const entity = require('./entity');
+const permissions = require('./permissions');
+const roles = require('./roles')
+const config = require('./configs')
+const razorpayCredentials = require('./razorpayCredential')
 
 
 
-router.use('/vendor',checkAuth,vendor)
-router.use('/fileupload',checkAuth,fileUpload)
+router.use('/vendor',vendor)
+router.use('/fileupload',fileUpload)
 router.use('/auth',auth)
-router.use('/donor',checkAuth,donor)
+router.use('/donor',donor)
 router.use('/userReceipts',userReceipts)
 router.use('/projects', projects)
-router.use('/ngo',checkAuth,ngo)
-router.use('/partner',checkAuth,partner)
-router.use('/csvUserUpload',checkAuth,csvUpload)
+router.use('/ngo',ngo)
+router.use('/partner',partner)
+router.use('/csvUserUpload',csvUpload)
+router.use('/user',users)
+router.use('/entity', entity )
+router.use('/permissions',permissions)
+router.use('/roles',roles)
+router.use('/configs',config)
+router.use('/razorpayCredentials',razorpayCredentials)
+
 
 
 
