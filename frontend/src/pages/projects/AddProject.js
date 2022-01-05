@@ -7,16 +7,25 @@ import TextEditor from './TextEditor';
 import TextField from '@material-ui/core/TextField';
 import TextError from '../error/TextError';
 import DatePicker from 'react-date-picker';
+import { addProjectAction } from '../../Redux/Actions/ProjectActions'
+import { useDispatch } from 'react-redux';
 
 const AddProject = () => {
     const [value, onChange] = useState(new Date());
     const [key, setKey] = React.useState('no');
+    const dispatch = useDispatch()
 
     const validationSchema = yup.object({
         title: yup.string().required('Required'),
         description: yup.string().required('Required'),
         gole: yup.string().required('Required'),
     });
+
+
+    const addProject = async (values) => {
+        console.log("values", value)
+    }
+
 
     return (
         <div>
@@ -60,6 +69,7 @@ const AddProject = () => {
                                         }}
                                         validationSchema={validationSchema}
                                         onSelect={k => setKey(k)}
+                                        onSubmit={(values) => addProject(values)}
                                     >
                                         {({ values, errors, touched }) => (
                                             <Form>
@@ -153,7 +163,7 @@ const AddProject = () => {
                                                                 <input
                                                                     type="date"
                                                                     className="form-control"
-                                                                    value={value}
+                                                                    // value={value}
                                                                 />
                                                                 {errors.startDate && touched.startDate && (
                                                                     <div className="text-left">

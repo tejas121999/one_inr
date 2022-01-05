@@ -36,7 +36,9 @@ export const addProjectAction = body => {
     return dispatch => {
       projectServices
         .createProject(body)
-        .then(res => {})
+        .then(res => {
+          console.log(res)
+        })
         .catch(err => {});
     };
   } else {

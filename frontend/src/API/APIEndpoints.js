@@ -1,4 +1,4 @@
-export const Local = 'http://3137-110-173-179-225.ngrok.io';
+export const Local = 'http://81d3-110-173-179-225.ngrok.io';
 export const BASE_URL = `${Local}/api/`;
 export const BASE_URL_RECEIPT =
   'http://newoneinr.nimapinfotech.com/api/userReceipts';
@@ -30,3 +30,5 @@ export const UPDATE_A_DONOR_URL = 'donor/{{id}}';
 export const UPDATE_DONOR_BALANCE_URL = 'donor/balance/{{id}}';
 
 export const DELETE_A_DONOR_URL = 'donor/{{id}}';
+
+export const CREATE_PROJECT_URL = 'projects/create'
