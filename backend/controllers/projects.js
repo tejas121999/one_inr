@@ -132,34 +132,26 @@ exports.getAllProjects = async (req, res) => {
         limit : pageSize
     });
     
-    var endDate = await project.map(ele=>{ return ele.endDate})
-    console.log(endDate);
+    // var endDate = await project.map(ele=>{ return ele.dataValues.endDate})
+    // console.log(endDate);
     
     //var end_Date = moment(endDate).format('YYYY-MM-DD'); //end date - current date
 
     // let end_date;
 
-    var current_date = moment().format('YYYY-MM-DD');
+    let current_date = moment();
+    let days_left;
 
-    var newDate = moment(new Date(endDate[0]))
-    var DaysLeft = newDate.diff(current_date, 'days');
-
-    console.log(DaysLeft)
-
-    // for(let enddate=0;enddate<=endDate.length;enddate++){
-
-    //         var dasLeft = moment.duration(enddate.diff(current_date)).asDays();
-    //         console.log(dasLeft)
-    //         // var DaysLeft = x[0].diff(current_date, 'days');
-    //         // console.log(DaysLeft)
-  
-    // }
-
-    console.log('=====================',DaysLeft);
-
-    // console.log(end_Date);
-    // console.log(current_date);
-
+    await project.map(ele => {
+        eleDate = moment(ele.dataValues.endDate)
+        days_left = eleDate.diff(current_date, 'days');
+        if(days_left<0){
+            days_left = 'Ended'
+        }
+        ele.dataValues.DaysLeft = days_left;
+    })
+    
+    console.log(project)
 
     if(!project) {
         return res.status(400).json({message : "No data Found"})
