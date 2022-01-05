@@ -1,12 +1,45 @@
-module.exports = (sequelize,DataTypes)=>{
-    const roles = sequelize.define('roles',{
-        name:{
+module.exports = (sequelize, DataTypes) => {
+    const Role = sequelize.define('role', {
+        // attributes
+        roleName: {
             type: DataTypes.STRING,
-            field : 'name'
+            field: 'role_name',
+            allowNull: false,
         },
-    },    {
+        description:{
+            type: DataTypes.TEXT,
+            field: 'description',
+            allowNull: false,
+        },
+        isActive: {
+            type: DataTypes.BOOLEAN,
+            field: 'is_active',
+            defaultValue: true,
+        },
+        createdBy: {
+            type: DataTypes.INTEGER,
+            field: 'created_by',
+        },
+        updatedBy: {
+            type: DataTypes.INTEGER,
+            field: 'updated_by',
+        },
+    }, {
         freezeTableName: true,
-        tableName: 'roles'
-    })
-    return roles
+        allowNull: false,
+        tableName: 'role',
+    });
+
+ 
+
+    Role.associate = function(models) {
+        Role.hasMany(models.rolePermission,{foreignKey : 'roleId'});
+        // Role.belongsToMany(models.user,{through: models.userRole});
+        // Role.belongsToMany(models.module,{through: models.roleModule});
+        // Role.belongsToMany(models.permission,{through: models.rolePermission});
+        // Role.belongsTo(models.user,{ foreignKey: 'createdBy', as: 'createdByUser' });
+        // Role.belongsTo(models.user,{ foreignKey: 'updatedBy', as: 'updatedByUser' });
+    }
+
+    return Role;
 }
