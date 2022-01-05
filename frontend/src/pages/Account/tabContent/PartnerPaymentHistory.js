@@ -74,7 +74,7 @@ const PartnerPaymentHistory = () => {
             id: 1,
             sr_no: 1,
             date: "10-12-2020",
-            amount_pade: 50,
+            amount_paid: 50,
             partner_name: 'tejas talkar',
             partner_company: 'nimap infotech',
             ngo: '1INR',
@@ -88,7 +88,7 @@ const PartnerPaymentHistory = () => {
             id: 1,
             sr_no: 1,
             date: "10-12-2020",
-            amount_pade: 50,
+            amount_paid: 50,
             partner_name: 'tejas talkar',
             partner_company: 'nimap infotech',
             ngo: '1INR',
@@ -156,7 +156,7 @@ const PartnerPaymentHistory = () => {
                                                     <TableCell align="center">
                                                         {row.date}
                                                     </TableCell>
-                                                    <TableCell align="center">{row.amount_pade}</TableCell>
+                                                    <TableCell align="center">{row.amount_paid}</TableCell>
                                                     <TableCell align="center">{row.partner_name}</TableCell>
                                                     <TableCell align="center">{row.partner_company}</TableCell>
                                                     <TableCell align="center">{row.ngo}</TableCell>
@@ -246,10 +246,10 @@ const headCells = [
         label: 'date',
     },
     {
-        id: 'amount_pade',
+        id: 'amount_paid',
         numeric: true,
         disablePadding: false,
-        label: 'Amount Pade',
+        label: 'Amount Paid',
     },
     {
         id: 'partner_name',

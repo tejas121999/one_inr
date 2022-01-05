@@ -26,6 +26,7 @@ const Dashboard = () => {
               fontWeight: 'bold',
               margin: '20px',
               width: '100%',
+              fontSize: 'x-large',
             }}
           >
             DASHBOARD
@@ -37,15 +38,15 @@ const Dashboard = () => {
             style={{
               textAlign: 'left',
               fontWeight: 'bold',
-              margin: '20px',
               width: '100%',
-              padding: '25px',
+              padding: '30px',
+              fontSize: 'xx-large',
             }}
           >
             DAILY FUNDS
           </p>
         </div>
-        <div className="container">
+        <div style={{ margin: '30px' }}>
           <div className="row">
             <div className="col">
               {' '}
@@ -53,10 +54,9 @@ const Dashboard = () => {
                 <p
                   style={{
                     textAlign: 'left',
-
-                    marginTop: '20px',
+                    fontSize: 'x-large',
                     width: '80%',
-                    padding: '25px',
+                    padding: '30px',
                   }}
                 >
                   Total Funds
@@ -65,8 +65,9 @@ const Dashboard = () => {
                 <p
                   style={{
                     textAlign: 'center',
-                    marginTop: '25px',
-                    padding: '20px',
+                    fontSize: 'x-large',
+                    padding: '30px',
+                    fontWeight: 'bold',
                   }}
                 >
                   169
@@ -79,10 +80,9 @@ const Dashboard = () => {
                 <p
                   style={{
                     textAlign: 'left',
-
-                    marginTop: '20px',
+                    fontSize: 'x-large',
                     width: '80%',
-                    padding: '20px',
+                    padding: '30px',
                   }}
                 >
                   Pending Funds
@@ -91,8 +91,9 @@ const Dashboard = () => {
                 <p
                   style={{
                     textAlign: 'center',
-                    marginTop: '25px',
-                    padding: '20px',
+                    fontSize: 'x-large',
+                    padding: '30px',
+                    fontWeight: 'bold',
                   }}
                 >
                   169
@@ -105,10 +106,9 @@ const Dashboard = () => {
                 <p
                   style={{
                     textAlign: 'left',
-
-                    marginTop: '20px',
+                    fontSize: 'x-large',
                     width: '80%',
-                    padding: '20px',
+                    padding: '30px',
                   }}
                 >
                   Used Funds
@@ -117,8 +117,9 @@ const Dashboard = () => {
                 <p
                   style={{
                     textAlign: 'center',
-                    marginTop: '25px',
-                    padding: '20px',
+                    fontSize: 'x-large',
+                    padding: '30px',
+                    fontWeight: 'bold',
                   }}
                 >
                   169
@@ -128,7 +129,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="container">
+        <div style={{ margin: '30px' }}>
           <div className="row">
             <div className="col">
               {' '}
@@ -136,10 +137,9 @@ const Dashboard = () => {
                 <p
                   style={{
                     textAlign: 'left',
-
-                    marginTop: '20px',
+                    fontSize: 'x-large',
                     width: '80%',
-                    padding: '20px',
+                    padding: '30px',
                   }}
                 >
                   Upcoming Donor Renewal
@@ -148,8 +148,9 @@ const Dashboard = () => {
                 <p
                   style={{
                     textAlign: 'center',
-                    marginTop: '25px',
-                    padding: '20px',
+                    fontSize: 'x-large',
+                    padding: '30px',
+                    fontWeight: 'bold',
                   }}
                 >
                   169
@@ -158,58 +159,6 @@ const Dashboard = () => {
             </div>
             <div className="col"> </div>
             <div className="col"> </div>
-            {/* <div className="col">
-              {' '}
-              <div className="datCard">
-                <p
-                  style={{
-                    textAlign: 'left',
-
-                    marginTop: '20px',
-                    width: '80%',
-                    padding: '20px',
-                  }}
-                >
-                  Priyank Donor
-                </p>
-
-                <p
-                  style={{
-                    textAlign: 'center',
-                    marginTop: '25px',
-                    padding: '20px',
-                  }}
-                >
-                  169
-                </p>
-              </div>
-            </div>
-            <div className="col">
-              {' '}
-              <div className="datCard">
-                <p
-                  style={{
-                    textAlign: 'left',
-
-                    marginTop: '20px',
-                    width: '80%',
-                    padding: '20px',
-                  }}
-                >
-                  Non Priyank Donor
-                </p>
-
-                <p
-                  style={{
-                    textAlign: 'center',
-                    marginTop: '25px',
-                    padding: '20px',
-                  }}
-                >
-                  169
-                </p>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

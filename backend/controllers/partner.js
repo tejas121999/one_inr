@@ -97,7 +97,7 @@ exports.updatePatner = async (req, res) => {
         })
     console.log(partnerData)
     if (!partnerUpdate) {
-        return res.status(404).json({
+        return res.status(400).json({
             message: "Failed to update partner"
         })
     }

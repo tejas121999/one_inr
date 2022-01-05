@@ -1,19 +1,29 @@
-module.exports = (sequelize,DataTypes)=>{
-    const roleHasPermissions = sequelize.define('role_has_permissions',{
-        roleId : {
-            type : DataTypes.INTEGER,
-            field : 'role_id'
+module.exports = (sequelize, DataTypes) => {
+    const RolePermission = sequelize.define('rolePermission', {
+        // attributes
+        roleId: {
+            type: DataTypes.INTEGER,
+            field: 'role_id'
         },
-        permissionId : {
-            type : DataTypes.STRING,
-            field: 'permission_id'
+        permissions: {
+            type: DataTypes.STRING,
+            field: 'permissions'
+        },
+        isActive: {
+            type: DataTypes.BOOLEAN,
+            field: 'is_active',
+            defaultValue: true,
         }
-
-
-    },
-    {
+    }, {
         freezeTableName: true,
-        tableName: 'role_has_permissions'
-    })
-    return roleHasPermissions
+        allowNull: false,
+        tableName: 'roleHasPermission'
+    });
+
+    RolePermission.associate = function(models) {
+        RolePermission.belongsTo(models.role, { foreignKey: 'roleId', as: 'role' });
+        RolePermission.belongsTo(models.permission, { foreignKey: 'permissions', as: 'permission' });
+    }
+    
+    return RolePermission;
 }

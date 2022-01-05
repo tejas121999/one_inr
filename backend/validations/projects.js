@@ -14,12 +14,12 @@ exports.projectValidation = [
     body('goal')
         .exists().withMessage('goal is Required')
         .notEmpty().withMessage('goal is Required')
-        .isNumeric().withMessage('Only Number required'),
-        
-    body('commission')
-        .exists().withMessage('commission is Required')
-        .notEmpty().withMessage('commission is Required')
         .isNumeric().withMessage('Only Number required')
+        
+    // body('commission')
+    //     .exists().withMessage('commission is Required')
+    //     .notEmpty().withMessage('commission is Required')
+    //     .isNumeric().withMessage('Only Number required')
 ]
 
 

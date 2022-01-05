@@ -17,10 +17,10 @@ import Paper from '@mui/material/Paper';
 import {
     FaRegEdit,
     FaRegEye,
-    FaRegTrashAlt,
-    FaBookOpen,
-    FaPlusCircle,
 } from 'react-icons/fa';
+import { BiLink } from 'react-icons/bi';
+import { AiOutlineDollarCircle } from 'react-icons/ai'
+
 import './project.css'
 
 const ViewAllProjects = () => {
@@ -67,7 +67,7 @@ const ViewAllProjects = () => {
         {
             id: 1,
             title: 'shivani',
-            gole: 0,
+            goal: 0,
             target: '0',
             funded: '0',
             days_left: '0',
@@ -79,7 +79,7 @@ const ViewAllProjects = () => {
         {
             id: 1,
             title: 'shivani',
-            gole: 0,
+            goal: 0,
             target: '0',
             funded: '0',
             days_left: '0',
@@ -112,7 +112,7 @@ const ViewAllProjects = () => {
                             marginLeft: '20px',
                         }}
                     >
-                        LIST OF ALL NGO
+                        VIEW ALL PROJECT
                     </p>
                 </div>
             </div>
@@ -200,7 +200,7 @@ const ViewAllProjects = () => {
                                                         {row.title}
                                                     </TableCell>
                                                     <TableCell align="center">
-                                                        {row.gole}
+                                                        {row.goal}
                                                     </TableCell>
                                                     <TableCell align="center">{row.target}</TableCell>
                                                     <TableCell align="center">{row.funded}</TableCell>
@@ -237,19 +237,19 @@ const ViewAllProjects = () => {
                                                         </button>
                                                         <button
                                                             data-bs-toggle="tooltip"
-                                                            title="Add Fund"
+                                                            title="Auto donate"
                                                             className="btn"
-                                                        // onClick={() => fundModaOpen(row)}
+                                                            onClick={() => history.push('/auto_donate', row)}
                                                         >
-                                                            <FaPlusCircle />
+                                                            <AiOutlineDollarCircle />
                                                         </button>
                                                         <button
                                                             data-bs-toggle="tooltip"
-                                                            title="Delete"
+                                                            title="Contributors"
                                                             className="btn"
-                                                        // onClick={() => deleteModalOpen(row)}
+                                                            onClick={() => history.push('/Contributors', row)}
                                                         >
-                                                            <FaRegTrashAlt />
+                                                            <BiLink />
                                                         </button>
                                                     </TableCell>
                                                 </TableRow>
@@ -273,7 +273,7 @@ const ViewAllProjects = () => {
                     </Paper>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 
@@ -318,10 +318,10 @@ const headCells = [
         label: 'Title',
     },
     {
-        id: 'gole',
+        id: 'goal',
         numeric: true,
         disablePadding: false,
-        label: 'Gole',
+        label: 'Goal',
     },
     {
         id: 'target',

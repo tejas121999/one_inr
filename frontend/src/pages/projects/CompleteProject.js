@@ -195,19 +195,16 @@ const CompleteProject = () => {
             <input
               type="search"
               placeholder="Search"
-              style={{ marginLeft: '0.5em' }}
+              style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
               onChange={e => handleChange(e)}
             />
           </label>
         </div>
-        <Paper sx={{ width: '100%', mb: 2 }}>
+        <hr style={{ margin: '0' }} />
+        <Paper sx={{ width: '100%' }}>
           <>
             <TableContainer>
-              <Table
-                sx={{ minWidth: 750 }}
-                aria-labelledby="tableTitle"
-                size={dense ? 'small' : 'medium'}
-              >
+              <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
                 <EnhancedTableHead
                   numSelected={selected.length}
                   order={order}
@@ -264,7 +261,9 @@ const CompleteProject = () => {
                               data-bs-toggle="tooltip"
                               title="Transfer"
                               className="btn"
-                              //   onClick={() => history.push('/payments', row)}
+                              onClick={() =>
+                                history.push('/payments/transfer', row)
+                              }
                             >
                               <FcMoneyTransfer size={21} />
                             </button>
@@ -272,7 +271,10 @@ const CompleteProject = () => {
                               data-bs-toggle="tooltip"
                               title="View"
                               className="btn"
-                              onClick={() => history.push('/payments', row)}
+                              onClick={
+                                () => history.push(`/payments/view`, row)
+                                // history.push(`/payments/${id}`, row)
+                              }
                             >
                               <BsEye size={21} />
                             </button>
@@ -395,7 +397,7 @@ function EnhancedTableHead(props) {
           <TableCell
             key={headCell.id}
             align="center"
-            // padding={headCell.disablePadding ? 'none' : 'normal'}
+            padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -403,7 +405,7 @@ function EnhancedTableHead(props) {
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
             >
-              {headCell.label}
+              <b>{headCell.label}</b>
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}

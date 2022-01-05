@@ -14,14 +14,11 @@ import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import './ngo.css'
+import './ngo.css';
 import { Link, useHistory } from 'react-router-dom';
 import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    FaRegEdit,
-    FaRegEye,
-} from 'react-icons/fa';
+import { FaRegEdit, FaRegEye } from 'react-icons/fa';
 import { Switch } from '@mui/material';
 import uploadImage from '../../assets/img/logo/uploadImage.jpg';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
@@ -126,7 +123,7 @@ const ViewSingleNgo = () => {
             numeric: false,
             disablePadding: false,
             label: 'Action Require',
-        }
+        },
     ];
     //END headcells
 
@@ -151,7 +148,6 @@ const ViewSingleNgo = () => {
             actionRequired: '0',
         }
     ];
-
 
     //project headcells
     const projectheadCells = [
@@ -203,7 +199,6 @@ const ViewSingleNgo = () => {
             disablePadding: false,
             label: 'Action',
         },
-
     ];
     //END Project headcells
 
@@ -241,7 +236,6 @@ const ViewSingleNgo = () => {
             status: '',
             action: '',
         },
-
     ];
 
     //DETAILS const headcells
@@ -282,10 +276,7 @@ const ViewSingleNgo = () => {
         },
     ];
 
-
-
     return (
-
         <>
             <div>
                 <br />
@@ -311,10 +302,10 @@ const ViewSingleNgo = () => {
                     <Tabs
                         id="controlled-tab-example"
                         activeKey={key}
-                        onSelect={(k) => setKey(k)}
+                        onSelect={k => setKey(k)}
                         className="mb-3"
                     >
-                        <Tab eventKey="details" title="Details" >
+                        <Tab eventKey="details" title="Details">
                             <div className="row">
                                 <div className="col-3 ">
                                     <div style={{ padding: '15px', paddingBottom: '10px' }}>
@@ -329,14 +320,12 @@ const ViewSingleNgo = () => {
                             <div className="row">
                                 <div className="col-3 ">
                                     <div style={{ padding: '15px', paddingBottom: '10px' }}>
-
                                         <label style={{ fontWeight: 'bold', height: '3em' }}>
                                             Pancard
                                         </label>
                                         <div className="image-upload">
                                             <DropzoneComponent />
                                         </div>
-
                                     </div>
                                 </div>
 
@@ -348,7 +337,6 @@ const ViewSingleNgo = () => {
                                         <div className="image-upload">
                                             <DropzoneComponent />
                                         </div>
-
                                     </div>
                                 </div>
 
@@ -360,7 +348,6 @@ const ViewSingleNgo = () => {
                                         <div className="image-upload">
                                             <DropzoneComponent />
                                         </div>
-
                                     </div>
                                 </div>
 
@@ -372,7 +359,6 @@ const ViewSingleNgo = () => {
                                         <div className="image-upload">
                                             <DropzoneComponent />
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -381,20 +367,9 @@ const ViewSingleNgo = () => {
                             <Paper sx={{ width: '100%', mb: 2 }}>
                                 <>
                                     <TableContainer>
-                                        <Table
-                                            sx={{ minWidth: 750 }}
-                                            aria-labelledby="tableTitle"
-
-                                        >
-
+                                        <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
                                             <TableBody>
-
-                                                <TableRow
-
-
-                                                    tabIndex={-1}
-
-                                                >
+                                                <TableRow tabIndex={-1}>
                                                     <TableCell
                                                         //   id={labelId}
                                                         align="center"
@@ -404,14 +379,10 @@ const ViewSingleNgo = () => {
                                                     >
                                                         NgoName
                                                     </TableCell>
-                                                    <TableCell align="center">
-                                                        ABC
-                                                    </TableCell>
-
+                                                    <TableCell align="center">ABC</TableCell>
                                                 </TableRow>
 
                                                 <TableRow
-
                                                     //   aria-checked={isItemSelected}
                                                     tabIndex={-1}
                                                 //   key={row.address}
@@ -426,14 +397,10 @@ const ViewSingleNgo = () => {
                                                     >
                                                         Address
                                                     </TableCell>
-                                                    <TableCell align="center">
-                                                        XYZ
-                                                    </TableCell>
-
+                                                    <TableCell align="center">XYZ</TableCell>
                                                 </TableRow>
 
                                                 <TableRow
-
                                                     // aria-checked={isItemSelected}
                                                     tabIndex={-1}
                                                 // key={row.email}
@@ -448,14 +415,10 @@ const ViewSingleNgo = () => {
                                                     >
                                                         Email
                                                     </TableCell>
-                                                    <TableCell align="center">
-                                                        EFG
-                                                    </TableCell>
-
+                                                    <TableCell align="center">EFG</TableCell>
                                                 </TableRow>
 
                                                 <TableRow
-
                                                     // aria-checked={isItemSelected}
                                                     tabIndex={-1}
                                                 // key={row.mobile}
@@ -470,16 +433,10 @@ const ViewSingleNgo = () => {
                                                     >
                                                         Mobile
                                                     </TableCell>
-                                                    <TableCell align="center">
-                                                        BCD
-                                                    </TableCell>
-
+                                                    <TableCell align="center">BCD</TableCell>
                                                 </TableRow>
 
-
-
                                                 <TableRow
-
                                                     //  aria-checked={isItemSelected}
                                                     tabIndex={-1}
                                                 //  key={row.landline}
@@ -494,15 +451,10 @@ const ViewSingleNgo = () => {
                                                     >
                                                         Landline
                                                     </TableCell>
-                                                    <TableCell align="center">
-                                                        EFG
-                                                    </TableCell>
-
+                                                    <TableCell align="center">EFG</TableCell>
                                                 </TableRow>
 
-
                                                 <TableRow
-
                                                     // aria-checked={isItemSelected}
                                                     tabIndex={-1}
                                                 // key={row.registrationdate}
@@ -517,15 +469,10 @@ const ViewSingleNgo = () => {
                                                     >
                                                         Registration Date
                                                     </TableCell>
-                                                    <TableCell align="center">
-                                                        12/4/2021
-                                                    </TableCell>
-
+                                                    <TableCell align="center">12/4/2021</TableCell>
                                                 </TableRow>
 
-
                                                 <TableRow
-
                                                     // aria-checked={isItemSelected}
                                                     tabIndex={-1}
                                                 // key={row.registrationnumber}
@@ -540,15 +487,10 @@ const ViewSingleNgo = () => {
                                                     >
                                                         Registration Number
                                                     </TableCell>
-                                                    <TableCell align="center">
-                                                        LMN
-                                                    </TableCell>
-
+                                                    <TableCell align="center">LMN</TableCell>
                                                 </TableRow>
 
-
                                                 <TableRow
-
                                                     tabIndex={-1}
                                                 // key={row.pannumber}
                                                 // selected={isItemSelected}
@@ -561,12 +503,8 @@ const ViewSingleNgo = () => {
                                                     >
                                                         Pan Number
                                                     </TableCell>
-                                                    <TableCell align="center">
-                                                        CDE
-                                                    </TableCell>
-
+                                                    <TableCell align="center">CDE</TableCell>
                                                 </TableRow>
-
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
@@ -575,11 +513,8 @@ const ViewSingleNgo = () => {
 
                             <br />
                             <br />
-                            <div>
-                                Bank Details
-                            </div>
+                            <div>Bank Details</div>
                             <br />
-
 
                             <div>
                                 <TableContainer component={Paper}>
@@ -593,16 +528,20 @@ const ViewSingleNgo = () => {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {constData.map((row) => (
+                                            {constData.map(row => (
                                                 <TableRow
                                                     key={row.name}
-                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                    sx={{
+                                                        '&:last-child td, &:last-child th': { border: 0 },
+                                                    }}
                                                 >
                                                     <TableCell component="th" scope="row">
                                                         {row.name}
                                                     </TableCell>
                                                     <TableCell align="right">{row.account}</TableCell>
-                                                    <TableCell align="right">{row.beneficiaryName}</TableCell>
+                                                    <TableCell align="right">
+                                                        {row.beneficiaryName}
+                                                    </TableCell>
                                                     <TableCell align="right">{row.ifsc}</TableCell>
                                                 </TableRow>
                                             ))}
@@ -611,13 +550,11 @@ const ViewSingleNgo = () => {
                                 </TableContainer>
 
                                 <br />
-                                <div style={{ textAlign: "center" }}>
-                                    <button type="submit" className="btn btn-success" >
+                                <div style={{ textAlign: 'center' }}>
+                                    <button type="submit" className="btn btn-success">
                                         Submit
                                     </button>
                                 </div>
-
-
                             </div>
                         </Tab>
 
@@ -626,7 +563,6 @@ const ViewSingleNgo = () => {
                             <br />
                             <div>
                                 <Paper sx={{ width: '100%', mb: 2 }}>
-
                                     <>
                                         <TableContainer>
                                             <Table
@@ -643,7 +579,10 @@ const ViewSingleNgo = () => {
                                                     headCells={tempCells}
                                                 />
                                                 <TableBody>
-                                                    {stableSort(headcellsconstdata, getComparator(order, orderBy))
+                                                    {stableSort(
+                                                        headcellsconstdata,
+                                                        getComparator(order, orderBy),
+                                                    )
                                                         .slice(
                                                             page * rowsPerPage,
                                                             page * rowsPerPage + rowsPerPage,
@@ -683,7 +622,6 @@ const ViewSingleNgo = () => {
                                                                     <TableCell align="center">
                                                                         {row.actionRequire}
                                                                     </TableCell>
-
                                                                 </TableRow>
                                                             );
                                                         })}
@@ -709,10 +647,13 @@ const ViewSingleNgo = () => {
                                 >
                                     Export
                                 </button>
-                                <input type="search" placeholder="Search" onChange={e => handleChange(e)} />
+                                <input
+                                    type="search"
+                                    placeholder="Search"
+                                    onChange={e => handleChange(e)}
+                                />
                             </div>
                             <Paper sx={{ width: '100%', mb: 2 }}>
-
                                 <>
                                     <TableContainer>
                                         <Table
@@ -729,7 +670,10 @@ const ViewSingleNgo = () => {
                                                 headCells={projectheadCells}
                                             />
                                             <TableBody>
-                                                {stableSort(projectconstData, getComparator(order, orderBy))
+                                                {stableSort(
+                                                    projectconstData,
+                                                    getComparator(order, orderBy),
+                                                )
                                                     .slice(
                                                         page * rowsPerPage,
                                                         page * rowsPerPage + rowsPerPage,
@@ -754,9 +698,7 @@ const ViewSingleNgo = () => {
                                                                 >
                                                                     {row.title}
                                                                 </TableCell>
-                                                                <TableCell align="center">
-                                                                    {row.goal}
-                                                                </TableCell>
+                                                                <TableCell align="center">{row.goal}</TableCell>
                                                                 <TableCell align="center">
                                                                     {row.funded}
                                                                 </TableCell>
@@ -771,19 +713,17 @@ const ViewSingleNgo = () => {
                                                                 </TableCell>
                                                                 <TableCell align="center">
                                                                     {/* {row.status}  */}
-                                                                    <Switch
-                                                                        color="primary"
-                                                                        size="medium"
-                                                                    />
+                                                                    <Switch color="primary" size="medium" />
                                                                 </TableCell>
-
 
                                                                 <TableCell align="center">
                                                                     <button
                                                                         data-bs-toggle="tooltip"
                                                                         title="View projects"
                                                                         className="btn"
-                                                                        onClick={() => history.push('/single_project_detail')}
+                                                                        onClick={() =>
+                                                                            history.push('/single_project_detail')
+                                                                        }
                                                                     >
                                                                         <FaRegEye />
                                                                     </button>
@@ -816,17 +756,13 @@ const ViewSingleNgo = () => {
                                     />
                                 </>
                             </Paper>
-
-
                         </Tab>
-
                     </Tabs>
                 </div>
             </div>
         </>
     );
-
-}
+};
 
 export default ViewSingleNgo;
 
@@ -860,7 +796,6 @@ function stableSort(array, comparator) {
     });
     return stabilizedThis.map(el => el[0]);
 }
-
 
 const projectheadCells = [
     {
@@ -911,10 +846,7 @@ const projectheadCells = [
         disablePadding: false,
         label: 'Action',
     },
-
 ];
-
-
 
 function EnhancedTableHead(props) {
     const {
@@ -924,7 +856,7 @@ function EnhancedTableHead(props) {
         numSelected,
         rowCount,
         onRequestSort,
-        headCells
+        headCells,
     } = props;
 
     const createSortHandler = property => event => {
@@ -966,6 +898,5 @@ EnhancedTableHead.propTypes = {
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
-    headCells: PropTypes.array.isRequired
+    headCells: PropTypes.array.isRequired,
 };
-
