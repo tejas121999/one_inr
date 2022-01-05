@@ -285,14 +285,6 @@ const ViewAllNgo = () => {
                             </button>
                             <button
                               data-bs-toggle="tooltip"
-                              title="Edit"
-                              className="btn"
-                              onClick={() => history.push('/add_project', row)}
-                            >
-                              <FaPlusCircle />
-                            </button>
-                            <button
-                              data-bs-toggle="tooltip"
                               title="Edit Ngo"
                               className="btn"
                               onClick={() => history.push('/edit_ngo', row)}

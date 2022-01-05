@@ -18,22 +18,28 @@ const Dashboard = () => {
       <br />
       <br />
       <br />
+      <br />
       <div style={{ backgroundColor: '#31313' }}>
-        <div className="card">
-          <p
+        <div className="card" style={{ border: '0' }}>
+          <div
             style={{
-              textAlign: 'left',
-              fontWeight: 'bold',
-              margin: '20px',
-              width: '100%',
-              fontSize: 'x-large',
+              display: 'flex',
+              padding: '15px',
             }}
           >
-            DASHBOARD
-          </p>
+            <p
+              style={{
+                textAlign: 'left',
+                // fontWeight: 'bold',
+                fontSize: 'x-large',
+                marginBottom: '0',
+              }}
+            >
+              DASHBOARD
+            </p>
+          </div>
         </div>
-
-        <div style={{ margin: '30px' }} className="card">
+        <div style={{ margin: '30px', marginBottom: '0' }} className="card">
           <p
             style={{
               textAlign: 'left',
@@ -46,7 +52,7 @@ const Dashboard = () => {
             DAILY FUNDS
           </p>
         </div>
-        <div style={{ margin: '30px' }}>
+        <div style={{ margin: '0px 30px' }}>
           <div className="row">
             <div className="col">
               {' '}
@@ -129,11 +135,11 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div style={{ margin: '30px' }}>
-          <div className="row">
-            <div className="col">
+        <div style={{ margin: '0px 30px' }}>
+          <div className="row" style={{ marginBottom: '5rem' }}>
+            <div className="col-4">
               {' '}
-              <div className="datCard">
+              <div className="datCard" style={{ marginTop: '0% !important' }}>
                 <p
                   style={{
                     textAlign: 'left',
@@ -157,8 +163,6 @@ const Dashboard = () => {
                 </p>
               </div>
             </div>
-            <div className="col"> </div>
-            <div className="col"> </div>
           </div>
         </div>
       </div>
