@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+const checkAuth = require('../middleware/checkAuth')
 
 const {wrapper} = require('../utils/errorWrap')
 
@@ -14,10 +14,10 @@ const { projectValidation, projectImageValidation } = require('../validations/pr
 // const user = require('../utils/exportToCsv')
 
 
-router.get('/get-project',wrapper(getAllProjects))
-router.get('/get-project/:id',wrapper(getProjectById))
+router.get('/get-project',checkAuth,wrapper(getAllProjects))
+router.get('/get-project/:id',checkAuth,wrapper(getProjectById))
 // router.get('/get-project-by-date',wrapper(getProjectById))
-router.post('/create',projectValidation, projectImageValidation, wrapper(addProjects))
-router.put('/update-status/:id',wrapper(updateStatus))
-router.put('/set-homeProject/:id',wrapper(setHomeProject))
+router.post('/create',checkAuth,projectValidation, projectImageValidation, wrapper(addProjects))
+router.put('/update-status/:id',checkAuth,wrapper(updateStatus))
+router.put('/set-homeProject/:id',checkAuth,wrapper(setHomeProject))
 module.exports = router;

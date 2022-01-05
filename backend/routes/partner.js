@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-
+const checkAuth = require('../middleware/checkAuth')
 const {wrapper} = require('../utils/errorWrap')
 
 
@@ -12,16 +12,16 @@ const {partnerValidation} = require('../validations/partner')
 const user = require('../utils/exportToCsv')
 
 
-router.post('/',partnerValidation,validationError,wrapper(addPartner))
+router.post('/',checkAuth,partnerValidation,validationError,wrapper(addPartner))
 
-router.get('/partner-data',wrapper(getPartner))
-router.get('/get-partner-csv',wrapper(exportPartnerCsv))
-router.get('/get-partnerById/:id',getPartnerById)
-router.get('/get-partner-excel',getPartnerExcel)
-router.get('/get-partnerPdf',pdfOfPartner)
-router.get('/get-all-users-csv',user.exportsToCsv)
-router.put('/update-partner/:id',updatePatner)
-router.delete('/delete-partner/:id',deletePartner)
+router.get('/partner-data',checkAuth,wrapper(getPartner))
+router.get('/get-partner-csv',checkAuth,wrapper(exportPartnerCsv))
+router.get('/get-partnerById/:id',checkAuth,getPartnerById)
+router.get('/get-partner-excel',checkAuth,getPartnerExcel)
+router.get('/get-partnerPdf',checkAuth,pdfOfPartner)
+router.get('/get-all-users-csv',checkAuth,user.exportsToCsv)
+router.put('/update-partner/:id',checkAuth,updatePatner)
+router.delete('/delete-partner/:id',checkAuth,deletePartner)
 
 
 

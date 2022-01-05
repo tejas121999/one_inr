@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+const checkAuth = require('../middleware/checkAuth')
 
 const {wrapper} = require('../utils/errorWrap')
 
@@ -9,11 +9,11 @@ const {razorpayCredentials,addRazorpayCredentials,updateRazorpayCredentials}= re
 
 
 
-router.get('/',wrapper(razorpayCredentials))
+router.get('/',checkAuth,wrapper(razorpayCredentials))
 
-router.post('/',wrapper(addRazorpayCredentials))
+router.post('/',checkAuth,wrapper(addRazorpayCredentials))
 
-router.put('/:id',wrapper(updateRazorpayCredentials))
+router.put('/:id',checkAuth,wrapper(updateRazorpayCredentials))
 
 
 
