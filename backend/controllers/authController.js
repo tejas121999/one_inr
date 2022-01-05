@@ -148,3 +148,24 @@ exports.changePassword = async (req,res) => {
     return res.status(200).json({message : "Password Reset Successful."})
  
 }
+
+exports.logout = async (req,res)=>{
+    const user = req.userData
+    // let deleteToken = await models.users.update({ rememberToken : null}, { where: { id: user.id } })
+    // console.log(`delete token `,deleteToken)
+
+
+    //updating all users rememberToken who are registered on same email.
+    const deleteToken = await models.users.bulkCreate([{rememberToken : null}], { updateOnDuplicate: ['email'] }).then(()=> { return models.users.update({rememberToken : null},{where : {email:user.email}})})
+    if(!deleteToken[0]){
+        res.status(400).json({
+            message : "Failed to Logout"
+        })
+    }
+    else{
+        res.status(200).json({
+            message : "Logout Successfully"
+        })
+    }
+
+}
