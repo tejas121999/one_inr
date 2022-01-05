@@ -85,8 +85,22 @@ const VendorPaymentHistory = () => {
             action: ''
         },
         {
-            id: 1,
-            sr_no: 1,
+            id: 2,
+            sr_no: 2,
+            date: "10-12-2020",
+            amount_pade: 50,
+            vendor_name: 'tejas talkar',
+            vendor_company: 'nimap infotech',
+            ngo: '1INR',
+            project: 'feeding pigeons grain',
+            project_date: '8-feb-2020 to 15-may-2020',
+            description: 'hgscce',
+            receipt: '--',
+            action: ''
+        },
+        {
+            id: 3,
+            sr_no: 3,
             date: "10-12-2020",
             amount_pade: 50,
             vendor_name: 'tejas talkar',
