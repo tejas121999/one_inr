@@ -7,12 +7,11 @@ import './project.css';
 import TextEditor from './TextEditor';
 
 const AddProject = props => {
-    const [value, setValue] = useState();
+    // const [value, setValue] = useState();
     const dispatch = useDispatch();
     const onProjectAdd = values => {
         console.log('project Add', values);
         const object = {
-
             userId: 1,
             title: values.title,
             slogan: 'xxx',
