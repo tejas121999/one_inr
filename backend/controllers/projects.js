@@ -192,3 +192,28 @@ exports.setHomeProject = async (req,res) => {
 }
 
 
+exports.addFunds = async (req,res)=>{
+    let id = req.params.id;
+    
+    let data = await models.projects.findOne({where:{id:id}});
+
+    let maxLimit = data.target - data.funded
+    console.log(maxLimit);
+    if(req.body.funded>maxLimit){
+        return res.status(400).json({message : "Check Max Limit"});
+    }
+    const fund = data.funded + req.body.funded;
+    const checkData = await models.projects.update({funded : fund},{where : {id:id}})
+    
+}
+
+
+exports.getCompletedProject = async (req, res) =>{
+    let projects = await models.projects.findAll({where: {status:1}});
+    if(!projects){
+        return res.status(404).json({message : "data not found"})
+    }else{
+        return res.status(404).json({message : "Project Data", result: projects})
+    }
+}
+
