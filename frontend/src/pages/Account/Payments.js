@@ -1,5 +1,5 @@
-import React from 'react'
-import { Tab, Tabs } from 'react-bootstrap'
+import React from 'react';
+import { Tab, Tabs } from 'react-bootstrap';
 import PartnerPaymentHistory from './tabContent/PartnerPaymentHistory';
 import VendorPaymentHistory from './tabContent/VendorPaymentHistory';
 
@@ -9,48 +9,52 @@ const Payments = () => {
   return (
     <div>
       <br />
-      <be />
       <br />
       <br />
-      <div className="card">
+      <br />
+      <div className="card" style={{ border: '0' }}>
         <div
           style={{
             display: 'flex',
-            padding: '2px',
-            justifyContent: 'space-betwee n',
+            padding: '15px',
           }}
         >
           <p
             style={{
               textAlign: 'left',
-              fontWeight: 'bold',
-              margin: '20px',
-              marginLeft: '20px',
+              fontSize: '1.25rem',
+              marginBottom: '0',
             }}
           >
             STARTER PAGE
           </p>
         </div>
       </div>
-      <div className='payment'>
-        <div className='white-box'>
+      <div className="payment">
+        <div className="white-box">
           <Tabs
             id="controlled-tab-example"
             activeKey={key}
-            onSelect={(k) => setKey(k)}
+            onSelect={k => setKey(k)}
             className="mb-3"
           >
-            <Tab eventKey='vendor_payment_history' title='Vendor Payment History'>
+            <Tab
+              eventKey="vendor_payment_history"
+              title="Vendor Payment History"
+            >
               <VendorPaymentHistory />
             </Tab>
-            <Tab eventKey='partner_payment_history' title='Partner Payment History'>
+            <Tab
+              eventKey="partner_payment_history"
+              title="Partner Payment History"
+            >
               <PartnerPaymentHistory />
             </Tab>
           </Tabs>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Payments
+export default Payments;
