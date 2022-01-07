@@ -19,13 +19,13 @@ const projects = sequelize .define('projects', {
     },
 
     description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         field: 'description',
         allowNull: false
     },
 
     longDesc: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         field: 'long_description'
     },
 
