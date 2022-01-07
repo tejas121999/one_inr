@@ -1,4 +1,4 @@
-export const Local = 'http://6af9-223-229-184-3.ngrok.io';
+export const Local = 'http://839f-223-229-184-3.ngrok.io';
 export const BASE_URL = `${Local}/api/`;
 export const BASE_URL_RECEIPT =
   'http://newoneinr.nimapinfotech.com/api/userReceipts';

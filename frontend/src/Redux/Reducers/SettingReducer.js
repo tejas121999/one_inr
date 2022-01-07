@@ -1,8 +1,9 @@
-import { GET_PROFILE, GET_ROLL_LIST } from "../constTypes";
+import { GET_PROFILE, GET_ROLL_LIST, GET_USER_LIST } from "../constTypes";
 
 const initialState = {
     getProfile: [],
-    getRoleList: []
+    getRoleList: [],
+    getUserList: []
 };
 
 export const SettingReducer = (state = initialState, action) => {
@@ -20,6 +21,14 @@ export const SettingReducer = (state = initialState, action) => {
             return {
                 ...state,
                 getRoleList: action.payload
+            }
+        }
+
+        // GET user List
+        case GET_USER_LIST: {
+            return {
+                ...state,
+                getUserList: action.payload
             }
         }
 
