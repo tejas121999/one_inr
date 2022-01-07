@@ -1,7 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { getProfile } from '../../Redux/Actions/SettingAction'
 
 const MyProfile = () => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProfile())
+  }, [])
+
+
   return (
     <>
       <br />

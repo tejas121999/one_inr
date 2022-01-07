@@ -20,31 +20,6 @@ let exportsToCsv = async(Data,filePath,req,res)=>{
         .write(userDataValues,{headers:true})
         .pipe(ws)
 
-    // const CSV_STRING=[
-    //     '1\firstName',
-    //     '2\astName',
-    //     '3\mobile',
-    //     '4\email',
-    //     '5\panImage',
-    //     '6\panNumber',
-    //     '7\gstNumber',
-    //     '8\gstImage',
-    //     '9\company',
-    //     '10\Address'
-    // ].join(EOL)
-
-
-    // const stream =parse({delimiter:'\t'})
-    // .on('error',(error) => console.log(error))
-    // .on('data',(row) => console.log(row))
-    // .on('end',(rowCount) => console.log(rowCount))
-
-    // stream.write(CSV_STRING);
-    // stream.end();
-
-
-
-
     // fastCsv.parseFile(path.join(destination,file),{objectMode : true,delimiter: '^',headers :true})
     // .on('error',error=>reject(error))
     // .on('data',(row)=>{
