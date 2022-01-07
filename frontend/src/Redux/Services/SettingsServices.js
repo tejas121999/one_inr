@@ -1,5 +1,5 @@
-import axios from "../../utils/interceptor"
-import { BASE_URL } from '../../API/APIEndpoints'
+import axios from '../../utils/interceptor';
+import { BASE_URL } from '../../API/APIEndpoints';
 
 function SettingsServices() {
     // profile
@@ -23,4 +23,4 @@ function SettingsServices() {
     this.updateConfig = async body => await axios.delete(BASE_URL + '', body)
 }
 
-export default new SettingsServices
+export default new SettingsServices();

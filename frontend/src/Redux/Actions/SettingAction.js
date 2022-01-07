@@ -16,13 +16,14 @@ export const getProfileAction = () => {
     } else {
         alert('No network');
     };
-};
+  } 
+
 
 export const getAllProfiles = data => {
-    return {
-        type: GET_PROFILE,
-        payload: data
-    };
+  return {
+    type: GET_PROFILE,
+    payload: data,
+  };
 };
 
 // update profile
@@ -84,10 +85,10 @@ export const getRoleListActionAction = () => {
 }
 
 export const getAllRoleList = data => {
-    return {
-        type: GET_ROLL_LIST,
-        payload: data
-    };
+  return {
+    type: GET_ROLL_LIST,
+    payload: data,
+  };
 };
 
 // add roll

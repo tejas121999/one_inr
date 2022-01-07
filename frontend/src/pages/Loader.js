@@ -27,7 +27,7 @@ const Loader = () => {
   );
 
   return show ? (
-    <div className="DataNotFound text-center mt-5">
+    <div className="DataNotFound text-center" style={{ marginTop: '15%' }}>
       <h2> No Data Found </h2>
     </div>
   ) : (
