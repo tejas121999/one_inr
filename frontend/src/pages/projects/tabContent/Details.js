@@ -70,7 +70,7 @@ const Details = () => {
                                     <div className='col-4'>
                                         <div className='input-box'>
                                             <label style={{ fontWeight: 'bold' }}>
-                                                Gole
+                                                goal
                                             </label>
                                             <NumericInput
                                                 className="form-control"

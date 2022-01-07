@@ -36,7 +36,9 @@ export const addProjectAction = body => {
     return dispatch => {
       projectServices
         .createProject(body)
-        .then(res => {})
+        .then(res => {
+          console.log(res);
+        })
         .catch(err => {});
     };
   } else {
@@ -83,6 +85,17 @@ export const getAllCompletedProjectAction = () => {
   } else {
     alert('No network');
   }
+};
+
+export const getCompletedProjectByValueAction = value => {
+  return dispatch => {
+    projectServices
+      .getCompletedProjectByValue(value)
+      .then(res => {
+        dispatch(getCompletedProjects(res.data));
+      })
+      .catch(err => {});
+  };
 };
 
 export const getCompletedProjects = data => {

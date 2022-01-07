@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const checkAuth = require('../middleware/checkAuth')
 
 const {wrapper} = require('../utils/errorWrap')
 
@@ -12,13 +13,13 @@ const {createVendorValidation,updateVendorValidation} = require('../validations/
 
 
 
-router.post('/',createVendorValidation,validationError,wrapper(addVendor)) 
-router.put('/:id',updateVendorValidation,validationError,wrapper(updateVendor))
-router.get('/',wrapper(getAllVendor))
-router.get('/get-vendor-pdf',generateVendorPdf)
-router.get('/get-vendor-csv',generateVendorCsv)
-router.get('/get-vendor-xlsx',getVendorExcel)
+router.post('/',checkAuth,createVendorValidation,validationError,wrapper(addVendor)) 
+router.put('/:id',checkAuth,updateVendorValidation,validationError,wrapper(updateVendor))
+router.get('/',wrapper(checkAuth,getAllVendor))
+router.get('/get-vendor-pdf',checkAuth,generateVendorPdf)
+router.get('/get-vendor-csv',checkAuth,generateVendorCsv)
+router.get('/get-vendor-xlsx',checkAuth,getVendorExcel)
 
-router.get('/:id',wrapper(getVenorById))
-router.delete('/:id',wrapper(deleteVendor))
+router.get('/:id',checkAuth,wrapper(getVenorById))
+router.delete('/:id',checkAuth,wrapper(deleteVendor))
 module.exports = router;

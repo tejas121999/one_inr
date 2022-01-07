@@ -1,9 +1,12 @@
 var express = require('express');
 var router = express.Router();
+const checkAuth = require('../middleware/checkAuth')
+const {myProfile,updateProfile,updateProfilePassword} = require('../controllers/myProfile')
+const { updateProfileValidation,updateProfilePasswordValidation} = require('../validations/user')
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+router.get('/my-profile',checkAuth,myProfile)
+router.put('/update',checkAuth,updateProfileValidation,updateProfile)
+router.put('/update/password',checkAuth,updateProfilePasswordValidation,updateProfilePassword)
+
 
 module.exports = router;

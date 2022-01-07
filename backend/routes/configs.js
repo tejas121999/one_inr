@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const checkAuth = require('../middleware/checkAuth')
 
 
 const {wrapper} = require('../utils/errorWrap')
@@ -10,11 +11,11 @@ const {addConfigSetting,getConfigSetting,updateConfigSetting}= require('../contr
 
 
 
-router.post('/',wrapper(addConfigSetting))
+router.post('/',checkAuth,wrapper(addConfigSetting))
 
-router.get('/',wrapper(getConfigSetting))
+router.get('/',checkAuth,wrapper(getConfigSetting))
 
-router.put('/:id',wrapper(updateConfigSetting))
+router.put('/:id',checkAuth,wrapper(updateConfigSetting))
 
 
 

@@ -20,14 +20,13 @@ import {
   FaBookOpen,
   FaPlusCircle,
 } from 'react-icons/fa';
-// import '../Ngo/Ngo.css';
+import './ngo.css';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllNGOAction } from '../../Redux/Actions/NgoActions';
 import DeleteNgo from './NgoModals/DeleteNgo';
-
 
 const ViewAllNgo = () => {
   const [order, setOrder] = React.useState('asc');
@@ -137,8 +136,6 @@ const ViewAllNgo = () => {
       active: '0',
       actionrequired: '0',
       action: '',
-
-
     },
     {
       id: 2,
@@ -147,7 +144,6 @@ const ViewAllNgo = () => {
       active: '0',
       actionrequired: '0',
       action: '',
-
     },
     {
       id: 3,
@@ -165,7 +161,14 @@ const ViewAllNgo = () => {
       actionrequired: '0',
       action: '',
     },
-
+    {
+      id: 5,
+      name: 'e',
+      pending: 0,
+      active: '0',
+      actionrequired: '0',
+      action: '',
+    },
   ];
 
   return (
@@ -174,36 +177,32 @@ const ViewAllNgo = () => {
       <br />
       <br />
       <br />
-      <div className="card">
+      <DeleteNgo show={deleteModal} onHide={deleteModalClose} id={deleteId} />
+      <div className="card" style={{ border: '0' }}>
         <div
           style={{
             display: 'flex',
             padding: '20px',
-            justifyContent: 'space-betwee n',
+            justifyContent: 'space-between',
           }}
         >
           <p
             style={{
               textAlign: 'left',
-              fontWeight: 'bold',
-              margin: '20px',
-              marginLeft: '20px',
+              fontSize: '1.25rem',
+              marginTop: '5px',
             }}
           >
             LIST OF ALL NGO
           </p>
-          <button
-            style={{ alignSelf: 'flex-start' }}
-            className="btn btn-primary"
-          >
-            Add NGO
-          </button>
+          <button className="btn btn-primary">Add NGO</button>
         </div>
       </div>
       <div
         style={{
           margin: '20px',
           backgroundColor: 'white',
+          marginBottom: '5em',
         }}
       >
         <div
@@ -219,13 +218,18 @@ const ViewAllNgo = () => {
           >
             Export
           </button>
-          <input
-            type="search"
-            placeholder="Search"
-            onChange={e => handleChange(e)}
-          />
+          <label style={{ fontWeight: '500', marginTop: '0.5em' }}>
+            Search :
+            <input
+              type="search"
+              placeholder="Search"
+              style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
+              onChange={e => handleChange(e)}
+            />
+          </label>
         </div>
-        <Paper sx={{ width: '100%', mb: 2 }}>
+        <hr style={{ margin: '0' }} />
+        <Paper sx={{ width: '100%' }}>
           <>
             <TableContainer>
               <Table
@@ -242,10 +246,7 @@ const ViewAllNgo = () => {
                 />
                 <TableBody>
                   {stableSort(constData, getComparator(order, orderBy))
-                    .slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage,
-                    )
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
                       const isItemSelected = isSelected(row.name);
                       const labelId = `enhanced-table-checkbox-${index}`;
@@ -266,9 +267,7 @@ const ViewAllNgo = () => {
                           >
                             {row.name}
                           </TableCell>
-                          <TableCell align="center">
-                            {row.pending}
-                          </TableCell>
+                          <TableCell align="center">{row.pending}</TableCell>
                           <TableCell align="center">{row.active}</TableCell>
                           <TableCell align="center">
                             {row.actionRequired}
@@ -278,13 +277,15 @@ const ViewAllNgo = () => {
                               data-bs-toggle="tooltip"
                               title="View Details"
                               className="btn"
-                              onClick={() => ViewModalOpen(row)}
+                              onClick={() =>
+                                history.push('/view_single_ngo', row)
+                              }
                             >
                               <FaRegEye />
                             </button>
                             <button
                               data-bs-toggle="tooltip"
-                              title="Edit"
+                              title="Edit Ngo"
                               className="btn"
                               onClick={() => history.push('/edit_ngo', row)}
                             >
@@ -292,9 +293,9 @@ const ViewAllNgo = () => {
                             </button>
                             <button
                               data-bs-toggle="tooltip"
-                              title="Add Fund"
+                              title="Add project"
                               className="btn"
-                              onClick={() => fundModaOpen(row)}
+                              onClick={() => history.push('/add_project', row)}
                             >
                               <FaPlusCircle />
                             </button>
@@ -329,8 +330,8 @@ const ViewAllNgo = () => {
         </Paper>
       </div>
     </>
-  )
-}
+  );
+};
 
 export default ViewAllNgo;
 

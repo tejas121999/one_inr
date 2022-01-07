@@ -7,6 +7,13 @@ import * as yup from 'yup';
 import uploadImage from '../../assets/img/logo/uploadImage.jpg';
 
 const EditProfile = props => {
+  const [old, oldPass] = useState('');
+  const [newPass, setNewPass] = useState('');
+  const [confPass, setConPass] = useState('');
+  const [pass, setPass] = useState(false);
+  const [show1, setShow1] = useState('true');
+  const [show2, setShow2] = useState('true');
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -27,6 +34,26 @@ const EditProfile = props => {
       .required('Required')
       .max(50, 'Max limit is 50 characters'),
   });
+
+  const updatePassword = async () => {
+    const Id = localStorage.getItem('userid');
+
+    const data = {
+      oldPassword: old,
+      newPassword: newPass,
+      confirmPassword: confPass,
+    };
+
+    // const url = BASE_URL + AUTH + CHANGE_PASSWORD;
+    // const res = await new APIService().post(url, data);
+
+    // if (res.status === 200) {
+    //   cogoToast.success('password updated sucessfuly');
+    //   history.push('/account');
+    // } else {
+    //   cogoToast.error(res);
+    // }
+  };
 
   //   const onUpdateProfile = values => {
   //     const obj = {
@@ -95,7 +122,7 @@ const EditProfile = props => {
                   />
                   <img
                     className="AttachImage"
-                    style={{ width: '100%' }}
+                    style={{ width: '100%', height: '225px' }}
                     src={uploadImage}
                   />
                 </label>
@@ -250,14 +277,129 @@ const EditProfile = props => {
             </div>
           </div>
           <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Header>
+              <Modal.Title style={{ textAlign: 'center' }}>
+                Change Password
+              </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              Woohoo, you're reading this text in a modal!
+              <div>
+                <div className="form-group required-field">
+                  {/* <div className="col-md-4"> */}
+                  <label className="required"> Old Password</label>
+                  <input
+                    type={show ? 'password' : 'text'}
+                    className="form-control"
+                    style={{ textAlign: 'left' }}
+                    onChange={e => {
+                      oldPass(e.target.value);
+                    }}
+                    required
+                  />
+                  <i
+                    className={`fa ${
+                      show ? 'fa-eye-slash' : 'fa-eye'
+                    } login-password-icon`}
+                    onClick={() => setShow(!show)}
+                    style={{
+                      position: 'absolute',
+                      left: '450px',
+                      top: '60px',
+                    }}
+                  ></i>
+                  {/* </div> */}
+                </div>
+                <div className="form-group required-field">
+                  {/* <div className="col-md-4"> */}
+                  <label className="required"> New Password</label>
+                  <input
+                    type={show1 ? 'password' : 'text'}
+                    className="form-control"
+                    onChange={e => {
+                      setNewPass(e.target.value);
+                    }}
+                    required
+                  />
+                  <i
+                    className={`fa ${
+                      show1 ? 'fa-eye-slash' : 'fa-eye'
+                    } login-password-icon`}
+                    onClick={() => setShow1(!show1)}
+                    style={{
+                      position: 'absolute',
+                      left: '450px',
+                      top: '145px',
+                    }}
+                  ></i>
+                  {/* </div> */}
+                </div>
+                <div className="form-group required-field">
+                  {/* <div className="col-md-4"> */}
+                  <label className="required"> Confirm Password</label>
+                  <input
+                    type={show2 ? 'password' : 'text'}
+                    className="form-control"
+                    onChange={e => {
+                      setConPass(e.target.value);
+                    }}
+                  />
+                  <i
+                    className={`fa ${
+                      show2 ? 'fa-eye-slash' : 'fa-eye'
+                    } login-password-icon`}
+                    onClick={() => setShow2(!show2)}
+                    style={{
+                      position: 'absolute',
+                      left: '450px',
+                      top: '230px',
+                    }}
+                  ></i>
+                  {/* </div> */}
+                </div>
+
+                {/* <div className="row">
+                  <div className="col-md-2 ">
+                    <button
+                      style={{
+                        padding: '10px 15px',
+                        borderRadius: '5px',
+                        fontSize: '10px',
+                        //textTransform: "lowercase",
+                        marginTop: '-10px',
+                        // font-size: "19px",
+                        marginLeft: '15px',
+                      }}
+                      className="savebtn btn-primary"
+                      onClick={() => updatePassword()}
+                    >
+                      Update Password
+                    </button>
+                  </div>
+                  <div className="col-md-2">
+                    <button
+                      style={{
+                        padding: '10px 20px',
+                        borderRadius: '5px',
+
+                        marginTop: '-10px',
+                        cursor: 'pointer',
+                        outline: 'none',
+                        border: 'none',
+                      }}
+                      className="savebtn btn-primary"
+                      onClick={() => setPass(false)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div> */}
+              </div>
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={updatePassword}>
                 Update
               </Button>
             </Modal.Footer>

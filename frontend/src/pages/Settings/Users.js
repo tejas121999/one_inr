@@ -112,6 +112,7 @@ const Users = () => {
         style={{
           margin: '20px',
           backgroundColor: 'white',
+          marginBottom: '5em',
         }}
       >
         <div
@@ -121,13 +122,18 @@ const Users = () => {
             justifyContent: 'flex-end',
           }}
         >
-          <input
-            placeholder="Search"
-            onChange={e => handleChange(e)}
-            type="search"
-          />
+          <label style={{ fontWeight: '500' }}>
+            Search :
+            <input
+              placeholder="Search"
+              onChange={e => handleChange(e)}
+              type="search"
+              style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
+            />
+          </label>
         </div>
-        <Paper sx={{ width: '100%', mb: 2 }}>
+        <hr style={{ margin: '0' }} />
+        <Paper sx={{ width: '100%' }}>
           {constData && constData.length > 0 ? (
             <React.Fragment>
               <TableContainer id="tableDiv">
