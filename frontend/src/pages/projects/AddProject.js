@@ -21,7 +21,7 @@ const AddProject = () => {
     return (
         <div>
             <br />
-            <be />
+            <br />
             <br />
             <br />
             <div className="card">
@@ -29,7 +29,7 @@ const AddProject = () => {
                     style={{
                         display: 'flex',
                         padding: '2px',
-                        justifyContent: 'space-betwee n',
+                        justifyContent: 'space-between',
                     }}
                 >
                     <p

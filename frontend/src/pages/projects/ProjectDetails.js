@@ -81,7 +81,65 @@ const projectDetails = (props) => {
     const data = [
         { img: "https://media.geeksforgeeks.org/wp-content/uploads/20210425122739/2-300x115.png", alt: "image one" },
         { img: "https://media.geeksforgeeks.org/wp-content/uploads/20210425122716/1-300x115.png", alt: "image two" },
-    ]
+    ];
+
+
+    const tempCells = [
+        {
+            id: 'startDate',
+            numeric: false,
+            disablePadding: false,
+            label: 'StartDate',
+        },
+        {
+            id: 'endDate',
+            numeric: false,
+            disablePadding: false,
+            label: 'EndDate',
+        },
+        {
+            id: 'daysLeft',
+            numeric: false,
+            disablePadding: false,
+            label: 'DaysLeft',
+        },
+    ];
+
+    const newHeadCells = [
+        {
+            id: 'date',
+            numeric: false,
+            disablePadding: false,
+            label: 'Date',
+        },
+        {
+            id: 'goal',
+            numeric: false,
+            disablePadding: false,
+            label: 'Goal',
+        },
+        {
+            id: 'funded',
+            numeric: false,
+            disablePadding: false,
+            label: 'Funded',
+        },
+        {
+            id: 'completion',
+            numeric: false,
+            disablePadding: false,
+            label: 'Completion',
+        },
+    ];
+
+    const TableconstData = [
+        {
+            id: 1,
+            startdate: '20-Jan-2021 To 20-Jan-2021',
+            endDate: '210',
+            daysLeft: '0',
+        },
+    ];
 
 
     //END
@@ -188,28 +246,75 @@ const projectDetails = (props) => {
                                                 </div>
                                             </div>
 
-
-
-
                                         </Tab>
 
                                         <Tab eventKey="date" title="Date" >
                                             <div className='row'>
-                                                <div className='col-4'>
-                                                    <span className="label label-default">Start Date</span>
+                                                <br />
+                                                <br />
+                                                <div>
+                                                    <hr style={{ margin: '0' }} />
+                                                    <Paper sx={{ width: '100%', mb: 2 }}>
+                                                        <>
+                                                            <TableContainer>
+                                                                <Table
+                                                                    sx={{ minWidth: 750 }}
+                                                                    aria-labelledby="tableTitle"
+                                                                    size={dense ? 'small' : 'medium'}
+                                                                >
+                                                                    <EnhancedTableHead
+                                                                        numSelected={selected.length}
+                                                                        order={order}
+                                                                        orderBy={orderBy}
+                                                                        onRequestSort={handleRequestSort}
+                                                                        rowCount={TableconstData.length}
+                                                                        headCells={tempCells}
+                                                                    />
+                                                                    <TableBody>
+                                                                        {stableSort(
+                                                                            TableconstData,
+                                                                            getComparator(order, orderBy),
+                                                                        )
+                                                                            .slice(
+                                                                                page * rowsPerPage,
+                                                                                page * rowsPerPage + rowsPerPage,
+                                                                            )
+                                                                            .map((row, index) => {
+                                                                                const isItemSelected = isSelected(row.name);
+                                                                                const labelId = `enhanced-table-checkbox-${index}`;
+
+                                                                                return (
+                                                                                    <TableRow
+                                                                                        hover
+                                                                                        aria-checked={isItemSelected}
+                                                                                        tabIndex={-1}
+                                                                                        key={row.name}
+                                                                                        selected={isItemSelected}
+                                                                                    >
+                                                                                        <TableCell
+                                                                                            id={labelId}
+                                                                                            align="center"
+                                                                                            scope="row"
+                                                                                            padding="none"
+                                                                                        >
+                                                                                            {row.startDate}
+                                                                                        </TableCell>
+                                                                                        <TableCell align="center">
+                                                                                            {row.endDate}
+                                                                                        </TableCell>
+                                                                                        <TableCell align="center">
+                                                                                            {row.daysLeft}
+                                                                                        </TableCell>
+                                                                                    </TableRow>
+                                                                                );
+                                                                            })}
+                                                                    </TableBody>
+                                                                </Table>
+                                                            </TableContainer>
+                                                        </>
+                                                    </Paper>
                                                 </div>
 
-                                                <div className='col-4'>
-                                                    <span className="label label-default">End Date</span>
-                                                </div>
-
-                                                <div className='col-4'>
-                                                    <span className="label label-default">Days Left</span>
-                                                </div>
-
-                                                <div className='col-4'>
-                                                    <span className="label label-default"></span>
-                                                </div>
 
                                             </div>
                                             <br />
@@ -239,6 +344,7 @@ const projectDetails = (props) => {
                                                                 orderBy={orderBy}
                                                                 onRequestSort={handleRequestSort}
                                                                 rowCount={constHeadcellsData.length}
+                                                                headCells={newHeadCells}
                                                             />
                                                             <TableBody>
                                                                 {stableSort(constHeadcellsData, getComparator(order, orderBy))
@@ -351,32 +457,6 @@ function stableSort(array, comparator) {
     return stabilizedThis.map(el => el[0]);
 }
 
-const headCells = [
-    {
-        id: 'date',
-        numeric: false,
-        disablePadding: false,
-        label: 'Date',
-    },
-    {
-        id: 'goal',
-        numeric: false,
-        disablePadding: false,
-        label: 'Goal',
-    },
-    {
-        id: 'funded',
-        numeric: false,
-        disablePadding: false,
-        label: 'Funded',
-    },
-    {
-        id: 'completion',
-        numeric: false,
-        disablePadding: false,
-        label: 'Completion',
-    },
-];
 
 function EnhancedTableHead(props) {
     const {
@@ -386,6 +466,7 @@ function EnhancedTableHead(props) {
         numSelected,
         rowCount,
         onRequestSort,
+        headCells,
     } = props;
 
     const createSortHandler = property => event => {
