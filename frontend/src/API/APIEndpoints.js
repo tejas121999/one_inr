@@ -1,4 +1,4 @@
-export const Local = 'http://newoneinr.nimapinfotech.com/api/';
+export const Local = 'http://localhost:9000//api/';
 export const BASE_URL = `${Local}/api/`;
 export const BASE_URL_RECEIPT =
   'http://newoneinr.nimapinfotech.com/api/userReceipts';

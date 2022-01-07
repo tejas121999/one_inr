@@ -402,9 +402,7 @@ const projectDetails = (props) => {
                                                     />
                                                 </>
                                             </Paper>
-
                                         </Tab>
-
                                     </Tabs>
                                 </div>
                             </div>
@@ -413,7 +411,7 @@ const projectDetails = (props) => {
                         <Tab eventKey="contributors" title="Contributors" >
                             <br />
                             <div>
-                                <h1 align={'center'}> No Contribution Yet </h1>
+                                <h1 align={'center'}>NO CONTRIBUTION YET</h1>
                             </div>
                         </Tab>
                     </Tabs>

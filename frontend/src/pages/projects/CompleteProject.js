@@ -245,7 +245,7 @@ const CompleteProject = () => {
                               data-bs-toggle="tooltip"
                               title="Archive"
                               className="btn"
-                              //   onClick={() => history.push('/edit_ngo', row)}
+                            //   onClick={() => history.push('/edit_ngo', row)}
                             >
                               <BsArchive size={20} />
                             </button>
@@ -253,7 +253,7 @@ const CompleteProject = () => {
                               data-bs-toggle="tooltip"
                               title="Refund"
                               className="btn"
-                              //   onClick={() => fundModaOpen(row)}
+                            //   onClick={() => fundModaOpen(row)}
                             >
                               <RiRefund2Line size={23} />
                             </button>

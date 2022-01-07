@@ -164,20 +164,19 @@ const ArchivedProject = () => {
       <br />
       <br />
       <br />
-      <div className="card">
+      <div className="card" style={{ border: '0' }}>
         <div
           style={{
             display: 'flex',
             padding: '20px',
-            justifyContent: 'space-between',
           }}
         >
           <p
             style={{
               textAlign: 'left',
+              fontSize: '1.25rem',
               fontWeight: 'bold',
-              margin: '20px',
-              marginLeft: '20px',
+              marginBottom: '0',
             }}
           >
             ARCHIVED PROJECTS
@@ -189,6 +188,7 @@ const ArchivedProject = () => {
           display: 'flex',
           padding: '20px',
           justifyContent: 'space-between',
+          backgroundColor: 'white',
         }}
       >
         <button style={{ alignSelf: 'flex-start' }} className="btn btn-primary">
@@ -247,7 +247,7 @@ const ArchivedProject = () => {
                             data-bs-toggle="tooltip"
                             title="Archive"
                             className="btn"
-                            // onClick={() => deleteModalOpen(row)}
+                          // onClick={() => deleteModalOpen(row)}
                           >
                             <FaRegFileArchive />
                           </button>
@@ -396,3 +396,5 @@ function EnhancedTableHead(props) {
     </TableHead>
   );
 }
+
+
