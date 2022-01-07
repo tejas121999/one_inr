@@ -197,7 +197,7 @@ const ArchivedProject = () => {
         <input placeholder="Search" onChange={e => handleChange(e)} />
       </div>
 
-      <Paper sx={{ width: '100%', mb: 2 }}>
+      <Paper sx={{ width: '100%' }}>
         <>
           <TableContainer>
             <Table
