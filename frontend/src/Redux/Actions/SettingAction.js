@@ -64,6 +64,9 @@ export const changePasswordAction = (id, data, history) => {
                     history.push('#');
                 }, 2000);
             })
+            .catch(err => {
+                window.history.back()
+            })
     }
 }
 
