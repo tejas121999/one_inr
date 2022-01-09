@@ -82,6 +82,10 @@ export default function EnhancedTable() {
 
   let donorList = useSelector(state => state.donor.ViewAllDonor);
 
+  // console.log("donerlist", donorList)
+
+  // console.log("view all doner")
+
   const ViewModalOpen = data => {
     setViewData(data);
     setViewModal(true);
@@ -97,7 +101,7 @@ export default function EnhancedTable() {
   const ViewDetailModalClose = () => {
     setViewDetails(false);
   };
-  
+
   const fundModaOpen = data => {
     setFundModalData(data.id);
     setFundModal(true);

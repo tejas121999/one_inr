@@ -1,4 +1,4 @@
-import { GET_PROFILE, GET_ROLL_LIST, GET_USER_LIST } from "../constTypes";
+import { GET_PROFILE, GET_ROLL_LIST, GET_USER_LIST, GET_REZORPAY } from "../constTypes";
 import SettingsServices from "../Services/SettingsServices";
 import { toast } from 'react-toastify';
 
@@ -16,14 +16,14 @@ export const getProfileAction = () => {
     } else {
         alert('No network');
     };
-  } 
+}
 
 
 export const getAllProfiles = data => {
-  return {
-    type: GET_PROFILE,
-    payload: data,
-  };
+    return {
+        type: GET_PROFILE,
+        payload: data,
+    };
 };
 
 // update profile
@@ -88,10 +88,10 @@ export const getRoleListActionAction = () => {
 }
 
 export const getAllRoleList = data => {
-  return {
-    type: GET_ROLL_LIST,
-    payload: data,
-  };
+    return {
+        type: GET_ROLL_LIST,
+        payload: data,
+    };
 };
 
 // add roll
@@ -262,3 +262,83 @@ export const updateConfigAction = (body, history) => {
     }
 }
 
+// RAZORPAY CREDENTIALS
+// GET REZORPAY
+export const getRezorpayAction = () => {
+    if (navigator.onLine) {
+        return dispatch => {
+            SettingsServices.getAllRazorpay()
+                .then(res => {
+                    dispatch(getRezorpay(res.data));
+                })
+                .catch(err => { })
+        }
+    } else {
+        alert('No Network')
+    }
+}
+
+export const getRezorpay = data => {
+    return {
+        type: GET_REZORPAY,
+        payload: data
+    }
+}
+
+// add rezorpay
+export const addRezorpayAction = (body, history) => {
+    if (navigator.onLine) {
+        return dispatch => {
+            SettingsServices.addRezorpay(body)
+                .then(res => {
+                    toast.success(res.data.message, {
+                        position: 'top-center',
+                        autoClose: 2000
+                    });
+                    setTimeout(function () {
+                        history.push('#')
+                    }, 2000)
+                })
+                .catch(err => { })
+        }
+    } else {
+        alert('no network')
+    }
+}
+
+// update rezorpay
+export const updateRezorpayAction = (id, body, history) => {
+    if (navigator.onLine) {
+        return dispatch => {
+            SettingsServices.updateRezorpay(id, body)
+                .then(res => {
+                    toast.success(res.data.message, {
+                        position: 'top-center',
+                        autoClose: 2000
+                    });
+                    setTimeout(function () {
+                        history.push('#');
+                    }, 2000);
+                })
+                .catch(err => {
+                    window.history.back()
+                })
+        }
+    } else {
+        // need to add toster here
+    }
+}
+
+// delete rezorpay 
+export const deleteRezorpayAction = id => {
+    return dispatch => {
+        SettingsServices.deleteRezorpay(id)
+            .then(res => {
+                toast.success(res.data.message, {
+                    position: 'top-center',
+                    autoClose: 2000,
+                });
+                dispatch(err => { })
+            })
+    }
+}

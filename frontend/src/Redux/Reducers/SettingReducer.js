@@ -1,9 +1,10 @@
-import { GET_PROFILE, GET_ROLL_LIST, GET_USER_LIST } from "../constTypes";
+import { GET_PROFILE, GET_ROLL_LIST, GET_USER_LIST, GET_REZORPAY } from "../constTypes";
 
 const initialState = {
     getProfile: [],
     getRoleList: [],
-    getUserList: []
+    getUserList: [],
+    getRezorpay: []
 };
 
 export const SettingReducer = (state = initialState, action) => {
@@ -29,6 +30,14 @@ export const SettingReducer = (state = initialState, action) => {
             return {
                 ...state,
                 getUserList: action.payload
+            }
+        }
+
+        // GET RAZORPAY CREDENTIALS
+        case GET_REZORPAY: {
+            return {
+                ...state,
+                getRezorpay: action.payload
             }
         }
 

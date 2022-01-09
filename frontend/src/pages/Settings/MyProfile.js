@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProfileAction } from '../../Redux/Actions/SettingAction'
 
@@ -10,6 +10,9 @@ const MyProfile = () => {
   useEffect(() => {
     dispatch(getProfileAction())
   }, [])
+
+  let profile = useSelector(state => state.setting.getProfile)
+  console.log('profile', profile)
 
 
   return (

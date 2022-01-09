@@ -11,7 +11,7 @@ function SettingsServices() {
     this.getRoleList = async () => await axios.get(BASE_URL + '#');
     this.addRoleList = async body => await axios.post(BASE_URL + '#', body);
     this.editRollList = async body => await axios.put(BASE_URL + '#', body);
-    this.deleteRole = async id => await axios.delete(BASE_URL + '#' , id);
+    this.deleteRole = async id => await axios.delete(BASE_URL + '#', id);
 
     // user list
     this.getUserList = async () => await axios.get(BASE_URL + '#')
@@ -21,6 +21,13 @@ function SettingsServices() {
 
     // config 
     this.updateConfig = async body => await axios.delete(BASE_URL + '', body)
+
+    // RAZORPAY CREDENTIALS
+    this.getAllRazorpay = async () => await axios.get(BASE_URL + '#')
+    this.addRezorpay = async body => await axios.post(BASE_URL + '#', body)
+    this.updateRezorpay = async body => await axios.put(BASE_URL + '#', body)
+    this.deleteRezorpay = async id => await axios.delete(BASE_URL + '#', id)
+
 }
 
 export default new SettingsServices();
