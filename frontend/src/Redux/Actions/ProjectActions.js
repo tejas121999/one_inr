@@ -8,15 +8,16 @@ import projectServices from '../Services/projectServices';
 
 // Get ALl
 
-export const getAllProjectAction = () => {
+export const getAllProjectAction = (value) => {
   if (navigator.onLine) {
     return dispatch => {
       projectServices
-        .getAllProject()
+        .getAllProject(value)
         .then(res => {
-          dispatch(getAllProjects(res.data));
+          // console.log("getAllProject", res.data.result)
+          dispatch(getAllProjects(res.data.result));
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');
@@ -39,7 +40,7 @@ export const addProjectAction = body => {
         .then(res => {
           console.log(res);
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');
@@ -54,9 +55,9 @@ export const getProjectByIdAction = id => {
       projectServices
         .getProjectByID(id)
         .then(res => {
-          dispatch(getProjectData(res.data));
+          dispatch(getProjectData(res.data.result));
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');
@@ -80,7 +81,7 @@ export const getAllCompletedProjectAction = () => {
         .then(res => {
           dispatch(getCompletedProjects(res.data));
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');
@@ -94,7 +95,7 @@ export const getCompletedProjectByValueAction = value => {
       .then(res => {
         dispatch(getCompletedProjects(res.data));
       })
-      .catch(err => {});
+      .catch(err => { });
   };
 };
 
@@ -115,7 +116,7 @@ export const getAllArchivedProjectAction = () => {
         .then(res => {
           dispatch(getArchivedProjects(res.data));
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');

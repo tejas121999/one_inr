@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Box from '@mui/material/Box';
@@ -19,6 +19,7 @@ import { BiLink } from 'react-icons/bi';
 import { AiOutlineDollarCircle } from 'react-icons/ai';
 
 import './project.css';
+import { getAllProjectAction } from '../../Redux/Actions/ProjectActions';
 
 const ViewAllProjects = () => {
   const [order, setOrder] = React.useState('asc');
@@ -36,6 +37,14 @@ const ViewAllProjects = () => {
   const [deleteId, setDeleteID] = React.useState(0);
   const history = useHistory();
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllProjectAction(''))
+  }, [])
+
+
+  let allProject = useSelector((state) => state.project.projectList)
+  //console.log("shivani", allProject)
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -44,7 +53,7 @@ const ViewAllProjects = () => {
   };
 
   const handleChangePage = (event, newPage) => {
-    console.log('ChinmayChange', newPage);
+    //console.log('ChinmayChange', newPage);
 
     setPage(newPage);
   };
@@ -55,6 +64,22 @@ const ViewAllProjects = () => {
   };
 
   const isSelected = name => selected.indexOf(name) !== -1;
+
+  let timeout = null;
+  const handleChange = e => {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      onSearch(e.target.value);
+    }, 1000);
+  };
+
+  const onSearch = value => {
+    if (value) {
+      dispatch(getAllProjectAction(value));
+    } else {
+      dispatch(getAllProjectAction(''));
+    }
+  };
 
   const constData = [
     {
@@ -160,6 +185,7 @@ const ViewAllProjects = () => {
                 type="search"
                 placeholder="Search"
                 style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
+                onChange={(e) => handleChange(e)}
               />
             </label>
           </div>
@@ -176,10 +202,10 @@ const ViewAllProjects = () => {
                   order={order}
                   orderBy={orderBy}
                   onRequestSort={handleRequestSort}
-                  rowCount={constData.length}
+                  rowCount={allProject.length}
                 />
                 <TableBody>
-                  {stableSort(constData, getComparator(order, orderBy))
+                  {stableSort(allProject, getComparator(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
                       const isItemSelected = isSelected(row.name);
@@ -238,7 +264,7 @@ const ViewAllProjects = () => {
                               title="View Details"
                               className="btn"
                               onClick={() =>
-                                history.push('/project_details', row)
+                                history.push(`/project_details`, row)
                               }
                             >
                               <FaRegEye />
@@ -277,7 +303,7 @@ const ViewAllProjects = () => {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={constData.length}
+              count={allProject.length}
               rowsPerPage={rowsPerPage}
               page={page}
               pageSize={10}

@@ -18,8 +18,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import { visuallyHidden } from '@mui/utils';
+import { getProjectByIdAction } from '../../Redux/Actions/ProjectActions';
 
 const projectDetails = (props) => {
+    //  console.log("ss", props)
 
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
@@ -33,9 +35,11 @@ const projectDetails = (props) => {
     const history = useHistory();
     const dispatch = useDispatch();
     useEffect(() => {
-        //  dispatch(constData());
-    }, []);
+        dispatch(getProjectByIdAction(props.location.state.id))
+    }, [])
 
+    let projectById = useSelector((state) => state.project.projectDetails)
+    console.log("s", projectById)
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -218,7 +222,7 @@ const projectDetails = (props) => {
                                             <br />
                                             <div className='row'>
                                                 <div className='col-12'>
-                                                    <p> asdfghjfghjhj asdfghjkjasassa asdfghjsdxfcgvhbjdfcg </p>
+                                                    <p> {projectById && projectById.description} </p>
                                                     <hr />
                                                 </div>
                                             </div>
@@ -227,7 +231,7 @@ const projectDetails = (props) => {
                                                     <p>Recurring</p>
                                                 </div>
                                                 <div className='col-6'>
-                                                    <p>No</p>
+                                                    <p>{projectById && projectById.recurringDays}Days</p>
                                                 </div>
                                             </div>
                                             <br />
@@ -242,7 +246,7 @@ const projectDetails = (props) => {
                                                     <p>Goal</p>
                                                 </div>
                                                 <div className='col-6'>
-                                                    <p>300INR</p>
+                                                    <p>{projectById && projectById.goal}INR</p>
                                                 </div>
                                             </div>
 
