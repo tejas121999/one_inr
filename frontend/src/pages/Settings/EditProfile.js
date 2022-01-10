@@ -285,7 +285,6 @@ const EditProfile = props => {
             <Modal.Body>
               <div>
                 <div className="form-group required-field">
-                  {/* <div className="col-md-4"> */}
                   <label className="required"> Old Password</label>
                   <input
                     type={show ? 'password' : 'text'}
@@ -307,10 +306,8 @@ const EditProfile = props => {
                       top: '60px',
                     }}
                   ></i>
-                  {/* </div> */}
                 </div>
                 <div className="form-group required-field">
-                  {/* <div className="col-md-4"> */}
                   <label className="required"> New Password</label>
                   <input
                     type={show1 ? 'password' : 'text'}
@@ -331,10 +328,8 @@ const EditProfile = props => {
                       top: '145px',
                     }}
                   ></i>
-                  {/* </div> */}
                 </div>
                 <div className="form-group required-field">
-                  {/* <div className="col-md-4"> */}
                   <label className="required"> Confirm Password</label>
                   <input
                     type={show2 ? 'password' : 'text'}
@@ -354,45 +349,7 @@ const EditProfile = props => {
                       top: '230px',
                     }}
                   ></i>
-                  {/* </div> */}
                 </div>
-
-                {/* <div className="row">
-                  <div className="col-md-2 ">
-                    <button
-                      style={{
-                        padding: '10px 15px',
-                        borderRadius: '5px',
-                        fontSize: '10px',
-                        //textTransform: "lowercase",
-                        marginTop: '-10px',
-                        // font-size: "19px",
-                        marginLeft: '15px',
-                      }}
-                      className="savebtn btn-primary"
-                      onClick={() => updatePassword()}
-                    >
-                      Update Password
-                    </button>
-                  </div>
-                  <div className="col-md-2">
-                    <button
-                      style={{
-                        padding: '10px 20px',
-                        borderRadius: '5px',
-
-                        marginTop: '-10px',
-                        cursor: 'pointer',
-                        outline: 'none',
-                        border: 'none',
-                      }}
-                      className="savebtn btn-primary"
-                      onClick={() => setPass(false)}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div> */}
               </div>
             </Modal.Body>
             <Modal.Footer>

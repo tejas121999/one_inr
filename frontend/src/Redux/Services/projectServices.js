@@ -6,8 +6,8 @@ function projectServices() {
 
   this.createProject = async body =>
     await axios.post(BASE_URL + 'projects/create', body);
-  this.getAllProject = async body => await axios.get(BASE_URL + 'auth');
-  this.getProjectByID = async id => await axios.get(BASE_URL + 'auth');
+  this.getAllProject = async value => await axios.get(BASE_URL + `projects/get-project/?search=${value}`);
+  this.getProjectByID = async id => await axios.get(BASE_URL + `projects/get-project/${id}`);
 
   this.getAllCompletedProject = async () =>
     await axios.get(BASE_URL + 'get-completed-projects');
