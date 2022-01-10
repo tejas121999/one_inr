@@ -31,12 +31,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             field: 'contacts'
         },
-
-        bankDetails: {
-            type: DataTypes.STRING,
-            field: 'bank_details'
-        },
-
+        
         panCard: {
             type: DataTypes.STRING,
             field: 'pancard'
@@ -82,6 +77,8 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'ngos',
         paranoid: true,
         deletedAt : 'deleted_at',
+        createdAt : 'created_at',
+        updatedAt : 'updated_at',
         timeStamp : true,
     });
 
@@ -90,6 +87,7 @@ module.exports = (sequelize, DataTypes) => {
         ngo.hasMany(models.usersReceipts,{foreignKey : 'ngoId'})
         ngo.belongsTo(models.users,{foreignKey: 'userId'})
         
+
     }
 
     return ngo;
