@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getProfile } from '../../Redux/Actions/SettingAction'
+import { getProfile } from '../../Redux/Actions/SettingAction';
 
 const MyProfile = () => {
-
   const dispatch = useDispatch();
-
+  let profileData = useSelector(state => state.setting.getProfile);
+  console.log('priyank', profileData);
   useEffect(() => {
-    dispatch(getProfile())
-  }, [])
+    dispatch(getProfile());
+  }, []);
 
+  // const initialData = {
+  //   name: '',
+  //   email: '',
+  //   mobile: '',
+  // };
 
   return (
     <>
@@ -56,7 +61,7 @@ const MyProfile = () => {
                 marginLeft: '30px',
               }}
             >
-              <img src="https://test.oneinr.com/uploads/no-image.png" />
+              <img src={profileData && profileData.profileImage} />
             </div>
           </div>
           <div
@@ -76,15 +81,21 @@ const MyProfile = () => {
                 <tbody>
                   <tr>
                     <th style={{ width: '10em' }}>Name</th>
-                    <td style={{ width: '50em' }}>Priyank Ranka</td>
+                    <td style={{ width: '50em' }}>
+                      {profileData && profileData.name}
+                    </td>
                   </tr>
                   <tr>
                     <th style={{ width: '10em' }}>Mobile</th>
-                    <td style={{ width: '50em' }}>9756485684</td>
+                    <td style={{ width: '50em' }}>
+                      {profileData && profileData.email}
+                    </td>
                   </tr>
                   <tr>
                     <th style={{ width: '10em' }}>Email</th>
-                    <td style={{ width: '50em' }}>admin@nimapinfotech.com</td>
+                    <td style={{ width: '50em' }}>
+                      {profileData && profileData.mobile}
+                    </td>
                   </tr>
                   <tr>
                     <td></td>
