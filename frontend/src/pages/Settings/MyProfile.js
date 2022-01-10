@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProfile } from '../../Redux/Actions/SettingAction';
+import { Local } from '../../API/APIEndpoints';
+
+
 
 const MyProfile = () => {
   const dispatch = useDispatch();
   let profileData = useSelector(state => state.setting.getProfile);
-  console.log('priyank', profileData);
+
   useEffect(() => {
     dispatch(getProfile());
   }, []);
@@ -61,7 +64,7 @@ const MyProfile = () => {
                 marginLeft: '30px',
               }}
             >
-              <img src={profileData && profileData.profileImage} />
+              <img src={Local+'/'+profileData.profileImage}/>
             </div>
           </div>
           <div
