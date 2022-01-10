@@ -8,7 +8,8 @@ export const getProfile = () => {
     return dispatch => {
       SettingsServices.getProfile()
         .then(res => {
-          dispatch(getAllProfiles(res.data));
+          dispatch(getAllProfiles(res.data.data));
+          console.log(res);
         })
         .catch(err => {});
     };
