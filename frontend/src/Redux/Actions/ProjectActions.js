@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import {
   GET_ALL_PROJECTS,
   GET_ARCHIVED_PROJECTS,
@@ -16,7 +17,7 @@ export const getAllProjectAction = () => {
         .then(res => {
           dispatch(getAllProjects(res.data));
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');
@@ -39,7 +40,7 @@ export const addProjectAction = body => {
         .then(res => {
           console.log(res);
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');
@@ -56,7 +57,7 @@ export const getProjectByIdAction = id => {
         .then(res => {
           dispatch(getProjectData(res.data));
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');
@@ -70,6 +71,71 @@ export const getProjectData = data => {
   };
 };
 
+// update project 
+export const updateProjectAction = (id, data, history) => {
+  if (navigator.onLine) {
+    return dispatch => {
+      projectServices.updateProject(id, data)
+        .then(res => {
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000
+          });
+          setTimeout(function () {
+            history.push('#')
+          }, 2000);
+        })
+        .catch(err => {
+          window.history.back();
+        })
+    }
+  }
+}
+
+// commition update
+export const CommitionUpdateAction = (id, data, history) => {
+  if (navigator.onLine) {
+    return dispatch => {
+      projectServices.updateCommition(id, data)
+        .then(res => {
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000
+          });
+          setTimeout(function () {
+            history.push('#');
+          }, 2000);
+        })
+        .catch(err => {
+          window.history.back();
+        })
+    }
+  } else {
+    // 
+  }
+}
+
+// add fund by id
+export const addFundAction = (id, data, history) => {
+  if (navigator.onLine) {
+    return dispatch => {
+      projectServices.addFund(id, data)
+        .then(res => {
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000
+          });
+          setTimeout(function () {
+            history.push('#')
+          }, 2000);
+        })
+        .catch(err => {
+          window.history.back();
+        })
+    }
+  }
+}
+
 // Copleted projects
 
 export const getAllCompletedProjectAction = () => {
@@ -80,7 +146,7 @@ export const getAllCompletedProjectAction = () => {
         .then(res => {
           dispatch(getCompletedProjects(res.data));
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');
@@ -94,7 +160,7 @@ export const getCompletedProjectByValueAction = value => {
       .then(res => {
         dispatch(getCompletedProjects(res.data));
       })
-      .catch(err => {});
+      .catch(err => { });
   };
 };
 
@@ -115,7 +181,7 @@ export const getAllArchivedProjectAction = () => {
         .then(res => {
           dispatch(getArchivedProjects(res.data));
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');

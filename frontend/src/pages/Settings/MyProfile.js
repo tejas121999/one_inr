@@ -12,7 +12,7 @@ const MyProfile = () => {
   }, [])
 
   let profile = useSelector(state => state.setting.getProfile)
-  console.log('profile', profile)
+  console.log('profile', profile.data)
 
 
   return (
@@ -79,7 +79,7 @@ const MyProfile = () => {
                 <tbody>
                   <tr>
                     <th style={{ width: '10em' }}>Name</th>
-                    <td style={{ width: '50em' }}>Priyank Ranka</td>
+                    <td style={{ width: '50em' }}>{profile && profile.name}</td>
                   </tr>
                   <tr>
                     <th style={{ width: '10em' }}>Mobile</th>
