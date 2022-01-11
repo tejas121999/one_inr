@@ -37,7 +37,7 @@ export const updateProfileAction = (id, data, history) => {
                         autoClose: 2000,
                     });
                     setTimeout(function () {
-                        history.push('#');
+                        history.push('/my_profile');
                     }, 2000);
                 })
                 .catch(err => {
@@ -49,6 +49,28 @@ export const updateProfileAction = (id, data, history) => {
     }
 }
 
+// update profie image
+export const updateProfileImgAction = (id, data, history) => {
+    if (navigator.onLine) {
+        return dispatch => {
+            SettingsServices.updateProfileImg(id, data)
+                .then(res => {
+                    toast.success(res.data.message, {
+                        position: 'top-center',
+                        autoClose: 2000
+                    });
+                    setTimeout(function() {
+                        history.push('#')
+                    }, 2000);
+                })
+                .catch(err => {
+                    window.history.back();
+                })
+        }
+    } else {
+        // need to add toster here
+    }
+}
 
 
 // change password
