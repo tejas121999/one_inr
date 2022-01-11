@@ -1,48 +1,51 @@
 // const { DataTypes } = require('sequelize/types');
 const models = require('../models');
 const paginationFunc = require('../utils/pagination');
-const sequelize = models.Sequelize
-const Op = sequelize.Op;
+const Sequelize = models.Sequelize;
+const sequelize = models.sequelize;
+const Op = Sequelize.Op;
+const twinBcrypt = require('twin-bcrypt');
+const saltRounds = 10;
+const moment = require('moment');
+const { createBankData } = require('../service/createBankData');
 
-
-//Creating ngo
-// exports.addNgo = async (req, res) => {
-
-
-//     let addNgo = await models.ngo.create({
-//         userId: data.userId,
-//         address: req.body.address,
-//         registrationDate: req.body.registrationDate,
-//         registrationNumber: req.body.registrationNumber,
-//         landline: req.body.landline,
-//         contacts: req.body.contacts,
-//         panCard: req.body.panCard,
-//         panNumber: req.body.panNumber,
-//         certificate: req.body.certificate,
-//         charityRegistrationCertificate: req.body.charityRegistrationCertificate,
-//         deed: req.body.deed,
-//         logo: req.body.logo,
-//         signature: req.body.signature,
-//         isKyc: req.body.isKyc
-//     })
-//     // const newNGO = addNgo.map((ele) => ele.bankDetails = JSON.str(ele.bankDetails))
-//     // console.log((addNgo));
-//     if (!addNgo) {
-//         return res.status(400).json({
-//             message: 'Failed to create NGO'
-//         })
-//     } else {
-//         return res.status(201).json({
-//             message: 'NGO created successfully'
-//         })
-//     }
-// }
 
 
 
 // Creating Ngo 
-// res
+//It will create a user in user model then ngo in ngo model and if there is bank details it will create bank details.
+exports.addNgo = async (req, res) => {
+    var new_date = moment().add(365, 'days').format()
+    let { name, email, mobile, password, } = req.body;
+    let { address, registrationDate, registrationNumber, landline, panCard, panNumber, certificate, charityRegistrationCertificate, logo, deed, signature, isKyc } = req.body;
 
+    const hash = await twinBcrypt.hashSync(password, saltRounds);
+    var cBankData;
+    await sequelize.transaction(async (t) => {
+
+        let data = await models.users.create(
+            { name, email, mobile, password: hash, balanceNextRenewDate: new_date },
+            { transaction: t }
+        )
+        let createNgo = await models.ngo.create(
+            { userId: data.id, address, registrationDate, registrationNumber, landline, panCard, panNumber, certificate, charityRegistrationCertificate, logo, deed, signature, isKyc },
+            { transaction: t }
+        )
+        if (req.body.bankDetails) {
+            for (const item of req.body.bankDetails) {
+                cBankData = await createBankData({ userId: data.id, bankName: item.bankName, accountNumber: item.accountNumber, beneficiaryName: item.beneficiaryName, ifsc: item.ifsc }, t)
+            }
+        }
+
+    })
+
+    if (cBankData == false) {
+        return res.status(401).json({ message: " Failed to create NGO." })
+    } else {
+        return res.status(201).json({ message: "Ngo Created successfully." })
+    }
+
+}
 
 
 
@@ -123,7 +126,7 @@ exports.getAllNgo = async (req, res) => {
         offset: offset,
         where: searchQuery,
         include: [{
-            model : models.users 
+            model: models.users
         }
         ],
         order: [

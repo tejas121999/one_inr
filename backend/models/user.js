@@ -91,12 +91,6 @@ module.exports = (sequelize,DataTypes)=>{
             field: 'user_id',
             defaultValue : 0
         },
-        isPriyank:{
-            type: DataTypes.ENUM(),
-            values : ['false','true'],
-            defaultValue: 'false',
-            field: 'is_priyank',
-        },
         balanceRenewalDate:{
             type: DataTypes.DATE,
             field: 'balance_renew_date'
@@ -114,10 +108,13 @@ module.exports = (sequelize,DataTypes)=>{
     });
 
     users.associate = function (models) {
-        users.hasMany(models.usersReceipts, {foreignKey : 'user_id'}),
-        users.hasOne(models.users,{foreignKey : 'parentId'})
-        users.belongsTo(models.users,{foreignKey : 'parentId'})
+        users.hasMany(models.usersReceipts, {foreignKey : 'userId'}),
+        users.hasMany(models.bankDetails,{foreignKey:'userId'})
+        // users.hasOne(models.users,{foreignKey : 'parentId'})
+        // users.belongsTo(models.users,{foreignKey : 'parentId'})
         users.hasOne(models.ngo,{foreignKey: 'userId'})
+
+
         // usersReceipts.belongsTo(models.ngo, {foreignKey : 'ngo_id'}),
         // usersReceipts.belongsTo(models.projects, {foreignKey : 'project_id'})
     }
