@@ -9,13 +9,14 @@ import projectServices from '../Services/projectServices';
 
 // Get ALl
 
-export const getAllProjectAction = () => {
+export const getAllProjectAction = (value) => {
   if (navigator.onLine) {
     return dispatch => {
       projectServices
-        .getAllProject()
+        .getAllProject(value)
         .then(res => {
-          dispatch(getAllProjects(res.data));
+          // console.log("getAllProject", res.data.result)
+          dispatch(getAllProjects(res.data.result));
         })
         .catch(err => { });
     };
@@ -55,7 +56,7 @@ export const getProjectByIdAction = id => {
       projectServices
         .getProjectByID(id)
         .then(res => {
-          dispatch(getProjectData(res.data));
+          dispatch(getProjectData(res.data.result));
         })
         .catch(err => { });
     };

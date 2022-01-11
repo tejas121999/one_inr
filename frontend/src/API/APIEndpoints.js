@@ -33,3 +33,5 @@ export const DELETE_A_DONOR_URL = 'donor/{{id}}';
 export const CREATE_PROJECT_URL = 'projects/create';
 
 export const GET_COMPLETED_PROJECTS = 'projects/get-completed-projects';
+
+export const GET_PROFILE = 'user/my-profile';

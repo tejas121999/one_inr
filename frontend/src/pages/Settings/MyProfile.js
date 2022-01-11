@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProfileAction } from '../../Redux/Actions/SettingAction'
 
-const MyProfile = () => {
 
+const MyProfile = () => {
   const dispatch = useDispatch();
+  let profileData = useSelector(state => state.setting.getProfile);
 
   useEffect(() => {
     dispatch(getProfileAction())
@@ -59,7 +60,7 @@ const MyProfile = () => {
                 marginLeft: '30px',
               }}
             >
-              <img src="https://test.oneinr.com/uploads/no-image.png" />
+              <img src={Local+'/'+profileData.profileImage}/>
             </div>
           </div>
           <div
@@ -83,11 +84,15 @@ const MyProfile = () => {
                   </tr>
                   <tr>
                     <th style={{ width: '10em' }}>Mobile</th>
-                    <td style={{ width: '50em' }}>9756485684</td>
+                    <td style={{ width: '50em' }}>
+                      {profileData && profileData.email}
+                    </td>
                   </tr>
                   <tr>
                     <th style={{ width: '10em' }}>Email</th>
-                    <td style={{ width: '50em' }}>admin@nimapinfotech.com</td>
+                    <td style={{ width: '50em' }}>
+                      {profileData && profileData.mobile}
+                    </td>
                   </tr>
                   <tr>
                     <td></td>

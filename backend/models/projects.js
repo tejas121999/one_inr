@@ -89,7 +89,7 @@ const projects = sequelize .define('projects', {
             return rawValue;
         }
     },
-    
+
     recurring : {
         type : DataTypes.VIRTUAL,
         get(){
@@ -106,11 +106,12 @@ const projects = sequelize .define('projects', {
     {
         freezeTableName: true,
         tableName: 'projects',
-        paranoid: true,
-        timestamp: true,
         createdAt : 'created_at',
         updatedAt : 'updated_at',
-        deletedAt : 'deleted_at'
+        paranoid: true,
+        deletedAt : 'deleted_at',
+        timestamp: true,
+      
     });
 
     projects.associate = function(models) {

@@ -112,7 +112,7 @@ exports.ImageUpload = async (req, res) => {
     // You can display a nice error page using the standard express way.
     uploads(req, res, async (err) => {
         if (err) {
-            return res.status(500).json({ message: "Internal Server Error" })
+            return res.status(400).json({ message: err.message })
         }
 
         let pathtoAdd = destination.replace('public/', '')

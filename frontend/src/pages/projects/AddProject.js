@@ -70,18 +70,20 @@ const AddProject = props => {
 
     return (
         <>
-            <div className="headCard">
-                <p
+            <br />
+            <br />
+            <br />
+            <br />
+            <div className="card">
+                <div
                     style={{
-                        textAlign: 'left',
-                        fontWeight: 'bold',
-                        margin: '20px',
-                        width: '100%',
-                        marginLeft: '20px',
+                        display: 'flex',
+                        padding: '2px',
+                        justifyContent: 'space-between',
                     }}
                 >
-                    ADD PROJECT
-                </p>
+                    <p>ADD PROJECT</p>
+                </div>
             </div>
             <div className="contentCard">
                 <div className="row">

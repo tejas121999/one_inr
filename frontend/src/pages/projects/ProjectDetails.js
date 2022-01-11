@@ -18,8 +18,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import { visuallyHidden } from '@mui/utils';
+import { getProjectByIdAction } from '../../Redux/Actions/ProjectActions';
 
 const projectDetails = (props) => {
+    //  console.log("ss", props)
 
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
@@ -33,9 +35,11 @@ const projectDetails = (props) => {
     const history = useHistory();
     const dispatch = useDispatch();
     useEffect(() => {
-        //  dispatch(constData());
-    }, []);
+        dispatch(getProjectByIdAction(props.location.state.id))
+    }, [])
 
+    let projectById = useSelector((state) => state.project.projectDetails)
+    console.log("s", projectById)
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -81,7 +85,65 @@ const projectDetails = (props) => {
     const data = [
         { img: "https://media.geeksforgeeks.org/wp-content/uploads/20210425122739/2-300x115.png", alt: "image one" },
         { img: "https://media.geeksforgeeks.org/wp-content/uploads/20210425122716/1-300x115.png", alt: "image two" },
-    ]
+    ];
+
+
+    const tempCells = [
+        {
+            id: 'startDate',
+            numeric: false,
+            disablePadding: false,
+            label: 'StartDate',
+        },
+        {
+            id: 'endDate',
+            numeric: false,
+            disablePadding: false,
+            label: 'EndDate',
+        },
+        {
+            id: 'daysLeft',
+            numeric: false,
+            disablePadding: false,
+            label: 'DaysLeft',
+        },
+    ];
+
+    const newHeadCells = [
+        {
+            id: 'date',
+            numeric: false,
+            disablePadding: false,
+            label: 'Date',
+        },
+        {
+            id: 'goal',
+            numeric: false,
+            disablePadding: false,
+            label: 'Goal',
+        },
+        {
+            id: 'funded',
+            numeric: false,
+            disablePadding: false,
+            label: 'Funded',
+        },
+        {
+            id: 'completion',
+            numeric: false,
+            disablePadding: false,
+            label: 'Completion',
+        },
+    ];
+
+    const TableconstData = [
+        {
+            id: 1,
+            startdate: '20-Jan-2021 To 20-Jan-2021',
+            endDate: '210',
+            daysLeft: '0',
+        },
+    ];
 
 
     //END
@@ -160,7 +222,7 @@ const projectDetails = (props) => {
                                             <br />
                                             <div className='row'>
                                                 <div className='col-12'>
-                                                    <p> asdfghjfghjhj asdfghjkjasassa asdfghjsdxfcgvhbjdfcg </p>
+                                                    <p> {projectById && projectById.description} </p>
                                                     <hr />
                                                 </div>
                                             </div>
@@ -169,7 +231,7 @@ const projectDetails = (props) => {
                                                     <p>Recurring</p>
                                                 </div>
                                                 <div className='col-6'>
-                                                    <p>No</p>
+                                                    <p>{projectById && projectById.recurringDays}Days</p>
                                                 </div>
                                             </div>
                                             <br />
@@ -184,32 +246,79 @@ const projectDetails = (props) => {
                                                     <p>Goal</p>
                                                 </div>
                                                 <div className='col-6'>
-                                                    <p>300INR</p>
+                                                    <p>{projectById && projectById.goal}INR</p>
                                                 </div>
                                             </div>
-
-
-
 
                                         </Tab>
 
                                         <Tab eventKey="date" title="Date" >
                                             <div className='row'>
-                                                <div className='col-4'>
-                                                    <span className="label label-default">Start Date</span>
+                                                <br />
+                                                <br />
+                                                <div>
+                                                    <hr style={{ margin: '0' }} />
+                                                    <Paper sx={{ width: '100%', mb: 2 }}>
+                                                        <>
+                                                            <TableContainer>
+                                                                <Table
+                                                                    sx={{ minWidth: 750 }}
+                                                                    aria-labelledby="tableTitle"
+                                                                    size={dense ? 'small' : 'medium'}
+                                                                >
+                                                                    <EnhancedTableHead
+                                                                        numSelected={selected.length}
+                                                                        order={order}
+                                                                        orderBy={orderBy}
+                                                                        onRequestSort={handleRequestSort}
+                                                                        rowCount={TableconstData.length}
+                                                                        headCells={tempCells}
+                                                                    />
+                                                                    <TableBody>
+                                                                        {stableSort(
+                                                                            TableconstData,
+                                                                            getComparator(order, orderBy),
+                                                                        )
+                                                                            .slice(
+                                                                                page * rowsPerPage,
+                                                                                page * rowsPerPage + rowsPerPage,
+                                                                            )
+                                                                            .map((row, index) => {
+                                                                                const isItemSelected = isSelected(row.name);
+                                                                                const labelId = `enhanced-table-checkbox-${index}`;
+
+                                                                                return (
+                                                                                    <TableRow
+                                                                                        hover
+                                                                                        aria-checked={isItemSelected}
+                                                                                        tabIndex={-1}
+                                                                                        key={row.name}
+                                                                                        selected={isItemSelected}
+                                                                                    >
+                                                                                        <TableCell
+                                                                                            id={labelId}
+                                                                                            align="center"
+                                                                                            scope="row"
+                                                                                            padding="none"
+                                                                                        >
+                                                                                            {row.startDate}
+                                                                                        </TableCell>
+                                                                                        <TableCell align="center">
+                                                                                            {row.endDate}
+                                                                                        </TableCell>
+                                                                                        <TableCell align="center">
+                                                                                            {row.daysLeft}
+                                                                                        </TableCell>
+                                                                                    </TableRow>
+                                                                                );
+                                                                            })}
+                                                                    </TableBody>
+                                                                </Table>
+                                                            </TableContainer>
+                                                        </>
+                                                    </Paper>
                                                 </div>
 
-                                                <div className='col-4'>
-                                                    <span className="label label-default">End Date</span>
-                                                </div>
-
-                                                <div className='col-4'>
-                                                    <span className="label label-default">Days Left</span>
-                                                </div>
-
-                                                <div className='col-4'>
-                                                    <span className="label label-default"></span>
-                                                </div>
 
                                             </div>
                                             <br />
@@ -239,6 +348,7 @@ const projectDetails = (props) => {
                                                                 orderBy={orderBy}
                                                                 onRequestSort={handleRequestSort}
                                                                 rowCount={constHeadcellsData.length}
+                                                                headCells={newHeadCells}
                                                             />
                                                             <TableBody>
                                                                 {stableSort(constHeadcellsData, getComparator(order, orderBy))
@@ -296,9 +406,7 @@ const projectDetails = (props) => {
                                                     />
                                                 </>
                                             </Paper>
-
                                         </Tab>
-
                                     </Tabs>
                                 </div>
                             </div>
@@ -307,7 +415,7 @@ const projectDetails = (props) => {
                         <Tab eventKey="contributors" title="Contributors" >
                             <br />
                             <div>
-                                <h1 align={'center'}> No Contribution Yet </h1>
+                                <h1 align={'center'}>NO CONTRIBUTION YET</h1>
                             </div>
                         </Tab>
                     </Tabs>
@@ -351,32 +459,6 @@ function stableSort(array, comparator) {
     return stabilizedThis.map(el => el[0]);
 }
 
-const headCells = [
-    {
-        id: 'date',
-        numeric: false,
-        disablePadding: false,
-        label: 'Date',
-    },
-    {
-        id: 'goal',
-        numeric: false,
-        disablePadding: false,
-        label: 'Goal',
-    },
-    {
-        id: 'funded',
-        numeric: false,
-        disablePadding: false,
-        label: 'Funded',
-    },
-    {
-        id: 'completion',
-        numeric: false,
-        disablePadding: false,
-        label: 'Completion',
-    },
-];
 
 function EnhancedTableHead(props) {
     const {
@@ -386,6 +468,7 @@ function EnhancedTableHead(props) {
         numSelected,
         rowCount,
         onRequestSort,
+        headCells,
     } = props;
 
     const createSortHandler = property => event => {

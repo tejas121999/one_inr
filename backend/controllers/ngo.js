@@ -6,38 +6,42 @@ const Op = sequelize.Op;
 
 
 //Creating ngo
-exports.addNgo = async (req, res) => {
-    let addNgo = await models.ngo.create({
+// exports.addNgo = async (req, res) => {
 
-        userId: req.body.userId,
-        address: req.body.address,
-        registrationDate: req.body.registrationDate,
-        registrationNumber: req.body.registrationNumber,
-        landline: req.body.landline,
-        contacts: req.body.contacts,
-        bankDetails: req.body.bankDetails, //JSON.stringify(req.body.bankDetails),
-        panCard: req.body.panCard,
-        panNumber: req.body.panNumber,
-        certificate: req.body.certificate,
-        charityRegistrationCertificate: req.body.charityRegistrationCertificate,
-        deed: req.body.deed,
-        logo: req.body.logo,
-        signature: req.body.signature,
-        isKyc: req.body.isKyc
-    })
-    // const newNGO = addNgo.map((ele) => ele.bankDetails = JSON.str(ele.bankDetails))
-    // console.log((addNgo));
-    if (!addNgo) {
-        return res.status(400).json({
-            message: 'Failed to create NGO'
-        })
-    } else {
-        return res.status(201).json({
-            message: 'NGO created successfully'
-        })
-    }
-}
 
+//     let addNgo = await models.ngo.create({
+//         userId: data.userId,
+//         address: req.body.address,
+//         registrationDate: req.body.registrationDate,
+//         registrationNumber: req.body.registrationNumber,
+//         landline: req.body.landline,
+//         contacts: req.body.contacts,
+//         panCard: req.body.panCard,
+//         panNumber: req.body.panNumber,
+//         certificate: req.body.certificate,
+//         charityRegistrationCertificate: req.body.charityRegistrationCertificate,
+//         deed: req.body.deed,
+//         logo: req.body.logo,
+//         signature: req.body.signature,
+//         isKyc: req.body.isKyc
+//     })
+//     // const newNGO = addNgo.map((ele) => ele.bankDetails = JSON.str(ele.bankDetails))
+//     // console.log((addNgo));
+//     if (!addNgo) {
+//         return res.status(400).json({
+//             message: 'Failed to create NGO'
+//         })
+//     } else {
+//         return res.status(201).json({
+//             message: 'NGO created successfully'
+//         })
+//     }
+// }
+
+
+
+// Creating Ngo 
+// res
 
 
 
@@ -113,7 +117,7 @@ exports.getAllNgo = async (req, res) => {
         }],
     }
 
-    var result = await models.ngo.findAndCountAll({
+    var data = await models.ngo.findAll({
 
         limit: pageSize,
         offset: offset,
@@ -126,16 +130,14 @@ exports.getAllNgo = async (req, res) => {
             ['id', 'DESC']
         ]
     });
-
-    // result = await models.ngo.findAll({})
-    if (!result) {
+    if (!data) {
         return res.status(400).json({
             message: "Failed to get all data."
         })
     }
 
     return res.status(200).json({
-        result: result,
+        data: data,
         message: "Found All Data."
     })
 }
