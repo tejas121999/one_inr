@@ -1,10 +1,10 @@
 const sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    const ngoBankDetails = sequelize.define('ngoBankDetails', {
-        ngoId: {
+    const bankDetails = sequelize.define('bankDetails', {
+        userId: {
             type: DataTypes.INTEGER,
-            field: 'ngo_id'
+            field: 'user_id'
         },
 
         bankName: {
@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
 
         accountNumber: {
             type: DataTypes.BIGINT,
+            unique: true,
             field: 'account_number',
             allowNull: false
         },
@@ -34,14 +35,15 @@ module.exports = (sequelize, DataTypes) => {
 
     {
         freezeTableName: true,
-        tableName: 'ngo_bank_details',
+        tableName: 'bank_details',
         paranoid : true,
         deletedAt : 'deleted_at',
         timestamp: true
         
     })
-    ngoBankDetails.associate = function (models) {
-        ngoBankDetails.belongsTo(models.ngo,{foreignKey : 'ngoId'})
+    bankDetails.associate = function (models) {
+        bankDetails.belongsTo(models.users,{foreignKey : 'userId'})
+        // bankDetails.belongsTo(models.ngo,{foreignKey : 'ngoId'})
     }
-    return ngoBankDetails
+    return bankDetails;
 }
