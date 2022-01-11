@@ -155,6 +155,7 @@ const AddNgo = props => {
   console.log('deadImage', deedImgUrl);
 
   const onAddNgo = values => {
+    console.log("abc", values)
     const obj = {
       logoname: values.logoImgUrl,
       ngoname: values.ngoName,

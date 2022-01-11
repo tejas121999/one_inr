@@ -168,14 +168,14 @@ const ArchivedProject = () => {
         <div
           style={{
             display: 'flex',
-            padding: '20px',
+            padding: '15px',
+            // justifyContent: 'space-between',
           }}
         >
           <p
             style={{
               textAlign: 'left',
               fontSize: '1.25rem',
-              fontWeight: 'bold',
               marginBottom: '0',
             }}
           >
@@ -183,95 +183,99 @@ const ArchivedProject = () => {
           </p>
         </div>
       </div>
-      <div
-        style={{
-          display: 'flex',
-          padding: '20px',
-          justifyContent: 'space-between',
-          backgroundColor: 'white',
-        }}
-      >
-        <button style={{ alignSelf: 'flex-start' }} className="btn btn-primary">
-          Export
-        </button>
-        <input placeholder="Search" onChange={e => handleChange(e)} />
-      </div>
+      <div className="contentCard">
+        <div
+          style={{
+            display: 'flex',
+            padding: '20px',
+            justifyContent: 'space-between',
+          }}
+        >
+          <button
+            style={{ alignSelf: 'flex-start' }}
+            className="btn btn-primary"
+          >
+            Export
+          </button>
+          <input placeholder="Search" onChange={e => handleChange(e)} />
+        </div>
 
-      <Paper sx={{ width: '100%' }}>
-        <>
-          <TableContainer>
-            <Table
-              sx={{ minWidth: 750 }}
-              aria-labelledby="tableTitle"
-              size={dense ? 'small' : 'medium'}
-            >
-              <EnhancedTableHead
-                numSelected={selected.length}
-                order={order}
-                orderBy={orderBy}
-                onRequestSort={handleRequestSort}
-                rowCount={constData.length}
-              />
-              <TableBody>
-                {stableSort(constData, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    const isItemSelected = isSelected(row.name);
-                    const labelId = `enhanced-table-checkbox-${index}`;
+        <Paper sx={{ width: '100%', mb: 2 }}>
+          <>
+            <TableContainer>
+              <Table
+                sx={{ minWidth: 750 }}
+                aria-labelledby="tableTitle"
+                size={dense ? 'small' : 'medium'}
+              >
+                <EnhancedTableHead
+                  numSelected={selected.length}
+                  order={order}
+                  orderBy={orderBy}
+                  onRequestSort={handleRequestSort}
+                  rowCount={constData.length}
+                />
+                <TableBody>
+                  {stableSort(constData, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      const isItemSelected = isSelected(row.name);
+                      const labelId = `enhanced-table-checkbox-${index}`;
 
-                    return (
-                      <TableRow
-                        hover
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={row.name}
-                        selected={isItemSelected}
-                      >
-                        <TableCell
-                          id={labelId}
-                          align="center"
-                          scope="row"
-                          padding="none"
+                      return (
+                        <TableRow
+                          hover
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={row.name}
+                          selected={isItemSelected}
                         >
-                          {row.title}
-                        </TableCell>
-                        <TableCell align="center">{row.date}</TableCell>
-                        <TableCell align="center">{row.goal}</TableCell>
-                        <TableCell align="center">{row.funded}</TableCell>
-                        <TableCell align="center">{row.paid}</TableCell>
-                        <TableCell align="center">{row.status}</TableCell>
-
-                        <TableCell>
-                          {row.action}
-                          <button
-                            data-bs-toggle="tooltip"
-                            title="Archive"
-                            className="btn"
-                          // onClick={() => deleteModalOpen(row)}
+                          <TableCell
+                            id={labelId}
+                            align="center"
+                            scope="row"
+                            padding="none"
                           >
-                            <FaRegFileArchive />
-                          </button>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={constData.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            pageSize={10}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            showLastButton={true}
-            showFirstButton={true}
-          />
-        </>
-      </Paper>
+                            {row.title}
+                          </TableCell>
+                          <TableCell align="center">{row.date}</TableCell>
+                          <TableCell align="center">{row.goal}</TableCell>
+                          <TableCell align="center">{row.funded}</TableCell>
+                          <TableCell align="center">{row.paid}</TableCell>
+                          <TableCell align="center">{row.status}</TableCell>
+
+                          <TableCell>
+                            {row.action}
+                            <button
+                              data-bs-toggle="tooltip"
+                              title="Archive"
+                              className="btn"
+                            // onClick={() => deleteModalOpen(row)}
+                            >
+                              <FaRegFileArchive />
+                            </button>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={constData.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              pageSize={10}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              showLastButton={true}
+              showFirstButton={true}
+            />
+          </>
+        </Paper>
+      </div>
     </>
   );
 };
