@@ -44,7 +44,7 @@ export const updateProfileAction = (data, history) => {
           }, 1000);
         })
         .catch(err => {
-          window.history.back();
+          // window.history.back();
         });
     };
   } else {
@@ -66,7 +66,7 @@ export const updateProfileImgAction = (data, history) => {
           }, 2000);
         })
         .catch(err => {
-          window.history.back();
+          // window.history.back();
         });
     };
   } else {
@@ -84,11 +84,11 @@ export const changePassword = (data, history) => {
           autoClose: 2000,
         });
         setTimeout(function () {
-          history.push('/my_Profile');
+          // history.push('/my_Profile');
         }, 1000);
       })
       .catch(err => {
-        window.history.back();
+        // window.history.back();
       });
   };
 };

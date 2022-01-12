@@ -22,7 +22,7 @@ function SettingsServices() {
     await axios.get(BASE_URL + `user/?search=${value}`);
   this.addUserList = async body => await axios.post(BASE_URL + 'user', body);
   this.updateUserList = async body => await axios.put(BASE_URL + '#', body);
-  this.deleteUserList = async id => await axios.delete(BASE_URL + '#', id);
+  this.deleteUserById = async id => await axios.delete(BASE_URL + '#', id);
 
   // config
   this.updateConfig = async body => await axios.delete(BASE_URL + '', body);
