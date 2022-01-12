@@ -28,7 +28,9 @@ exports.createRoleswithPermission = async (req,res) => {
 }
 
 exports.getRoles = async (req,res)=>{
-    const data = await models.role.findAll()
+    const data = await models.role.findAll({
+        attributes : ['id','roleName']
+    })
     
     if (!data) {
         return res.status(400).json({ message: "Failed to get roles" })

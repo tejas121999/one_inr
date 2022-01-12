@@ -107,26 +107,33 @@ exports.getAllNgo = async (req, res) => {
         req.query.from,
         req.query.to
     )
-
     //SEARCH QUERY
     const searchQuery = {
         [Op.and]: [query, {
             [Op.or]: {
-                address: { [Op.like]: search + '%' },
-                landline: { [Op.like]: search + '%' },
-                contacts: { [Op.like]: search + '%' },
-                panNumber: { [Op.like]: search + '%' }
+                address: { [Op.like]: '%' + search + '%' },
+                landline: { [Op.like]: '%' + search + '%' },
+                registrationNumber : { [Op.like]: '%' + search + '%' },
+                landline : { [Op.like]: '%' + search + '%' },
+                panNumber :  { [Op.like]: '%' + search + '%' },
             },
         }],
     }
-
-    var data = await models.ngo.findAll({
-
+    // const searchQueryForUser = {
+    //     [Op.and]:[query, {
+    //         [Op.or]: {
+    //             mobile : {[Op.like]: '%'+ query + '%'}
+    //         }
+    //     }
+    //     ]
+    // }
+    const data = await models.ngo.findAll({
         limit: pageSize,
         offset: offset,
         where: searchQuery,
         include: [{
-            model: models.users
+            model: models.users,
+            // where: searchQueryForUser,
         }
         ],
         order: [
@@ -138,7 +145,6 @@ exports.getAllNgo = async (req, res) => {
             message: "Failed to get all data."
         })
     }
-
     return res.status(200).json({
         data: data,
         message: "Found All Data."
