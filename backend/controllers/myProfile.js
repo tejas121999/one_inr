@@ -2,6 +2,10 @@ const models = require('../models');
 const saltRounds = 10;
 const twinBcrypt = require('twin-bcrypt');
 const moment = require('moment');
+const { paginationWithFromTo } = require('../utils/pagination')
+const sequelize = models.Sequelize;
+const Op = sequelize.Op;
+
 
 exports.myProfile = async (req,res)=>{
     const id = req.userData.id
@@ -16,7 +20,7 @@ exports.myProfile = async (req,res)=>{
         data : data
     })
 }
-
+//update self profile
 exports.updateProfile = async (req,res)=>{
     const id = req.userData.id
     const { name , email , mobile , profileImage} = req.body
@@ -33,8 +37,8 @@ exports.updateProfile = async (req,res)=>{
     return res.status(200).json({message : "User Profile Updated Successfully."})
 }
 
-
-exports.        updateProfilePassword = async (req,res)=>{
+//update self password
+exports.updateProfilePassword = async (req,res)=>{
     const id = req.userData.id
     const {currentPassword , newPassword } = req.body;
     console.log(newPassword,currentPassword)
@@ -63,7 +67,7 @@ exports.        updateProfilePassword = async (req,res)=>{
 
 }
 
-
+//Create Users  by Admin
 exports.createUser = async (req,res)=> {
         let { name, email, mobile, role_id, password, parentId } = req.body
 
@@ -81,4 +85,42 @@ exports.createUser = async (req,res)=> {
                 message: "User created successfully",
             })
         }
+}
+
+
+//Get all Users 
+exports.getAllUser = async (req,res)=>{
+    const { search, offset, pageSize } = paginationWithFromTo(
+        req.query.search,
+        req.query.from,
+        req.query.to
+    );
+    let query = {};
+
+    const searchQuery = {
+        [Op.and]: [query, {
+            [Op.or]: {
+                name: { [Op.like]: search + "%" },
+                email: { [Op.like]: search + '%' },
+                mobile: { [Op.like]: search + '%' },
+            },
+        }]
+    };
+    const data = await models.users.findAll({
+        offset: offset,
+        limit: pageSize,
+        where: searchQuery,
+        attributes : ['id','name','email','mobile']
+    })
+    if (!data) {
+        return res.status(400).json({
+            message: "Failed to get all data."
+        })
+
+    }
+    return res.status(200).json({
+        message: "Success",
+        data: data,
+
+    })
 }
