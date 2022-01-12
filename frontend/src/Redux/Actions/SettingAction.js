@@ -184,13 +184,23 @@ export const getUserListAction = () => {
     return dispatch => {
       SettingsServices.getUserList()
         .then(res => {
-          dispatch(getUserLists(res.data));
+          dispatch(getUserLists(res.data.data));
         })
         .catch(err => {});
     };
   } else {
     alert('No network');
   }
+};
+
+export const getUserListByValueAction = value => {
+  return dispatch => {
+    SettingsServices.getUserListByValue(value)
+      .then(res => {
+        dispatch(getUserLists(res.data.data));
+      })
+      .catch(err => {});
+  };
 };
 
 export const getUserLists = data => {

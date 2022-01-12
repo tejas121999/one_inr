@@ -20,7 +20,10 @@ import Loader from '../Loader';
 import Adduser from '../../Modals/Settings/AddUser';
 import DeleteUser from '../../Modals/Settings/DeleteUser';
 import Edituser from '../../Modals/Settings/EditUser';
-import { getUserListAction } from '../../Redux/Actions/SettingAction';
+import {
+  getUserListAction,
+  getUserListByValueAction,
+} from '../../Redux/Actions/SettingAction';
 
 const Users = () => {
   const [order, setOrder] = React.useState('asc');
@@ -35,7 +38,7 @@ const Users = () => {
 
   const dispatch = useDispatch();
   let userList = useSelector(state => state.setting.getUserList);
-  console.log(userList);
+  console.log(userList, 'sagar');
   useEffect(() => {
     dispatch(getUserListAction());
   }, []);
@@ -50,9 +53,9 @@ const Users = () => {
   };
   const onSearch = value => {
     if (value) {
-      dispatch(getUserListAction(value));
+      dispatch(getUserListByValueAction(value));
     } else {
-      dispatch(getUserListAction(''));
+      dispatch(getUserListAction());
     }
   };
 
@@ -151,11 +154,11 @@ const Users = () => {
                     order={order}
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
-                    rowCount={constData.length}
+                    rowCount={userList.length}
                     headCells={headCells}
                   />
                   <TableBody>
-                    {stableSort(constData, getComparator(order, orderBy))
+                    {stableSort(userList, getComparator(order, orderBy))
                       .slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage,
@@ -174,9 +177,9 @@ const Users = () => {
                             >
                               {row.name}
                             </TableCell>
-                            <TableCell align="center">{row.date}</TableCell>
-                            <TableCell align="center">{row.date}</TableCell>
-                            <TableCell align="center">{row.date}</TableCell>
+                            <TableCell align="center">{row.role}</TableCell>
+                            <TableCell align="center">{row.email}</TableCell>
+                            <TableCell align="center">{row.mobile}</TableCell>
                             <TableCell align="center">
                               <button
                                 data-bs-toggle="tooltip"
