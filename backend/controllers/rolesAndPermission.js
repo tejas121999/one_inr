@@ -17,7 +17,6 @@ exports.createRole = async (req,res)=>{
 
 exports.createRoleswithPermission = async (req,res) => {
     const {permissions,roleId} = req.body;
-    console.log(`performance `,typeof(permissions))
     const data  = await models.rolePermission.create({
         permissions, roleId
     }) 
@@ -26,4 +25,19 @@ exports.createRoleswithPermission = async (req,res) => {
     }else {
         return  res.status(201).json({message : "Permisssion added successfully "})
     }
+}
+
+exports.getRoles = async (req,res)=>{
+    const data = await models.role.findAll()
+    
+    if (!data) {
+        return res.status(400).json({ message: "Failed to get roles" })
+    }
+    else {
+        return res.status(200).json({
+            data: data,
+            message : "Success."
+        })
+    }
+
 }

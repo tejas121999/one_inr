@@ -1,7 +1,7 @@
-const models = require('../models')
+const models = require('../models');
 const saltRounds = 10;
-const twinBcrypt = require('twin-bcrypt')
-
+const twinBcrypt = require('twin-bcrypt');
+const moment = require('moment');
 
 exports.myProfile = async (req,res)=>{
     const id = req.userData.id
@@ -61,4 +61,24 @@ exports.        updateProfilePassword = async (req,res)=>{
     }
     return res.status(200).json({message : "Password Reset Successful."})
 
+}
+
+
+exports.createUser = async (req,res)=> {
+        let { name, email, mobile, role_id, password, parentId } = req.body
+
+        var new_date = moment().add(365,'days').format()
+        const hash = await twinBcrypt.hashSync(password, saltRounds);
+    
+        let userData = await models.users.create({ name, email, mobile, role_id, password: hash, parentId, balanceNextRenewDate : new_date })
+        if (!userData) {
+            return res.status(401).json({
+                message: "Failed to create a user"
+            })
+        }
+        else {
+            return res.status(200).json({
+                message: "User created successfully",
+            })
+        }
 }
