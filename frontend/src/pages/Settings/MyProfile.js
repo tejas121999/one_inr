@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getProfile } from '../../Redux/Actions/SettingAction';
+import { getProfileAction } from '../../Redux/Actions/SettingAction'
 import { Local } from '../../API/APIEndpoints';
 
 const MyProfile = () => {
@@ -10,14 +10,12 @@ const MyProfile = () => {
   console.log(profileData);
 
   useEffect(() => {
-    dispatch(getProfile());
-  }, []);
+    dispatch(getProfileAction())
+  }, [])
 
-  // const initialData = {
-  //   name: '',
-  //   email: '',
-  //   mobile: '',
-  // };
+  let profile = useSelector(state => state.setting.getProfile)
+  console.log('profile', profile.data)
+
 
   return (
     <>
@@ -86,9 +84,7 @@ const MyProfile = () => {
                 <tbody>
                   <tr>
                     <th style={{ width: '10em' }}>Name</th>
-                    <td style={{ width: '50em' }}>
-                      {profileData && profileData.name}
-                    </td>
+                    <td style={{ width: '50em' }}>{profile && profile.name}</td>
                   </tr>
                   <tr>
                     <th style={{ width: '10em' }}>Mobile</th>

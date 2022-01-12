@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import {
   GET_ALL_PROJECTS,
   GET_ARCHIVED_PROJECTS,
@@ -70,6 +71,71 @@ export const getProjectData = data => {
     payload: data,
   };
 };
+
+// update project 
+export const updateProjectAction = (id, data, history) => {
+  if (navigator.onLine) {
+    return dispatch => {
+      projectServices.updateProject(id, data)
+        .then(res => {
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000
+          });
+          setTimeout(function () {
+            history.push('#')
+          }, 2000);
+        })
+        .catch(err => {
+          window.history.back();
+        })
+    }
+  }
+}
+
+// commition update
+export const CommitionUpdateAction = (id, data, history) => {
+  if (navigator.onLine) {
+    return dispatch => {
+      projectServices.updateCommition(id, data)
+        .then(res => {
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000
+          });
+          setTimeout(function () {
+            history.push('#');
+          }, 2000);
+        })
+        .catch(err => {
+          window.history.back();
+        })
+    }
+  } else {
+    // 
+  }
+}
+
+// add fund by id
+export const addFundAction = (id, data, history) => {
+  if (navigator.onLine) {
+    return dispatch => {
+      projectServices.addFund(id, data)
+        .then(res => {
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000
+          });
+          setTimeout(function () {
+            history.push('#')
+          }, 2000);
+        })
+        .catch(err => {
+          window.history.back();
+        })
+    }
+  }
+}
 
 // Copleted projects
 
