@@ -9,8 +9,12 @@ import uploadImage from '../../assets/img/logo/uploadImage.jpg';
 import { Local } from '../../API/APIEndpoints';
 import {
   changePassword,
+  getAllProfileAction,
+  getAllProfiles,
   getProfile,
   updateProfile,
+  updateProfileAction,
+  updateProfileImgAction,
 } from '../../Redux/Actions/SettingAction';
 
 const EditProfile = props => {
@@ -75,10 +79,11 @@ const EditProfile = props => {
       email: values.emailId,
       mobile: values.phoneNumber,
     };
-    dispatch(updateProfile(obj, props.history));
+    dispatch(updateProfileAction(obj, props.history));
+    // dispatch(updateProfileImgAction(img, props.history));
   };
   useEffect(() => {
-    dispatch(getProfile());
+    dispatch(getAllProfileAction());
   }, []);
 
   return (

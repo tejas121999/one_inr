@@ -8,12 +8,12 @@ import SettingsServices from '../Services/SettingsServices';
 import { toast } from 'react-toastify';
 
 // get profile
-export const getProfileAction = () => {
+export const getAllProfileAction = () => {
   if (navigator.onLine) {
     return dispatch => {
       SettingsServices.getProfile()
         .then(res => {
-          dispatch(getAllProfiles(res.data));
+          dispatch(getAllProfiles(res.data.data));
         })
         .catch(err => {});
     };
@@ -30,7 +30,7 @@ export const getAllProfiles = data => {
 };
 
 // update profile
-export const updateProfile = (data, history) => {
+export const updateProfileAction = (data, history) => {
   if (navigator.onLine) {
     return dispatch => {
       SettingsServices.updateProfile(data)
@@ -52,10 +52,10 @@ export const updateProfile = (data, history) => {
   }
 };
 // update profie image
-export const updateProfileImgAction = (id, data, history) => {
+export const updateProfileImgAction = (data, history) => {
   if (navigator.onLine) {
     return dispatch => {
-      SettingsServices.updateProfileImg(id, data)
+      SettingsServices.updateProfileImg(data)
         .then(res => {
           toast.success(res.data.message, {
             position: 'top-center',
@@ -171,7 +171,7 @@ export const DeleteRoleAction = id => {
           position: 'top-center',
           autoClose: 2000,
         });
-        dispatch(getProfileAction(''));
+        dispatch(getAllProfileAction(''));
       })
       .catch(err => {});
   };
@@ -214,7 +214,7 @@ export const addUserListAction = (body, history) => {
           });
           setTimeout(function () {
             history.push('#');
-          }, 2000);
+          }, 1000);
         })
         .catch(err => {});
     };
@@ -223,7 +223,7 @@ export const addUserListAction = (body, history) => {
   }
 };
 
-// update role
+// update user
 export const updateUserListAction = (body, history) => {
   if (navigator.onLine) {
     return dispatch => {
@@ -246,7 +246,7 @@ export const updateUserListAction = (body, history) => {
   }
 };
 
-// delete role
+// delete user
 export const DeleteUserACtion = id => {
   return dispatch => {
     SettingsServices.deleteUser(id)
