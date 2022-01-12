@@ -4,11 +4,10 @@ import { Link } from 'react-router-dom';
 import { getProfile } from '../../Redux/Actions/SettingAction';
 import { Local } from '../../API/APIEndpoints';
 
-
-
 const MyProfile = () => {
   const dispatch = useDispatch();
   let profileData = useSelector(state => state.setting.getProfile);
+  console.log(profileData);
 
   useEffect(() => {
     dispatch(getProfile());
@@ -64,7 +63,10 @@ const MyProfile = () => {
                 marginLeft: '30px',
               }}
             >
-              <img src={Local+'/'+profileData.profileImage}/>
+              <img
+                style={{ width: '250px', height: '200px' }}
+                src={Local + '/' + profileData.profileImage}
+              />
             </div>
           </div>
           <div
