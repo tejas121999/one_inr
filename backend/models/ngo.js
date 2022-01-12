@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         registrationNumber: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.BIGINT,
             field: 'registration_number'
         },
 
@@ -26,12 +26,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             field: 'landline'
         },
-
-        contacts: {
-            type: DataTypes.STRING,
-            field: 'contacts'
-        },
-        
         panCard: {
             type: DataTypes.STRING,
             field: 'pancard'
@@ -68,29 +62,30 @@ module.exports = (sequelize, DataTypes) => {
         },
         isKyc: {
             type: DataTypes.BOOLEAN,
-            field: 'is_kyc'
+            field: 'is_kyc',
+            defaultValue : 0
         },
     },
-    
-    {
-        freezeTableName: true,
-        tableName: 'ngos',
-        paranoid: true,
-        deletedAt : 'deleted_at',
-        createdAt : 'created_at',
-        updatedAt : 'updated_at',
-        timeStamp : true,
-    });
+
+        {
+            freezeTableName: true,
+            tableName: 'ngos',
+            paranoid: true,
+            deletedAt: 'deleted_at',
+            createdAt: 'created_at',
+            updatedAt: 'updated_at',
+            timeStamp: true,
+        });
 
     ngo.associate = function (models) {
         // ngo.hasMany(models.bankDetails,{foreignKey : 'userId'})
-        ngo.hasMany(models.usersReceipts,{foreignKey : 'ngoId'})
-        ngo.belongsTo(models.users,{foreignKey: 'userId'})
-        
+        ngo.hasMany(models.usersReceipts, { foreignKey: 'ngoId' })
+        ngo.belongsTo(models.users, { foreignKey: 'userId' })
+
 
     }
 
     return ngo;
-    
+
 }
 
