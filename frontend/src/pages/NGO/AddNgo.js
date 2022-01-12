@@ -61,9 +61,18 @@ const AddNgo = props => {
   };
 
   const validationSchema = yup.object({
-    ngoName: yup.string().required('Required'),
-    address: yup.string().required('Required'),
-    emailId: yup.string().email('Invalid Email Format').required('Required'),
+    ngoName: yup
+      .string()
+      .required('Required')
+      .max(50, 'Max limit is 50 characters'),
+    address: yup
+      .string()
+      .required('Required'),
+    emailId: yup
+      .string()
+      .email('Invalid Email Format')
+      .required('Required')
+      .max(50, 'Max limit is 50 characters'),
     registrationDate: yup.string().required('Required'),
     registrationNumber: yup
       .string()
@@ -77,12 +86,18 @@ const AddNgo = props => {
       .string()
       .required('Required')
       .min(10, 'please enter 10 digits'),
-    password: yup.string().required('Required').min(7, 'Should be 7 character'),
+    password: yup
+      .string()
+      .required('Required')
+      .min(7, 'Should be 7 character'),
     panNumber: yup
       .string()
       .required('Required')
       .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
   });
+
+  //Submit
+
 
   const onlogoImageAdd = async imgData => {
     const data = new FormData();
@@ -96,7 +111,7 @@ const AddNgo = props => {
       setLogoImgUrl(result.data.url);
     }
   };
-  console.log('logoImage', logoImgUrl);
+  // console.log('logoImage', logoImgUrl);
 
   const onPanCardImageAdd = async imgData => {
     const data = new FormData();
@@ -110,7 +125,7 @@ const AddNgo = props => {
       setPanCardImgUrl(result.data.url);
     }
   };
-  console.log('panCardImage', panCardImgUrl);
+  //console.log('panCardImage', panCardImgUrl);
 
   const onCertificateImageAdd = async imgData => {
     const data = new FormData();
@@ -124,7 +139,7 @@ const AddNgo = props => {
       setCertificateImgUrl(result.data.url);
     }
   };
-  console.log('certificateImage', certificateImgUrl);
+  // console.log('certificateImage', certificateImgUrl);
 
   const onCharityCertificateImageAdd = async imgData => {
     const data = new FormData();
@@ -138,7 +153,7 @@ const AddNgo = props => {
       setCharityCertificateImgUrl(result.data.url);
     }
   };
-  console.log('charityCertificateImage', charityCertificateImgUrl);
+  // console.log('charityCertificateImage', charityCertificateImgUrl);
 
   const onDeedImageAdd = async imgData => {
     const data = new FormData();
@@ -152,7 +167,7 @@ const AddNgo = props => {
       setDeedImgUrl(result.data.url);
     }
   };
-  console.log('deadImage', deedImgUrl);
+  // console.log('deadImage', deedImgUrl);
 
   const onAddNgo = values => {
     console.log("abc", values)
@@ -716,7 +731,10 @@ const AddNgo = props => {
               </div>
               <br />
               <div style={{ marginLeft: '2em', paddingBottom: '2em' }}>
-                <button type="submit" className="btn btn-success">
+                <button type="submit" className="btn btn-success
+                 "
+
+                >
                   Submit
                 </button>
               </div>
