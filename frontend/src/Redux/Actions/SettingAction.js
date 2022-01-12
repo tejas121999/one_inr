@@ -26,33 +26,33 @@ export const getAllProfiles = data => {
 };
 
 // update profile
-export const updateProfile = (id, data, history) => {
+export const updateProfile = (data, history) => {
   return dispatch => {
-    SettingsServices.updateProfile(id, data)
+    SettingsServices.updateProfile(data)
       .then(res => {
         toast.success(res.data.messgae, {
           position: 'top-center',
           autoClose: 2000,
         });
         setTimeout(function () {
-          history.push('#');
-        }, 2000);
+          history.push('/my_profile');
+        }, 1000);
       })
       .catch(err => {});
   };
 };
 
 // change password
-export const changePassword = (id, data, history) => {
+export const changePassword = (data, history) => {
   return dispatch => {
-    SettingsServices.changePassword(id, data).then(res => {
+    SettingsServices.changePassword(data).then(res => {
       toast.success(res.data.messgae, {
         position: 'top-center',
         autoClose: 2000,
       });
       setTimeout(function () {
-        history.push('#');
-      }, 2000);
+        // history.push('/my_Profile');
+      }, 1000);
     });
   };
 };
