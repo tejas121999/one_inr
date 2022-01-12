@@ -113,9 +113,9 @@ exports.getAllNgo = async (req, res) => {
             [Op.or]: {
                 address: { [Op.like]: '%' + search + '%' },
                 landline: { [Op.like]: '%' + search + '%' },
-                registrationNumber : { [Op.like]: '%' + search + '%' },
-                landline : { [Op.like]: '%' + search + '%' },
-                panNumber :  { [Op.like]: '%' + search + '%' },
+                registrationNumber: { [Op.like]: '%' + search + '%' },
+                landline: { [Op.like]: '%' + search + '%' },
+                panNumber: { [Op.like]: '%' + search + '%' },
             },
         }],
     }
@@ -158,7 +158,14 @@ exports.getNgoById = async (req, res) => {
     let id = req.params.id
     let data = await models.ngo.findOne({
         where: { id: id },
-        include: [{ model: models.ngoBankDetails }
+        include: [{
+            model: models.users,
+            attributes: ['name', 'email', 'mobile'],
+            include: [{
+                model: models.bankDetails,
+                attributes: { exclude: ['createdAt', 'updatedAt', 'deleted_at'] }
+            }]
+        }
         ],
     })
     if (!data) {
