@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -14,12 +14,16 @@ import {
 } from '../../components/Pagination';
 import { constData } from '../../utils/colors';
 import { ToastContainer } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
 import Loader from '../Loader';
 import Adduser from '../../Modals/Settings/AddUser';
 import DeleteUser from '../../Modals/Settings/DeleteUser';
 import Edituser from '../../Modals/Settings/EditUser';
+import {
+  getUserListAction,
+  getUserListByValueAction,
+} from '../../Redux/Actions/SettingAction';
 
 const Users = () => {
   const [order, setOrder] = React.useState('asc');
@@ -31,6 +35,14 @@ const Users = () => {
   const [addModal, setAddModal] = React.useState(false);
   const [editModal, setEditModal] = React.useState(false);
   const [deleteModal, setDeleteModal] = React.useState(false);
+
+  const dispatch = useDispatch();
+  let userList = useSelector(state => state.setting.getUserList);
+  console.log(userList, 'sagar');
+  useEffect(() => {
+    dispatch(getUserListAction());
+  }, []);
+
   // SEARCH
   let timeout = null;
   const handleChange = e => {
@@ -41,9 +53,9 @@ const Users = () => {
   };
   const onSearch = value => {
     if (value) {
-      //   dispatch(getAllVEndorAction(value));
+      dispatch(getUserListByValueAction(value));
     } else {
-      //   dispatch(getAllVEndorAction(''));
+      dispatch(getUserListAction());
     }
   };
 
@@ -108,33 +120,33 @@ const Users = () => {
           </div>
         </form>
       </nav>
-      <div
-        style={{
-          margin: '20px',
-          backgroundColor: 'white',
-          marginBottom: '5em',
-        }}
-      >
+      {userList && userList.length > 0 ? (
         <div
           style={{
-            display: 'flex',
-            padding: '20px',
-            justifyContent: 'flex-end',
+            margin: '20px',
+            backgroundColor: 'white',
+            marginBottom: '5em',
           }}
         >
-          <label style={{ fontWeight: '500' }}>
-            Search :
-            <input
-              placeholder="Search"
-              onChange={e => handleChange(e)}
-              type="search"
-              style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
-            />
-          </label>
-        </div>
-        <hr style={{ margin: '0' }} />
-        <Paper sx={{ width: '100%' }}>
-          {constData && constData.length > 0 ? (
+          <div
+            style={{
+              display: 'flex',
+              padding: '20px',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <label style={{ fontWeight: '500' }}>
+              Search :
+              <input
+                placeholder="Search"
+                onChange={e => handleChange(e)}
+                type="search"
+                style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
+              />
+            </label>
+          </div>
+          <hr style={{ margin: '0' }} />
+          <Paper sx={{ width: '100%' }}>
             <React.Fragment>
               <TableContainer id="tableDiv">
                 <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
@@ -142,11 +154,11 @@ const Users = () => {
                     order={order}
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
-                    rowCount={constData.length}
+                    rowCount={userList.length}
                     headCells={headCells}
                   />
                   <TableBody>
-                    {stableSort(constData, getComparator(order, orderBy))
+                    {stableSort(userList, getComparator(order, orderBy))
                       .slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage,
@@ -165,9 +177,9 @@ const Users = () => {
                             >
                               {row.name}
                             </TableCell>
-                            <TableCell align="center">{row.date}</TableCell>
-                            <TableCell align="center">{row.date}</TableCell>
-                            <TableCell align="center">{row.date}</TableCell>
+                            <TableCell align="center">{row.role}</TableCell>
+                            <TableCell align="center">{row.email}</TableCell>
+                            <TableCell align="center">{row.mobile}</TableCell>
                             <TableCell align="center">
                               <button
                                 data-bs-toggle="tooltip"
@@ -205,11 +217,11 @@ const Users = () => {
                 showFirstButton={true}
               />
             </React.Fragment>
-          ) : (
-            <Loader />
-          )}
-        </Paper>
-      </div>
+          </Paper>
+        </div>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 };

@@ -26,7 +26,7 @@ import {
 // import '../Donor.css';
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
-import { BASE_URL, VIEW_RECEPT_URL } from '../../API/APIEndpoints';
+import { BASE_URL } from '../../API/APIEndpoints';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Donordelete from '../../Modals/Donor/DonorDelete';
@@ -100,7 +100,7 @@ export default function ViewRecept() {
   };
   
   const getViewRecepts = async () => {
-    const url = BASE_URL + VIEW_RECEPT_URL;
+    const url = BASE_URL ;
     await axios
       .get(url)
       .then(res => {

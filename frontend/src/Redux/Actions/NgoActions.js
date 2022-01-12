@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { ADD_NGO, ADD_NGO_FAIL, GET_ALL_NGOS } from '../constTypes';
 import NgoServices from '../Services/NgoServices';
 
@@ -41,3 +42,26 @@ export const GetAllNGO = data => {
     payload: data,
   };
 };
+
+// update ngo
+export const updateNgoAction = (body, id, history) => {
+  if (navigator.onLine) {
+    return dispatch => {
+      NgoServices.updateNgo(id, body)
+        .then(res => {
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000
+          });
+          setTimeout(function () {
+            history.push('#')
+          }, 2000)
+        })
+        .catch(err => {
+          window.history.back()
+        })
+    }
+  } else {
+    // need to add toster here
+  }
+}

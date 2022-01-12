@@ -11,22 +11,17 @@ const validationError = require('../middleware/validationError'); //importing va
 
 const { ngoValidation } = require('../validations/ngo');//importing ngo validatation
 
-const { addNgo, updateNgo, getAllNgo, deleteNgo ,getNgoById} = require('../controllers/ngo');//importing ngo controller operation from controller
-
-const { addNgoBankDetails } = require('../controllers/ngoBankDetails')//Importing Ngo Bank Details from Controllers
+const { addNgo, updateNgo, getAllNgo, deleteNgo, getNgoById } = require('../controllers/ngo');//importing ngo controller operation from controller
 
 //routing modules
+router.post('/', checkAuth, ngoValidation, validationError, wrapper(addNgo))//creating ngo 
 
-router.post('/create-ngo',checkAuth,wrapper(addNgo))//creating ngo 
+router.get('/', checkAuth, wrapper(getAllNgo))//listing ngo
 
-router.post('/create-bank-details',checkAuth,addNgoBankDetails)//creating ngo bank details
+router.get('/:id', checkAuth, wrapper(getNgoById)) //Getting Ngo Details with Bank Id
 
-router.get('/read-ngo', checkAuth,wrapper(getAllNgo))//listing ngo
+router.put('/:id', checkAuth, wrapper(updateNgo))//update ngo
 
-router.get('/:id',checkAuth,wrapper(getNgoById)) //Getting Ngo Details with Bank Id
+router.delete('/:id', checkAuth, wrapper(deleteNgo))//deleting ngo
 
-router.put('/update-ngo/:id',checkAuth, ngoValidation, validationError, wrapper(updateNgo))//update ngo
-
-router.delete('/delete-ngo/:id',checkAuth, wrapper(deleteNgo))//deleting ngo
-
-module.exports= router;
+module.exports = router;
