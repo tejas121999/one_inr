@@ -110,6 +110,8 @@ module.exports = (sequelize,DataTypes)=>{
     users.associate = function (models) {
         users.hasMany(models.usersReceipts, {foreignKey : 'userId'}),
         users.hasMany(models.bankDetails,{foreignKey:'userId'})
+        users.belongsTo(models.role,{foreignKey : 'roleId'})
+
         // users.hasOne(models.users,{foreignKey : 'parentId'})
         // users.belongsTo(models.users,{foreignKey : 'parentId'})
         users.hasOne(models.ngo,{foreignKey: 'userId'})
