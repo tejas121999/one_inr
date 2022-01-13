@@ -22,7 +22,7 @@ const AddNgo = props => {
 
   const [addBankDetailsValues, setAddBankDetailsValues] = useState([]);
 
-  let handleChangeForAddBankDetails = (i, e) => {
+  let handleChangeForAddBankDetails = (e, i) => {
     let newFormValues = [...addBankDetailsValues];
     newFormValues[i][e.target.name] = e.target.value;
     setAddBankDetailsValues(newFormValues);
@@ -34,6 +34,7 @@ const AddNgo = props => {
       { bankName: '', accountNumber: '', beneficiaryName: '', ifscCode: '' },
     ]);
   };
+  console.log("xyz", addBankDetailsValues)
 
   let removeBankDetailsFormFields = i => {
     let newFormValues = [...addBankDetailsValues];
@@ -43,6 +44,7 @@ const AddNgo = props => {
 
   let handleChangeForAddContact = (i, e) => {
     let newFormValues = [...addContactValues];
+    console.log("COntact", i, e);
     newFormValues[i][e.target.name] = e.target.value;
     setAddContactValues(newFormValues);
   };
@@ -101,6 +103,7 @@ const AddNgo = props => {
 
 
 
+
   const onlogoImageAdd = async imgData => {
     const data = new FormData();
     data.append('avatar', imgData);
@@ -113,7 +116,7 @@ const AddNgo = props => {
       setLogoImgUrl(result.data.url);
     }
   };
-  // console.log('logoImage', logoImgUrl);
+  console.log('logoImage', logoImgUrl);
 
   const onPanCardImageAdd = async imgData => {
     const data = new FormData();
@@ -174,23 +177,26 @@ const AddNgo = props => {
     console.log("Ngo LOGo", data);
   }
   const onAddNgo = values => {
-    console.log("abc", values)
+
     const obj = {
-      logoname: values.logoImgUrl,
-      ngoname: values.ngoName,
+      logo: logoImgUrl,
+      name: values.ngoName,
       address: values.address,
-      emailId: values.emailId,
-      registrationDate: '',
-      registrationNumber: '',
-      mobileNumber: '',
-      landlineNumber: '',
-      password: '',
-      panCardNumber: values.panCard,
+      email: values.emailId,
+      registrationDate: values.registrationDate,
+      registrationNumber: values.registrationNumber,
+      mobile: values.mobile,
+      landline: values.landline,
+      password: values.password,
+      panNumber: values.panCard,
       panCardImage: panCardImgUrl,
       certificateImage: certificateImgUrl,
       charityCertificateImage: charityCertificateImgUrl,
       deedImage: deedImgUrl,
+      bankDetails: addBankDetailsValues,
+      contactDetails: addContactValues
     };
+    console.log("abc", obj)
     dispatch(createNGOAction(obj, props.history));
   };
 
@@ -520,13 +526,14 @@ const AddNgo = props => {
                   <div className="col-2.5 ">
                     <div style={{ padding: '15px', paddingBottom: '10px' }}>
                       <label style={{ fontWeight: 'bold' }}>Name</label>
-                      <Field
+                      <input
                         className="form-control"
                         placeholder="Please enter your Name"
                         name="name"
                         autocomplete="off"
                         required
-                        value={values.name}
+                        value={addContactValues[index].name}
+                        onChange={(e) => handleChangeForAddContact(index, e)}
                       />
                       {errors.name && touched.name && (
                         <div className="text-left">
@@ -545,7 +552,8 @@ const AddNgo = props => {
                         name="designation"
                         autocomplete="off"
                         required
-                        value={values.Designation}
+                        value={addContactValues[index].designation}
+                        onChange={(e) => handleChangeForAddContact(index, e)}
                       />
                       {errors.designation && touched.designation && (
                         <div className="text-left">
@@ -566,7 +574,8 @@ const AddNgo = props => {
                         name="email"
                         autocomplete="off"
                         required
-                        value={values.email}
+                        value={addContactValues[index].email}
+                        onChange={(e) => handleChangeForAddContact(index, e)}
                       />
                       {errors.email && touched.email && (
                         <div className="text-left">
@@ -585,7 +594,8 @@ const AddNgo = props => {
                         name="mobile"
                         autocomplete="off"
                         required
-                        value={values.Mobile}
+                        value={addContactValues[index].mobile}
+                        onChange={(e) => handleChangeForAddContact(index, e)}
                       />
                       {errors.mobile && touched.mobile && (
                         <div className="text-left">
@@ -632,7 +642,9 @@ const AddNgo = props => {
                         name="bankName"
                         autocomplete="off"
                         required
-                        value={values.BankName}
+                        value={addBankDetailsValues[index].bankName}
+                        onChange={(e) => handleChangeForAddBankDetails(e, index)}
+
                       />
                       {errors.BankName && touched.BankName && (
                         <div className="text-left">
@@ -655,7 +667,8 @@ const AddNgo = props => {
                         name="accountNumber"
                         autocomplete="off"
                         required
-                        value={values.AccountNumber}
+                        value={addBankDetailsValues[index].accountNumber}
+                        onChange={(e) => handleChangeForAddBankDetails(e, index)}
                       />
                       {errors.accountnumber && touched.accountnumber && (
                         <div className="text-left">
@@ -678,7 +691,8 @@ const AddNgo = props => {
                         name="beneficiaryName"
                         autocomplete="off"
                         required
-                        value={values.BeneficiaryName}
+                        value={addBankDetailsValues[index].beneficiaryName}
+                        onChange={(e) => handleChangeForAddBankDetails(e, index)}
                       />
                       {errors.BeneficiaryName && touched.BeneficiaryName && (
                         <div className="text-left">
@@ -699,7 +713,8 @@ const AddNgo = props => {
                         name="IFSCCode"
                         autocomplete="off"
                         required
-                        value={values.IFSCCode}
+                        value={addBankDetailsValues[index].IFSCCode}
+                        onChange={(e) => handleChangeForAddBankDetails(e, index)}
                       />
                       {errors.IFSCCode && touched.IFSCCode && (
                         <div className="text-left">
