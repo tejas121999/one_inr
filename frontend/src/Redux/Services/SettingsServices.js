@@ -17,6 +17,7 @@ function SettingsServices() {
     // user list
     this.getUserList = async () => await axios.get(BASE_URL + '#')
     this.addUserList = async body => await axios.post(BASE_URL + '#', body)
+    this.searchUser = async body => await axios.get(BASE_URL + '#', body)
     this.updateUserList = async body => await axios.put(BASE_URL + '#', body)
     this.deleteUserList = async id => await axios.delete(BASE_URL + '#', id)
 

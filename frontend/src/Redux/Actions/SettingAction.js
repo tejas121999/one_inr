@@ -1,4 +1,4 @@
-import { GET_PROFILE, GET_ROLL_LIST, GET_USER_LIST, GET_REZORPAY } from "../constTypes";
+import { GET_PROFILE, GET_ROLL_LIST, GET_USER_LIST, GET_REZORPAY, SEARCH_USER } from "../constTypes";
 import SettingsServices from "../Services/SettingsServices";
 import { toast } from 'react-toastify';
 
@@ -25,6 +25,8 @@ export const getAllProfiles = data => {
         payload: data,
     };
 };
+
+
 
 // update profile
 export const updateProfileAction = (id, data, history) => {
@@ -59,7 +61,7 @@ export const updateProfileImgAction = (id, data, history) => {
                         position: 'top-center',
                         autoClose: 2000
                     });
-                    setTimeout(function() {
+                    setTimeout(function () {
                         history.push('#')
                     }, 2000);
                 })
@@ -220,6 +222,23 @@ export const addUserListAction = (body, history) => {
         }
     } else {
         alert('no network')
+    }
+}
+
+// search user
+export const SearchUserAction = value => {
+    return dispatch => {
+        SettingsServices.searchUser(value)
+            .then(res => {
+                dispatch(searchUsers(res.data.data));
+            });
+    }
+}
+
+export const searchUsers = data => {
+    return {
+        type: SEARCH_USER,
+        payload: data
     }
 }
 
