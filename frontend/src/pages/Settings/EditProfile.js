@@ -1,23 +1,37 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { Field, Form, Formik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
 import * as yup from 'yup';
 import uploadImage from '../../assets/img/logo/uploadImage.jpg';
+import { BASE_URL, Local } from '../../API/APIEndpoints';
+import {
+  changePassword,
+  getAllProfileAction,
+  getAllProfiles,
+  getProfile,
+  updateProfile,
+  updateProfileAction,
+  updateProfileImgAction,
+} from '../../Redux/Actions/SettingAction';
+import axios from 'axios';
 
 const EditProfile = props => {
   const [old, oldPass] = useState('');
   const [newPass, setNewPass] = useState('');
   const [confPass, setConPass] = useState('');
   const [pass, setPass] = useState(false);
+  const [show, setShow] = useState(false);
   const [show1, setShow1] = useState('true');
   const [show2, setShow2] = useState('true');
 
-  const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  let profileData = useSelector(state => state.setting.getProfile);
+  console.log(profileData, 'ajit');
 
   const validationSchema = yup.object({
     fName: yup
@@ -35,14 +49,29 @@ const EditProfile = props => {
       .max(50, 'Max limit is 50 characters'),
   });
 
+  const onProfileImageAdd = async imgData => {
+    console.log('shivam');
+    const data = new FormData();
+    data.append('avatar', imgData);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=profile_image',
+      data,
+    );
+    console.log('data', result.data.url);
+    // if (result && result.data && result.data.url) {
+    //   setLogoImgUrl(result.data.url);
+    // }
+  };
+
   const updatePassword = async () => {
-    const Id = localStorage.getItem('userid');
+    // const Id = localStorage.getItem('userid');
 
     const data = {
-      oldPassword: old,
+      currentPassword: old,
       newPassword: newPass,
       confirmPassword: confPass,
     };
+    dispatch(changePassword(data, props.history));
 
     // const url = BASE_URL + AUTH + CHANGE_PASSWORD;
     // const res = await new APIService().post(url, data);
@@ -55,19 +84,22 @@ const EditProfile = props => {
     // }
   };
 
-  //   const onUpdateProfile = values => {
-  //     const obj = {
-  //       fname: values.fName + ' ' + values.lName,
-  //       emailId: values.email,
-  //       phoneNumber: values.mobile,
-  //     };
-  //     dispatch(updateProfile(props.location.state.id, obj, props.history));
-  //   };
-  //   useEffect(() => {
-  //     dispatch(getProfile(props.location.state.id));
-  //   }, []);
+  const dispatch = useDispatch();
+  // let history = useHistory();
 
-  // let vendorData = useSelector(state => state.master);
+  const onUpdateProfile = values => {
+    console.log(values, 'priyank');
+    const obj = {
+      name: values.fName,
+      email: values.emailId,
+      mobile: values.phoneNumber,
+    };
+    dispatch(updateProfileAction(obj, props.history));
+    // dispatch(updateProfileImgAction(img, props.history));
+  };
+  useEffect(() => {
+    dispatch(getAllProfileAction());
+  }, []);
 
   return (
     <>
@@ -109,21 +141,31 @@ const EditProfile = props => {
             <div
               style={{
                 padding: '25px',
-                marginBottom: '30px',
+                marginTop: '18px',
               }}
             >
               <div className="image-upload">
                 <label for="file-input">
-                  <input
+                  {/* <input
                     type="file"
                     accept=".jpg, .jpeg, .png"
                     id="file-input"
+                   
                     style={{ display: 'none' }}
-                  />
+                  /> */}
+                  <input
+                    onChange={e => console.log('Chinmay', e.target)}
+                    type="file"
+                    placeholder="Browse"
+                  ></input>
                   <img
                     className="AttachImage"
-                    style={{ width: '100%', height: '225px' }}
-                    src={uploadImage}
+                    style={{ width: '100%', height: '250px' }}
+                    src={
+                      profileData.profileImage
+                        ? Local + '/' + profileData.profileImage
+                        : uploadImage
+                    }
                   />
                 </label>
               </div>
@@ -144,21 +186,12 @@ const EditProfile = props => {
             >
               <Formik
                 initialValues={{
-                  fName:
-                    // vendorData.vendorData.name
-                    //   .split(' ')
-                    //   .slice(0, -1)
-                    //   .toString() ||
-                    '',
-                  phoneNumber:
-                    //   vendorData.vendorData.phone ||
-                    '',
-                  emailId:
-                    //   vendorData.vendorData.email ||
-                    '',
+                  fName: profileData.name || '',
+                  phoneNumber: profileData.mobile || '',
+                  emailId: profileData.email || '',
                 }}
                 validationSchema={validationSchema}
-                // onSubmit={values => onUpdateVendor(values)}
+                onSubmit={values => onUpdateProfile(values)}
                 enableReinitialize={true}
               >
                 {({ errors, values, touched }) => (
@@ -234,31 +267,27 @@ const EditProfile = props => {
                       }}
                     >
                       <div className="col-md-12">
-                        <Link>
-                          <button
-                            type="submit"
-                            className="btn btn-primary"
-                            style={{
-                              marginRight: '10px',
-                              marginBottom: '10px',
-                            }}
-                            onClick={handleShow}
-                          >
-                            Change Password
-                          </button>
-                        </Link>
-                        <Link to="/editProfile">
-                          <button
-                            class="btn btn-success"
-                            style={{
-                              marginRight: '10px',
-                              marginBottom: '10px',
-                            }}
-                          >
-                            Update
-                          </button>
-                        </Link>
-                        <Link to="/my_Profile">
+                        <button
+                          className="btn btn-primary"
+                          style={{
+                            marginRight: '10px',
+                            marginBottom: '10px',
+                          }}
+                          onClick={handleShow}
+                        >
+                          Change Password
+                        </button>
+                        <button
+                          class="btn btn-success"
+                          style={{
+                            marginRight: '10px',
+                            marginBottom: '10px',
+                          }}
+                          type="submit"
+                        >
+                          Update
+                        </button>
+                        <Link to="/my_profile">
                           <button
                             class="btn btn-danger"
                             style={{
@@ -304,6 +333,8 @@ const EditProfile = props => {
                       position: 'absolute',
                       left: '450px',
                       top: '60px',
+                      height: '25px',
+                      width: '25px',
                     }}
                   ></i>
                 </div>
@@ -326,6 +357,8 @@ const EditProfile = props => {
                       position: 'absolute',
                       left: '450px',
                       top: '145px',
+                      height: '25px',
+                      width: '25px',
                     }}
                   ></i>
                 </div>
@@ -347,6 +380,8 @@ const EditProfile = props => {
                       position: 'absolute',
                       left: '450px',
                       top: '230px',
+                      height: '25px',
+                      width: '25px',
                     }}
                   ></i>
                 </div>

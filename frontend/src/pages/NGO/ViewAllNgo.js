@@ -195,7 +195,10 @@ const ViewAllNgo = () => {
           >
             LIST OF ALL NGO
           </p>
-          <button className="btn btn-primary">Add NGO</button>
+          <button className="btn btn-primary"
+            onClick={() => history.push('/add_ngo')}
+          >Add NGO</button>
+
         </div>
       </div>
       <div

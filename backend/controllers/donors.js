@@ -26,7 +26,6 @@ exports.addDonor = async (req, res) => {
 
     // let balanceNextRenewDate = moment().endOf('year').fromNow();
     var new_date = moment().add(365,'days').format()
-    console.log(new_date)
     const hash = await twinBcrypt.hashSync(password, saltRounds);
 
     let userData = await models.users.create({ name, email, mobile, role_id, password: hash, parentId, balanceNextRenewDate : new_date })

@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getProfileAction } from '../../Redux/Actions/SettingAction'
+import { getAllProfileAction } from '../../Redux/Actions/SettingAction';
 import { Local } from '../../API/APIEndpoints';
-
-
 
 const MyProfile = () => {
   const dispatch = useDispatch();
   let profileData = useSelector(state => state.setting.getProfile);
+  console.log(profileData);
 
   useEffect(() => {
-    dispatch(getProfileAction())
-  }, [])
-
-  let profile = useSelector(state => state.setting.getProfile)
-  console.log('profile', profile.data)
-
+    dispatch(getAllProfileAction());
+  }, []);
 
   return (
     <>
@@ -62,7 +57,10 @@ const MyProfile = () => {
                 marginLeft: '30px',
               }}
             >
-              <img src={Local+'/'+profileData.profileImage}/>
+              <img
+                style={{ width: '250px', height: '200px' }}
+                src={Local + '/' + profileData.profileImage}
+              />
             </div>
           </div>
           <div
@@ -82,18 +80,20 @@ const MyProfile = () => {
                 <tbody>
                   <tr>
                     <th style={{ width: '10em' }}>Name</th>
-                    <td style={{ width: '50em' }}>{profile && profile.name}</td>
+                    <td style={{ width: '50em' }}>
+                      {profileData && profileData.name}
+                    </td>
                   </tr>
                   <tr>
                     <th style={{ width: '10em' }}>Mobile</th>
                     <td style={{ width: '50em' }}>
-                      {profileData && profileData.email}
+                      {profileData && profileData.mobile}
                     </td>
                   </tr>
                   <tr>
                     <th style={{ width: '10em' }}>Email</th>
                     <td style={{ width: '50em' }}>
-                      {profileData && profileData.mobile}
+                      {profileData && profileData.email}
                     </td>
                   </tr>
                   <tr>
