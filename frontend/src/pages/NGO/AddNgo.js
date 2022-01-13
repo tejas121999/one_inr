@@ -99,6 +99,8 @@ const AddNgo = props => {
   //Submit
 
 
+
+
   const onlogoImageAdd = async imgData => {
     const data = new FormData();
     data.append('avatar', imgData);
@@ -168,7 +170,9 @@ const AddNgo = props => {
     }
   };
   // console.log('deadImage', deedImgUrl);
-
+  const onChangeImage = (data) => {
+    console.log("Ngo LOGo", data);
+  }
   const onAddNgo = values => {
     console.log("abc", values)
     const obj = {
@@ -245,7 +249,8 @@ const AddNgo = props => {
                 <div className="col-3 ">
                   <div style={{ padding: '15px', paddingBottom: '10px' }}>
                     <label style={{ fontWeight: 'bold' }}>Logo Name</label>
-                    <DropzoneComponent />
+                    <DropzoneComponent onChangeImage={onlogoImageAdd}
+                    />
                     <ErrorMessage name="logo_img" component={TextError} />
                   </div>
                 </div>
@@ -467,7 +472,7 @@ const AddNgo = props => {
                     <label style={{ fontWeight: 'bold', height: '3em' }}>
                       Pancard
                     </label>
-                    <DropzoneComponent />
+                    <DropzoneComponent onChangeImage={onPanCardImageAdd} />
                     <ErrorMessage name="pancard_img" component={TextError} />
                   </div>
                 </div>
@@ -477,7 +482,7 @@ const AddNgo = props => {
                     <label style={{ fontWeight: 'bold', height: '3em' }}>
                       Certificate
                     </label>
-                    <DropzoneComponent />
+                    <DropzoneComponent onChangeImage={onCertificateImageAdd} />
                     <ErrorMessage
                       name="certificate_img"
                       component={TextError}
@@ -490,7 +495,7 @@ const AddNgo = props => {
                     <label style={{ fontWeight: 'bold', height: '3em' }}>
                       Charity Registration Certificate
                     </label>
-                    <DropzoneComponent />
+                    <DropzoneComponent onChangeImage={onCharityCertificateImageAdd} />
                     <ErrorMessage
                       name="charityCertificate_img"
                       component={TextError}
@@ -503,7 +508,7 @@ const AddNgo = props => {
                     <label style={{ fontWeight: 'bold', height: '3em' }}>
                       Deed
                     </label>
-                    <DropzoneComponent />
+                    <DropzoneComponent onChangeImage={onDeedImageAdd} />
                     <ErrorMessage name="deed_img" component={TextError} />
                   </div>
                 </div>
