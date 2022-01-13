@@ -69,12 +69,12 @@ exports.updateProfilePassword = async (req, res) => {
 
 //Create Users  by Admin
 exports.createUser = async (req, res) => {
-    let { name, email, mobile, role_id, password, parentId } = req.body
+    let { name, email, mobile, roleId, password, parentId } = req.body
 
     var new_date = moment().add(365, 'days').format()
     const hash = await twinBcrypt.hashSync(password, saltRounds);
 
-    let userData = await models.users.create({ name, email, mobile, role_id, password: hash, parentId, balanceNextRenewDate: new_date })
+    let userData = await models.users.create({ name, email, mobile, roleId, password: hash, parentId, balanceNextRenewDate: new_date })
     if (!userData) {
         return res.status(401).json({
             message: "Failed to create a user"
@@ -110,6 +110,7 @@ exports.getAllUser = async (req, res) => {
         offset: offset,
         limit: pageSize,
         where: searchQuery,
+        where: { isActive: true },
         attributes: ['id', 'name', 'email', 'mobile'],
         include: [{ model: models.role, attributes: ['id', 'roleName'] }]
     })
@@ -124,4 +125,41 @@ exports.getAllUser = async (req, res) => {
         data: data,
 
     })
+}
+
+//updating a user in admin panel in setting module.
+exports.updateUser = async (req, res) => {
+    const id = req.params.id;
+    let { name, email, mobile, roleId } = req.body
+    const data = await models.users.update({ name, email, mobile, roleId }, { where: { id } })
+    if (data == 0) {
+        return res.status(401).json({ success: false, message: "Failed." })
+    } else {
+        return res.status(201).json({ success: true, message: "User updated successfully." })
+    }
+
+}
+//Delete a user from admin in setting module.
+exports.deleteUser = async (req, res) => {
+    const id = req.params.id;
+    const data = await models.users.update({ isActive: false }, { where: { id: id } })
+    if (data == 0) {
+        return res.status(400).json({ success: false, message: "Failed." })
+    } else {
+        return res.status(200).json({ success: true, message: "User Deleted successfully." })
+    }
+}
+
+
+
+//get user by ID from admin in setting module.
+exports.getUserByID = async (req, res) => {
+    const id = req.params.id;
+    const data = await models.users.findOne({ where: { id: id } })
+    if (!data) {
+        return res.status(400).json({ success: false, message: "Failed" })
+    } else {
+        return res.status(200).json({ success: true, data: data })
+    }
+
 }
