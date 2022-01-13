@@ -6,7 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
 import * as yup from 'yup';
 import uploadImage from '../../assets/img/logo/uploadImage.jpg';
-import { Local } from '../../API/APIEndpoints';
+import { BASE_URL, Local } from '../../API/APIEndpoints';
 import {
   changePassword,
   getAllProfileAction,
@@ -16,13 +16,14 @@ import {
   updateProfileAction,
   updateProfileImgAction,
 } from '../../Redux/Actions/SettingAction';
+import axios from 'axios';
 
 const EditProfile = props => {
   const [old, oldPass] = useState('');
   const [newPass, setNewPass] = useState('');
   const [confPass, setConPass] = useState('');
   const [pass, setPass] = useState(false);
-  const [show, setShow] = useState('true');
+  const [show, setShow] = useState(false);
   const [show1, setShow1] = useState('true');
   const [show2, setShow2] = useState('true');
 
@@ -47,6 +48,20 @@ const EditProfile = props => {
       .required('Required')
       .max(50, 'Max limit is 50 characters'),
   });
+
+  const onProfileImageAdd = async imgData => {
+    console.log('shivam');
+    const data = new FormData();
+    data.append('avatar', imgData);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=profile_image',
+      data,
+    );
+    console.log('data', result.data.url);
+    // if (result && result.data && result.data.url) {
+    //   setLogoImgUrl(result.data.url);
+    // }
+  };
 
   const updatePassword = async () => {
     // const Id = localStorage.getItem('userid');
@@ -131,12 +146,18 @@ const EditProfile = props => {
             >
               <div className="image-upload">
                 <label for="file-input">
-                  <input
+                  {/* <input
                     type="file"
                     accept=".jpg, .jpeg, .png"
                     id="file-input"
+                   
                     style={{ display: 'none' }}
-                  />
+                  /> */}
+                  <input
+                    onChange={e => console.log('Chinmay', e.target)}
+                    type="file"
+                    placeholder="Browse"
+                  ></input>
                   <img
                     className="AttachImage"
                     style={{ width: '100%', height: '250px' }}
