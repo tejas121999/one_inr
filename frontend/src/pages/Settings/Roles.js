@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import { visuallyHidden } from '@mui/utils';
 import Table from '@mui/material/Table';
@@ -13,13 +13,17 @@ import { Link, useHistory } from 'react-router-dom';
 import { getComparator, stableSort } from '../../components/Pagination';
 import { constData } from '../../utils/colors';
 import { ToastContainer } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
 import Loader from '../Loader';
 import { TableHead } from '@mui/material';
 import Addrole from '../../Modals/Settings/AddRole';
 import Editrole from '../../Modals/Settings/EditRole';
 import DeleteRole from '../../Modals/Settings/DeleteRole';
+import {
+  getRoleListAction,
+  getRoleListByValueAction,
+} from '../../Redux/Actions/SettingAction';
 const Roles = () => {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -31,7 +35,6 @@ const Roles = () => {
   const [editModal, setEditModal] = React.useState(false);
   const [deleteModal, setDeleteModal] = React.useState(false);
   const history = useHistory();
-  const dispatch = useDispatch();
   // SEARCH
   let timeout = null;
   const handleChange = e => {
@@ -39,6 +42,14 @@ const Roles = () => {
     timeout = setTimeout(function () {
       onSearch(e.target.value);
     }, 1000);
+  };
+
+  const onSearch = value => {
+    if (value) {
+      dispatch(getRoleListByValueAction(value));
+    } else {
+      dispatch(getRoleListAction());
+    }
   };
 
   const onAddModalOpen = e => {
@@ -54,14 +65,6 @@ const Roles = () => {
   const onEditModalClose = () => {
     setEditModal(false);
   };
-  const onSearch = value => {
-    if (value) {
-      //   dispatch(getAllVEndorAction(value));
-    } else {
-      //   dispatch(getAllVEndorAction(''));
-    }
-  };
-
   // END
 
   const hanldeDeleteModal = () => {
@@ -81,6 +84,14 @@ const Roles = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const dispatch = useDispatch();
+  let roleList = useSelector(state => state.setting.getRoleList);
+  console.log(roleList, 'role');
+  useEffect(() => {
+    dispatch(getRoleListAction());
+  }, []);
+
   return (
     <>
       <br />
@@ -131,7 +142,7 @@ const Roles = () => {
         </div>
         <hr style={{ margin: '0' }} />
         <Paper sx={{ width: '100%' }}>
-          {constData && constData.length > 0 ? (
+          {roleList && roleList.length > 0 ? (
             <React.Fragment>
               <TableContainer id="tableDiv">
                 <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
@@ -139,11 +150,11 @@ const Roles = () => {
                     order={order}
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
-                    rowCount={constData.length}
+                    rowCount={roleList.length}
                     headCells={headCells}
                   />
                   <TableBody>
-                    {stableSort(constData, getComparator(order, orderBy))
+                    {stableSort(roleList, getComparator(order, orderBy))
                       .slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage,
@@ -160,7 +171,7 @@ const Roles = () => {
                               padding="none"
                               style={{ padding: '20px' }}
                             >
-                              {row.name}
+                              {row.roleName}
                             </TableCell>
 
                             <TableCell align="right">
