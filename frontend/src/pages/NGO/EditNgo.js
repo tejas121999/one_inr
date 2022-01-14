@@ -96,9 +96,8 @@ const EditNgo = props => {
       BASE_URL + 'fileupload?reason=ngo_logo',
       data,
     );
-    console.log('data', result.data.url);
-    if (result && result.data && result.data.url) {
-      setLogoImgUrl(result.data.url);
+    if (result && result.data && result.data.pathtoUpload) {
+      setLogoImgUrl(result.data.pathtoUpload);
     }
   };
   console.log('logoImage', logoImgUrl);
@@ -110,9 +109,8 @@ const EditNgo = props => {
       BASE_URL + 'fileupload?reason=ngo_pancard',
       data,
     );
-    console.log('data', result.data.url);
-    if (result && result.data && result.data.url) {
-      setPanCardImgUrl(result.data.url);
+    if (result && result.data && result.data.pathtoUpload) {
+      setPanCardImgUrl(result.data.pathtoUpload);
     }
   };
   console.log('panCardImage', panCardImgUrl);
@@ -124,9 +122,8 @@ const EditNgo = props => {
       BASE_URL + 'fileupload?reason=ngo_certificate',
       data,
     );
-    console.log('data', result.data.url);
-    if (result && result.data && result.data.url) {
-      setCertificateImgUrl(result.data.url);
+    if (result && result.data && result.data.pathtoUpload) {
+      setCertificateImgUrl(result.data.pathtoUpload);
     }
   };
   console.log('certificateImage', certificateImgUrl);
@@ -138,9 +135,8 @@ const EditNgo = props => {
       BASE_URL + 'fileupload?reason=ngo_certificate',
       data,
     );
-    console.log('data', result.data.url);
-    if (result && result.data && result.data.url) {
-      setCharityCertificateImgUrl(result.data.url);
+    if (result && result.data && result.data.pathtoUpload) {
+      setCharityCertificateImgUrl(result.data.pathtoUpload);
     }
   };
   console.log('charityCertificateImage', charityCertificateImgUrl);
@@ -152,9 +148,8 @@ const EditNgo = props => {
       BASE_URL + 'fileupload?reason=ngo_dead',
       data,
     );
-    console.log('data', result.data.url);
-    if (result && result.data && result.data.url) {
-      setDeedImgUrl(result.data.url);
+    if (result && result.data && result.data.pathtoUpload) {
+      setDeedImgUrl(result.data.pathtoUpload);
     }
   };
   console.log('deadImage', deedImgUrl);
