@@ -106,12 +106,11 @@ const AddNgo = props => {
 
   const onlogoImageAdd = async imgData => {
     const data = new FormData();
-    data.append('avatar', imgData);
+    data.append('avatar', imgData[0]);
     const result = await axios.post(
       BASE_URL + 'fileupload?reason=ngo_logo',
       data,
     );
-    console.log('data', result.data.url);
     if (result && result.data && result.data.url) {
       setLogoImgUrl(result.data.url);
     }
@@ -120,7 +119,7 @@ const AddNgo = props => {
 
   const onPanCardImageAdd = async imgData => {
     const data = new FormData();
-    data.append('avatar', imgData);
+    data.append('avatar', imgData[0]);
     const result = await axios.post(
       BASE_URL + 'fileupload?reason=ngo_pancard',
       data,
@@ -134,7 +133,7 @@ const AddNgo = props => {
 
   const onCertificateImageAdd = async imgData => {
     const data = new FormData();
-    data.append('avatar', imgData);
+    data.append('avatar', imgData[0]);
     const result = await axios.post(
       BASE_URL + 'fileupload?reason=ngo_certificate',
       data,
@@ -148,7 +147,7 @@ const AddNgo = props => {
 
   const onCharityCertificateImageAdd = async imgData => {
     const data = new FormData();
-    data.append('avatar', imgData);
+    data.append('avatar', imgData[0]);
     const result = await axios.post(
       BASE_URL + 'fileupload?reason=ngo_certificate',
       data,
@@ -162,9 +161,9 @@ const AddNgo = props => {
 
   const onDeedImageAdd = async imgData => {
     const data = new FormData();
-    data.append('avatar', imgData);
+    data.append('avatar', imgData[0]);
     const result = await axios.post(
-      BASE_URL + 'fileupload?reason=ngo_dead',
+      BASE_URL + 'fileupload?reason=ngo_deed',
       data,
     );
     console.log('data', result.data.url);
