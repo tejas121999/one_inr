@@ -52,7 +52,7 @@ function DonorServices() {
     await axios.delete(BASE_URL + 'auth/register', body);
 
   //10. GET_DONER_BY_ID
-  this.GetDonorById = async id => await axios.delete(BASE_URL + `donor/${id}`);
+  this.GetDonorById = async id => await axios.get(BASE_URL + `donor/${id}`);
 
   //11. UPDATE_DONOR_BY_ID
   this.UpdateDonorById = async (id, body) =>

@@ -35,6 +35,14 @@ const Users = () => {
   const [addModal, setAddModal] = React.useState(false);
   const [editModal, setEditModal] = React.useState(false);
   const [deleteModal, setDeleteModal] = React.useState(false);
+  const [editData, setEditData] = React.useState(initialData);
+  const initialData = {
+    id: '',
+    name: '',
+    email: '',
+    mobile: '',
+    role: '',
+  };
 
   const dispatch = useDispatch();
   let userList = useSelector(state => state.setting.getUserList);
@@ -103,7 +111,7 @@ const Users = () => {
       <br />
       <br />
 
-      <Edituser show={editModal} onHide={onEditModalClose} />
+      <Edituser show={editModal} data={editData} onHide={onEditModalClose} />
       <ToastContainer hideProgressBar />
       <Adduser show={addModal} onHide={onAddModalClose} />
       <DeleteUser show={deleteModal} onHide={deleteModalOpen} />
@@ -177,7 +185,9 @@ const Users = () => {
                             >
                               {row.name}
                             </TableCell>
-                            <TableCell align="center">{row.role}</TableCell>
+                            <TableCell align="center">
+                              {row.role.roleName}
+                            </TableCell>
                             <TableCell align="center">{row.email}</TableCell>
                             <TableCell align="center">{row.mobile}</TableCell>
                             <TableCell align="center">
@@ -185,7 +195,16 @@ const Users = () => {
                                 data-bs-toggle="tooltip"
                                 title="Edit"
                                 className="btn"
-                                onClick={() => onEditModalOpen()}
+                                onClick={() => {
+                                  onEditModalOpen();
+                                  setEditData({
+                                    id: row.id,
+                                    name: row.name,
+                                    email: row.email,
+                                    mobile: row.mobile,
+                                    role: row.role.roleName,
+                                  });
+                                }}
                               >
                                 <FaRegEdit />
                               </button>
