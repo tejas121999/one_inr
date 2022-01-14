@@ -4,14 +4,14 @@ import { BASE_URL } from '../../API/APIEndpoints';
 function NgoServices() {
   // Service For Add/ Create NGO
   this.createNGO = async body =>
-    await axios.post(BASE_URL + 'ngo/', body);
+    await axios.post(BASE_URL + 'ngo', body);
 
   // Service For View All Ngo
-  this.getAllNGOList = async value => 
-    await axios.get(BASE_URL + `ngo?search=${value}`);
+  this.getAllNGOListByValue = async value =>
+    await axios.get(BASE_URL + `ngo/?search=${value}`);
 
-  this.GetAllNgoList = async value =>
-    await axios.get(BASE_URL + `ngo?search=&from=2&to=3`);
+  this.GetAllNgoList = async () =>
+    await axios.get(BASE_URL + 'ngo');
 
   this.updateNgo = async (body, id) =>
     await axios.put(BASE_URL + `ngo/${id}`, body);

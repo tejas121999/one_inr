@@ -19,13 +19,27 @@ export const createNGOAction = (body, history) => {
   }
 };
 
-export const getAllNGOAction = value => {
+export const getAllNGOAction = () => {
   if (navigator.onLine) {
     return dispatch => {
-      NgoServices.getAllNGOList(value)
+      NgoServices.GetAllNgoList()
+        .then(res => {
+          dispatch(GetAllNGO(res.data.data));
+        })
+        .catch(err => { });
+    };
+  } else {
+    alert('No network');
+  }
+};
+
+export const getAllNGOByValueAction = value => {
+  if (navigator.onLine) {
+    return dispatch => {
+      NgoServices.getAllNGOListByValue(value)
         .then(res => {
           //need to add toster here
-          dispatch(GetAllNGO(res.data.result));
+          dispatch(GetAllNGO(res.data.data));
         })
         .catch(err => {
           //need to add toster here
