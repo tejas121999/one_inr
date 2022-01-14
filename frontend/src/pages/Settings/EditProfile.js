@@ -57,9 +57,8 @@ const EditProfile = props => {
       BASE_URL + 'fileupload?reason=profile_image',
       data,
     );
-    console.log('data', result.data.url);
-    // if (result && result.data && result.data.url) {
-    //   setLogoImgUrl(result.data.url);
+    // if (result && result.data && result.data.pathtoUpload) {
+    //   setLogoImgUrl(result.data.pathtoUpload);
     // }
   };
 

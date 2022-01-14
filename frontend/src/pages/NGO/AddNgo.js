@@ -34,7 +34,6 @@ const AddNgo = props => {
       { bankName: '', accountNumber: '', beneficiaryName: '', ifscCode: '' },
     ]);
   };
-  console.log("xyz", addBankDetailsValues)
 
   let removeBankDetailsFormFields = i => {
     let newFormValues = [...addBankDetailsValues];
@@ -44,7 +43,6 @@ const AddNgo = props => {
 
   let handleChangeForAddContact = (i, e) => {
     let newFormValues = [...addContactValues];
-    console.log("COntact", i, e);
     newFormValues[i][e.target.name] = e.target.value;
     setAddContactValues(newFormValues);
   };
@@ -111,11 +109,10 @@ const AddNgo = props => {
       BASE_URL + 'fileupload?reason=ngo_logo',
       data,
     );
-    if (result && result.data && result.data.url) {
-      setLogoImgUrl(result.data.url);
+    if (result && result.data && result.data.pathtoUpload) {
+      setLogoImgUrl(result.data.pathtoUpload);
     }
   };
-  console.log('logoImage', logoImgUrl);
 
   const onPanCardImageAdd = async imgData => {
     const data = new FormData();
@@ -124,9 +121,8 @@ const AddNgo = props => {
       BASE_URL + 'fileupload?reason=ngo_pancard',
       data,
     );
-    console.log('data', result.data.url);
-    if (result && result.data && result.data.url) {
-      setPanCardImgUrl(result.data.url);
+    if (result && result.data && result.data.pathtoUpload) {
+      setPanCardImgUrl(result.data.pathtoUpload);
     }
   };
   //console.log('panCardImage', panCardImgUrl);
@@ -138,9 +134,8 @@ const AddNgo = props => {
       BASE_URL + 'fileupload?reason=ngo_certificate',
       data,
     );
-    console.log('data', result.data.url);
-    if (result && result.data && result.data.url) {
-      setCertificateImgUrl(result.data.url);
+    if (result && result.data && result.data.pathtoUpload) {
+      setCertificateImgUrl(result.data.pathtoUpload);
     }
   };
   // console.log('certificateImage', certificateImgUrl);
@@ -152,9 +147,8 @@ const AddNgo = props => {
       BASE_URL + 'fileupload?reason=ngo_certificate',
       data,
     );
-    console.log('data', result.data.url);
-    if (result && result.data && result.data.url) {
-      setCharityCertificateImgUrl(result.data.url);
+    if (result && result.data && result.data.pathtoUpload) {
+      setCharityCertificateImgUrl(result.data.pathtoUpload);
     }
   };
   // console.log('charityCertificateImage', charityCertificateImgUrl);
@@ -166,15 +160,14 @@ const AddNgo = props => {
       BASE_URL + 'fileupload?reason=ngo_deed',
       data,
     );
-    console.log('data', result.data.url);
-    if (result && result.data && result.data.url) {
-      setDeedImgUrl(result.data.url);
+    if (result && result.data && result.data.pathtoUpload) {
+      setDeedImgUrl(result.data.pathtoUpload);
     }
   };
   // console.log('deadImage', deedImgUrl);
-  const onChangeImage = (data) => {
-    console.log("Ngo LOGo", data);
-  }
+  // const onChangeImage = (data) => {
+  //   console.log("Ngo LOGo", data);
+  // }
   const onAddNgo = values => {
 
     const obj = {
@@ -195,7 +188,6 @@ const AddNgo = props => {
       bankDetails: addBankDetailsValues,
       contactDetails: addContactValues
     };
-    console.log("abc", obj)
     dispatch(createNGOAction(obj, props.history));
   };
 
