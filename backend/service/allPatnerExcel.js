@@ -1,9 +1,6 @@
 
 const XLSX = require('xlsx')
 const fsPath = require('fs-path');
-// const path = require('path')
-// console.log(path.dirname(__dirname))
-// console.log(__dirname.concat("/download.csv"))
 async function generateAllUserExcel(partnerData,res) {
 
     
