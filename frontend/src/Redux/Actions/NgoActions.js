@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { ADD_NGO, ADD_NGO_FAIL, GET_ALL_NGOS } from '../constTypes';
+import { ADD_NGO, ADD_NGO_FAIL, GET_ALL_NGOS, GET_NGO } from '../constTypes';
 import NgoServices from '../Services/NgoServices';
 
 export const createNGOAction = (body, history) => {
@@ -32,6 +32,30 @@ export const getAllNGOAction = () => {
     alert('No network');
   }
 };
+
+export const getNgoByIdAction = (id) => {
+  if (navigator.onLine) {
+    return dispatch => {
+      NgoServices.getNgoById(id)
+        .then(res => {
+          dispatch(getNgoById(res.data.data));
+          console.log("abc", res)
+        })
+        .catch(err => { });
+    };
+  } else {
+    alert('No network');
+  }
+};
+
+export const getNgoById = data => {
+  return {
+    type: GET_NGO,
+    payload: data,
+  };
+};
+
+
 
 export const getAllNGOByValueAction = value => {
   if (navigator.onLine) {

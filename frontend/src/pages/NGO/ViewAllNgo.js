@@ -54,7 +54,6 @@ const ViewAllNgo = () => {
   }, []);
 
   let allNgoList = useSelector(state => state.ngo.ngoList);
-  console.log("abc", allNgoList);
 
   // const getNgoList = async () => {
   //   const url = BASE_URL + ADD_NGO_URL;
@@ -96,7 +95,7 @@ const ViewAllNgo = () => {
   };
 
   const handleChangePage = (event, newPage) => {
-    console.log('ChinmayChange', newPage);
+
 
     setPage(newPage);
   };
