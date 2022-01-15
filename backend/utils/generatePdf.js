@@ -33,7 +33,6 @@ const pdfGenerator = async (partner,filePath,html) => {
         type: "",
     };
     
-    console.log(document.data);
     
     pdf
         .create(document, options)

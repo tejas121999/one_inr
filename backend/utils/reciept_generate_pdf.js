@@ -2,7 +2,6 @@ var pdf = require("pdf-creator-node");
 const amounttowords = require("./amountotwords")
 
 const recieptGenerator = async (partner, html) => {
-    console.log(`data coming from reciept`,partner)
     var options = {
         format: "A5",
         orientation: "landscape",
