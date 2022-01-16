@@ -50,7 +50,7 @@ const EditProfile = props => {
   });
 
   const onProfileImageAdd = async imgData => {
-    console.log('shivam');
+    console.log('shivam', imgData);
     const data = new FormData();
     data.append('avatar', imgData);
     const result = await axios.post(
@@ -145,18 +145,6 @@ const EditProfile = props => {
             >
               <div className="image-upload">
                 <label for="file-input">
-                  {/* <input
-                    type="file"
-                    accept=".jpg, .jpeg, .png"
-                    id="file-input"
-                   
-                    style={{ display: 'none' }}
-                  /> */}
-                  <input
-                    onChange={e => console.log('Chinmay', e.target)}
-                    type="file"
-                    placeholder="Browse"
-                  ></input>
                   <img
                     className="AttachImage"
                     style={{ width: '100%', height: '250px' }}
@@ -167,6 +155,13 @@ const EditProfile = props => {
                     }
                   />
                 </label>
+                <input
+                  onChange={e => onProfileImageAdd(e.target.files[0])}
+                  type="file"
+                  accept=".jpg, .jpeg, .png"
+                  id="file-input"
+                  style={{ display: 'none' }}
+                />
               </div>
             </div>
           </div>
