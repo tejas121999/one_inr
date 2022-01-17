@@ -173,7 +173,7 @@ const AddNgo = props => {
       email: values.emailId,
       registrationDate: values.registrationDate,
       registrationNumber: values.registrationNumber,
-      mobile: values.mobile,
+      mobileNumber: values.mobileNumber,
       landline: values.landline,
       password: values.password,
       panNumber: values.panCard,
