@@ -8,7 +8,7 @@ exports.ngoValidation = [
         .exists().withMessage('Name is Required.')
         .notEmpty().withMessage('Name is Required.')
         .matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic.'),
-    
+
     body('email')
         .exists().withMessage('Email is Required')
         .notEmpty().withMessage('Email is Required')
@@ -104,9 +104,6 @@ exports.ngoValidation = [
         .exists().withMessage('Logo Image is required')
         .notEmpty().withMessage('Logo Image is required'),
 
-    body('signature')
-        .exists().withMessage('Signature is required')
-        .notEmpty().withMessage('Signature is required'),  
 
 ]
 

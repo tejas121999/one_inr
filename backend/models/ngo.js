@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         landline: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.BIGINT,
             field: 'landline'
         },
         panCard: {
@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
         isKyc: {
             type: DataTypes.BOOLEAN,
             field: 'is_kyc',
-            defaultValue : 0
+            defaultValue: 0
         },
     },
 
