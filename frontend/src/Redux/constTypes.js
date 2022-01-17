@@ -57,6 +57,7 @@ export const GET_PARTNER_BY_ID = 'GET_PARTNER_BY_ID';
 export const ADD_NGO = 'ADD_NGO';
 export const ADD_NGO_FAIL = 'ADD_NGO_FAIL';
 export const GET_ALL_NGOS = 'GET_ALL_NGOS';
+export const GET_NGO = 'GET_NGO';
 export const UPDATE_NGO_BY_ID = 'UPDATE_NGO_BY_ID';
 
 export const GET_ALL_PROJECTS = 'GET_ALL_PROJECTS';
@@ -68,6 +69,16 @@ export const GET_ARCHIVED_PROJECTS = 'GET_ARCHIVED_PROJECTS';
 export const GET_PROFILE = 'GET_PROFILE';
 export const GET_ROLL_LIST = 'GET_ROLL_LIST';
 export const GET_USER_LIST = 'GET_USER_LIST';
+export const GET_USER_LIST_FAIL = 'GET_USER_LIST_FAIL';
+export const ADD_USER = 'ADD_USER';
+export const ADD_USER_FAIL = 'ADD_USER_FAIL';
+export const Get_User_By_Id = 'Get_User_By_Id';
+export const Get_User_By_Id_FAIL = 'Get_User_By_Id_FAIL';
+export const Update_User_By_Id = 'Update_User_By_Id';
+export const Update_User_By_Id_FAIL = 'Update_User_By_Id_FAIL';
+export const DELETE_USER_BY_ID = 'DELETE_USER_BY_ID';
+export const DELETE_USER_BY_ID_FAIL = 'DELETE_USER_BY_ID_FAIL';
+
 export const GET_REZORPAY = 'GET_REZORPAY';
 
 export const GET_ALL_VENDORS_PAYMENT = 'GET_ALL_VENDORS_PAYMENT';
@@ -75,5 +86,9 @@ export const GET_ALL_PARTNERS_PAYMENT = 'GET_ALL_PARTNERS_PAYMENT';
 
 export const GET_COMPLETE_PROJECT_BY_ID = 'GET_COMPLETE_PROJECT_BY_ID';
 export const GET_DONER_LIST_BY_ID = 'GET_DONER_LIST_BY_ID';
-export const GET_VENDOR_PAYMENT_HISTORY_BY_ID = 'GET_VENDOR_PAYMENT_HISTORY_BY_ID';
-export const GET_PARTNER_PAYMENT_HISTORY_BY_ID = 'GET_PARTNER_PAYMENT_HISTORY_BY_ID';
+export const GET_VENDOR_PAYMENT_HISTORY_BY_ID =
+  'GET_VENDOR_PAYMENT_HISTORY_BY_ID';
+export const GET_PARTNER_PAYMENT_HISTORY_BY_ID =
+  'GET_PARTNER_PAYMENT_HISTORY_BY_ID';
+
+export const SEARCH_USER = 'SEARCH_USER';

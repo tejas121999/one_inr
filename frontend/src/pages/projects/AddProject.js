@@ -4,9 +4,14 @@ import { useDispatch } from 'react-redux';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 import { addProjectAction } from '../../Redux/Actions/ProjectActions';
 import './project.css';
+import axios from '../../utils/interceptor';
+import { BASE_URL } from '../../API/APIEndpoints';
 import TextEditor from './TextEditor';
 
 const AddProject = props => {
+    const [featureImg, setFeatureImg] = useState('')
+    const [coverImg, setCoverImg] = useState('')
+
     // const [value, setValue] = useState();
     const dispatch = useDispatch();
     const onProjectAdd = values => {
@@ -26,47 +31,36 @@ const AddProject = props => {
             recurringDays: values.recurringDays,
             status: 1,
             displayOnHomeStatus: 1,
-            images: [
-                {
-                    ImageType: "mobile",
-                    projectImage: "http://localhost:3000/uploads/project_image/mobile/1639564336778.png"
-                }, {
-                    ImageType: "banner",
-                    projectImage: "http://localhost:3000/uploads/project_image/banner/1639567551715.png"
-                }, {
-                    ImageType: "slider",
-                    projectImage: "http://localhost:3000/uploads/project_image/slider/1639714355938.png"
-
-                }, {
-                    ImageType: "slider",
-                    projectImage: "http://localhost:3000/uploads/project_image/slider/1639714555712.png"
-
-                }, {
-                    ImageType: "slider",
-                    projectImage: "http://localhost:3000/uploads/project_image/slider/1639714624535.png"
-
-                }, {
-                    ImageType: "slider",
-                    projectImage: "http://localhost:3000/uploads/project_image/slider/1639714648249.png"
-
-                }, {
-                    ImageType: "slider",
-                    projectImage: "http://localhost:3000/uploads/project_image/slider/1639714355938.png"
-
-                }, {
-                    ImageType: "slider",
-                    projectImage: "http://localhost:3000/uploads/project_image/slider/1639714355938.png"
-
-                }, {
-                    ImageType: "cover",
-                    projectImage: "http://localhost:3000/uploads/project_image/cover/1639567617850.png"
-                }
-            ]
+            feature: featureImg,
+            cover: coverImg
 
         }
-        dispatch(addProjectAction(object));
+        dispatch(addProjectAction(object, props.history));
     };
 
+    const onFeatureImgAdd = async imgData => {
+        const data = new FormData();
+        data.append('avatar', imgData[0]);
+        const result = await axios.post(
+            BASE_URL + '#',
+            data,
+        );
+        if (result && result.data && result.data.pathtoUpload) {
+            setFeatureImg(result.data.pathtoUpload);
+        }
+    }
+
+    const onCoverImgAdd = async imgData => {
+        const data = new FormData();
+        data.append('avatar', imgData[0]);
+        const result = await axios.post(
+            BASE_URL + '#',
+            data,
+        );
+        if (result && result.data && result.data.pathtoUpload) {
+            setCoverImg(result.data.pathtoUpload);
+        }
+    }
 
     return (
         <>
@@ -278,7 +272,7 @@ const AddProject = props => {
                                                                 Image dimensions must be 1024(i.e. width) *
                                                                 768(i.e. height)
                                                                 <div className="col-sm-4 col-xs-12 mt-3">
-                                                                    <DropzoneComponent />
+                                                                    <DropzoneComponent onChangeImage={onFeatureImgAdd} />
                                                                 </div>
                                                             </div>
                                                             <div className="col-sm-12 col-xs-12 mt-3">
@@ -290,7 +284,7 @@ const AddProject = props => {
                                                                 Image dimensions must be 1024(i.e. width) *
                                                                 768(i.e. height)
                                                                 <div className="col-sm-4 col-xs-12 mt-3">
-                                                                    <DropzoneComponent />
+                                                                    <DropzoneComponent onChangeImage={onCoverImgAdd} />
                                                                 </div>
                                                             </div>
                                                             <div className="col-sm-12 col-xs-12 mt-3">

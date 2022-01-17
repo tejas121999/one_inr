@@ -31,6 +31,8 @@ function DropzoneComponent(props) {
     const [files, setFiles] = useState([]);
 
     const onDrop = useCallback(acceptedFiles => {
+        console.log("dropZone", acceptedFiles);
+        props.onChangeImage(acceptedFiles)
         setFiles(
             acceptedFiles.map(file =>
                 Object.assign(file, {
@@ -51,6 +53,7 @@ function DropzoneComponent(props) {
         accept: 'image/jpeg, image/png',
     });
 
+
     const style = useMemo(
         () => ({
             ...baseStyle,
@@ -66,7 +69,7 @@ function DropzoneComponent(props) {
             <img
                 src={file.preview}
                 alt={file.name}
-                style={{width: '100px', height: '100px'}}
+                style={{ width: '100px', height: '100px' }}
             />
         </div>
     ));

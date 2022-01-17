@@ -75,7 +75,6 @@ exports.updatePatner = async (req, res) => {
         let userId = req.params.id;
     // let { firstName, lastName, mobile, email, gstNumber, panNumber, gstImage, panImage, companyName, Address } = req.body;
     let partnerData = await models.partners.findOne({ where: { id: userId } })
-    console.log(partnerData);
     if (!partnerData) {
         return res.status(404).json({
             message: "Partner does not exists"
@@ -95,7 +94,6 @@ exports.updatePatner = async (req, res) => {
         {
             where: { id: userId }
         })
-    console.log(partnerData)
     if (!partnerUpdate) {
         return res.status(400).json({
             message: "Failed to update partner"
@@ -132,7 +130,6 @@ exports.deletePartner = async (req,res) => {
 exports.getPartnerExcel = async (req, res) => {
     try {
         const urlData = req.get('host');
-        console.log(urlData);
         let partnerData = await models.partners.findAll();
         if (!partnerData) {
             res.status(404).json({ message: 'Data not found' });
@@ -148,7 +145,6 @@ exports.getPartnerExcel = async (req, res) => {
 exports.pdfOfPartner = async (req, res) => {
     try {
         const urlData = req.get('host');
-        console.log(urlData);
         let partnerData = await models.partners.findAll();
         if (!partnerData) {
             res.status(404).json({ message: 'Data not found' });
@@ -168,7 +164,6 @@ exports.exportPartnerCsv = async (req,res) => {
         let Partner = await models.partners.findAll();
         if(!Partner){
             res.status(404).json({message:'Data not found'})
-            console.log(Partner)
         }else{
             const csvData = await exportToCsv.exportsToCsv(Partner,filePath,"",res)
             res.status(200).json({message:'Exported Data into CSV',url : `http://` + urlData + csvData.downloadPath})

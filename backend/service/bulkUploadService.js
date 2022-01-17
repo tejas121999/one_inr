@@ -27,7 +27,6 @@ let bulkUserUploadService = async (dataArray, fileId) => {
         ele.fileId = fileId;
         // ele.user_status = ele.user_status.toLocaleLowerCase().trim();
     }
-    //console.log(dataArray,'---------------------------------------')
     // const defaultAray = [{
     //     name: '',
     //     email: '',
@@ -84,7 +83,6 @@ let bulkUserUploadService = async (dataArray, fileId) => {
             returning: true,
         }
     );
-    //console.log(users,"----------------------------------------------")
 
 
     if (!users) {

@@ -29,7 +29,6 @@ exports.addProjectImages =  async (req, res) => {
         }
     }
     catch(err) {
-        console.log(err);
         return res.status(400).josn({
             message: err
         })

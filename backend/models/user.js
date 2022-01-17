@@ -82,10 +82,6 @@ module.exports = (sequelize,DataTypes)=>{
             type: DataTypes.DATE,
             field : 'updated_at'
         },
-        deletedAt: {
-            type: DataTypes.DATE,
-            field: 'deleted_at'
-        },
         userId: {
             type: DataTypes.INTEGER,
             field: 'user_id',
@@ -98,18 +94,25 @@ module.exports = (sequelize,DataTypes)=>{
         balanceNextRenewDate:{
             type: DataTypes.DATE,
             field: 'balance_next_renew_date'
+        },
+        isActive :{
+            type : DataTypes.BOOLEAN,
+            field: 'is_active',
+            defaultValue: true
         }
-
-
     },{
         freezeTableName : true,
         tableName: 'users',
-        timestamps: false
+        timestamps: false,
+        paranoid : true,
+        deletedAt : 'deleted_at'
     });
 
     users.associate = function (models) {
         users.hasMany(models.usersReceipts, {foreignKey : 'userId'}),
         users.hasMany(models.bankDetails,{foreignKey:'userId'})
+        users.belongsTo(models.role,{foreignKey : 'roleId'})
+
         // users.hasOne(models.users,{foreignKey : 'parentId'})
         // users.belongsTo(models.users,{foreignKey : 'parentId'})
         users.hasOne(models.ngo,{foreignKey: 'userId'})

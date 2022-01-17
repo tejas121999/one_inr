@@ -1,9 +1,51 @@
 import { Field, Form, Formik } from 'formik';
+import * as yup from 'yup';
 import { Divider } from 'material-ui';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { BASE_URL } from '../../API/APIEndpoints';
 import { Modal } from 'react-bootstrap';
+import {
+  GetUserByIdAction,
+  updateUserByIdAction,
+} from '../../Redux/Actions/SettingAction';
 
 const Edituser = props => {
+  console.log(props, 'sms');
+
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(GetUserByIdAction());
+  // }, []);
+
+  // let parentList = useSelector(state => state.setting.getUserList);
+
+  const validationSchema = yup.object({
+    name: yup.string().required('Required'),
+    phoneNumber: yup
+      .string()
+      .required('required')
+      .min(10, 'Please enter 10 digits'),
+    emailId: yup.string().email('Invalid Email Format').required('Required'),
+    roleName: yup.string().required('Required'),
+  });
+
+  const onUpdate = async values => {
+    // const url = BASE_URL + `user/${userId}`;
+    // const parentId = parentList.filter(data => data.name == values.parent);
+
+    // let id = parentId && parentId.length ? parentId[0].id : 0;
+
+    const obj = {
+      name: values.name,
+      email: values.emailId,
+      mobile: values.phoneNumber,
+      role: values.role,
+    };
+    // dispatch(updateUserByIdAction(parentId, obj, props.history));
+  };
+
   return (
     <React.Fragment>
       <Modal
@@ -20,11 +62,12 @@ const Edituser = props => {
                 role: '',
                 phoneNumber: '',
                 emailId: '',
-                password: '',
-                parent: '',
+                // password: '',
+                // parent: '',
               }}
               enableReinitialize={true}
-              // validationSchema={this.validationSchema}
+              validationSchema={validationSchema}
+              onSubmit={values => onUpdate(values)}
             >
               {({ errors, values, touched }) => (
                 <Form>
