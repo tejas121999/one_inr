@@ -33,13 +33,19 @@ export const getAllProjects = data => {
 };
 
 // CREate
-export const addProjectAction = body => {
+export const addProjectAction = (body, history) => {
   if (navigator.onLine) {
     return dispatch => {
       projectServices
         .createProject(body)
         .then(res => {
-          console.log(res);
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000
+          });
+          setTimeout(function () {
+            history.push('#')
+          }, 2000);
         })
         .catch(err => { });
     };
