@@ -31,7 +31,7 @@ const AddNgo = props => {
   let addBankDetailsFormFields = () => {
     setAddBankDetailsValues([
       ...addBankDetailsValues,
-      { bankName: '', accountNumber: '', beneficiaryName: '', ifscCode: '' },
+      { bankName: '', accountNumber: '', beneficiaryName: '', ifsc: '' },
     ]);
   };
 
@@ -696,16 +696,16 @@ const AddNgo = props => {
                       <Field
                         className="form-control"
                         placeholder="Please enter IFSC Code"
-                        name="IFSCCode"
+                        name="ifsc"
                         autocomplete="off"
                         required
-                        value={addBankDetailsValues[index].IFSCCode}
+                        value={addBankDetailsValues[index].ifsc}
                         onChange={(e) => handleChangeForAddBankDetails(e, index)}
                       />
-                      {errors.IFSCCode && touched.IFSCCode && (
+                      {errors.ifsc && touched.ifsc && (
                         <div className="text-left">
                           <span style={{ color: 'blue' }}>
-                            {errors.IFSCCode}
+                            {errors.ifsc}
                           </span>
                         </div>
                       )}
