@@ -11,7 +11,6 @@ module.exports = async (req, res, next) => {
         return res.status(401).send({ message: 'Unauthorized' });
       } else {
         // let checkTokenInDb = await models.users.findOne({where : { rememberToken : checkToken }})
-        // console.log(`check Token `,checkTokenInDb)
         // if(!checkTokenInDb){
         //     res.status(401).send({message : 'Invalid Token '})
         // }

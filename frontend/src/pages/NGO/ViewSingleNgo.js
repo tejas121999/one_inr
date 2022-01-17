@@ -22,8 +22,10 @@ import { FaRegEdit, FaRegEye } from 'react-icons/fa';
 import { Switch } from '@mui/material';
 import uploadImage from '../../assets/img/logo/uploadImage.jpg';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
+import { getAllProjectAction } from '../../Redux/Actions/ProjectActions';
+import { getNgoByIdAction } from '../../Redux/Actions/NgoActions';
 
-const ViewSingleNgo = () => {
+const ViewSingleNgo = (props) => {
   const [key, setKey] = React.useState('details');
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -37,8 +39,15 @@ const ViewSingleNgo = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
-    //  dispatch(constData());
+    dispatch(getAllProjectAction());
+    dispatch(getNgoByIdAction(props.location.state.id));
   }, []);
+
+  let allProjectList = useSelector(state => state.project.projectList);
+  console.log("shivani", props.location.state.id)
+
+  let ngoById = useSelector(state => state.ngo.ngoData);
+  // console.log("chinmay", ngoById.user.bankDetails)
 
   const ViewModalOpen = data => {
     setViewData(data);
@@ -385,14 +394,14 @@ const ViewSingleNgo = () => {
                           >
                             NgoName
                           </TableCell>
-                          <TableCell align="center">ABC</TableCell>
+                          <TableCell align="center">{ngoById.ngoName}</TableCell>
                         </TableRow>
 
                         <TableRow
                           //   aria-checked={isItemSelected}
                           tabIndex={-1}
-                          //   key={row.address}
-                          //   selected={isItemSelected}
+                        //   key={row.address}
+                        //   selected={isItemSelected}
                         >
                           <TableCell
                             //   id={labelId}
@@ -403,14 +412,14 @@ const ViewSingleNgo = () => {
                           >
                             Address
                           </TableCell>
-                          <TableCell align="center">XYZ</TableCell>
+                          <TableCell align="center">{ngoById.address}</TableCell>
                         </TableRow>
 
                         <TableRow
                           // aria-checked={isItemSelected}
                           tabIndex={-1}
-                          // key={row.email}
-                          // selected={isItemSelected}
+                        // key={row.email}
+                        // selected={isItemSelected}
                         >
                           <TableCell
                             // id={labelId}
@@ -421,14 +430,14 @@ const ViewSingleNgo = () => {
                           >
                             Email
                           </TableCell>
-                          <TableCell align="center">EFG</TableCell>
+                          <TableCell align="center">{ngoById.email}</TableCell>
                         </TableRow>
 
                         <TableRow
                           // aria-checked={isItemSelected}
                           tabIndex={-1}
-                          // key={row.mobile}
-                          // selected={isItemSelected}
+                        // key={row.mobile}
+                        // selected={isItemSelected}
                         >
                           <TableCell
                             // id={labelId}
@@ -439,14 +448,14 @@ const ViewSingleNgo = () => {
                           >
                             Mobile
                           </TableCell>
-                          <TableCell align="center">BCD</TableCell>
+                          <TableCell align="center">{ngoById.mobile}</TableCell>
                         </TableRow>
 
                         <TableRow
                           //  aria-checked={isItemSelected}
                           tabIndex={-1}
-                          //  key={row.landline}
-                          //  selected={isItemSelected}
+                        //  key={row.landline}
+                        //  selected={isItemSelected}
                         >
                           <TableCell
                             // id={labelId}
@@ -457,14 +466,14 @@ const ViewSingleNgo = () => {
                           >
                             Landline
                           </TableCell>
-                          <TableCell align="center">EFG</TableCell>
+                          <TableCell align="center">{ngoById.landline}</TableCell>
                         </TableRow>
 
                         <TableRow
                           // aria-checked={isItemSelected}
                           tabIndex={-1}
-                          // key={row.registrationdate}
-                          // selected={isItemSelected}
+                        // key={row.registrationdate}
+                        // selected={isItemSelected}
                         >
                           <TableCell
                             // id={labelId}
@@ -475,14 +484,14 @@ const ViewSingleNgo = () => {
                           >
                             Registration Date
                           </TableCell>
-                          <TableCell align="center">12/4/2021</TableCell>
+                          <TableCell align="center">{ngoById.registrationDate}</TableCell>
                         </TableRow>
 
                         <TableRow
                           // aria-checked={isItemSelected}
                           tabIndex={-1}
-                          // key={row.registrationnumber}
-                          // selected={isItemSelected}
+                        // key={row.registrationnumber}
+                        // selected={isItemSelected}
                         >
                           <TableCell
                             // id={labelId}
@@ -493,13 +502,13 @@ const ViewSingleNgo = () => {
                           >
                             Registration Number
                           </TableCell>
-                          <TableCell align="center">LMN</TableCell>
+                          <TableCell align="center">{ngoById.registrationDate}</TableCell>
                         </TableRow>
 
                         <TableRow
                           tabIndex={-1}
-                          // key={row.pannumber}
-                          // selected={isItemSelected}
+                        // key={row.pannumber}
+                        // selected={isItemSelected}
                         >
                           <TableCell
                             // id={labelId}
@@ -509,7 +518,7 @@ const ViewSingleNgo = () => {
                           >
                             Pan Number
                           </TableCell>
-                          <TableCell align="center">CDE</TableCell>
+                          <TableCell align="center">{ngoById.panNumber}</TableCell>
                         </TableRow>
                       </TableBody>
                     </Table>
@@ -582,12 +591,12 @@ const ViewSingleNgo = () => {
                           order={order}
                           orderBy={orderBy}
                           onRequestSort={handleRequestSort}
-                          rowCount={headcellsconstdata.length}
+                          rowCount={allProjectList.length}
                           headCells={tempCells}
                         />
                         <TableBody>
                           {stableSort(
-                            headcellsconstdata,
+                            allProjectList,
                             getComparator(order, orderBy),
                           )
                             .slice(
@@ -678,7 +687,7 @@ const ViewSingleNgo = () => {
                         order={order}
                         orderBy={orderBy}
                         onRequestSort={handleRequestSort}
-                        rowCount={constData.length}
+                        rowCount={allProjectList.length}
                         headCells={projectheadCells}
                       />
                       <TableBody>

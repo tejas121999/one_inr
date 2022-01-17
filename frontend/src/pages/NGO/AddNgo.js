@@ -125,7 +125,7 @@ const AddNgo = props => {
       setPanCardImgUrl(result.data.pathtoUpload);
     }
   };
-  //console.log('panCardImage', panCardImgUrl);
+
 
   const onCertificateImageAdd = async imgData => {
     const data = new FormData();
@@ -138,7 +138,7 @@ const AddNgo = props => {
       setCertificateImgUrl(result.data.pathtoUpload);
     }
   };
-  // console.log('certificateImage', certificateImgUrl);
+
 
   const onCharityCertificateImageAdd = async imgData => {
     const data = new FormData();
@@ -151,7 +151,6 @@ const AddNgo = props => {
       setCharityCertificateImgUrl(result.data.pathtoUpload);
     }
   };
-  // console.log('charityCertificateImage', charityCertificateImgUrl);
 
   const onDeedImageAdd = async imgData => {
     const data = new FormData();
@@ -164,10 +163,7 @@ const AddNgo = props => {
       setDeedImgUrl(result.data.pathtoUpload);
     }
   };
-  // console.log('deadImage', deedImgUrl);
-  // const onChangeImage = (data) => {
-  //   console.log("Ngo LOGo", data);
-  // }
+
   const onAddNgo = values => {
 
     const obj = {
@@ -177,7 +173,7 @@ const AddNgo = props => {
       email: values.emailId,
       registrationDate: values.registrationDate,
       registrationNumber: values.registrationNumber,
-      mobile: values.mobile,
+      mobileNumber: values.mobileNumber,
       landline: values.landline,
       password: values.password,
       panNumber: values.panCard,
