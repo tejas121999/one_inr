@@ -29,7 +29,8 @@ function SettingsServices() {
   this.deleteUserById = async id => await axios.delete(BASE_URL + `user/${id}`);
 
   // config
-  this.updateConfig = async body => await axios.delete(BASE_URL + '', body);
+  this.getConfig = async () => await axios.get(BASE_URL + 'configs');
+  this.updateConfig = async body => await axios.put(BASE_URL + 'configs', body);
 
   // RAZORPAY CREDENTIALS
   this.getAllRazorpay = async () => await axios.get(BASE_URL + '#');
