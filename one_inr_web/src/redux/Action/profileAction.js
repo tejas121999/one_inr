@@ -68,7 +68,7 @@ export const getAllBackCampaignsAction = () => {
 export const getAllBackCamp = data => {
     return {
         type: GET_ALL_BACK_CAMPAIGNS,
-        payloade: data
+        payload: data
     }
 }
 
@@ -87,7 +87,7 @@ export const getBackCampaignsByidAction = (id) => {
 export const getBackCampById = data => {
     return {
         type: GET_BACK_CAMPAIGNS_BY_ID,
-        payloade: data
+        payload: data
     }
 }
 

@@ -9,7 +9,7 @@ exports.addConfigSetting = async (req, res) => {
     if (!config) {
         return res.status(400).json({ message: 'Bad Request' });
     }
-    return res.status(200).json({ message: 'Settings Created', result: config })
+    return res.status(201).json({ message: 'Settings Created', result: config })
 }
 
 exports.getConfigSetting = async (req, res) => {

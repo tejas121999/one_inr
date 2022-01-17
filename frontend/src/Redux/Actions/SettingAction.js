@@ -3,6 +3,15 @@ import {
   GET_ROLL_LIST,
   GET_USER_LIST,
   GET_REZORPAY,
+  Update_User_By_Id,
+  Update_User_By_Id_FAIL,
+  GET_USER_LIST_FAIL,
+  DELETE_USER_BY_ID,
+  DELETE_USER_BY_ID_FAIL,
+  Get_User_By_Id_FAIL,
+  Get_User_By_Id,
+  ADD_USER,
+  ADD_USER_FAIL,
 } from '../constTypes';
 import SettingsServices from '../Services/SettingsServices';
 import { toast } from 'react-toastify';
@@ -97,18 +106,28 @@ export const changePassword = (data, history) => {
 
 // role list
 // get roll list
-export const getRoleListActionAction = () => {
+export const getRoleListAction = () => {
   if (navigator.onLine) {
     return dispatch => {
       SettingsServices.getRoleList()
         .then(res => {
-          dispatch(getAllRoleList(res.data));
+          dispatch(getAllRoleList(res.data.data));
         })
         .catch(err => {});
     };
   } else {
     alert('No network');
   }
+};
+
+export const getRoleListByValueAction = value => {
+  return dispatch => {
+    SettingsServices.getRoleListByValue(value)
+      .then(res => {
+        dispatch(getAllRoleList(res.data.data));
+      })
+      .catch(err => {});
+  };
 };
 
 export const getAllRoleList = data => {
@@ -141,7 +160,7 @@ export const addRollListAction = (body, history) => {
   }
 };
 
-// update role
+//update role
 export const editRollListAction = (body, history) => {
   if (navigator.onLine) {
     return dispatch => {
@@ -212,6 +231,13 @@ export const getUserLists = data => {
   };
 };
 
+export const getUserListsFail = data => {
+  return {
+    type: GET_USER_LIST_FAIL,
+    payload: data,
+  };
+};
+
 // add user
 export const addUserListAction = (body, history) => {
   if (navigator.onLine) {
@@ -235,41 +261,117 @@ export const addUserListAction = (body, history) => {
   }
 };
 
-// update user
-export const updateUserListAction = (body, history) => {
+export const addUser = data => {
+  return {
+    type: ADD_USER,
+    payload: data,
+  };
+};
+
+export const addUserFail = data => {
+  return {
+    type: ADD_USER_FAIL,
+    payload: data,
+  };
+};
+
+// Get_User_By_Id
+export const GetUserByIdAction = id => {
   if (navigator.onLine) {
     return dispatch => {
-      SettingsServices.updateUserList(body)
+      SettingsServices.GetUserById(id)
         .then(res => {
-          // need to add toster here
+          dispatch(GetUserByIdData(res.data.data));
+          //need to add toster here
+        })
+        .catch(err => {
+          //need to add toster here
+        });
+    };
+  } else {
+    //need to add toster here
+  }
+};
 
+export const GetUserByIdData = data => {
+  return {
+    type: Get_User_By_Id,
+    payload: data,
+  };
+};
+
+export const onGetUserByIdDataFail = data => {
+  return {
+    type: Get_User_By_Id_FAIL,
+    payload: data,
+  };
+};
+
+// update user by id
+export const updateUserByIdAction = (id, data) => {
+  if (navigator.onLine) {
+    return dispatch => {
+      SettingsServices.updateUserById(id, data)
+        .then(res => {
+          dispatch(UpdateUserByIdData(res.data.data));
           toast.success(res.data.message, {
             position: 'top-center',
             autoClose: 2000,
           });
           setTimeout(function () {
-            history.push('#');
+            window.history.back();
           }, 2000);
         })
-        .catch(err => {});
+        .catch(err => {
+          window.history.back();
+          //need to add toster here
+        });
     };
   } else {
     alert('no network');
   }
 };
 
-// delete user
-export const DeleteUserACtion = id => {
+export const UpdateUserByIdData = data => {
+  return {
+    type: Update_User_By_Id,
+    payload: data,
+  };
+};
+
+export const onUpdateUserByIdDataFail = data => {
+  return {
+    type: Update_User_By_Id_FAIL,
+    payload: data,
+  };
+};
+
+// delete user by id
+export const DeleteUserByIdACtion = id => {
   return dispatch => {
-    SettingsServices.deleteUser(id)
+    SettingsServices.deleteUserById(id)
       .then(res => {
-        toast.success(res.data.message, {
+        toast.success('User Deleted', {
           position: 'top-center',
-          autoClose: 2000,
+          autoClose: 3000,
         });
-        dispatch(getUserListAction(''));
+        dispatch(getUserListAction());
       })
       .catch(err => {});
+  };
+};
+
+export const DeleteUserByIdData = data => {
+  return {
+    type: DELETE_USER_BY_ID,
+    payload: data,
+  };
+};
+
+export const onDeleteUserByIdDataFail = data => {
+  return {
+    type: DELETE_USER_BY_ID_FAIL,
+    payload: data,
   };
 };
 
