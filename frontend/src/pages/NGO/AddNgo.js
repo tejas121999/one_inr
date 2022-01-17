@@ -82,7 +82,7 @@ const AddNgo = props => {
       .string()
       .required('Required')
       .min(10, 'Please enter 10 digits'),
-    landlineNumber: yup
+    landline: yup
       .string()
       .required('Required')
       .min(10, 'please enter 10 digits'),
@@ -173,16 +173,15 @@ const AddNgo = props => {
       email: values.emailId,
       registrationDate: values.registrationDate,
       registrationNumber: values.registrationNumber,
-      mobileNumber: values.mobileNumber,
+      mobile: values.mobileNumber,
       landline: values.landline,
       password: values.password,
-      panNumber: values.panCard,
-      panCardImage: panCardImgUrl,
-      certificateImage: certificateImgUrl,
-      charityCertificateImage: charityCertificateImgUrl,
-      deedImage: deedImgUrl,
+      panNumber: values.panNumber,
+      panCard: panCardImgUrl,
+      certificate: certificateImgUrl,
+      charityRegistrationCertificate: charityCertificateImgUrl,
+      deed: deedImgUrl,
       bankDetails: addBankDetailsValues,
-      contactDetails: addContactValues
     };
     dispatch(createNGOAction(obj, props.history));
   };
@@ -228,7 +227,7 @@ const AddNgo = props => {
             registrationDate: '',
             registrationNumber: '',
             mobileNumber: '',
-            landlineNumber: '',
+            landline: '',
             password: '',
             panNumber: '',
           }}
@@ -400,17 +399,17 @@ const AddNgo = props => {
                     <Field
                       className="form-control"
                       placeholder="Please Enter landline Number"
-                      name="landlineNumber"
+                      name="landline"
                       type="text"
                       autocomplete="off"
                       maxLength={10}
                       required
-                      value={values.landlineNumber}
+                      value={values.landline}
                     />
-                    {errors.landlineNumber && touched.landlineNumber && (
+                    {errors.landline && touched.landline && (
                       <div className="text-left">
                         <span style={{ color: 'red' }}>
-                          {errors.landlineNumber}
+                          {errors.landline}
                         </span>
                       </div>
                     )}
@@ -607,7 +606,7 @@ const AddNgo = props => {
                 </div>
               ))}
 
-              <div style={{ textAlign: 'center' }}>
+              {/*   <div style={{ textAlign: 'center' }}>
                 <button
                   type="add contact"
                   className="btn btn-success"
@@ -615,7 +614,7 @@ const AddNgo = props => {
                 >
                   Add Contact
                 </button>
-              </div>
+                  </div>            */}
 
               <br />
               {addBankDetailsValues.map((element, index) => (
