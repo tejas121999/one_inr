@@ -60,16 +60,13 @@ exports.addProjects = async (req, res) => {
             commissionModel = (Number(commission)*goal)/100;
         }
 
-        // console.log(commm,gst,pg);
 
         gstCal = (commissionModel*gst)/100;
         pgCal = (Number(goal)+commissionModel)*pg/100;  
         
         target = Number(goal) + Number(commissionModel) + Number(gstCal) + Number(pgCal);
 
-        // console.log('=============================',target);
         
-        console.log(target);
 
         const projects = await models.projects.create({
             userId,
@@ -99,7 +96,6 @@ exports.addProjects = async (req, res) => {
         return res.status(200).json({projects, pro_images})
     }
     catch (err) {
-        console.log(err);
         return res.status(400).json({
             message: err
         })
@@ -133,7 +129,6 @@ exports.getAllProjects = async (req, res) => {
     });
     
     // var endDate = await project.map(ele=>{ return ele.dataValues.endDate})
-    // console.log(endDate);
     
     //var end_Date = moment(endDate).format('YYYY-MM-DD'); //end date - current date
 
@@ -151,7 +146,6 @@ exports.getAllProjects = async (req, res) => {
         ele.dataValues.DaysLeft = days_left;
     })
     
-    console.log(project)
 
     if(!project) {
         return res.status(400).json({message : "No data Found"})
@@ -198,7 +192,6 @@ exports.addFunds = async (req,res)=>{
     let data = await models.projects.findOne({where:{id:id}});
 
     let maxLimit = data.target - data.funded
-    console.log(maxLimit);
     if(req.body.funded>maxLimit){
         return res.status(400).json({message : "Check Max Limit"});
     }

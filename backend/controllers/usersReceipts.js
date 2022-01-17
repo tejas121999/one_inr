@@ -2,7 +2,7 @@ const models = require('../models');
 const paginationFunc = require('../utils/pagination');
 const Sequelize = models.Sequelize
 const Op = Sequelize.Op;
-const {recieptGenerator} = require('../utils/reciept_generate_pdf')
+const { recieptGenerator } = require('../utils/reciept_generate_pdf')
 const path = require("path")
 const fs = require("fs")
 const html = fs.readFileSync(path.join(__dirname, '..', 'utils', 'templates', 'receipt.html'), 'utf-8');
@@ -33,9 +33,7 @@ exports.addUsersReceipts = async (req, res) => {
             branch,
 
         } = req.body;
-        // console.log(req.body);
         let findTotalReciepts = await models.usersReceipts.count()
-        // console.log(findTotalReciepts);rs
         let receiptNumber = 1000 + findTotalReciepts.count++
         let usersReceipts = await models.usersReceipts.create({
 
@@ -66,7 +64,6 @@ exports.addUsersReceipts = async (req, res) => {
             })
         }
     } catch (err) {
-        console.log(err);
         return res.status(400).json({ message: err })
     }
 
@@ -77,7 +74,6 @@ exports.updateUsersReceipts = async (req, res) => {
 
     let usersReceiptsId = req.params.id;
 
-    // console.log(`usersReceipts id `, usersReceiptsId)
 
     let {
         userId,
@@ -132,26 +128,28 @@ exports.updateUsersReceipts = async (req, res) => {
 //Generating PDF for User Reciepts
 exports.pdfForUserReceipt = async (req, res) => {
     try {
-        
+
         const receipt_number = req.params.receipt_number
 
         const getReceiptDet = await models.usersReceipts.findOne({
-            where: {receipt_number },
-            attributes: ['receipt_number','amount','createdAt'],
+            where: { receipt_number },
+            attributes: ['receipt_number', 'amount', 'createdAt'],
             include: [
-                {model: models.users, 
-                    attributes: ['name','parentId'],
-                    include:{model : models.users,attributes : ['id','name']},}
+                {
+                    model: models.users,
+                    attributes: ['name', 'parentId'],
+                    include: { model: models.users, attributes: ['id', 'name'] },
+                }
             ]
         })
-       
-        if(getReceiptDet){
+
+        if (getReceiptDet) {
             recieptGenerator(getReceiptDet, html)
-            res.status(200).json({ message: 'Pdf Generated' , data : getReceiptDet.dataValues });
-        }else{
-            return res.json({message: "Receipt not found"})
+            res.status(200).json({ message: 'Pdf Generated', data: getReceiptDet.dataValues });
+        } else {
+            return res.json({ message: "Receipt not found" })
         }
-       
+
     } catch (err) {
         console.log(err);
     }
@@ -212,8 +210,8 @@ exports.getAllUserReceipts = async (req, res) => {
 exports.getUserReceiptsById = async (req, res) => {
     let id = req.params.id;
 
-    const data = await models.usersReceipts.findOne({id } );
-    
+    const data = await models.usersReceipts.findOne({ id });
+
 
     if (!data) {
         return res.status(400).json({
@@ -231,9 +229,9 @@ exports.getUserReceiptsById = async (req, res) => {
 exports.getUserData = async (req, res) => {
 
     const data = await models.usersReceipts.findAll({
-        include    : [{ model: models.users, attributes: ['name']}]
+        include: [{ model: models.users, attributes: ['name'] }]
     });
-    
+
 
     if (!data) {
         return res.status(400).json({
@@ -249,12 +247,11 @@ exports.getUserData = async (req, res) => {
 
 
 //get user receipts by ID
-exports.getUserReceiptsById = async(req,res)=>{
+exports.getUserReceiptsById = async (req, res) => {
     let dataId = req.params.id;
 
-    // console.log(`dataId id `, dataId)
 
-    let data = await models.usersReceipts.findOne({where : {id : dataId}})
+    let data = await models.usersReceipts.findOne({ where: { id: dataId } })
 
     if (!data) {
         return res.status(400).json({
@@ -262,9 +259,9 @@ exports.getUserReceiptsById = async(req,res)=>{
         })
     }
     return res.status(200).json({
-                data: data,
-                message: "Found All Data."
-            })
+        data: data,
+        message: "Found All Data."
+    })
 }
 
 
@@ -274,29 +271,24 @@ exports.getUserReceiptsById = async(req,res)=>{
 
 exports.pdfOfUserReceipts = async (req, res) => {
     try {
-        
+
         const urlData = req.get('host');
-        console.log(urlData);
         let userReceiptsData = await models.usersReceipts.findAll({
-            include    : [{ model: models.users, attributes: ['name']}]
+            include: [{ model: models.users, attributes: ['name'] }]
         });
-        // console.log(`------------>`,userReceiptsData.dataValues)
 
         const userDataValues = await userReceiptsData.map(ele => { return ele.dataValues });
-        console.log((userDataValues[0]))
 
-        // console.log("-----------------00000000000000",userDataValues, "-----------------00000000000000");
 
         // const userName = await userDataValues.map(ele => { return ele.user.dataValues.name
-            
+
         // })
-        // console.log(userName, '=====================================================');
 
         if (!userReceiptsData) {
             res.status(404).json({ message: 'Data not found' });
         } else {
-            const pdfData = await generatePdf.pdfGenerator(userReceiptsData,filePath, html1)
-            res.status(200).json({ message: 'Pdf Generated', url : 'http://' + urlData + pdfData.path });
+            const pdfData = await generatePdf.pdfGenerator(userReceiptsData, filePath, html1)
+            res.status(200).json({ message: 'Pdf Generated', url: 'http://' + urlData + pdfData.path });
         }
     } catch (err) {
         console.log(err);
@@ -307,20 +299,18 @@ exports.pdfOfUserReceipts = async (req, res) => {
 exports.getUserReceiptExcel = async (req, res) => {
     try {
         const urlData = req.get('host');
-        console.log(urlData);
         let userReceiptsData = await models.usersReceipts.findAll({
-            include    : [{ model: models.users, attributes: ['name']}]
+            include: [{ model: models.users, attributes: ['name'] }]
         });
 
         const userDataValues = await userReceiptsData.map(ele => { return ele.dataValues });
-        // console.log(userDataValues[0].user.dataValues.name);
         // res.json({userDataValues: userDataValues})
 
         if (!userReceiptsData) {
             res.status(404).json({ message: 'Data not found' });
         } else {
             const userReceiptsXlsx = await generateUserReceiptsExcel(userDataValues, res)
-            res.status(200).json({ message: 'Xlsx Generated', url : 'http://' + urlData + userReceiptsXlsx.pathToExport });
+            res.status(200).json({ message: 'Xlsx Generated', url: 'http://' + urlData + userReceiptsXlsx.pathToExport });
         }
     } catch (e) {
         console.log(e)
@@ -328,19 +318,19 @@ exports.getUserReceiptExcel = async (req, res) => {
 }
 
 
-exports.getUserReceiptCsv = async (req,res) => {
-    try{
+exports.getUserReceiptCsv = async (req, res) => {
+    try {
         const urlData = req.get('host');
         let userReceiptsData = await models.usersReceipts.findAll({
-            include : [{ model: models.users, attributes: ['name']}]
+            include: [{ model: models.users, attributes: ['name'] }]
         });
-        if(!userReceiptsData){
-            res.status(404).json({message:'Data not found'})
-        }else{
-            const csvData = await exportToCsv.exportsToCsv(userReceiptsData,filePath,"",res)
-            res.status(200).json({message:'Exported Data into CSV',url : `http://` + urlData + csvData.downloadPath})
+        if (!userReceiptsData) {
+            res.status(404).json({ message: 'Data not found' })
+        } else {
+            const csvData = await exportToCsv.exportsToCsv(userReceiptsData, filePath, "", res)
+            res.status(200).json({ message: 'Exported Data into CSV', url: `http://` + urlData + csvData.downloadPath })
         }
-    }catch(err){
+    } catch (err) {
         console.log(err)
     }
 }

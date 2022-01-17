@@ -109,7 +109,6 @@ exports.deleteVendor = async (req,res) => {
     }
 
     let data = await models.vendors.destroy({ where: { id: id } })
-    console.log(`data`, data)
     if (!data) {
         return res.status(204).json({
             message: "Failed to delete a Vendor"
@@ -143,7 +142,6 @@ exports.generateVendorCsv = async (req,res) => {
         if(!vendorData){
             res.status(404).json({message:'Data not found'})
         }else{
-            //console.log(vendorData)
             const csvData = await exportToCsv.exportsToCsv(vendorData,filePath,"",res)
             res.status(200).json({message:'Exported Data into CSV', url : `http://` + urlData + csvData.downloadPath })
         }
@@ -155,7 +153,6 @@ exports.generateVendorCsv = async (req,res) => {
 exports.getVendorExcel = async (req, res) => {
     try {
         const urlData = req.get('host');
-        console.log(urlData);
         let vendorData = await models.vendors.findAll();
         if (!vendorData) {
             res.status(404).json({ message: 'Data not found' });

@@ -1,14 +1,14 @@
 const nodemailer = require('nodemailer');
 
 
-let sendEmailWithAttachment = (toEmail,data)=>{
+let sendEmailWithAttachment = (toEmail, data) => {
 
 
     var mail = nodemailer.createTransport({
-        service : 'gmail',
-        auth : {
-            user : 'akshay.k.eklare@gmail.com',
-            pass : 'ake.19.96@08'
+        service: 'gmail',
+        auth: {
+            user: 'akshay.k.eklare@gmail.com',
+            pass: 'ake.19.96@08'
         }
     })
 
@@ -18,21 +18,21 @@ let sendEmailWithAttachment = (toEmail,data)=>{
         to: toEmail,
         subject: data.subject,
         text: data.text,
-        attachments : data.attachments
+        attachments: data.attachments
     }
 
-    const msg = mail.sendMail(mailOptions, function(err,data){
-        if(err){
+    const msg = mail.sendMail(mailOptions, function (err, data) {
+        if (err) {
             console.log(err)
-        }else{
+        } else {
             console.log('Mail Send Successful')
         }
     })
 
-    return {msg}
+    return { msg }
 }
 
 
 module.exports = {
-    sendEmailWithAttachment : sendEmailWithAttachment
+    sendEmailWithAttachment: sendEmailWithAttachment
 }

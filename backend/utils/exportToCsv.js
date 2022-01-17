@@ -11,7 +11,6 @@ let exportsToCsv = async(Data,filePath,req,res)=>{
     //     return res.status(400).json({message : "Bad Request"})
     // }        
     //const userData = await models.partners.findAll();
-    //console.log(userData)
     const fileName = `public/uploads/${filePath}${Date.now()}.csv`
     const downloadPath = `/uploads/${filePath}${Date.now()}.csv`
     const ws = fs.createWriteStream(fileName)
@@ -29,7 +28,6 @@ let exportsToCsv = async(Data,filePath,req,res)=>{
 
     //     const 
     // })
-    // console.log(__dirname)
     // const  ws = fs.createWriteStream(`${__dirname}/${moment()}.csv`)
 
     // fastCsv.write(data,{headers : true}).on("finish",function(){
@@ -37,7 +35,6 @@ let exportsToCsv = async(Data,filePath,req,res)=>{
     // }).pipe(ws)
     //   return res.status(200).json({message:"Success"})
     //return res.status(200).json({message : "User Data", result : data})
-    console.log(fileName);
     return {downloadPath};
 
 }
