@@ -1,14 +1,24 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
+import { addRazorpayAction } from '../../Redux/Actions/SettingAction';
 
-function AddRazorpay() {
+const AddRazorpay = props => {
+  const dispatch = useDispatch();
+
   const schema = Yup.object().shape({
-    key: Yup.string().required('The Razorpay Key Field Is Required.'),
-    secret: Yup.string().required('The Razorpay Secret Field Is Required.'),
+    key_id: Yup.string().required('The Razorpay Key Field Is Required.'),
+    key_secret: Yup.string().required('The Razorpay Secret Field Is Required.'),
+    status: Yup.string(),
   });
 
+  const onAddRazor = async values => {
+    console.log(values, 'add');
+
+    dispatch(addRazorpayAction(values, props.history));
+  };
   return (
     <>
       <br />
@@ -41,10 +51,11 @@ function AddRazorpay() {
       >
         <Formik
           validationSchema={schema}
-          onSubmit={console.log}
+          onSubmit={values => onAddRazor(values)}
           initialValues={{
-            key: '',
-            secret: '',
+            key_id: '',
+            key_secret: '',
+            status: '',
           }}
         >
           {({
@@ -68,7 +79,7 @@ function AddRazorpay() {
                       <br />
                       <Form.Control
                         type="text"
-                        name="key"
+                        name="key_id"
                         value={values.key}
                         onChange={handleChange}
                         isValid={touched.key && !errors.key}
@@ -84,7 +95,7 @@ function AddRazorpay() {
                       <Form.Label>RAZORPAY SECRET:</Form.Label>
                       <Form.Control
                         type="text"
-                        name="secret"
+                        name="key_secret"
                         value={values.secret}
                         onChange={handleChange}
                         isValid={touched.secret && !errors.secret}
@@ -128,6 +139,6 @@ function AddRazorpay() {
       </div>
     </>
   );
-}
+};
 
 export default AddRazorpay;

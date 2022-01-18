@@ -1,6 +1,5 @@
 import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
-import { Divider } from 'material-ui';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
@@ -16,7 +15,7 @@ const Adduser = props => {
   });
 
   const onAddUser = async values => {
-    console.log(values, 'shiv');
+    // console.log(values, 'shiv');
 
     dispatch(addUserListAction(values, props.history));
     props.onHide();

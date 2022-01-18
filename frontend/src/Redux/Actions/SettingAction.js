@@ -14,6 +14,10 @@ import {
   ADD_USER_FAIL,
   GET_CONFIG,
   UPDATE_CONFIG,
+  GET_RAZORPAY,
+  UPDATE_RAZORPAY_BY_ID,
+  ADD_RAZORPAY,
+  GET_RAZORPAY_BY_ID,
 } from '../constTypes';
 import SettingsServices from '../Services/SettingsServices';
 import { toast } from 'react-toastify';
@@ -245,7 +249,6 @@ export const addUserListAction = body => {
       SettingsServices.addUserList(body)
         .then(res => {
           // need to add toster here
-
           toast.success(res.data.message, {
             position: 'top-center',
             autoClose: 2000,
@@ -319,7 +322,6 @@ export const updateUserByIdAction = (id, data) => {
           // setTimeout(function () {
           dispatch(getUserListAction());
           // });
-          console.log('UPDATED', res);
         })
         .catch(err => {
           window.history.back();
@@ -424,13 +426,13 @@ export const updateAllConfig = data => {
 };
 
 // RAZORPAY CREDENTIALS
-// GET REZORPAY
-export const getRezorpayAction = () => {
+// GET RAZORPAY
+export const getRazorpayAction = () => {
   if (navigator.onLine) {
     return dispatch => {
       SettingsServices.getAllRazorpay()
         .then(res => {
-          dispatch(getRezorpay(res.data));
+          dispatch(getRazorpay(res.data.result));
         })
         .catch(err => {});
     };
@@ -439,26 +441,62 @@ export const getRezorpayAction = () => {
   }
 };
 
-export const getRezorpay = data => {
+export const getRazorpayByValueAction = value => {
+  return dispatch => {
+    SettingsServices.getAllRazorpayByValue(value)
+      .then(res => {
+        dispatch(getRazorpay(res.data.result));
+      })
+      .catch(err => {});
+  };
+};
+
+export const getRazorpay = data => {
   return {
-    type: GET_REZORPAY,
+    type: GET_RAZORPAY,
     payload: data,
   };
 };
 
-// add rezorpay
-export const addRezorpayAction = (body, history) => {
+// Get_Razorpay_By_Id
+export const GetRazorpayByIdAction = id => {
   if (navigator.onLine) {
     return dispatch => {
-      SettingsServices.addRezorpay(body)
+      SettingsServices.getRazorpayById(id)
+        .then(res => {
+          dispatch(GetRazorpayByIdData(res.data.result));
+          //need to add toster here
+        })
+        .catch(err => {
+          //need to add toster here
+        });
+    };
+  } else {
+    //need to add toster here
+  }
+};
+
+export const GetRazorpayByIdData = data => {
+  return {
+    type: GET_RAZORPAY_BY_ID,
+    payload: data,
+  };
+};
+
+// add razorpay
+export const addRazorpayAction = (body, history) => {
+  if (navigator.onLine) {
+    return dispatch => {
+      SettingsServices.addRazorpay(body)
         .then(res => {
           toast.success(res.data.message, {
             position: 'top-center',
             autoClose: 2000,
           });
+          dispatch(getRazorpayAction());
           setTimeout(function () {
-            history.push('#');
-          }, 2000);
+            history.push('/razorpay_credentials');
+          }, 1000);
         })
         .catch(err => {});
     };
@@ -467,19 +505,27 @@ export const addRezorpayAction = (body, history) => {
   }
 };
 
+export const addRazorpay = data => {
+  return {
+    type: ADD_RAZORPAY,
+    payload: data,
+  };
+};
+
 // update rezorpay
-export const updateRezorpayAction = (id, body, history) => {
+export const updateRezorpayByIdAction = (id, data) => {
   if (navigator.onLine) {
     return dispatch => {
-      SettingsServices.updateRezorpay(id, body)
+      SettingsServices.updateRazorpayById(id, data)
         .then(res => {
-          toast.success(res.data.message, {
+          toast.success(res.data.result.message, {
             position: 'top-center',
             autoClose: 2000,
           });
-          setTimeout(function () {
-            history.push('#');
-          }, 2000);
+          // setTimeout(function () {
+          dispatch(getRazorpayAction());
+          // history.push('#');
+          // }, 2000);
         })
         .catch(err => {
           window.history.back();
@@ -490,15 +536,9 @@ export const updateRezorpayAction = (id, body, history) => {
   }
 };
 
-// delete rezorpay
-export const deleteRezorpayAction = id => {
-  return dispatch => {
-    SettingsServices.deleteRezorpay(id).then(res => {
-      toast.success(res.data.message, {
-        position: 'top-center',
-        autoClose: 2000,
-      });
-      dispatch(err => {});
-    });
+export const UpdateRazorpayById = data => {
+  return {
+    type: UPDATE_RAZORPAY_BY_ID,
+    payload: data,
   };
 };

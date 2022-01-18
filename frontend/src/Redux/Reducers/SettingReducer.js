@@ -12,6 +12,9 @@ import {
   ADD_USER,
   UPDATE_CONFIG,
   GET_CONFIG,
+  UPDATE_RAZORPAY_BY_ID,
+  ADD_RAZORPAY,
+  GET_RAZORPAY,
 } from '../constTypes';
 
 const initialState = {
@@ -23,7 +26,9 @@ const initialState = {
   UpdateUserById: [],
   getConfig: [],
   updateConfig: [],
-  getRezorpay: [],
+  getRazorpay: [],
+  addRazorpay: [],
+  updateRazorpayById: [],
 };
 
 export const SettingReducer = (state = initialState, action) => {
@@ -129,10 +134,26 @@ export const SettingReducer = (state = initialState, action) => {
     }
 
     // GET RAZORPAY CREDENTIALS
-    case GET_REZORPAY: {
+    case GET_RAZORPAY: {
       return {
         ...state,
-        getRezorpay: action.payload,
+        getRazorpay: action.payload,
+      };
+    }
+
+    // ADD RAZORPAY CREDENTIALS
+    case ADD_RAZORPAY: {
+      return {
+        ...state,
+        addRazorpay: action.payload,
+      };
+    }
+
+    // UPDATE RAZORPAY CREDENTIALS
+    case UPDATE_RAZORPAY_BY_ID: {
+      return {
+        ...state,
+        updateRazorpayById: action.payload,
       };
     }
 
