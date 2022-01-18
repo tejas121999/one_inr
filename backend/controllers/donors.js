@@ -141,7 +141,6 @@ exports.updateDonorBalance = async (req, res) => {
         })
     }
     let donorUpdate = await models.users.update({ balance: (donorExists.dataValues.balance + balance) }, { where: { id: id } })
-    console.log(`data`, donorUpdate)
     if (!donorUpdate[0]) {
         return res.status(400).json({
             message: "Failed to update balance"

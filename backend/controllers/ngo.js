@@ -52,47 +52,41 @@ exports.addNgo = async (req, res) => {
 
 //updating ngo
 exports.updateNgo = async (req, res) => {
-    let ngoId = req.params.id;
-
-    let ngoExists = await models.ngo.findOne(
-        { where: { id: ngoId } })
-
-    if (!ngoExists) {
-        return res.status(402).json({
-            message: "Ngo Does not exists!"
-        })
+    const id = req.params.id;
+    let { name, email, mobile, password, } = req.body;
+    let { address, registrationDate, registrationNumber, landline, panCard, panNumber, certificate, charityRegistrationCertificate, logo, deed, isKyc } = req.body;
+    //FINDING USER ID THROUGH NGO
+    let getUser = await models.ngo.findOne({
+        where: { id },
+        include: { model: models.users, attributes: ['id', 'name'] }
+    })
+    let userId = getUser.user.id  //User ID
+    const hash = await twinBcrypt.hashSync(password, saltRounds);
+    var cBankData;
+    let createNgo;
+    let data;
+    await sequelize.transaction(async (t) => {
+        data = await models.users.update(
+            { name, email, mobile, password: hash }, { where: { id: userId } },
+            { transaction: t }
+        )
+        createNgo = await models.ngo.update(
+            { address, registrationDate, registrationNumber, landline, panCard, panNumber, certificate, charityRegistrationCertificate, logo, deed, isKyc }, { where: { id } },
+            { transaction: t }
+        )
+        if (req.body.bankDetails) {
+            for (const item of req.body.bankDetails) {
+                cBankData = await createBankData({ userId: userId, id, bankName: item.bankName, accountNumber: item.accountNumber, beneficiaryName: item.beneficiaryName, ifsc: item.ifsc },
+                    t
+                )
+            }
+        }
+    })
+    if (cBankData == false || data==[0] || createNgo ==[0]) {
+        return res.status(401).json({ message: " Failed to create NGO." })
+    } else {
+        return res.status(201).json({ message: "Ngo Updated successfully." })
     }
-
-
-    let ngoUpdate = await models.ngo.update(
-        {
-            userId: req.body.userId,
-            address: req.body.address,
-            registrationDate: req.body.registrationDate,
-            registrationNumber: req.body.registrationNumber,
-            landline: req.body.landline,
-            contacts: req.body.contacts,
-            bankDetails: req.body.bankDetails,
-            panCard: req.body.panCard,
-            panNumber: req.body.panNumber,
-            certificate: req.body.certificate,
-            charityRegistrationCertificate: req.body.charityRegistrationCertificate,
-            deed: req.body.deed,
-            logo: req.body.logo,
-            signature: req.body.signature,
-            isKyc: req.body.isKyc
-        },
-
-        {
-            where: { id: ngoId }
-        })
-
-    if (ngoUpdate) {
-        return res.status(200).json({
-            message: "Ngo Details Updated Successfuly"
-        });
-    }
-
 }
 
 
