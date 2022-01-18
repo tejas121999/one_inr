@@ -12,14 +12,14 @@ import {
   Form,
 } from 'react-bootstrap';
 import { getConfigAction } from '../../Redux/Actions/SettingAction';
+import { height } from '@mui/system';
 
 const styles = {
   card: {
     width: 400,
     height: 200,
-    marginTop: 140,
+    marginTop: 30,
     marginLeft: 23,
-    marginBottom: -120,
   },
   button: {
     marginLeft: 260,
@@ -56,8 +56,27 @@ const Config = () => {
 
   return (
     <>
-      <div style={styles.heading}>
-        <p>App Config</p>
+      <br />
+      <br />
+      <br />
+      <br />
+      <div className="card" style={{ border: '0' }}>
+        <div
+          style={{
+            display: 'flex',
+            padding: '15px',
+          }}
+        >
+          <p
+            style={{
+              textAlign: 'left',
+              fontSize: '1.25rem',
+              marginBottom: '0',
+            }}
+          >
+            APP CONFIG
+          </p>
+        </div>
       </div>
 
       <Col>
@@ -114,7 +133,7 @@ const Config = () => {
           <Card style={styles.card}>
             <Card.Body>
               <Card.Title style={styles.title}>Payment Gateway Name</Card.Title>
-              <InputGroup>
+              <InputGroup size="sm" style={styles.inputgroup}>
                 <FormControl aria-label="Dollar amount (with dot and two decimal places)" />
                 <Button style={styles.button} variant="primary">
                   Update
@@ -128,7 +147,14 @@ const Config = () => {
               <InputGroup>
                 <FloatingLabel controlId="floatingSelectGrid">
                   <Form.Select
-                    style={styles.inputgroup}
+                    style={{
+                      height: '31px',
+                      width: '360px',
+                      marginTop: '18px',
+                      fontSize: '12px',
+                      border: '1px solid #ced4da',
+                      borderRadius: '0.25rem',
+                    }}
                     aria-label="Floating label select example"
                   >
                     <option value="1">Feed cows with the grass of love</option>
