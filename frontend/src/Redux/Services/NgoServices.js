@@ -24,7 +24,7 @@ function NgoServices() {
 
   this.UpdateNgo = async (body, id) =>
     await axios.put(BASE_URL + `ngo/update-ngo`, body);
-  this.deleteNgo = async id => await axios.delete(BASE_URL + `ngo/delete-ngo}`);
+  this.deleteNgo = async id => await axios.delete(BASE_URL + `ngo/${id}`);
 }
 
 export default new NgoServices();
