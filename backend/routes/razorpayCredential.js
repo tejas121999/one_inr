@@ -6,14 +6,13 @@ const {wrapper} = require('../utils/errorWrap')
 
 
 const {razorpayCredentials,addRazorpayCredentials,updateRazorpayCredentials}= require('../controllers/razorpayCredential') //Importing Vendor controller.
+const checkRolesAndPermission = require('../middleware/checkRolesAndPermissions')
 
+router.get('/',checkAuth,checkRolesAndPermission,wrapper(razorpayCredentials))
 
+router.post('/',checkAuth,checkRolesAndPermission,wrapper(addRazorpayCredentials))
 
-router.get('/',checkAuth,wrapper(razorpayCredentials))
-
-router.post('/',checkAuth,wrapper(addRazorpayCredentials))
-
-router.put('/:id',checkAuth,wrapper(updateRazorpayCredentials))
+router.put('/:id',checkAuth,checkRolesAndPermission,wrapper(updateRazorpayCredentials))
 
 
 
