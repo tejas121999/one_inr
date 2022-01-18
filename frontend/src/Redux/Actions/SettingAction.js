@@ -12,6 +12,8 @@ import {
   Get_User_By_Id,
   ADD_USER,
   ADD_USER_FAIL,
+  GET_CONFIG,
+  UPDATE_CONFIG,
 } from '../constTypes';
 import SettingsServices from '../Services/SettingsServices';
 import { toast } from 'react-toastify';
@@ -37,8 +39,6 @@ export const getAllProfiles = data => {
     payload: data,
   };
 };
-
-
 
 // update profile
 export const updateProfileAction = (data, history) => {
@@ -239,7 +239,7 @@ export const getUserListsFail = data => {
 };
 
 // add user
-export const addUserListAction = (body, history) => {
+export const addUserListAction = body => {
   if (navigator.onLine) {
     return dispatch => {
       SettingsServices.addUserList(body)
@@ -250,9 +250,7 @@ export const addUserListAction = (body, history) => {
             position: 'top-center',
             autoClose: 2000,
           });
-          setTimeout(function () {
-            history.push('#');
-          }, 1000);
+          dispatch(getUserListAction());
         })
         .catch(err => {});
     };
@@ -313,14 +311,15 @@ export const updateUserByIdAction = (id, data) => {
     return dispatch => {
       SettingsServices.updateUserById(id, data)
         .then(res => {
-          dispatch(UpdateUserByIdData(res.data.data));
+          // dispatch(UpdateUserByIdData(res.data.data));
           toast.success(res.data.message, {
             position: 'top-center',
             autoClose: 2000,
           });
-          setTimeout(function () {
-            window.history.back();
-          }, 2000);
+          // setTimeout(function () {
+          dispatch(getUserListAction());
+          // });
+          console.log('UPDATED', res);
         })
         .catch(err => {
           window.history.back();
@@ -376,26 +375,52 @@ export const onDeleteUserByIdDataFail = data => {
 };
 
 // config
-// update config
-export const updateConfigAction = (body, history) => {
+//get config
+export const getConfigAction = () => {
   if (navigator.onLine) {
     return dispatch => {
-      SettingsServices.updateConfig(body)
+      SettingsServices.getConfig()
+        .then(res => {
+          dispatch(getAllConfig(res.data.data));
+        })
+        .catch(err => {});
+    };
+  } else {
+    alert('No network');
+  }
+};
+
+export const getAllConfig = data => {
+  return {
+    type: GET_CONFIG,
+    payload: data,
+  };
+};
+
+// update config
+export const updateConfigAction = (data, history) => {
+  if (navigator.onLine) {
+    return dispatch => {
+      SettingsServices.updateConfig(data)
         .then(res => {
           // need to add toster here
           toast.success(res.data.message, {
             position: 'top-center',
             autoClose: 2000,
           });
-          setTimeout(function () {
-            history.push('#');
-          }, 2000);
         })
         .catch(err => {});
     };
   } else {
     alert('no network');
   }
+};
+
+export const updateAllConfig = data => {
+  return {
+    type: UPDATE_CONFIG,
+    payload: data,
+  };
 };
 
 // RAZORPAY CREDENTIALS

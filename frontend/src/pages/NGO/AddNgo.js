@@ -82,7 +82,7 @@ const AddNgo = props => {
       .string()
       .required('Required')
       .min(10, 'Please enter 10 digits'),
-    landlineNumber: yup
+    landline: yup
       .string()
       .required('Required')
       .min(10, 'please enter 10 digits'),
@@ -125,7 +125,7 @@ const AddNgo = props => {
       setPanCardImgUrl(result.data.pathtoUpload);
     }
   };
-  //console.log('panCardImage', panCardImgUrl);
+
 
   const onCertificateImageAdd = async imgData => {
     const data = new FormData();
@@ -138,7 +138,7 @@ const AddNgo = props => {
       setCertificateImgUrl(result.data.pathtoUpload);
     }
   };
-  // console.log('certificateImage', certificateImgUrl);
+
 
   const onCharityCertificateImageAdd = async imgData => {
     const data = new FormData();
@@ -151,7 +151,6 @@ const AddNgo = props => {
       setCharityCertificateImgUrl(result.data.pathtoUpload);
     }
   };
-  // console.log('charityCertificateImage', charityCertificateImgUrl);
 
   const onDeedImageAdd = async imgData => {
     const data = new FormData();
@@ -164,10 +163,7 @@ const AddNgo = props => {
       setDeedImgUrl(result.data.pathtoUpload);
     }
   };
-  // console.log('deadImage', deedImgUrl);
-  // const onChangeImage = (data) => {
-  //   console.log("Ngo LOGo", data);
-  // }
+
   const onAddNgo = values => {
 
     const obj = {
@@ -177,16 +173,15 @@ const AddNgo = props => {
       email: values.emailId,
       registrationDate: values.registrationDate,
       registrationNumber: values.registrationNumber,
-      mobile: values.mobile,
+      mobile: values.mobileNumber,
       landline: values.landline,
       password: values.password,
-      panNumber: values.panCard,
-      panCardImage: panCardImgUrl,
-      certificateImage: certificateImgUrl,
-      charityCertificateImage: charityCertificateImgUrl,
-      deedImage: deedImgUrl,
+      panNumber: values.panNumber,
+      panCard: panCardImgUrl,
+      certificate: certificateImgUrl,
+      charityRegistrationCertificate: charityCertificateImgUrl,
+      deed: deedImgUrl,
       bankDetails: addBankDetailsValues,
-      contactDetails: addContactValues
     };
     dispatch(createNGOAction(obj, props.history));
   };
@@ -232,7 +227,7 @@ const AddNgo = props => {
             registrationDate: '',
             registrationNumber: '',
             mobileNumber: '',
-            landlineNumber: '',
+            landline: '',
             password: '',
             panNumber: '',
           }}
@@ -404,17 +399,17 @@ const AddNgo = props => {
                     <Field
                       className="form-control"
                       placeholder="Please Enter landline Number"
-                      name="landlineNumber"
+                      name="landline"
                       type="text"
                       autocomplete="off"
                       maxLength={10}
                       required
-                      value={values.landlineNumber}
+                      value={values.landline}
                     />
-                    {errors.landlineNumber && touched.landlineNumber && (
+                    {errors.landline && touched.landline && (
                       <div className="text-left">
                         <span style={{ color: 'red' }}>
-                          {errors.landlineNumber}
+                          {errors.landline}
                         </span>
                       </div>
                     )}
@@ -611,7 +606,7 @@ const AddNgo = props => {
                 </div>
               ))}
 
-              <div style={{ textAlign: 'center' }}>
+              {/*   <div style={{ textAlign: 'center' }}>
                 <button
                   type="add contact"
                   className="btn btn-success"
@@ -619,7 +614,7 @@ const AddNgo = props => {
                 >
                   Add Contact
                 </button>
-              </div>
+                  </div>            */}
 
               <br />
               {addBankDetailsValues.map((element, index) => (

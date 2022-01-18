@@ -10,6 +10,8 @@ import {
   GET_USER_LIST_FAIL,
   ADD_USER_FAIL,
   ADD_USER,
+  UPDATE_CONFIG,
+  GET_CONFIG,
 } from '../constTypes';
 
 const initialState = {
@@ -19,6 +21,8 @@ const initialState = {
   addUser: [],
   GetUserById: [],
   UpdateUserById: [],
+  getConfig: [],
+  updateConfig: [],
   getRezorpay: [],
 };
 
@@ -105,6 +109,22 @@ export const SettingReducer = (state = initialState, action) => {
         ...state,
         UpdateUserById: action.payload,
         isLoadding: true,
+      };
+    }
+
+    //GET CONFIG
+    case GET_CONFIG: {
+      return {
+        ...state,
+        getConfig: action.payload,
+      };
+    }
+
+    //UPDATE CONFIG
+    case UPDATE_CONFIG: {
+      return {
+        ...state,
+        updateConfig: action.payload,
       };
     }
 

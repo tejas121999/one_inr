@@ -179,3 +179,10 @@ margin-top: 13vh;
   background-color: #fff;
   margin: 30px;
 }
+.image-upload>input {
+  display: none;
+}
+.AttachImage {
+  margin-left: 10px;
+  height: 100px;
+}

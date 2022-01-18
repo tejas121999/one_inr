@@ -57,6 +57,7 @@ export const GET_PARTNER_BY_ID = 'GET_PARTNER_BY_ID';
 export const ADD_NGO = 'ADD_NGO';
 export const ADD_NGO_FAIL = 'ADD_NGO_FAIL';
 export const GET_ALL_NGOS = 'GET_ALL_NGOS';
+export const GET_NGO = 'GET_NGO';
 export const UPDATE_NGO_BY_ID = 'UPDATE_NGO_BY_ID';
 
 export const GET_ALL_PROJECTS = 'GET_ALL_PROJECTS';
@@ -91,3 +92,7 @@ export const GET_PARTNER_PAYMENT_HISTORY_BY_ID =
   'GET_PARTNER_PAYMENT_HISTORY_BY_ID';
 
 export const SEARCH_USER = 'SEARCH_USER';
+
+export const GET_CONFIG = 'GET_CONFIG';
+
+export const UPDATE_CONFIG = 'UPDATE_CONFIG';
