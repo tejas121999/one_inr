@@ -55,11 +55,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             field: 'logo'
         },
-
-        signature: {
-            type: DataTypes.STRING,
-            field: 'signature'
-        },
         isKyc: {
             type: DataTypes.BOOLEAN,
             field: 'is_kyc',

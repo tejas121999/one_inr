@@ -1,12 +1,13 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
+import { DeleteNgoByIdAction } from '../../../Redux/Actions/NgoActions';
 
 const DeleteNgo = props => {
   const dispatch = useDispatch();
   const onDelete = async () => {
     const id = props.id;
-    // await dispatch(DeleteNgoByIdAction(id));
+    await dispatch(DeleteNgoByIdAction(id));
     props.onHide();
   };
 

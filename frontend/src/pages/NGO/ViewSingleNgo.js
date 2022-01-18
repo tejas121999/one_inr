@@ -47,7 +47,7 @@ const ViewSingleNgo = (props) => {
   console.log("shivani", props.location.state.id)
 
   let ngoById = useSelector(state => state.ngo.ngoData);
-  // console.log("chinmay", ngoById.user.bankDetails)
+  console.log("chinmay", ngoById)
 
   const ViewModalOpen = data => {
     setViewData(data);
@@ -543,7 +543,7 @@ const ViewSingleNgo = (props) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {constData.map(row => (
+                      {ngoById.user && ngoById.user.bankDetails.map(row => (
                         <TableRow
                           key={row.name}
                           sx={{
@@ -551,9 +551,9 @@ const ViewSingleNgo = (props) => {
                           }}
                         >
                           <TableCell component="th" scope="row">
-                            {row.name}
+                            {row.bankName}
                           </TableCell>
-                          <TableCell align="right">{row.account}</TableCell>
+                          <TableCell align="right">{row.accountNumber}</TableCell>
                           <TableCell align="right">
                             {row.beneficiaryName}
                           </TableCell>
