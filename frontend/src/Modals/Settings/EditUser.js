@@ -15,12 +15,6 @@ const Edituser = props => {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(GetUserByIdAction());
-  // }, []);
-
-  // let parentList = useSelector(state => state.setting.getUserList);
-
   const validationSchema = yup.object({
     name: yup.string().required('Required'),
     phoneNumber: yup
@@ -28,10 +22,11 @@ const Edituser = props => {
       .required('required')
       .min(10, 'Please enter 10 digits'),
     emailId: yup.string().email('Invalid Email Format').required('Required'),
-    roleName: yup.string().required('Required'),
+    // roleName: yup.string().required('Required'),
   });
 
   const onUpdate = async values => {
+    console.log(values, 'shiv');
     // const url = BASE_URL + `user/${userId}`;
     // const parentId = parentList.filter(data => data.name == values.parent);
 
@@ -43,7 +38,8 @@ const Edituser = props => {
       mobile: values.phoneNumber,
       role: values.role,
     };
-    // dispatch(updateUserByIdAction(parentId, obj, props.history));
+    dispatch(updateUserByIdAction(props.data.id, obj, props.history));
+    props.onHide();
   };
 
   return (
@@ -58,12 +54,10 @@ const Edituser = props => {
           <div style={{ backgroundColor: 'white', margin: '5px' }}>
             <Formik
               initialValues={{
-                name: '',
-                role: '',
-                phoneNumber: '',
-                emailId: '',
-                // password: '',
-                // parent: '',
+                name: props.data.name,
+                // role: props.data.role,
+                phoneNumber: props.data.mobile,
+                emailId: props.data.email,
               }}
               enableReinitialize={true}
               validationSchema={validationSchema}
@@ -154,8 +148,14 @@ const Edituser = props => {
                   <div
                     style={{ display: 'flex', justifyContent: 'space-around' }}
                   >
-                    <button className="btn btn-success">Submit</button>
-                    <button onClick={props.onHide} className="btn btn-danger">
+                    <button type="submit" className="btn btn-success">
+                      Submit
+                    </button>
+                    <button
+                      type="button"
+                      onClick={props.onHide}
+                      className="btn btn-danger"
+                    >
                       Cancel
                     </button>
                   </div>
