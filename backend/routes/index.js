@@ -33,7 +33,7 @@ router.use('/entity', entity )
 router.use('/permissions',permissions)
 router.use('/roles',roles)
 router.use('/configs',config)
-router.use('/razorpayCredentials',razorpayCredentials)
+router.use('/razorpay',razorpayCredentials)
 
 
 

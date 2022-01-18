@@ -514,7 +514,7 @@ const EditNgo = props => {
                 </div>
               </div>
 
-              <br />
+              {/*   <br />
               {addContactValues.map((element, index) => (
                 <div className="row" style={{ marginLeft: '4px' }}>
                   <div className="col-2.5 ">
@@ -618,7 +618,7 @@ const EditNgo = props => {
                 >
                   Add Contact
                 </button>
-              </div>
+                  </div>                                     */}
 
               <br />
               {addBankDetailsValues.map((element, index) => (

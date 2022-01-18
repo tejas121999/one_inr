@@ -42,7 +42,7 @@ const ViewAllProjects = () => {
   }, []);
 
   let allProject = useSelector(state => state.project.projectList);
-  //console.log("shivani", allProject)
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -51,7 +51,7 @@ const ViewAllProjects = () => {
   };
 
   const handleChangePage = (event, newPage) => {
-    //console.log('ChinmayChange', newPage);
+
 
     setPage(newPage);
   };

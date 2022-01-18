@@ -103,3 +103,18 @@ export const updateNgoAction = (body, id, history) => {
     // need to add toster here
   }
 }
+
+//delete Ngo
+export const DeleteNgoByIdAction = id => {
+  return dispatch => {
+    NgoServices.deleteNgo(id)
+      .then(res => {
+        toast.success('User Deleted', {
+          position: 'top-center',
+          autoClose: 3000,
+        });
+        dispatch(getAllNGOAction());
+      })
+      .catch(err => { });
+  };
+};

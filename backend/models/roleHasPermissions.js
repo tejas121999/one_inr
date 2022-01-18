@@ -5,10 +5,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             field: 'role_id'
         },
-        permissionId: {
-            type: DataTypes.INTEGER,
-            field: 'permission_id'
-        },
         permissions: {
             type: DataTypes.STRING,
             field: 'permissions'

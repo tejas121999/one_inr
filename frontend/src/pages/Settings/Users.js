@@ -35,14 +35,7 @@ const Users = () => {
   const [addModal, setAddModal] = React.useState(false);
   const [editModal, setEditModal] = React.useState(false);
   const [deleteModal, setDeleteModal] = React.useState(false);
-  const [editData, setEditData] = React.useState(initialData);
-  const initialData = {
-    id: '',
-    name: '',
-    email: '',
-    mobile: '',
-    role: '',
-  };
+  const [editData, setEditData] = React.useState([]);
 
   const dispatch = useDispatch();
   let userList = useSelector(state => state.setting.getUserList);
@@ -76,14 +69,19 @@ const Users = () => {
   const onAddModalClose = () => {
     setAddModal(false);
   };
-  const onEditModalOpen = () => {
+  const onEditModalOpen = row => {
+    setEditData(row);
     setEditModal(true);
   };
   const onEditModalClose = () => {
     setEditModal(false);
   };
-  const deleteModalOpen = () => {
-    setDeleteModal(!deleteModal);
+  const deleteModalOpen = row => {
+    setEditData(row);
+    setDeleteModal(true);
+  };
+  const deleteModalClose = () => {
+    setDeleteModal(false);
   };
 
   //   start
@@ -114,7 +112,11 @@ const Users = () => {
       <Edituser show={editModal} data={editData} onHide={onEditModalClose} />
       <ToastContainer hideProgressBar />
       <Adduser show={addModal} onHide={onAddModalClose} />
-      <DeleteUser show={deleteModal} onHide={deleteModalOpen} />
+      <DeleteUser
+        show={deleteModal}
+        data={editData}
+        onHide={deleteModalClose}
+      />
       <nav className="navbar navbar-light">
         <a className="navbar-brand">Users List</a>
         <form className="form-inline">
@@ -196,14 +198,7 @@ const Users = () => {
                                 title="Edit"
                                 className="btn"
                                 onClick={() => {
-                                  onEditModalOpen();
-                                  setEditData({
-                                    id: row.id,
-                                    name: row.name,
-                                    email: row.email,
-                                    mobile: row.mobile,
-                                    role: row.role.roleName,
-                                  });
+                                  onEditModalOpen(row);
                                 }}
                               >
                                 <FaRegEdit />

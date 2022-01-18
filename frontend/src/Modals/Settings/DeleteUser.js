@@ -4,14 +4,14 @@ import '../../pages/NGO/ngo.css';
 
 import { BASE_URL } from '../../API/APIEndpoints';
 import { useDispatch } from 'react-redux';
-import { DeleteVendorByIdAction } from '../../Redux/Actions/MasterActions';
+import { DeleteUserByIdACtion } from '../../Redux/Actions/SettingAction';
 
 const DeleteUser = props => {
+  console.log('DeleteModak', props);
   const dispatch = useDispatch();
   const onDelete = async () => {
-    const id = props.id;
-    const Url = BASE_URL + `donor/${id}`;
-    await dispatch(DeleteVendorByIdAction(id));
+    const id = props.data.id;
+    await dispatch(DeleteUserByIdACtion(id));
     props.onHide();
   };
   return (

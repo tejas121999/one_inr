@@ -16,7 +16,7 @@ import {
   updateProfileAction,
   updateProfileImgAction,
 } from '../../Redux/Actions/SettingAction';
-import axios from 'axios';
+import axios from '../../utils/interceptor';
 
 const EditProfile = props => {
   const [old, oldPass] = useState('');
@@ -26,9 +26,12 @@ const EditProfile = props => {
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState('true');
   const [show2, setShow2] = useState('true');
-
+  const [show3, setShow3] = useState('true');
+  const [imgUrl, setImgUrl] = useState('');
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const dispatch = useDispatch();
 
   let profileData = useSelector(state => state.setting.getProfile);
   console.log(profileData, 'ajit');
@@ -50,16 +53,16 @@ const EditProfile = props => {
   });
 
   const onProfileImageAdd = async imgData => {
-    console.log('shivam');
+    console.log('shivam', imgData);
     const data = new FormData();
     data.append('avatar', imgData);
     const result = await axios.post(
       BASE_URL + 'fileupload?reason=profile_image',
       data,
     );
-    // if (result && result.data && result.data.pathtoUpload) {
-    //   setLogoImgUrl(result.data.pathtoUpload);
-    // }
+    if (result && result.data && result.data.pathtoUpload) {
+      setImgUrl(result.data.pathtoUpload);
+    }
   };
 
   const updatePassword = async () => {
@@ -83,7 +86,6 @@ const EditProfile = props => {
     // }
   };
 
-  const dispatch = useDispatch();
   // let history = useHistory();
 
   const onUpdateProfile = values => {
@@ -92,6 +94,7 @@ const EditProfile = props => {
       name: values.fName,
       email: values.emailId,
       mobile: values.phoneNumber,
+      profileImage: imgUrl,
     };
     dispatch(updateProfileAction(obj, props.history));
     // dispatch(updateProfileImgAction(img, props.history));
@@ -145,18 +148,6 @@ const EditProfile = props => {
             >
               <div className="image-upload">
                 <label for="file-input">
-                  {/* <input
-                    type="file"
-                    accept=".jpg, .jpeg, .png"
-                    id="file-input"
-                   
-                    style={{ display: 'none' }}
-                  /> */}
-                  <input
-                    onChange={e => console.log('Chinmay', e.target)}
-                    type="file"
-                    placeholder="Browse"
-                  ></input>
                   <img
                     className="AttachImage"
                     style={{ width: '100%', height: '250px' }}
@@ -167,6 +158,13 @@ const EditProfile = props => {
                     }
                   />
                 </label>
+                <input
+                  onChange={e => onProfileImageAdd(e.target.files[0])}
+                  type="file"
+                  accept=".jpg, .jpeg, .png"
+                  id="file-input"
+                  style={{ display: 'none' }}
+                />
               </div>
             </div>
           </div>
@@ -267,6 +265,7 @@ const EditProfile = props => {
                     >
                       <div className="col-md-12">
                         <button
+                          type="button"
                           className="btn btn-primary"
                           style={{
                             marginRight: '10px',
@@ -315,7 +314,7 @@ const EditProfile = props => {
                 <div className="form-group required-field">
                   <label className="required"> Old Password</label>
                   <input
-                    type={show ? 'password' : 'text'}
+                    type={show3 ? 'password' : 'text'}
                     className="form-control"
                     style={{ textAlign: 'left' }}
                     onChange={e => {
@@ -325,9 +324,9 @@ const EditProfile = props => {
                   />
                   <i
                     className={`fa ${
-                      show ? 'fa-eye-slash' : 'fa-eye'
+                      show3 ? 'fa-eye-slash' : 'fa-eye'
                     } login-password-icon`}
-                    onClick={() => setShow(!show)}
+                    onClick={() => setShow3(!show3)}
                     style={{
                       position: 'absolute',
                       left: '450px',

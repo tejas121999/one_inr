@@ -1,9 +1,27 @@
 import { Field, Form, Formik } from 'formik';
+import * as yup from 'yup';
 import { Divider } from 'material-ui';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
+import { addUserListAction } from '../../Redux/Actions/SettingAction';
 
 const Adduser = props => {
+  const dispatch = useDispatch();
+  const validationSchema = yup.object({
+    name: yup.string().required('Required'),
+    mobile: yup.string().required('required').min(10, 'Please enter 10 digits'),
+    email: yup.string().email('Invalid Email Format').required('Required'),
+    // roleName: yup.string().required('Required'),
+  });
+
+  const onAddUser = async values => {
+    console.log(values, 'shiv');
+
+    dispatch(addUserListAction(values, props.history));
+    props.onHide();
+  };
+
   return (
     <React.Fragment>
       <Modal
@@ -17,14 +35,14 @@ const Adduser = props => {
             <Formik
               initialValues={{
                 name: '',
-                role: '',
-                phoneNumber: '',
-                emailId: '',
+                roleId: 1,
+                mobile: '',
+                email: '',
                 password: '',
-                parent: '',
               }}
               enableReinitialize={true}
-              // validationSchema={this.validationSchema}
+              validationSchema={validationSchema}
+              onSubmit={values => onAddUser(values)}
             >
               {({ errors, values, touched }) => (
                 <Form>
@@ -70,16 +88,14 @@ const Adduser = props => {
                         <Field
                           className="form-control"
                           placeholder="Please Enter Email"
-                          name="emailId"
+                          name="email"
                           type="email"
                           autocomplete="off"
-                          value={values.emailId}
+                          value={values.email}
                         />
-                        {errors.emailId && touched.emailId && (
+                        {errors.email && touched.email && (
                           <div className="text-left">
-                            <span style={{ color: 'red' }}>
-                              {errors.emailId}
-                            </span>
+                            <span style={{ color: 'red' }}>{errors.email}</span>
                           </div>
                         )}
                       </div>
@@ -92,16 +108,16 @@ const Adduser = props => {
                         <Field
                           className="form-control"
                           placeholder="Please Enter Mobile Number"
-                          name="phoneNumber"
+                          name="mobile"
                           type="text"
                           autocomplete="off"
                           maxLength={10}
-                          value={values.phoneNumber}
+                          value={values.mobile}
                         />
-                        {errors.phoneNumber && touched.phoneNumber && (
+                        {errors.mobile && touched.mobile && (
                           <div className="text-left">
                             <span style={{ color: 'red' }}>
-                              {errors.phoneNumber}
+                              {errors.mobile}
                             </span>
                           </div>
                         )}
@@ -135,8 +151,14 @@ const Adduser = props => {
                   <div
                     style={{ display: 'flex', justifyContent: 'space-around' }}
                   >
-                    <button className="btn btn-success">Submit</button>
-                    <button onClick={props.onHide} className="btn btn-danger">
+                    <button type="submit" className="btn btn-success">
+                      Submit
+                    </button>
+                    <button
+                      type="button"
+                      onClick={props.onHide}
+                      className="btn btn-danger"
+                    >
                       Cancel
                     </button>
                   </div>
