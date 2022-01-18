@@ -25,7 +25,7 @@ import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllNGOAction } from '../../Redux/Actions/NgoActions';
+import { getAllNGOAction, getAllNGOByValueAction } from '../../Redux/Actions/NgoActions';
 import DeleteNgo from './NgoModals/DeleteNgo';
 
 const ViewAllNgo = () => {
@@ -54,7 +54,6 @@ const ViewAllNgo = () => {
   }, []);
 
   let allNgoList = useSelector(state => state.ngo.ngoList);
-  console.log(allNgoList);
 
   // const getNgoList = async () => {
   //   const url = BASE_URL + ADD_NGO_URL;
@@ -96,7 +95,7 @@ const ViewAllNgo = () => {
   };
 
   const handleChangePage = (event, newPage) => {
-    console.log('ChinmayChange', newPage);
+
 
     setPage(newPage);
   };
@@ -122,7 +121,7 @@ const ViewAllNgo = () => {
 
   const onSearch = value => {
     if (value) {
-      dispatch(getAllNGOAction(value));
+      dispatch(getAllNGOByValueAction(value));
     } else {
       dispatch(getAllNGOAction(''));
     }
@@ -245,10 +244,10 @@ const ViewAllNgo = () => {
                   order={order}
                   orderBy={orderBy}
                   onRequestSort={handleRequestSort}
-                  rowCount={constData.length}
+                  rowCount={allNgoList.length}
                 />
                 <TableBody>
-                  {stableSort(constData, getComparator(order, orderBy))
+                  {stableSort(allNgoList, getComparator(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
                       const isItemSelected = isSelected(row.name);
@@ -268,7 +267,7 @@ const ViewAllNgo = () => {
                             scope="row"
                             padding="none"
                           >
-                            {row.name}
+                            {row.user.name}
                           </TableCell>
                           <TableCell align="center">{row.pending}</TableCell>
                           <TableCell align="center">{row.active}</TableCell>
@@ -320,7 +319,7 @@ const ViewAllNgo = () => {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={constData.length}
+              count={allNgoList.length}
               rowsPerPage={rowsPerPage}
               page={page}
               pageSize={10}

@@ -1,9 +1,47 @@
 import { Field, Form, Formik } from 'formik';
+import * as yup from 'yup';
 import { Divider } from 'material-ui';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { BASE_URL } from '../../API/APIEndpoints';
 import { Modal } from 'react-bootstrap';
+import {
+  GetUserByIdAction,
+  updateUserByIdAction,
+} from '../../Redux/Actions/SettingAction';
 
 const Edituser = props => {
+  console.log(props, 'sms');
+
+  const dispatch = useDispatch();
+
+  const validationSchema = yup.object({
+    name: yup.string().required('Required'),
+    phoneNumber: yup
+      .string()
+      .required('required')
+      .min(10, 'Please enter 10 digits'),
+    emailId: yup.string().email('Invalid Email Format').required('Required'),
+    // roleName: yup.string().required('Required'),
+  });
+
+  const onUpdate = async values => {
+    console.log(values, 'shiv');
+    // const url = BASE_URL + `user/${userId}`;
+    // const parentId = parentList.filter(data => data.name == values.parent);
+
+    // let id = parentId && parentId.length ? parentId[0].id : 0;
+
+    const obj = {
+      name: values.name,
+      email: values.emailId,
+      mobile: values.phoneNumber,
+      role: values.role,
+    };
+    dispatch(updateUserByIdAction(props.data.id, obj, props.history));
+    props.onHide();
+  };
+
   return (
     <React.Fragment>
       <Modal
@@ -16,15 +54,14 @@ const Edituser = props => {
           <div style={{ backgroundColor: 'white', margin: '5px' }}>
             <Formik
               initialValues={{
-                name: '',
-                role: '',
-                phoneNumber: '',
-                emailId: '',
-                password: '',
-                parent: '',
+                name: props.data.name,
+                // role: props.data.role,
+                phoneNumber: props.data.mobile,
+                emailId: props.data.email,
               }}
               enableReinitialize={true}
-              // validationSchema={this.validationSchema}
+              validationSchema={validationSchema}
+              onSubmit={values => onUpdate(values)}
             >
               {({ errors, values, touched }) => (
                 <Form>
@@ -111,8 +148,14 @@ const Edituser = props => {
                   <div
                     style={{ display: 'flex', justifyContent: 'space-around' }}
                   >
-                    <button className="btn btn-success">Submit</button>
-                    <button onClick={props.onHide} className="btn btn-danger">
+                    <button type="submit" className="btn btn-success">
+                      Submit
+                    </button>
+                    <button
+                      type="button"
+                      onClick={props.onHide}
+                      className="btn btn-danger"
+                    >
                       Cancel
                     </button>
                   </div>

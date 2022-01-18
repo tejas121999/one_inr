@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { ADD_NGO, ADD_NGO_FAIL, GET_ALL_NGOS } from '../constTypes';
+import { ADD_NGO, ADD_NGO_FAIL, GET_ALL_NGOS, GET_NGO } from '../constTypes';
 import NgoServices from '../Services/NgoServices';
 
 export const createNGOAction = (body, history) => {
@@ -19,13 +19,51 @@ export const createNGOAction = (body, history) => {
   }
 };
 
-export const getAllNGOAction = value => {
+export const getAllNGOAction = () => {
   if (navigator.onLine) {
     return dispatch => {
-      NgoServices.getAllNGOList(value)
+      NgoServices.GetAllNgoList()
+        .then(res => {
+          dispatch(GetAllNGO(res.data.data));
+        })
+        .catch(err => { });
+    };
+  } else {
+    alert('No network');
+  }
+};
+
+export const getNgoByIdAction = (id) => {
+  if (navigator.onLine) {
+    return dispatch => {
+      NgoServices.getNgoById(id)
+        .then(res => {
+          dispatch(getNgoById(res.data.data));
+          console.log("abc", res)
+        })
+        .catch(err => { });
+    };
+  } else {
+    alert('No network');
+  }
+};
+
+export const getNgoById = data => {
+  return {
+    type: GET_NGO,
+    payload: data,
+  };
+};
+
+
+
+export const getAllNGOByValueAction = value => {
+  if (navigator.onLine) {
+    return dispatch => {
+      NgoServices.getAllNGOListByValue(value)
         .then(res => {
           //need to add toster here
-          dispatch(GetAllNGO(res.data.result));
+          dispatch(GetAllNGO(res.data.data));
         })
         .catch(err => {
           //need to add toster here
@@ -65,3 +103,18 @@ export const updateNgoAction = (body, id, history) => {
     // need to add toster here
   }
 }
+
+//delete Ngo
+export const DeleteNgoByIdAction = id => {
+  return dispatch => {
+    NgoServices.deleteNgo(id)
+      .then(res => {
+        toast.success('User Deleted', {
+          position: 'top-center',
+          autoClose: 3000,
+        });
+        dispatch(getAllNGOAction());
+      })
+      .catch(err => { });
+  };
+};

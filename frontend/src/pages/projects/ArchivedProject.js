@@ -183,7 +183,12 @@ const ArchivedProject = () => {
           </p>
         </div>
       </div>
-      <div className="contentCard">
+      <div
+        style={{
+          margin: '20px',
+          backgroundColor: 'white',
+        }}
+      >
         <div
           style={{
             display: 'flex',
@@ -197,10 +202,18 @@ const ArchivedProject = () => {
           >
             Export
           </button>
-          <input placeholder="Search" onChange={e => handleChange(e)} />
+          <label style={{ fontWeight: '500' }}>
+            Search :
+            <input
+              type="search"
+              placeholder="Search"
+              style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
+              onChange={e => handleChange(e)}
+            />
+          </label>{' '}
         </div>
-
-        <Paper sx={{ width: '100%', mb: 2 }}>
+        <hr style={{ margin: '0' }} />
+        <Paper sx={{ width: '100%' }}>
           <>
             <TableContainer>
               <Table
@@ -250,7 +263,7 @@ const ArchivedProject = () => {
                               data-bs-toggle="tooltip"
                               title="Archive"
                               className="btn"
-                            // onClick={() => deleteModalOpen(row)}
+                              // onClick={() => deleteModalOpen(row)}
                             >
                               <FaRegFileArchive />
                             </button>
@@ -387,7 +400,7 @@ function EnhancedTableHead(props) {
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
             >
-              {headCell.label}
+              <b>{headCell.label}</b>
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
@@ -400,5 +413,3 @@ function EnhancedTableHead(props) {
     </TableHead>
   );
 }
-
-

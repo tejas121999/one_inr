@@ -11,7 +11,6 @@ module.exports = async (req,res,next ) =>{
         let data = await models.rolePermission.findOne({where : {roleId : id}})
         let permissions = data.dataValues.permissions
         let arrayPermissions = permissions.split(",")
-        // console.log(`array`,arrayPermissions)
 
         const systemInfoData = await models.permissionSystemInfo.findAll({
             where: { permissionId: { [Op.in]: arrayPermissions } },

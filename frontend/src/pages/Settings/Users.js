@@ -35,6 +35,7 @@ const Users = () => {
   const [addModal, setAddModal] = React.useState(false);
   const [editModal, setEditModal] = React.useState(false);
   const [deleteModal, setDeleteModal] = React.useState(false);
+  const [editData, setEditData] = React.useState([]);
 
   const dispatch = useDispatch();
   let userList = useSelector(state => state.setting.getUserList);
@@ -68,14 +69,19 @@ const Users = () => {
   const onAddModalClose = () => {
     setAddModal(false);
   };
-  const onEditModalOpen = () => {
+  const onEditModalOpen = row => {
+    setEditData(row);
     setEditModal(true);
   };
   const onEditModalClose = () => {
     setEditModal(false);
   };
-  const deleteModalOpen = () => {
-    setDeleteModal(!deleteModal);
+  const deleteModalOpen = row => {
+    setEditData(row);
+    setDeleteModal(true);
+  };
+  const deleteModalClose = () => {
+    setDeleteModal(false);
   };
 
   //   start
@@ -103,10 +109,14 @@ const Users = () => {
       <br />
       <br />
 
-      <Edituser show={editModal} onHide={onEditModalClose} />
+      <Edituser show={editModal} data={editData} onHide={onEditModalClose} />
       <ToastContainer hideProgressBar />
       <Adduser show={addModal} onHide={onAddModalClose} />
-      <DeleteUser show={deleteModal} onHide={deleteModalOpen} />
+      <DeleteUser
+        show={deleteModal}
+        data={editData}
+        onHide={deleteModalClose}
+      />
       <nav className="navbar navbar-light">
         <a className="navbar-brand">Users List</a>
         <form className="form-inline">
@@ -177,7 +187,9 @@ const Users = () => {
                             >
                               {row.name}
                             </TableCell>
-                            <TableCell align="center">{row.role}</TableCell>
+                            <TableCell align="center">
+                              {row.role.roleName}
+                            </TableCell>
                             <TableCell align="center">{row.email}</TableCell>
                             <TableCell align="center">{row.mobile}</TableCell>
                             <TableCell align="center">
@@ -185,7 +197,9 @@ const Users = () => {
                                 data-bs-toggle="tooltip"
                                 title="Edit"
                                 className="btn"
-                                onClick={() => onEditModalOpen()}
+                                onClick={() => {
+                                  onEditModalOpen(row);
+                                }}
                               >
                                 <FaRegEdit />
                               </button>

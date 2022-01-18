@@ -38,12 +38,10 @@ const ViewAllProjects = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAllProjectAction(''))
-  }, [])
+    dispatch(getAllProjectAction(''));
+  }, []);
 
-
-  let allProject = useSelector((state) => state.project.projectList)
-  //console.log("shivani", allProject)
+  let allProject = useSelector(state => state.project.projectList);
 
 
   const handleRequestSort = (event, property) => {
@@ -53,7 +51,7 @@ const ViewAllProjects = () => {
   };
 
   const handleChangePage = (event, newPage) => {
-    //console.log('ChinmayChange', newPage);
+
 
     setPage(newPage);
   };
@@ -185,7 +183,7 @@ const ViewAllProjects = () => {
                 type="search"
                 placeholder="Search"
                 style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
-                onChange={(e) => handleChange(e)}
+                onChange={e => handleChange(e)}
               />
             </label>
           </div>

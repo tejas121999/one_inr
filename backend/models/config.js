@@ -6,7 +6,7 @@ module.exports = (sequelize,DataTypes)=>{
             allowNull : false
         },
         value:{
-            type: DataTypes.STRING,
+            type: DataTypes.FLOAT,
             field : 'value',
             allowNull : false
         },
@@ -20,7 +20,7 @@ module.exports = (sequelize,DataTypes)=>{
         }
     },    {
         freezeTableName: true,
-        tableName: 'configs'
+        tableName: 'configs',
     })
     return configs
 }

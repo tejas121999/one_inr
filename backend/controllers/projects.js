@@ -1,6 +1,6 @@
 const { sequelize } = require('../models');
 const models = require('../models');
-const {paginationWithFromTo} = require('../utils/pagination')
+const { paginationWithFromTo } = require('../utils/pagination')
 const Sequelize = models.Sequelize;
 const Op = Sequelize.Op;
 const moment = require('moment');
@@ -16,7 +16,7 @@ exports.addProjects = async (req, res) => {
             longDesc,
             videoLink,
             goal,
-            commission,
+            commission, 
             target,
             funded,
             startDate,
@@ -33,43 +33,40 @@ exports.addProjects = async (req, res) => {
         // gst(18) = commission*gst/100
         // pg(2) = (goal+commission)*pg/100
         // target = commission + gst + pg
-        
+
         const configData = await models.configs.findAll();
- 
+
         let gst;
         let pg;
 
-        await configData.map(ele=>{
-            if(ele.dataValues.name === 'commission'){
+        await configData.map(ele => {
+            if (ele.dataValues.name === 'commission') {
                 commission = ele.dataValues.value;
-            }if(ele.dataValues.name === 'gst'){
+            } if (ele.dataValues.name === 'gst') {
                 gst = ele.dataValues.value;
-            }if(ele.dataValues.name === 'payment_gateway_perc'){
+            } if (ele.dataValues.name === 'payment_gateway_perc') {
                 pg = ele.dataValues.value;
             }
-        });        
-        
+        });
+
         let commissionModel;
         let gstCal;
         let pgCal;
 
 
-        if(req.body.commission==null){
-            commissionModel = (Number(commission)*goal)/100;
-        }else{
-            commissionModel = (Number(commission)*goal)/100;
+        if (req.body.commission == null) {
+            commissionModel = (Number(commission) * goal) / 100;
+        } else {
+            commissionModel = (Number(commission) * goal) / 100;
         }
 
-        // console.log(commm,gst,pg);
 
-        gstCal = (commissionModel*gst)/100;
-        pgCal = (Number(goal)+commissionModel)*pg/100;  
-        
+        gstCal = (commissionModel * gst) / 100;
+        pgCal = (Number(goal) + commissionModel) * pg / 100;
+
         target = Number(goal) + Number(commissionModel) + Number(gstCal) + Number(pgCal);
 
-        // console.log('=============================',target);
-        
-        console.log(target);
+
 
         const projects = await models.projects.create({
             userId,
@@ -92,14 +89,13 @@ exports.addProjects = async (req, res) => {
         projectId = projects.id
         images.map(image => {
             image.projectId = projectId
-               })
+        })
 
         const pro_images = await models.project_images.bulkCreate(images)
 
-        return res.status(200).json({projects, pro_images})
+        return res.status(200).json({ projects, pro_images })
     }
     catch (err) {
-        console.log(err);
         return res.status(400).json({
             message: err
         })
@@ -119,22 +115,21 @@ exports.getAllProjects = async (req, res) => {
         [Op.and]: [query, {
             [Op.or]: {
                 title: { [Op.like]: "%" + search + "%" },
-                goal: { [Op.like]: "%" +  search + '%' },
+                goal: { [Op.like]: "%" + search + '%' },
                 target: { [Op.like]: "%" + search + '%' },
                 funded: { [Op.like]: "%" + search + '%' },
-                endDate : {[Op.like]: "%" +  search + '%'},
+                endDate: { [Op.like]: "%" + search + '%' },
             }
         }],
     };
     const project = await models.projects.findAll({
-        where : searchQuery,
-        offset : offset,
-        limit : pageSize
+        where: searchQuery,
+        offset: offset,
+        limit: pageSize
     });
-    
+
     // var endDate = await project.map(ele=>{ return ele.dataValues.endDate})
-    // console.log(endDate);
-    
+
     //var end_Date = moment(endDate).format('YYYY-MM-DD'); //end date - current date
 
     // let end_date;
@@ -145,75 +140,73 @@ exports.getAllProjects = async (req, res) => {
     await project.map(ele => {
         eleDate = moment(ele.dataValues.endDate)
         days_left = eleDate.diff(current_date, 'days');
-        if(days_left<0){
+        if (days_left < 0) {
             days_left = 'Ended'
         }
         ele.dataValues.DaysLeft = days_left;
     })
-    
-    console.log(project)
 
-    if(!project) {
-        return res.status(400).json({message : "No data Found"})
-    }else{
-        return res.status(200).json({message : "All Projects", result : project})
+
+    if (!project) {
+        return res.status(400).json({ message: "No data Found" })
+    } else {
+        return res.status(200).json({ message: "All Projects", result: project })
     }
 }
 
-exports.getProjectById = async (req, res)=>{
+exports.getProjectById = async (req, res) => {
     const id = req.params.id;
 
-    const project = await models.projects.findOne({where: { id: id },attributes:['title','description','recurringDays','goal']})
+    const project = await models.projects.findOne({ where: { id: id }, attributes: ['title', 'description', 'recurringDays', 'goal'] })
 
-    if(!project){
-        return res.status(400).json({message : "No data Found"})
-    }else{
-        return res.status(200).json({message : "All Projects", result : project})
+    if (!project) {
+        return res.status(400).json({ message: "No data Found" })
+    } else {
+        return res.status(200).json({ message: "All Projects", result: project })
     }
 
 }
 
-exports.updateStatus = async (req,res)=>{
+exports.updateStatus = async (req, res) => {
     const id = req.params.id;
-    const project = await models.projects.update({status : req.body.status},{where : {id:id}})
-    if(!project){
-        return res.status(404).json({message:"Not Found"})
-    }else{
-        return res.status(200).json({message : "Status Updated Successfully"})
+    const project = await models.projects.update({ status: req.body.status }, { where: { id: id } })
+    if (!project) {
+        return res.status(404).json({ message: "Not Found" })
+    } else {
+        return res.status(200).json({ message: "Status Updated Successfully" })
     }
 }
 
-exports.setHomeProject = async (req,res) => {
+exports.setHomeProject = async (req, res) => {
     let id = req.params.id;
-    let {setHomeProjet} = req.body;
-    const data = await models.projects.update({displayOnHomeStatus:0},{where:{displayOnHomeStatus: 1}})
-    const project = await models.projects.update({displayOnHomeStatus:1},{where : {id:id}});
-    return res.status(200).json({project : project, data: data});
+    let { setHomeProjet } = req.body;
+    const data = await models.projects.update({ displayOnHomeStatus: 0 }, { where: { displayOnHomeStatus: 1 } })
+    const project = await models.projects.update({ displayOnHomeStatus: 1 }, { where: { id: id } });
+    return res.status(200).json({ project: project, data: data });
 }
 
 
-exports.addFunds = async (req,res)=>{
+exports.addFunds = async (req, res) => {
     let id = req.params.id;
-    
-    let data = await models.projects.findOne({where:{id:id}});
+
+    let data = await models.projects.findOne({ where: { id: id } });
 
     let maxLimit = data.target - data.funded
-    console.log(maxLimit);
-    if(req.body.funded>maxLimit){
-        return res.status(400).json({message : "Check Max Limit"});
+    if (req.body.funded > maxLimit) {
+        return res.status(400).json({ message: "Check Max Limit" });
     }
     const fund = data.funded + req.body.funded;
-    const checkData = await models.projects.update({funded : fund},{where : {id:id}})
-    
+    const checkData = await models.projects.update({ funded: fund }, { where: { id: id } })
+
 }
 
 
-exports.getCompletedProject = async (req, res) =>{
-    let projects = await models.projects.findAll({where: {status:1}});
-    if(!projects){
-        return res.status(404).json({message : "data not found"})
-    }else{
-        return res.status(404).json({message : "Project Data", result: projects})
+exports.getCompletedProject = async (req, res) => {
+    let projects = await models.projects.findAll({ where: { status: 1 } });
+    if (!projects) {
+        return res.status(404).json({ message: "data not found" })
+    } else {
+        return res.status(404).json({ message: "Project Data", result: projects })
     }
 }
 
