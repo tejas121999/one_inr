@@ -5,7 +5,7 @@ const checkAuth = require('../middleware/checkAuth')
 const {wrapper} = require('../utils/errorWrap')
 
 
-const {razorpayCredentials,addRazorpayCredentials,updateRazorpayCredentials}= require('../controllers/razorpayCredential') //Importing Vendor controller.
+const {razorpayCredentials,addRazorpayCredentials,updateRazorpayCredentials,getRazorpayCredentialsById}= require('../controllers/razorpayCredential') //Importing Vendor controller.
 
 
 
@@ -15,6 +15,7 @@ router.post('/',checkAuth,wrapper(addRazorpayCredentials))
 
 router.put('/:id',checkAuth,wrapper(updateRazorpayCredentials))
 
+router.get('/:id',checkAuth,wrapper(getRazorpayCredentialsById))
 
 
 module.exports = router;

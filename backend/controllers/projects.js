@@ -8,24 +8,8 @@ const moment = require('moment');
 //Creating Projects
 exports.addProjects = async (req, res) => {
     try {
-        let {
-            userId,
-            title,
-            slogan,
-            description,
-            longDesc,
-            videoLink,
-            goal,
-            commission, 
-            target,
-            funded,
-            startDate,
-            endDate,
-            recurringDays,
-            status,
-            displayOnHomeStatus,
-            images
-        } = req.body;
+        let {userId,title,slogan,description,longDesc,videoLink,goal,commission,target,funded,startDate,endDate,recurringDays,status,displayOnHomeStatus,images} = req.body;
+
         recurringDays = recurringDays || 0;
 
         // commission(10) = commission*goal/100
@@ -68,24 +52,7 @@ exports.addProjects = async (req, res) => {
 
 
 
-        const projects = await models.projects.create({
-            userId,
-            title,
-            slogan,
-            description,
-            longDesc,
-            videoLink,
-            goal,
-            commission,
-            target,
-            funded,
-            startDate,
-            endDate,
-            recurringDays,
-            status,
-            displayOnHomeStatus
-        })
-
+        const projects = await models.projects.create({userId,title,slogan,description,longDesc,videoLink,goal,commission,target,funded,startDate,endDate,recurringDays,status,displayOnHomeStatus})
         projectId = projects.id
         images.map(image => {
             image.projectId = projectId
