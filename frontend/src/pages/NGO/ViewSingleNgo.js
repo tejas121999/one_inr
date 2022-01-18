@@ -24,6 +24,8 @@ import uploadImage from '../../assets/img/logo/uploadImage.jpg';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 import { getAllProjectAction } from '../../Redux/Actions/ProjectActions';
 import { getNgoByIdAction } from '../../Redux/Actions/NgoActions';
+import { Local } from '../../API/APIEndpoints';
+
 
 const ViewSingleNgo = (props) => {
   const [key, setKey] = React.useState('details');
@@ -47,7 +49,9 @@ const ViewSingleNgo = (props) => {
   console.log("shivani", props.location.state.id)
 
   let ngoById = useSelector(state => state.ngo.ngoData);
-  console.log("chinmay", ngoById)
+  console.log("chinmay", `${Local}/${ngoById.logo}`)
+
+
 
   const ViewModalOpen = data => {
     setViewData(data);
@@ -326,7 +330,10 @@ const ViewSingleNgo = (props) => {
                   <div style={{ padding: '15px', paddingBottom: '10px' }}>
                     <label style={{ fontWeight: 'bold' }}>Logo </label>
                     <div className="image-upload">
-                      <DropzoneComponent />
+                      <img
+                        style={{ width: '250px', height: '200px' }}
+                        src={`${Local}/${ngoById.logo}`}
+                      />
                     </div>
                   </div>
                 </div>
@@ -339,7 +346,10 @@ const ViewSingleNgo = (props) => {
                       Pancard
                     </label>
                     <div className="image-upload">
-                      <DropzoneComponent />
+                      <img
+                        style={{ width: '250px', height: '200px' }}
+                        src={`${Local}/${ngoById.panCard}`}
+                      />
                     </div>
                   </div>
                 </div>
@@ -350,7 +360,10 @@ const ViewSingleNgo = (props) => {
                       Certificate
                     </label>
                     <div className="image-upload">
-                      <DropzoneComponent />
+                      <img
+                        style={{ width: '250px', height: '200px' }}
+                        src={`${Local}/${ngoById.certificate}`}
+                      />
                     </div>
                   </div>
                 </div>
@@ -361,7 +374,10 @@ const ViewSingleNgo = (props) => {
                       Charity Registration Certificate
                     </label>
                     <div className="image-upload">
-                      <DropzoneComponent />
+                      <img
+                        style={{ width: '250px', height: '200px' }}
+                        src={`${Local}/${ngoById.charityRegistrationCertificate}`}
+                      />
                     </div>
                   </div>
                 </div>
@@ -372,7 +388,10 @@ const ViewSingleNgo = (props) => {
                       Deed
                     </label>
                     <div className="image-upload">
-                      <DropzoneComponent />
+                      <img
+                        style={{ width: '250px', height: '200px' }}
+                        src={`${Local}/${ngoById.deed}`}
+                      />
                     </div>
                   </div>
                 </div>
@@ -394,7 +413,7 @@ const ViewSingleNgo = (props) => {
                           >
                             NgoName
                           </TableCell>
-                          <TableCell align="center">{ngoById.ngoName}</TableCell>
+                          <TableCell align="center">{ngoById && ngoById.user && ngoById.user.name}</TableCell>
                         </TableRow>
 
                         <TableRow
@@ -430,7 +449,7 @@ const ViewSingleNgo = (props) => {
                           >
                             Email
                           </TableCell>
-                          <TableCell align="center">{ngoById.email}</TableCell>
+                          <TableCell align="center">{ngoById && ngoById.user && ngoById.user.email}</TableCell>
                         </TableRow>
 
                         <TableRow
@@ -448,7 +467,7 @@ const ViewSingleNgo = (props) => {
                           >
                             Mobile
                           </TableCell>
-                          <TableCell align="center">{ngoById.mobile}</TableCell>
+                          <TableCell align="center">{ngoById && ngoById.user && ngoById.user.mobile}</TableCell>
                         </TableRow>
 
                         <TableRow
@@ -502,7 +521,7 @@ const ViewSingleNgo = (props) => {
                           >
                             Registration Number
                           </TableCell>
-                          <TableCell align="center">{ngoById.registrationDate}</TableCell>
+                          <TableCell align="center">{ngoById.registrationNumber}</TableCell>
                         </TableRow>
 
                         <TableRow
