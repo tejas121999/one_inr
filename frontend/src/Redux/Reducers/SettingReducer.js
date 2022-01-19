@@ -117,6 +117,7 @@ export const SettingReducer = (state = initialState, action) => {
       return {
         ...state,
         getConfig: action.payload,
+        isLoadding: true,
       };
     }
 
@@ -125,6 +126,7 @@ export const SettingReducer = (state = initialState, action) => {
       return {
         ...state,
         updateConfig: action.payload,
+        isLoadding: true,
       };
     }
 

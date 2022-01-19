@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Row,
   Col,
@@ -50,9 +50,14 @@ const styles = {
 
 const Config = () => {
   const dispatch = useDispatch();
+
+  let configData = useSelector(state => state.setting.config)
+  console.log('config', configData)
   useEffect(() => {
     dispatch(getConfigAction());
   }, []);
+
+
 
   return (
     <>
@@ -84,7 +89,7 @@ const Config = () => {
           <Card style={styles.card}>
             <Card.Body>
               <Card.Title style={styles.title}>Commision (%)</Card.Title>
-              <InputGroup size="sm" style={styles.inputgroup}>
+              <InputGroup size="sm" style={styles.inputgroup} >
                 <FormControl aria-label="Dollar amount (with dot and two decimal places)" />
 
                 <Button style={styles.button} variant="primary">

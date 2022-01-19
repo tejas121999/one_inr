@@ -26,7 +26,7 @@ export const getAllProfileAction = () => {
         .then(res => {
           dispatch(getAllProfiles(res.data.data));
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');
@@ -113,7 +113,7 @@ export const getRoleListAction = () => {
         .then(res => {
           dispatch(getAllRoleList(res.data.data));
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');
@@ -126,7 +126,7 @@ export const getRoleListByValueAction = value => {
       .then(res => {
         dispatch(getAllRoleList(res.data.data));
       })
-      .catch(err => {});
+      .catch(err => { });
   };
 };
 
@@ -153,7 +153,7 @@ export const addRollListAction = (body, history) => {
             history.push('#');
           }, 2000);
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');
@@ -176,7 +176,7 @@ export const editRollListAction = (body, history) => {
             history.push('#');
           }, 2000);
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');
@@ -194,7 +194,7 @@ export const DeleteRoleAction = id => {
         });
         dispatch(getAllProfileAction(''));
       })
-      .catch(err => {});
+      .catch(err => { });
   };
 };
 
@@ -207,7 +207,7 @@ export const getUserListAction = () => {
         .then(res => {
           dispatch(getUserLists(res.data.data));
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');
@@ -220,7 +220,7 @@ export const getUserListByValueAction = value => {
       .then(res => {
         dispatch(getUserLists(res.data.data));
       })
-      .catch(err => {});
+      .catch(err => { });
   };
 };
 
@@ -252,7 +252,7 @@ export const addUserListAction = body => {
           });
           dispatch(getUserListAction());
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('no network');
@@ -356,7 +356,7 @@ export const DeleteUserByIdACtion = id => {
         });
         dispatch(getUserListAction());
       })
-      .catch(err => {});
+      .catch(err => { });
   };
 };
 
@@ -381,9 +381,10 @@ export const getConfigAction = () => {
     return dispatch => {
       SettingsServices.getConfig()
         .then(res => {
+          console.log(res)
           dispatch(getAllConfig(res.data.data));
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');
@@ -409,7 +410,7 @@ export const updateConfigAction = (data, history) => {
             autoClose: 2000,
           });
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('no network');
@@ -432,7 +433,7 @@ export const getRezorpayAction = () => {
         .then(res => {
           dispatch(getRezorpay(res.data));
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No Network');
@@ -460,7 +461,7 @@ export const addRezorpayAction = (body, history) => {
             history.push('#');
           }, 2000);
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('no network');
@@ -498,7 +499,7 @@ export const deleteRezorpayAction = id => {
         position: 'top-center',
         autoClose: 2000,
       });
-      dispatch(err => {});
+      dispatch(err => { });
     });
   };
 };
