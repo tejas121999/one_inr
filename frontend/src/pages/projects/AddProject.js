@@ -11,7 +11,17 @@ import TextEditor from './TextEditor';
 const AddProject = props => {
     const [featureImg, setFeatureImg] = useState('')
     const [coverImg, setCoverImg] = useState('')
-
+    const [mobileImg, setMoileImg] = useState('')
+    const [sliderImg, setSlider] = useState(
+      {  slider1: 'One',
+        slider2: '',
+        slider3: '',
+        slider4: '',
+        slider5: '',
+        slider6: ''
+    }
+    )
+    console.log('Images', sliderImg);
     // const [value, setValue] = useState();
     const dispatch = useDispatch();
     const onProjectAdd = values => {
@@ -21,7 +31,7 @@ const AddProject = props => {
             title: values.title,
             slogan: 'xxx',
             description: values.description,
-            longDesc: 'xxx',
+            longDesc: values.longDesc,
             goal: values.goal,
             commission: values.commission,
             target: values.target,
@@ -32,8 +42,9 @@ const AddProject = props => {
             status: 1,
             displayOnHomeStatus: 1,
             feature: featureImg,
-            cover: coverImg
-
+            cover: coverImg,
+            monile: mobileImg,
+            slider: sliderImg
         }
         dispatch(addProjectAction(object, props.history));
     };
@@ -42,7 +53,7 @@ const AddProject = props => {
         const data = new FormData();
         data.append('avatar', imgData[0]);
         const result = await axios.post(
-            BASE_URL + '#',
+            BASE_URL + 'fileupload?reason=banner',
             data,
         );
         if (result && result.data && result.data.pathtoUpload) {
@@ -54,11 +65,36 @@ const AddProject = props => {
         const data = new FormData();
         data.append('avatar', imgData[0]);
         const result = await axios.post(
-            BASE_URL + '#',
+            BASE_URL + 'fileupload?reason=cover',
             data,
         );
         if (result && result.data && result.data.pathtoUpload) {
             setCoverImg(result.data.pathtoUpload);
+        }
+    }
+
+    const onMobileImgAdd = async imgData => {
+        const data = new FormData();
+        data.append('avatar', imgData[0]);
+        const result = await axios.post(
+            BASE_URL + 'fileupload?reason=mobile',
+            data,
+        );
+        if (result && result.data && result.data.pathtoUpload) {
+            setMoileImg(result.data.pathtoUpload)
+        }
+    }
+
+    const onSliderImgAdd = async (imgData) => {
+      
+        const data = new FormData();
+        data.append('avatar', imgData[0]); 
+        const result = await axios.post(
+            BASE_URL + 'fileupload?reason=slider',
+            data,
+        );
+        if (result && result.data && result.data.pathtoUpload) {
+            setSlider(result.data.pathtoUpload)
         }
     }
 
@@ -98,6 +134,7 @@ const AddProject = props => {
                                             recuringType: '',
                                             days: '',
                                             videoLink: '',
+                                            longDesc: ''
                                         }}
                                         enableReinitialize={true}
                                         onSubmit={values => onProjectAdd(values)}
@@ -241,7 +278,7 @@ const AddProject = props => {
                                                                 <label style={{ fontWeight: 'bold' }}>
                                                                     Long Description:
                                                                 </label>
-                                                                <TextEditor  />
+                                                                <TextEditor value={values.longDesc} />
                                                             </div>
                                                             <div className="col-sm-12 col-xs-12 mt-3">
                                                                 <label style={{ fontWeight: 'bold' }}>
@@ -296,7 +333,7 @@ const AddProject = props => {
                                                                 Image dimensions must be 1024(i.e. width) *
                                                                 768(i.e. height)
                                                                 <div className="col-sm-4 col-xs-12 mt-3">
-                                                                    <DropzoneComponent />
+                                                                    <DropzoneComponent onChangeImage={onMobileImgAdd} />
                                                                 </div>
                                                             </div>
                                                             <div className="col-sm-12 col-xs-12 mt-3">
@@ -310,22 +347,22 @@ const AddProject = props => {
                                                             </div>
                                                             <div className="row">
                                                                 <div className="col-sm-4 col-xs-4 mt-3">
-                                                                    <DropzoneComponent />
+                                                                    <DropzoneComponent onChangeImage={onSliderImgAdd} />
                                                                 </div>
                                                                 <div className="col-sm-4 col-xs-4 mt-3">
-                                                                    <DropzoneComponent />
+                                                                <DropzoneComponent onChangeImage={onSliderImgAdd} />
                                                                 </div>
                                                                 <div className="col-sm-4 col-xs-4 mt-3">
-                                                                    <DropzoneComponent />
+                                                                <DropzoneComponent onChangeImage={onSliderImgAdd} />
                                                                 </div>
                                                                 <div className="col-sm-4 col-xs-4 mt-3">
-                                                                    <DropzoneComponent />
+                                                                <DropzoneComponent onChangeImage={onSliderImgAdd} />
                                                                 </div>
                                                                 <div className="col-sm-4 col-xs-4 mt-3">
-                                                                    <DropzoneComponent />
+                                                                <DropzoneComponent onChangeImage={onSliderImgAdd} />
                                                                 </div>
                                                                 <div className="col-sm-4 col-xs-4 mt-3">
-                                                                    <DropzoneComponent />
+                                                                <DropzoneComponent onChangeImage={onSliderImgAdd} />
                                                                 </div>
                                                             </div>
                                                             <div className="col-sm-4 col-xs-12 mt-3">

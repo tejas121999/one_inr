@@ -13,9 +13,9 @@ function projectServices() {
   this.addFund = async id => await axios.put(BASE_URL + '#', id);
 
   this.getAllCompletedProject = async () =>
-    await axios.get(BASE_URL + 'get-completed-projects');
+    await axios.get(BASE_URL + 'projects/completed');
   this.getCompletedProjectByValue = async value =>
-    await axios.get(BASE_URL + `get-completed-projects/?search=${value}`);
+    await axios.get(BASE_URL + `completed/?search=${value}`);
 
   this.getAllArchivedProject = async () => await axios.get(BASE_URL + 'auth');
 }
