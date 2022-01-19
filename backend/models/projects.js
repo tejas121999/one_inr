@@ -1,138 +1,138 @@
 module.exports = (sequelize, DataTypes) => {
-const projects = sequelize .define('projects', {
+    const projects = sequelize.define('projects', {
 
-    userId: {
-        type: DataTypes.INTEGER,
-        field: 'user_id'
-    },
+        userId: {
+            type: DataTypes.INTEGER,
+            field: 'user_id'
+        },
 
-    title: {
-        type: DataTypes.STRING,
-        field: 'title',
-        allowNull: false
-    },
+        title: {
+            type: DataTypes.STRING,
+            field: 'title',
+            allowNull: false
+        },
 
-    slogan: {
-        type: DataTypes.STRING,
-        field: 'slug',
-        
-    },
+        slogan: {
+            type: DataTypes.STRING,
+            field: 'slug',
 
-    description: {
-        type: DataTypes.TEXT,
-        field: 'description',
-        allowNull: false
-    },
+        },
 
-    longDesc: {
-        type: DataTypes.TEXT,
-        field: 'long_description'
-    },
+        description: {
+            type: DataTypes.TEXT,
+            field: 'description',
+            allowNull: false
+        },
 
-    videoLink: {
-        type: DataTypes.STRING,
-        field: 'video_link'
-    },
+        longDesc: {
+            type: DataTypes.TEXT,
+            field: 'long_description'
+        },
 
-    goal: {
-        type: DataTypes.BIGINT,
-        field: 'goal',
-        allowNull: false
-    },
+        videoLink: {
+            type: DataTypes.STRING,
+            field: 'video_link'
+        },
 
-    commission: {
-        type: DataTypes.INTEGER,
-        field: 'commission',
-        allowNull: false
-    },
+        goal: {
+            type: DataTypes.BIGINT,
+            field: 'goal',
+            allowNull: false
+        },
 
-    target: {
-        type: DataTypes.INTEGER,
-        field: 'target',
-        allowNull: false
-    },
+        commission: {
+            type: DataTypes.INTEGER,
+            field: 'commission',
+            allowNull: false
+        },
 
-    funded: {
-        type: DataTypes.INTEGER,
-        filed: 'funded'
-    },
+        target: {
+            type: DataTypes.INTEGER,
+            field: 'target',
+            allowNull: false
+        },
 
-    startDate: {
-        type: DataTypes.DATE,
-        field: 'start_date'
-    },
+        funded: {
+            type: DataTypes.INTEGER,
+            filed: 'funded'
+        },
 
-    endDate: {
-        type: DataTypes.DATE,
-        field: 'end_date'
-    },
+        startDate: {
+            type: DataTypes.DATE,
+            field: 'start_date'
+        },
 
-    recurringDays: {
-        type: DataTypes.INTEGER,
-        field: 'recurring_days'
-    },
+        endDate: {
+            type: DataTypes.DATE,
+            field: 'end_date'
+        },
 
-    status: {
-        type: DataTypes.BOOLEAN,
-        field: 'status'
-    },
+        recurringDays: {
+            type: DataTypes.INTEGER,
+            field: 'recurring_days'
+        },
 
-    displayOnHomeStatus: {
-        type: DataTypes.INTEGER,
-        field: 'display_on_home_status'
-    },
+        status: {
+            type: DataTypes.BOOLEAN,
+            field: 'status'
+        },
 
-    date: {
-        type : DataTypes.VIRTUAL,
-        get(){
-            const rawValue = `${this.startDate} to ${this.endDate}`;
-            return rawValue;
-        }
-    },
+        displayOnHomeStatus: {
+            type: DataTypes.INTEGER,
+            field: 'display_on_home_status'
+        },
 
-    recurring : {
-        type : DataTypes.VIRTUAL,
-        get(){
-            const isRecurring = this.recurringDays;
-            if(isRecurring==0){
-                return "No"
-            }else{
-                return 'Yes'
+        date: {
+            type: DataTypes.VIRTUAL,
+            get() {
+                const rawValue = `${this.startDate} to ${this.endDate}`;
+                return rawValue;
             }
-        }
-    }
+        },
 
-},
-    {
-        freezeTableName: true,
-        tableName: 'projects',
-        createdAt : 'created_at',
-        updatedAt : 'updated_at',
-        paranoid: true,
-        deletedAt : 'deleted_at',
-        timestamp: true,
-      
-    });
-
-    projects.associate = function(models) {
-        projects.hasMany(models.project_images, {foreignKey: 'user_id'})
-        projects.belongsTo(models.ngo, {foreignKey: 'userId'})
-    }
-
-
-    projects.afterFind(function(projects,options,cb){
-        let newData = Array.isArray(projects)?[...projects]:{...projects};
-        return new Promise((resolve,reject)=>{
-            if(Array.isArray(newData)){
-                for(let ele of newData){
-                    Object.assign(ele.dataValues,{DaysLeft : null})
-                }
-            }else{
-                if(newData.dataValues){
-                    Object.assign(newData.dataValues,{DaysLeft : null});
+        recurring: {
+            type: DataTypes.VIRTUAL,
+            get() {
+                const isRecurring = this.recurringDays;
+                if (isRecurring == 0) {
+                    return "No"
+                } else {
+                    return 'Yes'
                 }
             }
-            return resolve(newData,options);
+        }
+
+    },
+        {
+            freezeTableName: true,
+            tableName: 'projects',
+            createdAt: 'created_at',
+            updatedAt: 'updated_at',
+            paranoid: true,
+            deletedAt: 'deleted_at',
+            timestamp: true,
+
+        });
+
+    projects.associate = function (models) {
+        projects.hasMany(models.project_image, { foreignKey: 'projectId' })
+        projects.belongsTo(models.ngo, { foreignKey: 'userId' })
+    }
+
+
+    projects.afterFind(function (projects, options, cb) {
+        let newData = Array.isArray(projects) ? [...projects] : { ...projects };
+        return new Promise((resolve, reject) => {
+            if (Array.isArray(newData)) {
+                for (let ele of newData) {
+                    Object.assign(ele.dataValues, { DaysLeft: null })
+                }
+            } else {
+                if (newData.dataValues) {
+                    Object.assign(newData.dataValues, { DaysLeft: null });
+                }
+            }
+            return resolve(newData, options);
         })
     })
 
