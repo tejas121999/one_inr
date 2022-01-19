@@ -1,18 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Row,
   Col,
-  Card,
-  Button,
-  InputGroup,
-  FormControl,
-  FloatingLabel,
-  Form,
+  Card
 } from 'react-bootstrap';
-import { getConfigAction } from '../../Redux/Actions/SettingAction';
+import { getConfigAction, updateConfigAction } from '../../Redux/Actions/SettingAction';
 import { height } from '@mui/system';
+import { Field, Form, Formik } from 'formik';
 
 const styles = {
   card: {
@@ -51,12 +47,38 @@ const styles = {
 const Config = () => {
   const dispatch = useDispatch();
 
-  let configData = useSelector(state => state.setting.config)
+  let configData = useSelector(state => state.setting.getConfig)
   console.log('config', configData)
   useEffect(() => {
     dispatch(getConfigAction());
   }, []);
 
+
+
+  // commition
+  const [Commision, setCommition] = useState('')
+  const { commision } = Commision
+  const onCommisionChange = e => {
+    setCommition({ ...Commision, [e.target.name]: e.target.value });
+  }
+  const submitCommition = (e) => {
+    e.preventDefault();
+    dispatch(updateConfigAction(Commision))
+  }
+
+  // Feature Commission (%)
+  const [FeatureCommission, setFeatureCommission] = useState('')
+  const { feature_commision } = FeatureCommission
+  const onFeatureCommisionChange = e => {
+    setFeatureCommission({ ...FeatureCommission, [e.target.name]: e.target.value });
+  }
+  const submitFeatureCommition = (e) => {
+    e.preventDefault();
+    dispatch(updateConfigAction(FeatureCommission))
+  }
+
+
+  
 
 
   return (
@@ -89,13 +111,26 @@ const Config = () => {
           <Card style={styles.card}>
             <Card.Body>
               <Card.Title style={styles.title}>Commision (%)</Card.Title>
-              <InputGroup size="sm" style={styles.inputgroup} >
-                <FormControl aria-label="Dollar amount (with dot and two decimal places)" />
+              <Formik>
+                <Form onSubmit={submitCommition}>
+                  <Field
+                    name="commision"
+                    value={commision}
+                    onChange={onCommisionChange}
+                  />
 
-                <Button style={styles.button} variant="primary">
-                  Update
-                </Button>
-              </InputGroup>
+                  <button
+                    class="btn btn-success"
+                    style={{
+                      marginRight: '10px',
+                      marginBottom: '10px',
+                    }}
+                    type="submit"
+                  >
+                    Update
+                  </button>
+                </Form>
+              </Formik>
             </Card.Body>
           </Card>
           <Card style={styles.card}>
@@ -103,78 +138,93 @@ const Config = () => {
               <Card.Title style={styles.title}>
                 Feature Commission (%)
               </Card.Title>
-              <InputGroup size="sm" style={styles.inputgroup}>
-                <FormControl aria-label="Dollar amount (with dot and two decimal places)" />
-                <Button style={styles.button} variant="primary">
-                  Update
-                </Button>
-              </InputGroup>
+              <Formik>
+                <Form onSubmit={submitFeatureCommition}>
+                  <Field
+                    name="featurecommission"
+                    value={feature_commision}
+                    onChange={onFeatureCommisionChange}
+                  />
+                  <button
+                    class="btn btn-success"
+                    style={{
+                      marginRight: '10px',
+                      marginBottom: '10px',
+                    }}
+                    type="submit"
+                  >
+                    Update
+                  </button>
+                </Form>
+              </Formik>
             </Card.Body>
           </Card>
           <Card style={styles.card}>
             <Card.Body>
               <Card.Title style={styles.title}>Payment Gateway (%)</Card.Title>
-              <InputGroup size="sm" style={styles.inputgroup}>
-                <FormControl aria-label="Dollar amount (with dot and two decimal places)" />
-                <Button style={styles.button} variant="primary">
-                  Update
-                </Button>
-              </InputGroup>
+              <Formik>
+                <Form>
+                  <Field />
+                  <button
+                    class="btn btn-success"
+                    style={{
+                      marginRight: '10px',
+                      marginBottom: '10px',
+                    }}
+                    type="submit"
+                  >
+                    Update
+                  </button>
+                </Form>
+              </Formik>
             </Card.Body>
           </Card>
 
           <Card style={styles.card}>
             <Card.Body>
               <Card.Title style={styles.title}>GST (%)</Card.Title>
-              <InputGroup size="sm" style={styles.inputgroup}>
-                <FormControl aria-label="Dollar amount (with dot and two decimal places)" />
-                <Button style={styles.button} variant="primary">
-                  Update
-                </Button>
-              </InputGroup>
+              <Formik>
+                <Form>
+                  <Field />
+                  <button
+                    class="btn btn-success"
+                    style={{
+                      marginRight: '10px',
+                      marginBottom: '10px',
+                    }}
+                    type="submit"
+                  >
+                    Update
+                  </button>
+                </Form>
+              </Formik>
             </Card.Body>
           </Card>
 
           <Card style={styles.card}>
             <Card.Body>
               <Card.Title style={styles.title}>Payment Gateway Name</Card.Title>
-              <InputGroup size="sm" style={styles.inputgroup}>
-                <FormControl aria-label="Dollar amount (with dot and two decimal places)" />
-                <Button style={styles.button} variant="primary">
-                  Update
-                </Button>
-              </InputGroup>
+              <Formik>
+                <Form>
+                  <Field />
+                  <button
+                    class="btn btn-success"
+                    style={{
+                      marginRight: '10px',
+                      marginBottom: '10px',
+                    }}
+                    type="submit"
+                  >
+                    Update
+                  </button>
+                </Form>
+              </Formik>
             </Card.Body>
           </Card>
           <Card style={styles.card}>
             <Card.Body>
               <Card.Title style={styles.title}>Home Project</Card.Title>
-              <InputGroup>
-                <FloatingLabel controlId="floatingSelectGrid">
-                  <Form.Select
-                    style={{
-                      height: '31px',
-                      width: '360px',
-                      marginTop: '18px',
-                      fontSize: '12px',
-                      border: '1px solid #ced4da',
-                      borderRadius: '0.25rem',
-                    }}
-                    aria-label="Floating label select example"
-                  >
-                    <option value="1">Feed cows with the grass of love</option>
-                    <option value="2">Paying children education fees</option>
-                    <option value="3">Sponsoring books for students</option>
-                    <option value="4">feeding pigeons grains</option>
-                    <option value="5">
-                      Sponsoring stationary for students
-                    </option>
-                  </Form.Select>
-                </FloatingLabel>
-                <Button style={styles.button} variant="primary">
-                  Update
-                </Button>
-              </InputGroup>
+
             </Card.Body>
           </Card>
         </Row>
