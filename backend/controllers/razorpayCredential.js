@@ -38,4 +38,12 @@ exports.updateRazorpayCredentials = async (req, res) => {
     }
 
 }
-
+exports.getRazorpayCredentialsById = async (req,res) => {
+    let id = req.params.id;
+    let razorpayCredentials = await models.razorpaycredentials.findOne({where :{id} })
+    if (!razorpayCredentials) {
+        return res.status(404).json({ message: 'Data Not found' })
+    }else {
+    return res.status(200).json({ message: 'razorpayCredentials', result: razorpayCredentials })
+    }
+}
