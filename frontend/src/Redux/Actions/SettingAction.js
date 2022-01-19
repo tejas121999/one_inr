@@ -12,6 +12,7 @@ import {
   Get_User_By_Id,
   ADD_USER,
   ADD_USER_FAIL,
+  GET_CONFIG,
 } from '../constTypes';
 import SettingsServices from '../Services/SettingsServices';
 import { toast } from 'react-toastify';
@@ -376,6 +377,29 @@ export const onDeleteUserByIdDataFail = data => {
 };
 
 // config
+export const getConfigAction = () => {
+  if (navigator.onLine) {
+    return dispatch => {
+      SettingsServices.getConfig()
+        .then(res => {
+          dispatch(getConfig(res.data.data));
+        })
+        .catch(err => { })
+    }
+  } else {
+    alert('no network')
+  }
+}
+
+export const getConfig = data => {
+  return {
+    type: GET_CONFIG,
+    payload: data
+  }
+}
+
+
+
 // update config
 export const updateConfigAction = (body, history) => {
   if (navigator.onLine) {
