@@ -8,6 +8,7 @@ const moment = require('moment');
 //Creating Projects
 exports.addProjects = async (req, res) => {
         let {userId,title,slogan,description,longDesc,videoLink,goal,commission,target,funded,startDate,endDate,recurringDays,status,displayOnHomeStatus} = req.body;
+        let {banner,cover,mobile,slider1,slider2,slider3,slider4,slider5,slider6} = req.body;
         recurringDays = recurringDays || 0;
 
         const configData = await models.configs.findAll();
@@ -46,6 +47,7 @@ exports.addProjects = async (req, res) => {
          projects = await models.projects.create({userId,title,slogan,description,longDesc,videoLink,goal,commission,target,funded,startDate,endDate,recurringDays,status,displayOnHomeStatus},
             { transaction: t }
             )
+        projectImage = await models.project_image.create({projectId:projects.dataValues.id,banner,cover,mobile,slider1,slider2,slider3,slider4,slider5,slider6},{transaction:t})
         })
 
         // projectId = projects.id
@@ -64,8 +66,6 @@ exports.addProjects = async (req, res) => {
         // target = commission + gst + pg
   
 }
-
-
 
 exports.getAllProjects = async (req, res) => {
     const { search, offset, pageSize } = paginationWithFromTo(
