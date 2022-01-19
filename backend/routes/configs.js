@@ -4,14 +4,14 @@ const checkAuth = require('../middleware/checkAuth')
 const {wrapper} = require('../utils/errorWrap')
 const {addConfigSetting,getConfigSetting,updateConfigSetting}= require('../controllers/config') //Importing Vendor controller.
 
-const checkRolesAndPermission = require('../middleware/checkRolesAndPermissions')
 
 
-router.post('/',checkAuth,checkRolesAndPermission,wrapper(addConfigSetting))
 
-router.get('/',checkAuth,checkRolesAndPermission,wrapper(getConfigSetting))
+router.post('/',checkAuth,wrapper(addConfigSetting))
 
-router.put('/:id',checkAuth,checkRolesAndPermission,wrapper(updateConfigSetting))
+router.get('/',checkAuth,wrapper(getConfigSetting))
+
+router.put('/:id',checkAuth,wrapper(updateConfigSetting))
 
 
 

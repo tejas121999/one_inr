@@ -10,15 +10,15 @@ const {addVendor,updateVendor,getAllVendor,deleteVendor,generateVendorPdf,genera
 
 const validationError = require('../middleware/validationError')
 const {createVendorValidation,updateVendorValidation} = require('../validations/vendors')
-const checkRolesAndPermission = require('../middleware/checkRolesAndPermissions')
 
 
-router.post('/',checkAuth,checkRolesAndPermission,createVendorValidation,validationError,wrapper(addVendor)) 
-router.put('/:id',checkAuth,checkRolesAndPermission,updateVendorValidation,validationError,wrapper(updateVendor))
-router.get('/',wrapper(checkAuth,checkRolesAndPermission,getAllVendor))
-router.get('/get-vendor-pdf',checkAuth,checkRolesAndPermission,generateVendorPdf)
-router.get('/get-vendor-csv',checkAuth,checkRolesAndPermission,generateVendorCsv)
-router.get('/get-vendor-xlsx',checkAuth,checkRolesAndPermission,getVendorExcel)
+
+router.post('/',checkAuth,createVendorValidation,validationError,wrapper(addVendor)) 
+router.put('/:id',checkAuth,updateVendorValidation,validationError,wrapper(updateVendor))
+router.get('/',wrapper(checkAuth,getAllVendor))
+router.get('/get-vendor-pdf',checkAuth,generateVendorPdf)
+router.get('/get-vendor-csv',checkAuth,generateVendorCsv)
+router.get('/get-vendor-xlsx',checkAuth,getVendorExcel)
 
 router.get('/:id',checkAuth,wrapper(getVenorById))
 router.delete('/:id',checkAuth,wrapper(deleteVendor))

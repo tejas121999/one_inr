@@ -10,18 +10,18 @@ const {addPartner,getPartner,deletePartner,getPartnerExcel,pdfOfPartner,updatePa
 const validationError = require('../middleware/validationError')
 const {partnerValidation} = require('../validations/partner')
 const user = require('../utils/exportToCsv')
-const checkRolesAndPermission = require('../middleware/checkRolesAndPermissions')
 
-router.post('/',checkAuth,checkRolesAndPermission,partnerValidation,validationError,wrapper(addPartner))
 
-router.get('/partner-data',checkAuth,checkRolesAndPermission,wrapper(getPartner))
-router.get('/get-partner-csv',checkAuth,checkRolesAndPermission,wrapper(exportPartnerCsv))
-router.get('/get-partnerById/:id',checkAuth,checkRolesAndPermission,getPartnerById)
-router.get('/get-partner-excel',checkAuth,checkRolesAndPermission,getPartnerExcel)
-router.get('/get-partnerPdf',checkAuth,checkRolesAndPermission,pdfOfPartner)
-router.get('/get-all-users-csv',checkAuth,checkRolesAndPermission,user.exportsToCsv)
-router.put('/update-partner/:id',checkAuth,checkRolesAndPermission,updatePatner)
-router.delete('/delete-partner/:id',checkAuth,checkRolesAndPermission,deletePartner)
+router.post('/',checkAuth,partnerValidation,validationError,wrapper(addPartner))
+
+router.get('/partner-data',checkAuth,wrapper(getPartner))
+router.get('/get-partner-csv',checkAuth,wrapper(exportPartnerCsv))
+router.get('/get-partnerById/:id',checkAuth,getPartnerById)
+router.get('/get-partner-excel',checkAuth,getPartnerExcel)
+router.get('/get-partnerPdf',checkAuth,pdfOfPartner)
+router.get('/get-all-users-csv',checkAuth,user.exportsToCsv)
+router.put('/update-partner/:id',checkAuth,updatePatner)
+router.delete('/delete-partner/:id',checkAuth,deletePartner)
 
 
 

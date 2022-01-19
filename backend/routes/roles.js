@@ -3,7 +3,6 @@ var router = express.Router();
 const checkAuth = require('../middleware/checkAuth')
 const { createRole ,createRoleswithPermission,getRoles} = require('../controllers/rolesAndPermission')
 const  {wrapper} = require('../utils/errorWrap')
-// const checkRolesAndPermission = require('../middleware/checkRolesAndPermissions')
 
 router.post('/',checkAuth,wrapper(createRole))
 router.post('/add-permission',checkAuth,wrapper(createRoleswithPermission))
