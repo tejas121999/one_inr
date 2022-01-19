@@ -2,23 +2,6 @@ const multer = require("multer");
 
 exports.ImageUpload = async (req, res) => {
     let fileFor = req.query.reason;
-
-
-
-
-    //an object specifying the size limit of the following optional properties, now we have created a object where i have storage
-    // and limit of te file size. In case coming file size is greater then defined size
-    // multer will throw an error.
-    // var obj = {
-    //     storage: storage,
-    //     limits: {
-    //         fileSize: 200 * 1024 * 1024
-    //     },
-    //     fileFilter: fileFilter
-    // };
-
-
-
     //vendor file uploads path location
     let destination;
     if (fileFor == "vendor_pan") {
@@ -33,8 +16,6 @@ exports.ImageUpload = async (req, res) => {
     else if (fileFor == "partner_pan") {
         destination = `public/uploads/partner/pan_image/`
     }
-
-
 
     //Ngo file Uploads path location
     else if (fileFor == "ngo_pancard") {
@@ -53,8 +34,6 @@ exports.ImageUpload = async (req, res) => {
         destination = `public/uploads/ngo/logo/`
     }
 
-
-
     // Project Images Upload
     else if (fileFor == "banner") {
         destination = `public/uploads/project_image/banner/`
@@ -68,6 +47,8 @@ exports.ImageUpload = async (req, res) => {
     } else if (fileFor == "slider") {
         destination = `public/uploads/project_image/slider/`
     }
+
+    //My Profile Admin
     else if (fileFor == "profile_image") {
         destination = `public/uploads/users/profile/`
     }
@@ -78,7 +59,6 @@ exports.ImageUpload = async (req, res) => {
         filename: (req, file, cb) => {
             const exactName = file.originalname.split('.');
             const exactextension = exactName[exactName.length - 1];
-
             cb(null, `${Date.now()}.${exactextension}`);
         },
         destination: destination
@@ -96,13 +76,12 @@ exports.ImageUpload = async (req, res) => {
             }, false);
         }
     };
-
-
     var obj = {
         storage,
         limits: {
-            fileSize: 2 * 1024 * 1024 //2MB
+            fileSize: 20000000, // 20 Mb
         },
+        fileFilter : fileFilter,
     };
 
     //now we have to add our created object 'obj' into multer and called method single with param 'file'. here file is param of request body.
@@ -134,18 +113,14 @@ exports.ImageUpload = async (req, res) => {
         //     return res.status(400).json({ message: "Error while uploading the file" })
         // }
         // else {
-
-
         return res.status(201).json({
             type: fileFor,
             url: req.file.url,
-            path: process.env.BASE_URL + req.file.path,
+            path: process.env.BASE_URL+process.env.PORT+`/`+req.file.path,
             pathtoUpload: req.file.path,
             filename: req.file.filename,
             message: "File Uploaded Successfully"
         })
-
-        // }
     })
 }
 
