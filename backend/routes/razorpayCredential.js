@@ -3,7 +3,7 @@ var router = express.Router();
 const checkAuth = require('../middleware/checkAuth')
 
 const {wrapper} = require('../utils/errorWrap')
-
+const checkRolesAndPermission = require('../middleware/checkRolesAndPermissions')
 
 const {razorpayCredentials,addRazorpayCredentials,updateRazorpayCredentials,getRazorpayCredentialsById}= require('../controllers/razorpayCredential') //Importing Vendor controller.
 

@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
             field: 'role_id'
         },
         permissions: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             field: 'permissions'
         },
         isActive: {
