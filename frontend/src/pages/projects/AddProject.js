@@ -241,7 +241,7 @@ const AddProject = props => {
                                                                 <label style={{ fontWeight: 'bold' }}>
                                                                     Long Description:
                                                                 </label>
-                                                                <TextEditor />
+                                                                <TextEditor  />
                                                             </div>
                                                             <div className="col-sm-12 col-xs-12 mt-3">
                                                                 <label style={{ fontWeight: 'bold' }}>
