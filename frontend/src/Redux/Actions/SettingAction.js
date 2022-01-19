@@ -382,7 +382,7 @@ export const getConfigAction = () => {
     return dispatch => {
       SettingsServices.getConfig()
         .then(res => {
-          dispatch(getConfig(res.data.data));
+          dispatch(getConfig(res.data));
         })
         .catch(err => { })
     }
@@ -401,7 +401,7 @@ export const getConfig = data => {
 
 
 // update config
-export const updateConfigAction = (body, history) => {
+export const updateConfigAction = (body) => {
   if (navigator.onLine) {
     return dispatch => {
       SettingsServices.updateConfig(body)
@@ -411,9 +411,6 @@ export const updateConfigAction = (body, history) => {
             position: 'top-center',
             autoClose: 2000,
           });
-          setTimeout(function () {
-            history.push('#');
-          }, 2000);
         })
         .catch(err => { });
     };
