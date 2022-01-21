@@ -15,6 +15,8 @@ import {
 import uploadImage from '../../assets/uploadImage.png';
 import './ngo.css';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
+import { useHistory } from "react-router-dom";
+
 const EditNgo = props => {
   const dispatch = useDispatch();
   const [logoImgUrl, setLogoImgUrl] = useState('');
@@ -22,6 +24,7 @@ const EditNgo = props => {
   const [certificateImgUrl, setCertificateImgUrl] = useState('');
   const [charityCertificateImgUrl, setCharityCertificateImgUrl] = useState('');
   const [deedImgUrl, setDeedImgUrl] = useState('');
+  let history = useHistory();
 
   const textInput = useRef(null);
   const [addContactValues, setAddContactValues] = useState([]);
@@ -828,7 +831,7 @@ const EditNgo = props => {
                   Update Ngo
                 </button>
 
-                <button type="submit" className="btn btn-success ml-2">
+                <button type="submit" className="btn btn-success ml-2" >
                   Cancel
                 </button>
               </div>

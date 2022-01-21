@@ -30,7 +30,7 @@ function SettingsServices() {
 
   // config
   this.getConfig = async () => await axios.get(BASE_URL + 'configs');
-  this.updateConfig = async body => await axios.post(BASE_URL + 'configs/update', body);
+  this.updateConfig = async body => await axios.put(BASE_URL + 'configs/update', body);
 
   // RAZORPAY CREDENTIALS
   this.getAllRazorpay = async () => await axios.get(BASE_URL + '#');
