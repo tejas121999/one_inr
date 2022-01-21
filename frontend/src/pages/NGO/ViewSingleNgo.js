@@ -46,10 +46,9 @@ const ViewSingleNgo = (props) => {
   }, []);
 
   let allProjectList = useSelector(state => state.project.projectList);
-  console.log("shivani", props.location.state.id)
-
+ 
   let ngoById = useSelector(state => state.ngo.ngoData);
-  console.log("chinmay", `${Local}/${ngoById.logo}`)
+  
 
 
 
