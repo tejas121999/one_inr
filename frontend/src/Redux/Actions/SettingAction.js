@@ -13,6 +13,11 @@ import {
   ADD_USER,
   ADD_USER_FAIL,
   GET_CONFIG,
+  UPDATE_CONFIG,
+  GET_RAZORPAY,
+  UPDATE_RAZORPAY_BY_ID,
+  ADD_RAZORPAY,
+  GET_RAZORPAY_BY_ID,
 } from '../constTypes';
 import SettingsServices from '../Services/SettingsServices';
 import { toast } from 'react-toastify';
@@ -25,7 +30,7 @@ export const getAllProfileAction = () => {
         .then(res => {
           dispatch(getAllProfiles(res.data.data));
         })
-        .catch(err => { });
+        .catch(err => {});
     };
   } else {
     alert('No network');
@@ -38,8 +43,6 @@ export const getAllProfiles = data => {
     payload: data,
   };
 };
-
-
 
 // update profile
 export const updateProfileAction = (data, history) => {
@@ -114,7 +117,7 @@ export const getRoleListAction = () => {
         .then(res => {
           dispatch(getAllRoleList(res.data.data));
         })
-        .catch(err => { });
+        .catch(err => {});
     };
   } else {
     alert('No network');
@@ -127,7 +130,7 @@ export const getRoleListByValueAction = value => {
       .then(res => {
         dispatch(getAllRoleList(res.data.data));
       })
-      .catch(err => { });
+      .catch(err => {});
   };
 };
 
@@ -154,7 +157,7 @@ export const addRollListAction = (body, history) => {
             history.push('#');
           }, 2000);
         })
-        .catch(err => { });
+        .catch(err => {});
     };
   } else {
     alert('No network');
@@ -177,7 +180,7 @@ export const editRollListAction = (body, history) => {
             history.push('#');
           }, 2000);
         })
-        .catch(err => { });
+        .catch(err => {});
     };
   } else {
     alert('No network');
@@ -195,7 +198,7 @@ export const DeleteRoleAction = id => {
         });
         dispatch(getAllProfileAction(''));
       })
-      .catch(err => { });
+      .catch(err => {});
   };
 };
 
@@ -208,7 +211,7 @@ export const getUserListAction = () => {
         .then(res => {
           dispatch(getUserLists(res.data.data));
         })
-        .catch(err => { });
+        .catch(err => {});
     };
   } else {
     alert('No network');
@@ -221,7 +224,7 @@ export const getUserListByValueAction = value => {
       .then(res => {
         dispatch(getUserLists(res.data.data));
       })
-      .catch(err => { });
+      .catch(err => {});
   };
 };
 
@@ -246,7 +249,6 @@ export const addUserListAction = (body, history) => {
       SettingsServices.addUserList(body)
         .then(res => {
           // need to add toster here
-
           toast.success(res.data.message, {
             position: 'top-center',
             autoClose: 2000,
@@ -255,7 +257,7 @@ export const addUserListAction = (body, history) => {
             history.push('#');
           }, 1000);
         })
-        .catch(err => { });
+        .catch(err => {});
     };
   } else {
     alert('no network');
@@ -319,9 +321,9 @@ export const updateUserByIdAction = (id, data) => {
             position: 'top-center',
             autoClose: 2000,
           });
-          setTimeout(function () {
-            window.history.back();
-          }, 2000);
+          // setTimeout(function () {
+          dispatch(getUserListAction());
+          // });
         })
         .catch(err => {
           window.history.back();
@@ -358,7 +360,7 @@ export const DeleteUserByIdACtion = id => {
         });
         dispatch(getUserListAction());
       })
-      .catch(err => { });
+      .catch(err => {});
   };
 };
 
@@ -384,24 +386,22 @@ export const getConfigAction = () => {
         .then(res => {
           dispatch(getConfig(res.data));
         })
-        .catch(err => { })
-    }
+        .catch(err => {});
+    };
   } else {
-    alert('no network')
+    alert('no network');
   }
-}
+};
 
 export const getConfig = data => {
   return {
     type: GET_CONFIG,
-    payload: data
-  }
-}
-
-
+    payload: data,
+  };
+};
 
 // update config
-export const updateConfigAction = (body) => {
+export const updateConfigAction = body => {
   if (navigator.onLine) {
     return dispatch => {
       SettingsServices.updateConfig(body)
@@ -412,7 +412,7 @@ export const updateConfigAction = (body) => {
             autoClose: 2000,
           });
         })
-        .catch(err => { });
+        .catch(err => {});
     };
   } else {
     alert('no network');
@@ -420,65 +420,106 @@ export const updateConfigAction = (body) => {
 };
 
 // RAZORPAY CREDENTIALS
-// GET REZORPAY
-export const getRezorpayAction = () => {
+// GET RAZORPAY
+export const getRazorpayAction = () => {
   if (navigator.onLine) {
     return dispatch => {
       SettingsServices.getAllRazorpay()
         .then(res => {
-          dispatch(getRezorpay(res.data));
+          dispatch(getRazorpay(res.data.result));
         })
-        .catch(err => { });
+        .catch(err => {});
     };
   } else {
     alert('No Network');
   }
 };
 
-export const getRezorpay = data => {
+export const getRazorpayByValueAction = value => {
+  return dispatch => {
+    SettingsServices.getAllRazorpayByValue(value)
+      .then(res => {
+        dispatch(getRazorpay(res.data.result));
+      })
+      .catch(err => {});
+  };
+};
+
+export const getRazorpay = data => {
   return {
-    type: GET_REZORPAY,
+    type: GET_RAZORPAY,
     payload: data,
   };
 };
 
-// add rezorpay
-export const addRezorpayAction = (body, history) => {
+// Get_Razorpay_By_Id
+export const GetRazorpayByIdAction = id => {
   if (navigator.onLine) {
     return dispatch => {
-      SettingsServices.addRezorpay(body)
+      SettingsServices.getRazorpayById(id)
+        .then(res => {
+          dispatch(GetRazorpayByIdData(res.data.result));
+          //need to add toster here
+        })
+        .catch(err => {
+          //need to add toster here
+        });
+    };
+  } else {
+    //need to add toster here
+  }
+};
+
+export const GetRazorpayByIdData = data => {
+  return {
+    type: GET_RAZORPAY_BY_ID,
+    payload: data,
+  };
+};
+
+// add razorpay
+export const addRazorpayAction = body => {
+  if (navigator.onLine) {
+    return dispatch => {
+      SettingsServices.addRazorpay(body)
         .then(res => {
           toast.success(res.data.message, {
             position: 'top-center',
             autoClose: 2000,
           });
-          setTimeout(function () {
-            history.push('#');
-          }, 2000);
+          // dispatch(getRazorpayAction());
         })
-        .catch(err => { });
+        .catch(err => {});
     };
   } else {
     alert('no network');
   }
 };
 
-// update rezorpay
-export const updateRezorpayAction = (id, body, history) => {
+export const addRazorpay = data => {
+  return {
+    type: ADD_RAZORPAY,
+    payload: data,
+  };
+};
+
+// update razorpay
+export const updateRazorpayByIdAction = (id, data) => {
   if (navigator.onLine) {
     return dispatch => {
-      SettingsServices.updateRezorpay(id, body)
+      SettingsServices.updateRazorpayById(id, data)
         .then(res => {
-          toast.success(res.data.message, {
+          toast.success(res.data.result.message, {
             position: 'top-center',
             autoClose: 2000,
           });
-          setTimeout(function () {
-            history.push('#');
-          }, 2000);
+          // setTimeout(function () {
+          dispatch(getRazorpayAction());
+          // history.push('#');
+          // }, 2000);
         })
         .catch(err => {
-          window.history.back();
+          // window.history.back();
         });
     };
   } else {
@@ -486,15 +527,9 @@ export const updateRezorpayAction = (id, body, history) => {
   }
 };
 
-// delete rezorpay
-export const deleteRezorpayAction = id => {
-  return dispatch => {
-    SettingsServices.deleteRezorpay(id).then(res => {
-      toast.success(res.data.message, {
-        position: 'top-center',
-        autoClose: 2000,
-      });
-      dispatch(err => { });
-    });
+export const UpdateRazorpayById = data => {
+  return {
+    type: UPDATE_RAZORPAY_BY_ID,
+    payload: data,
   };
 };

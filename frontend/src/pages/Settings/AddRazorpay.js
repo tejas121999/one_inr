@@ -1,14 +1,25 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
+import { addRazorpayAction } from '../../Redux/Actions/SettingAction';
 
-function AddRazorpay() {
+const AddRazorpay = props => {
+  const dispatch = useDispatch();
+
   const schema = Yup.object().shape({
-    key: Yup.string().required('The Razorpay Key Field Is Required.'),
-    secret: Yup.string().required('The Razorpay Secret Field Is Required.'),
+    key_id: Yup.string().required('The Razorpay Key Field Is Required.'),
+    key_secret: Yup.string().required('The Razorpay Secret Field Is Required.'),
+    status: Yup.string(),
   });
 
+  const onAddRazor = async values => {
+    console.log(values, 'add');
+
+    dispatch(addRazorpayAction(values));
+  };
   return (
     <>
       <br />
@@ -41,10 +52,11 @@ function AddRazorpay() {
       >
         <Formik
           validationSchema={schema}
-          onSubmit={console.log}
+          onSubmit={values => onAddRazor(values)}
           initialValues={{
-            key: '',
-            secret: '',
+            key_id: '',
+            key_secret: '',
+            status: '',
           }}
         >
           {({
@@ -57,7 +69,7 @@ function AddRazorpay() {
             errors,
           }) => (
             <div>
-              <Form noValidate onSubmit={handleSubmit}>
+              <Form>
                 <div className="row" style={{ padding: '1em' }}>
                   <div className="col-md-6 col-xs-12">
                     <Form.Group
@@ -68,12 +80,16 @@ function AddRazorpay() {
                       <br />
                       <Form.Control
                         type="text"
-                        name="key"
-                        value={values.key}
+                        name="key_id"
+                        value={values.key_id}
                         onChange={handleChange}
-                        isValid={touched.key && !errors.key}
+                        isValid={touched.key_id && !errors.key_id}
                       />
-                      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                      {errors.key_id && touched.key_id && (
+                        <div className="text-left">
+                          <span style={{ color: 'red' }}>{errors.key_id}</span>
+                        </div>
+                      )}
                     </Form.Group>
                   </div>
                   <div className="col-md-6 col-xs-12">
@@ -84,12 +100,18 @@ function AddRazorpay() {
                       <Form.Label>RAZORPAY SECRET:</Form.Label>
                       <Form.Control
                         type="text"
-                        name="secret"
-                        value={values.secret}
+                        name="key_secret"
+                        value={values.key_secret}
                         onChange={handleChange}
-                        isValid={touched.secret && !errors.secret}
+                        isValid={touched.key_secret && !errors.key_secret}
                       />
-                      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                      {errors.key_secret && touched.key_secret && (
+                        <div className="text-left">
+                          <span style={{ color: 'red' }}>
+                            {errors.key_secret}
+                          </span>
+                        </div>
+                      )}
                     </Form.Group>
                   </div>
                 </div>
@@ -108,10 +130,14 @@ function AddRazorpay() {
                           height: '2.5em',
                         }}
                       >
-                        <option value="1" label="Active" />
+                        <option value="1" label="Enabled" />
                         <option value="0 " label="Disabled" />
                       </select>
-                      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                      {errors.status && touched.status && (
+                        <div className="text-left">
+                          <span style={{ color: 'red' }}>{errors.status}</span>
+                        </div>
+                      )}
                     </Form.Group>
                   </div>
                 </div>
@@ -119,7 +145,9 @@ function AddRazorpay() {
                   className="row"
                   style={{ padding: '1em', marginLeft: '1px' }}
                 >
-                  <Button type="submit">Submit</Button>
+                  <Link to="/razorpay_credentials">
+                    <Button type="submit">Submit</Button>
+                  </Link>
                 </div>
               </Form>
             </div>
@@ -128,6 +156,6 @@ function AddRazorpay() {
       </div>
     </>
   );
-}
+};
 
 export default AddRazorpay;

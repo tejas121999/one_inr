@@ -33,10 +33,15 @@ function SettingsServices() {
   this.updateConfig = async body => await axios.post(BASE_URL + 'configs', body);
 
   // RAZORPAY CREDENTIALS
-  this.getAllRazorpay = async () => await axios.get(BASE_URL + '#');
-  this.addRezorpay = async body => await axios.post(BASE_URL + '#', body);
-  this.updateRezorpay = async body => await axios.put(BASE_URL + '#', body);
-  this.deleteRezorpay = async id => await axios.delete(BASE_URL + '#', id);
+  this.getAllRazorpay = async () => await axios.get(BASE_URL + 'razorpay');
+  this.getAllRazorpayByValue = async value =>
+    await axios.get(BASE_URL + `razorpay/?search=${value}`);
+  this.getRazorpayById = async id =>
+    await axios.get(BASE_URL + `razorpay/${id}`);
+  this.addRazorpay = async body =>
+    await axios.post(BASE_URL + 'razorpay', body);
+  this.updateRazorpayById = async (id, body) =>
+    await axios.put(BASE_URL + `razorpay/${id}`, body);
 }
 
 export default new SettingsServices();

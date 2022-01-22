@@ -39,7 +39,7 @@ const Users = () => {
 
   const dispatch = useDispatch();
   let userList = useSelector(state => state.setting.getUserList);
-  console.log(userList, 'sagar');
+  // console.log(userList, 'sagar');
   useEffect(() => {
     dispatch(getUserListAction());
   }, []);

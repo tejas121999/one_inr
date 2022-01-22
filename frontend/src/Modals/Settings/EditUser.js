@@ -1,9 +1,7 @@
 import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
-import { Divider } from 'material-ui';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BASE_URL } from '../../API/APIEndpoints';
 import { Modal } from 'react-bootstrap';
 import {
   GetUserByIdAction,
@@ -11,8 +9,6 @@ import {
 } from '../../Redux/Actions/SettingAction';
 
 const Edituser = props => {
-  console.log(props, 'sms');
-
   const dispatch = useDispatch();
 
   const validationSchema = yup.object({
@@ -26,12 +22,6 @@ const Edituser = props => {
   });
 
   const onUpdate = async values => {
-    console.log(values, 'shiv');
-    // const url = BASE_URL + `user/${userId}`;
-    // const parentId = parentList.filter(data => data.name == values.parent);
-
-    // let id = parentId && parentId.length ? parentId[0].id : 0;
-
     const obj = {
       name: values.name,
       email: values.emailId,
