@@ -162,7 +162,7 @@ input::-webkit-inner-spin-button {
   background-color: transparent;
   border: 0;
 }
-.headCard{
+.headCard {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -172,17 +172,39 @@ input::-webkit-inner-spin-button {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
-margin-top: 13vh;
+  margin-top: 13vh;
 }
 
-.contentCard{
+.submit-btn {
+  padding: 15px;
+  padding-top: 0px;
+}
+.Del-btn {
+  margin: 40px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.contentCard {
   background-color: #fff;
   margin: 30px;
 }
-.image-upload>input {
+.image-upload > input {
   display: none;
 }
 .AttachImage {
   margin-left: 10px;
-  height: 100px;
+  height: 210px;
+}
+
+.viewNgo {
+  padding: 40px;
+  margin: 40px;
+  margin-bottom: 5em;
+  background-color: white;
+}
+.white-box {
+  background-color: white;
+  padding: 25px;
+  margin-bottom: 5em;
 }
