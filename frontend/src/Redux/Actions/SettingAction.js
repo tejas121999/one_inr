@@ -484,7 +484,7 @@ export const GetRazorpayByIdData = data => {
 };
 
 // add razorpay
-export const addRazorpayAction = (body, history) => {
+export const addRazorpayAction = body => {
   if (navigator.onLine) {
     return dispatch => {
       SettingsServices.addRazorpay(body)
@@ -493,10 +493,7 @@ export const addRazorpayAction = (body, history) => {
             position: 'top-center',
             autoClose: 2000,
           });
-          dispatch(getRazorpayAction());
-          setTimeout(function () {
-            history.push('/razorpay_credentials');
-          }, 1000);
+          // dispatch(getRazorpayAction());
         })
         .catch(err => {});
     };
@@ -512,8 +509,8 @@ export const addRazorpay = data => {
   };
 };
 
-// update rezorpay
-export const updateRezorpayByIdAction = (id, data) => {
+// update razorpay
+export const updateRazorpayByIdAction = (id, data) => {
   if (navigator.onLine) {
     return dispatch => {
       SettingsServices.updateRazorpayById(id, data)
@@ -528,7 +525,7 @@ export const updateRezorpayByIdAction = (id, data) => {
           // }, 2000);
         })
         .catch(err => {
-          window.history.back();
+          // window.history.back();
         });
     };
   } else {

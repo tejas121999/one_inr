@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
+import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { updateRezorpayByIdAction } from '../../Redux/Actions/SettingAction';
+import {
+  GetRazorpayByIdAction,
+  updateRazorpayByIdAction,
+} from '../../Redux/Actions/SettingAction';
 
 const EditRazorpay = props => {
   const dispatch = useDispatch();
@@ -15,9 +19,11 @@ const EditRazorpay = props => {
 
   const onUpdateRazor = async values => {
     console.log(values, 'shiv');
-    dispatch(updateRezorpayByIdAction(props.result.id, values, props.history));
+    dispatch(updateRazorpayByIdAction(props.result.id, values, props.history));
   };
-
+  useEffect(id => {
+    dispatch(GetRazorpayByIdAction(id));
+  }, []);
   return (
     <>
       <br />
@@ -143,9 +149,11 @@ const EditRazorpay = props => {
                   className="row"
                   style={{ padding: '1em', marginLeft: '1px' }}
                 >
-                  <Button type="submit" className="btn btn-success">
-                    Submit
-                  </Button>
+                  <Link to="/razorpay_credentials">
+                    <Button type="submit" className="btn btn-success">
+                      Submit
+                    </Button>
+                  </Link>
                 </div>
               </Form>
             </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
@@ -17,7 +18,7 @@ const AddRazorpay = props => {
   const onAddRazor = async values => {
     console.log(values, 'add');
 
-    dispatch(addRazorpayAction(values, props.history));
+    dispatch(addRazorpayAction(values));
   };
   return (
     <>
@@ -68,7 +69,7 @@ const AddRazorpay = props => {
             errors,
           }) => (
             <div>
-              <Form noValidate onSubmit={handleSubmit}>
+              <Form>
                 <div className="row" style={{ padding: '1em' }}>
                   <div className="col-md-6 col-xs-12">
                     <Form.Group
@@ -80,11 +81,15 @@ const AddRazorpay = props => {
                       <Form.Control
                         type="text"
                         name="key_id"
-                        value={values.key}
+                        value={values.key_id}
                         onChange={handleChange}
-                        isValid={touched.key && !errors.key}
+                        isValid={touched.key_id && !errors.key_id}
                       />
-                      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                      {errors.key_id && touched.key_id && (
+                        <div className="text-left">
+                          <span style={{ color: 'red' }}>{errors.key_id}</span>
+                        </div>
+                      )}
                     </Form.Group>
                   </div>
                   <div className="col-md-6 col-xs-12">
@@ -96,11 +101,17 @@ const AddRazorpay = props => {
                       <Form.Control
                         type="text"
                         name="key_secret"
-                        value={values.secret}
+                        value={values.key_secret}
                         onChange={handleChange}
-                        isValid={touched.secret && !errors.secret}
+                        isValid={touched.key_secret && !errors.key_secret}
                       />
-                      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                      {errors.key_secret && touched.key_secret && (
+                        <div className="text-left">
+                          <span style={{ color: 'red' }}>
+                            {errors.key_secret}
+                          </span>
+                        </div>
+                      )}
                     </Form.Group>
                   </div>
                 </div>
@@ -119,10 +130,14 @@ const AddRazorpay = props => {
                           height: '2.5em',
                         }}
                       >
-                        <option value="1" label="Active" />
+                        <option value="1" label="Enabled" />
                         <option value="0 " label="Disabled" />
                       </select>
-                      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                      {errors.status && touched.status && (
+                        <div className="text-left">
+                          <span style={{ color: 'red' }}>{errors.status}</span>
+                        </div>
+                      )}
                     </Form.Group>
                   </div>
                 </div>
@@ -130,7 +145,9 @@ const AddRazorpay = props => {
                   className="row"
                   style={{ padding: '1em', marginLeft: '1px' }}
                 >
-                  <Button type="submit">Submit</Button>
+                  <Link to="/razorpay_credentials">
+                    <Button type="submit">Submit</Button>
+                  </Link>
                 </div>
               </Form>
             </div>

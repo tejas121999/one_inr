@@ -73,27 +73,6 @@ const RazorpayCredentials = () => {
     }
   };
 
-  const constData = [
-    {
-      id: 1,
-      key: 'rzp_live_fjF8F16KQUQWqb',
-      secret: 'dyA2XWJSY6Fe1jF4C4Ywdplb',
-      status: 'Enabled',
-      created: '2021-07-24 08:06:01',
-      updated: '2021-09-15 06:41:20',
-      action: '',
-    },
-    {
-      id: 2,
-      key: 'rzp_live_hjR8F16KQUQSty',
-      secret: 'abT4EWJSY6Fe1jF4C4Ypebsh',
-      status: 'Disabled',
-      created: '2020-03-14 19:01:01',
-      updated: '2020-06-25 15:51:10',
-      action: '',
-    },
-  ];
-
   return (
     <>
       <br />
@@ -193,7 +172,9 @@ const RazorpayCredentials = () => {
                             <TableCell align="center">
                               {row.key_secret}
                             </TableCell>
-                            <TableCell align="center">{row.status}</TableCell>
+                            <TableCell align="center">
+                              {row.status ? 'Enabled' : 'Disabled'}
+                            </TableCell>
                             <TableCell align="center">
                               {row.createdAt
                                 ? row.createdAt
