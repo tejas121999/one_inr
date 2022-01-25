@@ -7,7 +7,7 @@ const moment = require('moment');
 
 //Creating Projects
 exports.addProjects = async (req, res) => {
-    let { userId, title, slogan, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, status, isRecurring } = req.body;
+    let { userId, title, slogan, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring } = req.body;
     let { banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 } = req.body;
     recurringDays = recurringDays || 0;
     const configData = await models.configs.findAll();
@@ -25,7 +25,10 @@ exports.addProjects = async (req, res) => {
     });
 
     let commissionModel;
-    if (req.body.commission == null) {
+    let isActive;
+    let projects;
+
+    if (req.body.commission == null || req.body.commission == undefined) {
         commissionModel = (Number(commission) * goal) / 100;   //One Inr Owner Commission
     } else {
         commissionModel = (Number(commission) * goal) / 100;   //One Inr Owner Commission
@@ -33,25 +36,40 @@ exports.addProjects = async (req, res) => {
     let gstCal = (commissionModel * gst) / 100;   //GST Calculaion After taking commision on goal.
     let paymentGatewayCal = (Number(goal) + commissionModel + gstCal) * pg / 100;   //Payment Gateway Calculation after calculating GST.
     target = Number(goal) + Number(commissionModel) + Number(gstCal) + Number(paymentGatewayCal); //Calculating Target
+    target = Math.round(target) //Rounding off target value.
 
-    let projects;
-    let projectIntervalEndDate = moment(startDate).add(recurringDays, 'days').format('YYYY-MM-DD')
-    startDate = moment(startDate).format('YYYY-MM-DD')
+    let projectIntervalEndDate = await moment(startDate).add(recurringDays, 'days').format('YYYY-MM-DD')
+    startDate = await moment(startDate).format('YYYY-MM-DD')
+
+    //If start date of project is bigger than todays date then project status will be inactive 
+    var currentDate = await moment().format('YYYY-MM-DD');
+    if (startDate > currentDate) {
+        isActive = false
+    } else {
+        isActive = true
+    }
 
 
-
-    await sequelize.transaction(async (t) => {
-        projects = await models.projects.create({ userId, title, slogan, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays,isRecurring, status },
+    let data = await sequelize.transaction(async (t) => {
+        projects = await models.projects.create({ userId, title, slogan, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring, isActive },
             { transaction: t }
         )
-        projectImage = await models.project_image.create({ projectId: projects.dataValues.id, banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 }, { transaction: t })
+        projectImage = await models.project_image.create({ projectId: projects.dataValues.id, isActive, banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 }, { transaction: t })
         if (isRecurring == true) {
             projectInterval = await models.projectInterval.create({ projectId: projects.dataValues.id, startDate, endDate: projectIntervalEndDate })
         }
+        if (!(projects && projectImage)) {
+            return true
+        } else {
+            return false
+        }
     })
+    if (data) {
+        return res.status(400).json({ message: "Failed to create Project." })
+    }
 
     return res.status(201).json({ message: "Success", projects })
-    
+
 }
 
 exports.getAllProjects = async (req, res) => {
