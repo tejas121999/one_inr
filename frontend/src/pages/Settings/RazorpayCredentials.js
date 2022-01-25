@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -13,21 +14,26 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
 import { FaRegEdit } from 'react-icons/fa';
+import {
+  getRazorpayAction,
+  getRazorpayByValueAction,
+} from '../../Redux/Actions/SettingAction';
+import Loader from '../Loader';
 
 const RazorpayCredentials = () => {
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('key');
+  const [orderBy, setOrderBy] = React.useState('key_id');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const history = useHistory();
-  // const dispatch = useDispatch();
-  // React.useEffect(() => {
-  //   dispatch(getAllCompletedProjectAction());
-  // }, []);
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(getRazorpayAction());
+  }, []);
 
-  // let donorList = useSelector(state => state.project.completedProjectList);
-
+  const razorpayList = useSelector(state => state.setting.getRazorpay);
+  console.log(razorpayList, 'razor');
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -61,32 +67,11 @@ const RazorpayCredentials = () => {
 
   const onSearch = value => {
     if (value) {
-      //   dispatch(getDonorByValueAction(value));
+      dispatch(getRazorpayByValueAction(value));
     } else {
-      //   dispatch(getViewAllDonorAction());
+      dispatch(getRazorpayAction());
     }
   };
-
-  const constData = [
-    {
-      id: 1,
-      key: 'rzp_live_fjF8F16KQUQWqb',
-      secret: 'dyA2XWJSY6Fe1jF4C4Ywdplb',
-      status: 'Enabled',
-      created: '2021-07-24 08:06:01',
-      updated: '2021-09-15 06:41:20',
-      action: '',
-    },
-    {
-      id: 2,
-      key: 'rzp_live_hjR8F16KQUQSty',
-      secret: 'abT4EWJSY6Fe1jF4C4Ypebsh',
-      status: 'Disabled',
-      created: '2020-03-14 19:01:01',
-      updated: '2020-06-25 15:51:10',
-      action: '',
-    },
-  ];
 
   return (
     <>
@@ -120,101 +105,130 @@ const RazorpayCredentials = () => {
           </Link>
         </div>
       </div>
-      <div
-        style={{
-          margin: '20px',
-          backgroundColor: 'white',
-          marginBottom: '5em',
-        }}
-      >
+      {razorpayList && razorpayList.length > 0 ? (
         <div
           style={{
-            display: 'flex',
-            padding: '20px',
-            justifyContent: 'end',
+            margin: '20px',
+            backgroundColor: 'white',
+            marginBottom: '5em',
           }}
         >
-          <label style={{ fontWeight: '500' }}>
-            Search :
-            <input
-              type="search"
-              placeholder="Search"
-              style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
-              onChange={e => handleChange(e)}
-            />
-          </label>
-        </div>
-        <hr style={{ margin: '0' }} />
-        <Paper sx={{ width: '100%' }}>
-          <>
-            <TableContainer>
-              <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-                <EnhancedTableHead
-                  numSelected={selected.length}
-                  order={order}
-                  orderBy={orderBy}
-                  onRequestSort={handleRequestSort}
-                  rowCount={constData.length}
-                />
-                <TableBody>
-                  {stableSort(constData, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      const isItemSelected = isSelected(row.name);
-                      const labelId = `enhanced-table-checkbox-${index}`;
+          <div
+            style={{
+              display: 'flex',
+              padding: '20px',
+              justifyContent: 'end',
+            }}
+          >
+            <label style={{ fontWeight: '500' }}>
+              Search :
+              <input
+                type="search"
+                placeholder="Search"
+                style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
+                onChange={e => handleChange(e)}
+              />
+            </label>
+          </div>
+          <hr style={{ margin: '0' }} />
+          <Paper sx={{ width: '100%' }}>
+            <>
+              <TableContainer>
+                <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                  <EnhancedTableHead
+                    numSelected={selected.length}
+                    order={order}
+                    orderBy={orderBy}
+                    onRequestSort={handleRequestSort}
+                    rowCount={razorpayList.length}
+                  />
+                  <TableBody>
+                    {stableSort(razorpayList, getComparator(order, orderBy))
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                      .map((row, index) => {
+                        const isItemSelected = isSelected(row.name);
+                        const labelId = `enhanced-table-checkbox-${index}`;
 
-                      return (
-                        <TableRow
-                          hover
-                          aria-checked={isItemSelected}
-                          tabIndex={-1}
-                          key={row.name}
-                          selected={isItemSelected}
-                        >
-                          <TableCell
-                            id={labelId}
-                            style={{ paddingLeft: '1em' }}
-                            scope="row"
-                            align="center"
+                        return (
+                          <TableRow
+                            hover
+                            aria-checked={isItemSelected}
+                            tabIndex={-1}
+                            key={row.name}
+                            selected={isItemSelected}
                           >
-                            {row.id}
-                          </TableCell>
-                          <TableCell align="center">{row.key}</TableCell>
-                          <TableCell align="center">{row.secret}</TableCell>
-                          <TableCell align="center">{row.status}</TableCell>
-                          <TableCell align="center">{row.created}</TableCell>
-                          <TableCell align="center">{row.updated}</TableCell>
-                          <TableCell align="center">
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="Edit"
-                              className="btn"
-                              onClick={() => history.push('/id/edit', row)}
+                            <TableCell
+                              id={labelId}
+                              style={{ paddingLeft: '1em' }}
+                              scope="row"
+                              align="center"
                             >
-                              <FaRegEdit />
-                            </button>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, 50, 100]}
-              component="div"
-              count={constData.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              pageSize={10}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              showLastButton={true}
-              showFirstButton={true}
-            />
-          </>
-        </Paper>
-      </div>
+                              {row.id}
+                            </TableCell>
+                            <TableCell align="center">{row.key_id}</TableCell>
+                            <TableCell align="center">
+                              {row.key_secret}
+                            </TableCell>
+                            <TableCell align="center">
+                              {row.status ? 'Enabled' : 'Disabled'}
+                            </TableCell>
+                            <TableCell align="center">
+                              {row.createdAt
+                                ? row.createdAt
+                                    .split('')
+                                    .slice(0, 19)
+                                    .join()
+                                    .replace(/T/g, ' ')
+                                    .replace(/,/g, '')
+                                : '-'}
+                            </TableCell>
+                            <TableCell align="center">
+                              {row.updatedAt
+                                ? row.updatedAt
+                                    .split('')
+                                    .slice(0, 19)
+                                    .join()
+                                    .replace(/T/g, ' ')
+                                    .replace(/,/g, '')
+                                : '-'}
+                            </TableCell>
+                            <TableCell align="center">
+                              <button
+                                data-bs-toggle="tooltip"
+                                title="Edit"
+                                className="btn"
+                                onClick={() => history.push('/id/edit', row)}
+                              >
+                                <FaRegEdit />
+                              </button>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, 50, 100]}
+                component="div"
+                count={razorpayList.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                pageSize={10}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                showLastButton={true}
+                showFirstButton={true}
+              />
+            </>
+          </Paper>
+        </div>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 };

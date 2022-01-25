@@ -55,32 +55,7 @@ const ViewAllNgo = () => {
 
   let allNgoList = useSelector(state => state.ngo.ngoList);
 
-  // const getNgoList = async () => {
-  //   const url = BASE_URL + ADD_NGO_URL;
-  //   await axios
-  //     .get(url)
-  //     .then(res => {
-  //       setNgoList(res.data.data.message);
-  //       toast.success('Yeay! New data is here.');
-  //     })
-  //     .catch(err => {
-  //     });
-  // };
 
-  const ViewModalOpen = data => {
-    setViewData(data);
-    setViewModal(true);
-  };
-  const ViewModalClose = () => {
-    setViewModal(false);
-  };
-  const fundModaOpen = data => {
-    setFundModalData(data.id);
-    setFundModal(true);
-  };
-  const fundModaClose = () => {
-    setFundModal(false);
-  };
   const deleteModalOpen = data => {
     setDeleteID(data.id);
     setDeleteModal(true);

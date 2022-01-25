@@ -85,14 +85,14 @@ export const GetAllNGO = data => {
 export const updateNgoAction = (body, id, history) => {
   if (navigator.onLine) {
     return dispatch => {
-      NgoServices.updateNgo(id, body)
+      NgoServices.updateNgo(body, id)
         .then(res => {
           toast.success(res.data.message, {
             position: 'top-center',
             autoClose: 2000
           });
           setTimeout(function () {
-            history.push('#')
+            history.push('/view_all_ngo')
           }, 2000)
         })
         .catch(err => {

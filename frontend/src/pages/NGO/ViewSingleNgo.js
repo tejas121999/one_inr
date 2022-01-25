@@ -26,8 +26,7 @@ import { getAllProjectAction } from '../../Redux/Actions/ProjectActions';
 import { getNgoByIdAction } from '../../Redux/Actions/NgoActions';
 import { Local } from '../../API/APIEndpoints';
 
-
-const ViewSingleNgo = (props) => {
+const ViewSingleNgo = props => {
   const [key, setKey] = React.useState('details');
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -46,12 +45,8 @@ const ViewSingleNgo = (props) => {
   }, []);
 
   let allProjectList = useSelector(state => state.project.projectList);
-  console.log("shivani", props.location.state.id)
 
   let ngoById = useSelector(state => state.ngo.ngoData);
-  console.log("chinmay", `${Local}/${ngoById.logo}`)
-
-
 
   const ViewModalOpen = data => {
     setViewData(data);
@@ -413,14 +408,16 @@ const ViewSingleNgo = (props) => {
                           >
                             NgoName
                           </TableCell>
-                          <TableCell align="center">{ngoById && ngoById.user && ngoById.user.name}</TableCell>
+                          <TableCell align="center">
+                            {ngoById && ngoById.user && ngoById.user.name}
+                          </TableCell>
                         </TableRow>
 
                         <TableRow
                           //   aria-checked={isItemSelected}
                           tabIndex={-1}
-                        //   key={row.address}
-                        //   selected={isItemSelected}
+                          //   key={row.address}
+                          //   selected={isItemSelected}
                         >
                           <TableCell
                             //   id={labelId}
@@ -431,14 +428,16 @@ const ViewSingleNgo = (props) => {
                           >
                             Address
                           </TableCell>
-                          <TableCell align="center">{ngoById.address}</TableCell>
+                          <TableCell align="center">
+                            {ngoById.address}
+                          </TableCell>
                         </TableRow>
 
                         <TableRow
                           // aria-checked={isItemSelected}
                           tabIndex={-1}
-                        // key={row.email}
-                        // selected={isItemSelected}
+                          // key={row.email}
+                          // selected={isItemSelected}
                         >
                           <TableCell
                             // id={labelId}
@@ -449,14 +448,16 @@ const ViewSingleNgo = (props) => {
                           >
                             Email
                           </TableCell>
-                          <TableCell align="center">{ngoById && ngoById.user && ngoById.user.email}</TableCell>
+                          <TableCell align="center">
+                            {ngoById && ngoById.user && ngoById.user.email}
+                          </TableCell>
                         </TableRow>
 
                         <TableRow
                           // aria-checked={isItemSelected}
                           tabIndex={-1}
-                        // key={row.mobile}
-                        // selected={isItemSelected}
+                          // key={row.mobile}
+                          // selected={isItemSelected}
                         >
                           <TableCell
                             // id={labelId}
@@ -467,14 +468,16 @@ const ViewSingleNgo = (props) => {
                           >
                             Mobile
                           </TableCell>
-                          <TableCell align="center">{ngoById && ngoById.user && ngoById.user.mobile}</TableCell>
+                          <TableCell align="center">
+                            {ngoById && ngoById.user && ngoById.user.mobile}
+                          </TableCell>
                         </TableRow>
 
                         <TableRow
                           //  aria-checked={isItemSelected}
                           tabIndex={-1}
-                        //  key={row.landline}
-                        //  selected={isItemSelected}
+                          //  key={row.landline}
+                          //  selected={isItemSelected}
                         >
                           <TableCell
                             // id={labelId}
@@ -485,14 +488,16 @@ const ViewSingleNgo = (props) => {
                           >
                             Landline
                           </TableCell>
-                          <TableCell align="center">{ngoById.landline}</TableCell>
+                          <TableCell align="center">
+                            {ngoById.landline}
+                          </TableCell>
                         </TableRow>
 
                         <TableRow
                           // aria-checked={isItemSelected}
                           tabIndex={-1}
-                        // key={row.registrationdate}
-                        // selected={isItemSelected}
+                          // key={row.registrationdate}
+                          // selected={isItemSelected}
                         >
                           <TableCell
                             // id={labelId}
@@ -503,14 +508,16 @@ const ViewSingleNgo = (props) => {
                           >
                             Registration Date
                           </TableCell>
-                          <TableCell align="center">{ngoById.registrationDate}</TableCell>
+                          <TableCell align="center">
+                            {ngoById.registrationDate}
+                          </TableCell>
                         </TableRow>
 
                         <TableRow
                           // aria-checked={isItemSelected}
                           tabIndex={-1}
-                        // key={row.registrationnumber}
-                        // selected={isItemSelected}
+                          // key={row.registrationnumber}
+                          // selected={isItemSelected}
                         >
                           <TableCell
                             // id={labelId}
@@ -521,13 +528,15 @@ const ViewSingleNgo = (props) => {
                           >
                             Registration Number
                           </TableCell>
-                          <TableCell align="center">{ngoById.registrationNumber}</TableCell>
+                          <TableCell align="center">
+                            {ngoById.registrationNumber}
+                          </TableCell>
                         </TableRow>
 
                         <TableRow
                           tabIndex={-1}
-                        // key={row.pannumber}
-                        // selected={isItemSelected}
+                          // key={row.pannumber}
+                          // selected={isItemSelected}
                         >
                           <TableCell
                             // id={labelId}
@@ -537,7 +546,9 @@ const ViewSingleNgo = (props) => {
                           >
                             Pan Number
                           </TableCell>
-                          <TableCell align="center">{ngoById.panNumber}</TableCell>
+                          <TableCell align="center">
+                            {ngoById.panNumber}
+                          </TableCell>
                         </TableRow>
                       </TableBody>
                     </Table>
@@ -562,23 +573,26 @@ const ViewSingleNgo = (props) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {ngoById.user && ngoById.user.bankDetails.map(row => (
-                        <TableRow
-                          key={row.name}
-                          sx={{
-                            '&:last-child td, &:last-child th': { border: 0 },
-                          }}
-                        >
-                          <TableCell component="th" scope="row">
-                            {row.bankName}
-                          </TableCell>
-                          <TableCell align="right">{row.accountNumber}</TableCell>
-                          <TableCell align="right">
-                            {row.beneficiaryName}
-                          </TableCell>
-                          <TableCell align="right">{row.ifsc}</TableCell>
-                        </TableRow>
-                      ))}
+                      {ngoById.user &&
+                        ngoById.user.bankDetails.map(row => (
+                          <TableRow
+                            key={row.name}
+                            sx={{
+                              '&:last-child td, &:last-child th': { border: 0 },
+                            }}
+                          >
+                            <TableCell component="th" scope="row">
+                              {row.bankName}
+                            </TableCell>
+                            <TableCell align="right">
+                              {row.accountNumber}
+                            </TableCell>
+                            <TableCell align="right">
+                              {row.beneficiaryName}
+                            </TableCell>
+                            <TableCell align="right">{row.ifsc}</TableCell>
+                          </TableRow>
+                        ))}
                     </TableBody>
                   </Table>
                 </TableContainer>

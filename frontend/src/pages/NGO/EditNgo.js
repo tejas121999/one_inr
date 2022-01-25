@@ -87,11 +87,11 @@ const EditNgo = props => {
       .string()
       .required('Required')
       .min(12, 'please enter 12 digits'),
-    mobileNumber: yup
+    mobile: yup
       .string()
       .required('Required')
       .min(10, 'Please enter 10 digits'),
-    landlineNumber: yup
+    landline: yup
       .string()
       .required('Required')
       .min(10, 'please enter 10 digits'),
@@ -168,6 +168,7 @@ const EditNgo = props => {
   console.log('deadImage', deedImgUrl);
 
   const onEditNgo = values => {
+    //console.log("chin", values)
     const obj = {
       logo: logoImgUrl,
       name: values.name,
@@ -235,7 +236,7 @@ const EditNgo = props => {
             password: ngoById.password,
             panNumber: ngoById.panNumber,
           }}
-          validationSchema={validationSchema}
+          // validationSchema={validationSchema}
           onSubmit={values => onEditNgo(values)}
           enableReinitialize={true}
         >
@@ -344,7 +345,7 @@ const EditNgo = props => {
                       className="form-control"
                       name="registrationDate"
                       type="date"
-                      required
+                      // required
                       autocomplete="off"
                       value={values.registrationDate}
                     />
@@ -445,7 +446,7 @@ const EditNgo = props => {
                       placeholder="Please Enter password"
                       name="password"
                       type="password"
-                      required
+
                       autocomplete="off"
                       value={values.password}
                     />
@@ -831,7 +832,7 @@ const EditNgo = props => {
                   Update Ngo
                 </button>
 
-                <button type="submit" className="btn btn-success ml-2" >
+                <button type="button" className="btn btn-success ml-2">
                   Cancel
                 </button>
               </div>
