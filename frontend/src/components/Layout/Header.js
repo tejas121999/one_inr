@@ -73,12 +73,8 @@ class Header extends React.Component {
     return (
       <Navbar light expand className={bem.b('bg-white')}>
         <Nav navbar className="mr-2">
-          <img src={logo200Image} className="pr-2 logo_1INR" alt="logo_1INR" />
-        </Nav>
-        <Nav navbar className="mr-2">
-          <Button outline onClick={this.handleSidebarControlButton}>
-            <MdClearAll size={25} />
-          </Button>
+          {/*<MdClearAll size={25} />*/}
+          <img src={logo200Image} className="pr-2 logo_1INR" alt="logo_1INR" onClick={this.handleSidebarControlButton} />
         </Nav>
 
         <Nav navbar className={bem.e('nav-right')}>
