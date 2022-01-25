@@ -57,7 +57,7 @@ const Config = () => {
 
   // commition
   const [Commision, setCommition] = useState('')
-  const { commision } = Commision
+  const { commission } = Commision
   const onCommisionChange = e => {
     setCommition({ ...Commision, [e.target.name]: e.target.value });
   }
@@ -77,8 +77,39 @@ const Config = () => {
     dispatch(updateConfigAction(FeatureCommission))
   }
 
+  // payment_gateway_percentage
+  const [PaymentGateway, setPaymentgatewaypercentage] = useState('')
+  const { payment_gateway_percentage } = PaymentGateway
+  const onPaymentgatewaypercentage = e => {
+    setPaymentgatewaypercentage({ ...PaymentGateway, [e.target.name]: e.target.value })
+  }
+  const submitPaymentgatewaypercentage = (e) => {
+    e.preventDefault();
+    dispatch(updateConfigAction(PaymentGateway))
+  }
 
-  
+  // gst 
+  const [GstCommission, setGstCommission] = useState('')
+  const { gst } = GstCommission
+  const onGstChange = e => {
+    setGstCommission({ ...GstCommission, [e.target.name]: e.target.value });
+  }
+  const submitGst = (e) => {
+    e.preventDefault();
+    dispatch(updateConfigAction(GstCommission))
+  }
+
+  // payment_gateway_name
+  const [paymentgatewayname, setPaymentgatewayname] = useState('')
+  const { payment_gateway_name } = paymentgatewayname
+  const onPaymentgatewaynameChange = e => {
+    setPaymentgatewayname({ ...paymentgatewayname, [e.target.name]: e.target.value });
+  }
+  const submitPaymentgatewayname = (e) => {
+    e.preventDefault();
+    dispatch(updateConfigAction(paymentgatewayname))
+  }
+
 
 
   return (
@@ -114,8 +145,8 @@ const Config = () => {
               <Formik>
                 <Form onSubmit={submitCommition}>
                   <Field
-                    name="commision"
-                    value={commision}
+                    name="commission"
+                    value={commission}
                     onChange={onCommisionChange}
                   />
 
@@ -141,7 +172,7 @@ const Config = () => {
               <Formik>
                 <Form onSubmit={submitFeatureCommition}>
                   <Field
-                    name="featurecommission"
+                    name="feature_commision"
                     value={feature_commision}
                     onChange={onFeatureCommisionChange}
                   />
@@ -163,8 +194,12 @@ const Config = () => {
             <Card.Body>
               <Card.Title style={styles.title}>Payment Gateway (%)</Card.Title>
               <Formik>
-                <Form>
-                  <Field />
+                <Form onSubmit={submitPaymentgatewaypercentage}>
+                  <Field
+                    name="payment_gateway_percentage"
+                    value={payment_gateway_percentage}
+                    onChange={onPaymentgatewaypercentage}
+                  />
                   <button
                     class="btn btn-success"
                     style={{
@@ -184,8 +219,12 @@ const Config = () => {
             <Card.Body>
               <Card.Title style={styles.title}>GST (%)</Card.Title>
               <Formik>
-                <Form>
-                  <Field />
+                <Form onSubmit={submitGst}>
+                  <Field
+                    name="gst"
+                    value={gst}
+                    onChange={onGstChange}
+                  />
                   <button
                     class="btn btn-success"
                     style={{
@@ -197,6 +236,7 @@ const Config = () => {
                     Update
                   </button>
                 </Form>
+
               </Formik>
             </Card.Body>
           </Card>
@@ -205,8 +245,12 @@ const Config = () => {
             <Card.Body>
               <Card.Title style={styles.title}>Payment Gateway Name</Card.Title>
               <Formik>
-                <Form>
-                  <Field />
+                <Form onSubmit={submitPaymentgatewayname}>
+                  <Field
+                    name='payment_gateway_name'
+                    value={payment_gateway_name}
+                    onChange={onPaymentgatewaynameChange}
+                  />
                   <button
                     class="btn btn-success"
                     style={{

@@ -44,7 +44,7 @@ export const addProjectAction = (body, history) => {
             autoClose: 2000
           });
           setTimeout(function () {
-            history.push('#')
+            history.push('/add_project')
           }, 2000);
         })
         .catch(err => { });
