@@ -5,10 +5,13 @@ import * as yup from 'yup';
 import { element } from 'prop-types';
 import axios from '../../utils/interceptor';
 import { BASE_URL } from '../../API/APIEndpoints';
-import { FaTimes } from 'react-icons/fa';
+import { FaMonument, FaTimes } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { createNGOAction } from '../../Redux/Actions/NgoActions';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 
 const AddNgo = props => {
   const dispatch = useDispatch();
@@ -21,6 +24,7 @@ const AddNgo = props => {
   const [addContactValues, setAddContactValues] = useState([]);
 
   const [addBankDetailsValues, setAddBankDetailsValues] = useState([]);
+  const [date, setDate] = useState(new Date());
 
   let handleChangeForAddBankDetails = (e, i) => {
     let newFormValues = [...addBankDetailsValues];
@@ -185,6 +189,7 @@ const AddNgo = props => {
     };
     dispatch(createNGOAction(obj, props.history));
   };
+  
 
   // const AddNgo = () => {
   return (
@@ -316,16 +321,16 @@ const AddNgo = props => {
                 <div className="col-6 ">
                   <div className="input-box">
                     <label style={{ fontWeight: 'bold' }}>
-                      RegistrationDate
+                      Registration Date
                     </label>
-                    <Field
-                      className="form-control"
-                      name="registrationDate"
-                      type="date"
-                      required
-                      autocomplete="off"
-                      value={values.registrationDate}
-                    />
+                    <DatePicker
+                    name="registrationDate"
+                    // value={values.registrationDate}
+                    required
+                    selected={date}
+                    onChange={date => setDate(date)}
+                    dateFormat="MMMM d, yyyy"
+                  />
                     {errors.registrationDate && touched.registrationDate && (
                       <div className="text-left">
                         <span style={{ color: 'red' }}>

@@ -25,6 +25,7 @@ import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 import { getAllProjectAction } from '../../Redux/Actions/ProjectActions';
 import { getNgoByIdAction } from '../../Redux/Actions/NgoActions';
 import { Local } from '../../API/APIEndpoints';
+import moment from 'moment';
 
 const ViewSingleNgo = props => {
   const [key, setKey] = React.useState('details');
@@ -509,7 +510,7 @@ const ViewSingleNgo = props => {
                             Registration Date
                           </TableCell>
                           <TableCell align="center">
-                            {ngoById.registrationDate}
+                          {moment(ngoById.registrationDate).format('LL')} 
                           </TableCell>
                         </TableRow>
 

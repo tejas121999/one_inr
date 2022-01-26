@@ -16,6 +16,8 @@ import uploadImage from '../../assets/uploadImage.png';
 import './ngo.css';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 import { useHistory } from "react-router-dom";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const EditNgo = props => {
   const dispatch = useDispatch();
@@ -24,6 +26,7 @@ const EditNgo = props => {
   const [certificateImgUrl, setCertificateImgUrl] = useState('');
   const [charityCertificateImgUrl, setCharityCertificateImgUrl] = useState('');
   const [deedImgUrl, setDeedImgUrl] = useState('');
+  const [date, setDate] = useState(new Date());
   let history = useHistory();
 
   const textInput = useRef(null);
@@ -226,10 +229,11 @@ const EditNgo = props => {
             name: ngoById && ngoById.user && ngoById.user.name,
             address: ngoById.address,
             email: ngoById && ngoById.user && ngoById.user.email,
-            //  registrationDate: ngoById && ngoById.registrationDate.split('')
-            //     .slice(0, 10)
-            //     .join()
-            //     .replace(/,/g, ''),
+              // registrationDate: ngoById && ngoById.registrationDate.split('')
+              // .slice(0, 19)
+              //                       .join()
+              //                       .replace(/T/g, ' ')
+              //                       .replace(/,/g, ''),
             registrationNumber: ngoById.registrationNumber,
             mobile: ngoById && ngoById.user && ngoById.user.mobile,
             landline: ngoById.landline,
@@ -339,16 +343,16 @@ const EditNgo = props => {
                 <div className="col-6 ">
                   <div className="input-box">
                     <label style={{ fontWeight: 'bold' }}>
-                      RegistrationDate
+                      Registration Date
                     </label>
-                    <Field
-                      className="form-control"
-                      name="registrationDate"
-                      type="date"
-                      // required
-                      autocomplete="off"
-                      value={values.registrationDate}
-                    />
+                    <DatePicker
+                    name="registrationDate"
+                    // value={values.registrationDate}
+                    required
+                    selected={date}
+                    onChange={date => setDate(date)}
+                    dateFormat="MMMM d, yyyy"
+                  />
                     {errors.registrationDate && touched.registrationDate && (
                       <div className="text-left">
                         <span style={{ color: 'red' }}>

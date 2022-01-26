@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Box from '@mui/material/Box';
@@ -20,6 +20,8 @@ import { AiOutlineDollarCircle } from 'react-icons/ai';
 
 import './project.css';
 import { getAllProjectAction } from '../../Redux/Actions/ProjectActions';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const ViewAllProjects = () => {
   const [order, setOrder] = React.useState('asc');
@@ -35,6 +37,8 @@ const ViewAllProjects = () => {
   // const [donorList, setDonorList] = React.useState([]);
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [deleteId, setDeleteID] = React.useState(0);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -132,33 +136,32 @@ const ViewAllProjects = () => {
       </div>
       <div className="ViewAll">
         <div className="white-box">
-          <div className="row">
-            <div className="col-2">
-              <div className="input-box">
-                <TextField
-                  id="date"
-                  label="start date"
-                  type="date"
-                  defaultValue="YY-DD-MM"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </div>
-            </div>
-            <div className="col-2">
-              <div className="input-box">
-                <TextField
-                  id="date"
-                  label="end date"
-                  type="date"
-                  defaultValue="YY-DD-MM"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </div>
-            </div>
+        <div className="row" style={{ marginTop: '-1.5em' }}>
+        <div style={{ margin: '1em', marginRight: '0.5em' }}>
+          {/* <div className="input-box"> */}
+          <DatePicker
+            selected={startDate}
+            selectsStart
+            startDate={startDate}
+            endDate={endDate}
+            onChange={date => setStartDate(date)}
+            dateFormat="MMMM d, yyyy"
+          />
+        </div>
+        {/* </div> */}
+        <div style={{ margin: '1em 0.5em' }}>
+        {/* <div className="input-box"> */}
+        <DatePicker
+          selected={endDate}
+          selectsEnd
+          startDate={startDate}
+          endDate={endDate}
+          minDate={startDate}
+          onChange={date => setEndDate(date)}
+          dateFormat="MMMM d, yyyy"
+        />
+        {/* </div> */}
+        </div>
             <div className="search-btn">
               <button type="button" className="btn btn-primary">
                 Search
