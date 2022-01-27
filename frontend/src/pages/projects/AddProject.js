@@ -7,21 +7,18 @@ import './project.css';
 import axios from '../../utils/interceptor';
 import { BASE_URL } from '../../API/APIEndpoints';
 import TextEditor from './TextEditor';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const AddProject = props => {
     const [featureImg, setFeatureImg] = useState('')
     const [coverImg, setCoverImg] = useState('')
     const [mobileImg, setMoileImg] = useState('')
-    const [sliderImg, setSlider] = useState(
-      {  slider1: 'One',
-        slider2: '',
-        slider3: '',
-        slider4: '',
-        slider5: '',
-        slider6: ''
-    }
-    )
-    console.log('Images', sliderImg);
+    const [date, setDate] = useState(new Date());
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
+    // const [sliderImg, setSlider] = useState('')
+    // console.log('Images', sliderImg);
     // const [value, setValue] = useState();
     const dispatch = useDispatch();
     const onProjectAdd = values => {
@@ -44,7 +41,7 @@ const AddProject = props => {
             feature: featureImg,
             cover: coverImg,
             monile: mobileImg,
-            slider: sliderImg
+            // slider: sliderImg
         }
         dispatch(addProjectAction(object, props.history));
     };
@@ -86,15 +83,19 @@ const AddProject = props => {
     }
 
     const onSliderImgAdd = async (imgData) => {
-      
+
         const data = new FormData();
-        data.append('avatar', imgData[0]); 
-        const result = await axios.post(
-            BASE_URL + 'fileupload?reason=slider',
-            data,
-        );
-        if (result && result.data && result.data.pathtoUpload) {
-            setSlider(result.data.pathtoUpload)
+
+        data.append('avatar', imgData[0]);
+        console.log(data)
+        if (data.length == 6) {
+            const result = await axios.post(
+                BASE_URL + 'fileupload?reason=slider',
+                data,
+            );
+            if (result && result.data && result.data.pathtoUpload) {
+                // setSlider(result.data.pathtoUpload)
+            }
         }
     }
 
@@ -244,23 +245,28 @@ const AddProject = props => {
                                                             </div>
                                                             <div className="col-sm-4 col-xs-12">
                                                                 <label>Start Date:</label>
-                                                                <Field
-                                                                    type="date"
-                                                                    name="startDate"
-                                                                    placeholder="Select Date"
-                                                                    className="form-control"
-                                                                    value={values.startDate}
-                                                                />
+                                                                <DatePicker
+                                                                selected={startDate}
+                                                                selectsStart
+                                                                startDate={startDate}
+                                                                endDate={endDate}
+                                                                onChange={date => setStartDate(date)}
+                                                                dateFormat="MMMM d, yyyy"
+                                                               // value={values.startDate}
+                                                              />
                                                             </div>
                                                             <div className="col-sm-4 col-xs-12">
                                                                 <label>End Date:</label>
-                                                                <Field
-                                                                    type="date"
-                                                                    name="endDate"
-                                                                    placeholder="select Date"
-                                                                    className="form-control"
-                                                                    value={values.endDate}
-                                                                />
+                                                                <DatePicker
+          selected={endDate}
+          selectsEnd
+          startDate={startDate}
+          endDate={endDate}
+          minDate={startDate}
+          onChange={date => setEndDate(date)}
+          dateFormat="MMMM d, yyyy"
+           // value={values.endDate}
+        />
                                                             </div>
                                                             <div className="col-sm-12 col-xs-12 mt-3">
                                                                 <label style={{ fontWeight: 'bold' }}>
@@ -350,19 +356,19 @@ const AddProject = props => {
                                                                     <DropzoneComponent onChangeImage={onSliderImgAdd} />
                                                                 </div>
                                                                 <div className="col-sm-4 col-xs-4 mt-3">
-                                                                <DropzoneComponent onChangeImage={onSliderImgAdd} />
+                                                                    <DropzoneComponent onChangeImage={onSliderImgAdd} />
                                                                 </div>
                                                                 <div className="col-sm-4 col-xs-4 mt-3">
-                                                                <DropzoneComponent onChangeImage={onSliderImgAdd} />
+                                                                    <DropzoneComponent onChangeImage={onSliderImgAdd} />
                                                                 </div>
                                                                 <div className="col-sm-4 col-xs-4 mt-3">
-                                                                <DropzoneComponent onChangeImage={onSliderImgAdd} />
+                                                                    <DropzoneComponent onChangeImage={onSliderImgAdd} />
                                                                 </div>
                                                                 <div className="col-sm-4 col-xs-4 mt-3">
-                                                                <DropzoneComponent onChangeImage={onSliderImgAdd} />
+                                                                    <DropzoneComponent onChangeImage={onSliderImgAdd} />
                                                                 </div>
                                                                 <div className="col-sm-4 col-xs-4 mt-3">
-                                                                <DropzoneComponent onChangeImage={onSliderImgAdd} />
+                                                                    <DropzoneComponent onChangeImage={onSliderImgAdd} />
                                                                 </div>
                                                             </div>
                                                             <div className="col-sm-4 col-xs-12 mt-3">

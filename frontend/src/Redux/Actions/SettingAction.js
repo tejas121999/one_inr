@@ -254,7 +254,7 @@ export const addUserListAction = (body, history) => {
             autoClose: 2000,
           });
           setTimeout(function () {
-            history.push('#');
+            history.push('/users');
           }, 1000);
         })
         .catch(err => {});
@@ -311,7 +311,7 @@ export const onGetUserByIdDataFail = data => {
 };
 
 // update user by id
-export const updateUserByIdAction = (id, data) => {
+export const updateUserByIdAction = (id, data, history) => {
   if (navigator.onLine) {
     return dispatch => {
       SettingsServices.updateUserById(id, data)
