@@ -17,6 +17,11 @@ const AddProject = props => {
     const [date, setDate] = useState(new Date());
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
+
+    const [opctions, setOpctions] = useState("select");
+    const [text, setText] = useState();
+
+
     // const [sliderImg, setSlider] = useState('')
     // console.log('Images', sliderImg);
     // const [value, setValue] = useState();
@@ -35,12 +40,13 @@ const AddProject = props => {
             funded: 1,
             startDate: values.startDate,
             endDate: values.endDate,
-            recurringDays: values.recurringDays,
-            status: 1,
+            isRecurring: values.recurring,
+            isrecurringDays: values.recurringDays,
+            status: false,
             displayOnHomeStatus: 1,
             feature: featureImg,
             cover: coverImg,
-            monile: mobileImg,
+            monbile: mobileImg,
             // slider: sliderImg
         }
         dispatch(addProjectAction(object, props.history));
@@ -99,6 +105,8 @@ const AddProject = props => {
         }
     }
 
+
+
     return (
         <>
             <br />
@@ -125,6 +133,7 @@ const AddProject = props => {
                                     <Formik
                                         initialValues={{
                                             recurring: 'no',
+                                            recurringDays:'',
                                             title: '',
                                             description: '',
                                             goal: '',
@@ -199,7 +208,8 @@ const AddProject = props => {
                                                             <div className="row">
                                                                 <div className="col-sm-4 col-xs-12">
                                                                     <Field
-                                                                        name="recuringType"
+                                                                        name="recurringDays"
+                                                                       
                                                                         className="form-control"
                                                                         // value={values.parent}
                                                                         disabled={
@@ -208,16 +218,22 @@ const AddProject = props => {
                                                                                 : 'disabled'
                                                                         }
                                                                         as="select"
+                                                                        value={opctions}
+                                                                        onChange={(e) => {
+                                                                            setOpctions(e.target.value);
+                                                                            setText(e.target.value);
+                                                                        }}
                                                                     >
-                                                                        <option value="">Select</option>
-                                                                        <option value="day">Day</option>
-                                                                        <option value="week">Week</option>
-                                                                        <option value="month">Month</option>
+
+                                                                        <option value="select">Select</option>
+                                                                        <option value="1">Day</option>
+                                                                        <option value="7">Week</option>
+                                                                        <option value="30">Month</option>
                                                                     </Field>
                                                                 </div>
                                                                 <div className="col-sm-4 col-md-8 col-xs-12">
                                                                     <Field
-                                                                        type="number"
+                                                                        type="text"
                                                                         name="days"
                                                                         placeholder="Enter number of reccuring days"
                                                                         className="form-control"
@@ -226,7 +242,10 @@ const AddProject = props => {
                                                                                 ? ''
                                                                                 : 'disabled'
                                                                         }
-                                                                    // value={values.parent}
+                                                                        value={text}
+                                                                        onChange={(e) => {
+                                                                            setText(e.target.value);
+                                                                        }}
                                                                     ></Field>
                                                                 </div>
                                                             </div>
@@ -246,27 +265,29 @@ const AddProject = props => {
                                                             <div className="col-sm-4 col-xs-12">
                                                                 <label>Start Date:</label>
                                                                 <DatePicker
-                                                                selected={startDate}
-                                                                selectsStart
-                                                                startDate={startDate}
-                                                                endDate={endDate}
-                                                                onChange={date => setStartDate(date)}
-                                                                dateFormat="MMMM d, yyyy"
-                                                               // value={values.startDate}
-                                                              />
+                                                                    className="form-control"
+                                                                    selected={startDate}
+                                                                    selectsStart
+                                                                    startDate={startDate}
+                                                                    endDate={endDate}
+                                                                    onChange={date => setStartDate(date)}
+                                                                    dateFormat="MMMM d, yyyy"
+                                                                // value={values.startDate}
+                                                                />
                                                             </div>
                                                             <div className="col-sm-4 col-xs-12">
                                                                 <label>End Date:</label>
                                                                 <DatePicker
-          selected={endDate}
-          selectsEnd
-          startDate={startDate}
-          endDate={endDate}
-          minDate={startDate}
-          onChange={date => setEndDate(date)}
-          dateFormat="MMMM d, yyyy"
-           // value={values.endDate}
-        />
+                                                                    className="form-control"
+                                                                    selected={endDate}
+                                                                    selectsEnd
+                                                                    startDate={startDate}
+                                                                    endDate={endDate}
+                                                                    minDate={startDate}
+                                                                    onChange={date => setEndDate(date)}
+                                                                    dateFormat="MMMM d, yyyy"
+                                                                // value={values.endDate}
+                                                                />
                                                             </div>
                                                             <div className="col-sm-12 col-xs-12 mt-3">
                                                                 <label style={{ fontWeight: 'bold' }}>
