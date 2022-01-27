@@ -26,9 +26,9 @@ const EditNgo = props => {
   const [certificateImgUrl, setCertificateImgUrl] = useState('');
   const [charityCertificateImgUrl, setCharityCertificateImgUrl] = useState('');
   const [deedImgUrl, setDeedImgUrl] = useState('');
-  const [date, setDate] = useState(new Date());
+ 
   let history = useHistory();
-
+ const [date, setDate] = useState(new Date());
   const textInput = useRef(null);
   const [addContactValues, setAddContactValues] = useState([]);
 
