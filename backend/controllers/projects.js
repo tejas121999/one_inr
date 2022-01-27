@@ -4,10 +4,11 @@ const Sequelize = models.Sequelize;
 const sequelize = models.sequelize;
 const Op = Sequelize.Op;
 const moment = require('moment');
+const cron = require('node-cron')
 
 //Creating Projects
 exports.addProjects = async (req, res) => {
-    let { userId, title,description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring } = req.body;
+    let { userId, title, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring } = req.body;
     let { banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 } = req.body;
     recurringDays = recurringDays || 0;
     const configData = await models.configs.findAll();
@@ -48,10 +49,9 @@ exports.addProjects = async (req, res) => {
     } else {
         isActive = true
     }
-
-
+    let slogan = title.split(" ").join('-').toLowerCase()   //Slogan in DB contains all lower case letter seperated by dash.
     let data = await sequelize.transaction(async (t) => {
-        projects = await models.projects.create({ userId, title, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring, isActive },
+        projects = await models.projects.create({ userId, title, slogan, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring, isActive },
             { transaction: t }
         )
         projectImage = await models.project_image.create({ projectId: projects.dataValues.id, isActive, banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 }, { transaction: t })
@@ -178,3 +178,47 @@ exports.getCompletedProject = async (req, res) => {
     }
 }
 
+exports.setRecuringProject = async (req,res) => {
+    let data = await models.projects.findAll( { where: {isRecurring: true, isActive: true},attributes : ['id','recurringDays'] ,
+    include :{model : models.projectInterval,where :{isActive : true,  endDate: { [Op.lt]: moment().format(('YYYY-MM-DD')) },},attributes:['endDate','id']}
+ }) 
+    // data = await models.projectInterval.findAll({ where: {isActive: true, isArchive: false } })
+    // let currentDate = moment().format(('YYYY-MM-DD'))
+    // for(var item of data ){    
+    // let data = createProjectInterval(item.id,item.recurringDays,item.projectIntervals[0].dataValues.endDate)
+    // }
+
+    let newData = data.forEach(item => {
+        createProjectInterval(item.id,item.recurringDays,item.projectIntervals[0].dataValues.endDate,item.projectIntervals[0].dataValues.id)
+    });
+    if(newData === false ){
+        // return res.status(400).json
+        console.log('cannot create New Recurring Project ')
+    }
+    console.log("Cron working")
+    return res.status(200).json({message :"ok", newData })
+}
+async function createProjectInterval(id,RecurringDays,projectEndDate,pId,todaysDate) {
+        todaysDate = await moment().format('YYYY-MM-DD')
+        let data;
+        if (todaysDate > projectEndDate ) {
+            let dates = await generateNewDate(projectEndDate,RecurringDays,id)
+            await sequelize.transaction(async (t) => {
+                await models.projectInterval.create({projectId : id,startDate : dates.startDate, endDate : dates.newProjectIntervalDate, isActive : true},t)
+                data = await models.projectInterval.update({isActive : false},{where : {id : pId}},t)
+                if(!data[0]){
+                    return false;
+                }  
+            })
+           
+        }
+        if(data === false){
+            return false
+        }
+}
+
+async function generateNewDate(projectEndDate,recurringDays) {
+    let newProjectIntervalDate = await moment(projectEndDate).add(recurringDays, 'days').format('YYYY-MM-DD')
+    startDate = await moment(projectEndDate).add(1,'days').format('YYYY-MM-DD')
+    return {newProjectIntervalDate,startDate}
+}
