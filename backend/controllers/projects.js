@@ -7,7 +7,7 @@ const moment = require('moment');
 
 //Creating Projects
 exports.addProjects = async (req, res) => {
-    let { userId, title, slogan, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring } = req.body;
+    let { userId, title,description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring } = req.body;
     let { banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 } = req.body;
     recurringDays = recurringDays || 0;
     const configData = await models.configs.findAll();
@@ -51,7 +51,7 @@ exports.addProjects = async (req, res) => {
 
 
     let data = await sequelize.transaction(async (t) => {
-        projects = await models.projects.create({ userId, title, slogan, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring, isActive },
+        projects = await models.projects.create({ userId, title, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring, isActive },
             { transaction: t }
         )
         projectImage = await models.project_image.create({ projectId: projects.dataValues.id, isActive, banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 }, { transaction: t })
