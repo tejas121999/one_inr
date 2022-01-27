@@ -7,64 +7,69 @@ const moment = require('moment');
 
 //Creating Projects
 exports.addProjects = async (req, res) => {
-        let {userId,title,slogan,description,longDesc,videoLink,goal,commission,target,funded,startDate,endDate,recurringDays,status,displayOnHomeStatus} = req.body;
-        let {banner,cover,mobile,slider1,slider2,slider3,slider4,slider5,slider6} = req.body;
-        recurringDays = recurringDays || 0;
+    let { userId, title,description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring } = req.body;
+    let { banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 } = req.body;
+    recurringDays = recurringDays || 0;
+    const configData = await models.configs.findAll();
+    let gst;
+    let pg;
 
-        const configData = await models.configs.findAll();
-        let gst;
-        let pg;
-        
-        await configData.map(ele => {
-            if (ele.dataValues.name === 'commission') {
-                commission = ele.dataValues.value;
-            } if (ele.dataValues.name === 'gst') {
-                gst = ele.dataValues.value;
-            } if (ele.dataValues.name === 'payment_gateway_percentage') {
-                pg = ele.dataValues.value;
-            }
-        });
-
-        // if(req.body.commission==undefined || req.body.commission ==null){
-        //     commission = 
-        // }
-
-        let commissionModel;
-        // let gstCal;
-        // let pgCal;
-
-        if (req.body.commission == null) {
-            commissionModel = (Number(commission) * goal) / 100;
-        } else {
-            commissionModel = (Number(commission) * goal) / 100;
+    await configData.map(ele => {
+        if (ele.dataValues.name === 'commission') {
+            commission = ele.dataValues.value;
+        } if (ele.dataValues.name === 'gst') {
+            gst = ele.dataValues.value;
+        } if (ele.dataValues.name === 'payment_gateway_percentage') {
+            pg = ele.dataValues.value;
         }
-        let gstCal = (commissionModel * gst) / 100;
-        let pgCal = (Number(goal) + commissionModel) * pg / 100;
-        target = Number(goal) + Number(commissionModel) + Number(gstCal) + Number(pgCal);
+    });
 
-        let projects;
-        await sequelize.transaction(async (t) => {
-         projects = await models.projects.create({userId,title,slogan,description,longDesc,videoLink,goal,commission,target,funded,startDate,endDate,recurringDays,status,displayOnHomeStatus},
+    let commissionModel;
+    let isActive;
+    let projects;
+
+    if (req.body.commission == null || req.body.commission == undefined) {
+        commissionModel = (Number(commission) * goal) / 100;   //One Inr Owner Commission
+    } else {
+        commissionModel = (Number(commission) * goal) / 100;   //One Inr Owner Commission
+    }
+    let gstCal = (commissionModel * gst) / 100;   //GST Calculaion After taking commision on goal.
+    let paymentGatewayCal = (Number(goal) + commissionModel + gstCal) * pg / 100;   //Payment Gateway Calculation after calculating GST.
+    target = Number(goal) + Number(commissionModel) + Number(gstCal) + Number(paymentGatewayCal); //Calculating Target
+    target = Math.round(target) //Rounding off target value.
+
+    let projectIntervalEndDate = await moment(startDate).add(recurringDays, 'days').format('YYYY-MM-DD')
+    startDate = await moment(startDate).format('YYYY-MM-DD')
+
+    //If start date of project is bigger than todays date then project status will be inactive 
+    var currentDate = await moment().format('YYYY-MM-DD');
+    if (startDate > currentDate) {
+        isActive = false
+    } else {
+        isActive = true
+    }
+
+
+    let data = await sequelize.transaction(async (t) => {
+        projects = await models.projects.create({ userId, title, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring, isActive },
             { transaction: t }
-            )
-        projectImage = await models.project_image.create({projectId:projects.dataValues.id,banner,cover,mobile,slider1,slider2,slider3,slider4,slider5,slider6},{transaction:t})
-        })
+        )
+        projectImage = await models.project_image.create({ projectId: projects.dataValues.id, isActive, banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 }, { transaction: t })
+        if (isRecurring == true) {
+            projectInterval = await models.projectInterval.create({ projectId: projects.dataValues.id, startDate, endDate: projectIntervalEndDate })
+        }
+        if (!(projects && projectImage)) {
+            return true
+        } else {
+            return false
+        }
+    })
+    if (data) {
+        return res.status(400).json({ message: "Failed to create Project." })
+    }
 
-        // projectId = projects.id
-        // images.map(image => {
-        //     image.projectId = projectId
-        // })
-        // const pro_images = await models.project_images.bulkCreate(images)
-        return res.status(201).json({ message: "Success", projects  })
+    return res.status(201).json({ message: "Success", projects })
 
-
-    
-        // commission(10) = commission*goal/100
-
-        // gst(18) = commission*gst/100
-        // pg(2) = (goal+commission)*pg/100
-        // target = commission + gst + pg
-  
 }
 
 exports.getAllProjects = async (req, res) => {
