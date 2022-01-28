@@ -58,28 +58,32 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         startDate: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             field: 'start_date'
         },
 
         endDate: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             field: 'end_date'
         },
-
+        isRecurring: {
+            type: DataTypes.BOOLEAN,
+            field: 'is_recurring'
+        },
         recurringDays: {
             type: DataTypes.INTEGER,
             field: 'recurring_days'
         },
 
-        status: {
+        isActive: {
             type: DataTypes.BOOLEAN,
-            field: 'status'
+            field: 'is_active',
         },
 
         displayOnHomeStatus: {
-            type: DataTypes.INTEGER,
-            field: 'display_on_home_status'
+            type: DataTypes.BOOLEAN,
+            field: 'display_on_home_status',
+            defaultValue: false
         },
 
         date: {

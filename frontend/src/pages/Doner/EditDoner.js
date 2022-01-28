@@ -11,10 +11,14 @@ import {
 import { useHistory } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 const Editdonor = props => {
   const [donarData, setDonarData] = useState([]);
   const [parentId, setParentId] = useState('');
   const [userId, setUserId] = useState(0);
+  const [date, setDate] = useState(new Date());
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(() => {
@@ -94,12 +98,12 @@ const Editdonor = props => {
             password: donarData.password,
             parent: parentId && parentId.length ? parentId : '',
             plan: donarData.plan ? donarData.plan : 1,
-            date: props.location.state.balanceNextRenewDate
-              ? props.location.state.balanceNextRenewDate
-                  .split('T')
-                  .slice(0, 1)
-                  .toString()
-              : '',
+            // date: props.location.state.balanceNextRenewDate
+            //   ? props.location.state.balanceNextRenewDate
+            //       .split('T')
+            //       .slice(0, 1)
+            //       .toString()
+            //   : '',
           }}
           validationSchema={validationSchema}
           enableReinitialize={true}
@@ -224,12 +228,14 @@ const Editdonor = props => {
                     <label style={{ fontWeight: 'bold' }}>
                       Next Renewal Date
                     </label>
-                    <Field
-                      type="date"
-                      className="form-control"
-                      name="date"
-                      value={values.date}
-                    />
+                    <DatePicker
+                    name="nextRenewalDate"
+                    // value={values.nextRenewalDate}
+                    required
+                    selected={date}
+                    onChange={date => setDate(date)}
+                    dateFormat="MMMM d, yyyy"
+                  />
                     {errors.date && touched.date && (
                       <div className="text-left">
                         <span style={{ color: 'red' }}>{errors.date}</span>

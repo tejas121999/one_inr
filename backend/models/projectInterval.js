@@ -4,32 +4,38 @@ module.exports = (sequeilze,Datatypes) =>{
             type : Datatypes.INTEGER,
             field : 'project_id'
         },
-        start_date : {
-            type : Datatypes.DATE,
+        startDate : {
+            type : Datatypes.DATEONLY,
             field : 'start_date'
         },
-        end_date : {
-            type : Datatypes.DATE,
+        endDate : {
+            type : Datatypes.DATEONLY,
             field : 'end_date'
         },
         funded : {
             type : Datatypes.BIGINT,
-            field : 'funded'
+            field : 'funded',
+            defaultValue : 0
         },
         completed : { 
             type : Datatypes.FLOAT,
             field : 'completed'
         },
         fundStatus : {
-            type : Datatypes.INTEGER,
-            field : 'fund_status'
-
+            type : Datatypes.BOOLEAN,
+            field : 'fund_status',
+            defaultValue : false
         },
         isArchive : {
-            type : Datatypes.INTEGER,
-            field : 'is_archive'
+            type : Datatypes.BOOLEAN,
+            field : 'is_archive',
+            defaultValue : false
+        },
+        isActive : {
+            type : Datatypes.BOOLEAN,
+            field : 'is_active',
+            defaultValue : true
         }
-
     },{
             freezeTableName : true,
             tableName: 'project_interval',
