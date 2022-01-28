@@ -102,50 +102,84 @@ const Roles = () => {
       <Addrole show={addModal} onHide={onAddModalClose} />
       <Editrole show={editModal} onHide={onEditModalClose} />
       <ToastContainer hideProgressBar />
-
-      <nav className="navbar navbar-light">
-        <a className="navbar-brand">Roles List</a>
-        <form className="form-inline">
-          <div className="modalClass">
-            <button
-              onClick={e => onAddModalOpen(e)}
-              className="btn btn-primary"
-            >
-              Add Role
-            </button>
-          </div>
-        </form>
-      </nav>
       <div
+        className="row"
         style={{
-          margin: '20px',
-          marginBottom: '5em',
           backgroundColor: 'white',
+          margin: '0 1.2em',
+          borderRadius: '1em',
         }}
       >
         <div
           style={{
             display: 'flex',
-            padding: '20px',
-            justifyContent: 'flex-end',
+            width: '50%',
+            padding: '0.5em 1.7em',
           }}
         >
-          <label style={{ fontWeight: '500' }}>
-            Search :
+          <p
+            style={{
+              textAlign: 'left',
+              fontSize: '1.25rem',
+              marginBottom: '0',
+              paddingTop: '3px',
+            }}
+          >
+            Roles List
+          </p>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            width: '50%',
+            padding: '0.5em 1.7em',
+          }}
+        >
+          <button
+            style={{ marginLeft: '1em', borderRadius: '2em', width: '20%' }}
+            className="btn btn-primary"
+            onClick={e => onAddModalOpen(e)}
+          >
+            Add Role
+          </button>
+        </div>
+      </div>
+      {roleList && roleList.length > 0 ? (
+        <div
+          style={{
+            margin: '20px',
+            marginBottom: '8em',
+            backgroundColor: 'white',
+            borderRadius: '1.5em',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              padding: '2em',
+              justifyContent: 'flex-end',
+            }}
+          >
             <input
               placeholder="Search"
               onChange={e => handleChange(e)}
               type="search"
-              style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
+              style={{
+                paddingLeft: '1em',
+                border: '1px solid #ced4da',
+                borderRadius: '1.5em',
+                height: '2.2em',
+              }}
             />
-          </label>
-        </div>
-        <hr style={{ margin: '0' }} />
-        <Paper sx={{ width: '100%' }}>
-          {roleList && roleList.length > 0 ? (
+          </div>
+          {/* <hr style={{ margin: '0' }} /> */}
+          <Paper
+            sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
+          >
             <React.Fragment>
               <TableContainer id="tableDiv">
-                <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                <Table aria-labelledby="tableTitle">
                   <EnhancedTableHead
                     order={order}
                     orderBy={orderBy}
@@ -202,7 +236,7 @@ const Roles = () => {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={constData.length}
+                count={roleList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
@@ -211,11 +245,11 @@ const Roles = () => {
                 showFirstButton={true}
               />
             </React.Fragment>
-          ) : (
-            <Loader />
-          )}
-        </Paper>
-      </div>
+          </Paper>
+        </div>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 };

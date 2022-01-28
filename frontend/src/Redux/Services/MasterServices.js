@@ -16,7 +16,7 @@ function MasterServices() {
     await axios.put(BASE_URL + `vendor/${id}`, body);
   // Partner
   this.GetAllPartnerList = async value =>
-    await axios.get(BASE_URL + `partner/partner-data?search=${value}`);
+    await axios.get(BASE_URL + `partner?search=${value}`);
   this.CreatePartner = async body =>
     await axios.post(BASE_URL + 'partner', body);
 
