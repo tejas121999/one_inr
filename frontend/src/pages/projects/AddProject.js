@@ -18,8 +18,10 @@ const AddProject = props => {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
 
-    const [recurring, setOpctions] = useState("select");
-    const [text, setText] = useState();
+    const [recurring, setRecurring] = useState("select");
+    const [recurringDays, setRecurringDays] = useState();
+    // console.log("recurring", recurring)
+    console.log("recurringdays", recurringDays)
 
 
     // const [sliderImg, setSlider] = useState('')
@@ -41,7 +43,7 @@ const AddProject = props => {
             startDate: values.startDate,
             endDate: values.endDate,
             isRecurring: values.recurring,
-            isrecurringDays: values.recurringDays,
+            recurringDays: recurringDays,
             status: false,
             displayOnHomeStatus: 1,
             feature: featureImg,
@@ -49,6 +51,7 @@ const AddProject = props => {
             monbile: mobileImg,
             // slider: sliderImg
         }
+        console.log("value", object)
         dispatch(addProjectAction(object, props.history));
     };
 
@@ -133,7 +136,7 @@ const AddProject = props => {
                                     <Formik
                                         initialValues={{
                                             recurring: 'no',
-                                            recurringDays:'',
+                                            recurringDays: '',
                                             title: '',
                                             description: '',
                                             goal: '',
@@ -209,7 +212,7 @@ const AddProject = props => {
                                                                 <div className="col-sm-4 col-xs-12">
                                                                     <Field
                                                                         name="recurringDays"
-                                                                       
+
                                                                         className="form-control"
                                                                         // value={values.parent}
                                                                         disabled={
@@ -220,8 +223,8 @@ const AddProject = props => {
                                                                         as="select"
                                                                         value={recurring}
                                                                         onChange={(e) => {
-                                                                            setOpctions(e.target.value);
-                                                                            setText(e.target.value);
+                                                                            setRecurring(e.target.value);
+                                                                            setRecurringDays(e.target.value);
                                                                         }}
                                                                     >
 
@@ -233,8 +236,8 @@ const AddProject = props => {
                                                                 </div>
                                                                 <div className="col-sm-4 col-md-8 col-xs-12">
                                                                     <Field
-                                                                        type="text"
-                                                                        name="days"
+                                                                        type="number"
+                                                                        name="recurringDays"
                                                                         placeholder="Enter number of reccuring days"
                                                                         className="form-control"
                                                                         disabled={
@@ -242,9 +245,9 @@ const AddProject = props => {
                                                                                 ? ''
                                                                                 : 'disabled'
                                                                         }
-                                                                        value={text}
+                                                                        value={recurringDays}
                                                                         onChange={(e) => {
-                                                                            setText(e.target.value);
+                                                                            setRecurringDays(e.target.value);
                                                                         }}
                                                                     ></Field>
                                                                 </div>
@@ -265,6 +268,7 @@ const AddProject = props => {
                                                             <div className="col-sm-4 col-xs-12">
                                                                 <label>Start Date:</label>
                                                                 <DatePicker
+                                                                    name='startDate'
                                                                     className="form-control"
                                                                     selected={startDate}
                                                                     selectsStart
@@ -278,6 +282,7 @@ const AddProject = props => {
                                                             <div className="col-sm-4 col-xs-12">
                                                                 <label>End Date:</label>
                                                                 <DatePicker
+                                                                    name='endDate'
                                                                     className="form-control"
                                                                     selected={endDate}
                                                                     selectsEnd
