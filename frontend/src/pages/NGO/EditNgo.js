@@ -28,7 +28,7 @@ const EditNgo = props => {
   const [deedImgUrl, setDeedImgUrl] = useState('');
  
   let history = useHistory();
- const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date());
   const textInput = useRef(null);
   const [addContactValues, setAddContactValues] = useState([]);
 
@@ -40,7 +40,7 @@ const EditNgo = props => {
 
 
   let ngoById = useSelector(state => state.ngo.ngoData);
-  console.log("abc", ngoById)
+  
 
 
   let handleChangeForAddBankDetails = (i, e) => {

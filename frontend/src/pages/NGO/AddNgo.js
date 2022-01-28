@@ -11,6 +11,7 @@ import { createNGOAction } from '../../Redux/Actions/NgoActions';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import moment from "moment";
 
 
 const AddNgo = props => {
@@ -77,7 +78,7 @@ const AddNgo = props => {
       .email('Invalid Email Format')
       .required('Required')
       .max(50, 'Max limit is 50 characters'),
-    registrationDate: yup.string().required('Required'),
+   // registrationDate: yup.string().required('Required'),
     registrationNumber: yup
       .string()
       .required('Required')
@@ -168,14 +169,18 @@ const AddNgo = props => {
     }
   };
 
+
+
   const onAddNgo = values => {
+
+    let newDate = moment(date).format("MMMM d, yyyy")
 
     const obj = {
       logo: logoImgUrl,
       name: values.ngoName,
       address: values.address,
       email: values.emailId,
-      registrationDate: values.registrationDate,
+      registrationDate: newDate,
       registrationNumber: values.registrationNumber,
       mobile: values.mobileNumber,
       landline: values.landline,
@@ -188,6 +193,7 @@ const AddNgo = props => {
       bankDetails: addBankDetailsValues,
     };
     dispatch(createNGOAction(obj, props.history));
+ 
   };
   
 
@@ -325,7 +331,7 @@ const AddNgo = props => {
                     </label>
                     <DatePicker
                     name="registrationDate"
-                    // value={values.registrationDate}
+                  //  value={}
                     required
                     selected={date}
                     onChange={date => setDate(date)}
