@@ -182,17 +182,13 @@ exports.createRecuringProject = async (req,res) => {
     let data = await models.projects.findAll( { where: {isRecurring: true, isActive: true},attributes : ['id','recurringDays'] ,
     include :{model : models.projectInterval,where :{isActive : true,  endDate: { [Op.lt]: moment().format(('YYYY-MM-DD')) },},attributes:['endDate','id']}
  }) 
-    let newData = data.forEach(item => {
+    data.forEach(item => {
         createProjectInterval(item.id,item.recurringDays,item.projectIntervals[0].dataValues.endDate,item.projectIntervals[0].dataValues.id)
     });
-    if(newData === false ){
-        console.log('cannot create New Recurring Project ')
-    }
-    console.log("Cron working")
     return 
 }
 async function createProjectInterval(id,RecurringDays,projectEndDate,pId,todaysDate) {
-        todaysDate = await moment().format('YYYY-MM-DD')
+        todaysDate = moment().format('YYYY-MM-DD')
         let data;
         if (todaysDate > projectEndDate ) {
             let dates = await generateNewDate(projectEndDate,RecurringDays,id)
@@ -211,8 +207,8 @@ async function createProjectInterval(id,RecurringDays,projectEndDate,pId,todaysD
 }
 
 async function generateNewDate(projectEndDate,recurringDays) {
-    let newProjectIntervalDate = await moment(projectEndDate).add(recurringDays, 'days').format('YYYY-MM-DD')
-    startDate = await moment(projectEndDate).add(1,'days').format('YYYY-MM-DD')
+    let newProjectIntervalDate = moment(projectEndDate).add(recurringDays, 'days').format('YYYY-MM-DD')
+    startDate = moment(projectEndDate).add(1,'days').format('YYYY-MM-DD')
     return {newProjectIntervalDate,startDate}
 }
 
