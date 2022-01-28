@@ -30,8 +30,8 @@ const AddProject = props => {
     const onProjectAdd = values => {
         console.log('project Add', values);
 
-        let start = moment(startDate).format("MMMM d, yyyy")
-        let end = moment(endDate).format("MMMM d, yyyy")
+        let start = moment(startDate).format("LL")
+        let end = moment(endDate).format("LL")
 
 
         const object = {
@@ -44,8 +44,8 @@ const AddProject = props => {
             commission: values.commission,
             target: values.target,
             funded: 1,
-            startDate: startDate,
-            endDate: endDate,
+            startDate: start,
+            endDate: end,
             recurringDays: values.recurringDays,
             status: 1,
             displayOnHomeStatus: 1,
