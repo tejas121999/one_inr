@@ -117,49 +117,85 @@ const Users = () => {
         data={editData}
         onHide={deleteModalClose}
       />
-      <nav className="navbar navbar-light">
-        <a className="navbar-brand">Users List</a>
-        <form className="form-inline">
-          <div className="modalClass">
-            <button
-              onClick={e => onAddModalOpen(e)}
-              className="btn btn-primary"
-            >
-              Add User
-            </button>
-          </div>
-        </form>
-      </nav>
+      <div
+        className="row"
+        style={{
+          backgroundColor: 'white',
+          margin: '0 1.2em',
+          borderRadius: '1em',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            width: '50%',
+            padding: '0.5em 1.5em',
+          }}
+        >
+          <p
+            style={{
+              textAlign: 'left',
+              fontSize: '1.25rem',
+              marginBottom: '0',
+              paddingTop: '3px',
+            }}
+          >
+            Users List
+          </p>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            width: '50%',
+            padding: '0.5em 1.5em',
+          }}
+        >
+          <button
+            style={{ marginLeft: '1em', borderRadius: '2em', width: '20%' }}
+            className="btn btn-primary"
+            onClick={e => onAddModalOpen(e)}
+          >
+            Add User
+          </button>
+        </div>
+      </div>
+
       {userList && userList.length > 0 ? (
         <div
           style={{
             margin: '20px',
             backgroundColor: 'white',
             marginBottom: '5em',
+            borderRadius: '1.5em',
           }}
         >
           <div
             style={{
               display: 'flex',
-              padding: '20px',
+              padding: '2em',
               justifyContent: 'flex-end',
             }}
           >
-            <label style={{ fontWeight: '500' }}>
-              Search :
-              <input
-                placeholder="Search"
-                onChange={e => handleChange(e)}
-                type="search"
-                style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
-              />
-            </label>
+            <input
+              placeholder="Search"
+              onChange={e => handleChange(e)}
+              type="search"
+              style={{
+                paddingLeft: '1em',
+                border: '1px solid #ced4da',
+                borderRadius: '1.5em',
+                height: '2.2em',
+              }}
+            />
           </div>
-          <hr style={{ margin: '0' }} />
-          <Paper sx={{ width: '100%' }}>
+          {/* <hr style={{ margin: '0' }} /> */}
+          <Paper
+            sx={{ width: '96%', marginBottom: '3em', marginLeft: '1.5em' }}
+          >
             <React.Fragment>
               <TableContainer id="tableDiv">
-                <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                <Table aria-labelledby="tableTitle">
                   <EnhancedTableHead
                     order={order}
                     orderBy={orderBy}
@@ -220,9 +256,10 @@ const Users = () => {
                 </Table>
               </TableContainer>
               <TablePagination
+                // style={{ marginTop: '0.5em', marginRight: '1.5em' }}
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={constData.length}
+                count={userList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
