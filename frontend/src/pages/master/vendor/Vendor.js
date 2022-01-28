@@ -40,6 +40,7 @@ import { BASE_URL, Local } from '../../../API/APIEndpoints';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { red } from '@mui/material/colors';
 
 export default function EnhancedTable() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -220,32 +221,50 @@ export default function EnhancedTable() {
         id={deleteId}
       />
       <ToastContainer hideProgressBar />
-
-      <nav className="navbar navbar-light">
-        <a className="navbar-brand">Vendor List</a>
-        <form className="form-inline">
-          <div className="modalClass">
-            <Link to="/addvendor" type="" className="btn btn-primary">
-              Add Vendor
-            </Link>
-          </div>
-        </form>
-      </nav>
       <div
+        className="row"
         style={{
-          margin: '20px',
           backgroundColor: 'white',
+          margin: '0 1.2em',
+          borderRadius: '1em',
         }}
       >
         <div
           style={{
             display: 'flex',
-            padding: '20px',
-            justifyContent: 'space-between',
+            width: '50%',
+            padding: '0.5em 1.7em',
           }}
         >
+          <p
+            style={{
+              textAlign: 'left',
+              fontSize: '1.25rem',
+              marginBottom: '0',
+              paddingTop: '3px',
+            }}
+          >
+            Vendor List
+          </p>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            width: '50%',
+            padding: '0.5em 1.7em',
+          }}
+        >
+          <Link
+            to="/addvendor"
+            type="button"
+            className="btn btn-primary"
+            style={{ borderRadius: '2em', width: '25%' }}
+          >
+            Add Vendor
+          </Link>
           <button
-            style={{ alignSelf: 'flex-start' }}
+            style={{ marginLeft: '1em', borderRadius: '2em', width: '15%' }}
             className="btn btn-primary"
             onClick={e => handleClick(e)}
           >
@@ -292,31 +311,43 @@ export default function EnhancedTable() {
             </MenuItem>
             {/* <MenuItem></MenuItem> */}
           </Menu>
-          {/* <input placeholder="Search" onChange={e => handleChange(e)} /> */}
-          {/* </button>  */}
-          {/* <DropdownButton variant="primary" title="Export">
-            <a className="dropdown-item" onClick={downloadCsv}>
-              CSV
-            </a>
-
-            <a onClick={downloadPdf} className="dropdown-item">
-              PDF{' '}
-            </a>
-            <a className="dropdown-item" onClick={downloadXls}>
-              Excel
-            </a>
-          </DropdownButton> */}
-          <input
-            placeholder="Search"
-            onChange={e => handleChange(e)}
-            type="search"
-          />
         </div>
-        <Paper sx={{ width: '100%', mb: 2 }}>
-          {donorList && donorList.length > 0 ? (
+      </div>
+      {donorList && donorList.length > 0 ? (
+        <div
+          style={{
+            margin: '20px',
+            backgroundColor: 'white',
+            marginBottom: '5em',
+            borderRadius: '1.5em',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              padding: '2em',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <input
+              placeholder="Search"
+              onChange={e => handleChange(e)}
+              type="search"
+              style={{
+                paddingLeft: '1em',
+                border: '1px solid #ced4da',
+                borderRadius: '1.5em',
+                height: '2.2em',
+              }}
+            />
+          </div>
+          {/* <hr style={{ margin: '0' }} /> */}
+          <Paper
+            sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
+          >
             <React.Fragment>
               <TableContainer id="tableDiv">
-                <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                <Table>
                   <EnhancedTableHead
                     order={order}
                     orderBy={orderBy}
@@ -384,19 +415,19 @@ export default function EnhancedTable() {
                 showFirstButton={true}
               />
             </React.Fragment>
-          ) : (
-            <Loader />
-          )}
-        </Paper>
-        <VendorTable
-          printDonorTable={printDonorTable}
-          tableData={stableSort(donorList, getComparator(order, orderBy)).slice(
-            page * rowsPerPage,
-            page * rowsPerPage + rowsPerPage,
-          )}
-          setPrintDonorValue={setPrintDonorValue}
-        ></VendorTable>
-      </div>
+          </Paper>
+          <VendorTable
+            printDonorTable={printDonorTable}
+            tableData={stableSort(
+              donorList,
+              getComparator(order, orderBy),
+            ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+            setPrintDonorValue={setPrintDonorValue}
+          ></VendorTable>
+        </div>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 }
@@ -410,31 +441,31 @@ const headCells = [
   },
   {
     id: 'Company Name',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'company name',
   },
   {
     id: 'Phone No',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Phone No',
   },
   {
     id: 'Email',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Email',
   },
   {
     id: 'GST',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'GST',
   },
   {
     id: 'action',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Action',
   },

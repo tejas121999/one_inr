@@ -83,7 +83,6 @@ export default function EnhancedTable() {
     setOrderBy(property);
   };
   const onPrintClick = () => {
-    console.log(printDonorTable);
     setPrintDonorTable(true);
     setTimeout(() => {
       setPrintDonorValue(false);
@@ -100,7 +99,6 @@ export default function EnhancedTable() {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
-    console.log('ttttttttt', anchorEl);
     setAnchorEl(null);
   };
 
@@ -151,31 +149,31 @@ export default function EnhancedTable() {
     },
     {
       id: 'Company Name',
-      numeric: true,
+      numeric: false,
       disablePadding: false,
       label: 'company name',
     },
     {
       id: 'Phone No',
-      numeric: true,
+      numeric: false,
       disablePadding: false,
       label: 'Phone No',
     },
     {
       id: 'Email',
-      numeric: true,
+      numeric: false,
       disablePadding: false,
       label: 'Email',
     },
     {
       id: 'GST',
-      numeric: true,
+      numeric: false,
       disablePadding: false,
       label: 'GST',
     },
     {
       id: 'action',
-      numeric: true,
+      numeric: false,
       disablePadding: false,
       label: 'Action',
     },
@@ -263,32 +261,51 @@ export default function EnhancedTable() {
           show={deleteModal}
           onHide={deleteModalClose}
           id={deleteId}
-        />
-        <nav className="navbar navbar-light">
-          <a className="navbar-brand">Partner List</a>
-          <form className="form-inline">
-            <div className="modalClass">
-              <Link to="/addpartner" type="" className="btn btn-primary">
-                Add Partner
-              </Link>
-            </div>
-          </form>
-        </nav>
+        />{' '}
         <div
+          className="row"
           style={{
-            margin: '20px',
             backgroundColor: 'white',
+            margin: '0 1.2em',
+            borderRadius: '1em',
           }}
         >
           <div
             style={{
               display: 'flex',
-              padding: '20px',
-              justifyContent: 'space-between',
+              width: '50%',
+              padding: '0.5em 1.7em',
             }}
           >
+            <p
+              style={{
+                textAlign: 'left',
+                fontSize: '1.25rem',
+                marginBottom: '0',
+                paddingTop: '3px',
+              }}
+            >
+              Partner List
+            </p>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              width: '50%',
+              padding: '0.5em 1.7em',
+            }}
+          >
+            <Link
+              to="/addpartner"
+              type="button"
+              className="btn btn-primary"
+              style={{ borderRadius: '2em', width: '25%' }}
+            >
+              Add Partner
+            </Link>
             <button
-              style={{ alignSelf: 'flex-start' }}
+              style={{ marginLeft: '1em', borderRadius: '2em', width: '15%' }}
               className="btn btn-primary"
               onClick={e => handleClick(e)}
             >
@@ -335,18 +352,42 @@ export default function EnhancedTable() {
               </MenuItem>
               {/* <MenuItem></MenuItem> */}
             </Menu>
-
-            <input placeholder="Search" onChange={handleChange} type="search" />
           </div>
-          <Paper sx={{ width: '100%', mb: 2 }}>
-            {partnerList && partnerList.length > 0 ? (
+        </div>
+        {partnerList && partnerList.length > 0 ? (
+          <div
+            style={{
+              margin: '20px',
+              backgroundColor: 'white',
+              marginBottom: '5em',
+              borderRadius: '1.5em',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                padding: '2em',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <input
+                placeholder="Search"
+                onChange={e => handleChange(e)}
+                type="search"
+                style={{
+                  paddingLeft: '1em',
+                  border: '1px solid #ced4da',
+                  borderRadius: '1.5em',
+                  height: '2.2em',
+                }}
+              />
+            </div>
+            <Paper
+              sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
+            >
               <React.Fragment>
                 <TableContainer id="tableDiv">
-                  <Table
-                    sx={{ minWidth: 750 }}
-                    aria-labelledby="tableTitle"
-                    size={dense ? 'small' : 'medium'}
-                  >
+                  <Table>
                     <EnhancedTableHead
                       numSelected={selected.length}
                       order={order}
@@ -378,6 +419,7 @@ export default function EnhancedTable() {
                                 align="center"
                                 scope="row"
                                 padding="none"
+                                style={{ padding: '20px' }}
                               >
                                 {row.name}
                               </TableCell>
@@ -428,19 +470,19 @@ export default function EnhancedTable() {
                   showFirstButton={true}
                 />
               </React.Fragment>
-            ) : (
-              <Loader />
-            )}
-          </Paper>
-          <PartnerTable
-            printDonorTable={printDonorTable}
-            tableData={stableSort(
-              partnerList,
-              getComparator(order, orderBy),
-            ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
-            setPrintDonorValue={setPrintDonorValue}
-          ></PartnerTable>
-        </div>
+            </Paper>
+            <PartnerTable
+              printDonorTable={printDonorTable}
+              tableData={stableSort(
+                partnerList,
+                getComparator(order, orderBy),
+              ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+              setPrintDonorValue={setPrintDonorValue}
+            ></PartnerTable>
+          </div>
+        ) : (
+          <Loader />
+        )}
       </>
     )
   );
