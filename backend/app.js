@@ -7,7 +7,10 @@ dotenv.config({path : './.env'})
 const cors = require('cors')
 const cron = require('node-cron')
 var app = express();
-const {setRecuringProject} = require('./controllers/projects')
+
+//Importing All Cron Functions
+const {createRecuringProject} = require('./controllers/projects')
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(cors());
@@ -22,14 +25,14 @@ app.use('/api', indexRouter);
 
 
 
-// cron.schedule('* * * * *', async () => {
-//     try {
-//         await setRecuringProject()
+cron.schedule('*/60 * * * *', async () => {
+    try {
+        await createRecuringProject()
 
-//     } catch (err) {
-//         console.log(err)
-//     }
-// });
+    } catch (err) {
+        console.log(err)
+    }
+});
 
 // cron.schedule(' * * * * *' ,async() => {
 
