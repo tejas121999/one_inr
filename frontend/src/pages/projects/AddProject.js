@@ -18,7 +18,7 @@ const AddProject = props => {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
 
-    const [opctions, setOpctions] = useState("select");
+    const [recurring, setOpctions] = useState("select");
     const [text, setText] = useState();
 
 
@@ -218,7 +218,7 @@ const AddProject = props => {
                                                                                 : 'disabled'
                                                                         }
                                                                         as="select"
-                                                                        value={opctions}
+                                                                        value={recurring}
                                                                         onChange={(e) => {
                                                                             setOpctions(e.target.value);
                                                                             setText(e.target.value);
