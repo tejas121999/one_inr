@@ -46,5 +46,9 @@ module.exports = (sequeilze,Datatypes) =>{
     
          
         })
+        projectInterval.associate = function (models) {
+        projectInterval.belongsTo(models.projects,{foreignKey : 'projectId'})
+        }
         return projectInterval;
+
     }
