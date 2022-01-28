@@ -9,6 +9,7 @@ import { BASE_URL } from '../../API/APIEndpoints';
 import TextEditor from './TextEditor';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import moment from "moment";
 
 const AddProject = props => {
     const [featureImg, setFeatureImg] = useState('')
@@ -28,6 +29,11 @@ const AddProject = props => {
     const dispatch = useDispatch();
     const onProjectAdd = values => {
         console.log('project Add', values);
+
+        let start = moment(startDate).format("MMMM d, yyyy")
+        let end = moment(endDate).format("MMMM d, yyyy")
+
+
         const object = {
             userId: 1,
             title: values.title,
@@ -38,11 +44,10 @@ const AddProject = props => {
             commission: values.commission,
             target: values.target,
             funded: 1,
-            startDate: values.startDate,
-            endDate: values.endDate,
-            isRecurring: values.recurring,
-            isrecurringDays: values.recurringDays,
-            status: false,
+            startDate: startDate,
+            endDate: endDate,
+            recurringDays: values.recurringDays,
+            status: 1,
             displayOnHomeStatus: 1,
             feature: featureImg,
             cover: coverImg,
