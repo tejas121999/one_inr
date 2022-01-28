@@ -16,7 +16,7 @@ const permissions = require('./permissions');
 const roles = require('./roles')
 const config = require('./configs')
 const razorpayCredentials = require('./razorpayCredential')
-
+const cron = require('./cron')
 
 
 router.use('/vendor',vendor)
@@ -34,7 +34,7 @@ router.use('/permissions',permissions)
 router.use('/roles',roles)
 router.use('/configs',config)
 router.use('/razorpay',razorpayCredentials)
-
+router.use('/cron',cron)
 
 
 
