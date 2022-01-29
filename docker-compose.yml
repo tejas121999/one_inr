@@ -7,21 +7,25 @@ services:
       image: one_inr:latest
       environment:
         - NODE_ENV=test
-      # links:
-      #   - db:db
+      links:
+        - db:db
       ports:
-        - "8900:3000"
+        - "8901:9000"
       volumes:
         - /home/sonatan/new-one-inr/public/uploads/:/usr/src/app/public/uploads
         - /home/sonatan/new-one-inr/npmLogs/:/root/.npm/_logs
 
-    # db:
-    #   container_name: one_inr_db
-    #   image: mysql
-    #   volumes:
-    #     - one_inr-data:/data/db
-    #   ports:
-    #     - "27019:27017"
+    db:
+      build: ./mysql
+      restart: always
+      container_name: one_inr_db
+      image: one_inr:mysql
+      volumes:
+        - one_inr-data:/data/db
+      ports:
+        - "3307:3306"
+      environment:
+       LC_ALL: C.UTF-8
 
     nginxApp:
       restart: always
@@ -33,7 +37,7 @@ services:
       volumes:
         - ./logs/:/new-one-inr/logs
       ports:
-        - '8905:80'
+        - '8906:80'
       links:
         - web:web
 
