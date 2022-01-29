@@ -233,7 +233,7 @@ export default function EnhancedTable() {
           style={{
             display: 'flex',
             width: '50%',
-            padding: '0.5em 1.5em',
+            padding: '0.5em 1.7em',
           }}
         >
           <p
@@ -252,7 +252,7 @@ export default function EnhancedTable() {
             display: 'flex',
             justifyContent: 'flex-end',
             width: '50%',
-            padding: '0.5em 1.5em',
+            padding: '0.5em 1.7em',
           }}
         >
           <Link
@@ -343,7 +343,7 @@ export default function EnhancedTable() {
           </div>
           {/* <hr style={{ margin: '0' }} /> */}
           <Paper
-            sx={{ width: '96%', marginBottom: '3em', marginLeft: '1.5em' }}
+            sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
           >
             <React.Fragment>
               <TableContainer id="tableDiv">
@@ -441,31 +441,31 @@ const headCells = [
   },
   {
     id: 'Company Name',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'company name',
   },
   {
     id: 'Phone No',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Phone No',
   },
   {
     id: 'Email',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Email',
   },
   {
     id: 'GST',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'GST',
   },
   {
     id: 'action',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Action',
   },

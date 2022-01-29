@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
 
         userId: {
             type: DataTypes.INTEGER,
-            field: 'user_id'
+            field: 'user_id',
+            allowNull : false
         },
 
         title: {
@@ -26,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
 
         longDesc: {
             type: DataTypes.TEXT,
-            field: 'long_description'
+            field: 'long_description',
+            allowNull : false
         },
 
         videoLink: {
@@ -59,16 +61,19 @@ module.exports = (sequelize, DataTypes) => {
 
         startDate: {
             type: DataTypes.DATEONLY,
-            field: 'start_date'
+            field: 'start_date',
+            allowNull : false
         },
 
         endDate: {
             type: DataTypes.DATEONLY,
-            field: 'end_date'
+            field: 'end_date',
+            allowNull : false
         },
         isRecurring: {
             type: DataTypes.BOOLEAN,
-            field: 'is_recurring'
+            field: 'is_recurring',
+            allowNull : false
         },
         recurringDays: {
             type: DataTypes.INTEGER,
@@ -78,6 +83,7 @@ module.exports = (sequelize, DataTypes) => {
         isActive: {
             type: DataTypes.BOOLEAN,
             field: 'is_active',
+            allowNull : false
         },
 
         displayOnHomeStatus: {
@@ -121,6 +127,7 @@ module.exports = (sequelize, DataTypes) => {
     projects.associate = function (models) {
         projects.hasMany(models.project_image, { foreignKey: 'projectId' })
         projects.belongsTo(models.ngo, { foreignKey: 'userId' })
+        projects.hasMany(models.projectInterval,{foreignKey : 'projectId'})
     }
 
 

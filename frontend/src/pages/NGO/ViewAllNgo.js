@@ -25,7 +25,10 @@ import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllNGOAction, getAllNGOByValueAction } from '../../Redux/Actions/NgoActions';
+import {
+  getAllNGOAction,
+  getAllNGOByValueAction,
+} from '../../Redux/Actions/NgoActions';
 import DeleteNgo from './NgoModals/DeleteNgo';
 
 const ViewAllNgo = () => {
@@ -55,7 +58,6 @@ const ViewAllNgo = () => {
 
   let allNgoList = useSelector(state => state.ngo.ngoList);
 
-
   const deleteModalOpen = data => {
     setDeleteID(data.id);
     setDeleteModal(true);
@@ -70,8 +72,6 @@ const ViewAllNgo = () => {
   };
 
   const handleChangePage = (event, newPage) => {
-
-
     setPage(newPage);
   };
 
@@ -152,160 +152,233 @@ const ViewAllNgo = () => {
       <br />
       <br />
       <DeleteNgo show={deleteModal} onHide={deleteModalClose} id={deleteId} />
-      <div className="card" style={{ border: '0' }}>
+      <div
+        className="row"
+        style={{
+          backgroundColor: 'white',
+          margin: '0 1.2em',
+          borderRadius: '1em',
+        }}
+      >
         <div
           style={{
             display: 'flex',
-            padding: '20px',
-            justifyContent: 'space-between',
+            width: '50%',
+            padding: '0.5em 1.7em',
           }}
         >
           <p
             style={{
               textAlign: 'left',
               fontSize: '1.25rem',
-              marginTop: '5px',
+              marginBottom: '0',
+              paddingTop: '3px',
             }}
           >
             LIST OF ALL NGO
           </p>
-          <button className="btn btn-primary"
-            onClick={() => history.push('/add_ngo')}
-          >Add NGO</button>
-
         </div>
-      </div>
-      <div
-        style={{
-          margin: '20px',
-          backgroundColor: 'white',
-          marginBottom: '5em',
-        }}
-      >
         <div
           style={{
             display: 'flex',
-            padding: '20px',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
+            width: '50%',
+            padding: '0.5em 1.7em',
           }}
         >
           <button
-            style={{ alignSelf: 'flex-start' }}
             className="btn btn-primary"
+            style={{ borderRadius: '2em', width: '25%' }}
+            type="button"
+            onClick={() => history.push('/add_ngo')}
+          >
+            Add NGO
+          </button>
+          <button
+            style={{ marginLeft: '1em', borderRadius: '2em', width: '15%' }}
+            className="btn btn-primary"
+            // onClick={e => handleClick(e)}
           >
             Export
           </button>
-          <label style={{ fontWeight: '500', marginTop: '0.5em' }}>
-            Search :
-            <input
-              type="search"
-              placeholder="Search"
-              style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
-              onChange={e => handleChange(e)}
-            />
-          </label>
-        </div>
-        <hr style={{ margin: '0' }} />
-        <Paper sx={{ width: '100%' }}>
-          <>
-            <TableContainer>
-              <Table
-                sx={{ minWidth: 750 }}
-                aria-labelledby="tableTitle"
-                size={dense ? 'small' : 'medium'}
+          {/* <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            style={{ top: '30px', left: '-8px' }}
+          >
+            <MenuItem>
+              <button
+                className="export-btn w-100"
+                onClick={() => onCopyClick()}
               >
-                <EnhancedTableHead
-                  numSelected={selected.length}
-                  order={order}
-                  orderBy={orderBy}
-                  onRequestSort={handleRequestSort}
-                  rowCount={allNgoList.length}
-                />
-                <TableBody>
-                  {stableSort(allNgoList, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      const isItemSelected = isSelected(row.name);
-                      const labelId = `enhanced-table-checkbox-${index}`;
-
-                      return (
-                        <TableRow
-                          hover
-                          aria-checked={isItemSelected}
-                          tabIndex={-1}
-                          key={row.name}
-                          selected={isItemSelected}
-                        >
-                          <TableCell
-                            id={labelId}
-                            align="center"
-                            scope="row"
-                            padding="none"
-                          >
-                            {row.user.name}
-                          </TableCell>
-                          <TableCell align="center">{row.pending}</TableCell>
-                          <TableCell align="center">{row.active}</TableCell>
-                          <TableCell align="center">
-                            {row.actionRequired}
-                          </TableCell>
-                          <TableCell align="center">
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="View Details"
-                              className="btn"
-                              onClick={() =>
-                                history.push('/view_single_ngo', row)
-                              }
-                            >
-                              <FaRegEye />
-                            </button>
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="Edit Ngo"
-                              className="btn"
-                              onClick={() => history.push('/edit_ngo', row)}
-                            >
-                              <FaRegEdit />
-                            </button>
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="Add project"
-                              className="btn"
-                              onClick={() => history.push('/add_project', row)}
-                            >
-                              <FaPlusCircle />
-                            </button>
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="Delete"
-                              className="btn"
-                              onClick={() => deleteModalOpen(row)}
-                            >
-                              <FaRegTrashAlt />
-                            </button>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={allNgoList.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              pageSize={10}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              showLastButton={true}
-              showFirstButton={true}
-            />
-          </>
-        </Paper>
+                Copy
+              </button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100" onClick={downloadCsv}>
+                CSV
+              </button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100" onClick={downloadXls}>
+                Excel
+              </button>
+            </MenuItem>
+            <MenuItem>
+              <button className="export-btn w-100" onClick={downloadPdf}>
+                PDF
+              </button>
+            </MenuItem>
+            <MenuItem>
+              <button
+                className="export-btn w-100"
+                onClick={() => onPrintClick()}
+              >
+                Print
+              </button>
+            </MenuItem>
+          </Menu> */}
+        </div>
       </div>
+      {allNgoList && allNgoList.length > 0 ? (
+        <div
+          style={{
+            margin: '20px',
+            backgroundColor: 'white',
+            marginBottom: '5em',
+            borderRadius: '1.5em',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              padding: '2em',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <input
+              placeholder="Search"
+              onChange={e => handleChange(e)}
+              type="search"
+              style={{
+                paddingLeft: '1em',
+                border: '1px solid #ced4da',
+                borderRadius: '1.5em',
+                height: '2.2em',
+              }}
+            />
+          </div>
+          {/* <hr style={{ margin: '0' }} /> */}
+          <Paper
+            sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
+          >
+            {' '}
+            <>
+              <TableContainer>
+                <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                  <EnhancedTableHead
+                    numSelected={selected.length}
+                    order={order}
+                    orderBy={orderBy}
+                    onRequestSort={handleRequestSort}
+                    rowCount={allNgoList.length}
+                  />
+                  <TableBody>
+                    {stableSort(allNgoList, getComparator(order, orderBy))
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                      .map((row, index) => {
+                        const isItemSelected = isSelected(row.name);
+                        const labelId = `enhanced-table-checkbox-${index}`;
+
+                        return (
+                          <TableRow
+                            hover
+                            aria-checked={isItemSelected}
+                            tabIndex={-1}
+                            key={row.name}
+                            selected={isItemSelected}
+                          >
+                            <TableCell
+                              id={labelId}
+                              align="center"
+                              scope="row"
+                              padding="none"
+                            >
+                              {row.user.name}
+                            </TableCell>
+                            <TableCell align="center">{row.pending}</TableCell>
+                            <TableCell align="center">{row.active}</TableCell>
+                            <TableCell align="center">
+                              {row.actionRequired}
+                            </TableCell>
+                            <TableCell align="center">
+                              <button
+                                data-bs-toggle="tooltip"
+                                title="View Details"
+                                className="btn"
+                                onClick={() =>
+                                  history.push('/view_single_ngo', row)
+                                }
+                              >
+                                <FaRegEye />
+                              </button>
+                              <button
+                                data-bs-toggle="tooltip"
+                                title="Edit Ngo"
+                                className="btn"
+                                onClick={() => history.push('/edit_ngo', row)}
+                              >
+                                <FaRegEdit />
+                              </button>
+                              <button
+                                data-bs-toggle="tooltip"
+                                title="Add project"
+                                className="btn"
+                                onClick={() =>
+                                  history.push('/add_project', row)
+                                }
+                              >
+                                <FaPlusCircle />
+                              </button>
+                              <button
+                                data-bs-toggle="tooltip"
+                                title="Delete"
+                                className="btn"
+                                onClick={() => deleteModalOpen(row)}
+                              >
+                                <FaRegTrashAlt />
+                              </button>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={allNgoList.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                pageSize={10}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                showLastButton={true}
+                showFirstButton={true}
+              />
+            </>
+          </Paper>
+        </div>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 };
@@ -352,25 +425,25 @@ const headCells = [
   },
   {
     id: 'pending',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Pending',
   },
   {
     id: 'active',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Active',
   },
   {
     id: 'actionRequired',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'ActionRequired',
   },
   {
     id: 'action',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Action',
   },
