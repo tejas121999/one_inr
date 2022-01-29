@@ -19,14 +19,17 @@ services:
       build: ./mySql
       restart: always
       container_name: one_inr_db
-      image: one_inr:mysql
-      volumes:
-        - one_inr-data:/data/db
+      image: one_inr_db:latest
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: newOneInr
+        MYSQL_PASSWORD: root
+        MYSQL_USER: root
       ports:
         - "3307:3306"
-      environment:
-       LC_ALL: C.UTF-8
-
+      volumes:
+         ./db_data:/var/lib/mysql    
+         
     nginxApp:
       restart: always
       container_name:  one-inr-front

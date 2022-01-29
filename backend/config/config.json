@@ -13,7 +13,7 @@
     "password": "root",
     "database": "newOneInr",
     "host": "144.91.79.237",
-    "port": "7232",
+    "port": "3306",
     "dialect": "mysql"
   },
 
