@@ -129,7 +129,7 @@ const Users = () => {
           style={{
             display: 'flex',
             width: '50%',
-            padding: '0.5em 1.5em',
+            padding: '0.5em 1.7em',
           }}
         >
           <p
@@ -148,7 +148,7 @@ const Users = () => {
             display: 'flex',
             justifyContent: 'flex-end',
             width: '50%',
-            padding: '0.5em 1.5em',
+            padding: '0.5em 1.7em',
           }}
         >
           <button
@@ -191,7 +191,7 @@ const Users = () => {
           </div>
           {/* <hr style={{ margin: '0' }} /> */}
           <Paper
-            sx={{ width: '96%', marginBottom: '3em', marginLeft: '1.5em' }}
+            sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
           >
             <React.Fragment>
               <TableContainer id="tableDiv">
