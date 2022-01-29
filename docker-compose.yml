@@ -16,7 +16,7 @@ services:
         - /home/sonatan/new-one-inr/npmLogs/:/root/.npm/_logs
 
     db:
-      build: ./mysql
+      build: ./mySql
       restart: always
       container_name: one_inr_db
       image: one_inr:mysql
