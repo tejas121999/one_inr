@@ -141,7 +141,7 @@ const Roles = () => {
             className="btn btn-primary"
             onClick={e => onAddModalOpen(e)}
           >
-            Add Role
+            Add Role 
           </button>
         </div>
       </div>
