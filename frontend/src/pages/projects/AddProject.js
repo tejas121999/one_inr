@@ -1,4 +1,5 @@
-import { Field, Form, Formik } from 'formik';
+import { Field, Form, Formik, ErrorMessage } from 'formik';
+import TextError from '../error/TextError';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
@@ -10,6 +11,7 @@ import TextEditor from './TextEditor';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from "moment";
+import * as yup from 'yup'
 
 const AddProject = props => {
     const [featureImg, setFeatureImg] = useState('')
@@ -19,9 +21,25 @@ const AddProject = props => {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
 
-    const [recurring, setOpctions] = useState("select");
-    const [text, setText] = useState();
+    const [recurring, setRecurring] = useState("select");
+    const [recurringDays, setRecurringDays] = useState();
+    // console.log("recurring", recurring)
+    console.log("recurringdays", recurringDays)
 
+    const validationSchema = yup.object({
+        title: yup
+            .string()
+            .required('Required')
+            .max(50, 'max limite is 50 character'),
+        description: yup
+            .string()
+            .required('required')
+            .min(300, 'minimum 300 letter'),
+        goal: yup
+            .string()
+            .required('Required'),
+
+    })
 
     // const [sliderImg, setSlider] = useState('')
     // console.log('Images', sliderImg);
@@ -44,16 +62,18 @@ const AddProject = props => {
             commission: values.commission,
             target: values.target,
             funded: 1,
-            startDate: startDate,
-            endDate: endDate,
-            recurringDays: values.recurringDays,
-            status: 1,
+            startDate: start,
+            endDate: end,
+            isRecurring: values.recurring,
+            recurringDays: recurringDays,
+            status: false,
             displayOnHomeStatus: 1,
             feature: featureImg,
             cover: coverImg,
             monbile: mobileImg,
             // slider: sliderImg
         }
+        console.log("value", object)
         dispatch(addProjectAction(object, props.history));
     };
 
@@ -137,8 +157,8 @@ const AddProject = props => {
                                 <div className="col-sm-12 col-xs-12">
                                     <Formik
                                         initialValues={{
-                                            recurring: 'no',
-                                            recurringDays:'',
+                                            recurring: 'false',
+                                            recurringDays: '',
                                             title: '',
                                             description: '',
                                             goal: '',
@@ -151,6 +171,7 @@ const AddProject = props => {
                                             videoLink: '',
                                             longDesc: ''
                                         }}
+                                        validationSchema={validationSchema}
                                         enableReinitialize={true}
                                         onSubmit={values => onProjectAdd(values)}
                                     >
@@ -186,6 +207,11 @@ const AddProject = props => {
                                                             className="form-control"
                                                             value={values.description}
                                                         />
+                                                        {errors.description && touched.description && (
+                                                            <div className='text-left'>
+                                                                <span style={{ color: 'red' }}>{errors.description}</span>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                     <div className="col-sm-12 col-xs-12 mt-3">
                                                         <label style={{ fontWeight: 'bold' }}>
@@ -195,7 +221,7 @@ const AddProject = props => {
                                                             <Field
                                                                 type="radio"
                                                                 name="recurring"
-                                                                value="yes"
+                                                                value="true"
                                                                 id="1"
                                                             />
                                                             Yes
@@ -204,29 +230,29 @@ const AddProject = props => {
                                                             <Field
                                                                 type="radio"
                                                                 name="recurring"
-                                                                value="no"
+                                                                value="false"
                                                                 id="2"
                                                             />
                                                             No
                                                         </label>
-                                                        {values.recurring === 'yes' && (
+                                                        {values.recurring === 'true' && (
                                                             <div className="row">
                                                                 <div className="col-sm-4 col-xs-12">
                                                                     <Field
                                                                         name="recurringDays"
-                                                                       
+
                                                                         className="form-control"
                                                                         // value={values.parent}
                                                                         disabled={
-                                                                            values.recurring === 'yes'
+                                                                            values.recurring === 'true'
                                                                                 ? ''
                                                                                 : 'disabled'
                                                                         }
                                                                         as="select"
                                                                         value={recurring}
                                                                         onChange={(e) => {
-                                                                            setOpctions(e.target.value);
-                                                                            setText(e.target.value);
+                                                                            setRecurring(e.target.value);
+                                                                            setRecurringDays(e.target.value);
                                                                         }}
                                                                     >
 
@@ -238,18 +264,18 @@ const AddProject = props => {
                                                                 </div>
                                                                 <div className="col-sm-4 col-md-8 col-xs-12">
                                                                     <Field
-                                                                        type="text"
-                                                                        name="days"
+                                                                        type="number"
+                                                                        name="recurringDays"
                                                                         placeholder="Enter number of reccuring days"
                                                                         className="form-control"
                                                                         disabled={
-                                                                            values.recurring === 'yes'
+                                                                            values.recurring === 'true'
                                                                                 ? ''
                                                                                 : 'disabled'
                                                                         }
-                                                                        value={text}
+                                                                        value={recurringDays}
                                                                         onChange={(e) => {
-                                                                            setText(e.target.value);
+                                                                            setRecurringDays(e.target.value);
                                                                         }}
                                                                     ></Field>
                                                                 </div>
@@ -266,10 +292,16 @@ const AddProject = props => {
                                                                     className="form-control"
                                                                     value={values.goal}
                                                                 />
+                                                                {errors.goal && touched.goal && (
+                                                                    <div className='text-left'>
+                                                                        <span style={{ color: 'red' }}>{errors.goal}</span>
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                             <div className="col-sm-4 col-xs-12">
                                                                 <label>Start Date:</label>
                                                                 <DatePicker
+                                                                    name='startDate'
                                                                     className="form-control"
                                                                     selected={startDate}
                                                                     selectsStart
@@ -283,6 +315,7 @@ const AddProject = props => {
                                                             <div className="col-sm-4 col-xs-12">
                                                                 <label>End Date:</label>
                                                                 <DatePicker
+                                                                    name='endDate'
                                                                     className="form-control"
                                                                     selected={endDate}
                                                                     selectsEnd
@@ -342,6 +375,7 @@ const AddProject = props => {
                                                                 768(i.e. height)
                                                                 <div className="col-sm-4 col-xs-12 mt-3">
                                                                     <DropzoneComponent onChangeImage={onFeatureImgAdd} />
+                                                                    <ErrorMessage name='feature image' component={TextError} />
                                                                 </div>
                                                             </div>
                                                             <div className="col-sm-12 col-xs-12 mt-3">
@@ -354,6 +388,7 @@ const AddProject = props => {
                                                                 768(i.e. height)
                                                                 <div className="col-sm-4 col-xs-12 mt-3">
                                                                     <DropzoneComponent onChangeImage={onCoverImgAdd} />
+                                                                    <ErrorMessage name='feature image' component={TextError} />
                                                                 </div>
                                                             </div>
                                                             <div className="col-sm-12 col-xs-12 mt-3">
@@ -366,6 +401,7 @@ const AddProject = props => {
                                                                 768(i.e. height)
                                                                 <div className="col-sm-4 col-xs-12 mt-3">
                                                                     <DropzoneComponent onChangeImage={onMobileImgAdd} />
+                                                                    <ErrorMessage name='feature image' component={TextError} />
                                                                 </div>
                                                             </div>
                                                             <div className="col-sm-12 col-xs-12 mt-3">
