@@ -112,7 +112,8 @@ exports.getAllUser = async (req, res) => {
         where: searchQuery,
         where: { isActive: true },
         attributes: ['id', 'name', 'email', 'mobile'],
-        include: [{ model: models.role, attributes: ['id', 'roleName'] }]
+        include: [{ model: models.role, attributes: ['id', 'roleName'] }],
+        order : [['id','DESC']] 
     })
     if (!data) {
         return res.status(400).json({

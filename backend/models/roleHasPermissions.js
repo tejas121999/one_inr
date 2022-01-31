@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     RolePermission.associate = function (models) {
-        RolePermission.belongsTo(models.role, { foreignKey: 'roleId', as: 'role' });
+        // RolePermission.belongsTo(models.role, { foreignKey: 'roleId', as: 'role' });
         // RolePermission.belongsTo(models.permission, { foreignKey: 'permissionId', as: 'permission' });
     }
 

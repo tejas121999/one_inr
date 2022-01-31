@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
  
 
     Role.associate = function(models) {
-        Role.hasMany(models.rolePermission,{foreignKey : 'roleId'});
+        // Role.hasMany(models.rolePermission,{foreignKey : 'roleId', as:'role'});
         Role.hasOne(models.users,{foreignKey : 'roleId'})
         // Role.belongsToMany(models.user,{through: models.userRole});
         // Role.belongsToMany(models.module,{through: models.roleModule});
