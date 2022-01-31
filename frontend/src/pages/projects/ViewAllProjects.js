@@ -126,87 +126,129 @@ const ViewAllProjects = () => {
       <br />
       <br />
       <br />
-      <div className="card" style={{ border: '0' }}>
-        <div
+      <div
+      className="row"
+      style={{
+        backgroundColor: 'white',
+        margin: '0 1.2em',
+        borderRadius: '1em',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          width: '50%',
+          padding: '0.5em 1.7em',
+        }}
+      >
+        <p
           style={{
-            display: 'flex',
-            padding: '15px',
+            textAlign: 'left',
+            fontSize: '1.25rem',
+            marginBottom: '0',
+            paddingTop: '3px',
           }}
         >
-          <p
-            style={{
-              textAlign: 'left',
-              fontSize: '1.25rem',
-              marginBottom: '0',
-            }}
-          >
-            VIEW ALL PROJECT
-          </p>
-        </div>
+          View All Project
+        </p>
       </div>
-      <div className="ViewAll">
-        <div className="white-box">
-          <div className="row" style={{ marginTop: '-1.5em' }}>
-            <div style={{ margin: '1em', marginRight: '0.5em' }}>
-              {/* <div className="input-box"> */}
-              <DatePicker
-                selected={startDate}
-                selectsStart
-                startDate={startDate}
-                endDate={endDate}
-                onChange={date => setStartDate(date)}
-                dateFormat="MMMM d, yyyy"
-              />
-            </div>
-            {/* </div> */}
-            <div style={{ margin: '1em 0.5em' }}>
-              {/* <div className="input-box"> */}
-              <DatePicker
-                selected={endDate}
-                selectsEnd
-                startDate={startDate}
-                endDate={endDate}
-                minDate={startDate}
-                onChange={date => setEndDate(date)}
-                dateFormat="MMMM d, yyyy"
-              />
-              {/* </div> */}
-            </div>
-            <div className="search-btn">
-              <button type="button" className="btn btn-primary">
-                Search
-              </button>
-            </div>
-          </div>
-          <hr style={{ margin: '0' }} />
-          <div
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          width: '50%',
+          padding: '0.5em 1.8em',
+        }}
+      >
+      <button
+      style={{ marginLeft: '1em', borderRadius: '2em', width: '15%' }}
+      className="btn btn-primary"
+      // onClick={e => handleClick(e)}
+    >
+      Export
+    </button>
+      </div>
+      </div>
+      <div
+      style={{
+        margin: '20px',
+        backgroundColor: 'white',
+        marginBottom: '5em',
+        borderRadius: '1.5em',
+      }}
+    >          <div
             className="row"
             style={{
               display: 'flex',
-              padding: '20px',
+              margin: '1.8em 1.8em 1.8em 1.4em',
               justifyContent: 'space-between',
             }}
           >
-            <button type="button" className="btn btn-primary">
-              Export
-            </button>
-            <label style={{ fontWeight: '500', marginTop: '0.5rem' }}>
-              Search :
-              <input
-                type="search"
-                placeholder="Search"
-                style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
-                onChange={e => handleChange(e)}
-              />
-            </label>
+          <div
+        style={{
+          display: 'flex',
+          // padding: '2em',
+          justifyContent: 'flex-start',
+        }}
+      >
+          <div style={{ margin: '1em 0.5em' }}>
+          {/* <div className="input-box"> */}
+          <DatePicker
+            selected={startDate}
+            selectsStart
+            startDate={startDate}
+            endDate={endDate}
+            onChange={date => setStartDate(date)}
+            dateFormat="MMMM d, yyyy"
+          />
+          {/* </div> */}
+        </div>
+        <div style={{ margin: '1em 0.5em' }}>
+        {/* <div className="input-box"> */}
+        <DatePicker
+          selected={endDate}
+          selectsEnd
+          startDate={startDate}
+          endDate={endDate}
+          minDate={startDate}
+          onChange={date => setEndDate(date)}
+          dateFormat="MMMM d, yyyy"
+        />
+        {/* </div> */}
+        </div>
+        <div className="search-btn">
+          <button type="button" className="btn btn-primary" style={{ borderRadius: '1em'}}>
+            Search
+          </button>
+        </div>
+        </div>
+        <div
+        style={{
+          display: 'flex',
+          // padding: '2em',
+          margin: '1em 0em',
+          justifyContent: 'flex-end',
+        }}
+      >
+        <input
+          placeholder="Search"
+          onChange={e => handleChange(e)}
+          type="search"
+          style={{
+            paddingLeft: '1em',
+            border: '1px solid #ced4da',
+            borderRadius: '1.5em',
+            height: '2.2em',
+          }}
+        />
+      </div>
           </div>
-          <hr style={{ margin: '0' }} />
-          <Paper sx={{ width: '100%' }}>
+          {/* <hr style={{ margin: '0' }} /> */}
+          <Paper sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
+          >
             <TableContainer>
               <Table
-                sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
-                size={dense ? 'small' : 'medium'}
               >
                 <EnhancedTableHead
                   numSelected={selected.length}
@@ -314,7 +356,6 @@ const ViewAllProjects = () => {
             />
           </Paper>
         </div>
-      </div>
     </>
   );
 };
