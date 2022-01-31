@@ -24,7 +24,7 @@ services:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: newOneInr
         MYSQL_PASSWORD: root
-        MYSQL_USER: root
+        MYSQL_USER: admin
       ports:
         - "3307:3306"
       volumes:
