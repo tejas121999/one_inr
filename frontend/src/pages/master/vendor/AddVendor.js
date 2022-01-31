@@ -83,21 +83,36 @@ const AddVendor = props => {
       <br />
       <br />
       <br />
+      <br />
       <ToastContainer hideProgressBar />
-      <div className="card">
+      <div
+        className="row"
+        style={{
+          backgroundColor: 'white',
+          margin: '0 1.2em',
+          borderRadius: '1em',
+        }}
+      >
         <p
           style={{
             textAlign: 'left',
-            fontWeight: 'bold',
+            fontSize: '1.25rem',
             margin: '20px',
             width: '100%',
             marginLeft: '20px',
           }}
         >
-          ADD VENDOR
+          Add Vendor
         </p>
       </div>
-      <div style={{ backgroundColor: 'white', margin: '30px' }}>
+      <div
+        style={{
+          margin: '20px',
+          backgroundColor: 'white',
+          marginBottom: '5em',
+          borderRadius: '1.5em',
+        }}
+      >
         <Formik
           initialValues={{
             fName: '',
@@ -114,7 +129,7 @@ const AddVendor = props => {
           enableReinitialize={true}
         >
           {({ values, errors, touched }) => (
-            <div className="w-100 mx-auto shadow p-5">
+            <div className="w-100 mx-auto" style={{ padding: '4rem 10rem' }}>
               <div className="row">
                 <div className="col-12">
                   <Form>
@@ -167,7 +182,7 @@ const AddVendor = props => {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col form-group">
+                      <div className="col-6">
                         <div style={{ padding: '15px', paddingBottom: '10px' }}>
                           <label style={{ fontWeight: 'bold' }}>
                             Mobile Number
@@ -191,7 +206,7 @@ const AddVendor = props => {
                           )}
                         </div>
                       </div>
-                      <div className="col form-group">
+                      <div className="col-6">
                         <div style={{ padding: '15px', paddingBottom: '10px' }}>
                           <label style={{ fontWeight: 'bold' }}>Email Id</label>
                           <Field
@@ -213,7 +228,7 @@ const AddVendor = props => {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col form-group">
+                      <div className="col-6">
                         <div style={{ padding: '15px', paddingBottom: '10px' }}>
                           <label style={{ fontWeight: 'bold' }}>GST No</label>
                           <Field
@@ -231,7 +246,7 @@ const AddVendor = props => {
                           )}
                         </div>
                       </div>
-                      <div className="col form-group">
+                      <div className="col-6">
                         <div style={{ padding: '15px', paddingBottom: '10px' }}>
                           <label style={{ fontWeight: 'bold' }}>
                             GST image
@@ -248,7 +263,7 @@ const AddVendor = props => {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col form-group">
+                      <div className="col-6">
                         <div style={{ padding: '15px', paddingBottom: '10px' }}>
                           <label style={{ fontWeight: 'bold' }}>Pan No</label>
                           <Field
@@ -266,7 +281,7 @@ const AddVendor = props => {
                           )}
                         </div>
                       </div>
-                      <div className="col form-group">
+                      <div className="col-6">
                         <div style={{ padding: '15px', paddingBottom: '10px' }}>
                           <label style={{ fontWeight: 'bold' }}>
                             Pan image
@@ -283,7 +298,7 @@ const AddVendor = props => {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col form-group">
+                      <div className="col-6">
                         <div style={{ padding: '15px', paddingBottom: '10px' }}>
                           <label style={{ fontWeight: 'bold' }}>
                             Company Name
@@ -305,7 +320,7 @@ const AddVendor = props => {
                           )}
                         </div>
                       </div>
-                      <div className="col form-group">
+                      <div className="col-6">
                         <div style={{ padding: '15px', paddingBottom: '10px' }}>
                           <label style={{ fontWeight: 'bold' }}>Address </label>
                           <Field
@@ -327,10 +342,31 @@ const AddVendor = props => {
                         </div>
                       </div>
                     </div>
-                    <div className="submit-btn">
-                      <button className="btn btn-success" type="submit">
-                        Add Vendor
-                      </button>
+                    <div className="row">
+                      <div className="col-6">
+                        <div
+                          style={{
+                            padding: '15px',
+                            display: 'flex',
+                            justifyContent: 'end',
+                          }}
+                        >
+                          <button className="btn btn-primary" type="submit">
+                            Add Vendor
+                          </button>
+                        </div>
+                      </div>
+                      {/* <div className="col-6">
+                        <div
+                          style={{
+                            padding: '15px',
+                            display: 'flex',
+                            justifyContent: 'start',
+                          }}
+                        >
+                          <button className="btn btn-secondary">Cancel</button>
+                        </div>
+                      </div> */}
                     </div>
                   </Form>
                 </div>
