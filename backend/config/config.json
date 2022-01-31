@@ -9,11 +9,11 @@
   },
 
   "test": {
-    "username": "root",
+    "username": "admin",
     "password": "root",
-    "database": "oneinrv20",
-    "host": "5.189.128.116",
-    "port": "7232",
+    "database": "newOneInr",
+    "host": "144.91.79.237",
+    "port": "3307",
     "dialect": "mysql"
   },
 

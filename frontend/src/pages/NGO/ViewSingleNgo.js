@@ -306,7 +306,7 @@ const ViewSingleNgo = props => {
                 marginBottom: '0',
               }}
             >
-              TEST
+            {ngoById && ngoById.user && ngoById.user.name}
             </p>
           </div>
         </div>

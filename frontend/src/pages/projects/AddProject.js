@@ -1,7 +1,7 @@
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import TextError from '../error/TextError';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 import { addProjectAction } from '../../Redux/Actions/ProjectActions';
 import './project.css';
@@ -12,8 +12,17 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from "moment";
 import * as yup from 'yup'
+import { getAllNGOAction } from '../../Redux/Actions/NgoActions';
 
 const AddProject = props => {
+
+    useEffect(() => {
+        dispatch(getAllNGOAction(''))
+    }, [])
+
+    let ngoName = useSelector(state => state.ngo.ngoList)
+
+
     const [featureImg, setFeatureImg] = useState('')
     const [coverImg, setCoverImg] = useState('')
     const [mobileImg, setMoileImg] = useState('')
@@ -23,7 +32,7 @@ const AddProject = props => {
 
     const [recurring, setRecurring] = useState("select");
     const [recurringDays, setRecurringDays] = useState();
-    // console.log("recurring", recurring)
+
     console.log("recurringdays", recurringDays)
 
     const validationSchema = yup.object({
@@ -45,11 +54,13 @@ const AddProject = props => {
     // console.log('Images', sliderImg);
     // const [value, setValue] = useState();
     const dispatch = useDispatch();
-    const onProjectAdd = values => {
-        console.log('project Add', values);
 
-        let start = moment(startDate).format("MMMM d, yyyy")
-        let end = moment(endDate).format("MMMM d, yyyy")
+
+    const onProjectAdd = values => {
+
+
+        let start = moment(startDate).format("LL")
+        let end = moment(endDate).format("LL")
 
 
         const object = {
@@ -240,7 +251,6 @@ const AddProject = props => {
                                                                 <div className="col-sm-4 col-xs-12">
                                                                     <Field
                                                                         name="recurringDays"
-
                                                                         className="form-control"
                                                                         // value={values.parent}
                                                                         disabled={
@@ -350,20 +360,19 @@ const AddProject = props => {
                                                                     Select NGO:
                                                                 </label>
                                                                 <Field
-                                                                    class="form-control"
+                                                                    className="form-control"
                                                                     list="datalistOptions"
-                                                                    id="exampleDataList"
+                                                                    // id="exampleDataList"
                                                                     name="ngo"
                                                                     value={values.ngo}
                                                                     placeholder="Type to search..."
                                                                 />
-                                                                <datalist id="datalistOptions">
-                                                                    <option value="San Francisco" />
-                                                                    <option value="New York" />
-                                                                    <option value="Seattle" />
-                                                                    <option value="Los Angeles" />
-                                                                    <option value="Chicago" />
+                                                                <datalist id="datalistOptions" >
+                                                                    {ngoName && ngoName.map((row) => (
+                                                                        <option value={row.name}>{row.user.id}&nbsp;{row.user.name}</option>
+                                                                    ))}
                                                                 </datalist>
+
                                                             </div>
                                                             <div className="col-sm-12 col-xs-12 mt-3">
                                                                 <label style={{ fontWeight: 'bold' }}>
