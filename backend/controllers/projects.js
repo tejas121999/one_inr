@@ -93,7 +93,10 @@ exports.getAllProjects = async (req, res) => {
     const project = await models.projects.findAll({
         where: searchQuery,
         offset: offset,
-        limit: pageSize
+        limit: pageSize,
+        order: [
+            ['id', 'DESC']
+        ]
     });
 
     // var endDate = await project.map(ele=>{ return ele.dataValues.endDate})
@@ -170,11 +173,11 @@ exports.addFunds = async (req, res) => {
 
 
 exports.getCompletedProject = async (req, res) => {
-    let projects = await models.projects.findAll({ where: { status: 1 } });
+    let projects = await models.projects.findAll({ where: { isActive: true } });
     if (!projects) {
-        return res.status(404).json({ message: "data not found" })
+        return res.status(400).json({ message: "data not found" })
     } else {
-        return res.status(404).json({ message: "Project Data", result: projects })
+        return res.status(200).json({ message: "Project Data", result: projects })
     }
 }
 

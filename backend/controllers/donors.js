@@ -63,7 +63,10 @@ exports.getAllDonor = async (req, res) => {
     const data = await models.users.findAll({
         offset: offset,
         limit: pageSize,
-        where: searchQuery
+        where: searchQuery,
+        order: [
+            ['id', 'DESC']
+        ]
     })
     if (!data) {
         return res.status(400).json({
