@@ -17,13 +17,23 @@ import Paper from '@mui/material/Paper';
 import { FaRegEdit, FaRegEye } from 'react-icons/fa';
 import { BiLink } from 'react-icons/bi';
 import { AiOutlineDollarCircle } from 'react-icons/ai';
-
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import './project.css';
 import { getAllProjectAction } from '../../Redux/Actions/ProjectActions';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const ViewAllProjects = () => {
+  const [state, setState] = React.useState({
+    checked: true,
+    checkedB: true,
+  })
+
+  const handleChangeSwitch = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -136,32 +146,32 @@ const ViewAllProjects = () => {
       </div>
       <div className="ViewAll">
         <div className="white-box">
-        <div className="row" style={{ marginTop: '-1.5em' }}>
-        <div style={{ margin: '1em', marginRight: '0.5em' }}>
-          {/* <div className="input-box"> */}
-          <DatePicker
-            selected={startDate}
-            selectsStart
-            startDate={startDate}
-            endDate={endDate}
-            onChange={date => setStartDate(date)}
-            dateFormat="MMMM d, yyyy"
-          />
-        </div>
-        {/* </div> */}
-        <div style={{ margin: '1em 0.5em' }}>
-        {/* <div className="input-box"> */}
-        <DatePicker
-          selected={endDate}
-          selectsEnd
-          startDate={startDate}
-          endDate={endDate}
-          minDate={startDate}
-          onChange={date => setEndDate(date)}
-          dateFormat="MMMM d, yyyy"
-        />
-        {/* </div> */}
-        </div>
+          <div className="row" style={{ marginTop: '-1.5em' }}>
+            <div style={{ margin: '1em', marginRight: '0.5em' }}>
+              {/* <div className="input-box"> */}
+              <DatePicker
+                selected={startDate}
+                selectsStart
+                startDate={startDate}
+                endDate={endDate}
+                onChange={date => setStartDate(date)}
+                dateFormat="MMMM d, yyyy"
+              />
+            </div>
+            {/* </div> */}
+            <div style={{ margin: '1em 0.5em' }}>
+              {/* <div className="input-box"> */}
+              <DatePicker
+                selected={endDate}
+                selectsEnd
+                startDate={startDate}
+                endDate={endDate}
+                minDate={startDate}
+                onChange={date => setEndDate(date)}
+                dateFormat="MMMM d, yyyy"
+              />
+              {/* </div> */}
+            </div>
             <div className="search-btn">
               <button type="button" className="btn btn-primary">
                 Search
@@ -234,30 +244,19 @@ const ViewAllProjects = () => {
                           <TableCell align="center">{row.days_left}</TableCell>
                           <TableCell align="center">{row.recurring}</TableCell>
                           <TableCell align="center">
-                            <div className="custom-control custom-switch">
-                              <input
-                                type="checkbox"
-                                className="custom-control-input"
-                                id="customSwitch1"
-                              />
-                              <label
-                                className="custom-control-label"
-                                for="customSwitch1"
-                              />
+                            <div className="container">
+
+                              <div className="toggle-switch">
+                                <input type="checkbox" className="checkbox" />
+                                <label className="label">
+                                  <span className="inner" />
+                                  <span className="switch" />
+                                </label>
+                              </div>
                             </div>
                           </TableCell>
                           <TableCell align="center">
-                            <div className="custom-control custom-switch">
-                              <input
-                                type="checkbox"
-                                className="custom-control-input"
-                                id="customSwitch2"
-                              />
-                              <label
-                                className="custom-control-label"
-                                for="customSwitch2"
-                              />
-                            </div>
+
                           </TableCell>
                           <TableCell align="center">
                             <button
