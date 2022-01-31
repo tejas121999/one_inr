@@ -173,7 +173,7 @@ const AddNgo = props => {
 
   const onAddNgo = values => {
 
-    let newDate = moment(date).format("MMMM d, yyyy")
+    let newDate = moment(date).format("LL")
 
     const obj = {
       logo: logoImgUrl,

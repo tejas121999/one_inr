@@ -18,6 +18,8 @@ import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 import { useHistory } from "react-router-dom";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import moment from "moment";
+
 
 const EditNgo = props => {
   const dispatch = useDispatch();
@@ -28,7 +30,7 @@ const EditNgo = props => {
   const [deedImgUrl, setDeedImgUrl] = useState('');
  
   let history = useHistory();
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState();
   const textInput = useRef(null);
   const [addContactValues, setAddContactValues] = useState([]);
 
@@ -172,12 +174,14 @@ const EditNgo = props => {
 
   const onEditNgo = values => {
     //console.log("chin", values)
+
+    let newDate = moment(date).format("LL")
     const obj = {
       logo: logoImgUrl,
       name: values.name,
       address: values.address,
       email: values.email,
-      registrationDate: values.registrationDate,
+      registrationDate: newDate,
       registrationNumber: values.registrationNumber,
       mobile: values.mobileNumber,
       landline: values.landline,

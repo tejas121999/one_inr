@@ -13,12 +13,13 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import moment from "moment";
 
 const Editdonor = props => {
   const [donarData, setDonarData] = useState([]);
   const [parentId, setParentId] = useState('');
   const [userId, setUserId] = useState(0);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState();
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(() => {
@@ -60,15 +61,16 @@ const Editdonor = props => {
 
     let id = parentId && parentId.length ? parentId[0].id : 0;
 
+    let newDate = moment(date).format("LL")
     const obj = {
       name: values.fName + ' ' + values.lName,
       email: values.emailId,
       mobile: values.phoneNumber,
       parentId: id,
-      balanceNextRenewDate: values.date,
+      balanceNextRenewDate: newDate,
       plan: values.plan,
     };
-    console.log('Chinmay Update', obj);
+   
     dispatch(UpdateDonorByIdAction(userId, obj, props.history));
   };
 

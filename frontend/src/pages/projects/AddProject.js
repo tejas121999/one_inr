@@ -59,8 +59,8 @@ const AddProject = props => {
     const onProjectAdd = values => {
 
 
-        let start = moment(startDate).format("MMMM d, yyyy")
-        let end = moment(endDate).format("MMMM d, yyyy")
+        let start = moment(startDate).format("LL")
+        let end = moment(endDate).format("LL")
 
 
         const object = {

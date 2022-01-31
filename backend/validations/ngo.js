@@ -52,8 +52,6 @@ exports.ngoValidation = [
         .isLength({ min: 12 }).withMessage('Min length registration number is 12'),
 
     body('landline')
-        .exists().withMessage('landline number is Required')
-        .notEmpty().withMessage('landline Number is required')
         .custom(async (value) => {
             return await models.ngo.findOne({
                 where: { landline: value }

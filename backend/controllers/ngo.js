@@ -18,6 +18,7 @@ exports.addNgo = async (req, res) => {
     var new_date = moment().add(365, 'days').format()
     let { name, email, mobile, password, } = req.body;
     let { address, registrationDate, registrationNumber, landline, panCard, panNumber, certificate, charityRegistrationCertificate, logo, deed, signature, isKyc } = req.body;
+    registrationDate = moment(registrationDate).format("YYYY-MM-DD")
 
     const hash = await twinBcrypt.hashSync(password, saltRounds);
     var cBankData;
