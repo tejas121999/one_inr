@@ -72,7 +72,7 @@ const AddProject = props => {
             goal: values.goal,
             commission: values.commission,
             target: values.target,
-            funded: 1,
+            // funded: 1,
             startDate: start,
             endDate: end,
             isRecurring: values.recurring,

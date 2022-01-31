@@ -1,14 +1,12 @@
 import axios from '../../../src/utils/interceptor';
 import {
-  BASE_URL,
-  BASE_URL_DONOR,
-  BASE_URL_RECEIPT,
+  BASE_URL
 } from '../../API/APIEndpoints';
 
 function DonorServices() {
   //2. all donor Parent list
   this.getAllParentDonor = async () =>
-    await axios.get(BASE_URL_DONOR + 'donor/parents/');
+    await axios.get(BASE_URL + 'donor/parents/');
 
   // this.getDonorData = async () =>
   //   await axios.get(BASE_URL + 'donor/parents');
@@ -27,7 +25,7 @@ function DonorServices() {
     await axios.get(BASE_URL + `donor/?search=&from=${40}&to=${42}`);
 
   //5. view receipt
-  this.getViewReceipt = async () => await axios.get(BASE_URL_RECEIPT + '/');
+  this.getViewReceipt = async () => await axios.get(BASE_URL + 'userReceipts');
 
   //6. add donor fund
   this.AddDonorfund = async (id, body) =>
@@ -38,11 +36,11 @@ function DonorServices() {
     await axios.post(BASE_URL + 'userReceipts/', body);
 
   //7.b add user receipt
-  this.updateUserReceipt = async body =>
-    await axios.post(BASE_URL + 'userReceipts/update-user', body);
+  this.updateUserReceipt = async (body, id) =>
+    await axios.post(BASE_URL + `userReceipts/${id}`, body);
   //7.c search user receipt
   this.SearchReceiptByValue = async value =>
-    await axios.get(BASE_URL_RECEIPT + `/?search=${value}`);
+    await axios.get(BASE_URL + `/?search=${value}`);
 
   //8. VIEW_DONER_BY_ID
   this.viewDonorById = async id => await axios.delete(BASE_URL + `donor/${id}`);
