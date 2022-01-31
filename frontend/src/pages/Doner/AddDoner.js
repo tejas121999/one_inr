@@ -210,20 +210,35 @@ class Adddonor extends Component {
         <br />
         <br />
         <ToastContainer hideProgressBar />
-        <div className="card">
+        <div
+          className="row"
+          style={{
+            backgroundColor: 'white',
+            margin: '0 1.2em',
+            borderRadius: '1em',
+          }}
+        >
           <p
             style={{
               textAlign: 'left',
-              fontWeight: 'bold',
+              fontSize: '1.25rem',
               margin: '20px',
               width: '100%',
               marginLeft: '20px',
             }}
           >
-            ADD DONOR
+            Add Donor
           </p>
         </div>
-        <div style={{ backgroundColor: 'white', margin: '30px' }}>
+        <div
+          style={{
+            margin: '20px',
+            backgroundColor: 'white',
+            marginBottom: '5em',
+            borderRadius: '1.5em',
+          }}
+        >
+          {' '}
           <Formik
             initialValues={{
               fName: '',
@@ -240,173 +255,207 @@ class Adddonor extends Component {
             }}
           >
             {({ errors, values, touched }) => (
-              <Form>
-                <div className="row">
-                  <div className="col-6 ">
-                    <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                      <label style={{ fontWeight: 'bold' }}>Parent</label>
-                      <Field
-                        type="search"
-                        name="parent"
-                        placeholder="No Parent"
-                        className="form-control"
-                        value={values.parent}
-                        list="parentList"
-                        autocomplete="off"
-                        validate={this.validateParent}
-                      />
-                      <datalist id="parentList">
-                        <option value="No Parent">No Parent</option>
-                        {parentsList &&
-                          parentsList.length > 0 &&
-                          parentsList.map(data => {
-                            return <option value={data.name} />;
-                          })}
-                      </datalist>
+              <div className="w-100 mx-auto" style={{ padding: '4rem 10rem' }}>
+                <Form>
+                  <div className="row">
+                    <div className="col-6 ">
+                      <div style={{ padding: '15px 0 10px' }}>
+                        <label style={{ fontWeight: 'bold' }}>Parent</label>
+                        <Field
+                          type="search"
+                          name="parent"
+                          placeholder="No Parent"
+                          className="form-control"
+                          value={values.parent}
+                          list="parentList"
+                          autocomplete="off"
+                          validate={this.validateParent}
+                        />
+                        <datalist id="parentList">
+                          <option value="No Parent">No Parent</option>
+                          {parentsList &&
+                            parentsList.length > 0 &&
+                            parentsList.map(data => {
+                              return <option value={data.name} />;
+                            })}
+                        </datalist>
+                      </div>
+                    </div>
+                    <div className="col-6 ">
+                      <div style={{ padding: '15px 0 10px' }}>
+                        <label style={{ fontWeight: 'bold' }}>First Name</label>
+                        <Field
+                          className="form-control"
+                          placeholder="Please Enter First Name"
+                          name="fName"
+                          type="text"
+                          autocomplete="off"
+                          value={values.fName}
+                          validate={this.validateFname}
+                        />
+                        {errors.fName && touched.fName && (
+                          <div className="text-left">
+                            <span style={{ color: 'red' }}>{errors.fName}</span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                  <div className="col-6 ">
-                    <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                      <label style={{ fontWeight: 'bold' }}>First Name</label>
-                      <Field
-                        className="form-control"
-                        placeholder="Please Enter First Name"
-                        name="fName"
-                        type="text"
-                        autocomplete="off"
-                        value={values.fName}
-                        validate={this.validateFname}
-                      />
-                      {errors.fName && touched.fName && (
-                        <div className="text-left">
-                          <span style={{ color: 'red' }}>{errors.fName}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
 
-                <div className="row">
-                  <div className="col-6 ">
-                    <div className="input-box">
-                      <label style={{ fontWeight: 'bold' }}>Last Name</label>
-                      <Field
-                        className="form-control"
-                        placeholder="Please Enter Last Name"
-                        name="lName"
-                        type="text"
-                        autocomplete="off"
-                        value={values.lName}
-                        validate={this.validateLname}
-                      />
-                      {errors.lName && touched.lName && (
-                        <div className="text-left">
-                          <span style={{ color: 'red' }}>{errors.lName}</span>
-                        </div>
-                      )}
+                  <div className="row">
+                    <div className="col-6 ">
+                      <div style={{ padding: '15px 0 10px' }}>
+                        <label style={{ fontWeight: 'bold' }}>Last Name</label>
+                        <Field
+                          className="form-control"
+                          placeholder="Please Enter Last Name"
+                          name="lName"
+                          type="text"
+                          autocomplete="off"
+                          value={values.lName}
+                          validate={this.validateLname}
+                        />
+                        {errors.lName && touched.lName && (
+                          <div className="text-left">
+                            <span style={{ color: 'red' }}>{errors.lName}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-6 ">
+                      <div style={{ padding: '15px 0 10px' }}>
+                        <label style={{ fontWeight: 'bold' }}>
+                          Mobile Number
+                        </label>
+                        <Field
+                          className="form-control"
+                          placeholder="Please Enter Mobile Number"
+                          name="phoneNumber"
+                          type="text"
+                          autocomplete="off"
+                          maxLength={10}
+                          validate={this.validateMobile}
+                          value={values.phoneNumber}
+                        />
+                        {errors.phoneNumber && touched.phoneNumber && (
+                          <div className="text-left">
+                            <span style={{ color: 'red' }}>
+                              {errors.phoneNumber}
+                            </span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                  <div className="col-6 ">
-                    <div className="input-box">
-                      <label style={{ fontWeight: 'bold' }}>
-                        Mobile Number
-                      </label>
-                      <Field
-                        className="form-control"
-                        placeholder="Please Enter Mobile Number"
-                        name="phoneNumber"
-                        type="text"
-                        autocomplete="off"
-                        maxLength={10}
-                        validate={this.validateMobile}
-                        value={values.phoneNumber}
-                      />
-                      {errors.phoneNumber && touched.phoneNumber && (
-                        <div className="text-left">
-                          <span style={{ color: 'red' }}>
-                            {errors.phoneNumber}
-                          </span>
-                        </div>
-                      )}
+                  <div className="row">
+                    <div className="col-6 ">
+                      <div style={{ padding: '15px 0 10px' }}>
+                        <label style={{ fontWeight: 'bold' }}>Email Id</label>
+                        <Field
+                          className="form-control"
+                          placeholder="Please Enter Email"
+                          name="emailId"
+                          type="email"
+                          autocomplete="off"
+                          validate={this.validateEmail}
+                          value={values.emailId}
+                        />
+                        {errors.emailId && touched.emailId && (
+                          <div className="text-left">
+                            <span style={{ color: 'red' }}>
+                              {errors.emailId}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-6 ">
+                      <div style={{ padding: '15px 0 10px' }}>
+                        <label style={{ fontWeight: 'bold' }}>Password</label>
+                        <Field
+                          className="p-2 w-100"
+                          aria-invalid="false"
+                          placeholder="Create Password"
+                          name="password"
+                          type={
+                            this.state.isPasswordVisble ? 'text' : 'password'
+                          }
+                          autocomplete="off"
+                          validate={this.validatePassword}
+                          value={values.password}
+                        />
+                        <i
+                          className={`fa ${
+                            this.state.isPasswordVisble
+                              ? 'fa-eye-slash'
+                              : 'fa-eye'
+                          } `}
+                          id="togglePassword"
+                          style={{ marginLeft: '-30px', cursor: 'pointer' }}
+                          onMouseDown={this.handleMouseDownPassword}
+                        ></i>
+                        {errors.password && touched.password && (
+                          <div className="text-left">
+                            <span style={{ color: 'red' }}>
+                              {errors.password}
+                            </span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="row">
-                  <div className="col-6 ">
-                    <div className="input-box">
-                      <label style={{ fontWeight: 'bold' }}>Email Id</label>
-                      <Field
-                        className="form-control"
-                        placeholder="Please Enter Email"
-                        name="emailId"
-                        type="email"
-                        autocomplete="off"
-                        validate={this.validateEmail}
-                        value={values.emailId}
-                      />
-                      {errors.emailId && touched.emailId && (
-                        <div className="text-left">
-                          <span style={{ color: 'red' }}>{errors.emailId}</span>
-                        </div>
-                      )}
+                  <div className="row">
+                    <div className="col-6">
+                      <div style={{ padding: '15px 0 10px' }}>
+                        <a href="">Download and check format of sample CSV </a>
+                        <p style={{ fontWeight: 'bold' }}>
+                          Note: Before uploading CSV, make sure that each and
+                          every row in CSV must be unique.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="col-6">
+                      <div style={{ padding: '15px 0 10px' }}>
+                        <p style={{ fontWeight: 'bold' }}>
+                          Or You Can Upload CSV Only
+                        </p>
+                        <input
+                          onChange={e => this.onCsvAdd(e.target.files[0])}
+                          type="file"
+                          placeholder="Browse"
+                          accept=".csv"
+                        ></input>
+                      </div>
                     </div>
                   </div>
-                  <div className="col-6 ">
-                    <div className="input-box">
-                      <label style={{ fontWeight: 'bold' }}>Password</label>
-                      <Field
-                        className="p-2 w-100"
-                        aria-invalid="false"
-                        placeholder="Create Password"
-                        name="password"
-                        type={this.state.isPasswordVisble ? 'text' : 'password'}
-                        autocomplete="off"
-                        validate={this.validatePassword}
-                        value={values.password}
-                      />
-                      <i
-                        className={`fa ${
-                          this.state.isPasswordVisble
-                            ? 'fa-eye-slash'
-                            : 'fa-eye'
-                        } `}
-                        id="togglePassword"
-                        style={{ marginLeft: '-30px', cursor: 'pointer' }}
-                        onMouseDown={this.handleMouseDownPassword}
-                      ></i>
-                      {errors.password && touched.password && (
-                        <div className="text-left">
-                          <span style={{ color: 'red' }}>
-                            {errors.password}
-                          </span>
-                        </div>
-                      )}
+                  <div className="row">
+                    <div className="col-6">
+                      <div
+                        style={{
+                          padding: '15px 0 10px',
+                          display: 'flex',
+                          justifyContent: 'end',
+                        }}
+                      >
+                        <button className="btn btn-primary" type="submit">
+                          Add Donor
+                        </button>
+                      </div>
                     </div>
+                    {/* <div className="col-6">
+                        <div
+                          style={{
+                            padding: '15px 0 10px',
+                            display: 'flex',
+                            justifyContent: 'start',
+                          }}
+                        >
+                          <button className="btn btn-secondary">Cancel</button>
+                        </div>
+                      </div> */}
                   </div>
-                </div>
-
-                <div className="input-box">
-                  <p style={{ fontWeight: 'bold' }}>
-                    Or You Can Upload CSV Only
-                  </p>
-                  <input
-                    onChange={e => this.onCsvAdd(e.target.files[0])}
-                    type="file"
-                    placeholder="Browse"
-                    accept=".csv"
-                  ></input>
-                </div>
-                <div className="input-box">
-                  <a href="">Download and check format of sample CSV </a>
-                  <p style={{ fontWeight: 'bold' }}>
-                    Note: Before uploading CSV, make sure that each and every
-                    row in CSV must be unique.
-                  </p>
-                  <button type="submit" className="btn btn-success">
-                    Submit
-                  </button>
-                </div>
-              </Form>
+                </Form>
+              </div>
             )}
           </Formik>
         </div>

@@ -79,12 +79,19 @@ const RazorpayCredentials = () => {
       <br />
       <br />
       <br />
-      <div className="card" style={{ border: '0' }}>
+      <div
+        className="row"
+        style={{
+          backgroundColor: 'white',
+          margin: '0 1.2em',
+          borderRadius: '1em',
+        }}
+      >
         <div
           style={{
             display: 'flex',
-            padding: '15px',
-            justifyContent: 'space-between',
+            padding: '0.5em 1.7em',
+            width: '50%',
           }}
         >
           <p
@@ -92,16 +99,27 @@ const RazorpayCredentials = () => {
               textAlign: 'left',
               fontSize: '1.25rem',
               marginBottom: '0',
+              paddingTop: '3px',
             }}
           >
-            RAZORPAY CREDENTIALS
+            Razorpay Credentials
           </p>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            width: '50%',
+            padding: '0.5em 1.7em',
+          }}
+        >
           <Link
+            style={{ marginLeft: '1em', borderRadius: '2em', width: '45%' }}
             to="/razorpay_credentials/create"
             type="button"
             className="btn btn-primary"
           >
-            ADD RAZORPAY CREDENTIALS
+            Add Razorpay Credentials
           </Link>
         </div>
       </div>
@@ -111,36 +129,43 @@ const RazorpayCredentials = () => {
             margin: '20px',
             backgroundColor: 'white',
             marginBottom: '5em',
+            borderRadius: '1.5em',
           }}
         >
           <div
             style={{
               display: 'flex',
-              padding: '20px',
+              padding: '2em',
               justifyContent: 'end',
             }}
           >
-            <label style={{ fontWeight: '500' }}>
-              Search :
-              <input
-                type="search"
-                placeholder="Search"
-                style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
-                onChange={e => handleChange(e)}
-              />
-            </label>
+            <input
+              placeholder="Search"
+              onChange={e => handleChange(e)}
+              type="search"
+              style={{
+                paddingLeft: '1em',
+                border: '1px solid #ced4da',
+                borderRadius: '1.5em',
+                height: '2.2em',
+              }}
+            />
           </div>
-          <hr style={{ margin: '0' }} />
-          <Paper sx={{ width: '100%' }}>
-            <>
+          {/* <hr style={{ margin: '0' }} /> */}
+          <Paper
+            sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
+          >
+            {' '}
+            <React.Fragment>
               <TableContainer>
-                <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                <Table>
                   <EnhancedTableHead
                     numSelected={selected.length}
                     order={order}
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
                     rowCount={razorpayList.length}
+                    headCells={headCells}
                   />
                   <TableBody>
                     {stableSort(razorpayList, getComparator(order, orderBy))
@@ -217,13 +242,13 @@ const RazorpayCredentials = () => {
                 count={razorpayList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                pageSize={10}
+                // pageSize={10}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
                 showLastButton={true}
                 showFirstButton={true}
               />
-            </>
+            </React.Fragment>
           </Paper>
         </div>
       ) : (

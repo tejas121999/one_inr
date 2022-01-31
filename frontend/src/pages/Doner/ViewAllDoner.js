@@ -124,8 +124,6 @@ export default function EnhancedTable() {
   };
 
   const handleChangePage = (event, newPage) => {
-    console.log('ChinmayChange', newPage);
-
     setPage(newPage);
   };
 
@@ -193,7 +191,7 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => { });
+      .catch(err => {});
   };
   const downloadCsv = () => {
     fetch(CsvUrl)
@@ -207,7 +205,7 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => { });
+      .catch(err => {});
   };
   const downloadXls = () => {
     fetch(XlsUrl)
@@ -221,7 +219,7 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => { });
+      .catch(err => {});
   };
   const onPrintClick = () => {
     console.log(printDonorTable);
@@ -269,31 +267,50 @@ export default function EnhancedTable() {
       <ToastContainer hideProgressBar />
       <Addfund show={fundModal} onHide={fundModaClose} data={fundModalData} />
       <Donordelete show={deleteModal} onHide={deleteModalClose} id={deleteId} />
-      <nav className="navbar navbar-light">
-        <a className="navbar-brand">Donor List</a>
-        <form className="form-inline">
-          <div className="modalClass">
-            <Link to="/add_doner" type="" className="btn btn-primary">
-              Add Donor
-            </Link>
-          </div>
-        </form>
-      </nav>
       <div
+        className="row"
         style={{
-          margin: '20px',
           backgroundColor: 'white',
+          margin: '0 1.2em',
+          borderRadius: '1em',
         }}
       >
         <div
           style={{
             display: 'flex',
-            padding: '20px',
-            justifyContent: 'space-between',
+            width: '50%',
+            padding: '0.5em 1.7em',
           }}
         >
+          <p
+            style={{
+              textAlign: 'left',
+              fontSize: '1.25rem',
+              marginBottom: '0',
+              paddingTop: '3px',
+            }}
+          >
+            Donor List
+          </p>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            width: '50%',
+            padding: '0.5em 1.7em',
+          }}
+        >
+          <Link
+            to="/add_doner"
+            type="button"
+            className="btn btn-primary"
+            style={{ borderRadius: '2em', width: '25%' }}
+          >
+            Add Donor
+          </Link>
           <button
-            style={{ alignSelf: 'flex-start' }}
+            style={{ marginLeft: '1em', borderRadius: '2em', width: '15%' }}
             className="btn btn-primary"
             onClick={e => handleClick(e)}
           >
@@ -343,22 +360,42 @@ export default function EnhancedTable() {
             </MenuItem>
             {/* <MenuItem></MenuItem> */}
           </Menu>
-
-          <input
-            placeholder="Search"
-            onChange={e => handleChange(e)}
-            type="search"
-          />
         </div>
-        <Paper sx={{ width: '100%', mb: 2 }}>
-          {donorList && donorList.length > 0 ? (
+      </div>
+      {donorList && donorList.length > 0 ? (
+        <div
+          style={{
+            margin: '20px',
+            backgroundColor: 'white',
+            marginBottom: '5em',
+            borderRadius: '1.5em',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              padding: '2em',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <input
+              placeholder="Search"
+              onChange={e => handleChange(e)}
+              type="search"
+              style={{
+                paddingLeft: '1em',
+                border: '1px solid #ced4da',
+                borderRadius: '1.5em',
+                height: '2.2em',
+              }}
+            />
+          </div>
+          <Paper
+            sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
+          >
             <React.Fragment>
               <TableContainer id="tableDiv">
-                <Table
-                  sx={{ minWidth: 750 }}
-                  aria-labelledby="tableTitle"
-                  size={dense ? 'small' : 'medium'}
-                >
+                <Table>
                   <EnhancedTableHead
                     numSelected={selected.length}
                     order={order}
@@ -449,7 +486,7 @@ export default function EnhancedTable() {
                 </Table>
               </TableContainer>
               <TablePagination
-                rowsPerPageOptions={[50, 100, 150]}
+                rowsPerPageOptions={[5, 10, 25, 50, 100]}
                 component="div"
                 count={donorList.length}
                 rowsPerPage={rowsPerPage}
@@ -461,19 +498,19 @@ export default function EnhancedTable() {
                 showFirstButton={true}
               />
             </React.Fragment>
-          ) : (
-            <Loader />
-          )}
-        </Paper>
-        <ViewAllDonorTable
-          printDonorTable={printDonorTable}
-          tableData={stableSort(donorList, getComparator(order, orderBy)).slice(
-            page * rowsPerPage,
-            page * rowsPerPage + rowsPerPage,
-          )}
-          setPrintDonorValue={setPrintDonorValue}
-        ></ViewAllDonorTable>
-      </div>
+          </Paper>
+          <ViewAllDonorTable
+            printDonorTable={printDonorTable}
+            tableData={stableSort(
+              donorList,
+              getComparator(order, orderBy),
+            ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+            setPrintDonorValue={setPrintDonorValue}
+          ></ViewAllDonorTable>
+        </div>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 }
@@ -487,25 +524,25 @@ const headCells = [
   },
   {
     id: 'donated',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Donated',
   },
   {
     id: 'balance',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Balance',
   },
   {
     id: 'projects',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Projects',
   },
   {
     id: 'action',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Action',
   },

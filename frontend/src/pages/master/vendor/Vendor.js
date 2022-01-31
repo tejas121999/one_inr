@@ -404,7 +404,7 @@ export default function EnhancedTable() {
                 </Table>
               </TableContainer>
               <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={[5, 10, 25, 50, 100]}
                 component="div"
                 count={donorList.length}
                 rowsPerPage={rowsPerPage}
