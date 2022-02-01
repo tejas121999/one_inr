@@ -80,7 +80,7 @@ const CreateReceiptForm = ({ modal, handleModal, type, id }) => {
         branch: '',
         receiptNumber: '',
       };
-      let editUrl = `http://newoneinr.nimapinfotech.com/api/userReceipts/${id}`;
+      let editUrl = BASE_URL + `/userReceipts/${id}`;
       await axios
         .put(editUrl, CreateReceiptEditBody)
         .then(res => {
@@ -226,9 +226,9 @@ const CreateReceiptForm = ({ modal, handleModal, type, id }) => {
                         type="radio"
                         className="form-check-input"
                         value="cash"
-                        // value={values.Transaction}
-                        // onChange={handleChange}
-                        // onBlur={handleBlur}
+                      // value={values.Transaction}
+                      // onChange={handleChange}
+                      // onBlur={handleBlur}
                       />
                       <label className="form-check-label ml-1">cash</label>
                     </div>
@@ -238,9 +238,9 @@ const CreateReceiptForm = ({ modal, handleModal, type, id }) => {
                         type="radio"
                         className="form-check-input"
                         value="online"
-                        // value={values.Transaction}
-                        // onChange={handleChange}
-                        // onBlur={handleBlur}
+                      // value={values.Transaction}
+                      // onChange={handleChange}
+                      // onBlur={handleBlur}
                       />
                       <label className="form-check-label ml-1">online</label>
                     </div>
@@ -250,9 +250,9 @@ const CreateReceiptForm = ({ modal, handleModal, type, id }) => {
                         type="radio"
                         className="form-check-input"
                         value="neft"
-                        // value={values.Transaction}
-                        // onChange={handleChange}
-                        // onBlur={handleBlur}
+                      // value={values.Transaction}
+                      // onChange={handleChange}
+                      // onBlur={handleBlur}
                       />
                       <label className="form-check-label ml-1">neft</label>
                     </div>
@@ -262,9 +262,9 @@ const CreateReceiptForm = ({ modal, handleModal, type, id }) => {
                         type="radio"
                         className="form-check-input"
                         value="Cheque"
-                        // value={values.Transaction}
-                        // onChange={handleChange}
-                        // onBlur={handleBlur}
+                      // value={values.Transaction}
+                      // onChange={handleChange}
+                      // onBlur={handleBlur}
                       />
                       <label className="form-check-label ml-1">Cheque</label>
                     </div>

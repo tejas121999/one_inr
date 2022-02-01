@@ -15,13 +15,14 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from "moment";
 
-const Editdonor = props => {
+const EditDoner = props => {
   const [donarData, setDonarData] = useState([]);
   const [parentId, setParentId] = useState('');
   const [userId, setUserId] = useState(0);
   const [date, setDate] = useState();
   const dispatch = useDispatch();
-  const history = useHistory();
+
+
   useEffect(() => {
     async function onMount() {
       setDonarData(props.location.state);
@@ -43,17 +44,6 @@ const Editdonor = props => {
     }
   }, [parentList]);
 
-  const validationSchema = yup.object({
-    fName: yup.string().required('Required'),
-    lName: yup.string().required('required'),
-    phoneNumber: yup
-      .string()
-      .required('required')
-      .min(10, 'Please enter 10 digits'),
-    emailId: yup.string().email('Invalid Email Format').required('Required'),
-    plan: yup.string().required('Required'),
-    date: yup.date().required('Required'),
-  });
 
   const onUpdate = async values => {
     const url = BASE_URL + `donor/${userId}`;
@@ -70,7 +60,7 @@ const Editdonor = props => {
       balanceNextRenewDate: newDate,
       plan: values.plan,
     };
-   
+
     dispatch(UpdateDonorByIdAction(userId, obj, props.history));
   };
 
@@ -87,10 +77,7 @@ const Editdonor = props => {
       <div
         style={{ backgroundColor: 'white', height: '100vh', margin: '30px' }}
       >
-        {console.log(
-          'render',
-          props.location.state.name.split(' ').slice(0, -1).toString(),
-        )}
+
         <Formik
           initialValues={{
             fName: props.location.state.name.split(' ').slice(0, -1).toString(),
@@ -107,7 +94,7 @@ const Editdonor = props => {
             //       .toString()
             //   : '',
           }}
-          validationSchema={validationSchema}
+          // validationSchema={validationSchema}
           enableReinitialize={true}
           onSubmit={values => onUpdate(values)}
         >
@@ -127,11 +114,6 @@ const Editdonor = props => {
                     />
                     <datalist id="parentList">
                       <option value="No Parent">No Parent</option>
-                      {parentList &&
-                        parentList.length > 0 &&
-                        parentList.map(data => {
-                          return <option value={data.name} />;
-                        })}
                     </datalist>
                   </div>
                 </div>
@@ -144,11 +126,7 @@ const Editdonor = props => {
                       className="form-control"
                       required
                     />
-                    {errors.fName && touched.fName && (
-                      <div className="text-left">
-                        <span style={{ color: 'red' }}>{errors.fName}</span>
-                      </div>
-                    )}
+
                   </div>
                 </div>
               </div>
@@ -163,11 +141,7 @@ const Editdonor = props => {
                       value={values.lName}
                       required
                     />
-                    {errors.lName && touched.lName && (
-                      <div className="text-left">
-                        <span style={{ color: 'red' }}>{errors.lName}</span>
-                      </div>
-                    )}
+
                   </div>
                 </div>
                 <div className="col-6 py-3">
@@ -179,13 +153,7 @@ const Editdonor = props => {
                       value={values.phoneNumber}
                       required
                     />
-                    {errors.phoneNumber && touched.phoneNumber && (
-                      <div className="text-left">
-                        <span style={{ color: 'red' }}>
-                          {errors.phoneNumber}
-                        </span>
-                      </div>
-                    )}
+
                   </div>
                 </div>
               </div>
@@ -199,11 +167,7 @@ const Editdonor = props => {
                       value={values.emailId}
                       required
                     />
-                    {errors.emailId && touched.emailId && (
-                      <div className="text-left">
-                        <span style={{ color: 'red' }}>{errors.emailId}</span>
-                      </div>
-                    )}
+
                   </div>
                 </div>
                 <div className="col-6 py-3">
@@ -216,11 +180,7 @@ const Editdonor = props => {
                       required
                       value={values.plan}
                     />
-                    {errors.plan && touched.plan && (
-                      <div className="text-left">
-                        <span style={{ color: 'red' }}>{errors.plan}</span>
-                      </div>
-                    )}
+
                   </div>
                 </div>
               </div>
@@ -231,18 +191,14 @@ const Editdonor = props => {
                       Next Renewal Date
                     </label>
                     <DatePicker
-                    name="nextRenewalDate"
-                    // value={values.nextRenewalDate}
-                    required
-                    selected={date}
-                    onChange={date => setDate(date)}
-                    dateFormat="MMMM d, yyyy"
-                  />
-                    {errors.date && touched.date && (
-                      <div className="text-left">
-                        <span style={{ color: 'red' }}>{errors.date}</span>
-                      </div>
-                    )}
+                      name="nextRenewalDate"
+                      // value={values.nextRenewalDate}
+                      required
+                      selected={date}
+                      onChange={date => setDate(date)}
+                      dateFormat="MMMM d, yyyy"
+                    />
+
                   </div>
                 </div>
               </div>
@@ -258,7 +214,8 @@ const Editdonor = props => {
         </Formik>
       </div>
     </React.Fragment>
-  );
+
+  )
 };
 
-export default Editdonor;
+export default EditDoner;
