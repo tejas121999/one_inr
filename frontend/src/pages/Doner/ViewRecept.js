@@ -169,7 +169,7 @@ export default function ViewRecept() {
     }
   };
   const getDonorbyId = async id => {
-    let getViewUrl = (`http://144.91.79.237:8901/api/userReceipts/${id}`);
+    let getViewUrl = `http://144.91.79.237:8901/api/userReceipts/${id}`;
     await axios
       .get(getViewUrl)
       .then(response => {
@@ -383,7 +383,7 @@ export default function ViewRecept() {
                             </TableCell>
                             <TableCell
                               id={labelId}
-                              align="left"
+                              align="center"
                               // scope="row"
                               // padding="none"
                             >
@@ -399,7 +399,7 @@ export default function ViewRecept() {
                             </TableCell>
                             <TableCell
                               id={labelId}
-                              align="left"
+                              align="center"
                               // scope="row"
                               // padding="none"
                             >
