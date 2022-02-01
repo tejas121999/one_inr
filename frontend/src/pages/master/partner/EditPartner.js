@@ -13,7 +13,7 @@ import { Modal } from 'react-bootstrap';
 import { BASE_URL, Local } from '../../../API/APIEndpoints';
 import axios from '../../../utils/interceptor';
 import Loader from '../../Loader';
-
+import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -121,6 +121,7 @@ const EditPartner = props => {
             style={{
               textAlign: 'left',
               fontSize: '1.25rem',
+              fontWeight: '600',
               margin: '20px',
               width: '100%',
               marginLeft: '20px',
@@ -446,22 +447,37 @@ const EditPartner = props => {
                               justifyContent: 'end',
                             }}
                           >
-                            <button className="btn btn-primary" type="submit">
-                              Update Partner
+                            <button
+                              className="btn btn-primary"
+                              type="submit"
+                              style={{ width: '6rem', borderRadius: '0.4em' }}
+                            >
+                              Update
                             </button>
                           </div>
                         </div>
-                        {/* <div className="col-6">
-                        <div
-                          style={{
-                            padding: '15px',
-                            display: 'flex',
-                            justifyContent: 'start',
-                          }}
-                        >
-                          <button className="btn btn-secondary">Cancel</button>
+                        <div className="col-6">
+                          <div
+                            style={{
+                              padding: '15px',
+                              display: 'flex',
+                              justifyContent: 'start',
+                            }}
+                          >
+                            <Link to="/partner">
+                              <button
+                                className="btn"
+                                style={{
+                                  color: 'white',
+                                  backgroundColor: 'darkgray',
+                                  borderRadius: '0.4em',
+                                }}
+                              >
+                                Cancel
+                              </button>
+                            </Link>
+                          </div>
                         </div>
-                      </div> */}
                       </div>
                     </Form>
                   </div>

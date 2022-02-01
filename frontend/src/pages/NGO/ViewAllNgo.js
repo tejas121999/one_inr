@@ -171,11 +171,12 @@ const ViewAllNgo = () => {
             style={{
               textAlign: 'left',
               fontSize: '1.25rem',
+              fontWeight: '600',
               marginBottom: '0',
               paddingTop: '3px',
             }}
           >
-            LIST OF ALL NGO
+            List Of All Ngo
           </p>
         </div>
         <div
@@ -304,12 +305,7 @@ const ViewAllNgo = () => {
                             key={row.name}
                             selected={isItemSelected}
                           >
-                            <TableCell
-                              id={labelId}
-                              align="center"
-                              scope="row"
-                              padding="none"
-                            >
+                            <TableCell id={labelId} align="left">
                               {row.user.name}
                             </TableCell>
                             <TableCell align="center">{row.pending}</TableCell>

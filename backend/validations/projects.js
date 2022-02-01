@@ -1,34 +1,123 @@
 const { body } = require("express-validator");
+const models = require('../models')
 
 
-exports.projectValidation = [
+exports.addProjectValidation = [
+
+    body('userId')
+        .exists().withMessage('UserId is Required')
+        .notEmpty().withMessage('UserId is Required')
+        .isNumeric().withMessage('UserID must have a numeric value'),
 
     body('title')
         .exists().withMessage('Title is Required')
         .notEmpty().withMessage('Title is Required'),
 
     body('description')
-        .exists().withMessage('description is Required')
-        .notEmpty().withMessage('description is Required'),
+        .exists().withMessage('Description is Required')
+        .notEmpty().withMessage('Description is Required')
+        .isLength({ min: 1, max: 200 }).withMessage('Max length of description is 200'),
+
+    body('longDesc')
+        .exists().withMessage('Description is Required')
+        .notEmpty().withMessage('Description is Required'),
+
+    body('videoLink')
+        .exists().withMessage('Video Url is Required')
+        .notEmpty().withMessage('Video Url is Required')
+        .isURL()
+        .withMessage('is invalid'),
 
     body('goal')
-        .exists().withMessage('goal is Required')
-        .notEmpty().withMessage('goal is Required')
-        .isNumeric().withMessage('Only Number required')
-        
-    // body('commission')
-    //     .exists().withMessage('commission is Required')
-    //     .notEmpty().withMessage('commission is Required')
-    //     .isNumeric().withMessage('Only Number required')
+        .exists().withMessage('Goal is Required')
+        .notEmpty().withMessage('Goal is Required')
+        .isNumeric().withMessage('Goal must have a numeric value'),
+
+    body('commission')
+        .exists().withMessage('Commission is Required')
+        .notEmpty().withMessage('Commission is Required')
+        .isNumeric().withMessage('Commission must have a numeric value'),
+
+
+    body('startDate')
+        .exists().withMessage('Start Date is Required')
+        .notEmpty().withMessage('Start Date is Required')
+        .isDate().withMessage('Invalid! Enter date in YY-MM-DD Format'),
+
+
+    body('endDate')
+        .exists().withMessage('EndDate is Required')
+        .notEmpty().withMessage('EndDate is Required')
+        .isDate().withMessage('Invalid! Enter date in YY-MM-DD Format'),
+
+
+    // body('recurringDays')
+    //     .exists().withMessage('RecurringDays is Required')
+    //     .notEmpty().withMessage('RecurringDays is Required')
+    //     .isNumeric().withMessage('Only Number required'),
+    //
+    body('isRecurring')
+        .exists().withMessage('isRecurring is Required')
+        .isBoolean().withMessage('Must be a boolean true or false')
+        .custom(async (value, { req }) => {
+            if (value === true) {
+                if (!req.body.recurringDays || req.body.recurringDays === undefined || req.body.recurringDays.length === 0) {
+                    return Promise.reject("Recurring Days is Required");
+                }
+                if (!Number.isInteger(req.body.recurringDays)) {
+                    return Promise.reject("Recurring Days must have a numeric value");
+                }
+            }
+
+        })
+
+
+
 ]
 
 
 
 exports.projectImageValidation = [
 
-    body('projectImage')
-        .exists().withMessage('Project Image Name is required')
-        .notEmpty().withMessage('Project Image Name is required'),
+    body('banner')
+        .exists().withMessage('Banner Image is required')
+        .notEmpty().withMessage('Banner Image is required'),
+
+    body('cover')
+        .exists().withMessage('Cover Image is required')
+        .notEmpty().withMessage('Cover Image is required'),
+
+
+    body('mobile')
+        .exists().withMessage('Mobile Image is required')
+        .notEmpty().withMessage('Mobile Image is required'),
+
+    body('slider1')
+        .exists().withMessage('slider1 Image is required')
+        .notEmpty().withMessage('slider1 Image is required'),
+
+    body('slider2')
+        .exists().withMessage('slider2 Image is required')
+        .notEmpty().withMessage('slider2 Image is required'),
+
+    body('slider3')
+        .exists().withMessage('slider3 Image is required')
+        .notEmpty().withMessage('slider3 Image is required'),
+
+    body('slider4')
+        .exists().withMessage('slider4 Image is required')
+        .notEmpty().withMessage('slider4 Image is required'),
+
+    body('slider5')
+        .exists().withMessage('slider5 Image is required')
+        .notEmpty().withMessage('slider5 Image is required'),
+
+    body('slider6')
+        .exists().withMessage('slider6 Image is required')
+        .notEmpty().withMessage('slider6 Image is required'),
+
+
+
 
     // body('imageType')
     //     .notEmpty().withMessage('Image is required')

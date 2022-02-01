@@ -19,153 +19,159 @@ const Dashboard = () => {
       <br />
       <br />
       <br />
-      <div style={{ backgroundColor: '#31313' }}>
-        <div className="card" style={{ border: '0' }}>
-          <div
-            style={{
-              display: 'flex',
-              padding: '15px',
-            }}
-          >
-            <p
-              style={{
-                textAlign: 'left',
-                // fontWeight: 'bold',
-                fontSize: 'x-large',
-                marginBottom: '0',
-              }}
-            >
-              DASHBOARD
-            </p>
-          </div>
-        </div>
-        <div style={{ margin: '30px', marginBottom: '0' }} className="card">
-          <p
-            style={{
-              textAlign: 'left',
-              fontWeight: 'bold',
-              width: '100%',
-              padding: '30px',
-              fontSize: 'xx-large',
-            }}
-          >
-            DAILY FUNDS
-          </p>
-        </div>
+      {/* <div style={{ backgroundColor: '#31313' }}> */}
+      <div
+        className="row"
+        style={{
+          backgroundColor: 'white',
+          margin: '0 1.2em',
+          borderRadius: '1em',
+        }}
+      >
+        <p
+          style={{
+            textAlign: 'left',
+            fontWeight: '600',
+            fontSize: '1.25rem',
+            margin: '20px',
+            width: '100%',
+            marginLeft: '20px',
+          }}
+        >
+          Dashboard
+        </p>
+      </div>
+      <div
+        style={{
+          margin: '20px',
+          backgroundColor: 'white',
+          marginBottom: '5em',
+          borderRadius: '1.5em',
+        }}
+      >
+        <p
+          style={{
+            textAlign: 'left',
+            fontWeight: '600',
+            // width: '100%',
+            padding: '20px',
+            fontSize: '1.25rem',
+          }}
+        >
+          Daily Funds
+        </p>
         <div style={{ margin: '0px 30px' }}>
           <div className="row">
-            <div className="col">
-              {' '}
-              <div className="datCard">
+            <div
+              style={{
+                marginBottom: '24rem',
+                display: 'flex',
+                flexDirection: 'row',
+                position: 'relative',
+                border: '2px solid lightcyan',
+                borderRadius: '1.5rem',
+                width: '100%',
+              }}
+            >
+              <div className="col" style={{ paddingRight: '0px' }}>
+                {' '}
                 <p
                   style={{
-                    textAlign: 'left',
+                    textAlign: 'center',
                     fontSize: 'x-large',
-                    width: '80%',
-                    padding: '30px',
+                    padding: '20px 20px 5px',
+                    fontWeight: '700',
+                    color: 'darkorange',
+                  }}
+                >
+                  169
+                </p>
+                <p
+                  style={{
+                    textAlign: 'center',
+                    fontSize: 'large',
+                    paddingBottom: '20px',
+                    fontWeight: '600',
                   }}
                 >
                   Total Funds
                 </p>
-
+              </div>
+              <div className="col" style={{ padding: '0px 0px 5px' }}>
+                {' '}
                 <p
                   style={{
                     textAlign: 'center',
                     fontSize: 'x-large',
-                    padding: '30px',
-                    fontWeight: 'bold',
+                    padding: '20px 20px 5px',
+                    fontWeight: '700',
+                    color: 'cornflowerblue',
                   }}
                 >
                   169
                 </p>
-              </div>
-            </div>
-            <div className="col">
-              {' '}
-              <div className="datCard">
                 <p
                   style={{
-                    textAlign: 'left',
-                    fontSize: 'x-large',
-                    width: '80%',
-                    padding: '30px',
+                    textAlign: 'center',
+                    fontSize: 'large',
+                    paddingBottom: '20px',
+                    fontWeight: '600',
                   }}
                 >
                   Pending Funds
                 </p>
-
+              </div>
+              <div className="col" style={{ padding: '0px 0px 5px' }}>
                 <p
                   style={{
                     textAlign: 'center',
                     fontSize: 'x-large',
-                    padding: '30px',
-                    fontWeight: 'bold',
+                    padding: '20px 20px 5px',
+                    fontWeight: '700',
+                    color: 'darkorchid',
                   }}
                 >
                   169
                 </p>
-              </div>
-            </div>
-            <div className="col">
-              {' '}
-              <div className="datCard">
                 <p
                   style={{
-                    textAlign: 'left',
-                    fontSize: 'x-large',
-                    width: '80%',
-                    padding: '30px',
+                    textAlign: 'center',
+                    fontSize: 'large',
+                    paddingBottom: '20px',
+                    fontWeight: '600',
                   }}
                 >
                   Used Funds
                 </p>
-
+              </div>
+              <div className="col-4" style={{ paddingLeft: '0px' }}>
                 <p
                   style={{
                     textAlign: 'center',
                     fontSize: 'x-large',
-                    padding: '30px',
-                    fontWeight: 'bold',
+                    padding: '20px 20px 5px',
+                    fontWeight: '700',
+                    color: 'chartreuse',
                   }}
                 >
                   169
                 </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div style={{ margin: '0px 30px' }}>
-          <div className="row" style={{ marginBottom: '5rem' }}>
-            <div className="col-4">
-              {' '}
-              <div className="datCard" style={{ marginTop: '0% !important' }}>
                 <p
                   style={{
-                    textAlign: 'left',
-                    fontSize: 'x-large',
-                    width: '80%',
-                    padding: '30px',
+                    textAlign: 'center',
+                    fontSize: 'large',
+                    paddingBottom: '20px',
+                    fontWeight: '600',
                   }}
                 >
                   Upcoming Donor Renewal
-                </p>
-
-                <p
-                  style={{
-                    textAlign: 'center',
-                    fontSize: 'x-large',
-                    padding: '30px',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  169
                 </p>
               </div>
             </div>
           </div>
         </div>
       </div>
+      {/* </div> */}
     </React.Fragment>
   );
 };

@@ -10,7 +10,7 @@ import {
   addDonorBulkAction,
 } from '../../Redux/Actions/DonorActions';
 import { connect } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 import { BASE_URL } from '../../API/APIEndpoints';
 
 import { toast, ToastContainer } from 'react-toastify';
@@ -222,6 +222,7 @@ class Adddonor extends Component {
             style={{
               textAlign: 'left',
               fontSize: '1.25rem',
+              fontWeight: '600',
               margin: '20px',
               width: '100%',
               marginLeft: '20px',
@@ -373,7 +374,7 @@ class Adddonor extends Component {
                       <div style={{ padding: '15px 0 10px' }}>
                         <label style={{ fontWeight: 'bold' }}>Password</label>
                         <Field
-                          className="p-2 w-100"
+                          className="form-control"
                           aria-invalid="false"
                           placeholder="Create Password"
                           name="password"
@@ -391,7 +392,14 @@ class Adddonor extends Component {
                               : 'fa-eye'
                           } `}
                           id="togglePassword"
-                          style={{ marginLeft: '-30px', cursor: 'pointer' }}
+                          style={{
+                            float: 'right',
+                            marginLeft: '-25px',
+                            marginTop: '-27px',
+                            marginRight: '10px',
+                            position: 'relative',
+                            zIndex: '2',
+                          }}
                           onMouseDown={this.handleMouseDownPassword}
                         ></i>
                         {errors.password && touched.password && (
@@ -404,30 +412,51 @@ class Adddonor extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-6">
-                      <div style={{ padding: '15px 0 10px' }}>
-                        <a href="">Download and check format of sample CSV </a>
-                        <p style={{ fontWeight: 'bold' }}>
-                          Note: Before uploading CSV, make sure that each and
-                          every row in CSV must be unique.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="col-6">
-                      <div style={{ padding: '15px 0 10px' }}>
-                        <p style={{ fontWeight: 'bold' }}>
-                          Or You Can Upload CSV Only
-                        </p>
-                        <input
-                          onChange={e => this.onCsvAdd(e.target.files[0])}
-                          type="file"
-                          placeholder="Browse"
-                          accept=".csv"
-                        ></input>
-                      </div>
-                    </div>
-                  </div>
+                  {/* <div> */}
+                  <p
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: '1.5em',
+                      textAlign: 'center',
+                      margin: '0.7em 0',
+                    }}
+                  >
+                    Or
+                  </p>
+                  {/* <div className="col-6"> */}
+                  {/* <div style={{ padding: '10px 0 10px' }}> */}
+                  <p style={{ fontWeight: 'bold', textAlign: 'center' }}>
+                    You Can Upload CSV Only
+                  </p>
+                  <center>
+                    <input
+                      onChange={e => this.onCsvAdd(e.target.files[0])}
+                      type="file"
+                      placeholder="Browse"
+                      accept=".csv"
+                      style={{ width: '14rem', marginBottom: '1.5em' }}
+                    ></input>
+                  </center>
+                  {/* </div> */}
+                  {/* </div> */}
+                  {/* <div className="col-6"> */}
+                  {/* <div style={{ padding: '15px 0 10px' }}> */}
+                  <center>
+                    <a href="">Download and check format of sample CSV </a>
+                  </center>
+                  <p
+                    style={{
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                      marginBottom: '1.5em',
+                    }}
+                  >
+                    Note: Before uploading CSV, make sure that each and every
+                    row in CSV must be unique.
+                  </p>
+                  {/* </div> */}
+                  {/* </div> */}
+                  {/* </div> */}
                   <div className="row">
                     <div className="col-6">
                       <div
@@ -437,22 +466,37 @@ class Adddonor extends Component {
                           justifyContent: 'end',
                         }}
                       >
-                        <button className="btn btn-primary" type="submit">
-                          Add Donor
+                        <button
+                          className="btn btn-primary"
+                          style={{ width: '6rem', borderRadius: '0.4em' }}
+                          type="submit"
+                        >
+                          Add
                         </button>
                       </div>
                     </div>
-                    {/* <div className="col-6">
-                        <div
-                          style={{
-                            padding: '15px 0 10px',
-                            display: 'flex',
-                            justifyContent: 'start',
-                          }}
-                        >
-                          <button className="btn btn-secondary">Cancel</button>
-                        </div>
-                      </div> */}
+                    <div className="col-6">
+                      <div
+                        style={{
+                          padding: '15px 0 10px',
+                          display: 'flex',
+                          justifyContent: 'start',
+                        }}
+                      >
+                        <Link to="/view_all_doner">
+                          <button
+                            className="btn"
+                            style={{
+                              color: 'white',
+                              backgroundColor: 'darkgray',
+                              borderRadius: '0.4em',
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </Link>
+                      </div>
+                    </div>
                   </div>
                 </Form>
               </div>

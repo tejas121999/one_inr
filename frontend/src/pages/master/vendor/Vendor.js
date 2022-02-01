@@ -240,6 +240,7 @@ export default function EnhancedTable() {
             style={{
               textAlign: 'left',
               fontSize: '1.25rem',
+              fontWeight: '600',
               marginBottom: '0',
               paddingTop: '3px',
             }}
@@ -368,15 +369,15 @@ export default function EnhancedTable() {
                           <TableRow hover tabIndex={-1} key={row.name}>
                             <TableCell
                               id={labelId}
-                              align="center"
-                              scope="row"
-                              padding="none"
+                              align="left"
+                              // scope="row"
+                              // padding="none"
                             >
                               {row.name}
                             </TableCell>
-                            <TableCell align="center">{row.company}</TableCell>
+                            <TableCell align="left">{row.company}</TableCell>
                             <TableCell align="center">{row.phone}</TableCell>
-                            <TableCell align="center">{row.email}</TableCell>
+                            <TableCell align="left">{row.email}</TableCell>
                             <TableCell align="center">{row.gst}</TableCell>
                             <TableCell align="center">
                               <button

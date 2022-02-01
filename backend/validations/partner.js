@@ -1,35 +1,67 @@
 const { body } = require("express-validator");
+const models = require('../models')
 
 
 exports.partnerValidation = [
 
     body('name')
-        .exists().withMessage('name is Required')
-        .notEmpty().withMessage('name is Required'),
+        .exists().withMessage('Name is Required.')
+        .notEmpty().withMessage('Name is Required.')
+        .matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic.'),
+
     body('phone')
-        .exists().withMessage('Phone number is Required')
-        .notEmpty().withMessage('Phone number is Required'),
+        .exists().withMessage('Mobile is Required')
+        .notEmpty().withMessage('Mobile is Required')
+        .custom(async value => {
+            if (!/^[0-9]{10}$/i.test(value)) {
+                return Promise.reject("Invalid mobile number");
+            }
+        }),
     body('email')
         .exists().withMessage('Email is Required')
         .notEmpty().withMessage('Email is Required')
-        .isEmail().withMessage('Email Required'),
+        .isEmail().withMessage('Invalid Email')
+        .isLength({ min: 5, max: 50 }).withMessage('Max length of emails is 50'),
+
     body('gstNumber')
-        .exists().withMessage('GST Number is Required')
-        .notEmpty().withMessage('GST Number is Required'),
+        .exists().withMessage('Gst Number is required')
+        .notEmpty().withMessage('Gst Number is required'),
+
     body('panNumber')
-        .exists().withMessage('PAN Number is Required')
-        .notEmpty().withMessage('PAN Number is Required'),
+        .exists().withMessage('Pan Number is required')
+        .notEmpty().withMessage('Pan Number is required')
+        .custom(async value => {
+            if (!/^([A-Z]){5}([0-9]){4}([A-Z]){1}$/i.test(value)) {
+                return Promise.reject("Invalid pan number");
+            }
+        })
+        .custom(async value => {
+            return await models.partners.findOne({
+                where: {
+                    panNumber: value,
+                }
+            }).then(panNumber => {
+                if (panNumber) {
+                    return Promise.reject("Pan number alredy exists!");
+                }
+            })
+        }),
+
     body('gstImage')
-        .exists().withMessage('GST image is Required')
-        .notEmpty().withMessage('GST image is Required'),
-    // body('panImage')
-    //     .exists().withMessage('Pan image is Required')
-    //     .notEmpty().withMessage('Pan image is Required'),
-    // body('companyName')
-    //     .exists().withMessage('Company is Required')
-    //     .notEmpty().withMessage('Company is Required'),
+        .exists().withMessage('Gst Image is required')
+        .notEmpty().withMessage('Gst Image is required'),
+
+    body('panImage')
+        .exists().withMessage('Gst Image is required')
+        .notEmpty().withMessage('Gst Image is required'),
+
+    body('companyName')
+        .exists().withMessage('Company Name is required')
+        .notEmpty().withMessage('Company Name is required'),
+
     body('Address')
-        .exists().withMessage('Address is Required')
-        .notEmpty().withMessage('Address is Required')
+        .exists().withMessage('Address is required')
+        .notEmpty().withMessage('Address is required'),
+
 
 ]
