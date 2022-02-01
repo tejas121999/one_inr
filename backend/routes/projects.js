@@ -10,13 +10,13 @@ const { projectValidation, projectImageValidation } = require('../validations/pr
 
 router.get('/check-isrecuring',wrapper(setRecuringProject))
 router.get('/',checkAuth,wrapper(getAllProjects))
-router.get('/:id',checkAuth,wrapper(getProjectById))
 router.get('/completed',checkAuth,wrapper(getCompletedProject))
 // router.get('/get-project-by-date',wrapper(getProjectById))
 router.post('/',projectValidation, projectImageValidation,checkAuth, wrapper(addProjects))
 router.put('/update-status/:id',checkAuth,wrapper(updateStatus))
 router.put('/set-home-project/:id',checkAuth,wrapper(setHomeProject))
 router.post('/add-funds/:id',checkAuth,wrapper(addFunds))
+router.get('/:id',checkAuth,wrapper(getProjectById))
 
 
 

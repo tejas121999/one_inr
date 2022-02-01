@@ -23,6 +23,12 @@ router.post('/',checkAuth,wrapper(async function (req, res) {
 
 }))
 
+router.get('/', async (req, res) => {
+    const cron = await models.cronLogger.findAll({
+        order: [['date', 'DESC']]
+    });
+    res.json({data: cron})
+})
 
 
 module.exports = router;
