@@ -173,11 +173,12 @@ exports.addFunds = async (req, res) => {
 
 
 exports.getCompletedProject = async (req, res) => {
-    let projects = await models.projects.findAll({ where: { isActive: true } });
-    if (!projects) {
-        return res.status(400).json({ message: "data not found" })
-    } else {
+    let projects = await models.projects.findAll({ where: { isActive: false } });
+    if (projects) {
         return res.status(200).json({ message: "Project Data", result: projects })
+    } else {
+        return res.status(400).json({ message: "data not found" })
+
     }
 }
 
