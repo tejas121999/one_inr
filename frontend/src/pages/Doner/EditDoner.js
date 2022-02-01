@@ -15,13 +15,14 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 
-const Editdonor = props => {
+const EditDoner = props => {
   const [donarData, setDonarData] = useState([]);
   const [parentId, setParentId] = useState('');
   const [userId, setUserId] = useState(0);
   const [date, setDate] = useState();
   const dispatch = useDispatch();
-  const history = useHistory();
+
+
   useEffect(() => {
     async function onMount() {
       setDonarData(props.location.state);
@@ -43,17 +44,6 @@ const Editdonor = props => {
     }
   }, [parentList]);
 
-  const validationSchema = yup.object({
-    fName: yup.string().required('Required'),
-    lName: yup.string().required('required'),
-    phoneNumber: yup
-      .string()
-      .required('required')
-      .min(10, 'Please enter 10 digits'),
-    emailId: yup.string().email('Invalid Email Format').required('Required'),
-    plan: yup.string().required('Required'),
-    date: yup.date().required('Required'),
-  });
 
   const onUpdate = async values => {
     const url = BASE_URL + `donor/${userId}`;
@@ -127,7 +117,7 @@ const Editdonor = props => {
             //       .toString()
             //   : '',
           }}
-          validationSchema={validationSchema}
+          // validationSchema={validationSchema}
           enableReinitialize={true}
           onSubmit={values => onUpdate(values)}
         >
@@ -316,7 +306,8 @@ const Editdonor = props => {
         </Formik>
       </div>
     </React.Fragment>
-  );
+
+  )
 };
 
-export default Editdonor;
+export default EditDoner;

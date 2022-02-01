@@ -17,7 +17,7 @@ function projectServices() {
   this.getCompletedProjectByValue = async value =>
     await axios.get(BASE_URL + `completed/?search=${value}`);
 
-  this.getAllArchivedProject = async () => await axios.get(BASE_URL + 'auth');
+  this.getAllArchivedProject = async () => await axios.get(BASE_URL + '#');
 }
 
 export default new projectServices();
