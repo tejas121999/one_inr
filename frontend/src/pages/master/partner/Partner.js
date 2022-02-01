@@ -69,7 +69,7 @@ export default function EnhancedTable() {
   }, []);
 
   let partnerList = useSelector(state => state.master.partnerList);
-
+  console.log('parent linst ', partnerList)
   const deleteModalOpen = data => {
     setDeleteID(data.id);
     setDeleteModal(true);
@@ -215,7 +215,7 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => {});
+      .catch(err => { });
   };
 
   const downloadCsv = () => {
@@ -230,7 +230,7 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => {});
+      .catch(err => { });
   };
   const downloadXls = () => {
     fetch(XlsUrl)
@@ -244,12 +244,12 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => {});
+      .catch(err => { });
   };
   // end
 
   return (
-    console.log('Download', pdfUrl),
+    // console.log('Download', pdfUrl),
     (
       <>
         <br />
@@ -459,7 +459,7 @@ export default function EnhancedTable() {
                   </Table>
                 </TableContainer>
                 <TablePagination
-                  rowsPerPageOptions={[5, 10, 25]}
+                  rowsPerPageOptions={[5, 10, 25, 50, 100]}
                   component="div"
                   count={partnerList.length}
                   rowsPerPage={rowsPerPage}

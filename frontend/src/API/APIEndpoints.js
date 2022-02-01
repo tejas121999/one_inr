@@ -1,4 +1,4 @@
-export const Local = 'http://localhost:9000';
+export const Local = 'http://144.91.79.237:8901';
 export const BASE_URL = `${Local}/api/`;
 export const BASE_URL_RECEIPT =
   'http://newoneinr.nimapinfotech.com/api/userReceipts';

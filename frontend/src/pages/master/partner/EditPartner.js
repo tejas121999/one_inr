@@ -92,6 +92,7 @@ const EditPartner = props => {
         <br />
         <br />
         <br />
+        <br />
         <ToastContainer hideProgressBar />
         <Modal size="sm" centered show={imgView}>
           <Modal.Body>
@@ -108,20 +109,35 @@ const EditPartner = props => {
             Close
           </button>
         </Modal>
-        <div className="card">
+        <div
+          className="row"
+          style={{
+            backgroundColor: 'white',
+            margin: '0 1.2em',
+            borderRadius: '1em',
+          }}
+        >
           <p
             style={{
               textAlign: 'left',
-              fontWeight: 'bold',
+              fontSize: '1.25rem',
               margin: '20px',
               width: '100%',
               marginLeft: '20px',
             }}
           >
-            ADD PARTNER
+            Edit Partner
           </p>
         </div>
-        <div style={{ backgroundColor: 'white', margin: '30px' }}>
+
+        <div
+          style={{
+            backgroundColor: 'white',
+            margin: '20px',
+            marginBottom: '5em',
+            borderRadius: '1.5em',
+          }}
+        >
           <Formik
             initialValues={{
               fName:
@@ -146,7 +162,7 @@ const EditPartner = props => {
             enableReinitialize={true}
           >
             {({ values, errors, touched }) => (
-              <div className="w-100 mx-auto shadow p-5">
+              <div className="w-100 mx-auto" style={{ padding: '4rem 10rem' }}>
                 <div className="row">
                   <div className="col-12">
                     <Form>
@@ -203,7 +219,7 @@ const EditPartner = props => {
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col form-group">
+                        <div className="col-6">
                           <div
                             style={{ padding: '15px', paddingBottom: '10px' }}
                           >
@@ -229,7 +245,7 @@ const EditPartner = props => {
                             )}
                           </div>
                         </div>
-                        <div className="col form-group">
+                        <div className="col-6">
                           <div
                             style={{ padding: '15px', paddingBottom: '10px' }}
                           >
@@ -255,7 +271,7 @@ const EditPartner = props => {
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col form-group">
+                        <div className="col-6">
                           <div
                             style={{ padding: '15px', paddingBottom: '10px' }}
                           >
@@ -277,7 +293,7 @@ const EditPartner = props => {
                             )}
                           </div>
                         </div>
-                        <div className="col form-group">
+                        <div className="col-6">
                           <div
                             style={{ padding: '15px', paddingBottom: '10px' }}
                           >
@@ -313,7 +329,7 @@ const EditPartner = props => {
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col form-group">
+                        <div className="col-6">
                           <div
                             style={{ padding: '15px', paddingBottom: '10px' }}
                           >
@@ -335,7 +351,7 @@ const EditPartner = props => {
                             )}
                           </div>
                         </div>
-                        <div className="col form-group">
+                        <div className="col-6">
                           <div
                             style={{ padding: '15px', paddingBottom: '10px' }}
                           >
@@ -371,7 +387,7 @@ const EditPartner = props => {
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col form-group">
+                        <div className="col-6">
                           <div
                             style={{ padding: '15px', paddingBottom: '10px' }}
                           >
@@ -395,7 +411,7 @@ const EditPartner = props => {
                             )}
                           </div>
                         </div>
-                        <div className="col form-group">
+                        <div className="col-6">
                           <div
                             style={{ padding: '15px', paddingBottom: '10px' }}
                           >
@@ -421,10 +437,31 @@ const EditPartner = props => {
                           </div>
                         </div>
                       </div>
-                      <div className="submit-btn">
-                        <button className="btn btn-success" type="submit">
-                          Update Partner
-                        </button>
+                      <div className="row">
+                        <div className="col-6">
+                          <div
+                            style={{
+                              padding: '15px',
+                              display: 'flex',
+                              justifyContent: 'end',
+                            }}
+                          >
+                            <button className="btn btn-primary" type="submit">
+                              Update Partner
+                            </button>
+                          </div>
+                        </div>
+                        {/* <div className="col-6">
+                        <div
+                          style={{
+                            padding: '15px',
+                            display: 'flex',
+                            justifyContent: 'start',
+                          }}
+                        >
+                          <button className="btn btn-secondary">Cancel</button>
+                        </div>
+                      </div> */}
                       </div>
                     </Form>
                   </div>
