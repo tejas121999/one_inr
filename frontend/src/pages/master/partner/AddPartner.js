@@ -7,7 +7,7 @@ import { CreatePartnerAction } from '../../../Redux/Actions/MasterActions';
 import { useDispatch } from 'react-redux';
 import axios from '../../../utils/interceptor';
 import { BASE_URL } from '../../../API/APIEndpoints';
-
+import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -89,6 +89,7 @@ const AddPartner = props => {
           style={{
             textAlign: 'left',
             fontSize: '1.25rem',
+            fontWeight: '600',
             margin: '20px',
             width: '100%',
             marginLeft: '20px',
@@ -343,12 +344,16 @@ const AddPartner = props => {
                             justifyContent: 'end',
                           }}
                         >
-                          <button className="btn btn-primary" type="submit">
-                            Add Partner
+                          <button
+                            className="btn btn-primary"
+                            type="submit"
+                            style={{ width: '6rem', borderRadius: '0.4em' }}
+                          >
+                            Add
                           </button>
                         </div>
                       </div>
-                      {/* <div className="col-6">
+                      <div className="col-6">
                         <div
                           style={{
                             padding: '15px',
@@ -356,9 +361,21 @@ const AddPartner = props => {
                             justifyContent: 'start',
                           }}
                         >
-                          <button className="btn btn-secondary">Cancel</button>
+                          {' '}
+                          <Link to="/partner">
+                            <button
+                              className="btn"
+                              style={{
+                                color: 'white',
+                                backgroundColor: 'darkgray',
+                                borderRadius: '0.4em',
+                              }}
+                            >
+                              Cancel
+                            </button>
+                          </Link>
                         </div>
-                      </div> */}
+                      </div>
                     </div>
                   </Form>
                 </div>

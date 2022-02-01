@@ -69,7 +69,7 @@ export default function EnhancedTable() {
   }, []);
 
   let partnerList = useSelector(state => state.master.partnerList);
-
+  console.log('parent linst ', partnerList)
   const deleteModalOpen = data => {
     setDeleteID(data.id);
     setDeleteModal(true);
@@ -215,7 +215,7 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => {});
+      .catch(err => { });
   };
 
   const downloadCsv = () => {
@@ -230,7 +230,7 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => {});
+      .catch(err => { });
   };
   const downloadXls = () => {
     fetch(XlsUrl)
@@ -244,12 +244,12 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => {});
+      .catch(err => { });
   };
   // end
 
   return (
-    console.log('Download', pdfUrl),
+    // console.log('Download', pdfUrl),
     (
       <>
         <br />
@@ -281,6 +281,7 @@ export default function EnhancedTable() {
               style={{
                 textAlign: 'left',
                 fontSize: '1.25rem',
+                fontWeight: '600',
                 marginBottom: '0',
                 paddingTop: '3px',
               }}
@@ -416,18 +417,18 @@ export default function EnhancedTable() {
                             >
                               <TableCell
                                 id={labelId}
-                                align="center"
-                                scope="row"
-                                padding="none"
+                                align="left"
+                                // scope="row"
+                                // padding="none"
                                 style={{ padding: '20px' }}
                               >
                                 {row.name}
                               </TableCell>
-                              <TableCell align="center">
+                              <TableCell align="left">
                                 {row.companyName}
                               </TableCell>
                               <TableCell align="center">{row.phone}</TableCell>
-                              <TableCell align="center">{row.email}</TableCell>
+                              <TableCell align="left">{row.email}</TableCell>
                               <TableCell align="center">
                                 {row.gstNumber}
                               </TableCell>

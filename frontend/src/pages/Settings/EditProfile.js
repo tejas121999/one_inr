@@ -323,15 +323,17 @@ const EditProfile = props => {
                     required
                   />
                   <i
-                    className={`fa ${show3 ? 'fa-eye-slash' : 'fa-eye'
-                      } login-password-icon`}
+                    className={`fa ${
+                      show3 ? 'fa-eye-slash' : 'fa-eye'
+                    } login-password-icon`}
                     onClick={() => setShow3(!show3)}
                     style={{
-                      position: 'absolute',
-                      left: '450px',
-                      top: '60px',
-                      height: '25px',
-                      width: '25px',
+                      float: 'right',
+                      marginLeft: '-25px',
+                      marginTop: '-27px',
+                      marginRight: '10px',
+                      position: 'relative',
+                      zIndex: '2',
                     }}
                   ></i>
                 </div>
@@ -346,15 +348,17 @@ const EditProfile = props => {
                     required
                   />
                   <i
-                    className={`fa ${show1 ? 'fa-eye-slash' : 'fa-eye'
-                      } login-password-icon`}
+                    className={`fa ${
+                      show1 ? 'fa-eye-slash' : 'fa-eye'
+                    } login-password-icon`}
                     onClick={() => setShow1(!show1)}
                     style={{
-                      position: 'absolute',
-                      left: '450px',
-                      top: '145px',
-                      height: '25px',
-                      width: '25px',
+                      float: 'right',
+                      marginLeft: '-25px',
+                      marginTop: '-27px',
+                      marginRight: '10px',
+                      position: 'relative',
+                      zIndex: '2',
                     }}
                   ></i>
                 </div>
@@ -368,15 +372,17 @@ const EditProfile = props => {
                     }}
                   />
                   <i
-                    className={`fa ${show2 ? 'fa-eye-slash' : 'fa-eye'
-                      } login-password-icon`}
+                    className={`fa ${
+                      show2 ? 'fa-eye-slash' : 'fa-eye'
+                    } login-password-icon`}
                     onClick={() => setShow2(!show2)}
                     style={{
-                      position: 'absolute',
-                      left: '450px',
-                      top: '230px',
-                      height: '25px',
-                      width: '25px',
+                      float: 'right',
+                      marginLeft: '-25px',
+                      marginTop: '-27px',
+                      marginRight: '10px',
+                      position: 'relative',
+                      zIndex: '2',
                     }}
                   ></i>
                 </div>

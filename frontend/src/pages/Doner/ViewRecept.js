@@ -15,14 +15,8 @@ import { Button } from 'react-bootstrap';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import './viewreciept.css';
-import {
-  FaRegEdit,
-  FaRegEye,
-  FaRegTrashAlt,
-  FaBookOpen,
-  FaDollarSign,
-} from 'react-icons/fa';
-
+import { FaRegEdit } from 'react-icons/fa';
+import moment from 'moment';
 // import '../Donor.css';
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
@@ -98,9 +92,9 @@ export default function ViewRecept() {
   const handleModal1 = () => {
     setModal1(!modal1);
   };
-  
+
   const getViewRecepts = async () => {
-    const url = BASE_URL ;
+    const url = BASE_URL;
     await axios
       .get(url)
       .then(res => {
@@ -175,7 +169,7 @@ export default function ViewRecept() {
     }
   };
   const getDonorbyId = async id => {
-    let getViewUrl = `http://newoneinr.nimapinfotech.com/api/userReceipts/${id}`;
+    let getViewUrl = `http://144.91.79.237:8901/api/userReceipts/${id}`;
     await axios
       .get(getViewUrl)
       .then(response => {
@@ -229,31 +223,49 @@ export default function ViewRecept() {
       />
       <Addfund show={fundModal} onHide={fundModaClose} data={fundModalData} />
       <Donordelete show={deleteModal} onHide={deleteModalClose} id={deleteId} />
-      <nav className="navbar navbar-light">
-        <a className="navbar-brand"> DONOR RECEIPT LIST</a>
-        <form className="form-inline">
-          <div className="modalClass">
-            <Button onClick={() => handleModal('create receipt')}>
-              Create Receipt
-            </Button>
-          </div>
-        </form>
-      </nav>
       <div
+        className="row"
         style={{
-          margin: '20px',
           backgroundColor: 'white',
+          margin: '0 1.2em',
+          borderRadius: '1em',
         }}
       >
         <div
           style={{
             display: 'flex',
-            padding: '20px',
-            justifyContent: 'space-between',
+            width: '50%',
+            padding: '0.5em 1.7em',
           }}
         >
+          <p
+            style={{
+              textAlign: 'left',
+              fontWeight: '600',
+              fontSize: '1.25rem',
+              marginBottom: '0',
+              paddingTop: '3px',
+            }}
+          >
+            Donor Receipt List
+          </p>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            width: '50%',
+            padding: '0.5em 1.7em',
+          }}
+        >
+          <Button
+            onClick={() => handleModal('create receipt')}
+            style={{ borderRadius: '2em', width: '25%' }}
+          >
+            Create Receipt
+          </Button>
           <button
-            style={{ alignSelf: 'flex-start' }}
+            style={{ marginLeft: '1em', borderRadius: '2em', width: '15%' }}
             className="btn btn-primary"
             onClick={e => handleClick(e)}
           >
@@ -294,23 +306,48 @@ export default function ViewRecept() {
             </MenuItem>
             {/* <MenuItem></MenuItem> */}
           </Menu>
-          <input placeholder="Search" onChange={e => handleChange(e)} />
         </div>
-        <CreateReceiptForm
-          modal={modal}
-          type={type}
-          id={id}
-          handleModal={handleModal}
-        />
-        <Paper sx={{ width: '100%', mb: 2 }}>
-          {ViewReceipt && ViewReceipt.length > 0 ? (
+      </div>
+      {ViewReceipt && ViewReceipt.length > 0 ? (
+        <div
+          style={{
+            margin: '20px',
+            backgroundColor: 'white',
+            marginBottom: '5em',
+            borderRadius: '1.5em',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              padding: '2em',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <input
+              placeholder="Search"
+              onChange={e => handleChange(e)}
+              type="search"
+              style={{
+                paddingLeft: '1em',
+                border: '1px solid #ced4da',
+                borderRadius: '1.5em',
+                height: '2.2em',
+              }}
+            />
+          </div>
+          <CreateReceiptForm
+            modal={modal}
+            type={type}
+            id={id}
+            handleModal={handleModal}
+          />
+          <Paper
+            sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
+          >
             <React.Fragment>
               <TableContainer id="tableDiv">
-                <Table
-                  sx={{ minWidth: 750 }}
-                  aria-labelledby="tableTitle"
-                  size={dense ? 'small' : 'medium'}
-                >
+                <Table>
                   <EnhancedTableHead
                     numSelected={selected.length}
                     order={order}
@@ -339,48 +376,48 @@ export default function ViewRecept() {
                             <TableCell
                               id={labelId}
                               align="center"
-                              scope="row"
-                              padding="none"
+                              // scope="row"
+                              // padding="none"
                             >
                               {row.id}
                             </TableCell>
                             <TableCell
                               id={labelId}
                               align="center"
-                              scope="row"
-                              padding="none"
+                              // scope="row"
+                              // padding="none"
                             >
                               {row.donor_name ? row.donor_name : '-'}
                             </TableCell>
                             <TableCell
                               id={labelId}
                               align="center"
-                              scope="row"
-                              padding="none"
+                              // scope="row"
+                              // padding="none"
                             >
                               {row.receiptNumber ? row.receiptNumber : '-'}
                             </TableCell>
                             <TableCell
                               id={labelId}
                               align="center"
-                              scope="row"
-                              padding="none"
+                              // scope="row"
+                              // padding="none"
                             >
                               {row.project_name ? row.project_name : '-'}
                             </TableCell>
                             <TableCell
                               id={labelId}
                               align="center"
-                              scope="row"
-                              padding="none"
+                              // scope="row"
+                              // padding="none"
                             >
                               {row.project_name ? row.project_name : '-'}
                             </TableCell>
                             <TableCell
                               id={labelId}
                               align="center"
-                              scope="row"
-                              padding="none"
+                              // scope="row"
+                              // padding="none"
                             >
                               {row.mailSend ? row.mailSend : 'Mail not send'}
                             </TableCell>
@@ -388,8 +425,8 @@ export default function ViewRecept() {
                               className="view-pdf"
                               id={labelId}
                               align="center"
-                              scope="row"
-                              padding="none"
+                              // scope="row"
+                              // padding="none"
                               // style={color="lightblue"}
                             >
                               {row.recieptPdf ? (
@@ -403,15 +440,11 @@ export default function ViewRecept() {
                             <TableCell
                               id={labelId}
                               align="center"
-                              scope="row"
-                              padding="none"
+                              // scope="row"
+                              // padding="none"
                             >
-                              {row.createdAt
-                                ? row.createdAt
-                                    .split('')
-                                    .slice(0, 10)
-                                    .join()
-                                    .replace(/,/g, '')
+                              {moment(row.createdAt).format('LL')
+                                ? moment(row.createdAt).format('LL')
                                 : '-'}
                             </TableCell>
                             <TableCell align="center">
@@ -448,19 +481,19 @@ export default function ViewRecept() {
                 showFirstButton={true}
               />
             </React.Fragment>
-          ) : (
-            <Loader />
-          )}
-        </Paper>
-        <DonorTable
-          printDonorTable={printDonorTable}
-          tableData={stableSort(
-            ViewReceipt,
-            getComparator(order, orderBy),
-          ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
-          setPrintDonorValue={setPrintDonorValue}
-        ></DonorTable>
-      </div>
+          </Paper>
+          <DonorTable
+            printDonorTable={printDonorTable}
+            tableData={stableSort(
+              ViewReceipt,
+              getComparator(order, orderBy),
+            ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+            setPrintDonorValue={setPrintDonorValue}
+          ></DonorTable>
+        </div>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 }
@@ -474,49 +507,49 @@ const tableHeader = [
   },
   {
     id: '2',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Donor Name',
   },
   {
     id: '3',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Receipt No',
   },
   {
     id: '4',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Project Name',
   },
   {
     id: '5',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'NGO Name',
   },
   {
     id: '6',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Mail Status',
   },
   {
     id: '7',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Receipt',
   },
   {
     id: '8',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Created At',
   },
   {
     id: '9',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Action',
   },

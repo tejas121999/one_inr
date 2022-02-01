@@ -9,7 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
 import Paper from '@mui/material/Paper';
-
+import moment from 'moment';
 import {
   FaRegEdit,
   FaRegEye,
@@ -256,31 +256,51 @@ export default function EnhancedTable() {
         onHide={deleteModalClose}
         id={deleteId}
       />
-      <nav className="navbar navbar-light">
-        <a className="navbar-brand">UPCOMING DONOR RENEWAL</a>
-        <form className="form-inline">
-          <div className="modalClass">
-            <Link to="/add_doner" type="" className="btn btn-primary">
-              ADD DONOR
-            </Link>
-          </div>
-        </form>
-      </nav>
       <div
+        className="row"
         style={{
-          margin: '20px',
           backgroundColor: 'white',
+          margin: '0 1.2em',
+          borderRadius: '1em',
         }}
       >
         <div
           style={{
             display: 'flex',
-            padding: '20px',
-            justifyContent: 'space-between',
+            width: '50%',
+            padding: '0.5em 1.7em',
           }}
         >
+          <p
+            style={{
+              textAlign: 'left',
+              fontSize: '1.25rem',
+              fontWeight: '600',
+              marginBottom: '0',
+              paddingTop: '3px',
+            }}
+          >
+            Upcoming Donor Renewal
+          </p>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            width: '50%',
+            padding: '0.5em 1.7em',
+          }}
+        >
+          <Link
+            to="/add_doner"
+            type="button"
+            className="btn btn-primary"
+            style={{ borderRadius: '2em', width: '25%' }}
+          >
+            Add Donor
+          </Link>
           <button
-            style={{ alignSelf: 'flex-start' }}
+            style={{ marginLeft: '1em', borderRadius: '2em', width: '15%' }}
             className="btn btn-primary"
             onClick={e => handleClick(e)}
           >
@@ -327,17 +347,42 @@ export default function EnhancedTable() {
             </MenuItem>
             {/* <MenuItem></MenuItem> */}
           </Menu>
-          <input
-            placeholder="Search"
-            onChange={e => handleChange(e)}
-            type="search"
-          />
         </div>
-        <Paper sx={{ width: '100%', mb: 2 }}>
-          {UpcomingdonorList && UpcomingdonorList.length > 0 ? (
+      </div>
+      {UpcomingdonorList && UpcomingdonorList.length > 0 ? (
+        <div
+          style={{
+            margin: '20px',
+            backgroundColor: 'white',
+            marginBottom: '5em',
+            borderRadius: '1.5em',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              padding: '2em',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <input
+              placeholder="Search"
+              onChange={e => handleChange(e)}
+              type="search"
+              style={{
+                paddingLeft: '1em',
+                border: '1px solid #ced4da',
+                borderRadius: '1.5em',
+                height: '2.2em',
+              }}
+            />
+          </div>
+          <Paper
+            sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
+          >
             <React.Fragment>
               <TableContainer id="tableDiv">
-                <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                <Table>
                   <EnhancedTableHead
                     numSelected={selected.length}
                     order={order}
@@ -367,19 +412,10 @@ export default function EnhancedTable() {
                             key={row.name}
                             selected={isItemSelected}
                           >
-                            <TableCell
-                              id={labelId}
-                              align="center"
-                              scope="row"
-                              padding="none"
-                            >
-                              {row.balanceNextRenewDate
-                                .split('')
-                                .slice(0, 10)
-                                .join()
-                                .replace(/,/g, '')}
+                            <TableCell id={labelId} align="center">
+                              {moment(row.balanceNextRenewDate).format('LL')}
                             </TableCell>
-                            <TableCell align="center">{row.name}</TableCell>
+                            <TableCell align="left">{row.name}</TableCell>
                             <TableCell align="center">
                               {row.donated ? row.donated : '100'}
                             </TableCell>
@@ -435,31 +471,30 @@ export default function EnhancedTable() {
                 </Table>
               </TableContainer>
               <TablePagination
-                rowsPerPageOptions={[50, 100, 150]}
+                rowsPerPageOptions={[5, 10, 25, 50, 100]}
                 component="div"
                 count={UpcomingdonorList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                pageSize={10}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
                 showLastButton={true}
                 showFirstButton={true}
               />
             </React.Fragment>
-          ) : (
-            <Loader />
-          )}
-        </Paper>
-        <UpcomingDonorRenewalTable
-          printDonorTable={printDonorTable}
-          tableData={stableSort(
-            UpcomingdonorList,
-            getComparator(order, orderBy),
-          ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
-          setPrintDonorValue={setPrintDonorValue}
-        ></UpcomingDonorRenewalTable>
-      </div>
+          </Paper>
+          <UpcomingDonorRenewalTable
+            printDonorTable={printDonorTable}
+            tableData={stableSort(
+              UpcomingdonorList,
+              getComparator(order, orderBy),
+            ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+            setPrintDonorValue={setPrintDonorValue}
+          ></UpcomingDonorRenewalTable>
+        </div>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 }
@@ -479,25 +514,25 @@ const headCells = [
   },
   {
     id: 'donated',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Donated',
   },
   {
     id: 'balance',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Balance',
   },
   {
     id: 'projects',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Projects',
   },
   {
     id: 'action',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Action',
   },

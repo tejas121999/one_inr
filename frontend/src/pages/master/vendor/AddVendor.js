@@ -9,6 +9,7 @@ import { BASE_URL } from '../../../API/APIEndpoints';
 import axios from '../../../utils/interceptor';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 
 const AddVendor = props => {
   const dispatch = useDispatch();
@@ -97,6 +98,7 @@ const AddVendor = props => {
           style={{
             textAlign: 'left',
             fontSize: '1.25rem',
+            fontWeight: '600',
             margin: '20px',
             width: '100%',
             marginLeft: '20px',
@@ -351,12 +353,16 @@ const AddVendor = props => {
                             justifyContent: 'end',
                           }}
                         >
-                          <button className="btn btn-primary" type="submit">
-                            Add Vendor
+                          <button
+                            className="btn btn-primary"
+                            type="submit"
+                            style={{ width: '6rem', borderRadius: '0.4em' }}
+                          >
+                            Add
                           </button>
                         </div>
                       </div>
-                      {/* <div className="col-6">
+                      <div className="col-6">
                         <div
                           style={{
                             padding: '15px',
@@ -364,9 +370,20 @@ const AddVendor = props => {
                             justifyContent: 'start',
                           }}
                         >
-                          <button className="btn btn-secondary">Cancel</button>
+                          <Link to="/Vendor">
+                            <button
+                              className="btn"
+                              style={{
+                                color: 'white',
+                                backgroundColor: 'darkgray',
+                                borderRadius: '0.4em',
+                              }}
+                            >
+                              Cancel
+                            </button>
+                          </Link>
                         </div>
-                      </div> */}
+                      </div>
                     </div>
                   </Form>
                 </div>
