@@ -3,6 +3,7 @@ import * as yup from 'yup';
 import { ErrorMessage, Form, Formik, Field } from 'formik';
 import TextError from '../../error/TextError';
 import './vendor.css';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   CreateVendorAction,
@@ -16,6 +17,7 @@ import { BASE_URL, Local } from '../../../API/APIEndpoints';
 import axios from '../../../utils/interceptor';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 const EditVendor = props => {
   const dispatch = useDispatch();
   const [panImgUrl, setPanImgUrl] = useState('');
@@ -127,6 +129,7 @@ const EditVendor = props => {
             style={{
               textAlign: 'left',
               fontSize: '1.25rem',
+              fontWeight: '600',
               margin: '20px',
               width: '100%',
               marginLeft: '20px',
@@ -442,22 +445,37 @@ const EditVendor = props => {
                               justifyContent: 'end',
                             }}
                           >
-                            <button className="btn btn-primary" type="submit">
-                              Update Vendor
+                            <button
+                              className="btn btn-primary"
+                              type="submit"
+                              style={{ width: '6rem', borderRadius: '0.4em' }}
+                            >
+                              Update
                             </button>
                           </div>
                         </div>
-                        {/* <div className="col-6">
-                        <div
-                          style={{
-                            padding: '15px',
-                            display: 'flex',
-                            justifyContent: 'start',
-                          }}
-                        >
-                          <button className="btn btn-secondary">Cancel</button>
+                        <div className="col-6">
+                          <div
+                            style={{
+                              padding: '15px',
+                              display: 'flex',
+                              justifyContent: 'start',
+                            }}
+                          >
+                            <Link to="/Vendor">
+                              <button
+                                className="btn"
+                                style={{
+                                  color: 'white',
+                                  backgroundColor: 'darkgray',
+                                  borderRadius: '0.4em',
+                                }}
+                              >
+                                Cancel
+                              </button>
+                            </Link>
+                          </div>
                         </div>
-                      </div> */}
                       </div>
                     </Form>
                   </div>

@@ -285,6 +285,7 @@ export default function EnhancedTable() {
           <p
             style={{
               textAlign: 'left',
+              fontWeight: '600',
               fontSize: '1.25rem',
               marginBottom: '0',
               paddingTop: '3px',
@@ -424,9 +425,9 @@ export default function EnhancedTable() {
                           >
                             <TableCell
                               id={labelId}
-                              align="center"
-                              scope="row"
-                              padding="none"
+                              align="left"
+                              // scope="row"
+                              // paddingLeft="2em"
                             >
                               {row.name}
                             </TableCell>
@@ -491,7 +492,6 @@ export default function EnhancedTable() {
                 count={donorList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                pageSize={10}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
                 showLastButton={true}
