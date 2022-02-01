@@ -169,7 +169,7 @@ export default function ViewRecept() {
     }
   };
   const getDonorbyId = async id => {
-    let getViewUrl = `http://newoneinr.nimapinfotech.com/api/userReceipts/${id}`;
+    let getViewUrl = (`http://144.91.79.237:8901/api/userReceipts/${id}`);
     await axios
       .get(getViewUrl)
       .then(response => {

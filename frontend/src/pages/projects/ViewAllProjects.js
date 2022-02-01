@@ -17,13 +17,23 @@ import Paper from '@mui/material/Paper';
 import { FaRegEdit, FaRegEye } from 'react-icons/fa';
 import { BiLink } from 'react-icons/bi';
 import { AiOutlineDollarCircle } from 'react-icons/ai';
-
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import './project.css';
 import { getAllProjectAction } from '../../Redux/Actions/ProjectActions';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const ViewAllProjects = () => {
+  const [state, setState] = React.useState({
+    checked: true,
+    checkedB: true,
+  })
+
+  const handleChangeSwitch = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -116,28 +126,72 @@ const ViewAllProjects = () => {
       <br />
       <br />
       <br />
-      <div className="card" style={{ border: '0' }}>
-        <div
+      <div
+      className="row"
+      style={{
+        backgroundColor: 'white',
+        margin: '0 1.2em',
+        borderRadius: '1em',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          width: '50%',
+          padding: '0.5em 1.7em',
+        }}
+      >
+        <p
           style={{
-            display: 'flex',
-            padding: '15px',
+            textAlign: 'left',
+            fontSize: '1.25rem',
+            marginBottom: '0',
+            paddingTop: '3px',
           }}
         >
-          <p
+          View All Project
+        </p>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          width: '50%',
+          padding: '0.5em 1.8em',
+        }}
+      >
+      <button
+      style={{ marginLeft: '1em', borderRadius: '2em', width: '15%' }}
+      className="btn btn-primary"
+      // onClick={e => handleClick(e)}
+    >
+      Export
+    </button>
+      </div>
+      </div>
+      <div
+      style={{
+        margin: '20px',
+        backgroundColor: 'white',
+        marginBottom: '5em',
+        borderRadius: '1.5em',
+      }}
+    >          <div
+            className="row"
             style={{
-              textAlign: 'left',
-              fontSize: '1.25rem',
-              marginBottom: '0',
+              display: 'flex',
+              margin: '1.8em 1.8em 1.8em 1.4em',
+              justifyContent: 'space-between',
             }}
           >
-            VIEW ALL PROJECT
-          </p>
-        </div>
-      </div>
-      <div className="ViewAll">
-        <div className="white-box">
-        <div className="row" style={{ marginTop: '-1.5em' }}>
-        <div style={{ margin: '1em', marginRight: '0.5em' }}>
+          <div
+        style={{
+          display: 'flex',
+          // padding: '2em',
+          justifyContent: 'flex-start',
+        }}
+      >
+          <div style={{ margin: '1em 0.5em' }}>
           {/* <div className="input-box"> */}
           <DatePicker
             selected={startDate}
@@ -147,8 +201,8 @@ const ViewAllProjects = () => {
             onChange={date => setStartDate(date)}
             dateFormat="MMMM d, yyyy"
           />
+          {/* </div> */}
         </div>
-        {/* </div> */}
         <div style={{ margin: '1em 0.5em' }}>
         {/* <div className="input-box"> */}
         <DatePicker
@@ -162,41 +216,39 @@ const ViewAllProjects = () => {
         />
         {/* </div> */}
         </div>
-            <div className="search-btn">
-              <button type="button" className="btn btn-primary">
-                Search
-              </button>
-            </div>
+        <div className="search-btn">
+          <button type="button" className="btn btn-primary" style={{ borderRadius: '1em'}}>
+            Search
+          </button>
+        </div>
+        </div>
+        <div
+        style={{
+          display: 'flex',
+          // padding: '2em',
+          margin: '1em 0em',
+          justifyContent: 'flex-end',
+        }}
+      >
+        <input
+          placeholder="Search"
+          onChange={e => handleChange(e)}
+          type="search"
+          style={{
+            paddingLeft: '1em',
+            border: '1px solid #ced4da',
+            borderRadius: '1.5em',
+            height: '2.2em',
+          }}
+        />
+      </div>
           </div>
-          <hr style={{ margin: '0' }} />
-          <div
-            className="row"
-            style={{
-              display: 'flex',
-              padding: '20px',
-              justifyContent: 'space-between',
-            }}
+          {/* <hr style={{ margin: '0' }} /> */}
+          <Paper sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
           >
-            <button type="button" className="btn btn-primary">
-              Export
-            </button>
-            <label style={{ fontWeight: '500', marginTop: '0.5rem' }}>
-              Search :
-              <input
-                type="search"
-                placeholder="Search"
-                style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
-                onChange={e => handleChange(e)}
-              />
-            </label>
-          </div>
-          <hr style={{ margin: '0' }} />
-          <Paper sx={{ width: '100%' }}>
             <TableContainer>
               <Table
-                sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
-                size={dense ? 'small' : 'medium'}
               >
                 <EnhancedTableHead
                   numSelected={selected.length}
@@ -234,30 +286,19 @@ const ViewAllProjects = () => {
                           <TableCell align="center">{row.days_left}</TableCell>
                           <TableCell align="center">{row.recurring}</TableCell>
                           <TableCell align="center">
-                            <div className="custom-control custom-switch">
-                              <input
-                                type="checkbox"
-                                className="custom-control-input"
-                                id="customSwitch1"
-                              />
-                              <label
-                                className="custom-control-label"
-                                for="customSwitch1"
-                              />
+                            <div className="container">
+
+                              <div className="toggle-switch">
+                                <input type="checkbox" className="checkbox" />
+                                <label className="label">
+                                  <span className="inner" />
+                                  <span className="switch" />
+                                </label>
+                              </div>
                             </div>
                           </TableCell>
                           <TableCell align="center">
-                            <div className="custom-control custom-switch">
-                              <input
-                                type="checkbox"
-                                className="custom-control-input"
-                                id="customSwitch2"
-                              />
-                              <label
-                                className="custom-control-label"
-                                for="customSwitch2"
-                              />
-                            </div>
+
                           </TableCell>
                           <TableCell align="center">
                             <button
@@ -315,7 +356,6 @@ const ViewAllProjects = () => {
             />
           </Paper>
         </div>
-      </div>
     </>
   );
 };
