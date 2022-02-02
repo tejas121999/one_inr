@@ -56,7 +56,8 @@ module.exports = (sequelize, DataTypes) => {
 
         funded: {
             type: DataTypes.INTEGER,
-            filed: 'funded'
+            filed: 'funded',
+            defaultValue : 0
         },
 
         startDate: {

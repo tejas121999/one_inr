@@ -39,11 +39,11 @@ exports.addProjects = async (req, res) => {
     target = Number(goal) + Number(commissionModel) + Number(gstCal) + Number(paymentGatewayCal); //Calculating Target
     target = Math.round(target) //Rounding off target value.
 
-    let projectIntervalEndDate = await moment(startDate).add(recurringDays, 'days').format('YYYY-MM-DD')
-    startDate = await moment(startDate).format('YYYY-MM-DD')
+    let projectIntervalEndDate = moment(startDate).add(recurringDays, 'days').format('YYYY-MM-DD')
+    startDate = moment(startDate).format('YYYY-MM-DD')
 
     //If start date of project is bigger than todays date then project status will be inactive 
-    var currentDate = await moment().format('YYYY-MM-DD');
+    var currentDate = moment().format('YYYY-MM-DD');
     if (startDate > currentDate) {
         isActive = false
     } else {
@@ -56,7 +56,7 @@ exports.addProjects = async (req, res) => {
         )
         projectImage = await models.project_image.create({ projectId: projects.dataValues.id, isActive, banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 }, { transaction: t })
         if (isRecurring == true) {
-            projectInterval = await models.projectInterval.create({ projectId: projects.dataValues.id, startDate, endDate: projectIntervalEndDate })
+            projectInterval = await models.projectInterval.create({ projectId: projects.dataValues.id, startDate, endDate: projectIntervalEndDate,goal,commission, target},{ transaction: t })
         }
         if (!(projects && projectImage)) {
             return true

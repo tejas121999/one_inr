@@ -12,6 +12,22 @@ module.exports = (sequeilze,Datatypes) =>{
             type : Datatypes.DATEONLY,
             field : 'end_date'
         },
+        goal: {
+            type: Datatypes.BIGINT,
+            field: 'goal',
+            allowNull: false
+        },
+        commission: {
+            type: Datatypes.INTEGER,
+            field: 'commission',
+            allowNull: false
+        },
+
+        target: {
+            type: Datatypes.INTEGER,
+            field: 'target',
+            allowNull: false
+        },
         funded : {
             type : Datatypes.BIGINT,
             field : 'funded',
