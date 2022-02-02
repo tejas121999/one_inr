@@ -9,6 +9,7 @@ import {
 import { getConfigAction, updateConfigAction } from '../../Redux/Actions/SettingAction';
 import { height } from '@mui/system';
 import { Field, Form, Formik } from 'formik';
+import { getAllProjectAction } from '../../Redux/Actions/ProjectActions';
 
 const styles = {
   card: {
@@ -110,6 +111,25 @@ const Config = () => {
     dispatch(updateConfigAction(paymentgatewayname))
   }
 
+  // home project
+  useEffect(() => {
+    dispatch(getAllProjectAction(''))
+  }, []);
+
+  let getProject = useSelector(state => state.project.projectList)
+  console.log(getProject);
+
+  const [homeProject, setHomeproject] = useState('')
+  const { home_project } = homeProject
+  const onHomeProjectChange = e => {
+    setHomeproject({ ...homeProject, [e.target.name]: e.target.value })
+  }
+
+  const submitHomeProject = (e) => {
+    e.preventDefault();
+    dispatch(updateConfigAction(homeProject))
+  }
+
 
 
   return (
@@ -146,6 +166,7 @@ const Config = () => {
                 <Form onSubmit={submitCommition}>
                   <Field
                     name="commission"
+                    className='form-control'
                     value={commission}
                     onChange={onCommisionChange}
                   />
@@ -173,6 +194,7 @@ const Config = () => {
                 <Form onSubmit={submitFeatureCommition}>
                   <Field
                     name="feature_commision"
+                    className='form-control'
                     value={feature_commision}
                     onChange={onFeatureCommisionChange}
                   />
@@ -197,6 +219,7 @@ const Config = () => {
                 <Form onSubmit={submitPaymentgatewaypercentage}>
                   <Field
                     name="payment_gateway_percentage"
+                    className='form-control'
                     value={payment_gateway_percentage}
                     onChange={onPaymentgatewaypercentage}
                   />
@@ -222,6 +245,7 @@ const Config = () => {
                 <Form onSubmit={submitGst}>
                   <Field
                     name="gst"
+                    className='form-control'
                     value={gst}
                     onChange={onGstChange}
                   />
@@ -248,6 +272,7 @@ const Config = () => {
                 <Form onSubmit={submitPaymentgatewayname}>
                   <Field
                     name='payment_gateway_name'
+                    className='form-control'
                     value={payment_gateway_name}
                     onChange={onPaymentgatewaynameChange}
                   />
@@ -268,7 +293,32 @@ const Config = () => {
           <Card style={styles.card}>
             <Card.Body>
               <Card.Title style={styles.title}>Home Project</Card.Title>
-
+              <Formik>
+                <Form
+                  onSubmit={submitHomeProject}
+                >
+                  <select
+                    name='home_prject'
+                    className='form-control'
+                    value={home_project}
+                    onChange={onHomeProjectChange}
+                  >
+                    {getProject && getProject.map(row => (
+                      <option value={row.title}>{row.title}</option>
+                    ))}
+                  </select>
+                  <button
+                    class="btn btn-success"
+                    style={{
+                      marginRight: '10px',
+                      marginBottom: '10px',
+                    }}
+                    type="submit"
+                  >
+                    Update
+                  </button>
+                </Form>
+              </Formik>
             </Card.Body>
           </Card>
         </Row>

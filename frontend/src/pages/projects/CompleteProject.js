@@ -36,9 +36,9 @@ const CompleteProject = () => {
   }, []);
 
   let completedProjectList = useSelector(
-    state => state.project.completedProjectList,
+    state => state.project.completedProjectList.result,
   );
-
+  console.log(completedProjectList)
   // const ViewModalOpen = data => {
   //   setViewData(data);
   //   setViewModal(true);
@@ -100,48 +100,7 @@ const CompleteProject = () => {
     }
   };
 
-  // const constData = [
-  //   {
-  //     id: 1,
-  //     title: 'Behatar Swaasthay, Behatar Desh',
-  //     date: '08 May 2020 To 08 May 2020',
-  //     goal: '456',
-  //     funded: '287',
-  //     paid: '13',
-  //     status: 'Half Paid',
-  //     action: '',
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'Feed Cows with grass of Love',
-  //     date: '23 Oct 2019 To 23 Oct 2019',
-  //     goal: '114',
-  //     funded: '5',
-  //     paid: '0',
-  //     status: 'Refunded',
-  //     action: '',
-  //   },
-  //   {
-  //     id: 3,
-  //     title: 'pahli roti dayittv ki',
-  //     date: '27 Nov 2019 To 27 Nov 2019',
-  //     goal: '338',
-  //     funded: '29',
-  //     paid: '0',
-  //     status: 'Action Required',
-  //     action: '',
-  //   },
-  //   {
-  //     id: 4,
-  //     title: 'Feeding Pigeons Grains',
-  //     date: '08 Feb 2020 To 08 Feb 2020',
-  //     goal: '582',
-  //     funded: '582',
-  //     paid: '100',
-  //     status: 'Half Paid',
-  //     action: '',
-  //   },
-  // ];
+
 
   return (
     <>

@@ -67,15 +67,21 @@ const Adduser = props => {
                     <div className="col-6 ">
                       <div style={{ paddingBottom: '10px' }}>
                         <label style={{ fontWeight: 'bold' }}>Role</label>
-                        <Field
-                          type="search"
+                        <select
+                          type="text"
                           name="role"
-                          placeholder="No Parent"
+                          placeholder="Role"
                           className="form-control"
                           value={values.role}
                           list="parentList"
                           autocomplete="off"
-                        />
+                        >
+                          <option>select</option>
+                          <option>admin</option>
+                          <option>doner</option>
+                          <option>ngo</option>
+                          <option>account</option>
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -145,18 +151,35 @@ const Adduser = props => {
                         )}
                       </div>
                     </div>
+                    <div className='col-6'>
+                      <div style={{ paddingBottom: '10px' }}>
+                        <label style={{ fontWeight: 'bold' }}>Permition</label>
+                        <select
+                          type="text"
+                          name="permition"
+                          placeholder="Permition"
+                          className="form-control"
+                          // value={values.permition}
+                          list="parentList"
+                          autocomplete="off"
+                        >
+                          <option>read-only</option>
+                          <option>write-only</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
 
                   <div
-                    style={{ display: 'flex', justifyContent: 'space-around' }}
+                    style={{ display: 'flex', justifyContent: 'space-evenly' , margin:'20px' }}
                   >
-                    <button type="submit" className="btn btn-success">
+                    <button type="submit" className="btn btn-lg btn-primary">
                       Submit
                     </button>
                     <button
                       type="button"
                       onClick={props.onHide}
-                      className="btn btn-danger"
+                      className="btn btn-danger btn-lg"
                     >
                       Cancel
                     </button>
