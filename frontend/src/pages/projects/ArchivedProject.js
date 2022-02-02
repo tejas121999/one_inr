@@ -14,6 +14,7 @@ import { BsArchive } from 'react-icons/bs';
 import { FaRegFileArchive } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllArchivedProjectAction } from '../../Redux/Actions/ProjectActions';
+import Loader from '../Loader';
 
 const ArchivedProject = () => {
   const [order, setOrder] = React.useState('asc');
@@ -164,63 +165,82 @@ const ArchivedProject = () => {
       <br />
       <br />
       <br />
-      <div className="card" style={{ border: '0' }}>
-        <div
-          style={{
-            display: 'flex',
-            padding: '15px',
-            // justifyContent: 'space-between',
-          }}
-        >
-          <p
-            style={{
-              textAlign: 'left',
-              fontSize: '1.25rem',
-              marginBottom: '0',
-            }}
-          >
-            ARCHIVED PROJECTS
-          </p>
-        </div>
-      </div>
       <div
+        className="row"
         style={{
-          margin: '20px',
           backgroundColor: 'white',
+          margin: '0 1.2em',
+          borderRadius: '1em',
         }}
       >
-        <div
+      <div
+      style={{
+        display: 'flex',
+        width: '50%',
+        padding: '0.5em 1.7em',
+      }}
+    >
+      <p
+        style={{
+          textAlign: 'left',
+          fontSize: '1.25rem',
+          fontWeight: '600',
+          marginBottom: '0',
+          paddingTop: '3px',
+        }}
+      >
+        Archived Projects      
+      </p>
+      </div>
+      <div
           style={{
             display: 'flex',
-            padding: '20px',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
+            width: '50%',
+            padding: '0.5em 1.7em',
           }}
         >
           <button
-            style={{ alignSelf: 'flex-start' }}
+            style={{ marginLeft: '1em', borderRadius: '2em', width: '15%' }}
             className="btn btn-primary"
+            // onClick={e => handleClick(e)}
           >
             Export
           </button>
-          <label style={{ fontWeight: '500' }}>
-            Search :
-            <input
-              type="search"
-              placeholder="Search"
-              style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
-              onChange={e => handleChange(e)}
-            />
-          </label>{' '}
         </div>
-        <hr style={{ margin: '0' }} />
-        <Paper sx={{ width: '100%' }}>
+      </div>
+      {constData && constData.length > 0 ? (
+      <div
+        style={{
+           margin: '20px',
+        backgroundColor: 'white',
+        marginBottom: '5em',
+        borderRadius: '1.5em',
+        }}
+      >
+      <div
+      style={{
+        display: 'flex',
+        padding: '2em',
+        justifyContent: 'flex-end',
+      }}
+    >
+      <input
+        placeholder="Search"
+        onChange={e => handleChange(e)}
+        type="search"
+        style={{
+          paddingLeft: '1em',
+          border: '1px solid #ced4da',
+          borderRadius: '1.5em',
+          height: '2.2em',
+        }}
+      />
+    </div>
+        <Paper sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}>
           <>
             <TableContainer>
-              <Table
-                sx={{ minWidth: 750 }}
-                aria-labelledby="tableTitle"
-                size={dense ? 'small' : 'medium'}
-              >
+              <Table>
                 <EnhancedTableHead
                   numSelected={selected.length}
                   order={order}
@@ -245,9 +265,7 @@ const ArchivedProject = () => {
                         >
                           <TableCell
                             id={labelId}
-                            align="center"
-                            scope="row"
-                            padding="none"
+                            align="left"
                           >
                             {row.title}
                           </TableCell>
@@ -255,18 +273,20 @@ const ArchivedProject = () => {
                           <TableCell align="center">{row.goal}</TableCell>
                           <TableCell align="center">{row.funded}</TableCell>
                           <TableCell align="center">{row.paid}</TableCell>
-                          <TableCell align="center">{row.status}</TableCell>
+                          <TableCell align="left">{row.status}</TableCell>
 
                           <TableCell>
-                            {row.action}
+                            {row.action}<center>
                             <button
                               data-bs-toggle="tooltip"
                               title="Archive"
                               className="btn"
                               // onClick={() => deleteModalOpen(row)}
                             >
+
                               <FaRegFileArchive />
                             </button>
+                            </center>
                           </TableCell>
                         </TableRow>
                       );
@@ -280,7 +300,7 @@ const ArchivedProject = () => {
               count={constData.length}
               rowsPerPage={rowsPerPage}
               page={page}
-              pageSize={10}
+              // pageSize={10}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
               showLastButton={true}
@@ -289,6 +309,9 @@ const ArchivedProject = () => {
           </>
         </Paper>
       </div>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 };
@@ -335,37 +358,37 @@ const headCells = [
   },
   {
     id: 'date',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Date',
   },
   {
     id: 'goal',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Goal',
   },
   {
     id: 'funded',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Funded',
   },
   {
     id: 'paid',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Paid',
   },
   {
     id: 'status',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Status',
   },
   {
     id: 'action',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Action',
   },
