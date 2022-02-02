@@ -39,11 +39,11 @@ exports.addProjects = async (req, res) => {
     target = Number(goal) + Number(commissionModel) + Number(gstCal) + Number(paymentGatewayCal); //Calculating Target
     target = Math.round(target) //Rounding off target value.
 
-    let projectIntervalEndDate = await moment(startDate).add(recurringDays, 'days').format('YYYY-MM-DD')
-    startDate = await moment(startDate).format('YYYY-MM-DD')
+    let projectIntervalEndDate = moment(startDate).add(recurringDays, 'days').format('YYYY-MM-DD')
+    startDate = moment(startDate).format('YYYY-MM-DD')
 
     //If start date of project is bigger than todays date then project status will be inactive 
-    var currentDate = await moment().format('YYYY-MM-DD');
+    var currentDate = moment().format('YYYY-MM-DD');
     if (startDate > currentDate) {
         isActive = false
     } else {
