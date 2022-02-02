@@ -56,7 +56,7 @@ exports.addProjects = async (req, res) => {
         )
         projectImage = await models.project_image.create({ projectId: projects.dataValues.id, isActive, banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 }, { transaction: t })
         if (isRecurring == true) {
-            projectInterval = await models.projectInterval.create({ projectId: projects.dataValues.id, startDate, endDate: projectIntervalEndDate })
+            projectInterval = await models.projectInterval.create({ projectId: projects.dataValues.id, startDate, endDate: projectIntervalEndDate,goal,commission, target},{ transaction: t })
         }
         if (!(projects && projectImage)) {
             return true
