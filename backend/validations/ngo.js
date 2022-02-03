@@ -39,8 +39,15 @@ exports.ngoValidation = [
         .isLength({ min: 8, max: 15 }).withMessage("Min password length is 8"),
 
     body('address')
-        .exists().withMessage('Address is required')
-        .notEmpty().withMessage('Address is required'),
+        .exists().withMessage('Address is Required')
+        .notEmpty().withMessage('Address is Required')
+        .isLength({ max: 100 }).withMessage('Only 100 characters allowed')
+        .custom(async (value) => {
+            let addressRegex = /^[a-zA-Z0-9\s,./'-\(\)\-]{0,}$/g
+            if (!addressRegex.test(value)) {
+                return Promise.reject(`Address cannot have special characters like @,$,%,!,",^`)
+            }
+        }),
 
     body('registrationDate')
         .exists().withMessage('Registration Date is required')
@@ -133,9 +140,15 @@ exports.ngoUpdateValidation = [
         .isLength({ min: 8, max: 15 }).withMessage("Min password length is 8"),
 
     body('address')
-        .exists().withMessage('Address is required')
-        .notEmpty().withMessage('Address is required'),
-
+        .exists().withMessage('Address is Required')
+        .notEmpty().withMessage('Address is Required')
+        .isLength({ max: 100 }).withMessage('Only 100 characters allowed')
+        .custom(async (value) => {
+            let addressRegex = /^[a-zA-Z0-9\s,./'-\(\)\-]{0,}$/g
+            if (!addressRegex.test(value)) {
+                return Promise.reject(`Address cannot have special characters like @,$,%,!,",^`)
+            }
+        }),
     body('registrationDate')
         .exists().withMessage('Registration Date is required')
         .notEmpty().withMessage('Registration Date is required'),

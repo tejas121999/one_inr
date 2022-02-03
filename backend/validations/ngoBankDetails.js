@@ -43,7 +43,7 @@ exports.ngoBankDetailsValidation = [
         .notEmpty().withMessage('IFSC is required')
         .custom(async value => {
             if(!/^([A-Z|a-z]){4}[0]([a-zA-Z0-9]){6}$/i.test(value)) {
-                return Promise.reject("invalid IFSC number");
+                return Promise.reject("Invalid IFSC number");
             }
         })
         .custom(async value => {
@@ -53,7 +53,7 @@ exports.ngoBankDetailsValidation = [
                 }
             }).then(IFSC => {
                 if(IFSC) {
-                    return Promise.reject("IFSC number alredy exists!");
+                    return Promise.reject("IFSC number already exists!");
                 }
             })
         })

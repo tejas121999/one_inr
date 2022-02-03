@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 const checkAuth = require("../middleware/checkAuth");
-
 const { wrapper } = require("../utils/errorWrap");
 
 const {
@@ -29,6 +28,7 @@ router.post(
   validationError,
   wrapper(addVendor)
 );
+
 router.put(
   "/:id",
   checkAuth,
@@ -36,7 +36,9 @@ router.put(
   validationError,
   wrapper(updateVendor)
 );
-router.get("/", checkAuth, wrapper(getAllVendor));
+
+
+router.get("/",checkAuth, wrapper(getAllVendor));
 router.get("/get-vendor-pdf", checkAuth, generateVendorPdf);
 router.get("/get-vendor-csv", checkAuth, generateVendorCsv);
 router.get("/get-vendor-xlsx", checkAuth, getVendorExcel);
