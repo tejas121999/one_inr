@@ -179,7 +179,7 @@ const projectDetails = props => {
               marginLeft: '20px',
             }}
           >
-            PROJECT DETAILS
+            Project Details
           </p>
         </div>
       </div>
@@ -260,22 +260,21 @@ const projectDetails = props => {
                       <br />
                     </div>
                   </div>
-                  <div className="row" style={{}}>
+                  <div className="row">
                     <br />
                     <br />
+
                     <div className="col-2">
-                      <div>
-                        <p>Start Date</p>
-                        <p>Date</p>
-                      </div>
-                      <div className="col-2">
-                        <p>End Date</p>
-                        <p>Date</p>
-                      </div>
-                      <div>
-                        <p>Days Left</p>
-                        <p>Date</p>
-                      </div>
+                      <p>Start Date</p>
+                      <p style={{ fontWeight: 'bold' }}>12 january 2022</p>
+                    </div>
+                    <div className="col-2">
+                      <p>End Date</p>
+                      <p style={{ fontWeight: 'bold' }}>25 May 2022</p>
+                    </div>
+                    <div className="col-2">
+                      <p>Days Left</p>
+                      <p style={{ fontWeight: 'bold' }}>46</p>
                     </div>
                   </div>
                   <br />

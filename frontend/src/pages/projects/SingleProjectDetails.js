@@ -19,413 +19,427 @@ import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import { visuallyHidden } from '@mui/utils';
 
-const SingleProjectDetails = (props) => {
+const SingleProjectDetails = props => {
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('calories');
+  const [selected, setSelected] = React.useState([]);
+  const [page, setPage] = React.useState(0);
+  const [dense, setDense] = React.useState(false);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [key, setKey] = React.useState('details');
+  const [projectkey, setProjectKey] = React.useState('projectDetails');
 
-    const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('calories');
-    const [selected, setSelected] = React.useState([]);
-    const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    const [key, setKey] = React.useState('details');
-    const [projectkey, setProjectKey] = React.useState('projectDetails');
+  const history = useHistory();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    //  dispatch(constData());
+  }, []);
 
-    const history = useHistory();
-    const dispatch = useDispatch();
-    useEffect(() => {
-        //  dispatch(constData());
-    }, []);
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
 
+  const handleChangePage = (event, newPage) => {
+    console.log('ChinmayChange', newPage);
 
-    const handleRequestSort = (event, property) => {
-        const isAsc = orderBy === property && order === 'asc';
-        setOrder(isAsc ? 'desc' : 'asc');
-        setOrderBy(property);
-    };
+    setPage(newPage);
+  };
 
-    const handleChangePage = (event, newPage) => {
-        console.log('ChinmayChange', newPage);
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
-        setPage(newPage);
-    };
+  const isSelected = name => selected.indexOf(name) !== -1;
 
-    const handleChangeRowsPerPage = event => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
+  // Avoid a layout jump when reaching the last page with empty rows.
+  const emptyRows =
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - constHeadcellsData.length)
+      : 0;
+  // SEARCH
 
-    const isSelected = name => selected.indexOf(name) !== -1;
+  let timeout = null;
+  const handleChange = e => {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      onSearch(e.target.value);
+    }, 1000);
+  };
 
-    // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - constHeadcellsData.length) : 0;
-    // SEARCH
+  const onSearch = value => {
+    if (value) {
+      // dispatch(getNgoByValueAction(value));
+    } else {
+      // dispatch(getViewAllNgoAction());
+    }
+  };
 
-    let timeout = null;
-    const handleChange = e => {
-        clearTimeout(timeout);
-        timeout = setTimeout(function () {
-            onSearch(e.target.value);
-        }, 1000);
-    };
+  const data = [
+    {
+      img: 'https://media.geeksforgeeks.org/wp-content/uploads/20210425122739/2-300x115.png',
+      alt: 'image one',
+    },
+    {
+      img: 'https://media.geeksforgeeks.org/wp-content/uploads/20210425122716/1-300x115.png',
+      alt: 'image two',
+    },
+  ];
 
-    const onSearch = value => {
-        if (value) {
-            // dispatch(getNgoByValueAction(value));
-        } else {
-            // dispatch(getViewAllNgoAction());
-        }
-    };
+  //END
 
+  const constHeadcellsData = [
+    {
+      id: 1,
+      date: '26-Dec-2021 To 27-Dec-2021',
+      goal: '310',
+      funded: '0',
+      completion: '0.oo1%',
+    },
+    {
+      id: 2,
+      date: '26-Dec-2021 To 27-Dec-2021',
+      goal: '140',
+      funded: '0',
+      completion: '0.oo1%',
+    },
+  ];
 
-    const data = [
-        { img: "https://media.geeksforgeeks.org/wp-content/uploads/20210425122739/2-300x115.png", alt: "image one" },
-        { img: "https://media.geeksforgeeks.org/wp-content/uploads/20210425122716/1-300x115.png", alt: "image two" },
-    ]
+  return (
+    <>
+      <div>
+        <br />
+        <br />
+        <br />
+        <div className="card">
+          <p
+            style={{
+              textAlign: 'left',
+              fontWeight: 'bold',
+              margin: '20px',
+              width: '100%',
+              marginLeft: '20px',
+            }}
+          >
+            Project Details
+          </p>
+        </div>
+      </div>
 
+      <div
+        style={{
+          padding: '20px',
+          margin: '20px',
+        }}
+      >
+        <div>
+          <Tabs
+            id="controlled-tab-example"
+            activeKey={key}
+            onSelect={k => setKey(k)}
+            className="mb-3"
+          >
+            <Tab eventKey="details" title="Details">
+              <div className="row">
+                <div className="col-4">
+                  <Carousel nextLabel={null} prevLabel={null}>
+                    {data.map(item => (
+                      <Carousel.Item interval={2000}>
+                        <img
+                          // className="row"
+                          style={{ height: '200px' }}
+                          src={item.img}
+                          alt={item.alt}
+                        />
+                      </Carousel.Item>
+                    ))}
+                  </Carousel>
+                </div>
 
-    //END
+                <div className="col-8">
+                  <br />
+                  <br />
 
-    const constHeadcellsData = [
-        {
-            id: 1,
-            date: '26-Dec-2021 To 27-Dec-2021',
-            goal: '310',
-            funded: '0',
-            completion: '0.oo1%',
+                  <Tabs
+                    id="controlled-tab-example"
+                    activeKey={projectkey}
+                    onSelect={k => setProjectKey(k)}
+                    className="mb-3"
+                  >
+                    <Tab eventKey="project details" title="Project Details">
+                      <br />
+                      <div className="row">
+                        <div className="col-12">
+                          <p>
+                            {' '}
+                            asdfghjfghjhj asdfghjkjasassa asdfghjsdxfcgvhbjdfcg{' '}
+                          </p>
+                          <hr />
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-6">
+                          <p>Recurring</p>
+                        </div>
+                        <div className="col-6">
+                          <p>No</p>
+                        </div>
+                      </div>
+                      <br />
+                      <div className="row">
+                        <div className="col-12">
+                          <p>
+                            {' '}
+                            <b> Goal </b>{' '}
+                          </p>
+                          <hr />
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-6">
+                          <p>Goal</p>
+                        </div>
+                        <div className="col-6">
+                          <p>300INR</p>
+                        </div>
+                      </div>
+                    </Tab>
 
-        },
-        {
-            id: 2,
-            date: '26-Dec-2021 To 27-Dec-2021',
-            goal: '140',
-            funded: '0',
-            completion: '0.oo1%',
+                    <Tab eventKey="date" title="Date">
+                      <div className="row">
+                        <div className="col-4">
+                          <span className="label label-default">
+                            Start Date
+                          </span>
+                        </div>
 
-        },
-    ];
+                        <div className="col-4">
+                          <span className="label label-default">End Date</span>
+                        </div>
 
-    return (
-        <>
-            <div>
-                <br />
-                <br />
-                <br />
-                <div className="card">
-                    <p
+                        <div className="col-4">
+                          <span className="label label-default">Days Left</span>
+                        </div>
+
+                        <div className="col-4">
+                          <span className="label label-default"></span>
+                        </div>
+                      </div>
+                      <br />
+                      <br />
+
+                      <div
                         style={{
-                            textAlign: 'left',
-                            fontWeight: 'bold',
-                            margin: '20px',
-                            width: '100%',
-                            marginLeft: '20px',
+                          display: 'flex',
+                          justifyContent: 'space-between',
                         }}
-                    >
-                        PROJECT DETAILS
-                    </p>
+                      >
+                        <button
+                          style={{ alignSelf: 'flex-start' }}
+                          className="btn btn-primary"
+                        >
+                          Export
+                        </button>
+                        <input
+                          type="search"
+                          placeholder="Search"
+                          onChange={e => handleChange(e)}
+                        />
+                      </div>
+                      <br />
+                      <Paper sx={{ width: '100%', mb: 2 }}>
+                        <>
+                          <TableContainer>
+                            <Table
+                              sx={{ minWidth: 750 }}
+                              aria-labelledby="tableTitle"
+                              size={dense ? 'small' : 'medium'}
+                            >
+                              <EnhancedTableHead
+                                numSelected={selected.length}
+                                order={order}
+                                orderBy={orderBy}
+                                onRequestSort={handleRequestSort}
+                                rowCount={constHeadcellsData.length}
+                              />
+                              <TableBody>
+                                {stableSort(
+                                  constHeadcellsData,
+                                  getComparator(order, orderBy),
+                                )
+                                  .slice(
+                                    page * rowsPerPage,
+                                    page * rowsPerPage + rowsPerPage,
+                                  )
+                                  .map((row, index) => {
+                                    const isItemSelected = isSelected(row.name);
+                                    const labelId = `enhanced-table-checkbox-${index}`;
+
+                                    return (
+                                      <TableRow
+                                        hover
+                                        aria-checked={isItemSelected}
+                                        tabIndex={-1}
+                                        key={row.date}
+                                        selected={isItemSelected}
+                                      >
+                                        <TableCell
+                                          id={labelId}
+                                          align="center"
+                                          scope="row"
+                                          padding="none"
+                                        >
+                                          {row.date}
+                                        </TableCell>
+                                        <TableCell align="center">
+                                          {row.goal}
+                                        </TableCell>
+                                        <TableCell align="center">
+                                          {row.funded}
+                                        </TableCell>
+                                        <TableCell align="center">
+                                          {row.completion}
+                                        </TableCell>
+                                      </TableRow>
+                                    );
+                                  })}
+                              </TableBody>
+                            </Table>
+                          </TableContainer>
+                          <TablePagination
+                            rowsPerPageOptions={[5, 10, 25]}
+                            component="div"
+                            count={constHeadcellsData.length}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            pageSize={10}
+                            onPageChange={handleChangePage}
+                            onRowsPerPageChange={handleChangeRowsPerPage}
+                            showLastButton={true}
+                            showFirstButton={true}
+                          />
+                        </>
+                      </Paper>
+                    </Tab>
+                  </Tabs>
                 </div>
-            </div>
+              </div>
+            </Tab>
 
-            <div style={{
-                padding: '20px',
-                margin: '20px'
-            }}>
-                <div>
-                    <Tabs
-                        id="controlled-tab-example"
-                        activeKey={key}
-                        onSelect={(k) => setKey(k)}
-                        className="mb-3"
-                    >
-                        <Tab eventKey="details" title="Details" >
-                            <div className='row'>
-                                <div className='col-4'>
-                                    <Carousel nextLabel={null} prevLabel={null}>
-                                        {data.map((item) => (
-                                            <Carousel.Item interval={2000}>
-                                                <img
-                                                    // className="row"
-                                                    style={{ height: '200px' }}
-                                                    src={item.img}
-                                                    alt={item.alt}
-                                                />
-                                            </Carousel.Item>
-                                        ))}
-                                    </Carousel>
-                                </div>
-
-                                <div className='col-8'>
-                                    <br />
-                                    <br />
-
-                                    <Tabs
-                                        id="controlled-tab-example"
-                                        activeKey={projectkey}
-                                        onSelect={(k) => setProjectKey(k)}
-                                        className="mb-3"
-                                    >
-                                        <Tab eventKey="project details" title="Project Details" >
-                                            <br />
-                                            <div className='row'>
-                                                <div className='col-12'>
-                                                    <p> asdfghjfghjhj asdfghjkjasassa asdfghjsdxfcgvhbjdfcg </p>
-                                                    <hr />
-                                                </div>
-                                            </div>
-                                            <div className='row'>
-                                                <div className='col-6'>
-                                                    <p>Recurring</p>
-                                                </div>
-                                                <div className='col-6'>
-                                                    <p>No</p>
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div className='row'>
-                                                <div className='col-12'>
-                                                    <p> <b> Goal </b> </p>
-                                                    <hr />
-                                                </div>
-                                            </div>
-                                            <div className='row'>
-                                                <div className='col-6'>
-                                                    <p>Goal</p>
-                                                </div>
-                                                <div className='col-6'>
-                                                    <p>300INR</p>
-                                                </div>
-                                            </div>
-
-
-
-
-                                        </Tab>
-
-                                        <Tab eventKey="date" title="Date" >
-                                            <div className='row'>
-                                                <div className='col-4'>
-                                                    <span className="label label-default">Start Date</span>
-                                                </div>
-
-                                                <div className='col-4'>
-                                                    <span className="label label-default">End Date</span>
-                                                </div>
-
-                                                <div className='col-4'>
-                                                    <span className="label label-default">Days Left</span>
-                                                </div>
-
-                                                <div className='col-4'>
-                                                    <span className="label label-default"></span>
-                                                </div>
-
-                                            </div>
-                                            <br />
-                                            <br />
-
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                <button
-                                                    style={{ alignSelf: 'flex-start' }}
-                                                    className="btn btn-primary"
-                                                >
-                                                    Export
-                                                </button>
-                                                <input type="search" placeholder="Search" onChange={e => handleChange(e)} />
-                                            </div>
-                                            <br />
-                                            <Paper sx={{ width: '100%', mb: 2 }}>
-                                                <>
-                                                    <TableContainer>
-                                                        <Table
-                                                            sx={{ minWidth: 750 }}
-                                                            aria-labelledby="tableTitle"
-                                                            size={dense ? 'small' : 'medium'}
-                                                        >
-                                                            <EnhancedTableHead
-                                                                numSelected={selected.length}
-                                                                order={order}
-                                                                orderBy={orderBy}
-                                                                onRequestSort={handleRequestSort}
-                                                                rowCount={constHeadcellsData.length}
-                                                            />
-                                                            <TableBody>
-                                                                {stableSort(constHeadcellsData, getComparator(order, orderBy))
-                                                                    .slice(
-                                                                        page * rowsPerPage,
-                                                                        page * rowsPerPage + rowsPerPage,
-                                                                    )
-                                                                    .map((row, index) => {
-                                                                        const isItemSelected = isSelected(row.name);
-                                                                        const labelId = `enhanced-table-checkbox-${index}`;
-
-                                                                        return (
-                                                                            <TableRow
-                                                                                hover
-                                                                                aria-checked={isItemSelected}
-                                                                                tabIndex={-1}
-                                                                                key={row.date}
-                                                                                selected={isItemSelected}
-                                                                            >
-                                                                                <TableCell
-                                                                                    id={labelId}
-                                                                                    align="center"
-                                                                                    scope="row"
-                                                                                    padding="none"
-                                                                                >
-                                                                                    {row.date}
-                                                                                </TableCell>
-                                                                                <TableCell align="center">
-                                                                                    {row.goal}
-                                                                                </TableCell>
-                                                                                <TableCell align="center">
-                                                                                    {row.funded}
-                                                                                </TableCell>
-                                                                                <TableCell align="center">
-                                                                                    {row.completion}
-                                                                                </TableCell>
-
-                                                                            </TableRow>
-                                                                        );
-                                                                    })}
-                                                            </TableBody>
-                                                        </Table>
-                                                    </TableContainer>
-                                                    <TablePagination
-                                                        rowsPerPageOptions={[5, 10, 25]}
-                                                        component="div"
-                                                        count={constHeadcellsData.length}
-                                                        rowsPerPage={rowsPerPage}
-                                                        page={page}
-                                                        pageSize={10}
-                                                        onPageChange={handleChangePage}
-                                                        onRowsPerPageChange={handleChangeRowsPerPage}
-                                                        showLastButton={true}
-                                                        showFirstButton={true}
-                                                    />
-                                                </>
-                                            </Paper>
-
-                                        </Tab>
-
-                                    </Tabs>
-                                </div>
-                            </div>
-                        </Tab>
-
-                        <Tab eventKey="contributors" title="Contributors" >
-                            <br />
-                            <div>
-                                <h1 align={'center'}> No Contribution Yet </h1>
-                            </div>
-                        </Tab>
-                    </Tabs>
-                </div>
-
-            </div>
-        </>
-    )
-}
+            <Tab eventKey="contributors" title="Contributors">
+              <br />
+              <div>
+                <h1 align={'center'}> No Contribution Yet </h1>
+              </div>
+            </Tab>
+          </Tabs>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default SingleProjectDetails;
 
 function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
-    }
-    return 0;
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
 }
 
 function getComparator(order, orderBy) {
-    return order === 'desc'
-        ? (a, b) => descendingComparator(a, b, orderBy)
-        : (a, b) => -descendingComparator(a, b, orderBy);
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 // This method is created for cross-browser compatibility, if you don't
 // need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
+  const stabilizedThis = array.map((el, index) => [el, index]);
 
-    stabilizedThis.sort((a, b) => {
-        const order = comparator(a[0], b[0]);
-        if (order !== 0) {
-            return order;
-        }
-        return a[1] - b[1];
-    });
-    return stabilizedThis.map(el => el[0]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) {
+      return order;
+    }
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map(el => el[0]);
 }
 
 const headCells = [
-    {
-        id: 'date',
-        numeric: false,
-        disablePadding: false,
-        label: 'Date',
-    },
-    {
-        id: 'goal',
-        numeric: false,
-        disablePadding: false,
-        label: 'Goal',
-    },
-    {
-        id: 'funded',
-        numeric: false,
-        disablePadding: false,
-        label: 'Funded',
-    },
-    {
-        id: 'completion',
-        numeric: false,
-        disablePadding: false,
-        label: 'Completion',
-    },
+  {
+    id: 'date',
+    numeric: false,
+    disablePadding: false,
+    label: 'Date',
+  },
+  {
+    id: 'goal',
+    numeric: false,
+    disablePadding: false,
+    label: 'Goal',
+  },
+  {
+    id: 'funded',
+    numeric: false,
+    disablePadding: false,
+    label: 'Funded',
+  },
+  {
+    id: 'completion',
+    numeric: false,
+    disablePadding: false,
+    label: 'Completion',
+  },
 ];
 
 function EnhancedTableHead(props) {
-    const {
-        onSelectAllClick,
-        order,
-        orderBy,
-        numSelected,
-        rowCount,
-        onRequestSort,
-    } = props;
+  const {
+    onSelectAllClick,
+    order,
+    orderBy,
+    numSelected,
+    rowCount,
+    onRequestSort,
+  } = props;
 
-    const createSortHandler = property => event => {
-        onRequestSort(event, property);
-    };
+  const createSortHandler = property => event => {
+    onRequestSort(event, property);
+  };
 
-    return (
-        <TableHead className="table-head">
-            <TableRow>
-                {headCells.map(headCell => (
-                    <TableCell
-                        key={headCell.id}
-                        align="center"
-                        padding={headCell.disablePadding ? 'none' : 'normal'}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                    >
-                        <TableSortLabel
-                            active={true}
-                            direction={orderBy === headCell.id ? order : 'asc'}
-                            onClick={createSortHandler(headCell.id)}
-                        >
-                            <b>{headCell.label}</b>
-                            {orderBy === headCell.id ? (
-                                <Box component="span" sx={visuallyHidden}>
-                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                </Box>
-                            ) : null}
-                        </TableSortLabel>
-                    </TableCell>
-                ))}
-            </TableRow>
-        </TableHead>
-    );
+  return (
+    <TableHead className="table-head">
+      <TableRow>
+        {headCells.map(headCell => (
+          <TableCell
+            key={headCell.id}
+            align="center"
+            padding={headCell.disablePadding ? 'none' : 'normal'}
+            sortDirection={orderBy === headCell.id ? order : false}
+          >
+            <TableSortLabel
+              active={true}
+              direction={orderBy === headCell.id ? order : 'asc'}
+              onClick={createSortHandler(headCell.id)}
+            >
+              <b>{headCell.label}</b>
+              {orderBy === headCell.id ? (
+                <Box component="span" sx={visuallyHidden}>
+                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                </Box>
+              ) : null}
+            </TableSortLabel>
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+  );
 }
-
