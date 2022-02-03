@@ -179,7 +179,7 @@ const projectDetails = props => {
               marginLeft: '20px',
             }}
           >
-            PROJECT DETAILS
+            Project Details
           </p>
         </div>
       </div>
@@ -205,7 +205,11 @@ const projectDetails = props => {
                       <Carousel.Item interval={2000}>
                         <img
                           // className="row"
-                          style={{ height: '400px', width: '100%', borderRadius: '1.5em' }}
+                          style={{
+                            height: '400px',
+                            width: '100%',
+                            borderRadius: '1.5em',
+                          }}
                           src={item.img}
                           alt={item.alt}
                         />
@@ -248,115 +252,65 @@ const projectDetails = props => {
                   </div>
                   <br />
                   <div className="row">
-                  <div className="col-12">
-                    <p>
-                      {' '}
-                      <b> Dates </b>{' '}
-                    </p>
-                    <br />  
+                    <div className="col-12">
+                      <p>
+                        {' '}
+                        <b> Dates </b>{' '}
+                      </p>
+                      <br />
+                    </div>
                   </div>
-                </div>
                   <div className="row">
                     <br />
                     <br />
-                    <div>
-                      <hr style={{ margin: '0' }} />
-                      <Paper sx={{ width: '100%', mb: 2 }}
-                         style={{borderRadius: '1.5em',
-                         }}
-                      >
-                        <>
-                          <TableContainer>
-                            <Table
-                              sx={{ minWidth: 750 }}
-                              aria-labelledby="tableTitle"
-                              size={dense ? 'small' : 'medium'}
-                            >
-                              <EnhancedTableHead
-                                numSelected={selected.length}
-                                order={order}
-                                orderBy={orderBy}
-                                onRequestSort={handleRequestSort}
-                                rowCount={TableconstData.length}
-                                headCells={tempCells}
-                              />
-                              <TableBody>
-                                {stableSort(
-                                  TableconstData,
-                                  getComparator(order, orderBy),
-                                )
-                                  .slice(
-                                    page * rowsPerPage,
-                                    page * rowsPerPage + rowsPerPage,
-                                  )
-                                  .map((row, index) => {
-                                    const isItemSelected = isSelected(row.name);
-                                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                                    return (
-                                      <TableRow
-                                        hover
-                                        aria-checked={isItemSelected}
-                                        tabIndex={-1}
-                                        key={row.name}
-                                        selected={isItemSelected}
-                                      >
-                                        <TableCell
-                                          id={labelId}
-                                          align="center"
-                                          scope="row"
-                                          padding="none"
-                                        >
-                                          {row.startDate}
-                                        </TableCell>
-                                        <TableCell align="center">
-                                          {row.endDate}
-                                        </TableCell>
-                                        <TableCell align="center">
-                                          {row.daysLeft}
-                                        </TableCell>
-                                      </TableRow>
-                                    );
-                                  })}
-                              </TableBody>
-                            </Table>
-                          </TableContainer>
-                        </>
-                      </Paper>
+                    <div className="col-2">
+                      <p>Start Date</p>
+                      <p style={{ fontWeight: 'bold' }}>12 january 2022</p>
+                    </div>
+                    <div className="col-2">
+                      <p>End Date</p>
+                      <p style={{ fontWeight: 'bold' }}>25 May 2022</p>
+                    </div>
+                    <div className="col-2">
+                      <p>Days Left</p>
+                      <p style={{ fontWeight: 'bold' }}>46</p>
                     </div>
                   </div>
                   <br />
                   <br />
-         
-                  <Paper sx={{ width: '100%', mb: 2 }}
-                   style={{borderRadius: '1.5em',
-                   }}
-                  >
 
-                  <div style={{ display: 'flex',
-                                justifyContent:'flex-end',
-                                padding : '20px'
-                             }}>
-                  <input
-                    type="search"
-                    placeholder="Search"
-                    onChange={e => handleChange(e)}
-                    style={{
-                      paddingLeft: '1em',
-                      border: '1px solid #ced4da',
-                      borderRadius: '1.5em',
-                      height: '2.2em',
-                      marginRight : '10px'
-                    }}
-                  />
-                  <button
-                    style={{ alignSelf: 'flex-start' }}
-                    className="btn btn-primary"
+                  <Paper
+                    sx={{ width: '100%', mb: 2 }}
+                    style={{ borderRadius: '1.5em' }}
                   >
-                    Export
-                  </button>
-                </div>
-                <br />
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        padding: '20px',
+                      }}
+                    >
+                      <input
+                        type="search"
+                        placeholder="Search"
+                        onChange={e => handleChange(e)}
+                        style={{
+                          paddingLeft: '1em',
+                          border: '1px solid #ced4da',
+                          borderRadius: '1.5em',
+                          height: '2.2em',
+                          marginRight: '10px',
+                        }}
+                      />
+                      <button
+                        style={{ alignSelf: 'flex-start' }}
+                        className="btn btn-primary"
+                      >
+                        Export
+                      </button>
+                    </div>
+                    <br />
                     <>
                       <TableContainer>
                         <Table
