@@ -43,7 +43,7 @@ const AutoDonate = () => {
               margin: '20px',
               backgroundColor: 'white',
               marginBottom: '2px',
-              borderRadius: '1.5em',
+              borderRadius: '1em',
               textAlign: 'center',
             }}
           >

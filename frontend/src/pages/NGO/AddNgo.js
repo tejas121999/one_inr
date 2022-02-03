@@ -67,31 +67,31 @@ const AddNgo = props => {
   const validationSchema = yup.object({
     ngoName: yup
       .string()
-      .required('Required')
+      .required('Required Field')
       .max(50, 'Max limit is 50 characters'),
-    address: yup.string().required('Required'),
+    address: yup.string().required('Required Field'),
     emailId: yup
       .string()
       .email('Invalid Email Format')
-      .required('Required')
+      .required('Required Field')
       .max(50, 'Max limit is 50 characters'),
     // registrationDate: yup.string().required('Required'),
     registrationNumber: yup
       .string()
-      .required('Required')
+      .required('Required Field')
       .min(12, 'please enter 12 digits'),
     mobileNumber: yup
       .string()
-      .required('Required')
+      .required('Required Field')
       .min(10, 'Please enter 10 digits'),
     landline: yup
       .string()
-      .required('Required')
+      .required('Required Field')
       .min(10, 'please enter 10 digits'),
     password: yup.string().required('Required').min(7, 'Should be 7 character'),
     panNumber: yup
       .string()
-      .required('Required')
+      .required('Required Field')
       .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
   });
 
@@ -249,7 +249,9 @@ const AddNgo = props => {
                 <div className="row">
                   <div className="col-12 ">
                     <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold' }}>NGO Name</label>
+                      <label style={{ fontWeight: 'bold' }}>
+                        NGO Name<label style={{ color: 'red' }}>*</label>
+                      </label>
                       <Field
                         className="form-control"
                         placeholder="Please Enter NGO Name"
@@ -271,7 +273,9 @@ const AddNgo = props => {
                 <div className="row">
                   <div className="col-12 ">
                     <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold' }}>Address</label>
+                      <label style={{ fontWeight: 'bold' }}>
+                        Address<label style={{ color: 'red' }}>*</label>
+                      </label>
                       <Field
                         className="form-control"
                         placeholder="Please Enter ddress"
@@ -293,14 +297,16 @@ const AddNgo = props => {
                 <div className="row">
                   <div className="col-6 ">
                     <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold' }}>Email Id</label>
+                      <label style={{ fontWeight: 'bold' }}>
+                        Email Id<label style={{ color: 'red' }}>*</label>
+                      </label>
                       <Field
                         className="form-control"
                         placeholder="Please Enter Email"
                         name="emailId"
                         type="emailId"
                         required
-                        autocomplete="off"
+                        autocomplete="on"
                         value={values.emailId}
                       />
                       {errors.emailId && touched.emailId && (
@@ -315,6 +321,7 @@ const AddNgo = props => {
                     <div style={{ padding: '15px 0 10px' }}>
                       <label style={{ fontWeight: 'bold' }}>
                         Registration Date
+                        <label style={{ color: 'red' }}>*</label>
                       </label>
                       <DatePicker
                         name="registrationDate"
@@ -339,8 +346,8 @@ const AddNgo = props => {
                   <div className="col-6 ">
                     <div style={{ padding: '15px 0 10px' }}>
                       <label style={{ fontWeight: 'bold' }}>
-                        {' '}
                         Registration Number
+                        <label style={{ color: 'red' }}>*</label>
                       </label>
                       <Field
                         className="form-control"
@@ -364,14 +371,13 @@ const AddNgo = props => {
                   <div className="col-6 ">
                     <div style={{ padding: '15px 0 10px' }}>
                       <label style={{ fontWeight: 'bold' }}>
-                        {' '}
-                        Mobile Number{' '}
+                        Mobile Number<label style={{ color: 'red' }}>*</label>
                       </label>
                       <Field
                         className="form-control"
                         placeholder="Please Enter Mobile Number"
                         name="mobileNumber"
-                        type="text"
+                        type="number"
                         autocomplete="off"
                         maxLength={10}
                         required
@@ -391,14 +397,13 @@ const AddNgo = props => {
                   <div className="col-6 ">
                     <div style={{ padding: '15px 0 10px' }}>
                       <label style={{ fontWeight: 'bold' }}>
-                        {' '}
-                        Landline Number{' '}
+                        Landline Number<label style={{ color: 'red' }}>*</label>
                       </label>
                       <Field
                         className="form-control"
                         placeholder="Please Enter landline Number"
                         name="landline"
-                        type="text"
+                        type="number"
                         autocomplete="off"
                         maxLength={10}
                         required
@@ -415,7 +420,9 @@ const AddNgo = props => {
                   </div>
                   <div className="col-6 ">
                     <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold' }}>Password</label>
+                      <label style={{ fontWeight: 'bold' }}>
+                        Password<label style={{ color: 'red' }}>*</label>
+                      </label>
                       <Field
                         className="form-control"
                         placeholder="Please Enter password"
@@ -452,7 +459,10 @@ const AddNgo = props => {
                 <div className="row">
                   <div className="col-12 ">
                     <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold' }}> Pan Number </label>
+                      <label style={{ fontWeight: 'bold' }}>
+                        {' '}
+                        Pan Number<label style={{ color: 'red' }}>*</label>
+                      </label>
                       <Field
                         className="form-control"
                         placeholder="Please Enter Pan Number"
@@ -531,7 +541,9 @@ const AddNgo = props => {
                   <div className="row" style={{ marginLeft: '4px' }}>
                     <div className="col-2.5 ">
                       <div style={{ padding: '15px 0 10px' }}>
-                        <label style={{ fontWeight: 'bold' }}>Name</label>
+                        <label style={{ fontWeight: 'bold' }}>
+                          Name<label style={{ color: 'red' }}>*</label>
+                        </label>
                         <input
                           className="form-control"
                           placeholder="Please enter your Name"
@@ -552,7 +564,7 @@ const AddNgo = props => {
                     <div className="col-2.5 ">
                       <div style={{ padding: '15px 0 10px' }}>
                         <label style={{ fontWeight: 'bold' }}>
-                          Designation
+                          Designation<label style={{ color: 'red' }}>*</label>
                         </label>
                         <Field
                           className="form-control"
@@ -575,7 +587,9 @@ const AddNgo = props => {
 
                     <div className="col-2.5 ">
                       <div style={{ padding: '15px 0 10px' }}>
-                        <label style={{ fontWeight: 'bold' }}>Email</label>
+                        <label style={{ fontWeight: 'bold' }}>
+                          Email<label style={{ color: 'red' }}>*</label>
+                        </label>
                         <Field
                           className="form-control"
                           placeholder="Please enter email"
@@ -597,7 +611,9 @@ const AddNgo = props => {
 
                     <div className="col-2.5 ">
                       <div style={{ padding: '15px 0 10px' }}>
-                        <label style={{ fontWeight: 'bold' }}>Mobile</label>
+                        <label style={{ fontWeight: 'bold' }}>
+                          Mobile<label style={{ color: 'red' }}>*</label>
+                        </label>
                         <Field
                           className="form-control"
                           placeholder="Please enter mobile"

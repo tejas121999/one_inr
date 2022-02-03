@@ -29,9 +29,9 @@ const ViewAllProjects = () => {
   const [state, setState] = React.useState({
     checked: true,
     checkedB: true,
-  })
+  });
 
-  const handleChangeSwitch = (event) => {
+  const handleChangeSwitch = event => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
   const [order, setOrder] = React.useState('asc');
@@ -57,7 +57,6 @@ const ViewAllProjects = () => {
 
   let allProject = useSelector(state => state.project.projectList);
 
-
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -65,8 +64,6 @@ const ViewAllProjects = () => {
   };
 
   const handleChangePage = (event, newPage) => {
-
-
     setPage(newPage);
   };
 
@@ -125,237 +122,236 @@ const ViewAllProjects = () => {
       <br />
       <br />
       <br />
-      <br />
       <div
-      className="row"
-      style={{
-        backgroundColor: 'white',
-        margin: '0 1.2em',
-        borderRadius: '1em',
-      }}
-    >
-      <div
+        className="row"
         style={{
-          display: 'flex',
-          width: '50%',
-          padding: '0.5em 1.7em',
+          backgroundColor: 'white',
+          margin: '0 1.2em',
+          borderRadius: '1em',
         }}
       >
-        <p
+        <div
           style={{
-            textAlign: 'left',
-            fontSize: '1.25rem',
-            marginBottom: '0',
-            paddingTop: '3px',
+            display: 'flex',
+            width: '50%',
+            padding: '0.5em 1.7em',
           }}
         >
-          View All Project
-        </p>
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          width: '50%',
-          padding: '0.5em 1.8em',
-        }}
-      >
-      <button
-      style={{ marginLeft: '1em', borderRadius: '2em', width: '15%' }}
-      className="btn btn-primary"
-      // onClick={e => handleClick(e)}
-    >
-      Export
-    </button>
-      </div>
-      </div>
-      <div
-      style={{
-        margin: '20px',
-        backgroundColor: 'white',
-        marginBottom: '5em',
-        borderRadius: '1.5em',
-      }}
-    >          <div
-            className="row"
+          <p
             style={{
-              display: 'flex',
-              margin: '1.8em 1.8em 1.8em 1.4em',
-              justifyContent: 'space-between',
+              textAlign: 'left',
+              fontSize: '1.25rem',
+              marginBottom: '0',
+              paddingTop: '3px',
             }}
           >
-          <div
-        style={{
-          display: 'flex',
-          // padding: '2em',
-          justifyContent: 'flex-start',
-        }}
-      >
-          <div style={{ margin: '1em 0.5em' }}>
-          {/* <div className="input-box"> */}
-          <DatePicker
-            selected={startDate}
-            selectsStart
-            startDate={startDate}
-            endDate={endDate}
-            onChange={date => setStartDate(date)}
-            dateFormat="MMMM d, yyyy"
-          />
-          {/* </div> */}
-        </div>
-        <div style={{ margin: '1em 0.5em' }}>
-        {/* <div className="input-box"> */}
-        <DatePicker
-          selected={endDate}
-          selectsEnd
-          startDate={startDate}
-          endDate={endDate}
-          minDate={startDate}
-          onChange={date => setEndDate(date)}
-          dateFormat="MMMM d, yyyy"
-        />
-        {/* </div> */}
-        </div>
-        <div className="search-btn">
-          <button type="button" className="btn btn-primary" style={{ borderRadius: '1em'}}>
-            Search
-          </button>
-        </div>
+            View All Project
+          </p>
         </div>
         <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            width: '50%',
+            padding: '0.5em 1.8em',
+          }}
+        >
+          <button
+            style={{ marginLeft: '1em', borderRadius: '2em', width: '15%' }}
+            className="btn btn-primary"
+            // onClick={e => handleClick(e)}
+          >
+            Export
+          </button>
+        </div>
+      </div>
+      <div
         style={{
-          display: 'flex',
-          // padding: '2em',
-          margin: '1em 0em',
-          justifyContent: 'flex-end',
+          margin: '20px',
+          backgroundColor: 'white',
+          marginBottom: '5em',
+          borderRadius: '1.5em',
         }}
       >
-        <input
-          placeholder="Search"
-          onChange={e => handleChange(e)}
-          type="search"
+        {' '}
+        <div
+          className="row"
           style={{
-            paddingLeft: '1em',
-            border: '1px solid #ced4da',
-            borderRadius: '1.5em',
-            height: '2.2em',
+            display: 'flex',
+            margin: '1.8em 1.8em 1.8em 1.4em',
+            justifyContent: 'space-between',
           }}
-        />
-      </div>
-          </div>
-          {/* <hr style={{ margin: '0' }} /> */}
-          <Paper sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              // padding: '2em',
+              justifyContent: 'flex-start',
+            }}
           >
-            <TableContainer>
-              <Table
-                aria-labelledby="tableTitle"
+            <div style={{ margin: '1em 0.5em' }}>
+              {/* <div className="input-box"> */}
+              <DatePicker
+                selected={startDate}
+                selectsStart
+                startDate={startDate}
+                endDate={endDate}
+                onChange={date => setStartDate(date)}
+                dateFormat="MMMM d, yyyy"
+              />
+              {/* </div> */}
+            </div>
+            <div style={{ margin: '1em 0.5em' }}>
+              {/* <div className="input-box"> */}
+              <DatePicker
+                selected={endDate}
+                selectsEnd
+                startDate={startDate}
+                endDate={endDate}
+                minDate={startDate}
+                onChange={date => setEndDate(date)}
+                dateFormat="MMMM d, yyyy"
+              />
+              {/* </div> */}
+            </div>
+            <div className="search-btn">
+              <button
+                type="button"
+                className="btn btn-primary"
+                style={{ borderRadius: '1em' }}
               >
-                <EnhancedTableHead
-                  numSelected={selected.length}
-                  order={order}
-                  orderBy={orderBy}
-                  onRequestSort={handleRequestSort}
-                  rowCount={allProject.length}
-                />
-                <TableBody>
-                  {stableSort(allProject, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      const isItemSelected = isSelected(row.name);
-                      const labelId = `enhanced-table-checkbox-${index}`;
-
-                      return (
-                        <TableRow
-                          hover
-                          aria-checked={isItemSelected}
-                          tabIndex={-1}
-                          key={row.title}
-                          selected={isItemSelected}
-                        >
-                          <TableCell
-                            id={labelId}
-                            align="center"
-                            scope="row"
-                            padding="none"
-                          >
-                            {row.title}
-                          </TableCell>
-                          <TableCell align="center">{row.goal}</TableCell>
-                          <TableCell align="center">{row.target}</TableCell>
-                          <TableCell align="center">{row.funded}</TableCell>
-                          <TableCell align="center">{row.days_left}</TableCell>
-                          <TableCell align="center">{row.recurring}</TableCell>
-                          <TableCell align="center">
-                            <div className="container">
-
-                              <div className="toggle-switch">
-                                <input type="checkbox" className="checkbox" />
-                                <label className="label">
-                                  <span className="inner" />
-                                  <span className="switch" />
-                                </label>
-                              </div>
-                            </div>
-                          </TableCell>
-                          <TableCell align="center">
-
-                          </TableCell>
-                          <TableCell align="center">
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="View Details"
-                              className="btn"
-                              onClick={() =>
-                                history.push(`/project_details`, row)
-                              }
-                            >
-                              <FaRegEye />
-                            </button>
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="Edit"
-                              className="btn"
-                              onClick={() => history.push('/edit_project', row)}
-                            >
-                              <FaRegEdit />
-                            </button>
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="Auto donate"
-                              className="btn"
-                              onClick={() => history.push('/auto_donate', row)}
-                            >
-                              <AiOutlineDollarCircle />
-                            </button>
-                            <button
-                              data-bs-toggle="tooltip"
-                              title="Contributors"
-                              className="btn"
-                              onClick={() => history.push('/Contributors', row)}
-                            >
-                              <BiLink />
-                            </button>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={allProject.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              pageSize={10}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              showLastButton={true}
-              showFirstButton={true}
+                Search
+              </button>
+            </div>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              // padding: '2em',
+              margin: '1em 0em',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <input
+              placeholder="Search"
+              onChange={e => handleChange(e)}
+              type="search"
+              style={{
+                paddingLeft: '1em',
+                border: '1px solid #ced4da',
+                borderRadius: '1.5em',
+                height: '2.2em',
+              }}
             />
-          </Paper>
+          </div>
         </div>
+        {/* <hr style={{ margin: '0' }} /> */}
+        <Paper sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}>
+          <TableContainer>
+            <Table aria-labelledby="tableTitle">
+              <EnhancedTableHead
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+                rowCount={allProject.length}
+              />
+              <TableBody>
+                {stableSort(allProject, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    const isItemSelected = isSelected(row.name);
+                    const labelId = `enhanced-table-checkbox-${index}`;
+
+                    return (
+                      <TableRow
+                        hover
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={row.title}
+                        selected={isItemSelected}
+                      >
+                        <TableCell
+                          id={labelId}
+                          align="center"
+                          scope="row"
+                          padding="none"
+                        >
+                          {row.title}
+                        </TableCell>
+                        <TableCell align="center">{row.goal}</TableCell>
+                        <TableCell align="center">{row.target}</TableCell>
+                        <TableCell align="center">{row.funded}</TableCell>
+                        <TableCell align="center">{row.days_left}</TableCell>
+                        <TableCell align="center">{row.recurring}</TableCell>
+                        <TableCell align="center">
+                          <div className="container">
+                            <div className="toggle-switch">
+                              <input type="checkbox" className="checkbox" />
+                              <label className="label">
+                                <span className="inner" />
+                                <span className="switch" />
+                              </label>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell align="center"></TableCell>
+                        <TableCell align="center">
+                          <button
+                            data-bs-toggle="tooltip"
+                            title="View Details"
+                            className="btn"
+                            onClick={() =>
+                              history.push(`/project_details`, row)
+                            }
+                          >
+                            <FaRegEye />
+                          </button>
+                          <button
+                            data-bs-toggle="tooltip"
+                            title="Edit"
+                            className="btn"
+                            onClick={() => history.push('/edit_project', row)}
+                          >
+                            <FaRegEdit />
+                          </button>
+                          <button
+                            data-bs-toggle="tooltip"
+                            title="Auto donate"
+                            className="btn"
+                            onClick={() => history.push('/auto_donate', row)}
+                          >
+                            <AiOutlineDollarCircle />
+                          </button>
+                          <button
+                            data-bs-toggle="tooltip"
+                            title="Contributors"
+                            className="btn"
+                            onClick={() => history.push('/Contributors', row)}
+                          >
+                            <BiLink />
+                          </button>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={allProject.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            pageSize={10}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            showLastButton={true}
+            showFirstButton={true}
+          />
+        </Paper>
+      </div>
     </>
   );
 };

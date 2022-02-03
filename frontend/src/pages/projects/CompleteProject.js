@@ -38,7 +38,7 @@ const CompleteProject = () => {
   let completedProjectList = useSelector(
     state => state.project.completedProjectList.result,
   );
-  console.log(completedProjectList)
+  console.log(completedProjectList);
   // const ViewModalOpen = data => {
   //   setViewData(data);
   //   setViewModal(true);
@@ -100,19 +100,25 @@ const CompleteProject = () => {
     }
   };
 
-
-
   return (
     <>
       <br />
       <br />
       <br />
       <br />
-      <div className="card" style={{ border: '0' }}>
+      <div
+        className="row"
+        style={{
+          backgroundColor: 'white',
+          margin: '0 1.2em',
+          borderRadius: '1em',
+        }}
+      >
         <div
           style={{
             display: 'flex',
-            padding: '15px',
+            width: '50%',
+            padding: '0.5em 1.7em',
           }}
         >
           <p
@@ -122,7 +128,7 @@ const CompleteProject = () => {
               marginBottom: '0',
             }}
           >
-            COMPLETED PROJECTS
+            Completed Projects
           </p>
         </div>
       </div>
@@ -131,6 +137,8 @@ const CompleteProject = () => {
           style={{
             margin: '20px',
             backgroundColor: 'white',
+            marginBottom: '5em',
+            borderRadius: '1.5em',
           }}
         >
           <div
@@ -145,7 +153,12 @@ const CompleteProject = () => {
               <input
                 type="search"
                 placeholder="Search"
-                style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
+                style={{
+                  paddingLeft: '1em',
+                  border: '1px solid #ced4da',
+                  borderRadius: '1.5em',
+                  height: '2.2em',
+                }}
                 onChange={e => handleChange(e)}
               />
             </label>
@@ -201,7 +214,7 @@ const CompleteProject = () => {
                                 data-bs-toggle="tooltip"
                                 title="Archive"
                                 className="btn"
-                              //   onClick={() => history.push('/edit_ngo', row)}
+                                //   onClick={() => history.push('/edit_ngo', row)}
                               >
                                 <BsArchive size={20} />
                               </button>
@@ -209,7 +222,7 @@ const CompleteProject = () => {
                                 data-bs-toggle="tooltip"
                                 title="Refund"
                                 className="btn"
-                              //   onClick={() => fundModaOpen(row)}
+                                //   onClick={() => fundModaOpen(row)}
                               >
                                 <RiRefund2Line size={23} />
                               </button>

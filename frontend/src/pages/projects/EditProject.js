@@ -13,12 +13,19 @@ const EditProject = () => {
       <br />
       <br />
       <br />
-      <div className="card">
+      <div
+        className="row"
+        style={{
+          backgroundColor: 'white',
+          margin: '0 1.2em',
+          borderRadius: '1em',
+        }}
+      >
         <div
           style={{
             display: 'flex',
-            padding: '2px',
-            justifyContent: 'space-betwee n',
+            width: '50%',
+            padding: '0.5em 1.7em',
           }}
         >
           <p
@@ -29,7 +36,7 @@ const EditProject = () => {
               marginLeft: '20px',
             }}
           >
-            EDIT PROJECT
+            Edit Project
           </p>
         </div>
       </div>
