@@ -79,7 +79,7 @@ exports.updateDonorValidation = [
     body('email')
         .exists().withMessage('Email is Required')
         .notEmpty().withMessage('Email is Rrequired')
-        .isLength({max : 50})
+        .isLength({max : 50}).withMessage('Max length of emails is 50')
         .isEmail().withMessage('Email is Required'),
     body('mobile')
         .exists()
