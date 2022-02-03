@@ -11,12 +11,14 @@ const validationError = require('../middleware/validationError'); //importing va
 
 const { ngoValidation, ngoUpdateValidation } = require('../validations/ngo');//importing ngo validatation
 
-const { addNgo, updateNgo, getAllNgo, deleteNgo, getNgoById } = require('../controllers/ngo');//importing ngo controller operation from controller
+const { addNgo, updateNgo, getAllNgo, deleteNgo, getNgoById,getNgoProjectDetails } = require('../controllers/ngo');//importing ngo controller operation from controller
 
 //routing modules
 router.post('/', checkAuth, ngoValidation, validationError, wrapper(addNgo))//creating ngo 
 
 router.get('/', checkAuth, wrapper(getAllNgo))//listing ngo
+
+router.get('/projects/:id',checkAuth,wrapper(getNgoProjectDetails)) //getting Project Details which belongs to a NGO.
 
 router.get('/:id', checkAuth, wrapper(getNgoById)) //Getting Ngo Details with Bank Id
 

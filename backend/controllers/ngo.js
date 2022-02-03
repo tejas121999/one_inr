@@ -83,7 +83,7 @@ exports.updateNgo = async (req, res) => {
             }
         }
     })
-    if (cBankData == false || data==[0] || createNgo ==[0]) {
+    if (cBankData == false || data == [0] || createNgo == [0]) {
         return res.status(401).json({ message: " Failed to create NGO." })
     } else {
         return res.status(201).json({ message: "Ngo Updated successfully." })
@@ -128,6 +128,7 @@ exports.getAllNgo = async (req, res) => {
         where: searchQuery,
         include: [{
             model: models.users,
+            model: models.projects
             // where: searchQueryForUser,
         }
         ],
@@ -135,6 +136,8 @@ exports.getAllNgo = async (req, res) => {
             ['id', 'DESC']
         ]
     });
+
+
     if (!data) {
         return res.status(400).json({
             message: "Failed to get all data."
@@ -204,4 +207,27 @@ exports.deleteNgo = async (req, res) => {
         })
     }
 
+}
+
+
+exports.getNgoProjectDetails = async (req, res) => {
+    let ngoId = req.params.id;
+    let data = await models.projects.findAll({ where: { userId: ngoId } })
+    var pendingCount = 0;
+    var activeCount = 0;
+    var fullFilledCount = 0;
+    var partialFullfilled = 0;
+    data.forEach(element => {
+        if (element.isActive) {
+            activeCount++;
+        } else {
+            pendingCount++;
+        }
+        if (element.funded >= element.target) {
+            fullFilledCount++;
+        } else {
+            partialFullfilled++;
+        }
+    });
+    return res.status(200).json({ pendingCount, activeCount, fullFilledCount, partialFullfilled, data, message: "success" })
 }
