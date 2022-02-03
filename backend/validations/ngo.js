@@ -89,7 +89,7 @@ exports.ngoValidation = [
                 }
             }).then(panNumber => {
                 if (panNumber) {
-                    return Promise.reject("Pan number alredy exists!");
+                    return Promise.reject("Pan number already exists!");
                 }
             })
         }),
@@ -191,7 +191,7 @@ exports.ngoUpdateValidation = [
                 }
             }).then(panNumber => {
                 if (panNumber) {
-                    return Promise.reject("Pan number alredy exists!");
+                    return Promise.reject("Pan number already exists!");
                 }
             })
         }),

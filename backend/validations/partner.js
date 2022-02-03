@@ -43,7 +43,7 @@ exports.partnerValidation = [
                 }
             }).then(panNumber => {
                 if (panNumber) {
-                    return Promise.reject("Pan number alredy exists!");
+                    return Promise.reject("Pan number already exists!");
                 }
             })
         }),
