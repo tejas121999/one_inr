@@ -18,8 +18,8 @@ exports.addProjectValidation = [
         .isLength({ min: 1, max: 200 }).withMessage('Max length of description is 200'),
 
     body('longDesc')
-        .exists().withMessage('Description is Required')
-        .notEmpty().withMessage('Description is Required'),
+        .exists().withMessage('Long Description is Required')
+        .notEmpty().withMessage('Long Description is Required'),
 
     body('videoLink')
         .exists().withMessage('Video Url is Required')

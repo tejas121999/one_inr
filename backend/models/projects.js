@@ -1,3 +1,4 @@
+const moment = require('moment');
 module.exports = (sequelize, DataTypes) => {
     const projects = sequelize.define('projects', {
 
@@ -59,7 +60,6 @@ module.exports = (sequelize, DataTypes) => {
             filed: 'funded',
             defaultValue : 0
         },
-
         startDate: {
             type: DataTypes.DATEONLY,
             field: 'start_date',
@@ -92,26 +92,34 @@ module.exports = (sequelize, DataTypes) => {
             field: 'display_on_home_status',
             defaultValue: false
         },
-
-        date: {
-            type: DataTypes.VIRTUAL,
+        daysLeft : {
+            type : DataTypes.VIRTUAL,
             get() {
-                const rawValue = `${this.startDate} to ${this.endDate}`;
-                return rawValue;
-            }
-        },
-
-        recurring: {
-            type: DataTypes.VIRTUAL,
-            get() {
-                const isRecurring = this.recurringDays;
-                if (isRecurring == 0) {
-                    return "No"
-                } else {
-                    return 'Yes'
-                }
+                let currentDate = moment().format('YYYY-MM-DD');
+                let days = moment(this.endDate).diff(currentDate, 'days')
+                return days < 0 ? 'Ended' : days;  
             }
         }
+
+        // date: {
+        //     type: DataTypes.VIRTUAL,
+        //     get() {
+        //         const rawValue = `${this.startDate} to ${this.endDate}`;
+        //         return rawValue;
+        //     }
+        // },
+
+        // recurring: {
+        //     type: DataTypes.VIRTUAL,
+        //     get() {
+        //         const isRecurring = this.recurringDays;
+        //         if (isRecurring == 0) {
+        //             return "No"
+        //         } else {
+        //             return 'Yes'
+        //         }
+        //     }
+        // }
 
     },
         {
