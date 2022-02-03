@@ -1,6 +1,5 @@
 const { body } = require("express-validator");
-const models = require('../models')
-
+const moment = require('moment');
 
 exports.addProjectValidation = [
 
@@ -33,29 +32,26 @@ exports.addProjectValidation = [
         .notEmpty().withMessage('Goal is Required')
         .isNumeric().withMessage('Goal must have a numeric value'),
 
-    body('commission')
-        .exists().withMessage('Commission is Required')
-        .notEmpty().withMessage('Commission is Required')
-        .isNumeric().withMessage('Commission must have a numeric value'),
-
-
     body('startDate')
         .exists().withMessage('Start Date is Required')
         .notEmpty().withMessage('Start Date is Required')
-        .isDate().withMessage('Invalid! Enter date in YY-MM-DD Format'),
+    // .isDate().withMessage('Invalid! Enter date in YY-MM-DD Format'),
+        .custom(async (value,{req}) =>{
+            if(value > req.body.endDate){
+                return Promise.reject("Project endDate Cannot be greater than startDate.")
+            }
+            startDate = moment(value).format('YYYY-MM-DD')
+            if(startDate < moment().format('YYYY-MM-DD')){
+                return Promise.reject("Project cannot be created in past days.")
+            }
+        })
 
-
+    ,
     body('endDate')
         .exists().withMessage('EndDate is Required')
-        .notEmpty().withMessage('EndDate is Required')
-        .isDate().withMessage('Invalid! Enter date in YY-MM-DD Format'),
+        .notEmpty().withMessage('EndDate is Required'),
+    // .isDate().withMessage('Invalid! Enter date in YY-MM-DD Format'),
 
-
-    // body('recurringDays')
-    //     .exists().withMessage('RecurringDays is Required')
-    //     .notEmpty().withMessage('RecurringDays is Required')
-    //     .isNumeric().withMessage('Only Number required'),
-    //
     body('isRecurring')
         .exists().withMessage('isRecurring is Required')
         .isBoolean().withMessage('Must be a boolean true or false')
@@ -67,6 +63,11 @@ exports.addProjectValidation = [
                 if (!Number.isInteger(req.body.recurringDays)) {
                     return Promise.reject("Recurring Days must have a numeric value");
                 }
+                let recuringCount = moment(req.body.endDate).diff(req.body.startDate, 'days')
+                if (req.body.recurringDays > recuringCount) {
+                    return Promise.reject("Recuring Days should be less than the total days of project.")
+                }
+
             }
 
         })

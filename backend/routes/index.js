@@ -1,22 +1,23 @@
 var express = require('express');
 var router = express.Router();
 
-const vendor = require('./vendors') 
-const fileUpload = require('./fileUpload')
-const auth = require('./auth') 
-const donor = require('./donor') 
-const userReceipts = require('./usersReceipts')
-const ngo = require('./ngo')
-const users = require('./users') 
-const partner = require('./partner') 
-const csvUpload = require('./csvFileUploads')
-const projects = require('./projects') 
+const vendor = require('./vendors');
+const fileUpload = require('./fileUpload');
+const auth = require('./auth'); 
+const donor = require('./donor'); 
+const userReceipts = require('./usersReceipts');
+const ngo = require('./ngo');
+const users = require('./users'); 
+const partner = require('./partner'); 
+const csvUpload = require('./csvFileUploads');
+const projects = require('./projects'); 
 const entity = require('./entity');
 const permissions = require('./permissions');
-const roles = require('./roles')
-const config = require('./configs')
-const razorpayCredentials = require('./razorpayCredential')
-const cron = require('./cron')
+const roles = require('./roles');
+const config = require('./configs');
+const razorpayCredentials = require('./razorpayCredential');
+const cron = require('./cron');
+const donate = require('./donate');
 
 
 router.use('/vendor',vendor)
@@ -35,7 +36,7 @@ router.use('/roles',roles)
 router.use('/configs',config)
 router.use('/razorpay',razorpayCredentials)
 router.use('/cron',cron)
-
+router.use('/donate',donate)
 
 
 module.exports = router;
