@@ -7,14 +7,15 @@ exports.partnerValidation = [
     body('name')
         .exists().withMessage('Name is Required.')
         .notEmpty().withMessage('Name is Required.')
-        .matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic.'),
+        .isLength({ max: 50 }).withMessage('Only 50 characters allowed'),
 
     body('phone')
         .exists().withMessage('Mobile is Required')
         .notEmpty().withMessage('Mobile is Required')
+        .isLength({ min: 10 }).withMessage('Invalid Mobie Number')
         .custom(async value => {
             if (!/^[0-9]{10}$/i.test(value)) {
-                return Promise.reject("Invalid mobile number");
+                return Promise.reject("Mobile Number should be numeric");
             }
         }),
     body('email')
@@ -57,11 +58,18 @@ exports.partnerValidation = [
 
     body('companyName')
         .exists().withMessage('Company Name is required')
-        .notEmpty().withMessage('Company Name is required'),
+        .notEmpty().withMessage('Company Name is required')
+        .isLength({ max: 50 }).withMessage('Only 50 characters allowed'),
 
     body('Address')
-        .exists().withMessage('Address is required')
-        .notEmpty().withMessage('Address is required'),
-
+        .exists().withMessage('Address is Required')
+        .notEmpty().withMessage('Address is Required')
+        .isLength({ max: 100 }).withMessage('Only 100 characters allowed')
+        .custom(async (value) => {
+            let addressRegex = /^[a-zA-Z0-9\s,./'-\(\)\-]{0,}$/g
+            if (!addressRegex.test(value)) {
+                return Promise.reject(`Address cannot have special characters like @,$,%,!,",^`)
+            }
+        }),
 
 ]

@@ -6,12 +6,14 @@ exports.createVendorValidation = [
 
     body('name')
         .exists().withMessage('Name is Required')
-        .notEmpty().withMessage('Name is Required'),
+        .notEmpty().withMessage('Name is Required')
+        .isLength({ max: 50 }).withMessage('Only 50 characters allowed'),
 
     body('email')
         .exists().withMessage('Email is Required')
         .notEmpty().withMessage('Email is Required')
         .isEmail().withMessage('Email Required')
+        .isLength({ max: 50 }).withMessage('Max length of email is 50')
         .custom(async (value) => {
             return await models.vendors.findOne({
                 where: { email: value }
@@ -23,8 +25,15 @@ exports.createVendorValidation = [
             })
         }),
     body('phone')
-        .exists().withMessage('Phone number is Required')
-        .notEmpty().withMessage('Phone number is Required')
+        .exists().withMessage('Mobile is Required')
+        .notEmpty().withMessage('Mobile is Required')
+        .isLength({ min: 10 }).withMessage('Invalid Mobie Number')
+        .custom(async value => {
+            if (!/^[0-9]{10}$/i.test(value)) {
+                return Promise.reject("Mobile Number should be numeric");
+            }
+        })
+
         .custom(async (value) => {
             return await models.vendors.findOne({
                 where: { phone: value }
@@ -61,30 +70,45 @@ exports.createVendorValidation = [
                 }
             })
         }),
+
+
     body('address')
         .exists().withMessage('Address is Required')
-        .notEmpty().withMessage('Address is Required'),
+        .notEmpty().withMessage('Address is Required')
+        .isLength({ max: 100 }).withMessage('Only 100 characters allowed')
+        .custom(async (value) => {
+            let addressRegex = /^[a-zA-Z0-9\s,./'-\(\)\-]{0,}$/g
+            if (!addressRegex.test(value)) {
+                return Promise.reject(`Address cannot have special characters like @,$,%,!,",^`)
+            }
+        }),
+
     body('company')
         .exists().withMessage('Company is Required')
-        .notEmpty().withMessage('Company is Required'),
-   
+        .notEmpty().withMessage('Company is Required')
+        .isLength({ max: 50 }).withMessage('Only 50 characters allowed'),
+
 
 
 ]
 exports.updateVendorValidation = [
     body('name')
         .exists().withMessage('Name is Required')
-        .notEmpty().withMessage('Name is Required'),
+        .notEmpty().withMessage('Name is Required')
+        .isLength({ max: 50 }).withMessage('Only 50 characters allowed'),
     body('email')
         .exists().withMessage('Email is Required')
         .notEmpty().withMessage('Email is Required')
-        .isEmail().withMessage('Email Required'),
+        .isEmail().withMessage('Email Required')
+        .isLength({ max: 50 }).withMessage('Max length of email is 50'),
+
     body('phone')
-        .exists().withMessage('Phone number is Required')
-        .notEmpty().withMessage('Phone number is Required')
+        .exists().withMessage('Mobile is Required')
+        .notEmpty().withMessage('Mobile is Required')
+        .isLength({ min: 10 }).withMessage('Invalid Mobie Number')
         .custom(async value => {
             if (!/^[0-9]{10}$/i.test(value)) {
-                return Promise.reject("Invalid mobile number");
+                return Promise.reject("Mobile Number should be numeric");
             }
         }),
 
@@ -96,10 +120,18 @@ exports.updateVendorValidation = [
         .notEmpty().withMessage('PAN is Required'),
     body('address')
         .exists().withMessage('Address is Required')
-        .notEmpty().withMessage('Address is Required'),
+        .notEmpty().withMessage('Address is Required')
+        .isLength({ max: 100 }).withMessage('Only 100 characters allowed')
+        .custom(async (value) => {
+            let addressRegex = /^[a-zA-Z0-9\s,./'-\(\)\-]{0,}$/g
+            if (!addressRegex.test(value)) {
+                return Promise.reject(`Address cannot have special characters like @,$,%,!,",^`)
+            }
+        }),
     body('company')
         .exists().withMessage('Company is Required')
-        .notEmpty().withMessage('Company is Required'),
+        .notEmpty().withMessage('Company is Required')
+        .isLength({ max: 50 }).withMessage('Only 50 characters allowed'),
     body('panImage')
         .exists().withMessage('Pan image is Required')
         .notEmpty().withMessage('Pan image is Required'),
