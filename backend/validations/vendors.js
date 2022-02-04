@@ -5,8 +5,8 @@ const models = require('../models')
 exports.createVendorValidation = [
 
     body('name')
-        .exists().withMessage('Name is Required')
-        .notEmpty().withMessage('Name is Required')
+        .exists().withMessage('Vendor Name is Required')
+        .notEmpty().withMessage('Vendor Name is Required')
         .isLength({ max: 50 }).withMessage('Only 50 characters allowed'),
 
     body('email')
@@ -93,8 +93,8 @@ exports.createVendorValidation = [
 ]
 exports.updateVendorValidation = [
     body('name')
-        .exists().withMessage('Name is Required')
-        .notEmpty().withMessage('Name is Required')
+        .exists().withMessage('Vendor Name is Required')
+        .notEmpty().withMessage('Vendor Name is Required')
         .isLength({ max: 50 }).withMessage('Only 50 characters allowed'),
     body('email')
         .exists().withMessage('Email is Required')

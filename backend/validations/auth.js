@@ -6,7 +6,7 @@ exports.loginValidation = [
         .exists().withMessage('Email Id is required')
         .notEmpty().withMessage('Email Id is required')
         .isEmail().withMessage('Email is Invalid')
-        .isLength({ min: 3, max: 64 }).withMessage('Min 3 character and Max 64 characters.'),
+        .isLength({ min: 3, max: 64 }).withMessage('Min 3 character and Max 64 characters'),
 
     body('password')
         .exists().withMessage("Password is Required")
@@ -19,7 +19,7 @@ exports.userRegisterValidation = [
     body('name')
         .exists().withMessage('Name is Required')
         .notEmpty().withMessage('Name is Required')
-        .matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic.'),
+        .matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic'),
 
     body('email')
         .exists().withMessage('Email is Required')

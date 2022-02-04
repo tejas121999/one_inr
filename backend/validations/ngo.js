@@ -1,4 +1,6 @@
 const { body } = require('express-validator');
+const { Op } = require('sequelize');
+
 const models = require('../models');
 
 exports.ngoValidation = [
@@ -7,13 +9,25 @@ exports.ngoValidation = [
     body('name')
         .exists().withMessage('Name is Required.')
         .notEmpty().withMessage('Name is Required.')
-        .matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic.'),
+        .matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic'),
 
     body('email')
         .exists().withMessage('Email is Required')
         .notEmpty().withMessage('Email is Required')
         .isEmail().withMessage('Invalid Email')
-        .isLength({ min: 5, max: 50 }).withMessage('Max length of emails is 50'),
+        .isLength({ min: 5, max: 50 }).withMessage('Max length of emails is 50')
+        .custom(async (value) => {
+            return await models.users.findOne({
+                where: {
+                    email: value
+                }
+            }).then(email => {
+                if (email) {
+                    return Promise.reject("Email Already Exists")
+
+                }
+            })
+        }),
 
     body('mobile')
         .exists().withMessage('Mobile is Required')
@@ -28,7 +42,7 @@ exports.ngoValidation = [
                 where: { mobile: value }
             }).then(phone => {
                 if (phone) {
-                    return Promise.reject("Mobile Number Already Exist.")
+                    return Promise.reject("Mobile Number Already Exist")
                 }
             })
         }),
@@ -65,7 +79,7 @@ exports.ngoValidation = [
                 where: { landline: value }
             }).then(phone => {
                 if (phone) {
-                    return Promise.reject("landline number already exist.")
+                    return Promise.reject("Landline number already exist")
                 }
             })
         }),
@@ -89,7 +103,7 @@ exports.ngoValidation = [
                 }
             }).then(panNumber => {
                 if (panNumber) {
-                    return Promise.reject("Pan number already exists!");
+                    return Promise.reject("Pan number already exists");
                 }
             })
         }),
@@ -117,13 +131,25 @@ exports.ngoUpdateValidation = [
     body('name')
         .exists().withMessage('Name is Required.')
         .notEmpty().withMessage('Name is Required.')
-        .matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic.'),
+        .matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic'),
 
     body('email')
         .exists().withMessage('Email is Required')
         .notEmpty().withMessage('Email is Required')
         .isEmail().withMessage('Invalid Email')
         .isLength({ min: 5, max: 50 }).withMessage('Max length of emails is 50'),
+        // .custom(async (value, { req }) => {
+        //     return await models.users.findOne({
+        //         where: {
+        //             email: req.body.email,
+        //             id: { [Op.not]: req.params.id }
+        //         }
+        //     }).then(userEmail => {
+        //         if (userEmail) {
+        //             return Promise.reject("Email Already Exists!");
+        //         }
+        //     })
+        // }),
 
     body('mobile')
         .exists().withMessage('Mobile is Required')
@@ -159,18 +185,30 @@ exports.ngoUpdateValidation = [
         .notEmpty().withMessage('Registration Number is required')
         .isLength({ min: 12 }).withMessage('Min length registration number is 12'),
 
-    body('landline')
-        .exists().withMessage('landline number is Required')
-        .notEmpty().withMessage('landline Number is required')
-        .custom(async (value) => {
-            return await models.ngo.findOne({
-                where: { landline: value }
-            }).then(phone => {
-                if (phone) {
-                    return Promise.reject("landline number already exist.")
-                }
-            })
-        }),
+    // body('landline')
+    //     .exists().withMessage('landline number is Required')
+    //     .notEmpty().withMessage('landline Number is required')
+    //     .custom(async (value) => {
+    //         return await models.ngo.findOne({
+    //             where: { landline: value }
+    //         }).then(phone => {
+    //             if (phone) {
+    //                 return Promise.reject("landline number already exist.")
+    //             }
+    //         })
+    //     }),
+        // .custom(async (value, { req }) => {
+        //         return await models.ngo.findOne({
+        //             where: {
+        //                 landline: req.body.landline,
+        //                 id: { [Op.not]: req.params.id }
+        //             }
+        //         }).then(ngoLandline => {
+        //             if (ngoLandline) {
+        //                 return Promise.reject("Landline Already Exists!");
+        //             }
+        //         })
+        //     }),
 
     body('panCard')
         .exists().withMessage('Pan Card is required')
@@ -191,7 +229,7 @@ exports.ngoUpdateValidation = [
                 }
             }).then(panNumber => {
                 if (panNumber) {
-                    return Promise.reject("Pan number already exists!");
+                    return Promise.reject("Pan number already exists");
                 }
             })
         }),
