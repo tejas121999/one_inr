@@ -18,9 +18,8 @@ const Dashboard = () => {
       <br />
       <br />
       <br />
-      <br />
       {/* <div style={{ backgroundColor: '#31313' }}> */}
-      <div
+      {/* <div
         className="row"
         style={{
           backgroundColor: 'white',
@@ -31,8 +30,8 @@ const Dashboard = () => {
         <p
           style={{
             textAlign: 'left',
-            fontWeight: '600',
-            fontSize: '1.25rem',
+            fontWeight: 'bold',
+            fontSize: '25',
             margin: '20px',
             width: '100%',
             marginLeft: '20px',
@@ -40,27 +39,32 @@ const Dashboard = () => {
         >
           Dashboard
         </p>
-      </div>
-      <div
-        style={{
-          margin: '20px',
-          backgroundColor: 'white',
-          marginBottom: '5em',
-          borderRadius: '1.5em',
-        }}
-      >
+      </div> */}
+      <div>
         <p
           style={{
             textAlign: 'left',
-            fontWeight: '600',
+            fontWeight: 'bold',
+            fontSize: '25',
+            margin: '2em 50px',
+            width: '100%',
+          }}
+        >
+          Dashboard
+        </p>
+        <hr />
+        <p
+          style={{
+            textAlign: 'left',
+            fontWeight: 'bold',
             // width: '100%',
-            padding: '20px',
-            fontSize: '1.25rem',
+            padding: '20px 50px',
+            fontSize: '25',
           }}
         >
           Daily Funds
         </p>
-        <div style={{ margin: '0px 30px' }}>
+        <div style={{ margin: '0px 62px' }}>
           <div className="row">
             <div
               style={{
@@ -68,19 +72,18 @@ const Dashboard = () => {
                 display: 'flex',
                 flexDirection: 'row',
                 position: 'relative',
-                border: '2px solid lightcyan',
+                border: '2px solid #D0EDFF',
                 borderRadius: '1.5rem',
                 width: '100%',
               }}
             >
               <div className="col" style={{ paddingRight: '0px' }}>
-                {' '}
                 <p
                   style={{
-                    textAlign: 'center',
-                    fontSize: 'x-large',
+                    textAlign: 'left',
+                    fontSize: '45',
                     padding: '20px 20px 5px',
-                    fontWeight: '700',
+                    // fontWeight: '700',
                     color: 'darkorange',
                   }}
                 >
@@ -88,23 +91,23 @@ const Dashboard = () => {
                 </p>
                 <p
                   style={{
-                    textAlign: 'center',
-                    fontSize: 'large',
+                    textAlign: 'left',
+                    fontSize: '18',
                     paddingBottom: '20px',
-                    fontWeight: '600',
+                    paddingLeft: '1em',
                   }}
                 >
-                  Total Funds
+                  TOTAL FUNDS
                 </p>
               </div>
               <div className="col" style={{ padding: '0px 0px 5px' }}>
                 {' '}
                 <p
                   style={{
-                    textAlign: 'center',
-                    fontSize: 'x-large',
+                    textAlign: 'left',
+                    fontSize: '45',
                     padding: '20px 20px 5px',
-                    fontWeight: '700',
+                    // fontWeight: '700',
                     color: 'cornflowerblue',
                   }}
                 >
@@ -112,22 +115,22 @@ const Dashboard = () => {
                 </p>
                 <p
                   style={{
-                    textAlign: 'center',
-                    fontSize: 'large',
+                    textAlign: 'left',
+                    fontSize: '18',
                     paddingBottom: '20px',
-                    fontWeight: '600',
+                    paddingLeft: '1em',
                   }}
                 >
-                  Pending Funds
+                  PENDING FUNDS
                 </p>
               </div>
               <div className="col" style={{ padding: '0px 0px 5px' }}>
                 <p
                   style={{
-                    textAlign: 'center',
-                    fontSize: 'x-large',
+                    textAlign: 'left',
+                    fontSize: '45',
                     padding: '20px 20px 5px',
-                    fontWeight: '700',
+                    // fontWeight: '700',
                     color: 'darkorchid',
                   }}
                 >
@@ -135,22 +138,22 @@ const Dashboard = () => {
                 </p>
                 <p
                   style={{
-                    textAlign: 'center',
-                    fontSize: 'large',
+                    textAlign: 'left',
+                    fontSize: '18',
                     paddingBottom: '20px',
-                    fontWeight: '600',
+                    paddingLeft: '1em',
                   }}
                 >
-                  Used Funds
+                  USED FUNDS
                 </p>
               </div>
               <div className="col-4" style={{ paddingLeft: '0px' }}>
                 <p
                   style={{
-                    textAlign: 'center',
-                    fontSize: 'x-large',
+                    textAlign: 'left',
+                    fontSize: '45',
                     padding: '20px 20px 5px',
-                    fontWeight: '700',
+                    // fontWeight: '700',
                     color: 'chartreuse',
                   }}
                 >
@@ -158,13 +161,13 @@ const Dashboard = () => {
                 </p>
                 <p
                   style={{
-                    textAlign: 'center',
-                    fontSize: 'large',
+                    textAlign: 'left',
+                    fontSize: '18',
                     paddingBottom: '20px',
-                    fontWeight: '600',
+                    paddingLeft: '1em',
                   }}
                 >
-                  Upcoming Donor Renewal
+                  UPCOMING DONOR RENEWAL
                 </p>
               </div>
             </div>
