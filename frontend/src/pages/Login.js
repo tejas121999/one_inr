@@ -82,7 +82,15 @@ const Login = props => {
                     isPasswordVisble ? 'fa-eye-slash' : 'fa-eye'
                   } `}
                   id="togglePassword"
-                  style={{ marginLeft: '-30px', cursor: 'pointer' }}
+                  // style={{ marginLeft: '-30px', cursor: 'pointer' }}
+                  style={{
+                    float: 'right',
+                    marginLeft: '-25px',
+                    marginTop: '-27px',
+                    marginRight: '10px',
+                    position: 'relative',
+                    zIndex: '2',
+                  }}
                   onMouseDown={() =>
                     setIsPasswordVisble(isPasswordVisble ? false : true)
                   }

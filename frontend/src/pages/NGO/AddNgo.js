@@ -195,7 +195,6 @@ const AddNgo = props => {
           borderRadius: '1em',
         }}
       >
-        {' '}
         <p
           style={{
             textAlign: 'left',
@@ -339,7 +338,6 @@ const AddNgo = props => {
                   <div className="col-6 ">
                     <div style={{ padding: '15px 0 10px' }}>
                       <label style={{ fontWeight: 'bold' }}>
-                        {' '}
                         Registration Number
                       </label>
                       <Field
@@ -364,8 +362,7 @@ const AddNgo = props => {
                   <div className="col-6 ">
                     <div style={{ padding: '15px 0 10px' }}>
                       <label style={{ fontWeight: 'bold' }}>
-                        {' '}
-                        Mobile Number{' '}
+                        Mobile Number
                       </label>
                       <Field
                         className="form-control"
@@ -391,8 +388,7 @@ const AddNgo = props => {
                   <div className="col-6 ">
                     <div style={{ padding: '15px 0 10px' }}>
                       <label style={{ fontWeight: 'bold' }}>
-                        {' '}
-                        Landline Number{' '}
+                        Landline Number
                       </label>
                       <Field
                         className="form-control"
@@ -474,58 +470,82 @@ const AddNgo = props => {
                   </div>
                 </div>
 
-                <div className="row">
-                  <div className="col-3 ">
-                    <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold', height: '3em' }}>
-                        Pancard
-                      </label>
-                      <DropzoneComponent onChangeImage={onPanCardImageAdd} />
-                      <ErrorMessage name="pancard_img" component={TextError} />
-                    </div>
+                <div className="row" style={{ margin: '1.5rem 0 0.5em' }}>
+                  <div
+                    className="col-sm-3 col-xs-3"
+                    style={{ paddingLeft: '0' }}
+                  >
+                    <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
+                      Pancard
+                    </label>
                   </div>
 
-                  <div className="col-3 ">
-                    <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold', height: '3em' }}>
-                        Certificate
-                      </label>
-                      <DropzoneComponent
-                        onChangeImage={onCertificateImageAdd}
-                      />
-                      <ErrorMessage
-                        name="certificate_img"
-                        component={TextError}
-                      />
-                    </div>
+                  <div
+                    className="col-sm-3 col-xs-3 "
+                    style={{ paddingLeft: '0' }}
+                  >
+                    <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
+                      Certificate
+                    </label>
                   </div>
 
-                  <div className="col-3 ">
-                    <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold', height: '3em' }}>
-                        Charity Registration Certificate
-                      </label>
-                      <DropzoneComponent
-                        onChangeImage={onCharityCertificateImageAdd}
-                      />
-                      <ErrorMessage
-                        name="charityCertificate_img"
-                        component={TextError}
-                      />
-                    </div>
+                  <div
+                    className="col-sm-3 col-xs-3 "
+                    style={{ paddingLeft: '0' }}
+                  >
+                    <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
+                      Charity Registration Certificate
+                    </label>
                   </div>
 
-                  <div className="col-3 ">
-                    <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold', height: '3em' }}>
-                        Deed
-                      </label>
-                      <DropzoneComponent onChangeImage={onDeedImageAdd} />
-                      <ErrorMessage name="deed_img" component={TextError} />
-                    </div>
+                  <div className="col-sm-3 col-xs-3 " style={{ padding: '0' }}>
+                    <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
+                      Deed
+                    </label>
                   </div>
                 </div>
+                <div
+                  className="row"
+                  style={{ margin: '0rem 0 1.5rem', flex: 'auto' }}
+                >
+                  <div
+                    className="col-sm-3 col-xs-3 "
+                    style={{ paddingLeft: '0' }}
+                  >
+                    <DropzoneComponent onChangeImage={onPanCardImageAdd} />
+                    <ErrorMessage name="pancard_img" component={TextError} />
+                  </div>
 
+                  <div
+                    className="col-sm-3 col-xs-3 "
+                    style={{ paddingLeft: '0' }}
+                  >
+                    <DropzoneComponent onChangeImage={onCertificateImageAdd} />
+                    <ErrorMessage
+                      name="certificate_img"
+                      component={TextError}
+                    />
+                  </div>
+
+                  <div
+                    className="col-sm-3 col-xs-3 "
+                    style={{ paddingLeft: '0' }}
+                  >
+                    <DropzoneComponent
+                      onChangeImage={onCharityCertificateImageAdd}
+                    />
+                    <ErrorMessage
+                      name="charityCertificate_img"
+                      component={TextError}
+                    />
+                  </div>
+
+                  <div className="col-sm-3 col-xs-3 " style={{ padding: '0' }}>
+                    <DropzoneComponent onChangeImage={onDeedImageAdd} />
+                    <ErrorMessage name="deed_img" component={TextError} />
+                  </div>
+                </div>
+                {/* 
                 <br />
                 {addContactValues.map((element, index) => (
                   <div className="row" style={{ marginLeft: '4px' }}>
@@ -630,7 +650,7 @@ const AddNgo = props => {
                       <FaTimes />
                     </button>
                   </div>
-                ))}
+                ))} */}
 
                 {/*   <div style={{ textAlign: 'center' }}>
                 <button
@@ -778,15 +798,6 @@ const AddNgo = props => {
                   </button>
                 </div>
                 <br />
-                {/* <div style={{ marginLeft: '2em', paddingBottom: '2em' }}>
-                  <button
-                    type="submit"
-                    className="btn btn-success
-                 "
-                  >
-                    Submit
-                  </button>
-                </div> */}
                 <div className="row">
                   <div className="col-6" style={{ paddingRight: '8px' }}>
                     <div
