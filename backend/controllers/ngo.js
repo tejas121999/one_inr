@@ -140,12 +140,11 @@ exports.getAllNgo = async (req, res) => {
         limit: pageSize,
         offset: offset,
         where: searchQuery,
-        include: [{
-            model: models.users,
-            model: models.projects
-            // where: searchQueryForUser,
-        }
+        include: [
+            {model : models.users},
+            {model : models.projects},
         ],
+            // where: searchQueryForUser,
         order: [
             ['id', 'DESC']
         ]
