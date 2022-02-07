@@ -94,7 +94,10 @@ export const updateNgoAction = (body, id, history) => {
           }, 2000);
         })
         .catch(err => {
-          window.history.back();
+          toast.error('something went wrong', {
+            position: 'top-center',
+            autoClose: 2000,
+          });
         });
     };
   } else {

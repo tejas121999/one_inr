@@ -306,7 +306,7 @@ const ViewSingleNgo = props => {
                 marginBottom: '0',
               }}
             >
-            {ngoById && ngoById.user && ngoById.user.name}
+              {ngoById && ngoById.user && ngoById.user.name}
             </p>
           </div>
         </div>
@@ -510,7 +510,7 @@ const ViewSingleNgo = props => {
                             Registration Date
                           </TableCell>
                           <TableCell align="center">
-                          {moment(ngoById.registrationDate).format('LL')} 
+                            {moment(ngoById.registrationDate).format('LL')}
                           </TableCell>
                         </TableRow>
 
@@ -777,7 +777,7 @@ const ViewSingleNgo = props => {
                                     title="View projects"
                                     className="btn"
                                     onClick={() =>
-                                      history.push('/project_details')
+                                      history.push('/project_details', row)
                                     }
                                   >
                                     <FaRegEye />
