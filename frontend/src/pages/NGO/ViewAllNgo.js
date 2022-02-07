@@ -12,7 +12,9 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
-// import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { ReactComponent as Edit } from '../../assets/icons/edit.svg';
+import { ReactComponent as View } from '../../assets/icons/view.svg';
+import { ReactComponent as Cross } from '../../assets/icons/cross.svg';
 import {
   FaRegEdit,
   FaRegEye,
@@ -150,30 +152,23 @@ const ViewAllNgo = () => {
       <br />
       <br />
       <br />
-      <br />
       <DeleteNgo show={deleteModal} onHide={deleteModalClose} id={deleteId} />
-      <div
-        className="row"
-        style={{
-          backgroundColor: 'white',
-          margin: '0 1.2em',
-          borderRadius: '1em',
-        }}
-      >
+      <div className="row" style={{ margin: '1em' }}>
         <div
           style={{
             display: 'flex',
             width: '50%',
-            padding: '0.5em 1.7em',
+            padding: '0.5em 2em',
+            justifyContent: 'flex-start',
           }}
         >
           <p
             style={{
               textAlign: 'left',
-              fontSize: '1.25rem',
-              fontWeight: '600',
+              fontSize: '25',
+              fontWeight: 'bold',
               marginBottom: '0',
-              paddingTop: '3px',
+              paddingTop: '5px',
             }}
           >
             List Of All Ngo
@@ -182,27 +177,86 @@ const ViewAllNgo = () => {
         <div
           style={{
             display: 'flex',
-            justifyContent: 'flex-end',
+            // padding: '2em',
             width: '50%',
-            padding: '0.5em 1.7em',
+            padding: '0.5em 2.3em',
+            justifyContent: 'flex-end',
           }}
         >
-          <button
-            className="btn btn-primary"
-            style={{ borderRadius: '2em', width: '25%' }}
-            type="button"
-            onClick={() => history.push('/add_ngo')}
-          >
-            Add NGO
-          </button>
-          <button
-            style={{ marginLeft: '1em', borderRadius: '2em', width: '15%' }}
-            className="btn btn-primary"
-            // onClick={e => handleClick(e)}
-          >
-            Export
-          </button>
-          {/* <Menu
+          <input
+            placeholder="Search"
+            onChange={e => handleChange(e)}
+            type="search"
+            style={{
+              paddingLeft: '1em',
+              border: '1px solid #ced4da',
+              borderRadius: '1.5em',
+              height: '2.2em',
+            }}
+          />
+        </div>
+      </div>
+      <hr style={{ margin: '0' }} />
+      {allNgoList && allNgoList.length > 0 ? (
+        <div
+          style={{
+            margin: '30px 50px',
+            marginBottom: '5em',
+            borderRadius: '1.5em',
+            border: '1px solid #63b8ec',
+          }}
+        >
+          <div className="row" style={{ margin: '1em 0' }}>
+            <div
+              style={{
+                display: 'flex',
+                width: '50%',
+                padding: '0em 2em 1em',
+                justifyContent: 'flex-start',
+              }}
+            >
+              <p
+                style={{
+                  textAlign: 'left',
+                  fontSize: '25',
+                  marginBottom: '0',
+                  paddingTop: '0.5em',
+                  borderBottomStyle: 'solid',
+                  borderBottomWidth: 'medium',
+                  borderColor: '#63b8ec',
+                }}
+              >
+                Overview
+              </p>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                width: '50%',
+                padding: '0.5rem 1.5rem',
+              }}
+            >
+              <Link
+                to="/add_ngo"
+                type="button"
+                className="btn btn-primary"
+                style={{ borderRadius: '2em', fontSize: '20' }}
+              >
+                Add NGO
+              </Link>
+              <button
+                style={{
+                  marginLeft: '1em',
+                  borderRadius: '2em',
+                  fontSize: '20',
+                }}
+                className="btn btn-primary"
+                // onClick={e => handleClick(e)}
+              >
+                Export
+              </button>
+              {/* <Menu
             id="simple-menu"
             anchorEl={anchorEl}
             keepMounted
@@ -242,44 +296,15 @@ const ViewAllNgo = () => {
               </button>
             </MenuItem>
           </Menu> */}
-        </div>
-      </div>
-      {allNgoList && allNgoList.length > 0 ? (
-        <div
-          style={{
-            margin: '20px',
-            backgroundColor: 'white',
-            marginBottom: '5em',
-            borderRadius: '1.5em',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              padding: '2em',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <input
-              placeholder="Search"
-              onChange={e => handleChange(e)}
-              type="search"
-              style={{
-                paddingLeft: '1em',
-                border: '1px solid #ced4da',
-                borderRadius: '1.5em',
-                height: '2.2em',
-              }}
-            />
+            </div>
           </div>
           {/* <hr style={{ margin: '0' }} /> */}
           <Paper
             sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
           >
-            {' '}
             <>
               <TableContainer>
-                <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                <Table>
                   <EnhancedTableHead
                     numSelected={selected.length}
                     order={order}
@@ -308,12 +333,12 @@ const ViewAllNgo = () => {
                             <TableCell id={labelId} align="left">
                               {row.user.name}
                             </TableCell>
-                            <TableCell align="center">{row.pending}</TableCell>
-                            <TableCell align="center">{row.active}</TableCell>
-                            <TableCell align="center">
+                            <TableCell align="left">{row.pending}</TableCell>
+                            <TableCell align="left">{row.active}</TableCell>
+                            <TableCell align="left">
                               {row.actionRequired}
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell align="left">
                               <button
                                 data-bs-toggle="tooltip"
                                 title="View Details"
@@ -321,16 +346,20 @@ const ViewAllNgo = () => {
                                 onClick={() =>
                                   history.push('/view_single_ngo', row)
                                 }
+                                style={{ padding: '0 0.5em 0 0' }}
                               >
-                                <FaRegEye />
+                                {/* <FaRegEye /> */}
+                                <View style={{ width: '25', height: '20' }} />
                               </button>
                               <button
                                 data-bs-toggle="tooltip"
                                 title="Edit Ngo"
                                 className="btn"
                                 onClick={() => history.push('/edit_ngo', row)}
+                                style={{ padding: '0' }}
                               >
-                                <FaRegEdit />
+                                {/* <FaRegEdit /> */}
+                                <Edit style={{ width: '20', height: '20' }} />
                               </button>
                               <button
                                 data-bs-toggle="tooltip"
@@ -347,8 +376,12 @@ const ViewAllNgo = () => {
                                 title="Delete"
                                 className="btn"
                                 onClick={() => deleteModalOpen(row)}
+                                style={{
+                                  padding: '3px 0 0 2px',
+                                }}
                               >
-                                <FaRegTrashAlt />
+                                <Cross style={{ width: '30', height: '30' }} />
+                                {/* <FaRegTrashAlt /> */}
                               </button>
                             </TableCell>
                           </TableRow>
@@ -358,7 +391,7 @@ const ViewAllNgo = () => {
                 </Table>
               </TableContainer>
               <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={[5, 10, 25, 50, 100]}
                 component="div"
                 count={allNgoList.length}
                 rowsPerPage={rowsPerPage}
@@ -465,7 +498,7 @@ function EnhancedTableHead(props) {
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
-            align="center"
+            align="left"
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
