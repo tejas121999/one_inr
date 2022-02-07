@@ -209,7 +209,6 @@ export default function EnhancedTable() {
       <br />
       <br />
       <br />
-
       <Vendordelete
         show={deleteModal}
         onHide={deleteModalClose}
@@ -240,7 +239,7 @@ export default function EnhancedTable() {
         <div
           style={{
             display: 'flex',
-            padding: '2em',
+            // padding: '2em',
             width: '50%',
             padding: '0.5em 2.3em',
             justifyContent: 'flex-end',
@@ -264,7 +263,6 @@ export default function EnhancedTable() {
         <div
           style={{
             margin: '30px 50px',
-            backgroundColor: 'white',
             marginBottom: '5em',
             borderRadius: '1.5em',
             border: '1px solid #63b8ec',
@@ -409,7 +407,7 @@ export default function EnhancedTable() {
                                 style={{ padding: '0' }}
                               >
                                 {/* <FaRegEdit /> */}
-                                <Edit style={{ width: '21', height: '21' }} />
+                                <Edit style={{ width: '20', height: '20' }} />
                               </button>
 
                               <button
@@ -417,7 +415,9 @@ export default function EnhancedTable() {
                                 title="Delete"
                                 className="btn"
                                 onClick={() => deleteModalOpen(row)}
-                                style={{ padding: '0' }}
+                                style={{
+                                  padding: '3px 0 0 2px',
+                                }}
                               >
                                 <Cross style={{ width: '30', height: '30' }} />
                                 {/* <FaRegTrashAlt /> */}
