@@ -47,7 +47,8 @@
     "reactstrap": "^7.1.0",
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
-    "suneditor": "^2.41.3",
+    "suneditor": "^2.42.0",
+    "suneditor-react": "^3.3.1",
     "victory": "^32.0.0",
     "web-vitals": "^1.1.2",
     "yup": "^0.32.11"

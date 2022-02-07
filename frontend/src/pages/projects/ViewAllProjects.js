@@ -356,17 +356,13 @@ const ViewAllProjects = () => {
                           <TableCell align="left">{row.days_left}</TableCell>
                           <TableCell align="left">{row.recurring}</TableCell>
                           <TableCell align="left">
-                            <div className="container">
-                              <div className="toggle-switch">
-                                <input type="checkbox" className="checkbox" />
-                                <label className="label">
-                                  <span className="inner" />
-                                  <span className="switch" />
-                                </label>
-                              </div>
-                            </div>
+                            {/* <div className="container"> */}
+                            <Switch color="primary" size="medium" />
+                            {/* </div> */}
                           </TableCell>
-                          <TableCell align="left"></TableCell>
+                          <TableCell align="left">
+                            <Switch color="primary" size="medium" />
+                          </TableCell>
                           <TableCell align="left">
                             <button
                               data-bs-toggle="tooltip"
