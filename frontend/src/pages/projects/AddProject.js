@@ -369,31 +369,40 @@ const AddProject = props => {
                     </div>
                     <div className="col-sm-4 col-xs-12">
                       <label style={{ fontWeight: 'bold' }}>Start Date:</label>
-                      <DatePicker
-                        name="startDate"
-                        className="form-control"
+                      <input
+                        type="date"
+                        id="start"
+                        name="trip-start"
+                        className='form-control'
                         selected={startDate}
                         selectsStart
                         startDate={startDate}
                         endDate={endDate}
                         onChange={date => setStartDate(date)}
-                        dateFormat="MMMM d, yyyy"
-                      // value={values.startDate}
+                        style={{
+                          padding: '0 0.5em',
+                          border: '1px solid #ced4da',
+                          height: '2.3em',
+                        }}
                       />
                     </div>
                     <div className="col-sm-4 col-xs-12">
                       <label style={{ fontWeight: 'bold' }}>End Date:</label>
-                      <DatePicker
-                        name="endDate"
-                        className="form-control"
-                        selected={endDate}
-                        selectsEnd
+                      <input
+                        type="date"
+                        id="end"
+                        name="trip-end"
+                        className='form-control'
+                        selected={startDate}
+                        selectsStart
                         startDate={startDate}
                         endDate={endDate}
-                        minDate={startDate}
-                        onChange={date => setEndDate(date)}
-                        dateFormat="MMMM d, yyyy"
-                      // value={values.endDate}
+                        onChange={date => setStartDate(date)}
+                        style={{
+                          padding: '0em 0.5em',
+                          border: '1px solid #ced4da',
+                          height: '2.3em',
+                        }}
                       />
                     </div>
                     <div className="col-sm-12 col-xs-12 mt-3">
