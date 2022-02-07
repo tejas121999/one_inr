@@ -11,7 +11,7 @@ export default function TextEditor() {
             <SunEditor
                 // setContents="My contents"
                 showToolbar={true}
-                onChange={handleEditorChange}
+                // onChange={handleEditorChange}
                 setDefaultStyle="height: auto"
                 setOptions={{
                     buttonList: [
