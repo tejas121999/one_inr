@@ -54,7 +54,10 @@ const AddProject = props => {
       .string()
       .required('required')
       .min(10, 'minimum 144 letter'),
-    goal: yup.string().required('Required'),
+    goal: yup.string().required('Required Field'),
+    title: yup.string().required('Required Field'),
+    description: yup.string().required('Required Field'),
+    
   });
 
   // console.log('Images', sliderone);
