@@ -273,7 +273,7 @@ const ViewAllProjects = () => {
                   fontSize: '20',
                 }}
                 className="btn btn-primary"
-              // onClick={e => handleClick(e)}
+                // onClick={e => handleClick(e)}
               >
                 Export
               </button>
@@ -356,9 +356,9 @@ const ViewAllProjects = () => {
                           <TableCell align="left">{row.days_left}</TableCell>
                           <TableCell align="left">{row.recurring}</TableCell>
                           <TableCell align="left">
-                            <div className="container">
-                              <Switch color="primary" size="medium" />
-                            </div>
+                            {/* <div className="container"> */}
+                            <Switch color="primary" size="medium" />
+                            {/* </div> */}
                           </TableCell>
                           <TableCell align="left">
                             <Switch color="primary" size="medium" />
