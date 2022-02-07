@@ -91,7 +91,7 @@ const AddNgo = props => {
     password: yup
       .string()
       .required('Required Field')
-      .min(7, 'Should be 7 character'),
+      .min(8, 'Should be 8 character'),
     panNumber: yup
       .string()
       .required('Required Field')
