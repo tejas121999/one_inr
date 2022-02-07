@@ -394,7 +394,7 @@ const AddProject = props => {
                         name="trip-end"
                         className='form-control'
                         selected={startDate}
-                        selectsStart
+                        selectsEnd
                         startDate={startDate}
                         endDate={endDate}
                         onChange={date => setStartDate(date)}
