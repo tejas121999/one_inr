@@ -12700,10 +12700,15 @@
   dependencies:
     "postcss" "^7.0.2"
 
-"suneditor@^2.41.3":
-  "integrity" "sha512-V4Hz1PY2MhIhw2Lf1iInjEhuVp65B5EbqKb8GpBluZDfx3MnZnNm5v/+Ssr1rV9swTCUWOsl8Qo92KhLMZIllA=="
-  "resolved" "https://registry.npmjs.org/suneditor/-/suneditor-2.41.3.tgz"
-  "version" "2.41.3"
+"suneditor-react@^3.3.1":
+  "integrity" "sha512-/bljp0IGEvkpzJ4Ty9xrb89RHN6U/Ap+OGtZtpJzVb9V6fLk6wuCEyt/9mH1xslefQnM8/FPZwcIP/vo//xh9A=="
+  "resolved" "https://registry.npmjs.org/suneditor-react/-/suneditor-react-3.3.1.tgz"
+  "version" "3.3.1"
+
+"suneditor@^2.42.0":
+  "integrity" "sha512-qlZBF5dk6kSOGGPn66gPu5NhHdxyuzWQKNgmHmV/G73XAKC+oGWTRnCjNasluQM+FHsKwFvemH0hDng7trjHVA=="
+  "resolved" "https://registry.npmjs.org/suneditor/-/suneditor-2.42.0.tgz"
+  "version" "2.42.0"
 
 "supports-color@^2.0.0":
   "integrity" "sha1-U10EXOa2Nj+kARcIRimZXp3zJMc="
