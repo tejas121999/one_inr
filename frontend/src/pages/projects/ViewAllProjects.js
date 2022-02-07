@@ -159,7 +159,7 @@ const ViewAllProjects = () => {
           <button
             style={{ marginLeft: '1em', borderRadius: '2em', width: '15%' }}
             className="btn btn-primary"
-            // onClick={e => handleClick(e)}
+          // onClick={e => handleClick(e)}
           >
             Export
           </button>
@@ -285,17 +285,11 @@ const ViewAllProjects = () => {
                         <TableCell align="center">{row.days_left}</TableCell>
                         <TableCell align="center">{row.recurring}</TableCell>
                         <TableCell align="center">
-                          <div className="container">
-                            <div className="toggle-switch">
-                              <input type="checkbox" className="checkbox" />
-                              <label className="label">
-                                <span className="inner" />
-                                <span className="switch" />
-                              </label>
-                            </div>
-                          </div>
+                          <Switch color="primary" size="medium" />
                         </TableCell>
-                        <TableCell align="center"></TableCell>
+                        <TableCell align="center">
+                          <Switch color="primary" size="medium" />
+                        </TableCell>
                         <TableCell align="center">
                           <button
                             data-bs-toggle="tooltip"
