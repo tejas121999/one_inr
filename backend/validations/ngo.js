@@ -1,7 +1,10 @@
 const { body } = require('express-validator');
-const { Op } = require('sequelize');
+
 
 const models = require('../models');
+const Sequelize = models.Sequelize;
+const sequelize = models.sequelize;
+const Op = Sequelize.Op;
 
 exports.ngoValidation = [
 
@@ -139,13 +142,15 @@ exports.ngoUpdateValidation = [
         .isEmail().withMessage('Invalid Email')
         .isLength({ min: 5, max: 50 }).withMessage('Max length of emails is 50'),
         // .custom(async (value, { req }) => {
+            
         //     return await models.users.findOne({
         //         where: {
         //             email: req.body.email,
-        //             id: { [Op.not]: req.params.id }
+        //            id: { [Op.not]: req.params.id }
         //         }
         //     }).then(userEmail => {
         //         if (userEmail) {
+        //             console.log(userEmail.dataValues)
         //             return Promise.reject("Email Already Exists!");
         //         }
         //     })
@@ -159,6 +164,7 @@ exports.ngoUpdateValidation = [
                 return Promise.reject("Invalid mobile number");
             }
         }),
+       
 
     body('password')
         .exists().withMessage('Password is required.')
@@ -185,18 +191,18 @@ exports.ngoUpdateValidation = [
         .notEmpty().withMessage('Registration Number is required')
         .isLength({ min: 12 }).withMessage('Min length registration number is 12'),
 
-    // body('landline')
-    //     .exists().withMessage('landline number is Required')
-    //     .notEmpty().withMessage('landline Number is required')
-    //     .custom(async (value) => {
-    //         return await models.ngo.findOne({
-    //             where: { landline: value }
-    //         }).then(phone => {
-    //             if (phone) {
-    //                 return Promise.reject("landline number already exist.")
-    //             }
-    //         })
-    //     }),
+    body('landline')
+        .exists().withMessage('landline number is Required')
+        .notEmpty().withMessage('landline Number is required')
+        .custom(async (value) => {
+            return await models.ngo.findOne({
+                where: { landline: value }
+            }).then(ngoLandline => {
+                if (ngoLandline) {
+                    return Promise.reject("landline number already exist.")
+                }
+            })
+        }),
         // .custom(async (value, { req }) => {
         //         return await models.ngo.findOne({
         //             where: {
