@@ -80,15 +80,22 @@ const AddNgo = props => {
       .string()
       .required('Required Field')
       .min(12, 'please enter 12 digits'),
-    mobileNumber: yup
+
+    mobile: yup
       .string()
       .required('Required Field')
-      .min(10, 'Please enter 10 digits'),
+      .min(10, 'please enter 10 digits')
+      .max(11, 'Max 10'),
+
     landline: yup
       .string()
       .required('Required Field')
-      .min(10, 'please enter 10 digits'),
-    password: yup.string().required('Required').min(7, 'Should be 7 character'),
+      .min(10, 'please enter 10 digits')
+      .max(11, 'Max 10'),
+    password: yup
+      .string()
+      .required('Required Field')
+      .min(8, 'Should be 8 character'),
     panNumber: yup
       .string()
       .required('Required Field')
@@ -165,9 +172,9 @@ const AddNgo = props => {
       name: values.ngoName,
       address: values.address,
       email: values.emailId,
-      registrationDate: newDate,
+      registrationDate: values.registrationDate,
       registrationNumber: values.registrationNumber,
-      mobile: values.mobileNumber,
+      mobile: values.mobile,
       landline: values.landline,
       password: values.password,
       panNumber: values.panNumber,
@@ -205,7 +212,7 @@ const AddNgo = props => {
             marginLeft: '1em',
           }}
         >
-          Add Ngo
+          Add NGO
         </p>
       </div>
       <div
@@ -223,7 +230,7 @@ const AddNgo = props => {
             emailId: '',
             registrationDate: '',
             registrationNumber: '',
-            mobileNumber: '',
+            mobile: '',
             landline: '',
             password: '',
             panNumber: '',
@@ -238,7 +245,7 @@ const AddNgo = props => {
                 <div className="row" style={{ justifyContent: 'center' }}>
                   <div className="col-3">
                     <div style={{ padding: '15px 15px -2px' }}>
-                      <label style={{ fontWeight: 'bold' }}>Logo Name</label>
+                      <label style={{ fontWeight: 'bold' }}>Logo </label>
                       <DropzoneComponent onChangeImage={onlogoImageAdd} />
                       <ErrorMessage name="logo_img" component={TextError} />
                     </div>
@@ -277,7 +284,7 @@ const AddNgo = props => {
                       </label>
                       <Field
                         className="form-control"
-                        placeholder="Please Enter ddress"
+                        placeholder="Please Enter Address"
                         name="address"
                         type="text"
                         required
@@ -322,13 +329,12 @@ const AddNgo = props => {
                         Registration Date
                         <label style={{ color: 'red' }}>*</label>
                       </label>
-                      <DatePicker
+                      <Field
+                        className="form-control"
+                        type="date"
+                        id="date"
                         name="registrationDate"
-                        //  value={}
-                        required
-                        selected={date}
-                        onChange={date => setDate(date)}
-                        dateFormat="MMMM d, yyyy"
+                        value={values.registrationDate}
                       />
                       {errors.registrationDate && touched.registrationDate && (
                         <div className="text-left">
@@ -370,23 +376,21 @@ const AddNgo = props => {
                   <div className="col-6 ">
                     <div style={{ padding: '15px 0 10px' }}>
                       <label style={{ fontWeight: 'bold' }}>
-                        Mobile Number<label style={{ color: 'red' }}>*</label>
+                        Mobile <label style={{ color: 'red' }}>*</label>
                       </label>
                       <Field
                         className="form-control"
                         placeholder="Please Enter Mobile Number"
-                        name="mobileNumber"
-                        type="number"
+                        name="mobile"
+                        type="text"
                         autocomplete="off"
                         maxLength={10}
                         required
-                        value={values.mobileNumber}
+                        value={values.mobile}
                       />
-                      {errors.mobileNumber && touched.mobileNumber && (
+                      {errors.mobile && touched.mobile && (
                         <div className="text-left">
-                          <span style={{ color: 'red' }}>
-                            {errors.mobileNumber}
-                          </span>
+                          <span style={{ color: 'red' }}>{errors.mobile}</span>
                         </div>
                       )}
                     </div>
@@ -396,13 +400,13 @@ const AddNgo = props => {
                   <div className="col-6 ">
                     <div style={{ padding: '15px 0 10px' }}>
                       <label style={{ fontWeight: 'bold' }}>
-                        Landline Number<label style={{ color: 'red' }}>*</label>
+                        Landline <label style={{ color: 'red' }}>*</label>
                       </label>
                       <Field
                         className="form-control"
-                        placeholder="Please Enter landline Number"
+                        placeholder="Please Enter Landline Number"
                         name="landline"
-                        type="number"
+                        type="text"
                         autocomplete="off"
                         maxLength={10}
                         required
@@ -424,7 +428,7 @@ const AddNgo = props => {
                       </label>
                       <Field
                         className="form-control"
-                        placeholder="Please Enter password"
+                        placeholder="Please Enter Password"
                         name="password"
                         type={show ? 'password' : 'text'}
                         required

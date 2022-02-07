@@ -14,6 +14,9 @@ import moment from 'moment';
 import * as yup from 'yup';
 import { getAllNGOAction } from '../../Redux/Actions/NgoActions';
 import { Link } from 'react-router-dom';
+import SunEditor from 'suneditor-react'
+import "suneditor/dist/css/suneditor.min.css";
+
 
 const AddProject = props => {
   useEffect(() => {
@@ -28,7 +31,7 @@ const AddProject = props => {
   const [date, setDate] = useState(new Date());
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-  const [longDesc, setLongDesc] = useState("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+  const [longDesc, setLongDesc] = useState("")
   const [recurring, setRecurring] = useState('select');
   const [recurringDays, setRecurringDays] = useState();
 
@@ -355,9 +358,9 @@ const AddProject = props => {
                     <div className="col-sm-4 col-xs-12">
                       <label style={{ fontWeight: 'bold' }}>Goal:</label>
                       <Field
-                        type="number"
+                        type="text"
                         name="goal"
-                        placeholder="No Parent"
+                        placeholder="goal"
                         className="form-control"
                         value={values.goal}
                       />
@@ -369,31 +372,40 @@ const AddProject = props => {
                     </div>
                     <div className="col-sm-4 col-xs-12">
                       <label style={{ fontWeight: 'bold' }}>Start Date:</label>
-                      <DatePicker
-                        name="startDate"
-                        className="form-control"
+                      <input
+                        type="date"
+                        id="start"
+                        name="trip-start"
+                        className='form-control'
                         selected={startDate}
                         selectsStart
                         startDate={startDate}
                         endDate={endDate}
                         onChange={date => setStartDate(date)}
-                        dateFormat="MMMM d, yyyy"
-                      // value={values.startDate}
+                        style={{
+                          padding: '0 0.5em',
+                          border: '1px solid #ced4da',
+                          height: '2.3em',
+                        }}
                       />
                     </div>
                     <div className="col-sm-4 col-xs-12">
                       <label style={{ fontWeight: 'bold' }}>End Date:</label>
-                      <DatePicker
-                        name="endDate"
-                        className="form-control"
-                        selected={endDate}
+                      <input
+                        type="date"
+                        id="end"
+                        name="trip-end"
+                        className='form-control'
+                        selected={startDate}
                         selectsEnd
                         startDate={startDate}
                         endDate={endDate}
-                        minDate={startDate}
-                        onChange={date => setEndDate(date)}
-                        dateFormat="MMMM d, yyyy"
-                      // value={values.endDate}
+                        onChange={date => setStartDate(date)}
+                        style={{
+                          padding: '0em 0.5em',
+                          border: '1px solid #ced4da',
+                          height: '2.3em',
+                        }}
                       />
                     </div>
                     <div className="col-sm-12 col-xs-12 mt-3">
@@ -412,12 +424,32 @@ const AddProject = props => {
                       <label style={{ fontWeight: 'bold' }}>
                         Long Description:
                       </label>
-                      <TextEditor
+                      <SunEditor
+                        // setContents="My contents"
                         value={longDesc}
-                        onChange={e => {
-                          setLongDesc(e.target.value)
+                        showToolbar={true}
+                        onChange={Desc => {
+                          setLongDesc(Desc)
+                        }}
+                        setDefaultStyle="height: auto"
+                        setOptions={{
+                          buttonList: [
+                            [
+                              "bold",
+                              "underline",
+                              "italic",
+                              "strike",
+                              "list",
+                              "align",
+                              "fontSize",
+                              "formatBlock",
+                              "table",
+                              "image"
+                            ]
+                          ]
                         }}
                       />
+
                     </div>
                     <div className="col-sm-12 col-xs-12 mt-3">
                       <label style={{ fontWeight: 'bold' }}>Select NGO:</label>
