@@ -16,18 +16,28 @@ const AddVendor = props => {
   const [panImgUrl, setPanImgUrl] = useState('');
   const [gstImgUrl, setGstImgUrl] = useState('');
   const validationSchema = yup.object({
-    fName: yup.string().required('Required'),
-    lName: yup.string().required('Required'),
-    company: yup.string().required('required'),
-    email: yup.string().email('Invalide Email Format').required('Required'),
-    mobile: yup.number().required('required').min(10, 'Please enter 10 digits'),
+    fName: yup.string().required('Required Field'),
+    lName: yup.string().required('Required Field'),
+    company: yup.string().required('Required Field'),
+    email: yup
+      .string()
+      .email('Invalide Email Format')
+      .required('Required Field'),
+    mobile: yup
+      .number()
+      .required('Required Field')
+      .min(10, 'Please enter 10 digits'),
     gst: yup
       .string()
+      .required('Required Field')
       .matches(
         /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
         'Invalid Format',
       ),
-    pan: yup.string().matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
+    pan: yup
+      .string()
+      .required('Required Field')
+      .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
   });
   const onPanImageAdd = async imagData => {
     const data = new FormData();
@@ -84,35 +94,29 @@ const AddVendor = props => {
       <br />
       <br />
       <br />
-      <br />
       <ToastContainer hideProgressBar />
       <div
         className="row"
         style={{
-          backgroundColor: 'white',
-          margin: '0 1.2em',
-          borderRadius: '1em',
+          margin: '1em',
+          padding: '0.8em 2em',
         }}
       >
         <p
           style={{
             textAlign: 'left',
-            fontSize: '1.25rem',
-            fontWeight: '600',
-            margin: '20px',
-            width: '100%',
-            marginLeft: '20px',
+            fontSize: '25',
+            fontWeight: 'bold',
+            marginBottom: '0',
           }}
         >
           Add Vendor
         </p>
       </div>
+      <hr style={{ margin: '0' }} />
       <div
         style={{
-          margin: '20px',
-          backgroundColor: 'white',
-          marginBottom: '5em',
-          borderRadius: '1.5em',
+          marginBottom: '2.5em',
         }}
       >
         <Formik
@@ -121,8 +125,8 @@ const AddVendor = props => {
             lName: '',
             mobile: '',
             email: '',
-            gst: '22AAAAA0000A1Z5',
-            pan: 'EGZPP5822A',
+            gst: '',
+            pan: '',
             company: '',
             address: '',
           }}
@@ -131,15 +135,15 @@ const AddVendor = props => {
           enableReinitialize={true}
         >
           {({ values, errors, touched }) => (
-            <div className="w-100 mx-auto" style={{ padding: '4rem 10rem' }}>
+            <div className="w-100 mx-auto" style={{ padding: '3rem 8rem' }}>
               <div className="row">
                 <div className="col-12">
                   <Form>
                     <div className="row">
                       <div className="col-6 ">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>
-                            First Name
+                        <div style={{ padding: '15px 5px 5px 15px' }}>
+                          <label style={{ fontSize: '20', marginBottom: '0' }}>
+                            First Name<label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
                             className="form-control"
@@ -160,9 +164,9 @@ const AddVendor = props => {
                         </div>
                       </div>
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>
-                            Last Name
+                        <div style={{ padding: '15px 15px 5px 5px' }}>
+                          <label style={{ fontSize: '20', marginBottom: '0' }}>
+                            Last Name<label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
                             className="form-control"
@@ -185,9 +189,10 @@ const AddVendor = props => {
                     </div>
                     <div className="row">
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>
+                        <div style={{ padding: '15px 5px 5px 15px' }}>
+                          <label style={{ fontSize: '20', marginBottom: '0' }}>
                             Mobile Number
+                            <label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
                             className="form-control"
@@ -209,14 +214,17 @@ const AddVendor = props => {
                         </div>
                       </div>
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>Email Id</label>
+                        <div style={{ padding: '15px 15px 5px 5px' }}>
+                          <label style={{ fontSize: '20', marginBottom: '0' }}>
+                            Email ID<label style={{ color: 'red' }}>*</label>
+                          </label>
                           <Field
                             type="text"
                             className="form-control"
                             placeholder="Please Enter Email Id"
                             id="email"
                             name="email"
+                            required
                             value={values.email}
                           />
                           {errors.email && touched.email && (
@@ -231,14 +239,17 @@ const AddVendor = props => {
                     </div>
                     <div className="row">
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>GST No</label>
+                        <div style={{ padding: '15px 5px 5px 15px' }}>
+                          <label style={{ fontSize: '20', marginBottom: '0' }}>
+                            GST Number<label style={{ color: 'red' }}>*</label>
+                          </label>
                           <Field
                             type="text"
                             placeholder="Please Enter GST No"
                             className="form-control"
                             id="gst"
                             name="gst"
+                            required
                             value={values.gst}
                           />
                           {errors.gst && touched.gst && (
@@ -249,9 +260,12 @@ const AddVendor = props => {
                         </div>
                       </div>
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>
-                            GST image
+                        <div style={{ padding: '15px 15px 5px 5px' }}>
+                          <label
+                            style={{ fontSize: '20', marginBottom: '0.6em' }}
+                          >
+                            GST Image
+                            {/* <label style={{ color: 'red' }}>*</label> */}
                           </label>
                           <input
                             type="file"
@@ -266,14 +280,17 @@ const AddVendor = props => {
                     </div>
                     <div className="row">
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>Pan No</label>
+                        <div style={{ padding: '15px 5px 5px 15px' }}>
+                          <label style={{ fontSize: '20', marginBottom: '0' }}>
+                            Pan Number<label style={{ color: 'red' }}>*</label>
+                          </label>
                           <Field
                             type="text"
                             placeholder="Please Enter PAN No"
                             className="form-control"
                             id="pan"
                             name="pan"
+                            required
                             value={values.pan}
                           />
                           {errors.pan && touched.pan && (
@@ -284,9 +301,12 @@ const AddVendor = props => {
                         </div>
                       </div>
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>
-                            Pan image
+                        <div style={{ padding: '15px 15px 5px 5px' }}>
+                          <label
+                            style={{ fontSize: '20', marginBottom: '0.6em' }}
+                          >
+                            Pan Image
+                            {/* <label style={{ color: 'red' }}>*</label> */}
                           </label>
                           <input
                             type="file"
@@ -301,9 +321,10 @@ const AddVendor = props => {
                     </div>
                     <div className="row">
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>
+                        <div style={{ padding: '15px 5px 5px 15px' }}>
+                          <label style={{ fontSize: '20', marginBottom: '0' }}>
                             Company Name
+                            <label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
                             type="text"
@@ -311,6 +332,7 @@ const AddVendor = props => {
                             className="form-control"
                             id="company"
                             name="company"
+                            required
                             value={values.company}
                           />
                           {errors.company && touched.company && (
@@ -323,8 +345,8 @@ const AddVendor = props => {
                         </div>
                       </div>
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>Address </label>
+                        <div style={{ padding: '15px 15px 5px 5px' }}>
+                          <label style={{ fontSize: '20' }}>Address</label>
                           <Field
                             as="textarea"
                             className="form-control"
@@ -348,7 +370,7 @@ const AddVendor = props => {
                       <div className="col-6">
                         <div
                           style={{
-                            padding: '15px',
+                            padding: '15px 5px 5px 15px',
                             display: 'flex',
                             justifyContent: 'end',
                           }}
@@ -365,7 +387,7 @@ const AddVendor = props => {
                       <div className="col-6">
                         <div
                           style={{
-                            padding: '15px',
+                            padding: '15px 15px 5px 5px',
                             display: 'flex',
                             justifyContent: 'start',
                           }}

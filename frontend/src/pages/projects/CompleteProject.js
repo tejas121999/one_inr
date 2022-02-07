@@ -105,75 +105,90 @@ const CompleteProject = () => {
       <br />
       <br />
       <br />
-      <br />
-      <div
-        className="row"
-        style={{
-          backgroundColor: 'white',
-          margin: '0 1.2em',
-          borderRadius: '1em',
-        }}
-      >
+      <div className="row" style={{ margin: '1em' }}>
         <div
           style={{
             display: 'flex',
             width: '50%',
-            padding: '0.5em 1.7em',
+            padding: '0.5em 2em',
+            justifyContent: 'flex-start',
           }}
         >
           <p
             style={{
               textAlign: 'left',
-              fontSize: '1.25rem',
+              fontSize: '25',
+              fontWeight: 'bold',
               marginBottom: '0',
+              paddingTop: '5px',
             }}
           >
             Completed Projects
           </p>
         </div>
+        <div
+          style={{
+            display: 'flex',
+            width: '50%',
+            padding: '0.5em 2.3em',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <input
+            placeholder="Search"
+            onChange={e => handleChange(e)}
+            type="search"
+            style={{
+              paddingLeft: '1em',
+              border: '1px solid #ced4da',
+              borderRadius: '1.5em',
+              height: '2.2em',
+            }}
+          />
+        </div>
       </div>
+      <hr style={{ margin: '0' }} />
       {completedProjectList && completedProjectList.length > 0 ? (
         <div
           style={{
-            margin: '20px',
-            backgroundColor: 'white',
+            margin: '30px 50px',
             marginBottom: '5em',
             borderRadius: '1.5em',
+            border: '1px solid #63b8ec',
           }}
         >
           <div
-            style={{
-              display: 'flex',
-              padding: '20px',
-              justifyContent: 'end',
-            }}
+            className="row"
+            style={{ margin: '1em 0', padding: '0em 2em 1em' }}
           >
-            <label style={{ fontWeight: '500' }}>
-              Search :
-              <input
-                type="search"
-                placeholder="Search"
-                style={{
-                  paddingLeft: '1em',
-                  border: '1px solid #ced4da',
-                  borderRadius: '1.5em',
-                  height: '2.2em',
-                }}
-                onChange={e => handleChange(e)}
-              />
-            </label>
+            <p
+              style={{
+                textAlign: 'left',
+                fontSize: '25',
+                marginBottom: '0',
+                paddingTop: '0.5em',
+                borderBottomStyle: 'solid',
+                borderBottomWidth: 'medium',
+                borderColor: '#63b8ec',
+              }}
+            >
+              Overview
+            </p>
           </div>
-          <hr style={{ margin: '0' }} />
-          <Paper sx={{ width: '100%' }}>
+          {/* <hr style={{ margin: '0' }} /> */}
+          <Paper
+            sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
+          >
             <React.Fragment>
               <TableContainer>
-                <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                <Table>
                   <EnhancedTableHead
                     numSelected={selected.length}
                     order={order}
                     orderBy={orderBy}
                     onRequestSort={handleRequestSort}
                     rowCount={completedProjectList.length}
+                    headCells={headCells}
                   />
                   <TableBody>
                     {stableSort(
@@ -196,20 +211,15 @@ const CompleteProject = () => {
                             key={row.name}
                             selected={isItemSelected}
                           >
-                            <TableCell
-                              id={labelId}
-                              style={{ paddingLeft: '1em' }}
-                              scope="row"
-                              padding="none"
-                            >
+                            <TableCell id={labelId} align="left">
                               {row.title}
                             </TableCell>
-                            <TableCell align="center">{row.date}</TableCell>
-                            <TableCell align="center">{row.goal}</TableCell>
-                            <TableCell align="center">{row.funded}</TableCell>
-                            <TableCell align="center">{row.paid}</TableCell>
-                            <TableCell align="center">{row.status}</TableCell>
-                            <TableCell align="center">
+                            <TableCell align="left">{row.date}</TableCell>
+                            <TableCell align="left">{row.goal}</TableCell>
+                            <TableCell align="left">{row.funded}</TableCell>
+                            <TableCell align="left">{row.paid}</TableCell>
+                            <TableCell align="left">{row.status}</TableCell>
+                            <TableCell align="left">
                               <button
                                 data-bs-toggle="tooltip"
                                 title="Archive"
@@ -270,7 +280,7 @@ const CompleteProject = () => {
           </Paper>
         </div>
       ) : (
-        <Loader style={{ marginTop: '15%' }} />
+        <Loader />
       )}
     </>
   );
@@ -368,7 +378,7 @@ function EnhancedTableHead(props) {
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
-            align="center"
+            align="left"
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
