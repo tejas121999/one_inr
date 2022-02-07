@@ -355,9 +355,9 @@ const AddProject = props => {
                     <div className="col-sm-4 col-xs-12">
                       <label style={{ fontWeight: 'bold' }}>Goal:</label>
                       <Field
-                        type="number"
+                        type="text"
                         name="goal"
-                        placeholder="No Parent"
+                        placeholder="goal"
                         className="form-control"
                         value={values.goal}
                       />
