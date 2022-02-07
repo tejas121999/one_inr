@@ -1,50 +1,35 @@
-import React from 'react'
-import { useRef, useEffect, useState } from "react";
-import suneditor from "suneditor";
-import plugins from "suneditor/src/plugins";
+import React from "react";
+import SunEditor from 'suneditor-react'
 import "suneditor/dist/css/suneditor.min.css";
 
-const TextEditor = () => {
-
-    let editor = useRef(null);
-    let txtArea = useRef();
-
-    useEffect(() => {
-        editor.current = suneditor.create(txtArea.current, {
-            plugins: plugins,
-            width: "100%",
-            height: "280px",
-            minHeight: "280px",
-            buttonList: [
-                // Default
-                ["undo", "redo"],
-                ["font", "fontSize", "formatBlock"],
-                // ["paragraphStyle", "blockquote"],
-                ["bold", "underline", "italic"],
-                // ["fontColor", "hiliteColor", "textStyle"],
-                // ["removeFormat"],
-                ["outdent", "indent","list"],
-                // ["align", "horizontalRule", "list", "lineHeight"],
-                // ["table", "link", "image", "video", "audio"],
-                // ["imageGallery"],
-                // ["fullScreen", "showBlocks", "codeView"],
-                ["preview", "print"],
-                ["save", "template"]
-            ],
-            historyStackDelayTime: 100,
-            attributesWhitelist: {
-                all: "style"
-            }
-        });
-    }, []);
+export default function TextEditor() {
+    const handleEditorChange = content => {
+        console.log(content);
+    };
     return (
-        <div>
-            <textarea
-                ref={txtArea}
-                value="Hi this is default content, you can edit here"
-            ></textarea>
+        <div className="App">
+            <SunEditor
+                // setContents="My contents"
+                showToolbar={true}
+                onChange={handleEditorChange}
+                setDefaultStyle="height: auto"
+                setOptions={{
+                    buttonList: [
+                        [
+                            "bold",
+                            "underline",
+                            "italic",
+                            "strike",
+                            "list",
+                            "align",
+                            "fontSize",
+                            "formatBlock",
+                            "table",
+                            "image"
+                        ]
+                    ]
+                }}
+            />
         </div>
-    )
+    );
 }
-
-export default TextEditor

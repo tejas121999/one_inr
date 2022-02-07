@@ -28,7 +28,7 @@ const AddProject = props => {
   const [date, setDate] = useState(new Date());
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-
+  const [longDesc, setLongDesc] = useState("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
   const [recurring, setRecurring] = useState('select');
   const [recurringDays, setRecurringDays] = useState();
 
@@ -42,11 +42,11 @@ const AddProject = props => {
     description: yup
       .string()
       .required('required')
-      .min(300, 'minimum 300 letter'),
+      .min(10, 'minimum 144 letter'),
     goal: yup.string().required('Required'),
   });
 
-  // const [sliderImg, setSlider] = useState('')
+  const [sliderImg, setSlider] = useState('')
   // console.log('Images', sliderImg);
   // const [value, setValue] = useState();
   const dispatch = useDispatch();
@@ -60,10 +60,11 @@ const AddProject = props => {
       title: values.title,
       slogan: 'xxx',
       description: values.description,
-      longDesc: values.longDesc,
+      longDesc: longDesc,
       goal: values.goal,
       commission: values.commission,
       target: values.target,
+      videoLink: values.videoLink,
       // funded: 1,
       startDate: start,
       endDate: end,
@@ -71,10 +72,10 @@ const AddProject = props => {
       recurringDays: recurringDays,
       status: false,
       displayOnHomeStatus: 1,
-      feature: featureImg,
+      banner: featureImg,
       cover: coverImg,
-      monbile: mobileImg,
-      // slider: sliderImg
+      mobile: mobileImg,
+      slider1: sliderImg
     };
     console.log('value', object);
     dispatch(addProjectAction(object, props.history));
@@ -124,7 +125,7 @@ const AddProject = props => {
         data,
       );
       if (result && result.data && result.data.pathtoUpload) {
-        // setSlider(result.data.pathtoUpload)
+        setSlider(result.data.pathtoUpload)
       }
     }
   };
@@ -304,7 +305,7 @@ const AddProject = props => {
                         endDate={endDate}
                         onChange={date => setStartDate(date)}
                         dateFormat="MMMM d, yyyy"
-                        // value={values.startDate}
+                      // value={values.startDate}
                       />
                     </div>
                     <div className="col-sm-4 col-xs-12">
@@ -319,7 +320,7 @@ const AddProject = props => {
                         minDate={startDate}
                         onChange={date => setEndDate(date)}
                         dateFormat="MMMM d, yyyy"
-                        // value={values.endDate}
+                      // value={values.endDate}
                       />
                     </div>
                     <div className="col-sm-12 col-xs-12 mt-3">
@@ -338,7 +339,12 @@ const AddProject = props => {
                       <label style={{ fontWeight: 'bold' }}>
                         Long Description:
                       </label>
-                      <TextEditor value={values.longDesc} />
+                      <TextEditor
+                        value={longDesc}
+                        onChange={e => {
+                          setLongDesc(e.target.value)
+                        }}
+                      />
                     </div>
                     <div className="col-sm-12 col-xs-12 mt-3">
                       <label style={{ fontWeight: 'bold' }}>Select NGO:</label>
@@ -439,19 +445,19 @@ const AddProject = props => {
                         <DropzoneComponent onChangeImage={onSliderImgAdd} />
                       </div>
                       <div className="col-sm-4 col-xs-4">
-                        <DropzoneComponent onChangeImage={onSliderImgAdd} />
+                        <DropzoneComponent />
                       </div>
                       <div className="col-sm-4 col-xs-4">
-                        <DropzoneComponent onChangeImage={onSliderImgAdd} />
+                        <DropzoneComponent  />
                       </div>
                       <div className="col-sm-4 col-xs-4 mt-3">
-                        <DropzoneComponent onChangeImage={onSliderImgAdd} />
+                        <DropzoneComponent />
                       </div>
                       <div className="col-sm-4 col-xs-4 mt-3">
-                        <DropzoneComponent onChangeImage={onSliderImgAdd} />
+                        <DropzoneComponent/>
                       </div>
                       <div className="col-sm-4 col-xs-4 mt-3">
-                        <DropzoneComponent onChangeImage={onSliderImgAdd} />
+                        <DropzoneComponent/>
                       </div>
                     </div>
                     <div className="col-sm-12 col-xs-12">
