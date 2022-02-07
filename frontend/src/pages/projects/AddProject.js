@@ -32,6 +32,14 @@ const AddProject = props => {
   const [recurring, setRecurring] = useState('select');
   const [recurringDays, setRecurringDays] = useState();
 
+  const [sliderone, setSliderone] = useState('')
+  const [slidertwo, setSlidertwo] = useState('')
+  const [sliderthree, setSliderthree] = useState('')
+  const [sliderfour, setSliderfour] = useState('')
+  const [sliderfive, setSliderfive] = useState('')
+  const [slidersix, setSlidersix] = useState('')
+
+
   console.log('recurringdays', recurringDays);
 
   const validationSchema = yup.object({
@@ -46,8 +54,7 @@ const AddProject = props => {
     goal: yup.string().required('Required'),
   });
 
-  const [sliderImg, setSlider] = useState('')
-  // console.log('Images', sliderImg);
+  // console.log('Images', sliderone);
   // const [value, setValue] = useState();
   const dispatch = useDispatch();
 
@@ -75,7 +82,12 @@ const AddProject = props => {
       banner: featureImg,
       cover: coverImg,
       mobile: mobileImg,
-      slider1: sliderImg
+      slider1: sliderone,
+      slider2: slidertwo,
+      slider3: sliderthree,
+      slider4: sliderfour,
+      slider5: sliderfive,
+      slider6: slidersix
     };
     console.log('value', object);
     dispatch(addProjectAction(object, props.history));
@@ -114,22 +126,83 @@ const AddProject = props => {
     }
   };
 
-  const onSliderImgAdd = async imgData => {
+  const onSliderone = async imgData => {
     const data = new FormData();
-
     data.append('avatar', imgData[0]);
     console.log(data);
-    if (data.length == 6) {
-      const result = await axios.post(
-        BASE_URL + 'fileupload?reason=slider',
-        data,
-      );
-      if (result && result.data && result.data.pathtoUpload) {
-        setSlider(result.data.pathtoUpload)
-      }
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=slider',
+      data,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setSliderone(result.data.pathtoUpload)
     }
   };
 
+  const onSlidertwo = async imgData => {
+    const data = new FormData();
+    data.append('avatar', imgData[0]);
+    console.log(data);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=slider',
+      data,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setSlidertwo(result.data.pathtoUpload)
+    }
+  };
+
+  const onSliderthree = async imgData => {
+    const data = new FormData();
+    data.append('avatar', imgData[0]);
+    console.log(data);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=slider',
+      data,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setSliderthree(result.data.pathtoUpload)
+    }
+  };
+
+  const onSliderfour = async imgData => {
+    const data = new FormData();
+    data.append('avatar', imgData[0]);
+    console.log(data);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=slider',
+      data,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setSliderfour(result.data.pathtoUpload)
+    }
+  };
+
+  const onSliderfive = async imgData => {
+    const data = new FormData();
+    data.append('avatar', imgData[0]);
+    console.log(data);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=slider',
+      data,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setSliderfive(result.data.pathtoUpload)
+    }
+  };
+
+  const onSlidersix = async imgData => {
+    const data = new FormData();
+    data.append('avatar', imgData[0]);
+    console.log(data);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=slider',
+      data,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setSlidersix(result.data.pathtoUpload)
+    }
+  };
   return (
     <>
       <br />
@@ -442,22 +515,22 @@ const AddProject = props => {
                     </div>
                     <div className="row" style={{ margin: '0rem 0 1.5rem' }}>
                       <div className="col-sm-4 col-xs-4">
-                        <DropzoneComponent onChangeImage={onSliderImgAdd} />
+                        <DropzoneComponent onChangeImage={onSliderone} />
                       </div>
                       <div className="col-sm-4 col-xs-4">
-                        <DropzoneComponent />
+                        <DropzoneComponent onChangeImage={onSlidertwo} />
                       </div>
                       <div className="col-sm-4 col-xs-4">
-                        <DropzoneComponent  />
+                        <DropzoneComponent onChangeImage={onSliderthree} />
                       </div>
                       <div className="col-sm-4 col-xs-4 mt-3">
-                        <DropzoneComponent />
+                        <DropzoneComponent onChangeImage={onSliderfour} />
                       </div>
                       <div className="col-sm-4 col-xs-4 mt-3">
-                        <DropzoneComponent/>
+                        <DropzoneComponent onChangeImage={onSliderfive} />
                       </div>
                       <div className="col-sm-4 col-xs-4 mt-3">
-                        <DropzoneComponent/>
+                        <DropzoneComponent onChangeImage={onSlidersix} />
                       </div>
                     </div>
                     <div className="col-sm-12 col-xs-12">
