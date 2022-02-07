@@ -88,7 +88,10 @@ const AddNgo = props => {
       .string()
       .required('Required Field')
       .min(10, 'please enter 10 digits'),
-    password: yup.string().required('Required').min(7, 'Should be 7 character'),
+    password: yup
+      .string()
+      .required('Required Field')
+      .min(7, 'Should be 7 character'),
     panNumber: yup
       .string()
       .required('Required Field')
@@ -206,7 +209,7 @@ const AddNgo = props => {
             marginLeft: '1em',
           }}
         >
-          Add Ngo
+          Add NGO
         </p>
       </div>
       <div
@@ -278,7 +281,7 @@ const AddNgo = props => {
                       </label>
                       <Field
                         className="form-control"
-                        placeholder="Please Enter ddress"
+                        placeholder="Please Enter Address"
                         name="address"
                         type="text"
                         required
@@ -324,7 +327,7 @@ const AddNgo = props => {
                         <label style={{ color: 'red' }}>*</label>
                       </label>
                       <DatePicker
-                        name="registrationDate"
+                        name="registration Date"
                         //  value={}
                         required
                         selected={date}
@@ -401,7 +404,7 @@ const AddNgo = props => {
                       </label>
                       <Field
                         className="form-control"
-                        placeholder="Please Enter landline Number"
+                        placeholder="Please Enter Landline Number"
                         name="landline"
                         type="number"
                         autocomplete="off"
@@ -425,7 +428,7 @@ const AddNgo = props => {
                       </label>
                       <Field
                         className="form-control"
-                        placeholder="Please Enter password"
+                        placeholder="Please Enter Password"
                         name="password"
                         type={show ? 'password' : 'text'}
                         required

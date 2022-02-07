@@ -26,22 +26,22 @@ export const getAllNGOAction = () => {
         .then(res => {
           dispatch(GetAllNGO(res.data.data));
         })
-        .catch(err => { });
+        .catch(err => {});
     };
   } else {
     alert('No network');
   }
 };
 
-export const getNgoByIdAction = (id) => {
+export const getNgoByIdAction = id => {
   if (navigator.onLine) {
     return dispatch => {
       NgoServices.getNgoById(id)
         .then(res => {
           dispatch(getNgoById(res.data.data));
-          console.log("abc", res)
+          console.log('abc', res);
         })
-        .catch(err => { });
+        .catch(err => {});
     };
   } else {
     alert('No network');
@@ -54,8 +54,6 @@ export const getNgoById = data => {
     payload: data,
   };
 };
-
-
 
 export const getAllNGOByValueAction = value => {
   if (navigator.onLine) {
@@ -89,20 +87,20 @@ export const updateNgoAction = (body, id, history) => {
         .then(res => {
           toast.success(res.data.message, {
             position: 'top-center',
-            autoClose: 2000
+            autoClose: 2000,
           });
           setTimeout(function () {
-            history.push('/view_all_ngo')
-          }, 2000)
+            history.push('/view_all_ngo');
+          }, 2000);
         })
         .catch(err => {
-          window.history.back()
-        })
-    }
+          window.history.back();
+        });
+    };
   } else {
     // need to add toster here
   }
-}
+};
 
 //delete Ngo
 export const DeleteNgoByIdAction = id => {
@@ -115,6 +113,6 @@ export const DeleteNgoByIdAction = id => {
         });
         dispatch(getAllNGOAction());
       })
-      .catch(err => { });
+      .catch(err => {});
   };
 };

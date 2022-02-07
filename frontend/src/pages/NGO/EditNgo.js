@@ -15,11 +15,10 @@ import {
 import uploadImage from '../../assets/uploadImage.png';
 import './ngo.css';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import moment from "moment";
-
+import moment from 'moment';
 
 const EditNgo = props => {
   const dispatch = useDispatch();
@@ -28,7 +27,7 @@ const EditNgo = props => {
   const [certificateImgUrl, setCertificateImgUrl] = useState('');
   const [charityCertificateImgUrl, setCharityCertificateImgUrl] = useState('');
   const [deedImgUrl, setDeedImgUrl] = useState('');
- 
+
   let history = useHistory();
   const [date, setDate] = useState();
   const textInput = useRef(null);
@@ -40,10 +39,7 @@ const EditNgo = props => {
     dispatch(getNgoByIdAction(props.location.state.id));
   }, []);
 
-
   let ngoById = useSelector(state => state.ngo.ngoData);
-  
-
 
   let handleChangeForAddBankDetails = (i, e) => {
     let newFormValues = [...addBankDetailsValues];
@@ -92,10 +88,7 @@ const EditNgo = props => {
       .string()
       .required('Required')
       .min(12, 'please enter 12 digits'),
-    mobile: yup
-      .string()
-      .required('Required')
-      .min(10, 'Please enter 10 digits'),
+    mobile: yup.string().required('Required').min(10, 'Please enter 10 digits'),
     landline: yup
       .string()
       .required('Required')
@@ -175,7 +168,7 @@ const EditNgo = props => {
   const onEditNgo = values => {
     //console.log("chin", values)
 
-    let newDate = moment(date).format("LL")
+    let newDate = moment(date).format('LL');
     const obj = {
       logo: logoImgUrl,
       name: values.name,
@@ -233,13 +226,13 @@ const EditNgo = props => {
             name: ngoById && ngoById.user && ngoById.user.name,
             address: ngoById.address,
             email: ngoById && ngoById.user && ngoById.user.email,
-              // registrationDate: ngoById && ngoById.registrationDate.split('')
-              // .slice(0, 19)
-              //                       .join()
-              //                       .replace(/T/g, ' ')
-              //                       .replace(/,/g, ''),
+            // registrationDate: ngoById && ngoById.registrationDate.split('')
+            // .slice(0, 19)
+            //                       .join()
+            //                       .replace(/T/g, ' ')
+            //                       .replace(/,/g, ''),
             registrationNumber: ngoById.registrationNumber,
-            mobile: ngoById && ngoById.user && ngoById.user.mobile,
+            mobile: ngoById && ngoById.user && ngoById.mobile,
             landline: ngoById.landline,
             password: ngoById.password,
             panNumber: ngoById.panNumber,
@@ -307,7 +300,7 @@ const EditNgo = props => {
                     <label style={{ fontWeight: 'bold' }}>Address</label>
                     <Field
                       className="form-control"
-                      placeholder="Please Enter ddress"
+                      placeholder="Please Enter Address"
                       name="address"
                       type="text"
                       required
@@ -350,13 +343,13 @@ const EditNgo = props => {
                       Registration Date
                     </label>
                     <DatePicker
-                    name="registrationDate"
-                    // value={values.registrationDate}
-                    required
-                    selected={date}
-                    onChange={date => setDate(date)}
-                    dateFormat="MMMM d, yyyy"
-                  />
+                      name="registrationDate"
+                      // value={values.registrationDate}
+                      required
+                      selected={date}
+                      onChange={date => setDate(date)}
+                      dateFormat="MMMM d, yyyy"
+                    />
                     {errors.registrationDate && touched.registrationDate && (
                       <div className="text-left">
                         <span style={{ color: 'red' }}>
@@ -454,7 +447,6 @@ const EditNgo = props => {
                       placeholder="Please Enter password"
                       name="password"
                       type="password"
-
                       autocomplete="off"
                       value={values.password}
                     />
@@ -563,13 +555,17 @@ const EditNgo = props => {
                           style={{ width: '100%', height: '250px' }}
                           src={
                             ngoById.charityRegistrationCertificate
-                              ? Local + '/' + ngoById.charityRegistrationCertificate
+                              ? Local +
+                                '/' +
+                                ngoById.charityRegistrationCertificate
                               : uploadImage
                           }
                         />
                       </label>
                       <input
-                        onChange={e => onCharityCertificateImageAdd(e.target.files[0])}
+                        onChange={e =>
+                          onCharityCertificateImageAdd(e.target.files[0])
+                        }
                         type="file"
                         accept=".jpg, .jpeg, .png"
                         id="file-input"
