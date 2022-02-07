@@ -25,18 +25,28 @@ const EditVendor = props => {
   const [imgView, setImgView] = useState(false);
   const [imgData, setImgData] = useState('');
   const validationSchema = yup.object({
-    fName: yup.string().required('Required'),
-    lName: yup.string().required('Required'),
-    company: yup.string().required('required'),
-    email: yup.string().email('Invalide Email Format').required('Required'),
-    mobile: yup.string().required('required').min(10, 'Please enter 10 digits'),
+    fName: yup.string().required('Required Field'),
+    lName: yup.string().required('Required Field'),
+    company: yup.string().required('Required Field'),
+    email: yup
+      .string()
+      .email('Invalide Email Format')
+      .required('Required Field'),
+    mobile: yup
+      .string()
+      .required('Required Field')
+      .min(10, 'Please enter 10 digits'),
     gst: yup
       .string()
+      .required('Required Field')
       .matches(
         /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
         'Invalid Format',
       ),
-    pan: yup.string().matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
+    pan: yup
+      .string()
+      .required('Required Field')
+      .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
   });
 
   const onPanImageAdd = async imagData => {
@@ -99,7 +109,6 @@ const EditVendor = props => {
         <br />
         <br />
         <br />
-        <br />
         <ToastContainer hideProgressBar />
         <Modal size="sm" centered show={imgView}>
           <Modal.Body>
@@ -120,30 +129,25 @@ const EditVendor = props => {
         <div
           className="row"
           style={{
-            backgroundColor: 'white',
-            margin: '0 1.2em',
-            borderRadius: '1em',
+            margin: '1em',
+            padding: '0.8em 2em',
           }}
         >
           <p
             style={{
               textAlign: 'left',
-              fontSize: '1.25rem',
-              fontWeight: '600',
-              margin: '20px',
-              width: '100%',
-              marginLeft: '20px',
+              fontSize: '25',
+              fontWeight: 'bold',
+              marginBottom: '0',
             }}
           >
             Edit Vendor
           </p>
         </div>
+        <hr style={{ margin: '0' }} />
         <div
           style={{
-            margin: '20px',
-            backgroundColor: 'white',
-            marginBottom: '5em',
-            borderRadius: '1.5em',
+            marginBottom: '2.5em',
           }}
         >
           <Formik
@@ -166,17 +170,18 @@ const EditVendor = props => {
             enableReinitialize={true}
           >
             {({ values, errors, touched }) => (
-              <div className="w-100 mx-auto" style={{ padding: '4rem 10rem' }}>
+              <div className="w-100 mx-auto" style={{ padding: '3rem 8rem' }}>
                 <div className="row">
                   <div className="col-12">
                     <Form>
                       <div className="row">
                         <div className="col-6 ">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>
+                          <div style={{ padding: '15px 5px 5px 15px' }}>
+                            <label
+                              style={{ fontSize: '20', marginBottom: '0' }}
+                            >
                               First Name
+                              <label style={{ color: 'red' }}>*</label>
                             </label>
                             <Field
                               className="form-control"
@@ -197,11 +202,11 @@ const EditVendor = props => {
                           </div>
                         </div>
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>
-                              Last Name
+                          <div style={{ padding: '15px 15px 5px 5px' }}>
+                            <label
+                              style={{ fontSize: '20', marginBottom: '0' }}
+                            >
+                              Last Name<label style={{ color: 'red' }}>*</label>
                             </label>
                             <Field
                               className="form-control"
@@ -224,11 +229,12 @@ const EditVendor = props => {
                       </div>
                       <div className="row">
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>
+                          <div style={{ padding: '15px 5px 5px 15px' }}>
+                            <label
+                              style={{ fontSize: '20', marginBottom: '0' }}
+                            >
                               Mobile Number
+                              <label style={{ color: 'red' }}>*</label>
                             </label>
                             <Field
                               className="form-control"
@@ -250,11 +256,11 @@ const EditVendor = props => {
                           </div>
                         </div>
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>
-                              Email Id
+                          <div style={{ padding: '15px 15px 5px 5px' }}>
+                            <label
+                              style={{ fontSize: '20', marginBottom: '0' }}
+                            >
+                              Email ID<label style={{ color: 'red' }}>*</label>
                             </label>
                             <Field
                               type="text"
@@ -262,6 +268,7 @@ const EditVendor = props => {
                               placeholder="Please Enter Email Id"
                               id="email"
                               name="email"
+                              required
                               value={values.email}
                             />
                             {errors.email && touched.email && (
@@ -276,16 +283,20 @@ const EditVendor = props => {
                       </div>
                       <div className="row">
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>GST No</label>
+                          <div style={{ padding: '15px 5px 5px 15px' }}>
+                            <label
+                              style={{ fontSize: '20', marginBottom: '0' }}
+                            >
+                              GST Number
+                              <label style={{ color: 'red' }}>*</label>
+                            </label>
                             <Field
                               type="text"
                               placeholder="Please Enter GST No"
                               className="form-control"
                               id="gst"
                               name="gst"
+                              required
                               value={values.gst}
                             />
                             {errors.gst && touched.gst && (
@@ -298,11 +309,11 @@ const EditVendor = props => {
                           </div>
                         </div>
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>
-                              GST image
+                          <div style={{ padding: '15px 15px 5px 5px' }}>
+                            <label
+                              style={{ fontSize: '20', marginBottom: '0.6' }}
+                            >
+                              GST Image
                             </label>
                             {vendorData && vendorData.vendorData.gstImage ? (
                               <span
@@ -331,16 +342,20 @@ const EditVendor = props => {
                       </div>
                       <div className="row">
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>Pan No</label>
+                          <div style={{ padding: '15px 5px 5px 15px' }}>
+                            <label
+                              style={{ fontSize: '20', marginBottom: '0' }}
+                            >
+                              Pan Number
+                              <label style={{ color: 'red' }}>*</label>
+                            </label>
                             <Field
                               type="text"
                               placeholder="Please Enter PAN No"
                               className="form-control"
                               id="pan"
                               name="pan"
+                              required
                               value={values.pan}
                             />
                             {errors.pan && touched.pan && (
@@ -353,11 +368,11 @@ const EditVendor = props => {
                           </div>
                         </div>
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>
-                              Pan image
+                          <div style={{ padding: '15px 15px 5px 5px' }}>
+                            <label
+                              style={{ fontSize: '20', marginBottom: '0.6' }}
+                            >
+                              Pan Image
                             </label>
                             {vendorData && vendorData.vendorData.panImage ? (
                               <span
@@ -387,11 +402,12 @@ const EditVendor = props => {
                       </div>
                       <div className="row">
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>
+                          <div style={{ padding: '15px 5px 5px 15px' }}>
+                            <label
+                              style={{ fontSize: '20', marginBottom: '0' }}
+                            >
                               Company Name
+                              <label style={{ color: 'red' }}>*</label>
                             </label>
                             <Field
                               type="text"
@@ -399,6 +415,7 @@ const EditVendor = props => {
                               className="form-control"
                               id="company"
                               name="company"
+                              required
                               value={values.company}
                             />
                             {errors.company && touched.company && (
@@ -411,12 +428,8 @@ const EditVendor = props => {
                           </div>
                         </div>
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>
-                              Address{' '}
-                            </label>
+                          <div style={{ padding: '15px 15px 5px 5px' }}>
+                            <label style={{ fontSize: '20' }}>Address</label>
                             <Field
                               as="textarea"
                               className="form-control"
@@ -440,7 +453,7 @@ const EditVendor = props => {
                         <div className="col-6">
                           <div
                             style={{
-                              padding: '15px',
+                              padding: '15px 5px 5px 15px',
                               display: 'flex',
                               justifyContent: 'end',
                             }}
@@ -457,7 +470,7 @@ const EditVendor = props => {
                         <div className="col-6">
                           <div
                             style={{
-                              padding: '15px',
+                              padding: '15px 15px 5px 5px',
                               display: 'flex',
                               justifyContent: 'start',
                             }}

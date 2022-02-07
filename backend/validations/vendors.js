@@ -5,8 +5,8 @@ const models = require('../models')
 exports.createVendorValidation = [
 
     body('name')
-        .exists().withMessage('Name is Required')
-        .notEmpty().withMessage('Name is Required')
+        .exists().withMessage('Vendor Name is Required')
+        .notEmpty().withMessage('Vendor Name is Required')
         .isLength({ max: 50 }).withMessage('Only 50 characters allowed'),
 
     body('email')
@@ -25,8 +25,8 @@ exports.createVendorValidation = [
             })
         }),
     body('phone')
-        .exists().withMessage('Mobile is Required')
-        .notEmpty().withMessage('Mobile is Required')
+        .exists().withMessage('Mobile Number is Required')
+        .notEmpty().withMessage('Mobile Number is Required')
         .isLength({ min: 10 }).withMessage('Invalid Mobie Number')
         .custom(async value => {
             if (!/^[0-9]{10}$/i.test(value)) {
@@ -39,20 +39,20 @@ exports.createVendorValidation = [
                 where: { phone: value }
             }).then(phone => {
                 if (phone) {
-                    return Promise.reject("Phone number already exist")
+                    return Promise.reject("Mobile number already exist")
 
                 }
             })
         }),
     body('gst')
-        .exists().withMessage('GST is Required')
-        .notEmpty().withMessage('GST is Required')
+        .exists().withMessage('GST Number is Required')
+        .notEmpty().withMessage('GST Number is Required')
         .custom(async (value) => {
             return await models.vendors.findOne({
                 where: { gst: value }
             }).then(gst => {
                 if (gst) {
-                    return Promise.reject("GST number Already Exists")
+                    return Promise.reject("GST Number Already Exists")
 
                 }
             })
@@ -65,7 +65,7 @@ exports.createVendorValidation = [
                 where: { pan: value }
             }).then(pan => {
                 if (pan) {
-                    return Promise.reject("PAN number Already Exists")
+                    return Promise.reject("PAN Number Already Exists")
 
                 }
             })
@@ -84,8 +84,8 @@ exports.createVendorValidation = [
         }),
 
     body('company')
-        .exists().withMessage('Company is Required')
-        .notEmpty().withMessage('Company is Required')
+        .exists().withMessage('Company Name is Required')
+        .notEmpty().withMessage('Company Name is Required')
         .isLength({ max: 50 }).withMessage('Only 50 characters allowed'),
 
 
@@ -93,8 +93,8 @@ exports.createVendorValidation = [
 ]
 exports.updateVendorValidation = [
     body('name')
-        .exists().withMessage('Name is Required')
-        .notEmpty().withMessage('Name is Required')
+        .exists().withMessage('Vendor Name is Required')
+        .notEmpty().withMessage('Vendor Name is Required')
         .isLength({ max: 50 }).withMessage('Only 50 characters allowed'),
     body('email')
         .exists().withMessage('Email is Required')
@@ -103,8 +103,8 @@ exports.updateVendorValidation = [
         .isLength({ max: 50 }).withMessage('Max length of email is 50'),
 
     body('phone')
-        .exists().withMessage('Mobile is Required')
-        .notEmpty().withMessage('Mobile is Required')
+        .exists().withMessage('Mobile Number is Required')
+        .notEmpty().withMessage('Mobile Number is Required')
         .isLength({ min: 10 }).withMessage('Invalid Mobie Number')
         .custom(async value => {
             if (!/^[0-9]{10}$/i.test(value)) {
@@ -113,11 +113,23 @@ exports.updateVendorValidation = [
         }),
 
     body('gst')
-        .exists().withMessage('GST is Required')
-        .notEmpty().withMessage('GST is Required'),
+        .exists().withMessage('GST Number is Required')
+        .notEmpty().withMessage('GST Number is Required'),
+
     body('pan')
         .exists().withMessage('PAN is Required')
-        .notEmpty().withMessage('PAN is Required'),
+        .notEmpty().withMessage('PAN is Required')
+        .custom(async (value) => {
+            return await models.vendors.findOne({
+                where: { pan: value }
+            }).then(pan => {
+                if (pan) {
+                    return Promise.reject("PAN Number Already Exists")
+
+                }
+            })
+        }),
+
     body('address')
         .exists().withMessage('Address is Required')
         .notEmpty().withMessage('Address is Required')
@@ -129,8 +141,8 @@ exports.updateVendorValidation = [
             }
         }),
     body('company')
-        .exists().withMessage('Company is Required')
-        .notEmpty().withMessage('Company is Required')
+        .exists().withMessage('Company Name is Required')
+        .notEmpty().withMessage('Company Name is Required')
         .isLength({ max: 50 }).withMessage('Only 50 characters allowed'),
     body('panImage')
         .exists().withMessage('Pan image is Required')

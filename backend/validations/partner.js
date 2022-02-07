@@ -5,8 +5,8 @@ const models = require('../models')
 exports.partnerValidation = [
 
     body('name')
-        .exists().withMessage('Name is Required.')
-        .notEmpty().withMessage('Name is Required.')
+        .exists().withMessage('Name is Required')
+        .notEmpty().withMessage('Name is Required')
         .isLength({ max: 50 }).withMessage('Only 50 characters allowed'),
 
     body('phone')
@@ -22,11 +22,31 @@ exports.partnerValidation = [
         .exists().withMessage('Email is Required')
         .notEmpty().withMessage('Email is Required')
         .isEmail().withMessage('Invalid Email')
-        .isLength({ min: 5, max: 50 }).withMessage('Max length of emails is 50'),
+        .isLength({ min: 5, max: 50 }).withMessage('Max length of emails is 50')
+        .custom(async (value) => {
+            return await models.partners.findOne({
+                where: { email: value }
+            }).then(email => {
+                if (email) {
+                    return Promise.reject("Email Already Exists")
+
+                }
+            })
+        }),
 
     body('gstNumber')
         .exists().withMessage('Gst Number is required')
-        .notEmpty().withMessage('Gst Number is required'),
+        .notEmpty().withMessage('Gst Number is required')
+        .custom(async (value) => {
+            return await models.partners.findOne({
+                where: { gstNumber: value }
+            }).then(gstNumber => {
+                if (gstNumber) {
+                    return Promise.reject("GST Number Already Exists")
+
+                }
+            })
+        }),
 
     body('panNumber')
         .exists().withMessage('Pan Number is required')
@@ -43,7 +63,7 @@ exports.partnerValidation = [
                 }
             }).then(panNumber => {
                 if (panNumber) {
-                    return Promise.reject("Pan number alredy exists!");
+                    return Promise.reject("Pan number already exists");
                 }
             })
         }),

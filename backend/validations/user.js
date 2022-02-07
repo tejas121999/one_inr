@@ -5,26 +5,26 @@ exports.updateProfileValidation = [
     body('name')
         .exists().withMessage('Name is Required')
         .notEmpty().withMessage('Name is Required')
-        .matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic.'),
+        .matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic'),
 
     body('email')
         .exists().withMessage('Email is Required')
         .notEmpty().withMessage('Email is Required')
         .isEmail().withMessage('Email is Required')
         .isLength({min: 5 ,max : 50}).withMessage('Max length of emails is 50')
-        // .custom(async (value) => {
-        //     return await models.users.findOne({
-        //         where: {
-        //             email: value
-        //         }
-        //     }).then(email => {
-        //         if (email) {
-        //             return Promise.reject("Email Already Exists")
+        .custom(async (value) => {
+            return await models.users.findOne({
+                where: {
+                    email: value
+                }
+            }).then(email => {
+                if (email) {
+                    return Promise.reject("Email Already Exists")
 
-        //         }
-        //     })
-        // })
-        ,
+                }
+            })
+        }),
+        
     body('mobile')
         .exists()
         .withMessage('Mobile number is Required')

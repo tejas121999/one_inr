@@ -17,7 +17,7 @@ exports.addVendor = async (req, res) => {
     let vendors = await models.vendors.create({ name, email, phone, gst, pan, address, company, panImage, gstImage })
     if (!vendors) {
         return res.status(402).json({
-            message: "failed to create vendor"
+            message: "Failed to create vendor"
         })
     }
     return res.status(200).json({

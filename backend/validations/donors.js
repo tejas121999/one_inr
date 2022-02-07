@@ -7,7 +7,7 @@ exports.donorValidation = [
     body('name')
         .exists().withMessage('Name is Required')
         .notEmpty().withMessage('Name is Required')
-        .matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic.'),
+        .matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic'),
 
     body('email')
         .exists().withMessage('Email is Required')
@@ -74,7 +74,7 @@ exports.updateDonorValidation = [
     body('name')
         .exists().withMessage('Name is Required')
         .notEmpty().withMessage('Name is Required')
-        .matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic.'),
+        .matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic'),
 
     body('email')
         .exists().withMessage('Email is Required')

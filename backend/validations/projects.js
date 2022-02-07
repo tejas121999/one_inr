@@ -18,8 +18,8 @@ exports.addProjectValidation = [
         .isLength({ min: 1, max: 200 }).withMessage('Max length of description is 200'),
 
     body('longDesc')
-        .exists().withMessage('Description is Required')
-        .notEmpty().withMessage('Description is Required'),
+        .exists().withMessage('Long Description is Required')
+        .notEmpty().withMessage('Long Description is Required'),
 
     body('videoLink')
         .exists().withMessage('Video Url is Required')
@@ -38,11 +38,11 @@ exports.addProjectValidation = [
     // .isDate().withMessage('Invalid! Enter date in YY-MM-DD Format'),
         .custom(async (value,{req}) =>{
             if(value > req.body.endDate){
-                return Promise.reject("Project endDate Cannot be greater than startDate.")
+                return Promise.reject("Project endDate Cannot be greater than startDate")
             }
             startDate = moment(value).format('YYYY-MM-DD')
             if(startDate < moment().format('YYYY-MM-DD')){
-                return Promise.reject("Project cannot be created in past days.")
+                return Promise.reject("Project cannot be created in past days")
             }
         })
 
@@ -65,7 +65,7 @@ exports.addProjectValidation = [
                 }
                 let recuringCount = moment(req.body.endDate).diff(req.body.startDate, 'days')
                 if (req.body.recurringDays > recuringCount) {
-                    return Promise.reject("Recuring Days should be less than the total days of project.")
+                    return Promise.reject("Recuring Days should be less than the total days of project")
                 }
 
             }

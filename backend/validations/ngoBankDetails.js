@@ -11,7 +11,7 @@ exports.ngoBankDetailsValidation = [
         .notEmpty().withMessage('cannot be empty')
         // .custom((val) => /^(?:[0-9]{11}|[0-9]{2}-[0-9]{3}-[0-9]{6})$/g.test(val))
         // .withMessage("Invalid Number")\
-        .isLength({min : 8 ,max :16}).withMessage('Please check account number correctly!')
+        .isLength({min : 8 ,max :16}).withMessage('Please check account number correctly')
         .isNumeric().withMessage('Please enter only numbers...'),
 
     // body('accountNumber')
@@ -53,7 +53,7 @@ exports.ngoBankDetailsValidation = [
                 }
             }).then(IFSC => {
                 if(IFSC) {
-                    return Promise.reject("IFSC number already exists!");
+                    return Promise.reject("IFSC number already exists");
                 }
             })
         })

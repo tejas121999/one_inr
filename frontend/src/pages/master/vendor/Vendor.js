@@ -14,14 +14,9 @@ import { visuallyHidden } from '@mui/utils';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 // import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {
-  FaRegEdit,
-  FaRegEye,
-  FaRegTrashAlt,
-  FaBookOpen,
-  FaDollarSign,
-} from 'react-icons/fa';
-
+import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
+import { ReactComponent as Cross } from '../../../assets/icons/cross.svg';
+import { ReactComponent as Edit } from '../../../assets/icons/edit.svg';
 import { Link, useHistory } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -214,133 +209,159 @@ export default function EnhancedTable() {
       <br />
       <br />
       <br />
-      <br />
+
       <Vendordelete
         show={deleteModal}
         onHide={deleteModalClose}
         id={deleteId}
       />
       <ToastContainer hideProgressBar />
-      <div
-        className="row"
-        style={{
-          backgroundColor: 'white',
-          margin: '0 1.2em',
-          borderRadius: '1em',
-        }}
-      >
+      <div className="row" style={{ margin: '1em' }}>
         <div
           style={{
             display: 'flex',
             width: '50%',
-            padding: '0.5em 1.7em',
+            padding: '0.5em 2em',
+            justifyContent: 'flex-start',
           }}
         >
           <p
             style={{
               textAlign: 'left',
-              fontSize: '1.25rem',
-              fontWeight: '600',
+              fontSize: '25',
+              fontWeight: 'bold',
               marginBottom: '0',
-              paddingTop: '3px',
+              paddingTop: '5px',
             }}
           >
-            Vendor List
+            Vendors
           </p>
         </div>
         <div
           style={{
             display: 'flex',
-            justifyContent: 'flex-end',
+            padding: '2em',
             width: '50%',
-            padding: '0.5em 1.7em',
+            padding: '0.5em 2.3em',
+            justifyContent: 'flex-end',
           }}
         >
-          <Link
-            to="/addvendor"
-            type="button"
-            className="btn btn-primary"
-            style={{ borderRadius: '2em', width: '25%' }}
-          >
-            Add Vendor
-          </Link>
-          <button
-            style={{ marginLeft: '1em', borderRadius: '2em', width: '15%' }}
-            className="btn btn-primary"
-            onClick={e => handleClick(e)}
-          >
-            Export
-          </button>
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-            style={{ top: '30px', left: '-8px' }}
-          >
-            <MenuItem>
-              <button
-                className="export-btn w-100"
-                onClick={() => onCopyClick()}
-              >
-                Copy
-              </button>
-            </MenuItem>
-            <MenuItem>
-              <button className="export-btn w-100" onClick={downloadCsv}>
-                CSV
-              </button>
-            </MenuItem>
-            <MenuItem>
-              <button className="export-btn w-100" onClick={downloadXls}>
-                Excel
-              </button>
-            </MenuItem>
-            <MenuItem>
-              <button className="export-btn w-100" onClick={downloadPdf}>
-                PDF
-              </button>
-            </MenuItem>
-            <MenuItem>
-              <button
-                className="export-btn w-100"
-                onClick={() => onPrintClick()}
-              >
-                Print
-              </button>
-            </MenuItem>
-            {/* <MenuItem></MenuItem> */}
-          </Menu>
+          <input
+            placeholder="Search"
+            onChange={e => handleChange(e)}
+            type="search"
+            style={{
+              paddingLeft: '1em',
+              border: '1px solid #ced4da',
+              borderRadius: '1.5em',
+              height: '2.2em',
+            }}
+          />
         </div>
       </div>
+      <hr style={{ margin: '0' }} />
       {donorList && donorList.length > 0 ? (
         <div
           style={{
-            margin: '20px',
+            margin: '30px 50px',
             backgroundColor: 'white',
             marginBottom: '5em',
             borderRadius: '1.5em',
+            border: '1px solid #63b8ec',
           }}
         >
-          <div
-            style={{
-              display: 'flex',
-              padding: '2em',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <input
-              placeholder="Search"
-              onChange={e => handleChange(e)}
-              type="search"
+          <div className="row" style={{ margin: '1em 0' }}>
+            <div
               style={{
-                paddingLeft: '1em',
-                border: '1px solid #ced4da',
-                borderRadius: '1.5em',
-                height: '2.2em',
+                display: 'flex',
+                width: '50%',
+                padding: '0em 2em 1em',
+                justifyContent: 'flex-start',
               }}
-            />
+            >
+              <p
+                style={{
+                  textAlign: 'left',
+                  fontSize: '25',
+                  marginBottom: '0',
+                  paddingTop: '0.5em',
+                  borderBottomStyle: 'solid',
+                  borderBottomWidth: 'medium',
+                  borderColor: '#63b8ec',
+                }}
+              >
+                Overview
+              </p>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                width: '50%',
+                padding: '0.5rem 1.5rem',
+              }}
+            >
+              <Link
+                to="/addvendor"
+                type="button"
+                className="btn btn-primary"
+                style={{ borderRadius: '2em', fontSize: '20' }}
+              >
+                Add Vendor
+              </Link>
+              <button
+                style={{
+                  marginLeft: '1em',
+                  borderRadius: '2em',
+                  fontSize: '20',
+                }}
+                className="btn btn-primary"
+                onClick={e => handleClick(e)}
+              >
+                Export
+              </button>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                style={{ top: '30px', left: '-8px' }}
+              >
+                <MenuItem>
+                  <button
+                    className="export-btn w-100"
+                    onClick={() => onCopyClick()}
+                  >
+                    Copy
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button className="export-btn w-100" onClick={downloadCsv}>
+                    CSV
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button className="export-btn w-100" onClick={downloadXls}>
+                    Excel
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button className="export-btn w-100" onClick={downloadPdf}>
+                    PDF
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button
+                    className="export-btn w-100"
+                    onClick={() => onPrintClick()}
+                  >
+                    Print
+                  </button>
+                </MenuItem>
+                {/* <MenuItem></MenuItem> */}
+              </Menu>
+            </div>
           </div>
           {/* <hr style={{ margin: '0' }} /> */}
           <Paper
@@ -376,17 +397,19 @@ export default function EnhancedTable() {
                               {row.name}
                             </TableCell>
                             <TableCell align="left">{row.company}</TableCell>
-                            <TableCell align="center">{row.phone}</TableCell>
+                            <TableCell align="left">{row.phone}</TableCell>
                             <TableCell align="left">{row.email}</TableCell>
-                            <TableCell align="center">{row.gst}</TableCell>
-                            <TableCell align="center">
+                            <TableCell align="left">{row.gst}</TableCell>
+                            <TableCell align="left">
                               <button
                                 data-bs-toggle="tooltip"
                                 title="Edit"
                                 className="btn"
                                 onClick={() => history.push('/editvendor', row)}
+                                style={{ padding: '0' }}
                               >
-                                <FaRegEdit />
+                                {/* <FaRegEdit /> */}
+                                <Edit style={{ width: '21', height: '21' }} />
                               </button>
 
                               <button
@@ -394,8 +417,10 @@ export default function EnhancedTable() {
                                 title="Delete"
                                 className="btn"
                                 onClick={() => deleteModalOpen(row)}
+                                style={{ padding: '0' }}
                               >
-                                <FaRegTrashAlt />
+                                <Cross style={{ width: '30', height: '30' }} />
+                                {/* <FaRegTrashAlt /> */}
                               </button>
                             </TableCell>
                           </TableRow>
@@ -436,37 +461,37 @@ export default function EnhancedTable() {
 const headCells = [
   {
     id: 'name',
-    numeric: false,
+    numeric: true,
     disablePadding: false,
     label: 'Name',
   },
   {
     id: 'Company Name',
-    numeric: false,
+    numeric: true,
     disablePadding: false,
-    label: 'company name',
+    label: 'Company Name',
   },
   {
     id: 'Phone No',
-    numeric: false,
+    numeric: true,
     disablePadding: false,
-    label: 'Phone No',
+    label: 'Mobile',
   },
   {
     id: 'Email',
-    numeric: false,
+    numeric: true,
     disablePadding: false,
-    label: 'Email',
+    label: 'Email ID',
   },
   {
     id: 'GST',
-    numeric: false,
+    numeric: true,
     disablePadding: false,
     label: 'GST',
   },
   {
     id: 'action',
-    numeric: false,
+    numeric: true,
     disablePadding: false,
     label: 'Action',
   },

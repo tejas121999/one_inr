@@ -165,238 +165,266 @@ const projectDetails = props => {
 
   return (
     <>
-      <div>
-        <br />
-        <br />
-        <br />
-        <div className="card">
-          <p
-            style={{
-              textAlign: 'left',
-              fontWeight: 'bold',
-              margin: '20px',
-              width: '100%',
-              marginLeft: '20px',
-            }}
-          >
-            Project Details
-          </p>
-        </div>
-      </div>
-
-      <div
-        style={{
-          padding: '20px',
-          margin: '20px',
-        }}
-      >
+      <Paper sx={{ width: '100%', mb: 2 }}>
         <div>
-          <Tabs
-            id="controlled-tab-example"
-            activeKey={key}
-            onSelect={k => setKey(k)}
-            className="mb-3"
-          >
-            <Tab eventKey="details" title="Details">
-              <div className="row">
-                <div className="col-12">
-                  <Carousel nextLabel={null} prevLabel={null}>
-                    {data.map(item => (
-                      <Carousel.Item interval={2000}>
-                        <img
-                          // className="row"
-                          style={{
-                            height: '400px',
-                            width: '100%',
-                            borderRadius: '1.5em',
-                          }}
-                          src={item.img}
-                          alt={item.alt}
-                        />
-                      </Carousel.Item>
-                    ))}
-                  </Carousel>
-                </div>
-
-                <div className="col-12">
-                  <br />
-                  <br />
-                  <div className="row">
-                    <div className="col-12">
-                      <p> {projectById && projectById.description} </p>
-                      <hr />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-6">
-                      <p>Recurring</p>
-                    </div>
-                    <div className="col-6">
-                      <p>{projectById && projectById.recurringDays}Days</p>
-                    </div>
-                  </div>
-                  <br />
-                  <div className="row">
-                    <div className="col-12">
-                      <p>
-                        {' '}
-                        <b> Goal </b>{' '}
-                      </p>
-                      <hr />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-6">
-                      <p>{projectById && projectById.goal}INR</p>
-                    </div>
-                  </div>
-                  <br />
-                  <div className="row">
-                    <div className="col-12">
-                      <p>
-                        {' '}
-                        <b> Dates </b>{' '}
-                      </p>
-                      <br />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <br />
-                    <br />
-
-                    <div className="col-2">
-                      <p>Start Date</p>
-                      <p style={{ fontWeight: 'bold' }}>12 january 2022</p>
-                    </div>
-                    <div className="col-2">
-                      <p>End Date</p>
-                      <p style={{ fontWeight: 'bold' }}>25 May 2022</p>
-                    </div>
-                    <div className="col-2">
-                      <p>Days Left</p>
-                      <p style={{ fontWeight: 'bold' }}>46</p>
-                    </div>
-                  </div>
-                  <br />
-                  <br />
-
-                  <Paper
-                    sx={{ width: '100%', mb: 2 }}
-                    style={{ borderRadius: '1.5em' }}
-                  >
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        padding: '20px',
-                      }}
-                    >
-                      <input
-                        type="search"
-                        placeholder="Search"
-                        onChange={e => handleChange(e)}
-                        style={{
-                          paddingLeft: '1em',
-                          border: '1px solid #ced4da',
-                          borderRadius: '1.5em',
-                          height: '2.2em',
-                          marginRight: '10px',
-                        }}
-                      />
-                      <button
-                        style={{ alignSelf: 'flex-start' }}
-                        className="btn btn-primary"
-                      >
-                        Export
-                      </button>
-                    </div>
-                    <br />
-                    <>
-                      <TableContainer>
-                        <Table
-                          sx={{ minWidth: 750 }}
-                          aria-labelledby="tableTitle"
-                          size={dense ? 'small' : 'medium'}
-                        >
-                          <EnhancedTableHead
-                            numSelected={selected.length}
-                            order={order}
-                            orderBy={orderBy}
-                            onRequestSort={handleRequestSort}
-                            rowCount={constHeadcellsData.length}
-                            headCells={newHeadCells}
-                          />
-                          <TableBody>
-                            {stableSort(
-                              constHeadcellsData,
-                              getComparator(order, orderBy),
-                            )
-                              .slice(
-                                page * rowsPerPage,
-                                page * rowsPerPage + rowsPerPage,
-                              )
-                              .map((row, index) => {
-                                const isItemSelected = isSelected(row.name);
-                                const labelId = `enhanced-table-checkbox-${index}`;
-
-                                return (
-                                  <TableRow
-                                    hover
-                                    aria-checked={isItemSelected}
-                                    tabIndex={-1}
-                                    key={row.date}
-                                    selected={isItemSelected}
-                                  >
-                                    <TableCell
-                                      id={labelId}
-                                      align="center"
-                                      scope="row"
-                                      padding="none"
-                                    >
-                                      {row.date}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                      {row.goal}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                      {row.funded}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                      {row.completion}
-                                    </TableCell>
-                                  </TableRow>
-                                );
-                              })}
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
-                      <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        component="div"
-                        count={constHeadcellsData.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        pageSize={10}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
-                        showLastButton={true}
-                        showFirstButton={true}
-                      />
-                    </>
-                  </Paper>
-                </div>
-              </div>
-            </Tab>
-
-            <Tab eventKey="contributors" title="Contributors">
-              <br />
-              <div>
-                <h1 align={'center'}>NO CONTRIBUTION YET</h1>
-              </div>
-            </Tab>
-          </Tabs>
+          <br />
+          <br />
+          <br />
+          <div className="card">
+            <p
+              style={{
+                textAlign: 'left',
+                fontWeight: 'bold',
+                margin: '20px',
+                width: '100%',
+                marginLeft: '20px',
+              }}
+            >
+              Project Details
+            </p>
+          </div>
         </div>
-      </div>
+
+        <div
+          style={{
+            padding: '20px',
+            margin: '20px',
+          }}
+        >
+          <div>
+            <Tabs
+              id="controlled-tab-example"
+              activeKey={key}
+              onSelect={k => setKey(k)}
+              className="mb-3"
+            >
+              <Tab eventKey="details" title="Details">
+                <div className="row">
+                  <div className="col-12">
+                    <Carousel nextLabel={null} prevLabel={null}>
+                      {data.map(item => (
+                        <Carousel.Item interval={2000}>
+                          <img
+                            // className="row"
+                            style={{
+                              height: '400px',
+                              width: '100%',
+                              borderRadius: '1.5em',
+                            }}
+                            src={item.img}
+                            alt={item.alt}
+                          />
+                        </Carousel.Item>
+                      ))}
+                    </Carousel>
+                  </div>
+
+                  <div className="col-12">
+                    <br />
+                    <br />
+                    <div className="row">
+                      <div className="col-6">
+                        <p style={{ fontWeight: 'bold' }}>
+                          Feeding Street Dogs
+                        </p>
+                      </div>
+                      <div className="col-12">
+                        <p> {projectById && projectById.description} </p>
+                      </div>
+                    </div>
+                    <br />
+                    <div className="row">
+                      <div className="col-6">
+                        <p style={{ fontWeight: 'bold' }}>About</p>
+                        <hr style={{ height: '40px', color: 'blue' }} />
+                      </div>
+                      <div className="col-12">
+                        <p>
+                          Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry. Lorem Ipsum has been the
+                          industry's standard dummy text ever since the 1500s,
+                          when an unknown printer took a galley of type and
+                          scrambled it to make a type specimen book. It has
+                          survived not only five centuries, but also the leap
+                          into electronic typesetting, remaining essentially
+                          unchanged. It was popularised in the 1960s with the
+                          release of Letraset sheets containing Lorem Ipsum
+                          passages{' '}
+                        </p>
+                      </div>
+                    </div>
+                    <br />
+                    <div className="row">
+                      <div className="col-12">
+                        <p>Recurring</p>
+                      </div>
+                      <div className="col-6">
+                        <p style={{ fontWeight: 'bold' }}>
+                          {projectById && projectById.recurringDays}Days
+                        </p>
+                      </div>
+                    </div>
+                    <br />
+                    <div className="row">
+                      <div className="col-12">
+                        <p style={{ fontWeight: 'bold' }}> Goal </p>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-6">
+                        <p style={{ fontsize: '20px' }}>
+                          <h1> {projectById && projectById.goal}INR </h1>
+                        </p>
+                      </div>
+                    </div>
+                    <br />
+                    <div className="row">
+                      <div className="col-12">
+                        <p>
+                          {' '}
+                          <b> Dates </b>{' '}
+                        </p>
+                        <br />
+                      </div>
+                    </div>
+                    <div className="row">
+                      <br />
+                      <br />
+
+                      <div className="col-2">
+                        <p>Start Date</p>
+                        <p style={{ fontWeight: 'bold' }}>12 january 2022</p>
+                      </div>
+                      <div className="col-2">
+                        <p>End Date</p>
+                        <p style={{ fontWeight: 'bold' }}>25 May 2022</p>
+                      </div>
+                      <div className="col-2">
+                        <p>Days Left</p>
+                        <p style={{ fontWeight: 'bold' }}>46</p>
+                      </div>
+                    </div>
+                    <br />
+                    <br />
+
+                    <Paper
+                      sx={{ width: '100%', mb: 2 }}
+                      style={{ borderRadius: '1.5em' }}
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'flex-end',
+                          padding: '20px',
+                        }}
+                      >
+                        <input
+                          type="search"
+                          placeholder="Search"
+                          onChange={e => handleChange(e)}
+                          style={{
+                            paddingLeft: '1em',
+                            border: '1px solid #ced4da',
+                            borderRadius: '1.5em',
+                            height: '2.2em',
+                            marginRight: '10px',
+                          }}
+                        />
+                        <button
+                          style={{ alignSelf: 'flex-start' }}
+                          className="btn btn-primary"
+                        >
+                          Export
+                        </button>
+                      </div>
+                      <br />
+                      <>
+                        <TableContainer>
+                          <Table
+                            sx={{ minWidth: 750 }}
+                            aria-labelledby="tableTitle"
+                            size={dense ? 'small' : 'medium'}
+                          >
+                            <EnhancedTableHead
+                              numSelected={selected.length}
+                              order={order}
+                              orderBy={orderBy}
+                              onRequestSort={handleRequestSort}
+                              rowCount={constHeadcellsData.length}
+                              headCells={newHeadCells}
+                            />
+                            <TableBody>
+                              {stableSort(
+                                constHeadcellsData,
+                                getComparator(order, orderBy),
+                              )
+                                .slice(
+                                  page * rowsPerPage,
+                                  page * rowsPerPage + rowsPerPage,
+                                )
+                                .map((row, index) => {
+                                  const isItemSelected = isSelected(row.name);
+                                  const labelId = `enhanced-table-checkbox-${index}`;
+
+                                  return (
+                                    <TableRow
+                                      hover
+                                      aria-checked={isItemSelected}
+                                      tabIndex={-1}
+                                      key={row.date}
+                                      selected={isItemSelected}
+                                    >
+                                      <TableCell
+                                        id={labelId}
+                                        align="center"
+                                        scope="row"
+                                        padding="none"
+                                      >
+                                        {row.date}
+                                      </TableCell>
+                                      <TableCell align="center">
+                                        {row.goal}
+                                      </TableCell>
+                                      <TableCell align="center">
+                                        {row.funded}
+                                      </TableCell>
+                                      <TableCell align="center">
+                                        {row.completion}
+                                      </TableCell>
+                                    </TableRow>
+                                  );
+                                })}
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                        <TablePagination
+                          rowsPerPageOptions={[5, 10, 25]}
+                          component="div"
+                          count={constHeadcellsData.length}
+                          rowsPerPage={rowsPerPage}
+                          page={page}
+                          pageSize={10}
+                          onPageChange={handleChangePage}
+                          onRowsPerPageChange={handleChangeRowsPerPage}
+                          showLastButton={true}
+                          showFirstButton={true}
+                        />
+                      </>
+                    </Paper>
+                  </div>
+                </div>
+              </Tab>
+
+              <Tab eventKey="contributors" title="Contributors">
+                <br />
+                <div>
+                  <h1 align={'center'}>NO CONTRIBUTION YET</h1>
+                </div>
+              </Tab>
+            </Tabs>
+          </div>
+        </div>
+      </Paper>
     </>
   );
 };
