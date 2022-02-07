@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
+import Loader from '../Loader';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -17,8 +17,8 @@ import Paper from '@mui/material/Paper';
 import { FaRegEdit, FaRegEye } from 'react-icons/fa';
 import { BiLink } from 'react-icons/bi';
 import { AiOutlineDollarCircle } from 'react-icons/ai';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { ReactComponent as Edit } from '../../assets/icons/edit.svg';
+import { ReactComponent as View } from '../../assets/icons/view.svg';
 import Switch from '@material-ui/core/Switch';
 import './project.css';
 import { getAllProjectAction } from '../../Redux/Actions/ProjectActions';
@@ -125,24 +125,24 @@ const ViewAllProjects = () => {
       <div
         className="row"
         style={{
-          backgroundColor: 'white',
-          margin: '0 1.2em',
-          borderRadius: '1em',
+          margin: '1em',
         }}
       >
         <div
           style={{
             display: 'flex',
             width: '50%',
-            padding: '0.5em 1.7em',
+            padding: '0.5em 2em',
+            justifyContent: 'flex-start',
           }}
         >
           <p
             style={{
               textAlign: 'left',
-              fontSize: '1.25rem',
+              fontSize: '25',
+              fontWeight: 'bold',
               marginBottom: '0',
-              paddingTop: '3px',
+              paddingTop: '5px',
             }}
           >
             View All Project
@@ -153,199 +153,283 @@ const ViewAllProjects = () => {
             display: 'flex',
             justifyContent: 'flex-end',
             width: '50%',
-            padding: '0.5em 1.8em',
+            padding: '0.5em 2.3em',
           }}
         >
-          <button
-            style={{ marginLeft: '1em', borderRadius: '2em', width: '15%' }}
-            className="btn btn-primary"
-          // onClick={e => handleClick(e)}
-          >
-            Export
-          </button>
-        </div>
-      </div>
-      <div
-        style={{
-          margin: '20px',
-          backgroundColor: 'white',
-          marginBottom: '5em',
-          borderRadius: '1.5em',
-        }}
-      >
-        {' '}
-        <div
-          className="row"
-          style={{
-            display: 'flex',
-            margin: '1.8em 1.8em 1.8em 1.4em',
-            justifyContent: 'space-between',
-          }}
-        >
-          <div
+          <input
+            placeholder="Search"
+            onChange={e => handleChange(e)}
+            type="search"
             style={{
-              display: 'flex',
-              // padding: '2em',
-              justifyContent: 'flex-start',
+              paddingLeft: '1em',
+              border: '1px solid #ced4da',
+              borderRadius: '1.5em',
+              height: '2.2em',
             }}
-          >
-            <div style={{ margin: '1em 0.5em' }}>
-              {/* <div className="input-box"> */}
-              <DatePicker
-                selected={startDate}
-                selectsStart
-                startDate={startDate}
-                endDate={endDate}
-                onChange={date => setStartDate(date)}
-                dateFormat="MMMM d, yyyy"
-              />
-              {/* </div> */}
-            </div>
-            <div style={{ margin: '1em 0.5em' }}>
-              {/* <div className="input-box"> */}
-              <DatePicker
-                selected={endDate}
-                selectsEnd
-                startDate={startDate}
-                endDate={endDate}
-                minDate={startDate}
-                onChange={date => setEndDate(date)}
-                dateFormat="MMMM d, yyyy"
-              />
-              {/* </div> */}
-            </div>
-            <div className="search-btn">
-              <button
-                type="button"
-                className="btn btn-primary"
-                style={{ borderRadius: '1em' }}
-              >
-                Search
-              </button>
-            </div>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              // padding: '2em',
-              margin: '1em 0em',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <input
-              placeholder="Search"
-              onChange={e => handleChange(e)}
-              type="search"
-              style={{
-                paddingLeft: '1em',
-                border: '1px solid #ced4da',
-                borderRadius: '1.5em',
-                height: '2.2em',
-              }}
-            />
-          </div>
-        </div>
-        {/* <hr style={{ margin: '0' }} /> */}
-        <Paper sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}>
-          <TableContainer>
-            <Table aria-labelledby="tableTitle">
-              <EnhancedTableHead
-                numSelected={selected.length}
-                order={order}
-                orderBy={orderBy}
-                onRequestSort={handleRequestSort}
-                rowCount={allProject.length}
-              />
-              <TableBody>
-                {stableSort(allProject, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    const isItemSelected = isSelected(row.name);
-                    const labelId = `enhanced-table-checkbox-${index}`;
-
-                    return (
-                      <TableRow
-                        hover
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={row.title}
-                        selected={isItemSelected}
-                      >
-                        <TableCell
-                          id={labelId}
-                          align="center"
-                          scope="row"
-                          padding="none"
-                        >
-                          {row.title}
-                        </TableCell>
-                        <TableCell align="center">{row.goal}</TableCell>
-                        <TableCell align="center">{row.target}</TableCell>
-                        <TableCell align="center">{row.funded}</TableCell>
-                        <TableCell align="center">{row.days_left}</TableCell>
-                        <TableCell align="center">{row.recurring}</TableCell>
-                        <TableCell align="center">
-                          <Switch color="primary" size="medium" />
-                        </TableCell>
-                        <TableCell align="center">
-                          <Switch color="primary" size="medium" />
-                        </TableCell>
-                        <TableCell align="center">
-                          <button
-                            data-bs-toggle="tooltip"
-                            title="View Details"
-                            className="btn"
-                            onClick={() =>
-                              history.push(`/project_details`, row)
-                            }
-                          >
-                            <FaRegEye />
-                          </button>
-                          <button
-                            data-bs-toggle="tooltip"
-                            title="Edit"
-                            className="btn"
-                            onClick={() => history.push('/edit_project', row)}
-                          >
-                            <FaRegEdit />
-                          </button>
-                          <button
-                            data-bs-toggle="tooltip"
-                            title="Auto donate"
-                            className="btn"
-                            onClick={() => history.push('/auto_donate', row)}
-                          >
-                            <AiOutlineDollarCircle />
-                          </button>
-                          <button
-                            data-bs-toggle="tooltip"
-                            title="Contributors"
-                            className="btn"
-                            onClick={() => history.push('/Contributors', row)}
-                          >
-                            <BiLink />
-                          </button>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={allProject.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            pageSize={10}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            showLastButton={true}
-            showFirstButton={true}
           />
-        </Paper>
+        </div>
       </div>
+      <hr style={{ margin: '0' }} />
+      {allProject && allProject.length > 0 ? (
+        <div
+          style={{
+            margin: '30px 50px',
+            marginBottom: '5em',
+            borderRadius: '1.5em',
+            border: '1px solid #63b8ec',
+          }}
+        >
+          <div className="row" style={{ margin: '1em 0' }}>
+            <div
+              style={{
+                display: 'flex',
+                width: '30%',
+                padding: '0 0 1em 2em',
+                justifyContent: 'flex-start',
+              }}
+            >
+              <p
+                style={{
+                  textAlign: 'left',
+                  fontSize: '25',
+                  marginBottom: '0',
+                  paddingTop: '0.5em',
+                  borderBottomStyle: 'solid',
+                  borderBottomWidth: 'medium',
+                  borderColor: '#63b8ec',
+                }}
+              >
+                Overview
+              </p>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                width: '70%',
+                padding: '0.5rem 1.5rem 0.5rem 0',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                }}
+              >
+                <div
+                  style={{
+                    margin: '0 0.4em',
+                  }}
+                >
+                  <input
+                    type="date"
+                    id="start"
+                    name="trip-start"
+                    // value="2018-07-22"
+                    style={{
+                      padding: '0 0.5em',
+                      border: '1px solid #ced4da',
+                      borderRadius: '1.5em',
+                      height: '2.3em',
+                    }}
+                  />
+                </div>
+                <div
+                  style={{
+                    margin: '0',
+                  }}
+                >
+                  <input
+                    type="date"
+                    id="end"
+                    name="trip-end"
+                    // value="2018-07-22"
+                    style={{
+                      padding: '0em 0.5em',
+                      border: '1px solid #ced4da',
+                      borderRadius: '1.5em',
+                      height: '2.3em',
+                    }}
+                  />
+                </div>
+                {/* <div> */}
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  style={{
+                    marginLeft: '0.5em',
+                    borderRadius: '2em',
+                    fontSize: '20',
+                  }}
+                >
+                  Search
+                </button>
+                {/* </div> */}
+              </div>
+
+              <button
+                style={{
+                  marginLeft: '0.5em',
+                  borderRadius: '2em',
+                  fontSize: '20',
+                }}
+                className="btn btn-primary"
+                // onClick={e => handleClick(e)}
+              >
+                Export
+              </button>
+              {/* <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                style={{ top: '30px', left: '-8px' }}
+              >
+                <MenuItem>
+                  <button
+                    className="export-btn w-100"
+                    onClick={() => onCopyClick()}
+                  >
+                    Copy
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button className="export-btn w-100" onClick={downloadCsv}>
+                    CSV
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button className="export-btn w-100" onClick={downloadXls}>
+                    Excel
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button className="export-btn w-100" onClick={downloadPdf}>
+                    PDF
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button
+                    className="export-btn w-100"
+                    onClick={() => onPrintClick()}
+                  >
+                    Print
+                  </button>
+                </MenuItem>
+              </Menu> */}
+            </div>
+          </div>
+          {/* <hr style={{ margin: '0' }} /> */}
+          <Paper
+            sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
+          >
+            <TableContainer>
+              <Table aria-labelledby="tableTitle">
+                <EnhancedTableHead
+                  numSelected={selected.length}
+                  order={order}
+                  orderBy={orderBy}
+                  onRequestSort={handleRequestSort}
+                  rowCount={allProject.length}
+                />
+                <TableBody>
+                  {stableSort(allProject, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      const isItemSelected = isSelected(row.name);
+                      const labelId = `enhanced-table-checkbox-${index}`;
+
+                      return (
+                        <TableRow
+                          hover
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={row.title}
+                          selected={isItemSelected}
+                        >
+                          <TableCell id={labelId} align="left">
+                            {row.title}
+                          </TableCell>
+                          <TableCell align="left">{row.goal}</TableCell>
+                          <TableCell align="left">{row.target}</TableCell>
+                          <TableCell align="left">{row.funded}</TableCell>
+                          <TableCell align="left">{row.days_left}</TableCell>
+                          <TableCell align="left">{row.recurring}</TableCell>
+                          <TableCell align="left">
+                            <div className="container">
+                              <div className="toggle-switch">
+                                <input type="checkbox" className="checkbox" />
+                                <label className="label">
+                                  <span className="inner" />
+                                  <span className="switch" />
+                                </label>
+                              </div>
+                            </div>
+                          </TableCell>
+                          <TableCell align="left"></TableCell>
+                          <TableCell align="left">
+                            <button
+                              data-bs-toggle="tooltip"
+                              title="View Details"
+                              className="btn"
+                              onClick={() =>
+                                history.push(`/project_details`, row)
+                              }
+                              style={{ padding: '0 0.5em 0 0' }}
+                            >
+                              {/* <FaRegEye /> */}
+                              <View style={{ width: '25', height: '20' }} />
+                            </button>
+                            <button
+                              data-bs-toggle="tooltip"
+                              title="Edit"
+                              className="btn"
+                              onClick={() => history.push('/edit_project', row)}
+                              style={{ padding: '0' }}
+                            >
+                              {/* <FaRegEdit /> */}
+                              <Edit style={{ width: '20', height: '20' }} />
+                            </button>
+                            <button
+                              data-bs-toggle="tooltip"
+                              title="Auto donate"
+                              className="btn"
+                              onClick={() => history.push('/auto_donate', row)}
+                            >
+                              <AiOutlineDollarCircle />
+                            </button>
+                            <button
+                              data-bs-toggle="tooltip"
+                              title="Contributors"
+                              className="btn"
+                              onClick={() => history.push('/Contributors', row)}
+                            >
+                              <BiLink />
+                            </button>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, 50, 100]}
+              component="div"
+              count={allProject.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              pageSize={10}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              showLastButton={true}
+              showFirstButton={true}
+            />
+          </Paper>
+        </div>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 };
@@ -460,7 +544,7 @@ function EnhancedTableHead(props) {
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
-            align="center"
+            align="left"
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
