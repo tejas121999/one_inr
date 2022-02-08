@@ -19,15 +19,15 @@ const baseStyle = {
 };
 
 const activeStyle = {
-  borderColor: 'red',
+  borderColor: '#2196f3',
 };
 
 const acceptStyle = {
-  borderColor: 'green',
+  borderColor: '#00e676',
 };
 
 const rejectStyle = {
-  borderColor: 'blue',
+  borderColor: '#ff1744',
 };
 
 function DropzoneComponent(props) {
