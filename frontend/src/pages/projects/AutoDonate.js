@@ -6,98 +6,92 @@ const AutoDonate = () => {
       <br />
       <br />
       <br />
-      <br />
       <div
+        className="row"
         style={{
-          backgroundColor: 'white',
-          margin: '0 1.2em',
-          borderRadius: '1em',
+          margin: '1em',
+          padding: '0.8em 2em',
+        }}
+      >
+        <p
+          style={{
+            textAlign: 'left',
+            fontSize: '25',
+            fontWeight: 'bold',
+            marginBottom: '0',
+          }}
+        >
+          Add Fund
+        </p>
+      </div>
+      <hr style={{ margin: '0' }} />
+
+      <div
+        className="row"
+        style={{
+          margin: '5% 33%',
+          textAlign: 'center',
         }}
       >
         <div
-          style={{
-            display: 'flex',
-            width: '50%',
-            padding: '0.5em 1.7em',
-          }}
+          className="autoDonate"
+          style={{ borderRadius: '1.5em', border: '1px solid #707070' }}
         >
-          <p
-            style={{
-              textAlign: 'left',
-              fontSize: '1.25rem',
-              marginBottom: '0',
-              paddingTop: '3px',
-            }}
-          >
-            Auto Donate
-          </p>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="col-3"></div>
-        <div className="col-5">
-          {' '}
-          <div
-            style={{
-              margin: '20px',
-              backgroundColor: 'white',
-              marginBottom: '2px',
-              borderRadius: '1em',
-              textAlign: 'center',
-            }}
-          >
-            <div className="autoDonate">
-              <div style={{ backgroundColor: 'white', padding: '25px' }}>
-                <div>
-                  <p
-                    style={{
-                      fontsize: '20px',
-                      fontWeight: 'bold',
-                      margin: '10px',
-                    }}
-                  >
-                    Donate fund for Feeding Pigeons Grains
-                  </p>
-                </div>
-
-                <div>
-                  <label style={{ float: 'left' }}>Add Fund:</label>
-                  <input
-                    className="form-control"
-                    name="fund_amount"
-                    type="text"
-                  />
-                  <label style={{ float: 'left', marginTop: '20px' }}>
-                    Fund Date :{' '}
-                  </label>
-                  <input type="date" className="form-control" />
-                </div>
-
-                <button
-                  style={{ width: '100%', marginTop: '20px' }}
-                  type="submit"
-                  className="btn btn-success"
-                >
-                  Submit
-                </button>
-              </div>
+          <div style={{ margin: '2em' }}>
+            <div>
+              <p
+                style={{
+                  fontsize: '25px',
+                  fontWeight: 'bold',
+                  margin: '10px',
+                  borderBottomStyle: 'solid',
+                  borderBottomWidth: 'medium',
+                  borderColor: '#63b8ec',
+                }}
+              >
+                Donate fund for Feeding Pigeons Grains
+              </p>
             </div>
-          </div>
-          <div style={{ textAlign: 'center' }}>
-            <span>
-              Max Doner amount available is Rs.
-              <b>397</b>
-            </span>
-            <br />
-            <span>
-              Max fund limit is Rs.
-              <b>146</b>
-            </span>
+
+            <div>
+              <label style={{ float: 'left', fontsize: '20px' }}>
+                Add Fund :
+              </label>
+              <input
+                className="form-control"
+                name="fund_amount"
+                placeholder="Enter Amount"
+                type="text"
+              />
+              <label
+                style={{ float: 'left', marginTop: '20px', fontsize: '20px' }}
+              >
+                Fund Date :
+              </label>
+              <input type="date" className="form-control" />
+            </div>
+
+            <button
+              style={{ width: '100%', marginTop: '20px' }}
+              type="submit"
+              className="btn btn-success"
+            >
+              Submit
+            </button>
           </div>
         </div>
+        <div style={{ textAlign: 'center' }}>
+          <span>
+            Max Doner amount available is Rs.
+            <b>397</b>
+          </span>
+          <br />
+          <span>
+            Max fund limit is Rs.
+            <b>146</b>
+          </span>
+        </div>
       </div>
-      <div className="col-3"></div>
     </div>
   );
 };

@@ -15,13 +15,7 @@ import { visuallyHidden } from '@mui/utils';
 import { ReactComponent as Edit } from '../../assets/icons/edit.svg';
 import { ReactComponent as View } from '../../assets/icons/view.svg';
 import { ReactComponent as Cross } from '../../assets/icons/cross.svg';
-import {
-  FaRegEdit,
-  FaRegEye,
-  FaRegTrashAlt,
-  FaBookOpen,
-  FaPlusCircle,
-} from 'react-icons/fa';
+import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
 import './ngo.css';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
@@ -341,6 +335,17 @@ const ViewAllNgo = () => {
                             <TableCell align="left">
                               <button
                                 data-bs-toggle="tooltip"
+                                title="Add project"
+                                className="btn"
+                                onClick={() =>
+                                  history.push('/add_project', row)
+                                }
+                                style={{ padding: '0 0.5em 0 0' }}
+                              >
+                                <Plus style={{ width: '21', height: '21' }} />
+                              </button>
+                              <button
+                                data-bs-toggle="tooltip"
                                 title="View Details"
                                 className="btn"
                                 onClick={() =>
@@ -360,16 +365,6 @@ const ViewAllNgo = () => {
                               >
                                 {/* <FaRegEdit /> */}
                                 <Edit style={{ width: '20', height: '20' }} />
-                              </button>
-                              <button
-                                data-bs-toggle="tooltip"
-                                title="Add project"
-                                className="btn"
-                                onClick={() =>
-                                  history.push('/add_project', row)
-                                }
-                              >
-                                <FaPlusCircle />
                               </button>
                               <button
                                 data-bs-toggle="tooltip"
