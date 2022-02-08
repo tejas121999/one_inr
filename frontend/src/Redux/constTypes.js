@@ -57,6 +57,7 @@ export const GET_PARTNER_BY_ID = 'GET_PARTNER_BY_ID';
 export const ADD_NGO = 'ADD_NGO';
 export const ADD_NGO_FAIL = 'ADD_NGO_FAIL';
 export const GET_ALL_NGOS = 'GET_ALL_NGOS';
+export const GET_NGO_PROJECT = 'GET_NGO_PROJECT';
 export const GET_NGO = 'GET_NGO';
 export const UPDATE_NGO_BY_ID = 'UPDATE_NGO_BY_ID';
 

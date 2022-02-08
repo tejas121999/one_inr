@@ -75,23 +75,18 @@ const AddNgo = props => {
       .email('Invalid Email Format')
       .required('Required Field')
       .max(50, 'Max limit is 50 characters'),
-    // registrationDate: yup.string().required('Required'),
+    // registrationDate: yup.string().required('Required Field'),
     registrationNumber: yup
       .string()
       .required('Required Field')
       .min(12, 'please enter 12 digits'),
-
     mobile: yup
       .string()
       .required('Required Field')
       .min(10, 'please enter 10 digits')
       .max(11, 'Max 10'),
 
-    landline: yup
-      .string()
-      .required('Required Field')
-      .min(10, 'please enter 10 digits')
-      .max(11, 'Max 10'),
+    landline: yup.string().min(10, 'please enter 10 digits').max(11, 'Max 10'),
     password: yup
       .string()
       .required('Required Field')
@@ -100,6 +95,22 @@ const AddNgo = props => {
       .string()
       .required('Required Field')
       .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
+    bankName: yup
+      .string()
+      .required('Required Field')
+      .max(50, 'Max limit is 50 characters'),
+    accountNumber: yup
+      .string()
+      .required('Required Field')
+      .min(12, 'please enter 12 digits'),
+    beneficiaryName: yup
+      .string()
+      .required('Required Field')
+      .max(50, 'Max limit is 50 characters'),
+    ifscCode: yup
+      .string()
+      .required('Required Field')
+      .matches(/^[A-Z]{4}[0-9]{6}$/, 'Invalid Format'),
   });
 
   //Submit
@@ -183,6 +194,10 @@ const AddNgo = props => {
       charityRegistrationCertificate: charityCertificateImgUrl,
       deed: deedImgUrl,
       bankDetails: addBankDetailsValues,
+      // bankName: values.bankName,
+      // accountNumber: values.accountNumber,
+      // beneficiaryName: values.beneficiaryName,
+      // ifscCode: values.ifscCode,
     };
     dispatch(createNGOAction(obj, props.history));
   };
@@ -234,6 +249,10 @@ const AddNgo = props => {
             landline: '',
             password: '',
             panNumber: '',
+            bankName: '',
+            accountNumber: '',
+            beneficiaryName: '',
+            ifscCode: '',
           }}
           validationSchema={validationSchema}
           onSubmit={values => onAddNgo(values)}
@@ -399,9 +418,7 @@ const AddNgo = props => {
                 <div className="row">
                   <div className="col-6 ">
                     <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold' }}>
-                        Landline <label style={{ color: 'red' }}>*</label>
-                      </label>
+                      <label style={{ fontWeight: 'bold' }}>Landline</label>
                       <Field
                         className="form-control"
                         placeholder="Please Enter Landline Number"
@@ -562,128 +579,6 @@ const AddNgo = props => {
                     <ErrorMessage name="deed_img" component={TextError} />
                   </div>
                 </div>
-                {/* 
-                <br />
-                {addContactValues.map((element, index) => (
-                  <div className="row" style={{ marginLeft: '4px' }}>
-                    <div className="col-2.5 ">
-                      <div style={{ padding: '15px 0 10px' }}>
-                        <label style={{ fontWeight: 'bold' }}>
-                          Name<label style={{ color: 'red' }}>*</label>
-                        </label>
-                        <input
-                          className="form-control"
-                          placeholder="Please enter your Name"
-                          name="name"
-                          autocomplete="off"
-                          required
-                          value={addContactValues[index].name}
-                          onChange={e => handleChangeForAddContact(index, e)}
-                        />
-                        {errors.name && touched.name && (
-                          <div className="text-left">
-                            <span style={{ color: 'blue' }}>{errors.Name}</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="col-2.5 ">
-                      <div style={{ padding: '15px 0 10px' }}>
-                        <label style={{ fontWeight: 'bold' }}>
-                          Designation<label style={{ color: 'red' }}>*</label>
-                        </label>
-                        <Field
-                          className="form-control"
-                          placeholder="Please enter designation"
-                          name="designation"
-                          autocomplete="off"
-                          required
-                          value={addContactValues[index].designation}
-                          onChange={e => handleChangeForAddContact(index, e)}
-                        />
-                        {errors.designation && touched.designation && (
-                          <div className="text-left">
-                            <span style={{ color: 'blue' }}>
-                              {errors.Designation}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="col-2.5 ">
-                      <div style={{ padding: '15px 0 10px' }}>
-                        <label style={{ fontWeight: 'bold' }}>
-                          Email<label style={{ color: 'red' }}>*</label>
-                        </label>
-                        <Field
-                          className="form-control"
-                          placeholder="Please enter email"
-                          name="email"
-                          autocomplete="off"
-                          required
-                          value={addContactValues[index].email}
-                          onChange={e => handleChangeForAddContact(index, e)}
-                        />
-                        {errors.email && touched.email && (
-                          <div className="text-left">
-                            <span style={{ color: 'blue' }}>
-                              {errors.Email}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="col-2.5 ">
-                      <div style={{ padding: '15px 0 10px' }}>
-                        <label style={{ fontWeight: 'bold' }}>
-                          Mobile<label style={{ color: 'red' }}>*</label>
-                        </label>
-                        <Field
-                          className="form-control"
-                          placeholder="Please enter mobile"
-                          name="mobile"
-                          autocomplete="off"
-                          required
-                          value={addContactValues[index].mobile}
-                          onChange={e => handleChangeForAddContact(index, e)}
-                        />
-                        {errors.mobile && touched.mobile && (
-                          <div className="text-left">
-                            <span style={{ color: 'blue' }}>
-                              {errors.Mobile}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <button
-                      type="delete"
-                      className="btn btn-danger"
-                      style={{
-                        maxWidth: '1.5cm',
-                        maxHeight: '1cm',
-                        marginTop: '1.2cm',
-                      }}
-                      onClick={() => removeContactFormFields()}
-                    >
-                      <FaTimes />
-                    </button>
-                  </div>
-                ))} */}
-
-                {/*   <div style={{ textAlign: 'center' }}>
-                <button
-                  type="add contact"
-                  className="btn btn-success"
-                  onClick={() => addContactFormFields()}
-                >
-                  Add Contact
-                </button>
-                  </div>            */}
 
                 <br />
                 {addBankDetailsValues.map((element, index) => (
@@ -692,7 +587,7 @@ const AddNgo = props => {
                       <div className="col-6 ">
                         <div style={{ padding: '15px 0 10px' }}>
                           <label style={{ fontWeight: 'bold' }}>
-                            Bank Name
+                            Bank Name<label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
                             className="form-control"
@@ -719,6 +614,7 @@ const AddNgo = props => {
                         <div style={{ padding: '15px 0 10px' }}>
                           <label style={{ fontWeight: 'bold' }}>
                             Account Number
+                            <label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
                             className="form-control"
@@ -745,6 +641,7 @@ const AddNgo = props => {
                         <div style={{ padding: '15px 0 10px' }}>
                           <label style={{ fontWeight: 'bold' }}>
                             Beneficiary Name
+                            <label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
                             className="form-control"
@@ -770,7 +667,7 @@ const AddNgo = props => {
                       <div className="col-6">
                         <div style={{ padding: '15px 0 10px' }}>
                           <label style={{ fontWeight: 'bold' }}>
-                            IFSC Code
+                            IFSC Code<label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
                             className="form-control"

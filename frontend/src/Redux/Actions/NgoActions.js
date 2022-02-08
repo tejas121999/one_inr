@@ -1,5 +1,11 @@
 import { toast } from 'react-toastify';
-import { ADD_NGO, ADD_NGO_FAIL, GET_ALL_NGOS, GET_NGO } from '../constTypes';
+import {
+  ADD_NGO,
+  ADD_NGO_FAIL,
+  GET_ALL_NGOS,
+  GET_NGO,
+  GET_NGO_PROJECT,
+} from '../constTypes';
 import NgoServices from '../Services/NgoServices';
 
 export const createNGOAction = (body, history) => {
@@ -31,6 +37,28 @@ export const getAllNGOAction = () => {
   } else {
     alert('No network');
   }
+};
+
+export const getNgoProjectAction = id => {
+  if (navigator.onLine) {
+    return dispatch => {
+      NgoServices.getNgoProjectList(id)
+        .then(res => {
+          console.log('shivani', res.data);
+          dispatch(getNgoProject(res.data));
+        })
+        .catch(err => {});
+    };
+  } else {
+    alert('No network');
+  }
+};
+
+export const getNgoProject = data => {
+  return {
+    type: GET_NGO_PROJECT,
+    payload: data,
+  };
 };
 
 export const getNgoByIdAction = id => {

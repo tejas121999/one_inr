@@ -23,7 +23,10 @@ import { Switch } from '@mui/material';
 import uploadImage from '../../assets/img/logo/uploadImage.jpg';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 import { getAllProjectAction } from '../../Redux/Actions/ProjectActions';
-import { getNgoByIdAction } from '../../Redux/Actions/NgoActions';
+import {
+  getNgoByIdAction,
+  getNgoProjectAction,
+} from '../../Redux/Actions/NgoActions';
 import { Local } from '../../API/APIEndpoints';
 import moment from 'moment';
 
@@ -43,9 +46,13 @@ const ViewSingleNgo = props => {
   useEffect(() => {
     dispatch(getAllProjectAction());
     dispatch(getNgoByIdAction(props.location.state.id));
+    dispatch(getNgoProjectAction(props.location.state.id));
   }, []);
 
   let allProjectList = useSelector(state => state.project.projectList);
+
+  let allNgoProjectList = useSelector(state => state.ngo.ngoProjectList);
+  console.log('abc', allNgoProjectList && allNgoProjectList.data);
 
   let ngoById = useSelector(state => state.ngo.ngoData);
 
@@ -64,8 +71,6 @@ const ViewSingleNgo = props => {
   };
 
   const handleChangePage = (event, newPage) => {
-    console.log('ChinmayChange', newPage);
-
     setPage(newPage);
   };
 
@@ -610,209 +615,188 @@ const ViewSingleNgo = props => {
             <Tab eventKey="project" title="Project">
               <br />
               <br />
-              <div>
-                <hr style={{ margin: '0' }} />
-                <Paper sx={{ width: '100%', mb: 2 }}>
-                  <>
-                    <TableContainer>
-                      <Table
-                        sx={{ minWidth: 750 }}
-                        aria-labelledby="tableTitle"
-                        size={dense ? 'small' : 'medium'}
-                      >
-                        <EnhancedTableHead
-                          numSelected={selected.length}
-                          order={order}
-                          orderBy={orderBy}
-                          onRequestSort={handleRequestSort}
-                          rowCount={allProjectList.length}
-                          headCells={tempCells}
-                        />
-                        <TableBody>
-                          {stableSort(
-                            allProjectList,
-                            getComparator(order, orderBy),
-                          )
-                            .slice(
-                              page * rowsPerPage,
-                              page * rowsPerPage + rowsPerPage,
-                            )
-                            .map((row, index) => {
-                              const isItemSelected = isSelected(row.name);
-                              const labelId = `enhanced-table-checkbox-${index}`;
-
-                              return (
-                                <TableRow
-                                  hover
-                                  aria-checked={isItemSelected}
-                                  tabIndex={-1}
-                                  key={row.name}
-                                  selected={isItemSelected}
-                                >
-                                  <TableCell
-                                    id={labelId}
-                                    align="center"
-                                    scope="row"
-                                    padding="none"
-                                  >
-                                    {row.pending}
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    {row.active}
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    {row.fullfilled}
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    {row.partialFullfilled}
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    {row.unFullfilled}
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    {row.actionRequire}
-                                  </TableCell>
-                                </TableRow>
-                              );
-                            })}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  </>
-                </Paper>
-              </div>
-
-              <br />
-              <br />
-              <div
-                style={{
-                  display: 'flex',
-                  padding: '20px',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <button
-                  style={{ alignSelf: 'flex-start' }}
-                  className="btn btn-primary"
-                >
-                  Export
-                </button>
-                <label style={{ fontWeight: '500', marginTop: '0.5em' }}>
-                  Search :
-                  <input
-                    type="search"
-                    placeholder="Search"
-                    style={{ marginLeft: '0.5em', border: '1px solid #ced4da' }}
-                    onChange={e => handleChange(e)}
-                  />
-                </label>
-              </div>
-              <hr style={{ margin: '0' }} />
-              <Paper sx={{ width: '100%', mb: 2 }}>
+              {allNgoProjectList &&
+              allNgoProjectList.data &&
+              allNgoProjectList.data.length > 0 ? (
                 <>
-                  <TableContainer>
-                    <Table
-                      sx={{ minWidth: 750 }}
-                      aria-labelledby="tableTitle"
-                      size={dense ? 'small' : 'medium'}
+                  <div>
+                    <hr style={{ margin: '0' }} />
+                    <Paper sx={{ width: '100%', mb: 2 }}>
+                      <>
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">Pending</th>
+                              <th scope="col">Active</th>
+                              <th scope="col">Fullfilled</th>
+                              <th scope="col">partialFullfilled</th>
+                              <th scope="col">Unfullfilled</th>
+                              <th scope="col">ActionRequired</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{allNgoProjectList.pendingCount}</td>
+                              <td>{allNgoProjectList.activeCount}</td>
+                              <td>{allNgoProjectList.fullFilledCount}</td>
+                              <td>{allNgoProjectList.partialFullfilled}</td>
+                              <td>{allNgoProjectList.unfullfilledCount}</td>
+                              <td>{allNgoProjectList.actionRequired}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </>
+                    </Paper>
+                  </div>
+
+                  <br />
+                  <br />
+                  <div
+                    style={{
+                      display: 'flex',
+                      padding: '20px',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <button
+                      style={{ alignSelf: 'flex-start' }}
+                      className="btn btn-primary"
                     >
-                      <EnhancedTableHead
-                        numSelected={selected.length}
-                        order={order}
-                        orderBy={orderBy}
-                        onRequestSort={handleRequestSort}
-                        rowCount={allProjectList.length}
-                        headCells={projectheadCells}
+                      Export
+                    </button>
+                    <label style={{ fontWeight: '500', marginTop: '0.5em' }}>
+                      Search :
+                      <input
+                        type="search"
+                        placeholder="Search"
+                        style={{
+                          marginLeft: '0.5em',
+                          border: '1px solid #ced4da',
+                        }}
+                        onChange={e => handleChange(e)}
                       />
-                      <TableBody>
-                        {stableSort(
-                          projectconstData,
-                          getComparator(order, orderBy),
-                        )
-                          .slice(
-                            page * rowsPerPage,
-                            page * rowsPerPage + rowsPerPage,
-                          )
-                          .map((row, index) => {
-                            const isItemSelected = isSelected(row.name);
-                            const labelId = `enhanced-table-checkbox-${index}`;
+                    </label>
+                  </div>
+                  <hr style={{ margin: '0' }} />
 
-                            return (
-                              <TableRow
-                                hover
-                                aria-checked={isItemSelected}
-                                tabIndex={-1}
-                                key={row.name}
-                                selected={isItemSelected}
-                              >
-                                <TableCell
-                                  id={labelId}
-                                  align="center"
-                                  scope="row"
-                                  padding="none"
-                                >
-                                  {row.title}
-                                </TableCell>
-                                <TableCell align="center">{row.goal}</TableCell>
-                                <TableCell align="center">
-                                  {row.funded}
-                                </TableCell>
-                                <TableCell align="center">
-                                  {row.daysLeft}
-                                </TableCell>
-                                <TableCell align="center">
-                                  {row.startDate}
-                                </TableCell>
-                                <TableCell align="center">
-                                  {row.endDate}
-                                </TableCell>
-                                <TableCell align="center">
-                                  {/* {row.status}  */}
-                                  <Switch color="primary" size="medium" />
-                                </TableCell>
+                  <Paper sx={{ width: '100%', mb: 2 }}>
+                    <>
+                      <TableContainer>
+                        <Table
+                          sx={{ minWidth: 750 }}
+                          aria-labelledby="tableTitle"
+                          size={dense ? 'small' : 'medium'}
+                        >
+                          <EnhancedTableHead
+                            numSelected={selected.length}
+                            order={order}
+                            orderBy={orderBy}
+                            onRequestSort={handleRequestSort}
+                            rowCount={
+                              allNgoProjectList &&
+                              allNgoProjectList.data &&
+                              allNgoProjectList.data.length
+                            }
+                            headCells={projectheadCells}
+                          />
+                          <TableBody>
+                            {stableSort(
+                              allNgoProjectList.data,
 
-                                <TableCell align="center">
-                                  <button
-                                    data-bs-toggle="tooltip"
-                                    title="View projects"
-                                    className="btn"
-                                    onClick={() =>
-                                      history.push('/project_details', row)
-                                    }
+                              getComparator(order, orderBy),
+                            )
+                              .slice(
+                                page * rowsPerPage,
+                                page * rowsPerPage + rowsPerPage,
+                              )
+                              .map((row, index) => {
+                                const isItemSelected = isSelected(row.name);
+                                const labelId = `enhanced-table-checkbox-${index}`;
+
+                                return (
+                                  <TableRow
+                                    hover
+                                    aria-checked={isItemSelected}
+                                    tabIndex={-1}
+                                    key={row.name}
+                                    selected={isItemSelected}
                                   >
-                                    <FaRegEye />
-                                  </button>
-                                  <button
-                                    data-bs-toggle="tooltip"
-                                    title="Edit"
-                                    className="btn"
-                                    onClick={() =>
-                                      history.push('/edit_project', row)
-                                    }
-                                  >
-                                    <FaRegEdit />
-                                  </button>
-                                </TableCell>
-                              </TableRow>
-                            );
-                          })}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                  <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={constData.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    pageSize={10}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    showLastButton={true}
-                    showFirstButton={true}
-                  />
+                                    <TableCell
+                                      id={labelId}
+                                      align="center"
+                                      scope="row"
+                                      padding="none"
+                                    >
+                                      {row.title}
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      {row.goal}
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      {row.funded}
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      {row.daysLeft}
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      {row.startDate}
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      {row.endDate}
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      {/* {row.status}  */}
+                                      <Switch color="primary" size="medium" />
+                                    </TableCell>
+
+                                    <TableCell align="center">
+                                      <button
+                                        data-bs-toggle="tooltip"
+                                        title="View projects"
+                                        className="btn"
+                                        onClick={() =>
+                                          history.push('/project_details', row)
+                                        }
+                                      >
+                                        <FaRegEye />
+                                      </button>
+                                      <button
+                                        data-bs-toggle="tooltip"
+                                        title="Edit"
+                                        className="btn"
+                                        onClick={() =>
+                                          history.push('/edit_project', row)
+                                        }
+                                      >
+                                        <FaRegEdit />
+                                      </button>
+                                    </TableCell>
+                                  </TableRow>
+                                );
+                              })}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                      <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        count={allNgoProjectList.data.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        pageSize={10}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                        showLastButton={true}
+                        showFirstButton={true}
+                      />
+                    </>
+                  </Paper>
                 </>
-              </Paper>
+              ) : (
+                <p style={{ textAlign: 'center', fontSize: '25px' }}>
+                  No Projects Found
+                </p>
+              )}
             </Tab>
           </Tabs>
         </div>

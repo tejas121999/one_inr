@@ -80,26 +80,31 @@ const EditNgo = props => {
   };
 
   const validationSchema = yup.object({
-    ngoName: yup.string().required('Required Field'),
+    ngoName: yup
+      .string()
+      .required('Required Field')
+      .max(50, 'Max limit is 50 characters'),
     address: yup.string().required('Required Field'),
     emailId: yup
       .string()
       .email('Invalid Email Format')
-      .required('Required Field'),
+      .required('Required Field')
+      .max(50, 'Max limit is 50 characters'),
     registrationDate: yup.date().required('Required Field'),
     registrationNumber: yup
       .number()
       .required('Required Field')
       .min(12, 'please enter 12 digits'),
     mobile: yup
-      .number()
+      .string()
       .required('Required Field')
-      .min(10, 'Please enter 10 digits'),
-
+      .min(10, 'please enter 10 digits')
+      .max(11, 'Max 10'),
     landline: yup
       .string()
       .required('Required Field')
-      .min(10, 'please enter 10 digits'),
+      .min(10, 'please enter 10 digits')
+      .max(11, 'Max 10'),
     password: yup
       .string()
       .required('Required Field')
@@ -108,6 +113,22 @@ const EditNgo = props => {
       .string()
       .required('Required Field')
       .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
+    bankName: yup
+      .string()
+      .required('Required Field')
+      .max(50, 'Max limit is 50 characters'),
+    accountNumber: yup
+      .string()
+      .required('Required Field')
+      .min(12, 'please enter 12 digits'),
+    beneficiaryName: yup
+      .string()
+      .required('Required Field')
+      .max(50, 'Max limit is 50 characters'),
+    ifscCode: yup
+      .string()
+      .required('Required Field')
+      .matches(/^[A-Z]{4}[0-9]{6}$/, 'Invalid Format'),
   });
 
   const onlogoImageAdd = async imgData => {
