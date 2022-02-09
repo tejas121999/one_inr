@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { visuallyHidden } from '@mui/utils';
 import Paper from '@mui/material/Paper';
 import { FaRegEdit, FaRegEye } from 'react-icons/fa';
-import { BiLink } from 'react-icons/bi';
+import Loader from '../Loader';
 import { AiOutlineDollarCircle } from 'react-icons/ai';
 
 import './project.css';
@@ -29,6 +29,25 @@ const Contributors = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const dispatch = useDispatch();
+
+  // SEARCH
+  let timeout = null;
+  const handleChange = e => {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      onSearch(e.target.value);
+    }, 1000);
+  };
+
+  const onSearch = value => {
+    //  if (value) {
+    //    dispatch(getAllVEndorAction(value));
+    //  } else {
+    //    dispatch(getAllVEndorAction(''));
+    //  }
+  };
+
+  // END
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -61,134 +80,204 @@ const Contributors = () => {
   ];
 
   return (
-    <div>
+    <>
       <br />
       <br />
       <br />
-      <br />
-      <div
-        style={{
-          backgroundColor: 'white',
-          margin: '0 1.2em',
-          borderRadius: '1em',
-        }}
-      >
+      <div className="row" style={{ margin: '1em' }}>
         <div
           style={{
             display: 'flex',
-            padding: '2px',
-            justifyContent: 'space-betwee n',
+            width: '50%',
+            padding: '0.5em 2em',
+            justifyContent: 'flex-start',
           }}
         >
           <p
             style={{
               textAlign: 'left',
+              fontSize: '25',
               fontWeight: 'bold',
-              margin: '20px',
-              marginLeft: '20px',
+              marginBottom: '0',
+              paddingTop: '5px',
             }}
           >
             Project Contributors
           </p>
         </div>
-      </div>
-
-      <div
-        style={{
-          margin: '20px',
-          backgroundColor: 'white',
-          marginBottom: '5em',
-          borderRadius: '1.5em',
-        }}
-      >
-        <div className="ViewAll">
-          <div className="white-box">
-            <div className="row">
-              <div className="col-6"></div>
-              <div
-                style={{ display: 'flex', justifyContent: 'flex-end' }}
-                className="col-6 btn"
-              >
-                <label>Search</label>&nbsp;&nbsp;
-                <input
-                  type="search"
-                  style={{
-                    marginRight: '1em',
-                    border: '1px solid #ced4da',
-                    borderRadius: '1.5em',
-                    height: '2.2em',
-                  }}
-                />
-                <button type="button" className="btn btn-primary">
-                  Export
-                </button>
-              </div>
-            </div>
-            <hr style={{ margin: '0px' }} />
-            <Paper sx={{ width: '100%', mb: 2, height: '60vh' }}>
-              <TableContainer>
-                <Table
-                  sx={{ minWidth: 750 }}
-                  aria-labelledby="tableTitle"
-                  size={dense ? 'small' : 'medium'}
-                >
-                  <EnhancedTableHead
-                    numSelected={selected.length}
-                    order={order}
-                    orderBy={orderBy}
-                    onRequestSort={handleRequestSort}
-                    rowCount={constData.length}
-                  />
-                  <TableBody>
-                    {stableSort(constData, getComparator(order, orderBy))
-                      .slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage,
-                      )
-                      .map((row, index) => {
-                        const isItemSelected = isSelected(row.name);
-                        const labelId = `enhanced-table-checkbox-${index}`;
-
-                        return (
-                          <TableRow
-                            hover
-                            aria-checked={isItemSelected}
-                            tabIndex={-1}
-                            key={row.name}
-                            selected={isItemSelected}
-                          >
-                            <TableCell
-                              id={labelId}
-                              align="center"
-                              scope="row"
-                              padding="none"
-                            >
-                              {row.name}
-                            </TableCell>
-                            <TableCell align="center">{row.donated}</TableCell>
-                          </TableRow>
-                        );
-                      })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={constData.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                pageSize={10}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                showLastButton={true}
-                showFirstButton={true}
-              />
-            </Paper>
-          </div>
+        <div
+          style={{
+            display: 'flex',
+            // padding: '2em',
+            width: '50%',
+            padding: '0.5em 2.3em',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <input
+            placeholder="Search"
+            onChange={e => handleChange(e)}
+            type="search"
+            style={{
+              paddingLeft: '1em',
+              border: '1px solid #ced4da',
+              borderRadius: '1.5em',
+              height: '2.2em',
+            }}
+          />
         </div>
       </div>
-    </div>
+      <hr style={{ margin: '0' }} />
+      {constData && constData.length > 0 ? (
+        <div
+          style={{
+            margin: '30px 50px',
+            marginBottom: '5em',
+            borderRadius: '1.5em',
+            border: '1px solid #63b8ec',
+          }}
+        >
+          <div className="row" style={{ margin: '1em 0' }}>
+            <div
+              style={{
+                display: 'flex',
+                width: '50%',
+                padding: '0em 2em 1em',
+                justifyContent: 'flex-start',
+              }}
+            >
+              <p
+                style={{
+                  textAlign: 'left',
+                  fontSize: '25',
+                  marginBottom: '0',
+                  paddingTop: '0.5em',
+                  borderBottomStyle: 'solid',
+                  borderBottomWidth: 'medium',
+                  borderColor: '#63b8ec',
+                }}
+              >
+                Overview
+              </p>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                width: '50%',
+                padding: '0.5rem 1.5rem',
+              }}
+            >
+              <button
+                style={{
+                  marginLeft: '1em',
+                  borderRadius: '2em',
+                  fontSize: '20',
+                }}
+                className="btn btn-primary"
+                // onClick={e => handleClick(e)}
+              >
+                Export
+              </button>
+              {/* <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                style={{ top: '30px', left: '-8px' }}
+              >
+                <MenuItem>
+                  <button
+                    className="export-btn w-100"
+                    onClick={() => onCopyClick()}
+                  >
+                    Copy
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button className="export-btn w-100" onClick={downloadCsv}>
+                    CSV
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button className="export-btn w-100" onClick={downloadXls}>
+                    Excel
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button className="export-btn w-100" onClick={downloadPdf}>
+                    PDF
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button
+                    className="export-btn w-100"
+                    onClick={() => onPrintClick()}
+                  >
+                    Print
+                  </button>
+                </MenuItem>
+              </Menu> */}
+            </div>
+          </div>
+          {/* <hr style={{ margin: '0px' }} /> */}
+          <Paper
+            sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
+          >
+            <TableContainer>
+              <Table>
+                <EnhancedTableHead
+                  numSelected={selected.length}
+                  order={order}
+                  orderBy={orderBy}
+                  onRequestSort={handleRequestSort}
+                  rowCount={constData.length}
+                  headCells={headCells}
+                />
+                <TableBody>
+                  {stableSort(constData, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      const isItemSelected = isSelected(row.name);
+                      const labelId = `enhanced-table-checkbox-${index}`;
+
+                      return (
+                        <TableRow
+                          hover
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={row.name}
+                          selected={isItemSelected}
+                        >
+                          <TableCell id={labelId} align="left">
+                            {row.name}
+                          </TableCell>
+                          <TableCell align="left">{row.donated}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, 50, 100]}
+              component="div"
+              count={constData.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              pageSize={10}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              showLastButton={true}
+              showFirstButton={true}
+            />
+          </Paper>
+        </div>
+      ) : (
+        <Loader />
+      )}
+    </>
   );
 };
 
@@ -260,7 +349,7 @@ function EnhancedTableHead(props) {
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
-            align="center"
+            align="left"
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -269,7 +358,7 @@ function EnhancedTableHead(props) {
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
             >
-              {headCell.label}
+              <b>{headCell.label}</b>
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}

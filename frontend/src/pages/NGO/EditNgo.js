@@ -39,6 +39,7 @@ const EditNgo = props => {
   }, []);
 
   let ngoById = useSelector(state => state.ngo.ngoData);
+  console.log('acc', ngoById);
 
   let handleChangeForAddBankDetails = (i, e) => {
     let newFormValues = [...addBankDetailsValues];
@@ -79,24 +80,55 @@ const EditNgo = props => {
   };
 
   const validationSchema = yup.object({
-    ngoName: yup.string().required('Required'),
-    address: yup.string().required('Required'),
-    emailId: yup.string().email('Invalid Email Format').required('Required'),
-    registrationDate: yup.string().required('Required'),
-    registrationNumber: yup
+    ngoName: yup
       .string()
-      .required('Required')
+      .required('Required Field')
+      .max(50, 'Max limit is 50 characters'),
+    address: yup.string().required('Required Field'),
+    emailId: yup
+      .string()
+      .email('Invalid Email Format')
+      .required('Required Field')
+      .max(50, 'Max limit is 50 characters'),
+    registrationDate: yup.date().required('Required Field'),
+    registrationNumber: yup
+      .number()
+      .required('Required Field')
       .min(12, 'please enter 12 digits'),
-    mobile: yup.string().required('Required').min(10, 'Please enter 10 digits'),
+    mobile: yup
+      .string()
+      .required('Required Field')
+      .min(10, 'please enter 10 digits')
+      .max(11, 'Max 10'),
     landline: yup
       .string()
-      .required('Required')
-      .min(10, 'please enter 10 digits'),
-    password: yup.string().required('Required').min(7, 'Should be 7 character'),
+      .required('Required Field')
+      .min(10, 'please enter 10 digits')
+      .max(11, 'Max 10'),
+    password: yup
+      .string()
+      .required('Required Field')
+      .min(8, 'Should be 8 character'),
     panNumber: yup
       .string()
-      .required('Required')
+      .required('Required Field')
       .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
+    bankName: yup
+      .string()
+      .required('Required Field')
+      .max(50, 'Max limit is 50 characters'),
+    accountNumber: yup
+      .string()
+      .required('Required Field')
+      .min(12, 'please enter 12 digits'),
+    beneficiaryName: yup
+      .string()
+      .required('Required Field')
+      .max(50, 'Max limit is 50 characters'),
+    ifscCode: yup
+      .string()
+      .required('Required Field')
+      .matches(/^[A-Z]{4}[0-9]{6}$/, 'Invalid Format'),
   });
 
   const onlogoImageAdd = async imgData => {
@@ -165,17 +197,15 @@ const EditNgo = props => {
   console.log('deadImage', deedImgUrl);
 
   const onEditNgo = values => {
-    //console.log("chin", values)
-
     let newDate = moment(date).format('LL');
     const obj = {
       logo: logoImgUrl,
       name: values.name,
       address: values.address,
       email: values.email,
-      registrationDate: newDate,
+      registrationDate: values.registrationDate,
       registrationNumber: values.registrationNumber,
-      mobile: values.mobileNumber,
+      mobile: values.mobile,
       landline: values.landline,
       password: values.password,
       panNumber: values.panNumber,
@@ -185,6 +215,7 @@ const EditNgo = props => {
       deed: deedImgUrl,
       bankDetails: addBankDetailsValues,
     };
+
     dispatch(updateNgoAction(obj, props.location.state.id, props.history));
   };
 
@@ -213,7 +244,7 @@ const EditNgo = props => {
             marginLeft: '1em',
           }}
         >
-          Edit Ngo
+          Edit NGO
         </p>
       </div>
       <div
@@ -229,19 +260,14 @@ const EditNgo = props => {
             name: ngoById && ngoById.user && ngoById.user.name,
             address: ngoById.address,
             email: ngoById && ngoById.user && ngoById.user.email,
-            // registrationDate: ngoById && ngoById.registrationDate
-            // .split('')
-            // .slice(0, 19)
-            //                       .join()
-            //                       .replace(/T/g, ' ')
-            //                       .replace(/,/g, ''),
+            registrationDate: ngoById && ngoById.registrationDate,
             registrationNumber: ngoById.registrationNumber,
-            mobile: ngoById && ngoById.user && ngoById.user.mobile,
+            mobile: ngoById && ngoById.user && ngoById.mobile,
             landline: ngoById.landline,
             password: ngoById.password,
             panNumber: ngoById.panNumber,
           }}
-          // validationSchema={validationSchema}
+          validationSchema={validationSchema}
           onSubmit={values => onEditNgo(values)}
           enableReinitialize={true}
         >
@@ -250,32 +276,13 @@ const EditNgo = props => {
               <div className="w-100 mx-auto" style={{ padding: '4rem 10rem' }}>
                 <div className="row" style={{ justifyContent: 'center' }}>
                   <div className="col-3">
-                    <label style={{ fontWeight: 'bold' }}>Logo </label>
-                    <div className="image-upload">
-                      <label for="file-input">
-                        <img
-                          className="AttachImage"
-                          style={{
-                            width: '100%',
-                            height: 'auto',
-                            outlineStyle: 'groove',
-                            outlineColor: 'aliceblue',
-                            marginLeft: '0',
-                          }}
-                          src={
-                            ngoById.logo
-                              ? Local + '/' + ngoById.logo
-                              : uploadImage
-                          }
-                        />
-                      </label>
-                      <input
-                        onChange={e => onlogoImageAdd(e.target.files[0])}
-                        type="file"
-                        accept=".jpg, .jpeg, .png"
-                        id="file-input"
-                        style={{ display: 'none' }}
+                    <div style={{ padding: '15px 15px -2px' }}>
+                      <label style={{ fontWeight: 'bold' }}>Logo </label>
+                      <DropzoneComponent
+                        onChangeImage={onlogoImageAdd}
+                        value={values.logo}
                       />
+                      <ErrorMessage name="logo_img" component={TextError} />
                     </div>
                   </div>
                 </div>
@@ -308,7 +315,7 @@ const EditNgo = props => {
                       <label style={{ fontWeight: 'bold' }}>Address</label>
                       <Field
                         className="form-control"
-                        placeholder="Please Enter ddress"
+                        placeholder="Please Enter Address"
                         name="address"
                         type="text"
                         required
@@ -331,15 +338,15 @@ const EditNgo = props => {
                       <Field
                         className="form-control"
                         placeholder="Please Enter Email"
-                        name="email"
-                        type="emailId"
+                        name="emai"
+                        type="email"
                         required
                         autocomplete="off"
                         value={values.email}
                       />
-                      {errors.emailId && touched.emailId && (
+                      {errors.email && touched.email && (
                         <div className="text-left">
-                          <span style={{ color: 'red' }}>{errors.emailId}</span>
+                          <span style={{ color: 'red' }}>{errors.email}</span>
                         </div>
                       )}
                     </div>
@@ -350,13 +357,11 @@ const EditNgo = props => {
                       <label style={{ fontWeight: 'bold' }}>
                         Registration Date
                       </label>
-                      <DatePicker
+                      <Field
+                        className="form-control"
+                        type="date"
                         name="registrationDate"
-                        // value={values.registrationDate}
-                        required
-                        selected={date}
-                        onChange={date => setDate(date)}
-                        dateFormat="MMMM d, yyyy"
+                        value={values.registrationDate}
                       />
                       {errors.registrationDate && touched.registrationDate && (
                         <div className="text-left">
@@ -396,9 +401,7 @@ const EditNgo = props => {
                   </div>
                   <div className="col-6 ">
                     <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold' }}>
-                        Mobile Number
-                      </label>
+                      <label style={{ fontWeight: 'bold' }}>Mobile</label>
                       <Field
                         className="form-control"
                         placeholder="Please Enter Mobile Number"
@@ -409,11 +412,9 @@ const EditNgo = props => {
                         required
                         value={values.mobile}
                       />
-                      {errors.mobileNumber && touched.mobileNumber && (
+                      {errors.mobile && touched.mobile && (
                         <div className="text-left">
-                          <span style={{ color: 'red' }}>
-                            {errors.mobileNumber}
-                          </span>
+                          <span style={{ color: 'red' }}>{errors.mobile}</span>
                         </div>
                       )}
                     </div>
@@ -427,7 +428,7 @@ const EditNgo = props => {
                       </label>
                       <Field
                         className="form-control"
-                        placeholder="Please Enter landline Number"
+                        placeholder="Please Enter Landline Number"
                         name="landline"
                         type="text"
                         autocomplete="off"
@@ -449,7 +450,7 @@ const EditNgo = props => {
                       <label style={{ fontWeight: 'bold' }}>Password</label>
                       <Field
                         className="form-control"
-                        placeholder="Please Enter password"
+                        placeholder="Please Enter Password"
                         name="password"
                         type={show ? 'password' : 'text'}
                         autocomplete="off"
@@ -504,136 +505,91 @@ const EditNgo = props => {
                   </div>
                 </div>
 
-                <div className="row">
-                  <div className="col-3 ">
-                    <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold', height: '3em' }}>
-                        Pancard
-                      </label>
-                      <div className="image-upload">
-                        <label for="file-input">
-                          <img
-                            className="AttachImage"
-                            style={{ width: '100%', height: '250px' }}
-                            src={
-                              ngoById.panCard
-                                ? Local + '/' + ngoById.panCard
-                                : uploadImage
-                            }
-                          />
-                        </label>
-                        <input
-                          onChange={e => onPanCardImageAdd(e.target.files[0])}
-                          type="file"
-                          accept=".jpg, .jpeg, .png"
-                          id="file-input"
-                          style={{ display: 'none' }}
-                        />
-                      </div>
-                      <ErrorMessage name="pancard_img" component={TextError} />
-                    </div>
+                <div className="row" style={{ margin: '1.5rem 0 0.5em' }}>
+                  <div
+                    className="col-sm-3 col-xs-3"
+                    style={{ paddingLeft: '0' }}
+                  >
+                    <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
+                      Pancard
+                    </label>
                   </div>
 
-                  <div className="col-3 ">
-                    <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold', height: '3em' }}>
-                        Certificate
-                      </label>
-                      <div className="image-upload">
-                        <label for="file-input">
-                          <img
-                            className="AttachImage"
-                            style={{ width: '100%', height: '250px' }}
-                            src={
-                              ngoById.certificate
-                                ? Local + '/' + ngoById.certificate
-                                : uploadImage
-                            }
-                          />
-                        </label>
-                        <input
-                          onChange={e =>
-                            onCertificateImageAdd(e.target.files[0])
-                          }
-                          type="file"
-                          accept=".jpg, .jpeg, .png"
-                          id="file-input"
-                          style={{ display: 'none' }}
-                        />
-                      </div>
-                      <ErrorMessage
-                        name="certificate_img"
-                        component={TextError}
-                      />
-                    </div>
+                  <div
+                    className="col-sm-3 col-xs-3 "
+                    style={{ paddingLeft: '0' }}
+                  >
+                    <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
+                      Certificate
+                    </label>
                   </div>
 
-                  <div className="col-3 ">
-                    <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold', height: '3em' }}>
-                        Charity Registration Certificate
-                      </label>
-                      <div className="image-upload">
-                        <label for="file-input">
-                          <img
-                            className="AttachImage"
-                            style={{ width: '100%', height: '250px' }}
-                            src={
-                              ngoById.charityRegistrationCertificate
-                                ? Local +
-                                  '/' +
-                                  ngoById.charityRegistrationCertificate
-                                : uploadImage
-                            }
-                          />
-                        </label>
-                        <input
-                          onChange={e =>
-                            onCharityCertificateImageAdd(e.target.files[0])
-                          }
-                          type="file"
-                          accept=".jpg, .jpeg, .png"
-                          id="file-input"
-                          style={{ display: 'none' }}
-                        />
-                      </div>
-                      <ErrorMessage
-                        name="charityCertificate_img"
-                        component={TextError}
-                      />
-                    </div>
+                  <div
+                    className="col-sm-3 col-xs-3 "
+                    style={{ paddingLeft: '0' }}
+                  >
+                    <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
+                      Charity Registration Certificate
+                    </label>
                   </div>
 
-                  <div className="col-3 ">
-                    <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold', height: '3em' }}>
-                        Deed
-                      </label>
-                      <div className="image-upload">
-                        <label for="file-input">
-                          <img
-                            className="AttachImage"
-                            style={{ width: '100%', height: '250px' }}
-                            src={
-                              ngoById.deed
-                                ? Local + '/' + ngoById.deed
-                                : uploadImage
-                            }
-                          />
-                        </label>
-                        <input
-                          onChange={e => onDeedImageAdd(e.target.files[0])}
-                          type="file"
-                          accept=".jpg, .jpeg, .png"
-                          id="file-input"
-                          style={{ display: 'none' }}
-                        />
-                      </div>
-                      <ErrorMessage name="deed_img" component={TextError} />
-                    </div>
+                  <div className="col-sm-3 col-xs-3 " style={{ padding: '0' }}>
+                    <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
+                      Deed
+                    </label>
                   </div>
                 </div>
+                <div
+                  className="row"
+                  style={{ margin: '0rem 0 1.5rem', flex: 'auto' }}
+                >
+                  <div
+                    className="col-sm-3 col-xs-3 "
+                    style={{ paddingLeft: '0' }}
+                  >
+                    <DropzoneComponent
+                      onChangeImage={onPanCardImageAdd}
+                      value={values.panCard}
+                    />
+                    <ErrorMessage name="pancard_img" component={TextError} />
+                  </div>
 
+                  <div
+                    className="col-sm-3 col-xs-3 "
+                    style={{ paddingLeft: '0' }}
+                  >
+                    <DropzoneComponent
+                      onChangeImage={onCertificateImageAdd}
+                      value={values.certificate}
+                    />
+                    <ErrorMessage
+                      name="certificate_img"
+                      component={TextError}
+                    />
+                  </div>
+
+                  <div
+                    className="col-sm-3 col-xs-3 "
+                    style={{ paddingLeft: '0' }}
+                  >
+                    <DropzoneComponent
+                      onChangeImage={onCharityCertificateImageAdd}
+                      value={values.CharityCertificate}
+                    />
+                    <ErrorMessage
+                      name="charityCertificate_img"
+                      component={TextError}
+                    />
+                  </div>
+
+                  <div className="col-sm-3 col-xs-3 " style={{ padding: '0' }}>
+                    <DropzoneComponent
+                      onChangeImage={onDeedImageAdd}
+                      value={values.deed}
+                    />
+                    <ErrorMessage name="deed_img" component={TextError} />
+                  </div>
+                </div>
                 {/*   <br />
               {addContactValues.map((element, index) => (
                 <div className="row" style={{ marginLeft: '4px' }}>

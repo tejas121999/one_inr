@@ -24,17 +24,20 @@ exports.addNgo = async (req, res) => {
     registrationDate = moment(registrationDate).format("YYYY-MM-DD")
 
     // validation for bank details account number
-    for (let i = 0; i < req.body.bankDetails.length; i++) {
-        const element = req.body.bankDetails[i];
-        const existingBankAccount = await models.bankDetails.findOne({
-            where: {
-                accountNumber: element.accountNumber,
+    if(req.body.bankDetails){
+        for (let i = 0; i < req.body.bankDetails.length; i++) {
+            const element = req.body.bankDetails[i];
+            const existingBankAccount = await models.bankDetails.findOne({
+                where: {
+                    accountNumber: element.accountNumber,
+                }
+            })
+            if (existingBankAccount) {
+                return res.status(403).json({ message: 'Account Number already exists!' })
             }
-        })
-        if (existingBankAccount) {
-            return res.status(403).json({ message: 'Account Number already exists!' })
         }
     }
+   
 
     const hash = await twinBcrypt.hashSync(password, saltRounds);
     var cBankData;
@@ -72,7 +75,7 @@ exports.updateNgo = async (req, res) => {
     let { address, registrationDate, registrationNumber, landline, panCard, panNumber, certificate, charityRegistrationCertificate, logo, deed, isKyc } = req.body;
     //FINDING USER ID THROUGH NGO
     let getUser = await models.ngo.findOne({
-        where: { id },
+        where: { userId:id },
         include: { model: models.users, attributes: ['id', 'name'] }
     })
     let userId = getUser.user.id  //User ID

@@ -32,7 +32,7 @@ exports.addProjects = async (req, res) => {
     if (req.body.commission == null || req.body.commission == undefined) {
         commissionModel = (Number(commission) * goal) / 100;   //One Inr Owner Commission
     } else {
-        commissionModel = (Number(commission) * goal) / 100;   //One Inr Owner Commission
+        commissionModel = (Number(req.body.commission) * goal) / 100;   //One Inr Owner Commission
     }
     let gstCal = (commissionModel * gst) / 100;   //GST Calculaion After taking commision on goal.
     let paymentGatewayCal = (Number(goal) + commissionModel + gstCal) * pg / 100;   //Payment Gateway Calculation after calculating GST.
@@ -56,7 +56,7 @@ exports.addProjects = async (req, res) => {
         )
         projectImage = await models.project_image.create({ projectId: projects.dataValues.id, isActive, banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 }, { transaction: t })
         if (isRecurring == true) {
-            projectInterval = await models.projectInterval.create({ projectId: projects.dataValues.id, startDate, endDate: projectIntervalEndDate,goal,commission, target},{ transaction: t })
+            projectInterval = await models.projectInterval.create({ projectId: projects.dataValues.id, startDate, endDate: projectIntervalEndDate, goal, commission, target }, { transaction: t })
         }
         if (!(projects && projectImage)) {
             return true
@@ -71,6 +71,82 @@ exports.addProjects = async (req, res) => {
     return res.status(201).json({ message: "Success", projects })
 
 }
+
+exports.updateProject = async (req, res) => {
+    let { userId, title, description,longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring } = req.body;
+    let { banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 } = req.body;
+    const id = req.params.id;
+
+
+    //calculations
+    recurringDays = recurringDays || 0;
+    const configData = await models.configs.findAll();
+    let gst;
+    let pg;
+
+    await configData.map(ele => {
+        // if (ele.dataValues.name === 'commission') {
+        //     commission = ele.dataValues.value;}
+        if (ele.dataValues.name === 'gst') {
+            gst = ele.dataValues.value;
+        } if (ele.dataValues.name === 'payment_gateway_percentage') {
+            pg = ele.dataValues.value;
+        }
+    });
+
+    let commissionModel;
+    let isActive;
+    let pDetails;
+
+    commissionModel = (Number(commission) * goal) / 100;   //One Inr Owner Commission
+    let gstCal = (commissionModel * gst) / 100;   //GST Calculaion After taking commision on goal.
+    let paymentGatewayCal = (Number(goal) + commissionModel + gstCal) * pg / 100;   //Payment Gateway Calculation after calculating GST.
+    target = Number(goal) + Number(commissionModel) + Number(gstCal) + Number(paymentGatewayCal); //Calculating Target
+    target = Math.round(target) //Rounding off target value.
+    let slogan = title.split(" ").join('-').toLowerCase()  
+    const project = await models.projects.findByPk(id)
+
+    if (!project) {
+        return res.status(400).json({ message: "No data Found" })
+    }
+    let data = await sequelize.transaction(async (t) => {
+
+       
+        pDetails = await models.projects.update({ userId, title, slogan, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring, isActive}, { where: { id } },
+            { transaction: t }
+        )
+        projectImage = await models.project_image.update({projectId: id, isActive, banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6}, { where: { id } }, { transaction: t })
+        // if (isRecurring == true) {
+        // projectInterval = await models.projectInterval.update({ endDate: projectIntervalEndDate, goal, commission, target }, { where: { id }},{ transaction: t })
+        // }
+        if (!(pDetails && projectImage)) {
+            return true
+        } else {
+            return false
+        }
+    })
+
+    if (data) {
+        return res.status(400).json({ message: "Failed to Update Project" })
+    }
+
+    return res.status(201).json({ message: "Project Updated successfully" })
+
+
+
+
+    // await sequelize.transaction(async (t) => {
+    // data= await models.projects.update({title, description,longDesc,endDate,commission, recurringDays, goal,target},{where:{id:id}},{transaction:t})
+    // })
+
+    // if (data == [0]) {
+    //     return res.status(401).json({ message: " Failed to Update Project" })
+    // } else {
+    //     return res.status(201).json({ message: "Project Updated successfully." })
+    // }
+
+}
+
 
 exports.getAllProjects = async (req, res) => {
     const { search, offset, pageSize } = paginationWithFromTo(
@@ -128,12 +204,16 @@ exports.getAllProjects = async (req, res) => {
 exports.getProjectById = async (req, res) => {
     const id = req.params.id;
 
-    const project = await models.projects.findOne({ where: { id: id }, attributes: ['title', 'description', 'recurringDays', 'goal'] })
+    const project = await models.projects.findOne({ where: { id: id },
+       // include: { model: models.projectInterval }
+       include: { model: models.project_image}
+
+    })
 
     if (!project) {
         return res.status(400).json({ message: "No data Found" })
     } else {
-        return res.status(200).json({ message: "All Projects", result: project })
+        return res.status(200).json({ message: "Project fetched", result: project })
     }
 
 }
@@ -182,37 +262,38 @@ exports.getCompletedProject = async (req, res) => {
     }
 }
 
-exports.createRecuringProject = async (req,res) => {
-    let data = await models.projects.findAll( { where: {isRecurring: true, isActive: true},attributes : ['id','recurringDays'] ,
-    include :{model : models.projectInterval,where :{isActive : true,  endDate: { [Op.lt]: moment().format(('YYYY-MM-DD')) },},attributes:['endDate','id']}
- }) 
+exports.createRecuringProject = async (req, res) => {
+    let data = await models.projects.findAll({
+        where: { isRecurring: true, isActive: true }, attributes: ['id', 'recurringDays'],
+        include: { model: models.projectInterval, where: { isActive: true, endDate: { [Op.lt]: moment().format(('YYYY-MM-DD')) }, }, attributes: ['endDate', 'id'] }
+    })
     data.forEach(item => {
-        createProjectInterval(item.id,item.recurringDays,item.projectIntervals[0].dataValues.endDate,item.projectIntervals[0].dataValues.id)
+        createProjectInterval(item.id, item.recurringDays, item.projectIntervals[0].dataValues.endDate, item.projectIntervals[0].dataValues.id)
     });
-    return 
+    return
 }
-async function createProjectInterval(id,RecurringDays,projectEndDate,pId,todaysDate) {
-        todaysDate = moment().format('YYYY-MM-DD')
-        let data;
-        if (todaysDate > projectEndDate ) {
-            let dates = await generateNewDate(projectEndDate,RecurringDays,id)
-            await sequelize.transaction(async (t) => {
-                await models.projectInterval.create({projectId : id,startDate : dates.startDate, endDate : dates.newProjectIntervalDate, isActive : true},t)
-                data = await models.projectInterval.update({isActive : false},{where : {id : pId}},t)
-                if(!data[0]){
-                    return false;
-                }  
-            })
-           
-        }
-        if(data === false){
-            return false
-        }
+async function createProjectInterval(id, RecurringDays, projectEndDate, pId, todaysDate) {
+    todaysDate = moment().format('YYYY-MM-DD')
+    let data;
+    if (todaysDate > projectEndDate) {
+        let dates = await generateNewDate(projectEndDate, RecurringDays, id)
+        await sequelize.transaction(async (t) => {
+            await models.projectInterval.create({ projectId: id, startDate: dates.startDate, endDate: dates.newProjectIntervalDate, isActive: true }, t)
+            data = await models.projectInterval.update({ isActive: false }, { where: { id: pId } }, t)
+            if (!data[0]) {
+                return false;
+            }
+        })
+
+    }
+    if (data === false) {
+        return false
+    }
 }
 
-async function generateNewDate(projectEndDate,recurringDays) {
+async function generateNewDate(projectEndDate, recurringDays) {
     let newProjectIntervalDate = moment(projectEndDate).add(recurringDays, 'days').format('YYYY-MM-DD')
-    startDate = moment(projectEndDate).add(1,'days').format('YYYY-MM-DD')
-    return {newProjectIntervalDate,startDate}
+    startDate = moment(projectEndDate).add(1, 'days').format('YYYY-MM-DD')
+    return { newProjectIntervalDate, startDate }
 }
 

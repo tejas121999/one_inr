@@ -75,24 +75,42 @@ const AddNgo = props => {
       .email('Invalid Email Format')
       .required('Required Field')
       .max(50, 'Max limit is 50 characters'),
-    // registrationDate: yup.string().required('Required'),
+    // registrationDate: yup.string().required('Required Field'),
     registrationNumber: yup
       .string()
       .required('Required Field')
       .min(12, 'please enter 12 digits'),
-    mobileNumber: yup
+    mobile: yup
       .string()
       .required('Required Field')
-      .min(10, 'Please enter 10 digits'),
-    landline: yup
+      .min(10, 'please enter 10 digits')
+      .max(11, 'Max 10'),
+
+    landline: yup.string().min(10, 'please enter 10 digits').max(11, 'Max 10'),
+    password: yup
       .string()
       .required('Required Field')
-      .min(10, 'please enter 10 digits'),
-    password: yup.string().required('Required').min(7, 'Should be 7 character'),
+      .min(8, 'Should be 8 character'),
     panNumber: yup
       .string()
       .required('Required Field')
       .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
+    bankName: yup
+      .string()
+      .required('Required Field')
+      .max(50, 'Max limit is 50 characters'),
+    accountNumber: yup
+      .string()
+      .required('Required Field')
+      .min(12, 'please enter 12 digits'),
+    beneficiaryName: yup
+      .string()
+      .required('Required Field')
+      .max(50, 'Max limit is 50 characters'),
+    ifscCode: yup
+      .string()
+      .required('Required Field')
+      .matches(/^[A-Z]{4}[0-9]{6}$/, 'Invalid Format'),
   });
 
   //Submit
@@ -165,9 +183,9 @@ const AddNgo = props => {
       name: values.ngoName,
       address: values.address,
       email: values.emailId,
-      registrationDate: newDate,
+      registrationDate: values.registrationDate,
       registrationNumber: values.registrationNumber,
-      mobile: values.mobileNumber,
+      mobile: values.mobile,
       landline: values.landline,
       password: values.password,
       panNumber: values.panNumber,
@@ -176,6 +194,10 @@ const AddNgo = props => {
       charityRegistrationCertificate: charityCertificateImgUrl,
       deed: deedImgUrl,
       bankDetails: addBankDetailsValues,
+      // bankName: values.bankName,
+      // accountNumber: values.accountNumber,
+      // beneficiaryName: values.beneficiaryName,
+      // ifscCode: values.ifscCode,
     };
     dispatch(createNGOAction(obj, props.history));
   };
@@ -205,7 +227,7 @@ const AddNgo = props => {
             marginLeft: '1em',
           }}
         >
-          Add Ngo
+          Add NGO
         </p>
       </div>
       <div
@@ -223,10 +245,14 @@ const AddNgo = props => {
             emailId: '',
             registrationDate: '',
             registrationNumber: '',
-            mobileNumber: '',
+            mobile: '',
             landline: '',
             password: '',
             panNumber: '',
+            bankName: '',
+            accountNumber: '',
+            beneficiaryName: '',
+            ifscCode: '',
           }}
           validationSchema={validationSchema}
           onSubmit={values => onAddNgo(values)}
@@ -238,7 +264,7 @@ const AddNgo = props => {
                 <div className="row" style={{ justifyContent: 'center' }}>
                   <div className="col-3">
                     <div style={{ padding: '15px 15px -2px' }}>
-                      <label style={{ fontWeight: 'bold' }}>Logo Name</label>
+                      <label style={{ fontWeight: 'bold' }}>Logo </label>
                       <DropzoneComponent onChangeImage={onlogoImageAdd} />
                       <ErrorMessage name="logo_img" component={TextError} />
                     </div>
@@ -277,7 +303,7 @@ const AddNgo = props => {
                       </label>
                       <Field
                         className="form-control"
-                        placeholder="Please Enter ddress"
+                        placeholder="Please Enter Address"
                         name="address"
                         type="text"
                         required
@@ -322,13 +348,12 @@ const AddNgo = props => {
                         Registration Date
                         <label style={{ color: 'red' }}>*</label>
                       </label>
-                      <DatePicker
+                      <Field
+                        className="form-control"
+                        type="date"
+                        id="date"
                         name="registrationDate"
-                        //  value={}
-                        required
-                        selected={date}
-                        onChange={date => setDate(date)}
-                        dateFormat="MMMM d, yyyy"
+                        value={values.registrationDate}
                       />
                       {errors.registrationDate && touched.registrationDate && (
                         <div className="text-left">
@@ -370,23 +395,21 @@ const AddNgo = props => {
                   <div className="col-6 ">
                     <div style={{ padding: '15px 0 10px' }}>
                       <label style={{ fontWeight: 'bold' }}>
-                        Mobile Number<label style={{ color: 'red' }}>*</label>
+                        Mobile <label style={{ color: 'red' }}>*</label>
                       </label>
                       <Field
                         className="form-control"
                         placeholder="Please Enter Mobile Number"
-                        name="mobileNumber"
-                        type="number"
+                        name="mobile"
+                        type="text"
                         autocomplete="off"
                         maxLength={10}
                         required
-                        value={values.mobileNumber}
+                        value={values.mobile}
                       />
-                      {errors.mobileNumber && touched.mobileNumber && (
+                      {errors.mobile && touched.mobile && (
                         <div className="text-left">
-                          <span style={{ color: 'red' }}>
-                            {errors.mobileNumber}
-                          </span>
+                          <span style={{ color: 'red' }}>{errors.mobile}</span>
                         </div>
                       )}
                     </div>
@@ -395,14 +418,12 @@ const AddNgo = props => {
                 <div className="row">
                   <div className="col-6 ">
                     <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold' }}>
-                        Landline Number<label style={{ color: 'red' }}>*</label>
-                      </label>
+                      <label style={{ fontWeight: 'bold' }}>Landline</label>
                       <Field
                         className="form-control"
-                        placeholder="Please Enter landline Number"
+                        placeholder="Please Enter Landline Number"
                         name="landline"
-                        type="number"
+                        type="text"
                         autocomplete="off"
                         maxLength={10}
                         required
@@ -424,7 +445,7 @@ const AddNgo = props => {
                       </label>
                       <Field
                         className="form-control"
-                        placeholder="Please Enter password"
+                        placeholder="Please Enter Password"
                         name="password"
                         type={show ? 'password' : 'text'}
                         required
@@ -558,128 +579,6 @@ const AddNgo = props => {
                     <ErrorMessage name="deed_img" component={TextError} />
                   </div>
                 </div>
-                {/* 
-                <br />
-                {addContactValues.map((element, index) => (
-                  <div className="row" style={{ marginLeft: '4px' }}>
-                    <div className="col-2.5 ">
-                      <div style={{ padding: '15px 0 10px' }}>
-                        <label style={{ fontWeight: 'bold' }}>
-                          Name<label style={{ color: 'red' }}>*</label>
-                        </label>
-                        <input
-                          className="form-control"
-                          placeholder="Please enter your Name"
-                          name="name"
-                          autocomplete="off"
-                          required
-                          value={addContactValues[index].name}
-                          onChange={e => handleChangeForAddContact(index, e)}
-                        />
-                        {errors.name && touched.name && (
-                          <div className="text-left">
-                            <span style={{ color: 'blue' }}>{errors.Name}</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="col-2.5 ">
-                      <div style={{ padding: '15px 0 10px' }}>
-                        <label style={{ fontWeight: 'bold' }}>
-                          Designation<label style={{ color: 'red' }}>*</label>
-                        </label>
-                        <Field
-                          className="form-control"
-                          placeholder="Please enter designation"
-                          name="designation"
-                          autocomplete="off"
-                          required
-                          value={addContactValues[index].designation}
-                          onChange={e => handleChangeForAddContact(index, e)}
-                        />
-                        {errors.designation && touched.designation && (
-                          <div className="text-left">
-                            <span style={{ color: 'blue' }}>
-                              {errors.Designation}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="col-2.5 ">
-                      <div style={{ padding: '15px 0 10px' }}>
-                        <label style={{ fontWeight: 'bold' }}>
-                          Email<label style={{ color: 'red' }}>*</label>
-                        </label>
-                        <Field
-                          className="form-control"
-                          placeholder="Please enter email"
-                          name="email"
-                          autocomplete="off"
-                          required
-                          value={addContactValues[index].email}
-                          onChange={e => handleChangeForAddContact(index, e)}
-                        />
-                        {errors.email && touched.email && (
-                          <div className="text-left">
-                            <span style={{ color: 'blue' }}>
-                              {errors.Email}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="col-2.5 ">
-                      <div style={{ padding: '15px 0 10px' }}>
-                        <label style={{ fontWeight: 'bold' }}>
-                          Mobile<label style={{ color: 'red' }}>*</label>
-                        </label>
-                        <Field
-                          className="form-control"
-                          placeholder="Please enter mobile"
-                          name="mobile"
-                          autocomplete="off"
-                          required
-                          value={addContactValues[index].mobile}
-                          onChange={e => handleChangeForAddContact(index, e)}
-                        />
-                        {errors.mobile && touched.mobile && (
-                          <div className="text-left">
-                            <span style={{ color: 'blue' }}>
-                              {errors.Mobile}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <button
-                      type="delete"
-                      className="btn btn-danger"
-                      style={{
-                        maxWidth: '1.5cm',
-                        maxHeight: '1cm',
-                        marginTop: '1.2cm',
-                      }}
-                      onClick={() => removeContactFormFields()}
-                    >
-                      <FaTimes />
-                    </button>
-                  </div>
-                ))} */}
-
-                {/*   <div style={{ textAlign: 'center' }}>
-                <button
-                  type="add contact"
-                  className="btn btn-success"
-                  onClick={() => addContactFormFields()}
-                >
-                  Add Contact
-                </button>
-                  </div>            */}
 
                 <br />
                 {addBankDetailsValues.map((element, index) => (
@@ -688,7 +587,7 @@ const AddNgo = props => {
                       <div className="col-6 ">
                         <div style={{ padding: '15px 0 10px' }}>
                           <label style={{ fontWeight: 'bold' }}>
-                            Bank Name
+                            Bank Name<label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
                             className="form-control"
@@ -715,6 +614,7 @@ const AddNgo = props => {
                         <div style={{ padding: '15px 0 10px' }}>
                           <label style={{ fontWeight: 'bold' }}>
                             Account Number
+                            <label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
                             className="form-control"
@@ -741,6 +641,7 @@ const AddNgo = props => {
                         <div style={{ padding: '15px 0 10px' }}>
                           <label style={{ fontWeight: 'bold' }}>
                             Beneficiary Name
+                            <label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
                             className="form-control"
@@ -766,7 +667,7 @@ const AddNgo = props => {
                       <div className="col-6">
                         <div style={{ padding: '15px 0 10px' }}>
                           <label style={{ fontWeight: 'bold' }}>
-                            IFSC Code
+                            IFSC Code<label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
                             className="form-control"
