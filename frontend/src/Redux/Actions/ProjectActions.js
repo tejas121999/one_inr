@@ -15,7 +15,7 @@ export const getAllProjectAction = (value) => {
       projectServices
         .getAllProject(value)
         .then(res => {
-          alert(res.data.message)
+          // alert(res.data.message)
           dispatch(getAllProjects(res.data.result));
         })
         .catch(e => {
@@ -63,7 +63,7 @@ export const getProjectByIdAction = id => {
       projectServices
         .getProjectByID(id)
         .then(res => {
-          alert(res.data.message)
+          // alert(res.data.message)
           dispatch(getProjectData(res.data.result));
         })
         .catch(e => {
