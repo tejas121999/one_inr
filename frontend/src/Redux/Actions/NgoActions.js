@@ -16,8 +16,9 @@ export const createNGOAction = (body, history) => {
           //need to add toaster here
           history.push('/view_all_ngo');
         })
-        .catch(err => {
-          //need to add toaster here
+        .catch(e => {
+          alert(e.response.data.message)
+          console.log(e.response.data.message)
         });
     };
   } else {
@@ -32,7 +33,9 @@ export const getAllNGOAction = () => {
         .then(res => {
           dispatch(GetAllNGO(res.data.data));
         })
-        .catch(err => {});
+        .catch(e => {
+          alert(e.response.data.message)
+        });
     };
   } else {
     alert('No network');
@@ -47,7 +50,9 @@ export const getNgoProjectAction = id => {
           console.log('shivani', res.data);
           dispatch(getNgoProject(res.data));
         })
-        .catch(err => {});
+        .catch(e => {
+          alert(e.response.data.message)
+        });
     };
   } else {
     alert('No network');
@@ -67,9 +72,10 @@ export const getNgoByIdAction = id => {
       NgoServices.getNgoById(id)
         .then(res => {
           dispatch(getNgoById(res.data.data));
-          console.log('abc', res);
         })
-        .catch(err => {});
+        .catch(e => {
+          alert(e.response.request.statusText)
+        });
     };
   } else {
     alert('No network');
@@ -91,8 +97,8 @@ export const getAllNGOByValueAction = value => {
           //need to add toster here
           dispatch(GetAllNGO(res.data.data));
         })
-        .catch(err => {
-          //need to add toster here
+        .catch(e => {
+          alert(e.response.data.message)
         });
     };
   } else {
@@ -121,11 +127,8 @@ export const updateNgoAction = (body, id, history) => {
             history.push('/view_all_ngo');
           }, 2000);
         })
-        .catch(err => {
-          toast.error('something went wrong', {
-            position: 'top-center',
-            autoClose: 2000,
-          });
+        .catch(e => {
+          alert(e.response.data.message)
         });
     };
   } else {
@@ -144,6 +147,8 @@ export const DeleteNgoByIdAction = id => {
         });
         dispatch(getAllNGOAction());
       })
-      .catch(err => {});
+      .catch(e => {
+        alert(e.response.data.message)
+      });
   };
 };
