@@ -26,6 +26,7 @@ import { getAllProjectAction } from '../../Redux/Actions/ProjectActions';
 import { getNgoByIdAction } from '../../Redux/Actions/NgoActions';
 import { Local } from '../../API/APIEndpoints';
 import moment from 'moment';
+import { Checkbox } from 'material-ui';
 
 const ViewSingleNgo = props => {
   const [key, setKey] = React.useState('details');
@@ -287,12 +288,10 @@ const ViewSingleNgo = props => {
 
   return (
     <>
-      <div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <div className="card" style={{ border: '0' }}>
+      <br />
+      <br />
+      <br />
+      {/* <div className="card" style={{ border: '0' }}>
           <div
             style={{
               display: 'flex',
@@ -309,10 +308,35 @@ const ViewSingleNgo = props => {
               {ngoById && ngoById.user && ngoById.user.name}
             </p>
           </div>
-        </div>
+        </div> */}
+      <div
+        className="row"
+        style={{
+          backgroundColor: 'white',
+          margin: '0 1.2em',
+          borderRadius: '1em',
+        }}
+      >
+        <p
+          style={{
+            textAlign: 'left',
+            fontSize: '1.25rem',
+            fontWeight: '600',
+            margin: '20px',
+            width: '100%',
+            marginLeft: '20px',
+          }}
+        >
+          Ngo Details
+        </p>
       </div>
-
-      <div className="viewNgo">
+      <hr style={{ margin: '0' }} />
+      <div
+        style={{
+          margin: '2em',
+          marginBottom: '5em',
+        }}
+      >
         <div>
           <Tabs
             id="controlled-tab-example"
@@ -321,286 +345,299 @@ const ViewSingleNgo = props => {
             className="mb-3"
           >
             <Tab eventKey="details" title="Details">
-              <div className="row">
-                <div className="col-3 ">
-                  <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                    <label style={{ fontWeight: 'bold' }}>Logo </label>
-                    <div className="image-upload">
-                      <img
-                        style={{ width: '250px', height: '200px' }}
-                        src={`${Local}/${ngoById.logo}`}
-                      />
-                    </div>
+              <div className="row" style={{ justifyContent: 'center' }}>
+                {/* <div className="col-3 "> */}
+                <div
+                  style={{
+                    padding: '0.5em 1em 1.5em',
+                    textAlign: 'center',
+                  }}
+                >
+                  <div className="image-upload">
+                    <img
+                      style={{ width: '200px', borderRadius: '10em' }}
+                      src={`${Local}/${ngoById.logo}`}
+                    />
                   </div>
+                  <label
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: '1.3em',
+                      margin: '0.8em 0 0',
+                    }}
+                  >
+                    {ngoById && ngoById.user && ngoById.user.name}
+                  </label>
                 </div>
+                {/* </div> */}
               </div>
-
               <div className="row">
                 <div className="col-3 ">
-                  <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                    <label style={{ fontWeight: 'bold', height: '3em' }}>
-                      Pancard
-                    </label>
+                  <div style={{ padding: '15px 0 10px', textAlign: 'center' }}>
                     <div className="image-upload">
                       <img
-                        style={{ width: '250px', height: '200px' }}
+                        style={{
+                          height: '235px',
+                          width: '100%',
+                          borderRadius: '1.5em',
+                        }}
                         src={`${Local}/${ngoById.panCard}`}
                       />
                     </div>
+                    <label
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: '1em',
+                        margin: '0.8em 0 0',
+                      }}
+                    >
+                      Pancard
+                    </label>
                   </div>
                 </div>
 
                 <div className="col-3 ">
-                  <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                    <label style={{ fontWeight: 'bold', height: '3em' }}>
-                      Certificate
-                    </label>
+                  <div style={{ padding: '15px 0 10px', textAlign: 'center' }}>
                     <div className="image-upload">
                       <img
-                        style={{ width: '250px', height: '200px' }}
+                        style={{
+                          height: '235px',
+                          width: '100%',
+                          borderRadius: '1.5em',
+                        }}
                         src={`${Local}/${ngoById.certificate}`}
                       />
                     </div>
+                    <label
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: '1em',
+                        margin: '0.8em 0 0',
+                      }}
+                    >
+                      Certificate
+                    </label>
                   </div>
                 </div>
 
                 <div className="col-3 ">
-                  <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                    <label style={{ fontWeight: 'bold', height: '3em' }}>
-                      Charity Registration Certificate
-                    </label>
+                  <div style={{ padding: '15px 0 10px', textAlign: 'center' }}>
                     <div className="image-upload">
                       <img
-                        style={{ width: '250px', height: '200px' }}
+                        style={{
+                          height: '235px',
+                          width: '100%',
+                          borderRadius: '1.5em',
+                        }}
                         src={`${Local}/${ngoById.charityRegistrationCertificate}`}
                       />
                     </div>
+                    <label
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: '1em',
+                        margin: '0.8em 0 0',
+                      }}
+                    >
+                      Charity Registration Certificate
+                    </label>
                   </div>
                 </div>
 
                 <div className="col-3 ">
-                  <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                    <label style={{ fontWeight: 'bold', height: '3em' }}>
-                      Deed
-                    </label>
+                  <div style={{ padding: '15px 0 10px ', textAlign: 'center' }}>
                     <div className="image-upload">
                       <img
-                        style={{ width: '250px', height: '200px' }}
+                        style={{
+                          height: '235px',
+                          width: '100%',
+                          borderRadius: '1.5em',
+                        }}
                         src={`${Local}/${ngoById.deed}`}
                       />
                     </div>
+                    <label
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: '1em',
+                        margin: '0.8em 0 0',
+                      }}
+                    >
+                      Deed
+                    </label>
                   </div>
                 </div>
               </div>
-
-              <br />
-              <Paper sx={{ width: '100%', mb: 2 }}>
-                <>
-                  <TableContainer>
-                    <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-                      <TableBody>
-                        <TableRow tabIndex={-1}>
-                          <TableCell
-                            //   id={labelId}
-                            align="center"
-                            scope="row"
-                            padding="none"
-                            style={{ fontWeight: 700 }}
-                          >
-                            NgoName
-                          </TableCell>
-                          <TableCell align="center">
-                            {ngoById && ngoById.user && ngoById.user.name}
-                          </TableCell>
-                        </TableRow>
-
-                        <TableRow
-                          //   aria-checked={isItemSelected}
-                          tabIndex={-1}
-                          //   key={row.address}
-                          //   selected={isItemSelected}
-                        >
-                          <TableCell
-                            //   id={labelId}
-                            align="center"
-                            scope="row"
-                            padding="none"
-                            style={{ fontWeight: 700 }}
-                          >
-                            Address
-                          </TableCell>
-                          <TableCell align="center">
-                            {ngoById.address}
-                          </TableCell>
-                        </TableRow>
-
-                        <TableRow
-                          // aria-checked={isItemSelected}
-                          tabIndex={-1}
-                          // key={row.email}
-                          // selected={isItemSelected}
-                        >
-                          <TableCell
-                            // id={labelId}
-                            align="center"
-                            scope="row"
-                            padding="none"
-                            style={{ fontWeight: 700 }}
-                          >
-                            Email
-                          </TableCell>
-                          <TableCell align="center">
-                            {ngoById && ngoById.user && ngoById.user.email}
-                          </TableCell>
-                        </TableRow>
-
-                        <TableRow
-                          // aria-checked={isItemSelected}
-                          tabIndex={-1}
-                          // key={row.mobile}
-                          // selected={isItemSelected}
-                        >
-                          <TableCell
-                            // id={labelId}
-                            align="center"
-                            scope="row"
-                            padding="none"
-                            style={{ fontWeight: 700 }}
-                          >
-                            Mobile
-                          </TableCell>
-                          <TableCell align="center">
-                            {ngoById && ngoById.user && ngoById.user.mobile}
-                          </TableCell>
-                        </TableRow>
-
-                        <TableRow
-                          //  aria-checked={isItemSelected}
-                          tabIndex={-1}
-                          //  key={row.landline}
-                          //  selected={isItemSelected}
-                        >
-                          <TableCell
-                            // id={labelId}
-                            align="center"
-                            scope="row"
-                            padding="none"
-                            style={{ fontWeight: 700 }}
-                          >
-                            Landline
-                          </TableCell>
-                          <TableCell align="center">
-                            {ngoById.landline}
-                          </TableCell>
-                        </TableRow>
-
-                        <TableRow
-                          // aria-checked={isItemSelected}
-                          tabIndex={-1}
-                          // key={row.registrationdate}
-                          // selected={isItemSelected}
-                        >
-                          <TableCell
-                            // id={labelId}
-                            align="center"
-                            scope="row"
-                            padding="none"
-                            style={{ fontWeight: 700 }}
-                          >
-                            Registration Date
-                          </TableCell>
-                          <TableCell align="center">
-                            {moment(ngoById.registrationDate).format('LL')}
-                          </TableCell>
-                        </TableRow>
-
-                        <TableRow
-                          // aria-checked={isItemSelected}
-                          tabIndex={-1}
-                          // key={row.registrationnumber}
-                          // selected={isItemSelected}
-                        >
-                          <TableCell
-                            // id={labelId}
-                            align="center"
-                            scope="row"
-                            padding="none"
-                            style={{ fontWeight: 700 }}
-                          >
-                            Registration Number
-                          </TableCell>
-                          <TableCell align="center">
-                            {ngoById.registrationNumber}
-                          </TableCell>
-                        </TableRow>
-
-                        <TableRow
-                          tabIndex={-1}
-                          // key={row.pannumber}
-                          // selected={isItemSelected}
-                        >
-                          <TableCell
-                            // id={labelId}
-                            align="center"
-                            scope="row"
-                            style={{ fontWeight: 700 }}
-                          >
-                            Pan Number
-                          </TableCell>
-                          <TableCell align="center">
-                            {ngoById.panNumber}
-                          </TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </>
-              </Paper>
-
               <br />
               <br />
-              <div>Bank Details</div>
+              <br />
+              {/* <div className=""> */}
+              <div className="row" style={{ display: 'flex' }}>
+                <div className="col-6" style={{ padding: '0 15em 1em 1em' }}>
+                  <span style={{ fontSize: '25' }}>NGO Name</span>
+                  <br />
+                  <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+                    {ngoById && ngoById.user && ngoById.user.name}
+                  </label>
+                </div>
+                <div className="col-6" style={{ padding: '0 13em 1em 1em' }}>
+                  <span style={{ fontSize: '25' }}>Address</span>
+                  <br />
+                  <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+                    {ngoById.address}
+                  </label>
+                </div>
+              </div>
+              <div className="row" style={{ display: 'flex' }}>
+                <div className="col-6" style={{ padding: '0 15em 1em 1em' }}>
+                  <span style={{ fontSize: '25' }}>Mobile</span>
+                  <br />
+                  <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+                    {ngoById && ngoById.user && ngoById.user.mobile}
+                  </label>
+                </div>
+                <div className="col-6" style={{ padding: '0 13em 1em 1em' }}>
+                  <span style={{ fontSize: '25' }}>Email ID</span>
+                  <br />
+                  <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+                    {ngoById && ngoById.user && ngoById.user.email}
+                  </label>
+                </div>
+              </div>
+              <div className="row" style={{ display: 'flex' }}>
+                <div className="col-6" style={{ padding: '0 15em 1em 1em' }}>
+                  <span style={{ fontSize: '25' }}>Landline</span>
+                  <br />
+                  <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+                    {ngoById.landline}
+                  </label>
+                </div>
+                <div className="col-6" style={{ padding: '0 13em 1em 1em' }}>
+                  <span style={{ fontSize: '25' }}>Registration Date</span>
+                  <br />
+                  <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+                    {moment(ngoById.registrationDate).format('LL')}
+                  </label>
+                </div>
+              </div>
+              <div className="row" style={{ display: 'flex' }}>
+                <div className="col-6" style={{ padding: '0 15em 1em 1em' }}>
+                  <span style={{ fontSize: '25' }}>Registration Number</span>
+                  <br />
+                  <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+                    {ngoById.registrationNumber}
+                  </label>
+                </div>
+                <div className="col-6" style={{ padding: '0 13em 1em 1em' }}>
+                  <span style={{ fontSize: '25' }}>PAN Number</span>
+                  <br />
+                  <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+                    {ngoById.panNumber}
+                  </label>
+                </div>
+              </div>
+              <br />
+              <br />
+              <div
+                style={{
+                  textAlign: 'left',
+                  fontSize: '1.3em',
+                  fontWeight: 'bold',
+                  display: 'flex',
+                }}
+              >
+                <p
+                  // className="BankDet"
+                  style={{
+                    textAlign: 'left',
+                    fontWeight: 'bold',
+                    borderBottomStyle: 'solid',
+                    borderBottomWidth: 'medium',
+                    borderColor: '#63b8ec',
+                  }}
+                >
+                  Ban
+                </p>
+                k Details
+              </div>
               <br />
 
+              <div className="row" style={{ display: 'flex' }}>
+                <div className="col-6" style={{ padding: '0 15em 1em 1em' }}>
+                  <span style={{ fontSize: '25' }}>Bank Name</span>
+                  <br />
+                  <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+                    {ngoById &&
+                      ngoById.user &&
+                      ngoById.user.bankDetails.map(el => {
+                        return <span>{el.bankName}</span>;
+                      })}
+                  </label>
+                </div>
+                <div className="col-6" style={{ padding: '0 13em 1em 1em' }}>
+                  <span style={{ fontSize: '25' }}>Account Number</span>
+                  <br />
+                  <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+                    {ngoById &&
+                      ngoById.user &&
+                      ngoById.user.bankDetails.map(el => {
+                        return <span>{el.accountNumber}</span>;
+                      })}
+                  </label>
+                </div>
+              </div>
+              <div className="row" style={{ display: 'flex' }}>
+                <div className="col-6" style={{ padding: '0 15em 1em 1em' }}>
+                  <span style={{ fontSize: '25' }}>Beneficiary Name</span>
+                  <br />
+                  <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+                    {ngoById &&
+                      ngoById.user &&
+                      ngoById.user.bankDetails.map(el => {
+                        return <span>{el.beneficiaryName}</span>;
+                      })}
+                  </label>
+                </div>
+                <div className="col-6" style={{ padding: '0 13em 1em 1em' }}>
+                  <span style={{ fontSize: '25' }}>IFSC Code</span>
+                  <br />
+                  <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+                    {ngoById &&
+                      ngoById.user &&
+                      ngoById.user.bankDetails.map(el => {
+                        return <span>{el.ifsc}</span>;
+                      })}
+                  </label>
+                </div>
+              </div>
+              <div className="row" style={{ display: 'flex', margin: '0' }}>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="gridCheck"
+                  />
+                  <label
+                    class="form-check-label"
+                    style={{ fontSize: '25', fontWeight: 'bold' }}
+                  >
+                    Is KYC
+                  </label>
+                </div>
+              </div>
               <div>
-                <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Name </TableCell>
-                        <TableCell align="right">Account</TableCell>
-                        <TableCell align="right">BeneficiaryName</TableCell>
-                        <TableCell align="right">IFSC</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {ngoById.user &&
-                        ngoById.user.bankDetails.map(row => (
-                          <TableRow
-                            key={row.name}
-                            sx={{
-                              '&:last-child td, &:last-child th': { border: 0 },
-                            }}
-                          >
-                            <TableCell component="th" scope="row">
-                              {row.bankName}
-                            </TableCell>
-                            <TableCell align="right">
-                              {row.accountNumber}
-                            </TableCell>
-                            <TableCell align="right">
-                              {row.beneficiaryName}
-                            </TableCell>
-                            <TableCell align="right">{row.ifsc}</TableCell>
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-
                 <br />
                 <div style={{ textAlign: 'center' }}>
-                  <button type="submit" className="btn btn-success">
+                  <button
+                    type="submit"
+                    className="btn"
+                    style={{
+                      backgroundColor: '#65AC12',
+                      color: '#fff',
+                      // borderRadius: '2em',
+                      fontSize: '20',
+                    }}
+                  >
                     Submit
                   </button>
                 </div>

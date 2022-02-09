@@ -27,7 +27,7 @@ import RazorpayCredentials from './pages/Settings/RazorpayCredentials';
 import Roles from './pages/Settings/Roles';
 import Users from './pages/Settings/Users';
 import Dashboard from './pages/Other/Dashboard';
-
+import './App.css';
 import './styles/reduction.scss';
 import Login from './pages/Login';
 import PrivateRoute from './Routing/PrivateRoute';
