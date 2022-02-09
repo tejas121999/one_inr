@@ -18,7 +18,10 @@ export const getAllProjectAction = (value) => {
           // console.log("getAllProject", res.data.result)
           dispatch(getAllProjects(res.data.result));
         })
-        .catch(err => { });
+        .catch(e => {
+          alert(e.response.request.statusText)
+          console.log(e.response.request.statusText)
+        });
     };
   } else {
     alert('No network');
@@ -39,15 +42,14 @@ export const addProjectAction = (body, history) => {
       projectServices
         .createProject(body)
         .then(res => {
-          toast.success(res.data.message, {
-            position: 'top-center',
-            autoClose: 2000
-          });
+          alert(res.request.statusText)
           setTimeout(function () {
             history.push('/view_all_project')
           }, 2000);
         })
-        .catch(err => { });
+        .catch((e) => {
+          alert(e.response.request.statusText)
+        });
     };
   } else {
     alert('No network');

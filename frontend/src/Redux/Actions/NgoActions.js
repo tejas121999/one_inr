@@ -16,8 +16,9 @@ export const createNGOAction = (body, history) => {
           //need to add toaster here
           history.push('/view_all_ngo');
         })
-        .catch(err => {
-          //need to add toaster here
+        .catch(e => {
+          alert(e.response.data.message)
+          console.log(e.response.data.message)
         });
     };
   } else {
@@ -32,7 +33,7 @@ export const getAllNGOAction = () => {
         .then(res => {
           dispatch(GetAllNGO(res.data.data));
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');
@@ -47,7 +48,7 @@ export const getNgoProjectAction = id => {
           console.log('shivani', res.data);
           dispatch(getNgoProject(res.data));
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('No network');
@@ -67,9 +68,10 @@ export const getNgoByIdAction = id => {
       NgoServices.getNgoById(id)
         .then(res => {
           dispatch(getNgoById(res.data.data));
-          console.log('abc', res);
         })
-        .catch(err => {});
+        .catch(e => {
+          alert(e.response.request.statusText)
+        });
     };
   } else {
     alert('No network');
@@ -144,6 +146,6 @@ export const DeleteNgoByIdAction = id => {
         });
         dispatch(getAllNGOAction());
       })
-      .catch(err => {});
+      .catch(err => { });
   };
 };
