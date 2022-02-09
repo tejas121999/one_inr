@@ -254,7 +254,7 @@ const AddNgo = props => {
             beneficiaryName: '',
             ifscCode: '',
           }}
-          validationSchema={validationSchema}
+          //validationSchema={validationSchema}
           onSubmit={values => onAddNgo(values)}
           enableReinitialize={true}
         >
@@ -264,7 +264,9 @@ const AddNgo = props => {
                 <div className="row" style={{ justifyContent: 'center' }}>
                   <div className="col-3">
                     <div style={{ padding: '15px 15px -2px' }}>
-                      <label style={{ fontWeight: 'bold' }}>Logo </label>
+                      <label style={{ fontWeight: 'bold' }}>
+                        Logo<label style={{ color: 'red' }}>*</label>
+                      </label>
                       <DropzoneComponent onChangeImage={onlogoImageAdd} />
                       <ErrorMessage name="logo_img" component={TextError} />
                     </div>
@@ -510,7 +512,7 @@ const AddNgo = props => {
                     style={{ paddingLeft: '0' }}
                   >
                     <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
-                      Pancard
+                      Pancard<label style={{ color: 'red' }}>*</label>
                     </label>
                   </div>
 
@@ -519,7 +521,7 @@ const AddNgo = props => {
                     style={{ paddingLeft: '0' }}
                   >
                     <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
-                      Certificate
+                      Certificate<label style={{ color: 'red' }}>*</label>
                     </label>
                   </div>
 
@@ -529,12 +531,13 @@ const AddNgo = props => {
                   >
                     <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
                       Charity Registration Certificate
+                      <label style={{ color: 'red' }}>*</label>
                     </label>
                   </div>
 
                   <div className="col-sm-3 col-xs-3 " style={{ padding: '0' }}>
                     <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
-                      Deed
+                      Deed<label style={{ color: 'red' }}>*</label>
                     </label>
                   </div>
                 </div>

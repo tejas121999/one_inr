@@ -267,7 +267,7 @@ const EditNgo = props => {
             password: ngoById.password,
             panNumber: ngoById.panNumber,
           }}
-          validationSchema={validationSchema}
+          //validationSchema={validationSchema}
           onSubmit={values => onEditNgo(values)}
           enableReinitialize={true}
         >
@@ -338,7 +338,7 @@ const EditNgo = props => {
                       <Field
                         className="form-control"
                         placeholder="Please Enter Email"
-                        name="emai"
+                        name="email"
                         type="email"
                         required
                         autocomplete="off"
