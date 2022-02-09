@@ -7,7 +7,7 @@ const Op = Sequelize.Op;
 const twinBcrypt = require('twin-bcrypt');
 const saltRounds = 10;
 const moment = require('moment');
-const { createBankData } = require('../service/createBankData');
+const { createBankData, updateBankData } = require('../service/createBankData');
 
 
 
@@ -23,40 +23,56 @@ exports.addNgo = async (req, res) => {
     let { address, registrationDate, registrationNumber, landline, panCard, panNumber, certificate, charityRegistrationCertificate, logo, deed, signature, isKyc } = req.body;
     registrationDate = moment(registrationDate).format("YYYY-MM-DD")
 
-    // validation for bank details account number
-    if(req.body.bankDetails){
+
+    if (req.body.bankDetails) {
         for (let i = 0; i < req.body.bankDetails.length; i++) {
             const element = req.body.bankDetails[i];
+
             const existingBankAccount = await models.bankDetails.findOne({
                 where: {
                     accountNumber: element.accountNumber,
+
                 }
             })
+            // validation for bank details account number
             if (existingBankAccount) {
                 return res.status(403).json({ message: 'Account Number already exists!' })
             }
+            // validation for bank name required
+            if (!element.bankName || element.bankName.length === 0) {
+                return res.status(403).json({ message: 'Bank Name is required' })
+            }
+            // validation for IFSC Code 
+            if (!element.ifsc || element.ifsc.length === 0) {
+                return res.status(403).json({ message: 'IFSC Code required' })
+            }
+            // let ifscRegex = /^([A-Z|a-z]){4}([0-9]){7}$/i;
+
+            // if (element.ifsc != ifscRegex) {
+
+            //     return res.status(403).json({ message: 'Invalid IFS Code' })
+            // }
         }
     }
-   
 
     const hash = await twinBcrypt.hashSync(password, saltRounds);
     var cBankData;
     await sequelize.transaction(async (t) => {
 
-            let data = await models.users.create(
-                { name, email, mobile, password: hash, balanceNextRenewDate: new_date },
-                { transaction: t }
-            )
-            let createNgo = await models.ngo.create(
-                { userId: data.id, address, registrationDate, registrationNumber, landline, panCard, panNumber, certificate, charityRegistrationCertificate, logo, deed, signature, isKyc },
-                { transaction: t }
-            )
+        let data = await models.users.create(
+            { name, email, mobile, password: hash, balanceNextRenewDate: new_date },
+            { transaction: t }
+        )
+        let createNgo = await models.ngo.create(
+            { userId: data.id, address, registrationDate, registrationNumber, landline, panCard, panNumber, certificate, charityRegistrationCertificate, logo, deed, signature, isKyc },
+            { transaction: t }
+        )
 
-            if (req.body.bankDetails) {
-                for (const item of req.body.bankDetails) {
-                    cBankData = await createBankData({ userId: data.id, bankName: item.bankName, accountNumber: item.accountNumber, beneficiaryName: item.beneficiaryName, ifsc: item.ifsc }, t)
-                }
+        if (req.body.bankDetails) {
+            for (const item of req.body.bankDetails) {
+                cBankData = await createBankData({ userId: data.id, bankName: item.bankName, accountNumber: item.accountNumber, beneficiaryName: item.beneficiaryName, ifsc: item.ifsc }, t)
             }
+        }
     })
     if (cBankData == false) {
         return res.status(401).json({ message: " Failed to create NGO." })
@@ -70,44 +86,96 @@ exports.addNgo = async (req, res) => {
 
 //updating ngo
 exports.updateNgo = async (req, res) => {
-    const id = req.params.id;
-    let { name, email, mobile, password, } = req.body;
-    let { address, registrationDate, registrationNumber, landline, panCard, panNumber, certificate, charityRegistrationCertificate, logo, deed, isKyc } = req.body;
-    //FINDING USER ID THROUGH NGO
-    let getUser = await models.ngo.findOne({
-        where: { userId:id },
-        include: { model: models.users, attributes: ['id', 'name'] }
-    })
-    let userId = getUser.user.id  //User ID
-    const hash = await twinBcrypt.hashSync(password, saltRounds);
-    var cBankData;
-    let createNgo;
-    let data;
-    await sequelize.transaction(async (t) => {
-        data = await models.users.update(
-            { name, email, mobile, password: hash }, { where: { id: userId } },
-            { transaction: t }
-        )
-        createNgo = await models.ngo.update(
-            { address, registrationDate, registrationNumber, landline, panCard, panNumber, certificate, charityRegistrationCertificate, logo, deed, isKyc }, { where: { id } },
-            { transaction: t }
-        )
+    try {
+
+
+        const id = req.params.id;
+        let { name, email, mobile, password, } = req.body;
+        let { address, registrationDate, registrationNumber, landline, panCard, panNumber, certificate, charityRegistrationCertificate, logo, deed, isKyc,bankDetails } = req.body;
+        //FINDING USER ID THROUGH NGO
+        let getUser = await models.ngo.findOne({
+            where: { id: id },
+            include: { model: models.users, attributes: ['id', 'name'] }
+        })
+        let userId = req.userData.id  //User ID
+        const hash = await twinBcrypt.hashSync(password, saltRounds);
+        var cBankData;
+        var uBankData;
+        let updateNgo;
+        let data;
+
+
+        // validation for bank details account number
         if (req.body.bankDetails) {
-            for (const item of req.body.bankDetails) {
-                cBankData = await createBankData({ userId: userId, id, bankName: item.bankName, accountNumber: item.accountNumber, beneficiaryName: item.beneficiaryName, ifsc: item.ifsc },
-                    t
-                )
+            for (let i = 0; i < req.body.bankDetails.length; i++) {
+                const element = req.body.bankDetails[i];
+
+                // validation for bank details empty fields
+                if (!element.bankName || element.bankName.length === 0) {
+                    return res.status(403).json({ message: 'Bank Name is required' })
+                }
+                if (!element.beneficiaryName || element.beneficiaryName.length === 0) {
+                    return res.status(403).json({ message: 'Beneficiary Name is required' })
+                }
+
+                if (!element.ifsc || element.ifsc.length === 0) {
+                    return res.status(403).json({ message: 'IFSC Code required' })
+                }
+                // let ifscRegex = /^([A-Z|a-z]){4}([0-9]){7}$/i;
+
+                // if (!element.ifsc == ifscRegex) {
+
+                //     return res.status(403).json({ message: 'Invalid IFSC Code' })
+                // }
+               
+                const existingBankAccount = await models.bankDetails.findOne({
+                    where: {
+                        accountNumber: element.accountNumber,
+                        userId: { [Op.not]: req.userData.id }
+                    }
+                })
+                if (existingBankAccount) {
+                    res.status(403).json({ message: 'Account Number already exists!' })
+                }
+                
+             }
+        }
+
+        await sequelize.transaction(async (t) => {
+            data = await models.users.update(
+                { name, email, mobile, password: hash }, { where: { id: userId } },
+                { transaction: t }
+            )
+            updateNgo = await models.ngo.update(
+                { address, registrationDate, registrationNumber, landline, panCard, panNumber, certificate, charityRegistrationCertificate, logo, deed, isKyc }, { where: { id } },
+                { transaction: t }
+            )
+
+            for(let element of bankDetails){
+                const existingBankAccount = await models.bankDetails.findOne({
+                    where: {
+                        accountNumber: element.accountNumber,
+                        ifsc:element.ifsc,
+                        userId: req.userData.id
+                    }
+            })
+            if(existingBankAccount){
+                await models.bankDetails.update({bankName:element.bankName,accountNumber:element.accountNumber,beneficiaryName:element.beneficiaryName,ifsc:element.ifsc},
+                   { where:{id:existingBankAccount.id}},
+                   { transaction: t });  
             }
         }
-    })
-    if (cBankData == false || data == [0] || createNgo == [0]) {
-        return res.status(401).json({ message: " Failed to create NGO." })
-    } else {
-        return res.status(201).json({ message: "Ngo Updated successfully." })
+        })
+        if (data == [0] || updateNgo == [0]) {
+            return res.status(401).json({ message: " Failed to create NGO." })
+        } else {
+            return res.status(201).json({ message: "Ngo Updated successfully." })
+        }
+    }
+    catch (err) {
+        console.log(err);
     }
 }
-
-
 
 //Read ngo details
 exports.getAllNgo = async (req, res) => {
@@ -144,10 +212,10 @@ exports.getAllNgo = async (req, res) => {
         offset: offset,
         where: searchQuery,
         include: [
-            {model : models.users},
-            {model : models.projects},
+            { model: models.users },
+            { model: models.projects },
         ],
-            // where: searchQueryForUser,
+        // where: searchQueryForUser,
         order: [
             ['id', 'DESC']
         ]

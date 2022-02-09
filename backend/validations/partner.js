@@ -25,7 +25,8 @@ exports.partnerValidation = [
         .isLength({ min: 5, max: 50 }).withMessage('Max length of emails is 50')
         .custom(async (value) => {
             return await models.partners.findOne({
-                where: { email: value }
+                where: { email: value },
+                
             }).then(email => {
                 if (email) {
                     return Promise.reject("Email Already Exists")
