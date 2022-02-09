@@ -87,8 +87,9 @@ function PaymentNavTab() {
       activeKey={key}
       onSelect={k => setKey(k)}
       className={key == 'donor' ? 'mb-0' : 'mb-5'}
+      style={{ borderBottom: 'none' }}
     >
-      <Tab eventKey="donor" title="Donors List">
+      <Tab eventKey="donor" title="Donores List">
         <div
           style={{
             display: 'flex',
