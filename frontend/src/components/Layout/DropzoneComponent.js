@@ -88,7 +88,6 @@ function DropzoneComponent(props) {
     <section>
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
-        <h3>drag and drop</h3>
         {thumbs}
       </div>
       <aside></aside>

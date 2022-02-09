@@ -57,7 +57,7 @@ const AddProject = props => {
     goal: yup.string().required('Required Field'),
     title: yup.string().required('Required Field'),
     description: yup.string().required('Required Field'),
-    
+
   });
 
   // console.log('Images', sliderone);
@@ -270,7 +270,7 @@ const AddProject = props => {
               <Form>
                 <div>
                   <div className="col-sm-12 col-xs-12">
-                    <label style={{ fontWeight: 'bold' }}>Title:</label>
+                    <label style={{ fontWeight: 'bold' }}>Title:<label style={{ color: 'red' }}>*</label></label>
                     <Field
                       type="text"
                       name="title"
@@ -287,6 +287,7 @@ const AddProject = props => {
                   <div className="col-sm-12 col-xs-12 mt-3">
                     <label style={{ fontWeight: 'bold' }}>
                       Description: (Max 144 char)
+                      <label style={{ color: 'red' }}>*</label>
                     </label>
                     <Field
                       as="textarea"
@@ -307,6 +308,7 @@ const AddProject = props => {
                 <div className="col-sm-12 col-xs-12 mt-3">
                   <label style={{ fontWeight: 'bold' }}>
                     Is this project recurring?
+                    <label style={{ color: 'red' }}>*</label>
                   </label>
                   <label style={{ marginLeft: '3cm' }}>
                     <Field type="radio" name="recurring" value="true" id="1" />
@@ -359,7 +361,7 @@ const AddProject = props => {
 
                   <div className="row mt-3">
                     <div className="col-sm-4 col-xs-12">
-                      <label style={{ fontWeight: 'bold' }}>Goal:</label>
+                      <label style={{ fontWeight: 'bold' }}>Goal:<label style={{ color: 'red' }}>*</label></label>
                       <Field
                         type="text"
                         name="goal"
@@ -374,7 +376,7 @@ const AddProject = props => {
                       )}
                     </div>
                     <div className="col-sm-4 col-xs-12">
-                      <label style={{ fontWeight: 'bold' }}>Start Date:</label>
+                      <label style={{ fontWeight: 'bold' }}>Start Date:<label style={{ color: 'red' }}>*</label></label>
                       <input
                         type="date"
                         id="start"
@@ -393,7 +395,7 @@ const AddProject = props => {
                       />
                     </div>
                     <div className="col-sm-4 col-xs-12">
-                      <label style={{ fontWeight: 'bold' }}>End Date:</label>
+                      <label style={{ fontWeight: 'bold' }}>End Date:<label style={{ color: 'red' }}>*</label></label>
                       <input
                         type="date"
                         id="end"
@@ -414,6 +416,7 @@ const AddProject = props => {
                     <div className="col-sm-12 col-xs-12 mt-3">
                       <label style={{ fontWeight: 'bold' }}>
                         Video Embed Link:
+                        <label style={{ color: 'red' }}>*</label>
                       </label>
                       <Field
                         type="text"
@@ -426,6 +429,7 @@ const AddProject = props => {
                     <div className="col-sm-12 col-xs-12 mt-3">
                       <label style={{ fontWeight: 'bold' }}>
                         Long Description:
+                        <label style={{ color: 'red' }}>*</label>
                       </label>
                       <SunEditor
                         // setContents="My contents"
@@ -455,7 +459,7 @@ const AddProject = props => {
 
                     </div>
                     <div className="col-sm-12 col-xs-12 mt-3">
-                      <label style={{ fontWeight: 'bold' }}>Select NGO:</label>
+                      <label style={{ fontWeight: 'bold' }}>Select NGO:<label style={{ color: 'red' }}>*</label></label>
                       <Field
                         className="form-control"
                         list="datalistOptions"
@@ -478,37 +482,25 @@ const AddProject = props => {
                         <label
                           style={{ fontWeight: 'bold', marginBottom: '0' }}
                         >
-                          Feature Image (Image on banner)*:
-                        </label>
-                        <br />
-                        <label>
-                          <b>Note: </b> Image dimensions must be 1024(i.e.
-                          width) * 768(i.e. height)
+                          Feature Image (Image on banner):
+                          <label style={{ color: 'red' }}>*</label>
                         </label>
                       </div>
                       <div className="col-sm-4 col-xs-4">
                         <label
                           style={{ fontWeight: 'bold', marginBottom: '0' }}
                         >
-                          Cover Image (Image in tile)*:
+                          Cover Image (Image in tile):<label style={{ color: 'red' }}>*</label>
                         </label>
-                        <br />
-                        <label>
-                          <b>Note: </b> Image dimensions must be 1024(i.e.
-                          width) * 768(i.e. height)
-                        </label>
+                        
                       </div>
                       <div className="col-sm-4 col-xs-4">
                         <label
                           style={{ fontWeight: 'bold', marginBottom: '0' }}
                         >
-                          Mobile Image (Image on Mobile):
+                          Mobile Image (Image on Mobile):<label style={{ color: 'red' }}>*</label>
                         </label>
-                        <br />
-                        <label>
-                          <b>Note: </b> Image dimensions must be 1024(i.e.
-                          width) * 768(i.e. height)
-                        </label>
+                        
                       </div>
                     </div>
                     <div
@@ -539,14 +531,9 @@ const AddProject = props => {
                     </div>
                     <div className="col-sm-12 col-xs-12">
                       <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
-                        Slider Images (Images on detailed page)*:
+                        Slider Images (Images on detailed page):<label style={{ color: 'red' }}>*</label>
                       </label>
-                      <br />
-                      <label>
-                        <b>Note: </b>
-                        Image dimensions must be 1024(i.e. width) * 768(i.e.
-                        height)
-                      </label>
+                      
                     </div>
                     <div className="row" style={{ margin: '0rem 0 1.5rem' }}>
                       <div className="col-sm-4 col-xs-4">
@@ -571,6 +558,7 @@ const AddProject = props => {
                     <div className="col-sm-12 col-xs-12">
                       <label style={{ fontWeight: 'bold' }}>
                         Commision (%):
+                        <label style={{ color: 'red' }}>*</label>
                       </label>
                       <Field
                         type="number"
