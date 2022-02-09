@@ -67,13 +67,11 @@ exports.addProjects = async (req, res) => {
     if (data) {
         return res.status(400).json({ message: "Failed to create Project." })
     }
-
     return res.status(201).json({ message: "Success", projects })
-
 }
 
 exports.updateProject = async (req, res) => {
-    let { userId, title, description,longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring } = req.body;
+    let { userId, title, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring } = req.body;
     let { banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 } = req.body;
     const id = req.params.id;
 
@@ -103,19 +101,17 @@ exports.updateProject = async (req, res) => {
     let paymentGatewayCal = (Number(goal) + commissionModel + gstCal) * pg / 100;   //Payment Gateway Calculation after calculating GST.
     target = Number(goal) + Number(commissionModel) + Number(gstCal) + Number(paymentGatewayCal); //Calculating Target
     target = Math.round(target) //Rounding off target value.
-    let slogan = title.split(" ").join('-').toLowerCase()  
+    let slogan = title.split(" ").join('-').toLowerCase()
     const project = await models.projects.findByPk(id)
 
     if (!project) {
         return res.status(400).json({ message: "No data Found" })
     }
     let data = await sequelize.transaction(async (t) => {
-
-       
-        pDetails = await models.projects.update({ userId, title, slogan, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring, isActive}, { where: { id } },
+        pDetails = await models.projects.update({ userId, title, slogan, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring, isActive }, { where: { id } },
             { transaction: t }
         )
-        projectImage = await models.project_image.update({projectId: id, isActive, banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6}, { where: { id } }, { transaction: t })
+        projectImage = await models.project_image.update({ projectId: id, isActive, banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 }, { where: { id } }, { transaction: t })
         // if (isRecurring == true) {
         // projectInterval = await models.projectInterval.update({ endDate: projectIntervalEndDate, goal, commission, target }, { where: { id }},{ transaction: t })
         // }
@@ -129,22 +125,7 @@ exports.updateProject = async (req, res) => {
     if (data) {
         return res.status(400).json({ message: "Failed to Update Project" })
     }
-
     return res.status(201).json({ message: "Project Updated successfully" })
-
-
-
-
-    // await sequelize.transaction(async (t) => {
-    // data= await models.projects.update({title, description,longDesc,endDate,commission, recurringDays, goal,target},{where:{id:id}},{transaction:t})
-    // })
-
-    // if (data == [0]) {
-    //     return res.status(401).json({ message: " Failed to Update Project" })
-    // } else {
-    //     return res.status(201).json({ message: "Project Updated successfully." })
-    // }
-
 }
 
 
@@ -204,9 +185,10 @@ exports.getAllProjects = async (req, res) => {
 exports.getProjectById = async (req, res) => {
     const id = req.params.id;
 
-    const project = await models.projects.findOne({ where: { id: id },
-       // include: { model: models.projectInterval }
-       include: { model: models.project_image}
+    const project = await models.projects.findOne({
+        where: { id: id },
+        // include: { model: models.projectInterval }
+        include: { model: models.project_image }
 
     })
 
