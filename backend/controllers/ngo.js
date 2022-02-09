@@ -121,12 +121,13 @@ exports.updateNgo = async (req, res) => {
                 if (!element.ifsc || element.ifsc.length === 0) {
                     return res.status(403).json({ message: 'IFSC Code required' })
                 }
-                // let ifscRegex = /^([A-Z|a-z]){4}([0-9]){7}$/i;
+                 let ifscRegex = /[A-Z|a-z]{4}[0][0-9]{6}$/
+                 
+                 
+                if (!ifscRegex.test(element.ifsc)) {
 
-                // if (!element.ifsc == ifscRegex) {
-
-                //     return res.status(403).json({ message: 'Invalid IFSC Code' })
-                // }
+                    return res.status(403).json({ message: 'Invalid IFSC Code' })
+                }
                
                 const existingBankAccount = await models.bankDetails.findOne({
                     where: {
@@ -143,7 +144,7 @@ exports.updateNgo = async (req, res) => {
 
         await sequelize.transaction(async (t) => {
             data = await models.users.update(
-                { name, email, mobile, password: hash }, { where: { id: userId } },
+                { name, email, mobile, password: hash }, { where: { id: getUser.userId } },
                 { transaction: t }
             )
             updateNgo = await models.ngo.update(

@@ -34,7 +34,7 @@ if (cluster.isMaster) {
 } else {
   // if we are not on master thread start master thread
   var server = http.createServer(app);
-  models.sequelize.sync().then(function () {
+  models.sequelize.authenticate().then(function () {
     server.listen(port, () => {
       debug('Express server listening on port ' + server.address().port);
     });
