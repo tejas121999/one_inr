@@ -15,12 +15,11 @@ export const getAllProjectAction = (value) => {
       projectServices
         .getAllProject(value)
         .then(res => {
-          // console.log("getAllProject", res.data.result)
+          alert(res.data.message)
           dispatch(getAllProjects(res.data.result));
         })
         .catch(e => {
           alert(e.response.request.statusText)
-          console.log(e.response.request.statusText)
         });
     };
   } else {
@@ -42,7 +41,7 @@ export const addProjectAction = (body, history) => {
       projectServices
         .createProject(body)
         .then(res => {
-          alert(res.request.statusText)
+          alert(res.data.message)
           setTimeout(function () {
             history.push('/view_all_project')
           }, 2000);
@@ -64,9 +63,12 @@ export const getProjectByIdAction = id => {
       projectServices
         .getProjectByID(id)
         .then(res => {
+          alert(res.data.message)
           dispatch(getProjectData(res.data.result));
         })
-        .catch(err => { });
+        .catch(e => {
+          alert(e.response.request.statusText)
+        });
     };
   } else {
     alert('No network');
@@ -86,16 +88,13 @@ export const updateProjectAction = (id, data, history) => {
     return dispatch => {
       projectServices.updateProject(id, data)
         .then(res => {
-          toast.success(res.data.message, {
-            position: 'top-center',
-            autoClose: 2000
-          });
+          alert(res.data.message)
           setTimeout(function () {
             history.push('#')
           }, 2000);
         })
-        .catch(err => {
-          window.history.back();
+        .catch(e => {
+          alert(e.response.request.statusText)
         })
     }
   }
@@ -107,16 +106,13 @@ export const CommitionUpdateAction = (id, data, history) => {
     return dispatch => {
       projectServices.updateCommition(id, data)
         .then(res => {
-          toast.success(res.data.message, {
-            position: 'top-center',
-            autoClose: 2000
-          });
+          alert(res.data.message)
           setTimeout(function () {
             history.push('#');
           }, 2000);
         })
-        .catch(err => {
-          window.history.back();
+        .catch(e => {
+          alert(e.response.request.statusText)
         })
     }
   } else {
@@ -130,16 +126,13 @@ export const addFundAction = (id, data, history) => {
     return dispatch => {
       projectServices.addFund(id, data)
         .then(res => {
-          toast.success(res.data.message, {
-            position: 'top-center',
-            autoClose: 2000
-          });
+          alert(res.data.message)
           setTimeout(function () {
             history.push('#')
           }, 2000);
         })
-        .catch(err => {
-          window.history.back();
+        .catch(e => {
+          alert(e.response.request.statusText)
         })
     }
   }
@@ -153,9 +146,12 @@ export const getAllCompletedProjectAction = () => {
       projectServices
         .getAllCompletedProject()
         .then(res => {
+          alert(res.data.message)
           dispatch(getCompletedProjects(res.data));
         })
-        .catch(err => { });
+        .catch(e => {
+          alert(e.response.request.statusText)
+        });
     };
   } else {
     alert('No network');
@@ -167,9 +163,12 @@ export const getCompletedProjectByValueAction = value => {
     projectServices
       .getCompletedProjectByValue(value)
       .then(res => {
+        alert(res.data.message)
         dispatch(getCompletedProjects(res.data));
       })
-      .catch(err => { });
+      .catch(e => {
+        alert(e.response.request.statusText)
+      });
   };
 };
 
@@ -188,9 +187,12 @@ export const getAllArchivedProjectAction = () => {
       projectServices
         .getAllArchivedProject()
         .then(res => {
+          alert(res.data.message)
           dispatch(getArchivedProjects(res.data));
         })
-        .catch(err => { });
+        .catch(e => {
+          alert(e.response.request.statusText)
+        });
     };
   } else {
     alert('No network');
