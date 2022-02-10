@@ -43,9 +43,9 @@ exports.addNgo = async (req, res) => {
                 return res.status(403).json({ message: 'Bank Name is required' })
             }
             // validation for IFSC Code 
-            if (!element.ifsc || element.ifsc.length === 0) {
-                return res.status(403).json({ message: 'IFSC Code required' })
-            }
+            // if (!element.ifsc || element.ifsc.length === 0) {
+            //     return res.status(403).json({ message: 'IFSC Code required' })
+            // }
             // let ifscRegex = /^([A-Z|a-z]){4}([0-9]){7}$/i;
 
             // if (element.ifsc != ifscRegex) {
@@ -70,7 +70,7 @@ exports.addNgo = async (req, res) => {
 
         if (req.body.bankDetails) {
             for (const item of req.body.bankDetails) {
-                cBankData = await createBankData({ userId: data.id, bankName: item.bankName, accountNumber: item.accountNumber, beneficiaryName: item.beneficiaryName, ifsc: item.ifsc }, t)
+                cBankData = await createBankData({ userId: data.id, bankName: item.bankName, accountNumber: item.accountNumber, beneficiaryName: item.beneficiaryName, ifsc: item.ifscCode }, t)
             }
         }
     })
