@@ -70,7 +70,7 @@ exports.addNgo = async (req, res) => {
 
         if (req.body.bankDetails) {
             for (const item of req.body.bankDetails) {
-                cBankData = await createBankData({ userId: data.id, bankName: item.bankName, accountNumber: item.accountNumber, beneficiaryName: item.beneficiaryName, ifsc: item.ifsc }, t)
+                cBankData = await createBankData({ userId: data.id, bankName: item.bankName, accountNumber: item.accountNumber, beneficiaryName: item.beneficiaryName, ifsc: item.ifscCode }, t)
             }
         }
     })
