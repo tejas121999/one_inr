@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         landline: {
-            type: DataTypes.BIGINT,
+            type: DataTypes.STRING,
             field: 'landline'
         },
         panCard: {
