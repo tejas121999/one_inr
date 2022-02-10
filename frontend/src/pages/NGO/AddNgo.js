@@ -83,7 +83,7 @@ const AddNgo = props => {
     ifscCode: yup
       .string()
       .required('Required Field')
-      .matches(/^[A-Z]{4}[0-9]{6}$/, 'Invalid Format'),
+      .matches(/^[A-Z|a-z]{4}[0][0-9]{6}$/, 'Invalid Format'),
   });
 
   const validationSchema = yup.object({
