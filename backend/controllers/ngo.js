@@ -43,9 +43,9 @@ exports.addNgo = async (req, res) => {
                 return res.status(403).json({ message: 'Bank Name is required' })
             }
             // validation for IFSC Code 
-            if (!element.ifsc || element.ifsc.length === 0) {
-                return res.status(403).json({ message: 'IFSC Code required' })
-            }
+            // if (!element.ifsc || element.ifsc.length === 0) {
+            //     return res.status(403).json({ message: 'IFSC Code required' })
+            // }
             // let ifscRegex = /^([A-Z|a-z]){4}([0-9]){7}$/i;
 
             // if (element.ifsc != ifscRegex) {
