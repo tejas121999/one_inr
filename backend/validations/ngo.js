@@ -77,6 +77,8 @@ exports.ngoValidation = [
         .isLength({ min: 12 }).withMessage('Min length registration number is 12'),
 
     body('landline')
+        .isLength({ max: 10 })
+        .isNumeric().withMessage('Landline number should be numeric')
         .custom(async (value) => {
             return await models.ngo.findOne({
                 where: { landline: value }
@@ -140,21 +142,21 @@ exports.ngoUpdateValidation = [
         .exists().withMessage('Email is Required')
         .notEmpty().withMessage('Email is Required')
         .isEmail().withMessage('Invalid Email')
-        .isLength({ min: 5, max: 50 }).withMessage('Max length of emails is 50'),
-        // .custom(async (value, { req }) => {
-            
-        //     return await models.users.findOne({
-        //         where: {
-        //             email: req.body.email,
-        //            id: { [Op.not]: req.params.id }
-        //         }
-        //     }).then(userEmail => {
-        //         if (userEmail) {
-        //             console.log(userEmail.dataValues)
-        //             return Promise.reject("Email Already Exists!");
-        //         }
-        //     })
-        // }),
+        .isLength({ min: 5, max: 50 }).withMessage('Max length of emails is 50')
+        .custom(async (value, { req }) => {
+            const ngoData = await models.ngo.findOne({ where: { id: req.params.id } });
+            return await models.users.findOne({
+                where: {
+                    id: { [Op.not]: ngoData.userId },
+                    email: req.body.email
+                }
+            })
+                .then(userEmail => {
+                    if (userEmail) {
+                        return Promise.reject("Email Already Exists!");
+                    }
+                })
+        }),
 
     body('mobile')
         .exists().withMessage('Mobile is Required')
@@ -163,8 +165,23 @@ exports.ngoUpdateValidation = [
             if (!/^[0-9]{10}$/i.test(value)) {
                 return Promise.reject("Invalid mobile number");
             }
+
+        })
+        .custom(async (value, { req }) => {
+            const ngoData = await models.ngo.findOne({ where: { id: req.params.id } });
+            return await models.users.findOne({
+                where: {
+                    id: { [Op.not]: ngoData.userId },
+                    mobile: req.body.mobile
+                }
+            })
+                .then(userMobile => {
+                    if (userMobile) {
+                        return Promise.reject("Mobile Number Already Exists!");
+                    }
+                })
         }),
-       
+
 
     body('password')
         .exists().withMessage('Password is required.')
@@ -192,29 +209,33 @@ exports.ngoUpdateValidation = [
         .isLength({ min: 12 }).withMessage('Min length registration number is 12'),
 
     body('landline')
-        .exists().withMessage('landline number is Required')
-        .notEmpty().withMessage('landline Number is required')
-        .custom(async (value) => {
+        .isLength({ max: 10 })
+        .isNumeric().withMessage('Landline number should be numeric')
+        .custom(async (value, { req }) => {
+
             return await models.ngo.findOne({
-                where: { landline: value }
+                where: {
+                    id: { [Op.not]: req.params.id },
+                    landline: req.body.landline
+                }
             }).then(ngoLandline => {
                 if (ngoLandline) {
-                    return Promise.reject("landline number already exist.")
+                    return Promise.reject("Landline Number Already Exists!");
                 }
             })
         }),
-        // .custom(async (value, { req }) => {
-        //         return await models.ngo.findOne({
-        //             where: {
-        //                 landline: req.body.landline,
-        //                 id: { [Op.not]: req.params.id }
-        //             }
-        //         }).then(ngoLandline => {
-        //             if (ngoLandline) {
-        //                 return Promise.reject("Landline Already Exists!");
-        //             }
-        //         })
-        //     }),
+    // .custom(async (value, { req }) => {
+    //         return await models.ngo.findOne({
+    //             where: {
+    //                 landline: req.body.landline,
+    //                 id: { [Op.not]: req.params.id }
+    //             }
+    //         }).then(ngoLandline => {
+    //             if (ngoLandline) {
+    //                 return Promise.reject("Landline Already Exists!");
+    //             }
+    //         })
+    //     }),
 
     body('panCard')
         .exists().withMessage('Pan Card is required')
@@ -228,17 +249,21 @@ exports.ngoUpdateValidation = [
                 return Promise.reject("Invalid pan number");
             }
         })
-        .custom(async value => {
+        .custom(async (value, { req }) => {
+
             return await models.ngo.findOne({
                 where: {
-                    panNumber: value,
+                    id: { [Op.not]: req.params.id },
+                    panNumber: req.body.panNumber
                 }
-            }).then(panNumber => {
-                if (panNumber) {
-                    return Promise.reject("Pan number already exists");
+            }).then(ngoPAN => {
+                if (ngoPAN) {
+                    return Promise.reject("PAN Number Already Exists!");
                 }
             })
         }),
+
+
 
     body('certificate')
         .exists().withMessage('Certificate is required')
@@ -257,4 +282,63 @@ exports.ngoUpdateValidation = [
         .notEmpty().withMessage('Logo Image is required'),
 
 ]
+
+// exports.ngoBankDetailsValidation = [
+
+//     body('bankName')
+//         .exists().withMessage('Bank Name is required')
+//         .notEmpty().withMessage('Bank Name is required'),
+
+//     body('accountNumber')
+//         .exists().withMessage('Account Number required')
+//         .notEmpty().withMessage('Account Number cannot be empty')
+//         // .custom((val) => /^(?:[0-9]{11}|[0-9]{2}-[0-9]{3}-[0-9]{6})$/g.test(val))
+//         // .withMessage("Invalid Number")\
+//         .isLength({min : 8 ,max :16}).withMessage('Please check account number correctly')
+//         .isNumeric().withMessage('Please enter only numbers...'),
+
+//     // body('accountNumber')
+//     //     .exists().withMessage('Account Number required')
+//     //     .notEmpty().withMessage('Account Number is required')
+//     //     .custom(async value => {
+//     //         if(!/^[0-9]{4}[-][0-9]{4}[-][0-9]{4}[-][0-9]{4}$/i.test(value)) {
+//     //             return Promise.reject("Invalid Account Number...")
+//     //         }
+//     //     })
+//     //     .custom(async value => {
+//     //         return await models.ngoBankDetailsValidation.findOne({
+//     //             where: {
+//     //                 accountNumber: value,
+//     //             }
+//     //         }).then(accountNumber => {
+//     //             if(accountNumber) {
+//     //                 return Promise.reject("Account Number alredy exists!");
+//     //             }
+//     //         })
+//     //     }),
+
+//     body('beneficiaryName')
+//         .exists().withMessage('Beneficiary Name is required')
+//         .notEmpty().withMessage('Beneficiary Name is required'),
+
+//     body('ifsc')
+//         .exists().withMessage('IFSC is required')
+//         .notEmpty().withMessage('IFSC is required')
+//         .custom(async value => {
+//             if(!/^([A-Z|a-z]){4}[0]([a-zA-Z0-9]){6}$/i.test(value)) {
+//                 return Promise.reject("Invalid IFSC number");
+//             }
+//         })
+//         .custom(async value => {
+//             return await models.ngoBankDetailsValidation.findOne({
+//                 where: {
+//                     IFSC: value,
+//                 }
+//             }).then(IFSC => {
+//                 if(IFSC) {
+//                     return Promise.reject("IFSC number already exists");
+//                 }
+//             })
+//         })
+// ]
 

@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         landline: {
-            type: DataTypes.BIGINT,
+            type: DataTypes.STRING,
             field: 'landline'
         },
         panCard: {
@@ -77,11 +77,7 @@ module.exports = (sequelize, DataTypes) => {
         ngo.hasMany(models.usersReceipts, { foreignKey: 'ngoId' })
         ngo.belongsTo(models.users, { foreignKey: 'userId' })
         ngo.hasMany(models.projects, { foreignKey: 'userId' })
-
-
     }
-
     return ngo;
-
 }
 
