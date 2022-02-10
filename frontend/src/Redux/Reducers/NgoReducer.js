@@ -1,9 +1,15 @@
-import { GET_ALL_NGOS, GET_NGO, GET_NGO_PROJECT } from '../constTypes';
+import {
+  GET_ALL_NGOS,
+  GET_NGO,
+  GET_NGO_PROJECT,
+  UPDATE_NGO_BY_ID,
+} from '../constTypes';
 
 const initialState = {
   ngoList: [],
   ngoProjectList: [],
   ngoData: [],
+  UpdateNgoById: [],
 };
 
 export const ngoReducer = (state = initialState, action) => {
@@ -26,6 +32,13 @@ export const ngoReducer = (state = initialState, action) => {
       return {
         ...state,
         ngoData: action.payload,
+      };
+    }
+
+    case UPDATE_NGO_BY_ID: {
+      return {
+        ...state,
+        UpdateNgoById: action.payload,
       };
     }
 
