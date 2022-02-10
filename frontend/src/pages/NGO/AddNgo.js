@@ -23,6 +23,9 @@ const AddNgo = props => {
   const [show, setShow] = useState('true');
   const [addContactValues, setAddContactValues] = useState([]);
 
+  const [bankName, setBankName] = useState([]);
+  const [id, setCount] = useState(0);
+
   const [addBankDetailsValues, setAddBankDetailsValues] = useState([]);
   const [date, setDate] = useState(new Date());
 
@@ -35,7 +38,7 @@ const AddNgo = props => {
   let addBankDetailsFormFields = () => {
     setAddBankDetailsValues([
       ...addBankDetailsValues,
-      { bankName: '', accountNumber: '', beneficiaryName: '', ifsc: '' },
+      { bankName: '', accountNumber: '', beneficiaryName: '', ifscCode: '' },
     ]);
   };
 
@@ -63,6 +66,25 @@ const AddNgo = props => {
     newFormValues.splice(i, 1);
     setAddContactValues(newFormValues);
   };
+
+  const newvalidationSchema = yup.object({
+    bankName: yup
+      .string()
+      .required('Required Field')
+      .max(50, 'Max limit is 50 characters'),
+    accountNumber: yup
+      .string()
+      .required('Required Field')
+      .min(12, 'please enter 12 digits'),
+    beneficiaryName: yup
+      .string()
+      .required('Required Field')
+      .max(50, 'Max limit is 50 characters'),
+    ifscCode: yup
+      .string()
+      .required('Required Field')
+      .matches(/^[A-Z|a-z]{4}[0][0-9]{6}$/, 'Invalid Format'),
+  });
 
   const validationSchema = yup.object({
     ngoName: yup
@@ -95,23 +117,34 @@ const AddNgo = props => {
       .string()
       .required('Required Field')
       .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
-    bankName: yup
-      .string()
-      .required('Required Field')
-      .max(50, 'Max limit is 50 characters'),
-    accountNumber: yup
-      .string()
-      .required('Required Field')
-      .min(12, 'please enter 12 digits'),
-    beneficiaryName: yup
-      .string()
-      .required('Required Field')
-      .max(50, 'Max limit is 50 characters'),
-    ifscCode: yup
-      .string()
-      .required('Required Field')
-      .matches(/^[A-Z]{4}[0-9]{6}$/, 'Invalid Format'),
+    // bankName: yup
+    //   .string()
+    //   .required('Required Field')
+    //   .max(50, 'Max limit is 50 characters'),
+    // accountNumber: yup
+    //   .string()
+    //   .required('Required Field')
+    //   .min(12, 'please enter 12 digits'),
+    // beneficiaryName: yup
+    //   .string()
+    //   .required('Required Field')
+    //   .max(50, 'Max limit is 50 characters'),
+    // ifscCode: yup
+    //   .string()
+    //   .required('Required Field')
+    //   .matches(/^[A-Z]{4}[0-9]{6}$/, 'Invalid Format'),
   });
+
+  const deleteBankDetail = event => {
+    const id = parseInt(event.target.id);
+    var arr = [];
+    addBankDetailsValues.filter(temp => {
+      if (temp.id !== id) {
+        arr.push(temp);
+      }
+    });
+    setAddBankDetailsValues(arr);
+  };
 
   //Submit
 
@@ -176,6 +209,7 @@ const AddNgo = props => {
   };
 
   const onAddNgo = values => {
+    console.log('abc', values);
     let newDate = moment(date).format('LL');
 
     const obj = {
@@ -194,10 +228,6 @@ const AddNgo = props => {
       charityRegistrationCertificate: charityCertificateImgUrl,
       deed: deedImgUrl,
       bankDetails: addBankDetailsValues,
-      // bankName: values.bankName,
-      // accountNumber: values.accountNumber,
-      // beneficiaryName: values.beneficiaryName,
-      // ifscCode: values.ifscCode,
     };
     dispatch(createNGOAction(obj, props.history));
   };
@@ -254,7 +284,7 @@ const AddNgo = props => {
             beneficiaryName: '',
             ifscCode: '',
           }}
-          //validationSchema={validationSchema}
+          validationSchema={validationSchema}
           onSubmit={values => onAddNgo(values)}
           enableReinitialize={true}
         >
@@ -428,7 +458,6 @@ const AddNgo = props => {
                         type="text"
                         autocomplete="off"
                         maxLength={10}
-                        required
                         value={values.landline}
                       />
                       {errors.landline && touched.landline && (
@@ -584,133 +613,8 @@ const AddNgo = props => {
                 </div>
 
                 <br />
-                {addBankDetailsValues.map((element, index) => (
-                  <>
-                    <div className="row">
-                      <div className="col-6 ">
-                        <div style={{ padding: '15px 0 10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>
-                            Bank Name<label style={{ color: 'red' }}>*</label>
-                          </label>
-                          <Field
-                            className="form-control"
-                            placeholder="Please enter your Bank Name"
-                            name="bankName"
-                            autocomplete="off"
-                            required
-                            value={addBankDetailsValues[index].bankName}
-                            onChange={e =>
-                              handleChangeForAddBankDetails(e, index)
-                            }
-                          />
-                          {errors.BankName && touched.BankName && (
-                            <div className="text-left">
-                              <span style={{ color: 'blue' }}>
-                                {errors.BankName}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
 
-                      <div className="col-6 ">
-                        <div style={{ padding: '15px 0 10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>
-                            Account Number
-                            <label style={{ color: 'red' }}>*</label>
-                          </label>
-                          <Field
-                            className="form-control"
-                            placeholder="Please enter Account Number"
-                            name="accountNumber"
-                            autocomplete="off"
-                            required
-                            value={addBankDetailsValues[index].accountNumber}
-                            onChange={e =>
-                              handleChangeForAddBankDetails(e, index)
-                            }
-                          />
-                          {errors.accountnumber && touched.accountnumber && (
-                            <div className="text-left">
-                              <span style={{ color: 'blue' }}>
-                                {errors.AccountNumber}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="col-6 ">
-                        <div style={{ padding: '15px 0 10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>
-                            Beneficiary Name
-                            <label style={{ color: 'red' }}>*</label>
-                          </label>
-                          <Field
-                            className="form-control"
-                            placeholder="Please enter Beneficiary Name"
-                            name="beneficiaryName"
-                            autocomplete="off"
-                            required
-                            value={addBankDetailsValues[index].beneficiaryName}
-                            onChange={e =>
-                              handleChangeForAddBankDetails(e, index)
-                            }
-                          />
-                          {errors.BeneficiaryName && touched.BeneficiaryName && (
-                            <div className="text-left">
-                              <span style={{ color: 'blue' }}>
-                                {errors.BeneficiaryName}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div style={{ padding: '15px 0 10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>
-                            IFSC Code<label style={{ color: 'red' }}>*</label>
-                          </label>
-                          <Field
-                            className="form-control"
-                            placeholder="Please enter IFSC Code"
-                            name="ifsc"
-                            autocomplete="off"
-                            required
-                            value={addBankDetailsValues[index].ifsc}
-                            onChange={e =>
-                              handleChangeForAddBankDetails(e, index)
-                            }
-                          />
-                          {errors.ifsc && touched.ifsc && (
-                            <div className="text-left">
-                              <span style={{ color: 'blue' }}>
-                                {errors.ifsc}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div style={{ textAlign: 'end' }}>
-                      <button
-                        type="delete"
-                        className="btn btn-danger"
-                        style={{
-                          maxHeight: '1cm',
-                          marginBottom: '2em',
-                          borderRadius: '0.4em',
-                        }}
-                        onClick={() => removeBankDetailsFormFields()}
-                      >
-                        {/* <FaTimes /> */}
-                        Remove
-                      </button>
-                    </div>
-                  </>
-                ))}
-                <div style={{ textAlign: 'center' }}>
+                {/*<div style={{ textAlign: 'center' }}>
                   <button
                     type="add bank details"
                     className="btn btn-primary"
@@ -719,7 +623,7 @@ const AddNgo = props => {
                   >
                     Add Bank Details
                   </button>
-                </div>
+                      </div> */}
                 <br />
                 <div className="row">
                   <div className="col-6" style={{ paddingRight: '8px' }}>
@@ -762,6 +666,153 @@ const AddNgo = props => {
                     </div>
                   </div>
                 </div>
+              </div>
+            </Form>
+          )}
+        </Formik>
+
+        {addBankDetailsValues.map(element => (
+          <div key={element.id}>
+            <p>Bank name : {element.bankName}</p>
+            <p>Acc no : {element.accountNumber}</p>
+            <p>Bene name : {element.beneficiaryName}</p>
+            <p>IFSC name : {element.ifscCode}</p>
+            <button
+              id={element.id}
+              onClick={element => deleteBankDetail(element)}
+            >
+              Delete
+            </button>
+          </div>
+        ))}
+
+        <Formik
+          initialValues={{
+            bankName: '',
+            accountNumber: '',
+            beneficiaryName: '',
+            ifscCode: '',
+          }}
+          validationSchema={newvalidationSchema}
+          onSubmit={values => {
+            console.log(values, obj);
+            var obj = {
+              id,
+              bankName: values.bankName,
+              accountNumber: values.accountNumber,
+              beneficiaryName: values.beneficiaryName,
+              ifscCode: values.ifscCode,
+            };
+
+            setCount(id + 1);
+            setAddBankDetailsValues([...addBankDetailsValues, obj]);
+          }}
+        >
+          {({ errors, values, touched }) => (
+            <Form>
+              {JSON.stringify(errors)}
+              <div className="row">
+                <div className="col-6 ">
+                  <div style={{ padding: '15px 0 10px' }}>
+                    <label style={{ fontWeight: 'bold' }}>
+                      Bank Name<label style={{ color: 'red' }}>*</label>
+                    </label>
+                    <Field
+                      className="form-control"
+                      placeholder="Please enter your Bank Name"
+                      name="bankName"
+                      autocomplete="off"
+                      required
+                      // value={addBankDetailsValues[index].bankName}
+                      value={values.bankName}
+                      // onChange={e =>
+                      //   // handleChangeForAddBankDetails(e, index)
+                      //   setBankName(e.target.value)
+                      // }
+                    />
+                  </div>
+                </div>
+
+                <div className="col-6 ">
+                  <div style={{ padding: '15px 0 10px' }}>
+                    <label style={{ fontWeight: 'bold' }}>
+                      Account Number
+                      <label style={{ color: 'red' }}>*</label>
+                    </label>
+                    <Field
+                      className="form-control"
+                      placeholder="Please enter Account Number"
+                      name="accountNumber"
+                      autocomplete="off"
+                      required
+                      // value={addBankDetailsValues[index].accountNumber}
+                      value={values.accountNumber}
+                      // onChange={e =>
+                      //   // handleChangeForAddBankDetails(e, index)
+
+                      //   setAccNo(e.target.value)
+                      // }
+                    />
+                  </div>
+                </div>
+
+                <div className="col-6 ">
+                  <div style={{ padding: '15px 0 10px' }}>
+                    <label style={{ fontWeight: 'bold' }}>
+                      Beneficiary Name
+                      <label style={{ color: 'red' }}>*</label>
+                    </label>
+                    <Field
+                      className="form-control"
+                      placeholder="Please enter Beneficiary Name"
+                      name="beneficiaryName"
+                      autocomplete="off"
+                      required
+                      // value={addBankDetailsValues[index].beneficiaryName}
+                      value={values.beneficiaryName}
+                      // onChange={e =>
+                      //   // handleChangeForAddBankDetails(e, index)
+
+                      //   setBeneNAme(e.target.value)
+                      // }
+                    />
+                  </div>
+                </div>
+
+                <div className="col-6">
+                  <div style={{ padding: '15px 0 10px' }}>
+                    <label style={{ fontWeight: 'bold' }}>
+                      IFSC Code<label style={{ color: 'red' }}>*</label>
+                    </label>
+                    <Field
+                      className="form-control"
+                      placeholder="Please enter IFSC Code"
+                      name="ifscCode"
+                      autocomplete="off"
+                      required
+                      value={values.ifscCode}
+                      // value={addBankDetailsValues[index].ifscCode}
+                      // onChange={e =>
+                      //   // handleChangeForAddBankDetails(e, index)
+
+                      //   setIfsc(e.target.value)
+                      // }
+                    />
+                  </div>
+                </div>
+              </div>
+              <div style={{ textAlign: 'end' }}>
+                <button
+                  type="submit"
+                  className="btn btn-danger"
+                  style={{
+                    maxHeight: '1cm',
+                    marginBottom: '2em',
+                    borderRadius: '0.4em',
+                  }}
+                >
+                  Add
+                </button>
               </div>
             </Form>
           )}

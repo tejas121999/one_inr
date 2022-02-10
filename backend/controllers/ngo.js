@@ -121,12 +121,13 @@ exports.updateNgo = async (req, res) => {
                 if (!element.ifsc || element.ifsc.length === 0) {
                     return res.status(403).json({ message: 'IFSC Code required' })
                 }
-                // let ifscRegex = /^([A-Z|a-z]){4}([0-9]){7}$/i;
+                 let ifscRegex = /[A-Z|a-z]{4}[0][0-9]{6}$/
+                 
+                 
+                if (!ifscRegex.test(element.ifsc)) {
 
-                // if (!element.ifsc == ifscRegex) {
-
-                //     return res.status(403).json({ message: 'Invalid IFSC Code' })
-                // }
+                    return res.status(403).json({ message: 'Invalid IFSC Code' })
+                }
                
                 const existingBankAccount = await models.bankDetails.findOne({
                     where: {
@@ -143,7 +144,7 @@ exports.updateNgo = async (req, res) => {
 
         await sequelize.transaction(async (t) => {
             data = await models.users.update(
-                { name, email, mobile, password: hash }, { where: { id: userId } },
+                { name, email, mobile, password: hash }, { where: { id: getUser.userId } },
                 { transaction: t }
             )
             updateNgo = await models.ngo.update(
@@ -187,17 +188,27 @@ exports.getAllNgo = async (req, res) => {
         req.query.from,
         req.query.to
     )
+    // includeArray = [
+    //     { 
+    //         model: models.users,
+    //          as: 'user'
+    //     },
+    //     { 
+    //         model: models.projects 
+    //     },
+    // ]
     //SEARCH QUERY
     const searchQuery = {
-        [Op.and]: [query, {
+        // [Op.and]: [query, {
             [Op.or]: {
                 address: { [Op.like]: '%' + search + '%' },
                 landline: { [Op.like]: '%' + search + '%' },
                 registrationNumber: { [Op.like]: '%' + search + '%' },
                 landline: { [Op.like]: '%' + search + '%' },
                 panNumber: { [Op.like]: '%' + search + '%' },
+                // '$user.email$' : { [Op.like]: search + '%' }
             },
-        }],
+        // }],
     }
     // const searchQueryForUser = {
     //     [Op.and]:[query, {
@@ -208,22 +219,45 @@ exports.getAllNgo = async (req, res) => {
     //     ]
     // }
     const data = await models.ngo.findAll({
+        attributes : ['id','userId','address'],
         limit: pageSize,
         offset: offset,
         where: searchQuery,
         include: [
-            { model: models.users },
-            { model: models.projects },
+            {
+                model: models.users,
+                attributes: ['id', 'name', 'email', 'isActive']
+            },
+            {
+                model: models.projects,
+                attributes: ['id','title','slogan','isActive']
+            },
         ],
+        // include : includeArray,
         // where: searchQueryForUser,
         order: [
             ['id', 'DESC']
         ]
     });
 
+        for (let i = 0; i < data.length; i++) {
+            let projectActiveCount = 0
+            let projectDeactiveCount = 0
+            const element = data[i];
+            for (let j = 0; j < element.projects.length; j++) {
+                const singleProject = element.projects[j];
+                if (singleProject.isActive) {
+                    projectActiveCount++;
+                } else {
+                    projectDeactiveCount++;
+                }
+            }
+            data[i].dataValues.projectActiveCount = projectActiveCount
+            data[i].dataValues.projectDeactiveCount = projectDeactiveCount
+        }
 
-    if (!data) {
-        return res.status(400).json({
+    if (data.length == 0) {
+        return res.status(404).json({
             message: "Failed to get all data."
         })
     }
@@ -236,12 +270,14 @@ exports.getAllNgo = async (req, res) => {
 
 
 
+
 exports.getNgoById = async (req, res) => {
     let id = req.params.id
     let data = await models.ngo.findOne({
         where: { id: id },
         include: [{
             model: models.users,
+            // as :'user',
             attributes: ['name', 'email', 'mobile'],
             include: [{
                 model: models.bankDetails,

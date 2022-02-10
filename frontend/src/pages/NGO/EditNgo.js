@@ -113,27 +113,27 @@ const EditNgo = props => {
       .string()
       .required('Required Field')
       .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
-    bankName: yup
-      .string()
-      .required('Required Field')
-      .max(50, 'Max limit is 50 characters'),
-    accountNumber: yup
-      .string()
-      .required('Required Field')
-      .min(12, 'please enter 12 digits'),
-    beneficiaryName: yup
-      .string()
-      .required('Required Field')
-      .max(50, 'Max limit is 50 characters'),
-    ifscCode: yup
-      .string()
-      .required('Required Field')
-      .matches(/^[A-Z]{4}[0-9]{6}$/, 'Invalid Format'),
+    // bankName: yup
+    //   .string()
+    //   .required('Required Field')
+    //   .max(50, 'Max limit is 50 characters'),
+    // accountNumber: yup
+    //   .string()
+    //   .required('Required Field')
+    //   .min(12, 'please enter 12 digits'),
+    // beneficiaryName: yup
+    //   .string()
+    //   .required('Required Field')
+    //   .max(50, 'Max limit is 50 characters'),
+    // ifscCode: yup
+    //   .string()
+    //   .required('Required Field')
+    //   .matches(/^[A-Z]{4}[0-9]{6}$/, 'Invalid Format'),
   });
 
   const onlogoImageAdd = async imgData => {
     const data = new FormData();
-    data.append('avatar', imgData);
+    data.append('avatar', imgData[0]);
     const result = await axios.post(
       BASE_URL + 'fileupload?reason=ngo_logo',
       data,
@@ -145,8 +145,9 @@ const EditNgo = props => {
   console.log('logoImage', logoImgUrl);
 
   const onPanCardImageAdd = async imgData => {
+    console.log('shivani', imgData);
     const data = new FormData();
-    data.append('avatar', imgData);
+    data.append('avatar', imgData[0]);
     const result = await axios.post(
       BASE_URL + 'fileupload?reason=ngo_pancard',
       data,
@@ -159,7 +160,7 @@ const EditNgo = props => {
 
   const onCertificateImageAdd = async imgData => {
     const data = new FormData();
-    data.append('avatar', imgData);
+    data.append('avatar', imgData[0]);
     const result = await axios.post(
       BASE_URL + 'fileupload?reason=ngo_certificate',
       data,
@@ -172,7 +173,7 @@ const EditNgo = props => {
 
   const onCharityCertificateImageAdd = async imgData => {
     const data = new FormData();
-    data.append('avatar', imgData);
+    data.append('avatar', imgData[0]);
     const result = await axios.post(
       BASE_URL + 'fileupload?reason=ngo_certificate',
       data,
@@ -185,9 +186,9 @@ const EditNgo = props => {
 
   const onDeedImageAdd = async imgData => {
     const data = new FormData();
-    data.append('avatar', imgData);
+    data.append('avatar', imgData[0]);
     const result = await axios.post(
-      BASE_URL + 'fileupload?reason=ngo_dead',
+      BASE_URL + 'fileupload?reason=ngo_deed',
       data,
     );
     if (result && result.data && result.data.pathtoUpload) {
@@ -267,7 +268,7 @@ const EditNgo = props => {
             password: ngoById.password,
             panNumber: ngoById.panNumber,
           }}
-          //validationSchema={validationSchema}
+          validationSchema={validationSchema}
           onSubmit={values => onEditNgo(values)}
           enableReinitialize={true}
         >
@@ -280,7 +281,7 @@ const EditNgo = props => {
                       <label style={{ fontWeight: 'bold' }}>Logo </label>
                       <DropzoneComponent
                         onChangeImage={onlogoImageAdd}
-                        value={values.logo}
+                        value={logoImgUrl}
                       />
                       <ErrorMessage name="logo_img" component={TextError} />
                     </div>
