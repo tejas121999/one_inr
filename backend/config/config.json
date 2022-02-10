@@ -11,7 +11,7 @@
   "test": {
     "username": "admin",
     "password": "root",
-    "database": "one_inr_test",
+    "database": "one_inr_new",
     "host": "144.91.79.237",
     "port": "3307",
     "dialect": "mysql"
