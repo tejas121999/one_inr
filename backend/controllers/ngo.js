@@ -351,3 +351,26 @@ exports.getNgoProjectDetails = async (req, res) => {
     });
     return res.status(200).json({ pendingCount, activeCount, fullFilledCount, partialFullfilled, data, message: "success" })
 }
+
+//update ngo kyc
+exports.updateNgoKyc = async (req, res) => {
+    const { isKyc } = req.body;
+    const id = req.params.id;
+
+    const findNgo = await models.ngo.findOne({ where: { id: id } });
+
+    if (!findNgo) {
+        return res.status(404).json({ message: "Ngo not found" });
+    }
+    if (findNgo.isKyc) {
+        return res.status(400).json({ message: "Kyc already approved" });
+    }
+
+    const updateNgo = await models.ngo.update({ isKyc: isKyc }, { where: { id: id } });
+
+    if (updateNgo[0] == 0) {
+        return res.status(200).json({ message: "Kyc not updated" });
+    } else {
+        return res.status(200).json({ message: "kyc updated successfully" });
+    }
+}
