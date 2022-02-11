@@ -76,7 +76,7 @@ const AddNgo = props => {
     accountNumber: yup
       .string()
       .required('Required Field')
-      .min(12, 'please enter 12 digits'),
+      .min(12, 'Please enter 12 digits'),
     beneficiaryName: yup
       .string()
       .required('Required Field')
@@ -104,25 +104,21 @@ const AddNgo = props => {
       .required('Required Field')
       .min(12, 'please enter 12 digits'),
     mobile: yup
-      .number()
-      .required('A mobile number is required')
-      .typeError("That doesn't look like a mobile number")
-      .positive("A phone number can't start with a minus")
-      .integer("A phone number can't include a decimal point")
+      .string()
+      .required('A Mobile Number is Required')
       .min(10, 'Please enter 10 digits')
-      .max(10, 'Please enter 10 digits'),
+      .max(10, 'Please enter 10 digits')
+      .matches(/^[0-9]{10}$/, 'Invalid Format'),
 
     landline: yup
-      .number()
-      .typeError("That doesn't look like a landline number")
-      .positive("A phone number can't start with a minus")
-      .integer("A phone number can't include a decimal point")
+      .string()
       .min(10, 'Please enter 10 digits')
       .max(10, 'Please enter 10 digits'),
     password: yup
       .string()
       .required('Required Field')
-      .min(8, 'Password is too short - should be 8 chars minimum'),
+      .min(8, 'Password is too short - should be 8 chars minimum')
+      .max(16, 'max 16 character'),
 
     panNumber: yup
       .string()
@@ -610,6 +606,14 @@ const AddNgo = props => {
                 </div>
 
                 <br />
+                <button
+                  style={{ display: 'none' }}
+                  className="btn btn-primary"
+                  type="submit"
+                  id="abc"
+                >
+                  Add
+                </button>
 
                 {/*<div style={{ textAlign: 'center' }}>
                   <button
@@ -622,47 +626,6 @@ const AddNgo = props => {
                   </button>
                       </div> */}
                 <br />
-                <div className="row">
-                  <div className="col-6" style={{ paddingRight: '8px' }}>
-                    <div
-                      style={{
-                        padding: '15px 0 10px',
-                        display: 'flex',
-                        justifyContent: 'end',
-                      }}
-                    >
-                      <button
-                        style={{ width: '6rem', borderRadius: '0.4em' }}
-                        className="btn btn-primary"
-                        type="submit"
-                      >
-                        Add
-                      </button>
-                    </div>
-                  </div>
-                  <div className="col-6" style={{ paddingLeft: '20px' }}>
-                    <div
-                      style={{
-                        padding: '15px 0 10px',
-                        display: 'flex',
-                        justifyContent: 'start',
-                      }}
-                    >
-                      <Link to="/view_all_ngo">
-                        <button
-                          className="btn"
-                          style={{
-                            color: 'white',
-                            backgroundColor: 'darkgray',
-                            borderRadius: '0.4em',
-                          }}
-                        >
-                          Cancel
-                        </button>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
               </div>
             </Form>
           )}
@@ -692,7 +655,6 @@ const AddNgo = props => {
           }}
           validationSchema={newvalidationSchema}
           onSubmit={values => {
-            console.log(values, obj);
             var obj = {
               id,
               bankName: values.bankName,
@@ -814,6 +776,49 @@ const AddNgo = props => {
             </Form>
           )}
         </Formik>
+        <div className="row">
+          <div className="col-6" style={{ paddingRight: '8px' }}>
+            <div
+              style={{
+                padding: '15px 0 10px',
+                display: 'flex',
+                justifyContent: 'end',
+              }}
+            >
+              <button
+                style={{ width: '6rem', borderRadius: '0.4em' }}
+                className="btn btn-primary"
+                onClick={() => {
+                  document.getElementById('abc').click();
+                }}
+              >
+                Add
+              </button>
+            </div>
+          </div>
+          <div className="col-6" style={{ paddingLeft: '20px' }}>
+            <div
+              style={{
+                padding: '15px 0 10px',
+                display: 'flex',
+                justifyContent: 'start',
+              }}
+            >
+              <Link to="/view_all_ngo">
+                <button
+                  className="btn"
+                  style={{
+                    color: 'white',
+                    backgroundColor: 'darkgray',
+                    borderRadius: '0.4em',
+                  }}
+                >
+                  Cancel
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

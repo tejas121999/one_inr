@@ -22,6 +22,7 @@ import moment from 'moment';
 
 const EditNgo = props => {
   const dispatch = useDispatch();
+  const [endPoint] = useState('http://144.91.79.237:8901/');
   const [logoImgUrl, setLogoImgUrl] = useState('');
   const [panCardImgUrl, setPanCardImgUrl] = useState('');
   const [certificateImgUrl, setCertificateImgUrl] = useState('');
@@ -33,10 +34,12 @@ const EditNgo = props => {
   const [addContactValues, setAddContactValues] = useState([]);
   const [addBankDetailsValues, setAddBankDetailsValues] = useState([]);
 
+  const [bankName, setBankName] = useState([]);
+  const [id, setCount] = useState(0);
+
   useEffect(() => {
     dispatch(getNgoByIdAction(props.location.state.id));
   }, []);
-
   let ngoById = useSelector(state => state.ngo.ngoData);
   console.log('acc', ngoById);
 
@@ -77,6 +80,25 @@ const EditNgo = props => {
     newFormValues.splice(i, 1);
     setAddContactValues(newFormValues);
   };
+
+  const newvalidationSchema = yup.object({
+    bankName: yup
+      .string()
+      .required('Required Field')
+      .max(50, 'Max limit is 50 characters'),
+    accountNumber: yup
+      .string()
+      .required('Required Field')
+      .min(12, 'please enter 12 digits'),
+    beneficiaryName: yup
+      .string()
+      .required('Required Field')
+      .max(50, 'Max limit is 50 characters'),
+    ifscCode: yup
+      .string()
+      .required('Required Field')
+      .matches(/^[A-Z|a-z]{4}[0][0-9]{6}$/, 'Invalid Format'),
+  });
 
   const validationSchema = yup.object({
     ngoName: yup
@@ -153,7 +175,7 @@ const EditNgo = props => {
     const data = new FormData();
     data.append('avatar', imgData[0]);
     const result = await axios.post(
-      BASE_URL + 'fileupload?reason=ngo__charity_registration_certificate',
+      BASE_URL + 'fileupload?reason=ngo_charity_registration_certificate',
       data,
     );
     if (result && result.data && result.data.pathtoUpload) {
@@ -701,7 +723,8 @@ const EditNgo = props => {
                     </div>
                   </>
                 ))}
-                <div style={{ textAlign: 'center' }}>
+
+                {/*     <div style={{ textAlign: 'center' }}>
                   <button
                     type="add bank details"
                     className="btn btn-success"
@@ -710,7 +733,7 @@ const EditNgo = props => {
                   >
                     Add Bank Details
                   </button>
-                </div>
+                      </div>     */}
                 <br />
 
                 <div className="row">

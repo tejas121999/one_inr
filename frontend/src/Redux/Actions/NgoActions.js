@@ -147,14 +147,14 @@ export const DeleteNgoByIdAction = id => {
   return dispatch => {
     NgoServices.deleteNgo(id)
       .then(res => {
+        dispatch(getAllNGOAction());
         toast.success('User Deleted', {
           position: 'top-center',
-          autoClose: 3000,
+          autoClose: 1000,
         });
-        dispatch(getAllNGOAction());
       })
       .catch(e => {
-        alert(e.response.data.message);
+        // alert(e.response.data.message);
       });
   };
 };

@@ -41,10 +41,16 @@ const ViewSingleNgo = props => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [viewModal, setViewModal] = React.useState(false);
   const [viewData, setViewData] = React.useState('');
-
+  let ngoById = useSelector(state => state.ngo.ngoData);
+  const getData = () => {
+    if (ngoById.length !== 0) {
+      console.log('ngoById', ngoById);
+    }
+  };
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
+    getData();
     dispatch(getAllProjectAction());
     dispatch(getNgoByIdAction(props.location.state.id));
     dispatch(getNgoProjectAction(props.location.state.id));
@@ -54,8 +60,6 @@ const ViewSingleNgo = props => {
 
   let allNgoProjectList = useSelector(state => state.ngo.ngoProjectList);
   console.log('abc', allNgoProjectList && allNgoProjectList.data);
-
-  let ngoById = useSelector(state => state.ngo.ngoData);
 
   const ViewModalOpen = data => {
     setViewData(data);
@@ -543,68 +547,73 @@ const ViewSingleNgo = props => {
               </div>
               <br />
               <br />
-              <div>
-                <p
-                  className="BankDet"
-                  style={{
-                    textAlign: 'left',
-                    fontWeight: 'bold',
-                    fontSize: '25',
-                  }}
-                >
-                  Bank Details
-                </p>
-              </div>
-              <br />
 
-              <div className="row" style={{ display: 'flex' }}>
-                <div className="col-6" style={{ padding: '0 15em 1em 1em' }}>
-                  <span style={{ fontSize: '25' }}>Bank Name</span>
-                  <br />
-                  <label style={{ fontSize: '25', fontWeight: 'bold' }}>
-                    {ngoById &&
-                      ngoById.user &&
-                      ngoById.user.bankDetails.map(el => {
-                        return <span>{el.bankName}</span>;
-                      })}
-                  </label>
-                </div>
-                <div className="col-6" style={{ padding: '0 13em 1em 1em' }}>
-                  <span style={{ fontSize: '25' }}>Account Number</span>
-                  <br />
-                  <label style={{ fontSize: '25', fontWeight: 'bold' }}>
-                    {ngoById &&
-                      ngoById.user &&
-                      ngoById.user.bankDetails.map(el => {
-                        return <span>{el.accountNumber}</span>;
-                      })}
-                  </label>
-                </div>
-              </div>
-              <div className="row" style={{ display: 'flex' }}>
-                <div className="col-6" style={{ padding: '0 15em 1em 1em' }}>
-                  <span style={{ fontSize: '25' }}>Beneficiary Name</span>
-                  <br />
-                  <label style={{ fontSize: '25', fontWeight: 'bold' }}>
-                    {ngoById &&
-                      ngoById.user &&
-                      ngoById.user.bankDetails.map(el => {
-                        return <span>{el.beneficiaryName}</span>;
-                      })}
-                  </label>
-                </div>
-                <div className="col-6" style={{ padding: '0 13em 1em 1em' }}>
-                  <span style={{ fontSize: '25' }}>IFSC Code</span>
-                  <br />
-                  <label style={{ fontSize: '25', fontWeight: 'bold' }}>
-                    {ngoById &&
-                      ngoById.user &&
-                      ngoById.user.bankDetails.map(el => {
-                        return <span>{el.ifsc}</span>;
-                      })}
-                  </label>
-                </div>
-              </div>
+              {ngoById.length === 0 ? (
+                <div>loading...</div>
+              ) : (
+                ngoById.user.bankDetails.map(el => (
+                  <>
+                    <div>
+                      <p
+                        className="BankDet"
+                        style={{
+                          textAlign: 'left',
+                          fontWeight: 'bold',
+                          fontSize: '25',
+                        }}
+                      >
+                        Bank Details
+                      </p>
+                    </div>
+                    <br />
+                    <div className="row" style={{ display: 'flex' }}>
+                      <div
+                        className="col-6"
+                        style={{ padding: '0 15em 1em 1em' }}
+                      >
+                        <span style={{ fontSize: '25' }}>Bank Name</span>
+                        <br />
+                        <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+                          <span>{el.bankName}</span>
+                        </label>
+                      </div>
+                      <div
+                        className="col-6"
+                        style={{ padding: '0 13em 1em 1em' }}
+                      >
+                        <span style={{ fontSize: '25' }}>Account Number</span>
+                        <br />
+                        <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+                          <span>{el.accountNumber}</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div className="row" style={{ display: 'flex' }}>
+                      <div
+                        className="col-6"
+                        style={{ padding: '0 15em 1em 1em' }}
+                      >
+                        <span style={{ fontSize: '25' }}>Beneficiary Name</span>
+                        <br />
+                        <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+                          <span>{el.beneficiaryName}</span>
+                        </label>
+                      </div>
+                      <div
+                        className="col-6"
+                        style={{ padding: '0 13em 1em 1em' }}
+                      >
+                        <span style={{ fontSize: '25' }}>IFSC Code</span>
+                        <br />
+                        <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+                          <span>{el.ifsc}</span>
+                        </label>
+                      </div>
+                    </div>
+                  </>
+                ))
+              )}
+
               <div className="row" style={{ display: 'flex', margin: '0' }}>
                 <div class="form-check">
                   <input
