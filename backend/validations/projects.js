@@ -93,9 +93,9 @@ exports.projectImageValidation = [
         .exists().withMessage('Mobile Image is required')
         .notEmpty().withMessage('Mobile Image is required'),
 
-    body('slider1')
-        .exists().withMessage('slider1 Image is required')
-        .notEmpty().withMessage('slider1 Image is required'),
+    // body('slider1')
+    //     .exists().withMessage('slider1 Image is required')
+    //     .notEmpty().withMessage('slider1 Image is required'),
 
     // body('slider2')
     //     .exists().withMessage('slider2 Image is required')
