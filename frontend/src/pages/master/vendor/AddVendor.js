@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import * as yup from 'yup';
 import { ErrorMessage, Form, Formik, Field } from 'formik';
 import TextError from '../../error/TextError';
-import './vendor.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { CreateVendorAction } from '../../../Redux/Actions/MasterActions';
 import { BASE_URL } from '../../../API/APIEndpoints';

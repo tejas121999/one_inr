@@ -94,7 +94,7 @@ form.login {
 .loginbg {
   background-image: url('./assets/img/background/login-register.jpg');
   padding: 25px;
-  background-repeat: no-repeat;
+  background-repeat: round;
   background-size: auto;
   height: 100vh;
 }
@@ -162,6 +162,7 @@ input::-webkit-inner-spin-button {
   background-color: transparent;
   border: 0;
 }
+
 .headCard {
   position: relative;
   display: flex;
@@ -179,10 +180,11 @@ input::-webkit-inner-spin-button {
   padding: 15px;
   padding-top: 0px;
 }
+
 .Del-btn {
-  margin: 40px;
+  margin: 2rem 0.5rem;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .contentCard {
@@ -207,4 +209,24 @@ input::-webkit-inner-spin-button {
   background-color: white;
   padding: 25px;
   margin-bottom: 5em;
+}
+
+.psw-feild {
+  outline: 0px;
+  border-radius: 30px;
+  padding-left: 12px !important;
+  border: 1px solid #ced4da !important;
+}
+
+.input-box {
+  padding: 15px;
+  padding-top: 0px;
+}
+
+/* For mobile phones: */
+@media only screen and (max-width: 567px) {
+}
+
+/* For Tablets: */
+@media only screen and (max-width: 768px) {
 }

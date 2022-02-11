@@ -19,7 +19,6 @@ import {
   FaBookOpen,
   FaDollarSign,
 } from 'react-icons/fa';
-import './Donor.css';
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
 import {

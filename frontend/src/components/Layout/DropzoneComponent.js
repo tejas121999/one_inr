@@ -2,9 +2,10 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 const baseStyle = {
-  display: 'flex',
+  display: 'grid',
   //   flexDirection: 'column',
   //   alignItems: 'center',
+  cursor: 'pointer',
   width: '10em',
   height: '10em',
   padding: '0',
@@ -32,9 +33,9 @@ const rejectStyle = {
 
 function DropzoneComponent(props) {
   const [files, setFiles] = useState([]);
-
+  const [hide, setHide] = useState('');
   const onDrop = useCallback(acceptedFiles => {
-    console.log('dropZone', acceptedFiles);
+    setHide(acceptedFiles.map(e => e.name));
     props.onChangeImage(acceptedFiles);
     setFiles(
       acceptedFiles.map(file =>
@@ -67,7 +68,15 @@ function DropzoneComponent(props) {
   );
 
   const thumbs = files.map(file => (
-    <div key={file.name}>
+    <div
+      key={file.name}
+      style={{
+        height: '9.9em',
+        gridColumn: '1/2',
+        gridRow: '1/2',
+        zIndex: '10',
+      }}
+    >
       <img
         src={file.preview}
         alt={file.name}
@@ -88,6 +97,27 @@ function DropzoneComponent(props) {
     <section>
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
+        {hide !== '' ? (
+          <span
+            style={{
+              display: 'none',
+            }}
+          >
+            Upload Image
+          </span>
+        ) : (
+          <span
+            style={{
+              padding: '65px 22px',
+              gridColumn: '1/2',
+              gridRow: '1/2',
+              zIndex: '1',
+            }}
+          >
+            Upload Image
+          </span>
+        )}
+
         {thumbs}
       </div>
       <aside></aside>

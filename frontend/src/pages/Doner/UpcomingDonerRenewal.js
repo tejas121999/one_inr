@@ -17,10 +17,7 @@ import {
   FaBookOpen,
   FaDollarSign,
 } from 'react-icons/fa';
-import './Donor.css';
-
 import { Link, useHistory } from 'react-router-dom';
-
 import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUpcomingDonorAction } from '../../Redux/Actions/DonorActions';

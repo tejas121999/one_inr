@@ -14,11 +14,11 @@ import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import './ngo.css';
 import { Link, useHistory } from 'react-router-dom';
 import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaRegEdit, FaRegEye } from 'react-icons/fa';
+import { ReactComponent as Edit } from '../../assets/icons/edit.svg';
+import { ReactComponent as View } from '../../assets/icons/view.svg';
 import { Switch } from '@mui/material';
 import uploadImage from '../../assets/img/logo/uploadImage.jpg';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
@@ -543,27 +543,17 @@ const ViewSingleNgo = props => {
               </div>
               <br />
               <br />
-              <div
-                style={{
-                  textAlign: 'left',
-                  fontSize: '1.3em',
-                  fontWeight: 'bold',
-                  display: 'flex',
-                }}
-              >
+              <div>
                 <p
-                  // className="BankDet"
+                  className="BankDet"
                   style={{
                     textAlign: 'left',
                     fontWeight: 'bold',
-                    borderBottomStyle: 'solid',
-                    borderBottomWidth: 'medium',
-                    borderColor: '#63b8ec',
+                    fontSize: '25',
                   }}
                 >
-                  Ban
+                  Bank Details
                 </p>
-                k Details
               </div>
               <br />
 
@@ -650,35 +640,104 @@ const ViewSingleNgo = props => {
             </Tab>
 
             <Tab eventKey="project" title="Project">
-              <br />
-              <br />
               {allNgoProjectList &&
               allNgoProjectList.data &&
               allNgoProjectList.data.length > 0 ? (
                 <>
-                  <div>
-                    <hr style={{ margin: '0' }} />
-                    <Paper sx={{ width: '100%', mb: 2 }}>
+                  <div
+                    style={{
+                      margin: '2em 1em',
+                      borderRadius: '1.5em',
+                      border: '1px solid #63b8ec',
+                    }}
+                  >
+                    <div className="row" style={{ margin: '1em 0' }}>
+                      <div
+                        style={{
+                          display: 'flex',
+                          width: '50%',
+                          padding: '0.2em 2em 1em',
+                          justifyContent: 'flex-start',
+                        }}
+                      >
+                        <p className="overview">Overview</p>
+                      </div>
+                    </div>
+                    {/* <hr style={{ margin: '0' }} /> */}
+                    <Paper
+                      sx={{
+                        width: '96%',
+                        marginBottom: '2em',
+                        marginLeft: '1.5em',
+                      }}
+                    >
                       <>
                         <table class="table">
                           <thead>
                             <tr>
-                              <th scope="col">Pending</th>
-                              <th scope="col">Active</th>
-                              <th scope="col">Fullfilled</th>
-                              <th scope="col">partialFullfilled</th>
-                              <th scope="col">Unfullfilled</th>
-                              <th scope="col">ActionRequired</th>
+                              <th
+                                style={{
+                                  fontSize: '0.875rem',
+                                  fontWeight: 'bold',
+                                  paddingLeft: '1.5rem',
+                                }}
+                              >
+                                Pending
+                              </th>
+                              <th
+                                style={{
+                                  fontSize: '0.875rem',
+                                  fontWeight: 'bold',
+                                }}
+                              >
+                                Active
+                              </th>
+                              <th
+                                style={{
+                                  fontSize: '0.875rem',
+                                  fontWeight: 'bold',
+                                }}
+                              >
+                                Fullfilled
+                              </th>
+                              <th
+                                style={{
+                                  fontSize: '0.875rem',
+                                  fontWeight: 'bold',
+                                }}
+                              >
+                                Partial Fullfilled
+                              </th>
+                              {/* <th
+                                scope="col"
+                                style={{
+                                  fontSize: '0.875rem',
+                                  fontWeight: 'bold',
+                                }}
+                              >
+                                Unfullfilled
+                              </th>
+                              <th
+                                scope="col"
+                                style={{
+                                  fontSize: '0.875rem',
+                                  fontWeight: 'bold',
+                                }}
+                              >
+                                Action Required
+                              </th> */}
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td>{allNgoProjectList.pendingCount}</td>
+                              <td style={{ paddingLeft: '1.5rem' }}>
+                                {allNgoProjectList.pendingCount}
+                              </td>
                               <td>{allNgoProjectList.activeCount}</td>
                               <td>{allNgoProjectList.fullFilledCount}</td>
                               <td>{allNgoProjectList.partialFullfilled}</td>
-                              <td>{allNgoProjectList.unfullfilledCount}</td>
-                              <td>{allNgoProjectList.actionRequired}</td>
+                              {/* <td>{allNgoProjectList.unfullfilledCount}</td>
+                              <td>{allNgoProjectList.actionRequired}</td> */}
                             </tr>
                           </tbody>
                         </table>
@@ -686,153 +745,191 @@ const ViewSingleNgo = props => {
                     </Paper>
                   </div>
 
-                  <br />
-                  <br />
                   <div
                     style={{
-                      display: 'flex',
-                      padding: '20px',
-                      justifyContent: 'space-between',
+                      margin: '2em 1em',
+                      borderRadius: '1.5em',
+                      border: '1px solid #63b8ec',
                     }}
                   >
-                    <button
-                      style={{ alignSelf: 'flex-start' }}
-                      className="btn btn-primary"
-                    >
-                      Export
-                    </button>
-                    <label style={{ fontWeight: '500', marginTop: '0.5em' }}>
-                      Search :
-                      <input
-                        type="search"
-                        placeholder="Search"
+                    <div className="row" style={{ margin: '1em 0' }}>
+                      <div
                         style={{
-                          marginLeft: '0.5em',
-                          border: '1px solid #ced4da',
+                          display: 'flex',
+                          width: '50%',
+                          padding: '0.5em 2em 1em',
+                          justifyContent: 'flex-start',
                         }}
-                        onChange={e => handleChange(e)}
-                      />
-                    </label>
-                  </div>
-                  <hr style={{ margin: '0' }} />
-
-                  <Paper sx={{ width: '100%', mb: 2 }}>
-                    <>
-                      <TableContainer>
-                        <Table
-                          sx={{ minWidth: 750 }}
-                          aria-labelledby="tableTitle"
-                          size={dense ? 'small' : 'medium'}
+                      >
+                        <p className="overview">Overview</p>
+                      </div>
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'flex-end',
+                          width: '50%',
+                          padding: '0.5rem 1.5rem',
+                        }}
+                      >
+                        <input
+                          placeholder="Search"
+                          onChange={e => handleChange(e)}
+                          type="search"
+                          style={{
+                            paddingLeft: '1em',
+                            border: '1px solid #ced4da',
+                            borderRadius: '1.5em',
+                            height: '2.2em',
+                          }}
+                        />
+                        <button
+                          style={{
+                            marginLeft: '1em',
+                            borderRadius: '2em',
+                            fontSize: '20',
+                          }}
+                          className="btn btn-primary"
+                          // onClick={e => handleClick(e)}
                         >
-                          <EnhancedTableHead
-                            numSelected={selected.length}
-                            order={order}
-                            orderBy={orderBy}
-                            onRequestSort={handleRequestSort}
-                            rowCount={
-                              allNgoProjectList &&
-                              allNgoProjectList.data &&
-                              allNgoProjectList.data.length
-                            }
-                            headCells={projectheadCells}
-                          />
-                          <TableBody>
-                            {stableSort(
-                              allNgoProjectList.data,
+                          Export
+                        </button>
+                      </div>
+                    </div>
+                    {/* <hr style={{ margin: '0' }} /> */}
 
-                              getComparator(order, orderBy),
-                            )
-                              .slice(
-                                page * rowsPerPage,
-                                page * rowsPerPage + rowsPerPage,
+                    <Paper
+                      sx={{
+                        width: '96%',
+                        marginBottom: '2em',
+                        marginLeft: '1.5em',
+                      }}
+                    >
+                      <>
+                        <TableContainer>
+                          <Table>
+                            <EnhancedTableHead
+                              numSelected={selected.length}
+                              order={order}
+                              orderBy={orderBy}
+                              onRequestSort={handleRequestSort}
+                              rowCount={
+                                allNgoProjectList &&
+                                allNgoProjectList.data &&
+                                allNgoProjectList.data.length
+                              }
+                              headCells={projectheadCells}
+                            />
+                            <TableBody>
+                              {stableSort(
+                                allNgoProjectList.data,
+
+                                getComparator(order, orderBy),
                               )
-                              .map((row, index) => {
-                                const isItemSelected = isSelected(row.name);
-                                const labelId = `enhanced-table-checkbox-${index}`;
+                                .slice(
+                                  page * rowsPerPage,
+                                  page * rowsPerPage + rowsPerPage,
+                                )
+                                .map((row, index) => {
+                                  const isItemSelected = isSelected(row.name);
+                                  const labelId = `enhanced-table-checkbox-${index}`;
 
-                                return (
-                                  <TableRow
-                                    hover
-                                    aria-checked={isItemSelected}
-                                    tabIndex={-1}
-                                    key={row.name}
-                                    selected={isItemSelected}
-                                  >
-                                    <TableCell
-                                      id={labelId}
-                                      align="center"
-                                      scope="row"
-                                      padding="none"
+                                  return (
+                                    <TableRow
+                                      hover
+                                      aria-checked={isItemSelected}
+                                      tabIndex={-1}
+                                      key={row.name}
+                                      selected={isItemSelected}
                                     >
-                                      {row.title}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                      {row.goal}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                      {row.funded}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                      {row.daysLeft}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                      {row.startDate}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                      {row.endDate}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                      {/* {row.status}  */}
-                                      <Switch color="primary" size="medium" />
-                                    </TableCell>
+                                      <TableCell id={labelId} align="left">
+                                        {row.title}
+                                      </TableCell>
+                                      <TableCell align="left">
+                                        {row.goal}
+                                      </TableCell>
+                                      <TableCell align="left">
+                                        {row.funded}
+                                      </TableCell>
+                                      <TableCell align="left">
+                                        {row.daysLeft}
+                                      </TableCell>
+                                      <TableCell align="left">
+                                        {moment(row.startDate).format('LL')}
+                                      </TableCell>
+                                      <TableCell align="left">
+                                        {moment(row.endDate).format('LL')}
+                                      </TableCell>
+                                      <TableCell align="left">
+                                        {/* {row.status}  */}
+                                        <Switch color="primary" size="medium" />
+                                      </TableCell>
 
-                                    <TableCell align="center">
-                                      <button
-                                        data-bs-toggle="tooltip"
-                                        title="View projects"
-                                        className="btn"
-                                        onClick={() =>
-                                          history.push('/project_details', row)
-                                        }
-                                      >
-                                        <FaRegEye />
-                                      </button>
-                                      <button
-                                        data-bs-toggle="tooltip"
-                                        title="Edit"
-                                        className="btn"
-                                        onClick={() =>
-                                          history.push('/edit_project', row)
-                                        }
-                                      >
-                                        <FaRegEdit />
-                                      </button>
-                                    </TableCell>
-                                  </TableRow>
-                                );
-                              })}
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
-                      <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        component="div"
-                        count={allNgoProjectList.data.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        pageSize={10}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
-                        showLastButton={true}
-                        showFirstButton={true}
-                      />
-                    </>
-                  </Paper>
+                                      <TableCell align="left">
+                                        <button
+                                          data-bs-toggle="tooltip"
+                                          title="View projects"
+                                          className="btn"
+                                          onClick={() =>
+                                            history.push(
+                                              '/project_details',
+                                              row,
+                                            )
+                                          }
+                                          style={{ padding: '0 0.5em 0 0' }}
+                                        >
+                                          <View
+                                            style={{
+                                              width: '25',
+                                              height: '20',
+                                            }}
+                                          />
+                                        </button>
+                                        <button
+                                          data-bs-toggle="tooltip"
+                                          title="Edit"
+                                          className="btn"
+                                          onClick={() =>
+                                            history.push('/edit_project', row)
+                                          }
+                                          style={{ padding: '0' }}
+                                        >
+                                          <Edit
+                                            style={{
+                                              width: '20',
+                                              height: '20',
+                                            }}
+                                          />
+                                        </button>
+                                      </TableCell>
+                                    </TableRow>
+                                  );
+                                })}
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                        <TablePagination
+                          rowsPerPageOptions={[5, 10, 25]}
+                          component="div"
+                          count={allNgoProjectList.data.length}
+                          rowsPerPage={rowsPerPage}
+                          page={page}
+                          pageSize={10}
+                          onPageChange={handleChangePage}
+                          onRowsPerPageChange={handleChangeRowsPerPage}
+                          showLastButton={true}
+                          showFirstButton={true}
+                        />
+                      </>
+                    </Paper>
+                  </div>
                 </>
               ) : (
-                <p style={{ textAlign: 'center', fontSize: '25px' }}>
-                  No Projects Found
-                </p>
+                <div
+                  className="DataNotFound text-center"
+                  style={{ marginTop: '15%' }}
+                >
+                  <h2> No Projects Found </h2>
+                </div>
               )}
             </Tab>
           </Tabs>
@@ -947,7 +1044,7 @@ function EnhancedTableHead(props) {
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
-            align="center"
+            align="left"
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >

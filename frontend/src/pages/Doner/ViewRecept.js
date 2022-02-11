@@ -17,7 +17,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import './viewreciept.css';
 import { FaRegEdit } from 'react-icons/fa';
 import moment from 'moment';
-// import '../Donor.css';
 import Viewdonormodal from '../../Modals/Donor/ViewDonorModal';
 import Addfund from '../../Modals/Donor/AddFund';
 import { BASE_URL } from '../../API/APIEndpoints';

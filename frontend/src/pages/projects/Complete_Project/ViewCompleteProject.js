@@ -16,7 +16,6 @@ import { visuallyHidden } from '@mui/utils';
 import { FcMoneyViewCompleteProject } from 'react-icons/fc';
 import { RiRefund2Line } from 'react-icons/ri';
 import { BsArchive, BsEye } from 'react-icons/bs';
-import '../../Doner/Donor.css';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Loader from '../../Loader';
