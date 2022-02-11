@@ -22,9 +22,9 @@ const AddNgo = props => {
   const [deedImgUrl, setDeedImgUrl] = useState('');
   const [show, setShow] = useState('true');
   const [addContactValues, setAddContactValues] = useState([]);
-
   const [addBankDetailsValues, setAddBankDetailsValues] = useState([]);
   const [date, setDate] = useState(new Date());
+  console.log('panCardImgUrl', panCardImgUrl);
 
   let handleChangeForAddBankDetails = (e, i) => {
     let newFormValues = [...addBankDetailsValues];
@@ -129,6 +129,7 @@ const AddNgo = props => {
 
   const onPanCardImageAdd = async imgData => {
     const data = new FormData();
+
     data.append('avatar', imgData[0]);
     const result = await axios.post(
       BASE_URL + 'fileupload?reason=ngo_pancard',

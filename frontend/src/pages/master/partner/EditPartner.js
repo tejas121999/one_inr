@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { ErrorMessage, Form, Formik, Field } from 'formik';
 import TextError from '../../error/TextError';
-import '../vendor/vendor.css';
 import {
   CreatePartnerAction,
   getPartnerByID,

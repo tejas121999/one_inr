@@ -1,6 +1,5 @@
 import { Field, Form, Formik } from 'formik';
 import React, { Component } from 'react';
-import './Donor.css';
 import * as yup from 'yup';
 import axios from '../../utils/interceptor';
 import { useHistory } from 'react-router-dom';

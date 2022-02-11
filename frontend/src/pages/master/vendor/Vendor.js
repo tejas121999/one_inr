@@ -273,23 +273,11 @@ export default function EnhancedTable() {
               style={{
                 display: 'flex',
                 width: '50%',
-                padding: '0em 2em 1em',
+                padding: '0.2em 2em 1em',
                 justifyContent: 'flex-start',
               }}
             >
-              <p
-                style={{
-                  textAlign: 'left',
-                  fontSize: '25',
-                  marginBottom: '0',
-                  paddingTop: '0.5em',
-                  borderBottomStyle: 'solid',
-                  borderBottomWidth: 'medium',
-                  borderColor: '#63b8ec',
-                }}
-              >
-                Overview
-              </p>
+              <p className="overview">Overview</p>
             </div>
             <div
               style={{

@@ -13,7 +13,6 @@ import {
   updateNgoAction,
 } from '../../Redux/Actions/NgoActions';
 import uploadImage from '../../assets/uploadImage.png';
-import './ngo.css';
 import { Link } from 'react-router-dom';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 import { useHistory } from 'react-router-dom';

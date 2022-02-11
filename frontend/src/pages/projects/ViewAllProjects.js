@@ -19,6 +19,8 @@ import { BiLink } from 'react-icons/bi';
 import { AiOutlineDollarCircle } from 'react-icons/ai';
 import { ReactComponent as Edit } from '../../assets/icons/edit.svg';
 import { ReactComponent as View } from '../../assets/icons/view.svg';
+import { ReactComponent as AutoDonate } from '../../assets/icons/Autodonate.svg';
+import { ReactComponent as Contribute } from '../../assets/icons/Contribute.svg';
 import Switch from '@material-ui/core/Switch';
 import './project.css';
 import { getAllProjectAction } from '../../Redux/Actions/ProjectActions';
@@ -184,23 +186,11 @@ const ViewAllProjects = () => {
               style={{
                 display: 'flex',
                 width: '30%',
-                padding: '0 0 1em 2em',
+                padding: '0.2em 0 1em 2em',
                 justifyContent: 'flex-start',
               }}
             >
-              <p
-                style={{
-                  textAlign: 'left',
-                  fontSize: '25',
-                  marginBottom: '0',
-                  paddingTop: '0.5em',
-                  borderBottomStyle: 'solid',
-                  borderBottomWidth: 'medium',
-                  borderColor: '#63b8ec',
-                }}
-              >
-                Overview
-              </p>
+              <p className="overview">Overview</p>
             </div>
             <div
               style={{
@@ -373,7 +363,6 @@ const ViewAllProjects = () => {
                               }
                               style={{ padding: '0 0.5em 0 0' }}
                             >
-                              {/* <FaRegEye /> */}
                               <View style={{ width: '25', height: '20' }} />
                             </button>
                             <button
@@ -391,16 +380,22 @@ const ViewAllProjects = () => {
                               title="Auto donate"
                               className="btn"
                               onClick={() => history.push('/auto_donate', row)}
+                              style={{ padding: '0 0.4em' }}
                             >
-                              <AiOutlineDollarCircle />
+                              <AutoDonate
+                                style={{ width: '22', height: '23' }}
+                              />
                             </button>
                             <button
                               data-bs-toggle="tooltip"
                               title="Contributors"
                               className="btn"
                               onClick={() => history.push('/Contributors', row)}
+                              style={{ padding: '0' }}
                             >
-                              <BiLink />
+                              <Contribute
+                                style={{ width: '24', height: '23' }}
+                              />
                             </button>
                           </TableCell>
                         </TableRow>
