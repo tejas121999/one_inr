@@ -327,11 +327,15 @@ const ViewAllNgo = () => {
                             <TableCell id={labelId} align="left">
                               {row.user.name}
                             </TableCell>
-                            <TableCell align="left">{row.pending}</TableCell>
-                            <TableCell align="left">{row.active}</TableCell>
                             <TableCell align="left">
-                              {row.actionRequired}
+                              {row.projectDeactiveCount}
                             </TableCell>
+                            <TableCell align="left">
+                              {row.projectActiveCount}
+                            </TableCell>
+                            {/* <TableCell align="left">
+                              {row.actionRequired}
+                        </TableCell> */}
                             <TableCell align="left">
                               <button
                                 data-bs-toggle="tooltip"
@@ -459,12 +463,12 @@ const headCells = [
     disablePadding: false,
     label: 'Active',
   },
-  {
-    id: 'actionRequired',
-    numeric: false,
-    disablePadding: false,
-    label: 'ActionRequired',
-  },
+  // {
+  //   id: 'actionRequired',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   label: 'ActionRequired',
+  // },
   {
     id: 'action',
     numeric: false,

@@ -103,36 +103,30 @@ const AddNgo = props => {
       .required('Required Field')
       .min(12, 'please enter 12 digits'),
     mobile: yup
-      .string()
-      .required('Required Field')
-      .min(10, 'please enter 10 digits')
-      .max(11, 'Max 10'),
+      .number()
+      .required('A mobile number is required')
+      .typeError("That doesn't look like a mobile number")
+      .positive("A phone number can't start with a minus")
+      .integer("A phone number can't include a decimal point")
+      .min(10, 'Please enter 10 digits')
+      .max(10, 'Please enter 10 digits'),
 
-    landline: yup.string().min(10, 'please enter 10 digits').max(11, 'Max 10'),
+    landline: yup
+      .number()
+      .typeError("That doesn't look like a landline number")
+      .positive("A phone number can't start with a minus")
+      .integer("A phone number can't include a decimal point")
+      .min(10, 'Please enter 10 digits')
+      .max(10, 'Please enter 10 digits'),
     password: yup
       .string()
       .required('Required Field')
-      .min(8, 'Should be 8 character'),
+      .min(8, 'Password is too short - should be 8 chars minimum'),
+
     panNumber: yup
       .string()
       .required('Required Field')
       .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
-    // bankName: yup
-    //   .string()
-    //   .required('Required Field')
-    //   .max(50, 'Max limit is 50 characters'),
-    // accountNumber: yup
-    //   .string()
-    //   .required('Required Field')
-    //   .min(12, 'please enter 12 digits'),
-    // beneficiaryName: yup
-    //   .string()
-    //   .required('Required Field')
-    //   .max(50, 'Max limit is 50 characters'),
-    // ifscCode: yup
-    //   .string()
-    //   .required('Required Field')
-    //   .matches(/^[A-Z]{4}[0-9]{6}$/, 'Invalid Format'),
   });
 
   const deleteBankDetail = event => {
@@ -187,8 +181,9 @@ const AddNgo = props => {
   const onCharityCertificateImageAdd = async imgData => {
     const data = new FormData();
     data.append('avatar', imgData[0]);
+
     const result = await axios.post(
-      BASE_URL + 'fileupload?reason=ngo_certificate',
+      BASE_URL + 'fileupload?reason=ngo_charity_registration_certificate',
       data,
     );
     if (result && result.data && result.data.pathtoUpload) {
