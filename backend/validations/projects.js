@@ -97,25 +97,25 @@ exports.projectImageValidation = [
         .exists().withMessage('slider1 Image is required')
         .notEmpty().withMessage('slider1 Image is required'),
 
-    body('slider2')
-        .exists().withMessage('slider2 Image is required')
-        .notEmpty().withMessage('slider2 Image is required'),
+    // body('slider2')
+    //     .exists().withMessage('slider2 Image is required')
+    //     .notEmpty().withMessage('slider2 Image is required'),
 
-    body('slider3')
-        .exists().withMessage('slider3 Image is required')
-        .notEmpty().withMessage('slider3 Image is required'),
+    // body('slider3')
+    //     .exists().withMessage('slider3 Image is required')
+    //     .notEmpty().withMessage('slider3 Image is required'),
 
-    body('slider4')
-        .exists().withMessage('slider4 Image is required')
-        .notEmpty().withMessage('slider4 Image is required'),
+    // body('slider4')
+    //     .exists().withMessage('slider4 Image is required')
+    //     .notEmpty().withMessage('slider4 Image is required'),
 
-    body('slider5')
-        .exists().withMessage('slider5 Image is required')
-        .notEmpty().withMessage('slider5 Image is required'),
+    // body('slider5')
+    //     .exists().withMessage('slider5 Image is required')
+    //     .notEmpty().withMessage('slider5 Image is required'),
 
-    body('slider6')
-        .exists().withMessage('slider6 Image is required')
-        .notEmpty().withMessage('slider6 Image is required'),
+    // body('slider6')
+    //     .exists().withMessage('slider6 Image is required')
+    //     .notEmpty().withMessage('slider6 Image is required'),
 
 
 
