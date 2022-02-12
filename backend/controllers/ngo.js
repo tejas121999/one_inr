@@ -95,7 +95,7 @@ exports.updateNgo = async (req, res) => {
         //FINDING USER ID THROUGH NGO
         let getUser = await models.ngo.findOne({
             where: { id: id },
-            include: { model: models.users, attributes: ['id', 'name'] }
+            include: { model: models.users,  as:'user', attributes: ['id', 'name'] }
         })
         let userId = req.userData.id  //User ID
         const hash = await twinBcrypt.hashSync(password, saltRounds);
@@ -199,16 +199,17 @@ exports.getAllNgo = async (req, res) => {
     // ]
     //SEARCH QUERY
     const searchQuery = {
-        // [Op.and]: [query, {
+        [Op.and]: [query, {
             [Op.or]: {
                 address: { [Op.like]: '%' + search + '%' },
                 landline: { [Op.like]: '%' + search + '%' },
                 registrationNumber: { [Op.like]: '%' + search + '%' },
                 landline: { [Op.like]: '%' + search + '%' },
                 panNumber: { [Op.like]: '%' + search + '%' },
-                // '$user.email$' : { [Op.like]: search + '%' }
+                '$user.email$' : { [Op.like]:'%'+ search + '%' },
+                '$user.name$' : {[Op.like]: '%' + search +'%' }
             },
-        // }],
+        }],
     }
     // const searchQueryForUser = {
     //     [Op.and]:[query, {
@@ -219,13 +220,16 @@ exports.getAllNgo = async (req, res) => {
     //     ]
     // }
     const data = await models.ngo.findAll({
-        attributes : ['id','userId','address'],
+         attributes : ['id','userId','address'],
         limit: pageSize,
         offset: offset,
-        where: searchQuery,
-        include: [
+         where: searchQuery, 
+         subQuery:false,
+         include: [
             {
                 model: models.users,
+                as: 'user',
+                subQuery:false,
                 attributes: ['id', 'name', 'email', 'isActive']
             },
             {
@@ -233,7 +237,7 @@ exports.getAllNgo = async (req, res) => {
                 attributes: ['id','title','slogan','isActive']
             },
         ],
-        // include : includeArray,
+        //  include : includeArray,
         // where: searchQueryForUser,
         order: [
             ['id', 'DESC']
@@ -277,7 +281,7 @@ exports.getNgoById = async (req, res) => {
         where: { id: id },
         include: [{
             model: models.users,
-            // as :'user',
+            as :'user',
             attributes: ['name', 'email', 'mobile'],
             include: [{
                 model: models.bankDetails,

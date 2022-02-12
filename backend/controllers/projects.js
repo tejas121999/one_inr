@@ -5,6 +5,8 @@ const sequelize = models.sequelize;
 const Op = Sequelize.Op;
 const moment = require('moment');
 const cron = require('node-cron')
+const check = require('../lib/checkLib');
+const { getCommission } = require('../service/getCommision');
 
 //Creating Projects
 exports.addProjects = async (req, res) => {
@@ -200,22 +202,94 @@ exports.getProjectById = async (req, res) => {
 
 }
 
+//update project status 
 exports.updateStatus = async (req, res) => {
     const id = req.params.id;
-    const project = await models.projects.update({ status: req.body.status }, { where: { id: id } })
-    if (!project) {
-        return res.status(404).json({ message: "Not Found" })
+    const checkProject = await models.projects.findOne({ where :{id: id}});
+    if(check.isEmpty(checkProject)){
+       return res.status(404).json({message :"Project not found"});
+    }
+    const project = await models.projects.update({ isActive: req.body.status }, { where: { id: id } })
+    if (project[0] == 1) {
+        return res.status(200).json({ message: "Status Updated Successfully", project })
     } else {
-        return res.status(200).json({ message: "Status Updated Successfully" })
+        return res.status(200).json({ message: "Status not updated ",project })
     }
 }
 
 exports.setHomeProject = async (req, res) => {
-    let id = req.params.id;
-    let { setHomeProjet } = req.body;
-    const data = await models.projects.update({ displayOnHomeStatus: 0 }, { where: { displayOnHomeStatus: 1 } })
-    const project = await models.projects.update({ displayOnHomeStatus: 1 }, { where: { id: id } });
-    return res.status(200).json({ project: project, data: data });
+    try {
+        const id = req.params.id;
+        let { changeOldHomeProjectCommi, changeNewHomeProjectCommi, oldCommision, newCommision } = req.body;
+        console.log(id)
+        const checkHomeProject = await models.projects.findOne({ where: { id: id } });
+        if (!check.isEmpty(checkHomeProject)) {
+            if (checkHomeProject.displayOnHomeStatus) {
+                return res.status(200).json({ message: `You can't disable all the home project` });
+            }
+        } else {
+            return res.status(404).json({ message: "Project not found", checkHomeProject });
+        }
+
+        if (changeOldHomeProjectCommi) {
+            console.log(oldCommision)
+            if (oldCommision == null || oldCommision == undefined) {
+                return res.status(400).json({ message: "Commission1 required" });
+            }
+        }
+
+        if (changeNewHomeProjectCommi) {
+            if (newCommision == null || oldCommision == undefined) {
+                return res.status(400).json({ message: "Commission2 required" });
+            }
+        }
+        const data = await sequelize.transaction(async (t) => {
+            const oldHomeProject = await models.projects.findOne({ where: { displayOnHomeStatus: 1 } });
+            console.log(oldHomeProject)
+            if (!check.isEmpty(oldHomeProject)) {
+                let targetOldProject = 0;
+                let targetNewProject = 0;
+                let oldProjectcommission = 0;
+                let newProjectcommission = 0;
+                if (changeOldHomeProjectCommi) {
+                    targetOldProject = await getCommission(oldCommision, oldHomeProject.goal);
+                    oldProjectcommission = oldCommision;
+                } else {
+                    targetOldProject = oldHomeProject.target;
+                    oldProjectcommission = oldHomeProject.commission;
+                }
+                if (changeNewHomeProjectCommi) {
+                    targetNewProject = await getCommission(newCommision, checkHomeProject.goal);
+                    newProjectcommission = newCommision;
+                }
+                else {
+                    targetNewProject = checkHomeProject.target;
+                    newProjectcommission = checkHomeProject.commission;
+                }
+                const oldProjectData = await models.projects.update({ commission: oldProjectcommission, target: targetOldProject, displayOnHomeStatus: 0 }, { where: { id: oldHomeProject.id } }, { transaction: t });
+
+                const newProjectData = await models.projects.update({ commission: newProjectcommission, target: targetNewProject, displayOnHomeStatus: 1 }, { where: { id: id } }, { transaction: t });
+
+                if (oldProjectData[0] == 1 && newProjectData[0] == 1) {
+                    return { sucess: true, status: 200 };
+                } else {
+                    return { sucess: false, status: 400 };
+                }
+            } else {
+                return res.status(400).json({ message: "Not found", oldHomeProject })
+            }
+        });
+
+        if (data.sucess) {
+            return res.status(data.status).json({ message: "Data updated suceessfully" });
+        }
+        else {
+            return res.status(data.status).json({ message: "Data not updated" });
+        }
+    }
+    catch (err) {
+        console.log(err)
+    }
 }
 
 
