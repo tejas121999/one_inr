@@ -77,7 +77,7 @@ exports.ngoValidation = [
         .isLength({ min: 12 }).withMessage('Min length registration number is 12'),
 
     body('landline')
-        .isLength({ max: 10 })
+        .isLength({ max: 12 })
        // .isNumeric().withMessage('Landline number should be numeric')
         .custom(async (value) => {
             return await models.ngo.findOne({

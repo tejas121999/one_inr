@@ -42,16 +42,26 @@ exports.addNgo = async (req, res) => {
             if (!element.bankName || element.bankName.length === 0) {
                 return res.status(403).json({ message: 'Bank Name is required' })
             }
-            // validation for IFSC Code 
-            // if (!element.ifsc || element.ifsc.length === 0) {
-            //     return res.status(403).json({ message: 'IFSC Code required' })
-            // }
-            // let ifscRegex = /^([A-Z|a-z]){4}([0-9]){7}$/i;
 
-            // if (element.ifsc != ifscRegex) {
+            if (!element.accountNumber||element.accountNumber.length === 0) {
+                return res.status(403).json({ message: 'Account number is required'})
+            }
+            //console.log(element.accountNumber.length)
+            // if (element.accountNumber.length >12) {
 
-            //     return res.status(403).json({ message: 'Invalid IFS Code' })
+            //     return res.status(403).json({ message: 'Account number should be max 12 digit' })
             // }
+
+        
+            if (!element.ifscCode || element.ifscCode.length === 0) {
+                return res.status(403).json({ message: 'IFSC Code required' })
+            }
+          
+
+            if ( !/^[A-Z|a-z]{4}0[0-9]{6}$/i.test(element.ifscCode)) {
+
+                return res.status(403).json({ message: 'Invalid IFS Code' })
+            }
         }
     }
 
@@ -118,15 +128,15 @@ exports.updateNgo = async (req, res) => {
                     return res.status(403).json({ message: 'Beneficiary Name is required' })
                 }
 
-                if (!element.ifsc || element.ifsc.length === 0) {
+                if (!element.ifscCode || element.ifscCode.length === 0) {
                     return res.status(403).json({ message: 'IFSC Code required' })
                 }
-                 let ifscRegex = /[A-Z|a-z]{4}[0][0-9]{6}$/
                  
                  
-                if (!ifscRegex.test(element.ifsc)) {
+                 
+                 if ( !/^[A-Z|a-z]{4}0[0-9]{6}$/i.test(element.ifscCode)) {
 
-                    return res.status(403).json({ message: 'Invalid IFSC Code' })
+                    return res.status(403).json({ message: 'Invalid IFS Code' })
                 }
                
                 const existingBankAccount = await models.bankDetails.findOne({
