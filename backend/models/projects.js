@@ -134,9 +134,10 @@ module.exports = (sequelize, DataTypes) => {
         });
 
     projects.associate = function (models) {
-        projects.hasMany(models.project_image, { foreignKey: 'projectId' })
+        // projects.hasMany(models.project_image, { foreignKey: 'projectId' })
         projects.belongsTo(models.ngo, { foreignKey: 'userId' })
         projects.hasMany(models.projectInterval,{foreignKey : 'projectId'})
+        projects.hasOne(models.project_image, { foreignKey: 'projectId' })
     }
 
 
@@ -156,6 +157,73 @@ module.exports = (sequelize, DataTypes) => {
         })
     })
 
+    projects.prototype.toJSON = function () {
+        var values = Object.assign({}, this.get({ plain: true }));
+        if (values.project_image) {
+            if (values.project_image.banner) {
+                let filePath = values.project_image.banner;
+                let pathToAdd = filePath.replace('public/', '');
+                values.project_image.bannerURL = process.env.BASE_URL_PATH + pathToAdd;
+            }
+        }
+        if (values.project_image) {
+            if (values.project_image.cover) {
+                let filePath = values.project_image.cover;
+                let pathToAdd = filePath.replace('public/', '');
+                values.project_image.coverURL = process.env.BASE_URL_PATH + pathToAdd;
+            }
+        }
+        if (values.project_image) {
+            if (values.project_image.mobile) {
+                let filePath = values.project_image.mobile;
+                let pathToAdd = filePath.replace('public/', '');
+                values.project_image.mobileURL = process.env.BASE_URL_PATH + pathToAdd;
+            }
+        }
+        if (values.project_image) {
+            if (values.project_image.slider1) {
+                let filePath = values.project_image.slider1;
+                let pathToAdd = filePath.replace('public/', '');
+                values.project_image.slider1URL = process.env.BASE_URL_PATH + pathToAdd;
+            }
+        }
+        if (values.project_image) {
+            if (values.project_image.slider2) {
+                let filePath = values.project_image.slider2;
+                let pathToAdd = filePath.replace('public/', '');
+                values.project_image.slider2URL = process.env.BASE_URL_PATH + pathToAdd;
+            }
+        }
+        if (values.project_image) {
+            if (values.project_image.slider3) {
+                let filePath = values.project_image.slider3;
+                let pathToAdd = filePath.replace('public/', '');
+                values.project_image.slider3URL = process.env.BASE_URL_PATH + pathToAdd;
+            }
+        }
+        if (values.project_image) {
+            if (values.project_image.slider4) {
+                let filePath = values.project_image.slider4;
+                let pathToAdd = filePath.replace('public/', '');
+                values.project_image.slider4URL = process.env.BASE_URL_PATH + pathToAdd;
+            }
+        }
+        if (values.project_image) {
+            if (values.project_image.slider5) {
+                let filePath = values.project_image.slider5;
+                let pathToAdd = filePath.replace('public/', '');
+                values.project_image.slider5URL = process.env.BASE_URL_PATH + pathToAdd;
+            }
+        }
+        if (values.project_image) {
+            if (values.project_image.slider6) {
+                let filePath = values.project_image.slider6;
+                let pathToAdd = filePath.replace('public/', '');
+                values.project_image.slider6URL = process.env.BASE_URL_PATH + pathToAdd;
+            }
+        }
+        return values;
+    }
     return projects
 }
 
