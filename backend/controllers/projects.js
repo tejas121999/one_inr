@@ -197,6 +197,9 @@ exports.getProjectById = async (req, res) => {
     if (!project) {
         return res.status(400).json({ message: "No data Found" })
     } else {
+        const completion=(project.dataValues.funded)/(project.dataValues.goal)*100;
+        console.log(completion)
+        project.dataValues.completion= completion;
         return res.status(200).json({ message: "Project fetched", result: project })
     }
 
