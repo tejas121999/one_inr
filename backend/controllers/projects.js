@@ -353,3 +353,115 @@ async function generateNewDate(projectEndDate, recurringDays) {
     return { newProjectIntervalDate, startDate }
 }
 
+//update project information
+exports.updateProjectImages = async (req, res, next) => {
+    const { bannerImage, coverImage, mobileImage, sliderImage, banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 } = req.body;
+    const projectId = req.params.id;
+    let updateImage;
+
+    const checkProject = await models.projects.findOne({ where: { id: projectId } });
+
+    if (check.isEmpty(checkProject)) {
+        return res.status(404).json({ message: "Project not found" });
+    }
+    if (!checkProject.isActive) {
+        return res.status(404).json({ message: `Can't edit project because project already completed` });
+    }
+    if (bannerImage) {
+        //update banner image
+        if (banner == null || banner == undefined) {
+            return res.status(400).json({ message: "Banner image required" });
+        } else {
+            updateImage = await models.project_image.update({ banner: banner }, { where: { projectId: projectId } });
+        }
+    }
+    else if (coverImage) {
+        //update cover image
+        if (cover == null || cover == undefined) {
+            return res.status(400).json({ message: "Cover image required" });
+        } else {
+            updateImage = await models.project_image.update({ cover: cover }, { where: { projectId: projectId } });
+        }
+    }
+    else if (mobileImage) {
+        //update mobile image
+        if (mobile == null || mobile == undefined) {
+            return res.status(400).json({ message: "Mobile image required" });
+        } else {
+            updateImage = await models.project_image.update({ mobile: mobile }, { where: { projectId: projectId } });
+        }
+    } else if (sliderImage) {
+        //update slider image
+        updateImage = await models.project_image.update({ slider1: slider1, slider2: slider2, slider3: slider3, slider4: slider4, slider5: slider5, slider6: slider6 }, { where: { projectId: projectId } });
+    }
+
+    if (updateImage[0] == 1) {
+        return res.status(200).json({ message: "Project image updated successfully" });
+    } else {
+        return res.status(400).json({ message: "Project image not updated" });
+    }
+}
+
+//update project information
+exports.updateProjectInformation = async (req, res) => {
+    let { title, longDesc, description, isProjectInfo, isCommissionUpdate, goal, commission, isRecurring, recurringDays, isExtend, endDate } = req.body;
+    const id = req.params.id;
+    let updateProject;
+    const checkProject = await models.projects.findOne({ where: { id: id } });
+
+    if (check.isEmpty(checkProject)) {
+        return res.status(404).json({ message: "Project not found" });
+    }
+    if (!checkProject.isActive) {
+        return res.status(404).json({ message: `Can't edit project because project already completed` });
+    }
+
+    if (isProjectInfo) {
+        //update project information
+        if (title == null || title == undefined || longDesc == null || longDesc == undefined || description == null || description == undefined) {
+            return res.status(400).json({ message: "tile , longDesc and desciption are required" });
+        } else {
+            updateProject = await models.projects.update({ title: title, longDesc: longDesc, description: description }, { where: { id: id } });
+        }
+    }
+    else if (isCommissionUpdate) {
+        //update project commission
+        if (!check.isNumeric(commission) || goal == null || goal == undefined || goal == 0 || commission == null || commission == undefined || commission == 0 || !check.isEmpty(goal)) {
+            return res.status(400).json({ message: "Goal and commission data are requied" });
+        } else {
+            const target = await getCommission(commission, goal);
+            updateProject = await models.projects.update({ goal: goal, commission: commission, target: target }, { where: { id: id } });
+        }
+    }
+    else if (isRecurring) {
+        //update recurring days
+        if (!check.isNumeric(recurringDays) || recurringDays == null || recurringDays == undefined || recurringDays == 0) {
+            return res.status(400).json({ message: "Recurring Days is requied" });
+        } else {
+            if (!checkProject.isRecurring) {
+                return res.status(400).json({ message: `Can't edit recurring days , project is not recurring project` });
+            }
+            updateProject = await models.projects.update({ recurringDays: recurringDays }, { where: { id: id } });
+        }
+    }
+    else if (isExtend) {
+        //update extend date
+        if (endDate == null || endDate == undefined) {
+            return res.status(400).json({ message: "Extended date is required" });
+        } else {
+            const date = moment(checkProject.endDate).format('YYYY-MM-DD');
+            endDate = moment(endDate).format('YYYY-MM-DD');
+            if (endDate < date) {
+                return res.status(400).json({ message: `End date should be greater then ` + date });
+            } else {
+                updateProject = await models.projects.update({ endDate: endDate }, { where: { id: id } });
+            }
+        }
+    }
+
+    if (updateProject[0] == 1) {
+        return res.status(200).json({ message: "Poject updated successfully" });
+    } else {
+        return res.status(404).json({ message: "Poject not updated" });
+    }
+}
