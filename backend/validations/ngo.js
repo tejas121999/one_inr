@@ -78,7 +78,7 @@ exports.ngoValidation = [
 
     body('landline')
         .isLength({ max: 10 })
-        .isNumeric().withMessage('Landline number should be numeric')
+       // .isNumeric().withMessage('Landline number should be numeric')
         .custom(async (value) => {
             return await models.ngo.findOne({
                 where: { landline: value }
@@ -125,9 +125,9 @@ exports.ngoValidation = [
         .exists().withMessage('deed is required')
         .notEmpty().withMessage('deed is required'),
 
-    body('logo')
-        .exists().withMessage('Logo Image is required')
-        .notEmpty().withMessage('Logo Image is required'),
+    // body('logo')
+    //     .exists().withMessage('Logo Image is required')
+    //     .notEmpty().withMessage('Logo Image is required'),
 
 
 ]
@@ -210,7 +210,7 @@ exports.ngoUpdateValidation = [
 
     body('landline')
         .isLength({ max: 10 })
-        .isNumeric().withMessage('Landline number should be numeric')
+        //.isNumeric().withMessage('Landline number should be numeric')
         .custom(async (value, { req }) => {
 
             return await models.ngo.findOne({

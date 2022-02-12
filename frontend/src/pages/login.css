@@ -97,9 +97,3 @@ form.w-50.m-auto {
   justify-content: space-around;
   margin-top: 20px;
 }
-.psw-feild {
-  outline: 0px;
-  border-radius: 30px;
-  padding-left: 12px !important;
-  border: 1px solid #ced4da !important;
-}

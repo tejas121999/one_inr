@@ -3,13 +3,7 @@
   margin: 40px; */
   margin-top: 40px;
 }
-.white-box {
-  background-color: #fefefe;
-  max-width: 100%;
-  padding: 25px;
-  margin: 25px;
-  margin-bottom: 5em;
-}
+
 .ViewAll {
   /* padding: 40px; */
   /* margin: 40px;  */
@@ -44,7 +38,4 @@
   /* color: #555555; */
   font-family: Rubik, sans-serif;
   text-align: justify;
-}
-.input-box {
-  padding: 15px;
 }

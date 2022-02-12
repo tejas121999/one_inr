@@ -2,7 +2,6 @@ import React from 'react';
 import { Modal, Tab, Tabs } from 'react-bootstrap';
 import Projects from './projects';
 import Transaction from './transaction';
-import '../../../pages/Doner/Donor.css';
 
 const Details = props => {
   return (
