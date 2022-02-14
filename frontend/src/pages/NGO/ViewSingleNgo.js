@@ -365,7 +365,7 @@ const ViewSingleNgo = props => {
                   <div className="image-upload">
                     <img
                       style={{ width: '200px', borderRadius: '10em' }}
-                      src={`${Local}/${ngoById.logo}`}
+                      src={`${ngoById.logoURL}`}
                     />
                   </div>
                   <label
@@ -390,7 +390,7 @@ const ViewSingleNgo = props => {
                           width: '100%',
                           borderRadius: '1.5em',
                         }}
-                        src={`${Local}/${ngoById.panCard}`}
+                        src={`${ngoById.panCardURL}`}
                       />
                     </div>
                     <label
@@ -414,7 +414,7 @@ const ViewSingleNgo = props => {
                           width: '100%',
                           borderRadius: '1.5em',
                         }}
-                        src={`${Local}/${ngoById.certificate}`}
+                        src={`${ngoById.certificateURL}`}
                       />
                     </div>
                     <label
@@ -438,7 +438,7 @@ const ViewSingleNgo = props => {
                           width: '100%',
                           borderRadius: '1.5em',
                         }}
-                        src={`${Local}/${ngoById.charityRegistrationCertificate}`}
+                        src={`${ngoById.charityRegistrationCertificateURL}`}
                       />
                     </div>
                     <label
@@ -462,7 +462,7 @@ const ViewSingleNgo = props => {
                           width: '100%',
                           borderRadius: '1.5em',
                         }}
-                        src={`${Local}/${ngoById.deed}`}
+                        src={`${ngoById.deedURL}`}
                       />
                     </div>
                     <label
@@ -554,6 +554,7 @@ const ViewSingleNgo = props => {
                 ngoById.user.bankDetails.map(el => (
                   <>
                     <div>
+                      {console.log('el', el)}
                       <p
                         className="BankDet"
                         style={{

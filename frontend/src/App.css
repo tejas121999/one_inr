@@ -79,3 +79,30 @@
   /* width: 70% !important; */
   border-radius: 1rem !important;
 }
+
+.Edit-NGO-logo-img {
+  grid-row: 1/2;
+  width: 200px;
+  height: 10em;
+  z-index: 200;
+  grid-column: 1/2;
+  border-radius: 50%;
+}
+.Edit-NGO-logo-img:hover {
+  z-index: 50;
+  opacity: 0.2;
+  /* filter: grayscale(1); */
+}
+/* .Edit-NGO-logo-img:hover .Edit-NGO-logo-p {
+  z-index: 200;
+} */
+.Edit-NGO-logo-p {
+  grid-row: 1/2;
+  z-index: 100;
+  grid-column: 1/2;
+  /* color: white; */
+}
+
+/* .Edit-NGO-logo-p:hover .Edit-NGO-logo-img {
+  opacity: 0.7;
+} */

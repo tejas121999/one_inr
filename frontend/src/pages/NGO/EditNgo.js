@@ -29,11 +29,13 @@ const EditNgo = props => {
   const [charityCertificateImgUrl, setCharityCertificateImgUrl] = useState('');
   const [deedImgUrl, setDeedImgUrl] = useState('');
   const [show, setShow] = useState('true');
+  const [LogoCondition, setLogoCondition] = useState('true');
+
   const [date, setDate] = useState();
   const textInput = useRef(null);
   const [addContactValues, setAddContactValues] = useState([]);
   const [addBankDetailsValues, setAddBankDetailsValues] = useState([]);
-
+  const [dropCondition, setDropCondition] = useState(false);
   const [bankName, setBankName] = useState([]);
   const [id, setCount] = useState(0);
 
@@ -42,7 +44,9 @@ const EditNgo = props => {
   }, []);
   let ngoById = useSelector(state => state.ngo.ngoData);
   console.log('acc', ngoById);
-
+  const handleDropzone = () => {
+    setDropCondition(true);
+  };
   let handleChangeForAddBankDetails = (i, e) => {
     let newFormValues = [...addBankDetailsValues];
     newFormValues[i][e.target.name] = e.target.value;
@@ -142,6 +146,7 @@ const EditNgo = props => {
       setLogoImgUrl(result.data.pathtoUpload);
     }
   };
+
   console.log('logoImage', logoImgUrl);
 
   const onPanCardImageAdd = async imgData => {
@@ -195,7 +200,6 @@ const EditNgo = props => {
       setDeedImgUrl(result.data.pathtoUpload);
     }
   };
-  console.log('deadImage', deedImgUrl);
 
   const onEditNgo = values => {
     let newDate = moment(date).format('LL');
@@ -281,10 +285,55 @@ const EditNgo = props => {
                       <label style={{ fontWeight: 'bold' }}>
                         Logo<label style={{ color: 'red' }}>*</label>
                       </label>
-                      <DropzoneComponent
-                        onChangeImage={onlogoImageAdd}
-                        value={logoImgUrl}
-                      />
+                      {dropCondition && (
+                        <DropzoneComponent
+                          onChangeImage={onlogoImageAdd}
+                          value={logoImgUrl}
+                        />
+                      )}
+                      <div
+                        style={{
+                          padding: '0.5em 1em 1.5em',
+                          textAlign: 'center',
+                        }}
+                      >
+                        {!dropCondition && (
+                          <div className="image-upload">
+                            <button
+                              style={{
+                                border: 'none',
+                                background: 'none',
+                                display: 'grid',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                alignContent: 'center',
+                                gridTemplateRows: '1fr',
+                                gridTemplateColumns: '1fr',
+                              }}
+                            >
+                              <img
+                                className="Edit-NGO-logo-img"
+                                style={{ gridRow: '1/2' }}
+                                // onMouseOver={() => {
+                                //   setLogoCondition(!LogoCondition);
+                                //   console.log(LogoCondition, 'LOGO CONDITION');
+                                // }}
+                                // onMouseLeave={() => {
+                                //   setLogoCondition(!LogoCondition);
+                                //   console.log(LogoCondition, 'LOGO CONDITION');
+                                // }}
+                                src={`${ngoById.logoURL}`}
+                              ></img>
+                              <p
+                                className="Edit-NGO-logo-p"
+                                onClick={handleDropzone}
+                              >
+                                Upload Logo
+                              </p>
+                            </button>
+                          </div>
+                        )}
+                      </div>
                       <ErrorMessage name="logo_img" component={TextError} />
                     </div>
                   </div>
@@ -565,10 +614,19 @@ const EditNgo = props => {
                     className="col-sm-3 col-xs-3 "
                     style={{ paddingLeft: '0' }}
                   >
-                    <DropzoneComponent
-                      onChangeImage={onPanCardImageAdd}
-                      value={panCardImgUrl}
-                    />
+                    <div
+                      style={{
+                        padding: '0.5em 1em 1.5em',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <div className="image-upload">
+                        <img
+                          style={{ width: '200px', borderRadius: '10em' }}
+                          src={`${ngoById.panCardURL}`}
+                        />
+                      </div>
+                    </div>
                     <ErrorMessage name="pancard_img" component={TextError} />
                   </div>
 
@@ -576,10 +634,19 @@ const EditNgo = props => {
                     className="col-sm-3 col-xs-3 "
                     style={{ paddingLeft: '0' }}
                   >
-                    <DropzoneComponent
-                      onChangeImage={onCertificateImageAdd}
-                      value={certificateImgUrl}
-                    />
+                    <div
+                      style={{
+                        padding: '0.5em 1em 1.5em',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <div className="image-upload">
+                        <img
+                          style={{ width: '200px', borderRadius: '10em' }}
+                          src={`${ngoById.charityURL}`}
+                        />
+                      </div>
+                    </div>
                     <ErrorMessage
                       name="certificate_img"
                       component={TextError}
@@ -590,10 +657,19 @@ const EditNgo = props => {
                     className="col-sm-3 col-xs-3 "
                     style={{ paddingLeft: '0' }}
                   >
-                    <DropzoneComponent
-                      onChangeImage={onCharityCertificateImageAdd}
-                      value={charityCertificateImgUrl}
-                    />
+                    <div
+                      style={{
+                        padding: '0.5em 1em 1.5em',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <div className="image-upload">
+                        <img
+                          style={{ width: '200px', borderRadius: '10em' }}
+                          src={`${ngoById.charityCertificateURL}`}
+                        />
+                      </div>
+                    </div>
                     <ErrorMessage
                       name="charityCertificate_img"
                       component={TextError}
@@ -601,10 +677,19 @@ const EditNgo = props => {
                   </div>
 
                   <div className="col-sm-3 col-xs-3 " style={{ padding: '0' }}>
-                    <DropzoneComponent
-                      onChangeImage={onDeedImageAdd}
-                      value={deedImgUrl}
-                    />
+                    <div
+                      style={{
+                        padding: '0.5em 1em 1.5em',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <div className="imageupload">
+                        <img
+                          style={{ width: '200px', borderRadius: '10em' }}
+                          src={`${ngoById.deedURL}`}
+                        />
+                      </div>
+                    </div>
                     <ErrorMessage name="deed_img" component={TextError} />
                   </div>
                 </div>
