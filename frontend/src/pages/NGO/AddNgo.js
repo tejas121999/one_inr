@@ -235,34 +235,28 @@ const AddNgo = props => {
       <br />
       <br />
       <br />
-      <br />
       <div
         className="row"
         style={{
-          backgroundColor: 'white',
-          margin: '0 1.2em',
-          borderRadius: '1em',
+          margin: '1em',
+          padding: '0.8em 2em',
         }}
       >
         <p
           style={{
             textAlign: 'left',
-            fontSize: '1.25rem',
-            fontWeight: '600',
-            margin: '20px',
-            width: '100%',
-            marginLeft: '1em',
+            fontSize: '25',
+            fontWeight: 'bold',
+            marginBottom: '0',
           }}
         >
           Add NGO
         </p>
       </div>
+      <hr style={{ margin: '0' }} />
       <div
         style={{
-          margin: '20px',
-          backgroundColor: 'white',
-          marginBottom: '5em',
-          borderRadius: '1.5em',
+          marginBottom: '2.5em',
         }}
       >
         <Formik
@@ -286,8 +280,8 @@ const AddNgo = props => {
           enableReinitialize={true}
         >
           {({ errors, values, touched }) => (
-            <Form>
-              <div className="w-100 mx-auto" style={{ padding: '4rem 10rem' }}>
+            <div className="w-100 mx-auto" style={{ padding: '3rem 8rem' }}>
+              <Form>
                 <div className="row" style={{ justifyContent: 'center' }}>
                   <div className="col-3">
                     <div style={{ padding: '15px 15px -2px' }}>
@@ -663,8 +657,8 @@ const AddNgo = props => {
                     </div>
                   </div>
                 </div>
-              </div>
-            </Form>
+              </Form>
+            </div>
           )}
         </Formik>
 

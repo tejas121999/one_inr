@@ -14,7 +14,6 @@ import { visuallyHidden } from '@mui/utils';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 // import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
 import { ReactComponent as Cross } from '../../../assets/icons/cross.svg';
 import { ReactComponent as Edit } from '../../../assets/icons/edit.svg';
 import { Link, useHistory } from 'react-router-dom';

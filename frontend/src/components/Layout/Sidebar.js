@@ -27,7 +27,7 @@ import bn from 'utils/bemnames';
 const dashboardItems = [
   {
     to: '/dashboard',
-    name: 'dashboard',
+    name: 'Dashboard',
     exact: true,
     Icon: MdDashboard,
   },
@@ -51,19 +51,19 @@ const masterItems = [
 const donorItems = [
   {
     to: '/add_doner',
-    name: 'add donor',
+    name: 'Add Donor',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
   {
     to: '/view_all_doner',
-    name: `view all donor's`,
+    name: `View All Donor's`,
     exact: true,
     Icon: MdOutlineNavigateNext,
   },
   {
     to: '/upcoming_doner_renewal',
-    name: 'Upcoming donor renewal',
+    name: 'Upcoming Donor Renewal',
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
@@ -84,7 +84,7 @@ const NGO_Item = [
   },
   {
     to: '/view_all_ngo',
-    name: `View All NGO's`,
+    name: `View All NGO`,
     exact: false,
     Icon: MdOutlineNavigateNext,
   },
@@ -128,16 +128,16 @@ const accountsItems = [
 const SettingItems = [
   {
     to: '/my_profile',
-    name: 'my profile',
+    name: 'My Profile',
     exact: true,
     Icon: MdOutlineNavigateNext,
   },
-  { to: '/roles', name: 'roles', exact: true, Icon: MdOutlineNavigateNext },
-  { to: '/users', name: 'users', exact: true, Icon: MdOutlineNavigateNext },
-  { to: '/config', name: 'config', exact: true, Icon: MdOutlineNavigateNext },
+  { to: '/roles', name: 'Roles', exact: true, Icon: MdOutlineNavigateNext },
+  { to: '/users', name: 'Users', exact: true, Icon: MdOutlineNavigateNext },
+  { to: '/config', name: 'Config', exact: true, Icon: MdOutlineNavigateNext },
   {
     to: '/razorpay_credentials',
-    name: 'Razorpay credentials',
+    name: 'Razorpay Credentials',
     exact: true,
     Icon: MdOutlineNavigateNext,
   },
@@ -247,14 +247,13 @@ class Sidebar extends React.Component {
               >
                 <BSNavLink
                   id={`navItem-${name}-${index}`}
-                  className="text-uppercase"
                   tag={NavLink}
                   to={to}
                   activeClassName="active"
                   exact={exact}
                 >
                   <Icon className={bem.e('nav-item-icon')} />
-                  <span className="">{name}</span>
+                  <span style={{ fontSize: '1rem' }}>{name}</span>
                 </BSNavLink>
               </NavItem>
             ))}
@@ -292,7 +291,6 @@ class Sidebar extends React.Component {
                 >
                   <BSNavLink
                     id={`navItem-${name}-${index}`}
-                    className="text-uppercase"
                     tag={NavLink}
                     to={to}
                     activeClassName="active"
@@ -335,7 +333,6 @@ class Sidebar extends React.Component {
                 >
                   <BSNavLink
                     id={`navItem-${name}-${index}`}
-                    className="text-uppercase"
                     tag={NavLink}
                     to={to}
                     activeClassName="active"
@@ -378,7 +375,6 @@ class Sidebar extends React.Component {
                 >
                   <BSNavLink
                     id={`navItem-${name}-${index}`}
-                    className="text-uppercase"
                     tag={NavLink}
                     to={to}
                     activeClassName="active"
@@ -422,7 +418,6 @@ class Sidebar extends React.Component {
                 >
                   <BSNavLink
                     id={`navItem-${name}-${index}`}
-                    className="text-uppercase"
                     tag={NavLink}
                     to={to}
                     activeClassName="active"
@@ -465,7 +460,6 @@ class Sidebar extends React.Component {
                 >
                   <BSNavLink
                     id={`navItem-${name}-${index}`}
-                    className="text-uppercase"
                     tag={NavLink}
                     to={to}
                     activeClassName="active"
@@ -509,7 +503,6 @@ class Sidebar extends React.Component {
                 >
                   <BSNavLink
                     id={`navItem-${name}-${index}`}
-                    className="text-uppercase"
                     tag={NavLink}
                     to={to}
                     activeClassName="active"
@@ -526,7 +519,6 @@ class Sidebar extends React.Component {
               <NavItem key={index} className={bem.e('nav-item')}>
                 <BSNavLink
                   id={`navItem-${name}-${index}`}
-                  className="text-uppercase"
                   tag={NavLink}
                   to={to}
                   activeClassName="active"
@@ -541,7 +533,6 @@ class Sidebar extends React.Component {
               <NavItem key={index} className={bem.e('nav-item')}>
                 <BSNavLink
                   id={`navItem-${name}-${index}`}
-                  className="text-uppercase"
                   tag={NavLink}
                   to={to}
                   activeClassName="active"

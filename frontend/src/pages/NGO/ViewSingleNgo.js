@@ -29,7 +29,6 @@ import {
 } from '../../Redux/Actions/NgoActions';
 import { Local } from '../../API/APIEndpoints';
 import moment from 'moment';
-import { Checkbox } from 'material-ui';
 
 const ViewSingleNgo = props => {
   const [key, setKey] = React.useState('details');
@@ -544,16 +543,7 @@ const ViewSingleNgo = props => {
               <br />
               <br />
               <div>
-                <p
-                  className="BankDet"
-                  style={{
-                    textAlign: 'left',
-                    fontWeight: 'bold',
-                    fontSize: '25',
-                  }}
-                >
-                  Bank Details
-                </p>
+                <p className="BankDet">Bank Details</p>
               </div>
               <br />
 
