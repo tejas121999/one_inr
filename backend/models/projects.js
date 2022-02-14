@@ -86,6 +86,11 @@ module.exports = (sequelize, DataTypes) => {
             field: 'is_active',
             allowNull : false
         },
+        isArchived: {
+            type: DataTypes.BOOLEAN,
+            field: 'is_archived',
+            default : false
+        },
 
         displayOnHomeStatus: {
             type: DataTypes.BOOLEAN,
