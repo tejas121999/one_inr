@@ -20,7 +20,7 @@ const AddVendor = props => {
     company: yup.string().required('Required Field'),
     email: yup
       .string()
-      .email('Invalide Email Format')
+      .email('Invalid Email Format')
       .required('Required Field'),
     mobile: yup
       .number()
@@ -141,7 +141,13 @@ const AddVendor = props => {
                     <div className="row">
                       <div className="col-6 ">
                         <div style={{ padding: '15px 5px 5px 15px' }}>
-                          <label style={{ fontSize: '20', marginBottom: '0' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0',
+                            }}
+                          >
                             First Name<label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
@@ -164,7 +170,13 @@ const AddVendor = props => {
                       </div>
                       <div className="col-6">
                         <div style={{ padding: '15px 15px 5px 5px' }}>
-                          <label style={{ fontSize: '20', marginBottom: '0' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0',
+                            }}
+                          >
                             Last Name<label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
@@ -189,7 +201,13 @@ const AddVendor = props => {
                     <div className="row">
                       <div className="col-6">
                         <div style={{ padding: '15px 5px 5px 15px' }}>
-                          <label style={{ fontSize: '20', marginBottom: '0' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0',
+                            }}
+                          >
                             Mobile Number
                             <label style={{ color: 'red' }}>*</label>
                           </label>
@@ -214,7 +232,13 @@ const AddVendor = props => {
                       </div>
                       <div className="col-6">
                         <div style={{ padding: '15px 15px 5px 5px' }}>
-                          <label style={{ fontSize: '20', marginBottom: '0' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0',
+                            }}
+                          >
                             Email ID<label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
@@ -239,7 +263,13 @@ const AddVendor = props => {
                     <div className="row">
                       <div className="col-6">
                         <div style={{ padding: '15px 5px 5px 15px' }}>
-                          <label style={{ fontSize: '20', marginBottom: '0' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0',
+                            }}
+                          >
                             GST Number<label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
@@ -261,7 +291,11 @@ const AddVendor = props => {
                       <div className="col-6">
                         <div style={{ padding: '15px 15px 5px 5px' }}>
                           <label
-                            style={{ fontSize: '20', marginBottom: '0.6em' }}
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0.6em',
+                            }}
                           >
                             GST Image
                             {/* <label style={{ color: 'red' }}>*</label> */}
@@ -280,7 +314,13 @@ const AddVendor = props => {
                     <div className="row">
                       <div className="col-6">
                         <div style={{ padding: '15px 5px 5px 15px' }}>
-                          <label style={{ fontSize: '20', marginBottom: '0' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0',
+                            }}
+                          >
                             Pan Number<label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
@@ -302,7 +342,11 @@ const AddVendor = props => {
                       <div className="col-6">
                         <div style={{ padding: '15px 15px 5px 5px' }}>
                           <label
-                            style={{ fontSize: '20', marginBottom: '0.6em' }}
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0.6em',
+                            }}
                           >
                             Pan Image
                             {/* <label style={{ color: 'red' }}>*</label> */}
@@ -321,7 +365,13 @@ const AddVendor = props => {
                     <div className="row">
                       <div className="col-6">
                         <div style={{ padding: '15px 5px 5px 15px' }}>
-                          <label style={{ fontSize: '20', marginBottom: '0' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0',
+                            }}
+                          >
                             Company Name
                             <label style={{ color: 'red' }}>*</label>
                           </label>
@@ -345,7 +395,15 @@ const AddVendor = props => {
                       </div>
                       <div className="col-6">
                         <div style={{ padding: '15px 15px 5px 5px' }}>
-                          <label style={{ fontSize: '20' }}>Address</label>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0.4em',
+                            }}
+                          >
+                            Address
+                          </label>
                           <Field
                             as="textarea"
                             className="form-control"

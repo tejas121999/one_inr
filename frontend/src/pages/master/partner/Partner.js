@@ -9,24 +9,16 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
+import { ReactComponent as Cross } from '../../../assets/icons/cross.svg';
+import { ReactComponent as Edit } from '../../../assets/icons/edit.svg';
 import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
-// import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {
-  FaRegEdit,
-  FaRegEye,
-  FaRegTrashAlt,
-  FaBookOpen,
-  FaDollarSign,
-} from 'react-icons/fa';
-
 import { Link, useHistory } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getAllPartnerAction } from '../../../Redux/Actions/MasterActions';
 import Loader from '../../Loader';
-import { constData } from '../../../utils/colors';
 import {
   EnhancedTableHead,
   getComparator,
@@ -69,7 +61,7 @@ export default function EnhancedTable() {
   }, []);
 
   let partnerList = useSelector(state => state.master.partnerList);
-  console.log('parent linst ', partnerList)
+  console.log('parent linst ', partnerList);
   const deleteModalOpen = data => {
     setDeleteID(data.id);
     setDeleteModal(true);
@@ -143,37 +135,37 @@ export default function EnhancedTable() {
   const headCells = [
     {
       id: 'name',
-      numeric: false,
+      numeric: true,
       disablePadding: false,
       label: 'Name',
     },
     {
       id: 'Company Name',
-      numeric: false,
+      numeric: true,
       disablePadding: false,
-      label: 'company name',
+      label: 'Company Name',
     },
     {
       id: 'Phone No',
-      numeric: false,
+      numeric: true,
       disablePadding: false,
-      label: 'Phone No',
+      label: 'Mobile',
     },
     {
       id: 'Email',
-      numeric: false,
+      numeric: true,
       disablePadding: false,
-      label: 'Email',
+      label: 'Email ID',
     },
     {
       id: 'GST',
-      numeric: false,
+      numeric: true,
       disablePadding: false,
       label: 'GST',
     },
     {
       id: 'action',
-      numeric: false,
+      numeric: true,
       disablePadding: false,
       label: 'Action',
     },
@@ -215,7 +207,7 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => { });
+      .catch(err => {});
   };
 
   const downloadCsv = () => {
@@ -230,7 +222,7 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => { });
+      .catch(err => {});
   };
   const downloadXls = () => {
     fetch(XlsUrl)
@@ -244,247 +236,262 @@ export default function EnhancedTable() {
         });
         //window.location.href = response.url;
       })
-      .catch(err => { });
+      .catch(err => {});
   };
   // end
 
   return (
     // console.log('Download', pdfUrl),
-    (
-      <>
-        <br />
-        <br />
-        <br />
-        <br />
-        <ToastContainer hideProgressBar />
-        <Partnerdelete
-          show={deleteModal}
-          onHide={deleteModalClose}
-          id={deleteId}
-        />{' '}
+    <>
+      <br />
+      <br />
+      <br />
+      <ToastContainer hideProgressBar />
+      <Partnerdelete
+        show={deleteModal}
+        onHide={deleteModalClose}
+        id={deleteId}
+      />{' '}
+      <div
+        className="row"
+        style={{
+          margin: '1em',
+        }}
+      >
         <div
-          className="row"
           style={{
-            backgroundColor: 'white',
-            margin: '0 1.2em',
-            borderRadius: '1em',
+            display: 'flex',
+            width: '50%',
+            padding: '0.5em 2em',
+            justifyContent: 'flex-start',
           }}
         >
-          <div
+          <p
             style={{
-              display: 'flex',
-              width: '50%',
-              padding: '0.5em 1.7em',
+              textAlign: 'left',
+              fontSize: '25',
+              fontWeight: 'bold',
+              marginBottom: '0',
+              paddingTop: '5px',
             }}
           >
-            <p
-              style={{
-                textAlign: 'left',
-                fontSize: '1.25rem',
-                fontWeight: '600',
-                marginBottom: '0',
-                paddingTop: '3px',
-              }}
-            >
-              Partner List
-            </p>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              width: '50%',
-              padding: '0.5em 1.7em',
-            }}
-          >
-            <Link
-              to="/addpartner"
-              type="button"
-              className="btn btn-primary"
-              style={{ borderRadius: '2em', width: '25%' }}
-            >
-              Add Partner
-            </Link>
-            <button
-              style={{ marginLeft: '1em', borderRadius: '2em', width: '15%' }}
-              className="btn btn-primary"
-              onClick={e => handleClick(e)}
-            >
-              Export
-            </button>
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-              style={{ top: '30px', left: '-8px' }}
-            >
-              <MenuItem>
-                <button
-                  className="export-btn w-100"
-                  onClick={() => onCopyClick()}
-                >
-                  Copy
-                </button>
-              </MenuItem>
-              <MenuItem>
-                <button className="export-btn w-100" onClick={downloadCsv}>
-                  CSV
-                </button>
-              </MenuItem>
-              <MenuItem>
-                <button className="export-btn w-100" onClick={downloadXls}>
-                  Excel
-                </button>
-              </MenuItem>
-              <MenuItem>
-                <button className="export-btn w-100" onClick={downloadPdf}>
-                  PDF
-                </button>
-              </MenuItem>
-              <MenuItem>
-                <button
-                  className="export-btn w-100"
-                  onClick={() => onPrintClick()}
-                >
-                  Print
-                </button>
-              </MenuItem>
-              {/* <MenuItem></MenuItem> */}
-            </Menu>
-          </div>
+            Partners
+          </p>
         </div>
-        {partnerList && partnerList.length > 0 ? (
-          <div
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            width: '50%',
+            padding: '0.5em 2.3em',
+          }}
+        >
+          <input
+            placeholder="Search"
+            onChange={e => handleChange(e)}
+            type="search"
             style={{
-              margin: '20px',
-              backgroundColor: 'white',
-              marginBottom: '5em',
+              paddingLeft: '1em',
+              border: '1px solid #ced4da',
               borderRadius: '1.5em',
+              height: '2.2em',
             }}
-          >
+          />
+        </div>
+      </div>
+      <hr style={{ margin: '0' }} />
+      {partnerList && partnerList.length > 0 ? (
+        <div
+          style={{
+            margin: '30px 50px',
+            marginBottom: '5em',
+            borderRadius: '1.5em',
+            border: '1px solid #63b8ec',
+          }}
+        >
+          <div className="row" style={{ margin: '1em 0' }}>
             <div
               style={{
                 display: 'flex',
-                padding: '2em',
-                justifyContent: 'flex-end',
+                width: '50%',
+                padding: '0.2em 2em 1em',
+                justifyContent: 'flex-start',
               }}
             >
-              <input
-                placeholder="Search"
-                onChange={e => handleChange(e)}
-                type="search"
-                style={{
-                  paddingLeft: '1em',
-                  border: '1px solid #ced4da',
-                  borderRadius: '1.5em',
-                  height: '2.2em',
-                }}
-              />
+              <p className="overview">Overview</p>
             </div>
-            <Paper
-              sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                width: '50%',
+                padding: '0.5rem 1.5rem',
+              }}
             >
-              <React.Fragment>
-                <TableContainer id="tableDiv">
-                  <Table>
-                    <EnhancedTableHead
-                      numSelected={selected.length}
-                      order={order}
-                      orderBy={orderBy}
-                      onRequestSort={handleRequestSort}
-                      rowCount={partnerList.length}
-                      headCells={headCells}
-                    />
-                    <TableBody>
-                      {stableSort(partnerList, getComparator(order, orderBy))
-                        .slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage,
-                        )
-                        .map((row, index) => {
-                          const isItemSelected = isSelected(row.name);
-                          const labelId = `enhanced-table-checkbox-${index}`;
-
-                          return (
-                            <TableRow
-                              hover
-                              aria-checked={isItemSelected}
-                              tabIndex={-1}
-                              key={row.name}
-                              selected={isItemSelected}
-                            >
-                              <TableCell
-                                id={labelId}
-                                align="left"
-                                // scope="row"
-                                // padding="none"
-                                style={{ padding: '20px' }}
-                              >
-                                {row.name}
-                              </TableCell>
-                              <TableCell align="left">
-                                {row.companyName}
-                              </TableCell>
-                              <TableCell align="center">{row.phone}</TableCell>
-                              <TableCell align="left">{row.email}</TableCell>
-                              <TableCell align="center">
-                                {row.gstNumber}
-                              </TableCell>
-                              <TableCell align="center">
-                                <button
-                                  data-bs-toggle="tooltip"
-                                  title="Edit"
-                                  className="btn"
-                                  onClick={() =>
-                                    history.push('/editpartner', row)
-                                  }
-                                >
-                                  <FaRegEdit />
-                                </button>
-
-                                <button
-                                  data-bs-toggle="tooltip"
-                                  title="Delete"
-                                  className="btn"
-                                  onClick={() => deleteModalOpen(row)}
-                                >
-                                  <FaRegTrashAlt />
-                                </button>
-                              </TableCell>
-                            </TableRow>
-                          );
-                        })}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, 50, 100]}
-                  component="div"
-                  count={partnerList.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  showLastButton={true}
-                  showFirstButton={true}
-                />
-              </React.Fragment>
-            </Paper>
-            <PartnerTable
-              printDonorTable={printDonorTable}
-              tableData={stableSort(
-                partnerList,
-                getComparator(order, orderBy),
-              ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
-              setPrintDonorValue={setPrintDonorValue}
-            ></PartnerTable>
+              <Link
+                to="/addpartner"
+                type="button"
+                className="btn btn-primary"
+                style={{ borderRadius: '2em', fontSize: '20' }}
+              >
+                Add Partner
+              </Link>
+              <button
+                style={{
+                  marginLeft: '1em',
+                  borderRadius: '2em',
+                  fontSize: '20',
+                }}
+                className="btn btn-primary"
+                onClick={e => handleClick(e)}
+              >
+                Export
+              </button>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                style={{ top: '30px', left: '-8px' }}
+              >
+                <MenuItem>
+                  <button
+                    className="export-btn w-100"
+                    onClick={() => onCopyClick()}
+                  >
+                    Copy
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button className="export-btn w-100" onClick={downloadCsv}>
+                    CSV
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button className="export-btn w-100" onClick={downloadXls}>
+                    Excel
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button className="export-btn w-100" onClick={downloadPdf}>
+                    PDF
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button
+                    className="export-btn w-100"
+                    onClick={() => onPrintClick()}
+                  >
+                    Print
+                  </button>
+                </MenuItem>
+              </Menu>
+            </div>
           </div>
-        ) : (
-          <Loader />
-        )}
-      </>
-    )
+          <Paper
+            sx={{ width: '96%', marginBottom: '2em', marginLeft: '1.5em' }}
+          >
+            <React.Fragment>
+              <TableContainer id="tableDiv">
+                <Table>
+                  <EnhancedTableHead
+                    numSelected={selected.length}
+                    order={order}
+                    orderBy={orderBy}
+                    onRequestSort={handleRequestSort}
+                    rowCount={partnerList.length}
+                    headCells={headCells}
+                  />
+                  <TableBody>
+                    {stableSort(partnerList, getComparator(order, orderBy))
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                      .map((row, index) => {
+                        const isItemSelected = isSelected(row.name);
+                        const labelId = `enhanced-table-checkbox-${index}`;
+
+                        return (
+                          <TableRow
+                            hover
+                            aria-checked={isItemSelected}
+                            tabIndex={-1}
+                            key={row.name}
+                            selected={isItemSelected}
+                          >
+                            <TableCell
+                              id={labelId}
+                              align="left"
+                              // scope="row"
+                              // padding="none"
+                              // style={{ padding: '20px' }}
+                            >
+                              {row.name}
+                            </TableCell>
+                            <TableCell align="left">
+                              {row.companyName}
+                            </TableCell>
+                            <TableCell align="left">{row.phone}</TableCell>
+                            <TableCell align="left">{row.email}</TableCell>
+                            <TableCell align="left">{row.gstNumber}</TableCell>
+                            <TableCell align="left">
+                              <button
+                                data-bs-toggle="tooltip"
+                                title="Edit"
+                                className="btn"
+                                onClick={() =>
+                                  history.push('/editpartner', row)
+                                }
+                                style={{ padding: '0' }}
+                              >
+                                <Edit style={{ width: '20', height: '20' }} />
+                              </button>
+
+                              <button
+                                data-bs-toggle="tooltip"
+                                title="Delete"
+                                className="btn"
+                                onClick={() => deleteModalOpen(row)}
+                                style={{
+                                  padding: '3px 0 0 2px',
+                                }}
+                              >
+                                <Cross style={{ width: '30', height: '30' }} />
+                              </button>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, 50, 100]}
+                component="div"
+                count={partnerList.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                showLastButton={true}
+                showFirstButton={true}
+              />
+            </React.Fragment>
+          </Paper>
+          <PartnerTable
+            printDonorTable={printDonorTable}
+            tableData={stableSort(
+              partnerList,
+              getComparator(order, orderBy),
+            ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+            setPrintDonorValue={setPrintDonorValue}
+          ></PartnerTable>
+        </div>
+      ) : (
+        <Loader />
+      )}
+    </>
   );
 }

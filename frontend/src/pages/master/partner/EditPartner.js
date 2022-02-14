@@ -23,18 +23,28 @@ const EditPartner = props => {
   const [panImgUrl, setPanImgUrl] = useState('');
   const [gstImgUrl, setGstImgUrl] = useState('');
   const validationSchema = yup.object({
-    fName: yup.string().required('Required'),
-    lName: yup.string().required('Required'),
-    company: yup.string().required('required'),
-    email: yup.string().email('Invalide Email Format').required('Required'),
-    mobile: yup.string().required('required').min(10, 'Please enter 10 digits'),
+    fName: yup.string().required('Required Field'),
+    lName: yup.string().required('Required Field'),
+    company: yup.string().required('Required Field'),
+    email: yup
+      .string()
+      .email('Invalid Email Format')
+      .required('Required Field'),
+    mobile: yup
+      .string()
+      .required('Required Field')
+      .min(10, 'Please enter 10 digits'),
     gst: yup
       .string()
+      .required('Required Field')
       .matches(
         /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
         'Invalid Format',
       ),
-    pan: yup.string().matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
+    pan: yup
+      .string()
+      .required('Required Field')
+      .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
   });
   const onUpdatePartner = values => {
     const obj = {
@@ -91,7 +101,6 @@ const EditPartner = props => {
         <br />
         <br />
         <br />
-        <br />
         <ToastContainer hideProgressBar />
         <Modal size="sm" centered show={imgView}>
           <Modal.Body>
@@ -104,38 +113,38 @@ const EditPartner = props => {
               src={imgData}
             />
           </Modal.Body>
-          <button onClick={() => closeModal()} className="btn btn-danger">
-            Close
-          </button>
+          <center>
+            <button
+              onClick={() => closeModal()}
+              className="btn btn-danger"
+              style={{ marginBottom: '1em' }}
+            >
+              Close
+            </button>
+          </center>
         </Modal>
         <div
           className="row"
           style={{
-            backgroundColor: 'white',
-            margin: '0 1.2em',
-            borderRadius: '1em',
+            margin: '1em',
+            padding: '0.8em 2em',
           }}
         >
           <p
             style={{
               textAlign: 'left',
-              fontSize: '1.25rem',
-              fontWeight: '600',
-              margin: '20px',
-              width: '100%',
-              marginLeft: '20px',
+              fontSize: '25',
+              fontWeight: 'bold',
+              marginBottom: '0',
             }}
           >
             Edit Partner
           </p>
         </div>
-
+        <hr style={{ margin: '0' }} />
         <div
           style={{
-            backgroundColor: 'white',
-            margin: '20px',
             marginBottom: '5em',
-            borderRadius: '1.5em',
           }}
         >
           <Formik
@@ -162,17 +171,22 @@ const EditPartner = props => {
             enableReinitialize={true}
           >
             {({ values, errors, touched }) => (
-              <div className="w-100 mx-auto" style={{ padding: '4rem 10rem' }}>
+              <div className="w-100 mx-auto" style={{ padding: '3rem 8rem' }}>
                 <div className="row">
                   <div className="col-12">
                     <Form>
                       <div className="row">
                         <div className="col-6 ">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>
+                          <div style={{ padding: '15px 5px 5px 15px' }}>
+                            <label
+                              style={{
+                                fontSize: '20',
+                                marginBottom: '0',
+                                fontWeight: 'bold',
+                              }}
+                            >
                               First Name
+                              <label style={{ color: 'red' }}>*</label>
                             </label>
                             <Field
                               className="form-control"
@@ -193,11 +207,16 @@ const EditPartner = props => {
                           </div>
                         </div>
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>
+                          <div style={{ padding: '15px 15px 5px 5px' }}>
+                            <label
+                              style={{
+                                fontSize: '20',
+                                marginBottom: '0',
+                                fontWeight: 'bold',
+                              }}
+                            >
                               Last Name
+                              <label style={{ color: 'red' }}>*</label>
                             </label>
                             <Field
                               className="form-control"
@@ -220,11 +239,16 @@ const EditPartner = props => {
                       </div>
                       <div className="row">
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>
+                          <div style={{ padding: '15px 5px 5px 15px' }}>
+                            <label
+                              style={{
+                                fontSize: '20',
+                                marginBottom: '0',
+                                fontWeight: 'bold',
+                              }}
+                            >
                               Mobile Number
+                              <label style={{ color: 'red' }}>*</label>
                             </label>
                             <Field
                               className="form-control"
@@ -246,11 +270,15 @@ const EditPartner = props => {
                           </div>
                         </div>
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>
-                              Email Id
+                          <div style={{ padding: '15px 15px 5px 5px' }}>
+                            <label
+                              style={{
+                                fontSize: '20',
+                                marginBottom: '0',
+                                fontWeight: 'bold',
+                              }}
+                            >
+                              Email ID<label style={{ color: 'red' }}>*</label>
                             </label>
                             <Field
                               type="text"
@@ -272,10 +300,17 @@ const EditPartner = props => {
                       </div>
                       <div className="row">
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>GST No</label>
+                          <div style={{ padding: '15px 5px 5px 15px' }}>
+                            <label
+                              style={{
+                                fontSize: '20',
+                                marginBottom: '0',
+                                fontWeight: 'bold',
+                              }}
+                            >
+                              GST Number
+                              <label style={{ color: 'red' }}>*</label>
+                            </label>
                             <Field
                               type="text"
                               placeholder="Please Enter GST No"
@@ -294,11 +329,15 @@ const EditPartner = props => {
                           </div>
                         </div>
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>
-                              GST image
+                          <div style={{ padding: '15px 15px 5px 5px' }}>
+                            <label
+                              style={{
+                                fontSize: '20',
+                                marginBottom: '0.6em',
+                                fontWeight: 'bold',
+                              }}
+                            >
+                              GST Image
                             </label>
                             {props.location.state &&
                             props.location.state.gstImage ? (
@@ -330,10 +369,17 @@ const EditPartner = props => {
                       </div>
                       <div className="row">
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>Pan No</label>
+                          <div style={{ padding: '15px 5px 5px 15px' }}>
+                            <label
+                              style={{
+                                fontSize: '20',
+                                marginBottom: '0',
+                                fontWeight: 'bold',
+                              }}
+                            >
+                              Pan Number
+                              <label style={{ color: 'red' }}>*</label>
+                            </label>
 
                             <Field
                               type="text"
@@ -352,11 +398,15 @@ const EditPartner = props => {
                           </div>
                         </div>
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>
-                              Pan image
+                          <div style={{ padding: '15px 15px 5px 5px' }}>
+                            <label
+                              style={{
+                                fontSize: '20',
+                                marginBottom: '0.6em',
+                                fontWeight: 'bold',
+                              }}
+                            >
+                              Pan Image
                             </label>
                             {props.location.state &&
                             props.location.state.panImage ? (
@@ -388,11 +438,16 @@ const EditPartner = props => {
                       </div>
                       <div className="row">
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>
+                          <div style={{ padding: '15px 5px 5px 15px' }}>
+                            <label
+                              style={{
+                                fontSize: '20',
+                                marginBottom: '0',
+                                fontWeight: 'bold',
+                              }}
+                            >
                               Company Name
+                              <label style={{ color: 'red' }}>*</label>
                             </label>
                             <Field
                               type="text"
@@ -412,11 +467,11 @@ const EditPartner = props => {
                           </div>
                         </div>
                         <div className="col-6">
-                          <div
-                            style={{ padding: '15px', paddingBottom: '10px' }}
-                          >
-                            <label style={{ fontWeight: 'bold' }}>
-                              Address{' '}
+                          <div style={{ padding: '15px 15px 5px 5px' }}>
+                            <label
+                              style={{ fontWeight: 'bold', fontSize: '20' }}
+                            >
+                              Address
                             </label>
                             <Field
                               as="textarea"
@@ -441,7 +496,7 @@ const EditPartner = props => {
                         <div className="col-6">
                           <div
                             style={{
-                              padding: '15px',
+                              padding: '15px 5px 5px 15px',
                               display: 'flex',
                               justifyContent: 'end',
                             }}
@@ -458,7 +513,7 @@ const EditPartner = props => {
                         <div className="col-6">
                           <div
                             style={{
-                              padding: '15px',
+                              padding: '15px 15px 5px 5px',
                               display: 'flex',
                               justifyContent: 'start',
                             }}

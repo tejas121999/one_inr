@@ -31,6 +31,7 @@ const AutoDonate = () => {
         style={{
           margin: '5% 33%',
           textAlign: 'center',
+          flexDirection: 'column',
         }}
       >
         <div
@@ -40,14 +41,15 @@ const AutoDonate = () => {
           <div style={{ margin: '2em' }}>
             <div>
               <p
-                style={{
-                  fontsize: '25px',
-                  fontWeight: 'bold',
-                  margin: '10px',
-                  borderBottomStyle: 'solid',
-                  borderBottomWidth: 'medium',
-                  borderColor: '#63b8ec',
-                }}
+                className="donate"
+                // style={
+                //   {
+                //     // margin: '10px',
+                //     // borderBottomStyle: 'solid',
+                //     // borderBottomWidth: 'medium',
+                //     // borderColor: '#63b8ec',
+                //   }
+                // }
               >
                 Donate fund for Feeding Pigeons Grains
               </p>
@@ -81,15 +83,11 @@ const AutoDonate = () => {
           </div>
         </div>
         <div style={{ textAlign: 'center' }}>
-          <span>
-            Max Doner amount available is Rs.
-            <b>397</b>
+          <span style={{ fontWeight: 'bold' }}>
+            Max Donor amount available is Rs. 397
           </span>
           <br />
-          <span>
-            Max fund limit is Rs.
-            <b>146</b>
-          </span>
+          <span style={{ fontWeight: 'bold' }}>Max fund limit is Rs. 146</span>
         </div>
       </div>
     </div>

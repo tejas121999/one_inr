@@ -164,7 +164,7 @@ const ViewAllNgo = () => {
               paddingTop: '5px',
             }}
           >
-            List Of All Ngo
+            View All NGO
           </p>
         </div>
         <div
