@@ -75,8 +75,38 @@ module.exports = (sequelize, DataTypes) => {
     ngo.associate = function (models) {
         // ngo.hasMany(models.bankDetails,{foreignKey : 'userId'})
         ngo.hasMany(models.usersReceipts, { foreignKey: 'ngoId' })
-        ngo.belongsTo(models.users, { foreignKey: 'userId' })
+        ngo.belongsTo(models.users, { foreignKey: 'userId' , as :'user' })
         ngo.hasMany(models.projects, { foreignKey: 'userId' })
+    }
+
+    ngo.prototype.toJSON = function () {
+        var values = Object.assign({}, this.get());
+        if (values.certificate) {
+            let filePath = values.certificate;
+            let pathToAdd = filePath.replace('public/', '');
+            values.certificateURL = process.env.BASE_URL_PATH + pathToAdd;
+        }
+        if (values.charityRegistrationCertificate) {
+            let filePath = values.charityRegistrationCertificate;
+            let pathToAdd = filePath.replace('public/', '');
+            values.charityRegistrationCertificateURL = process.env.BASE_URL_PATH + pathToAdd;
+        }
+        if (values.deed) {
+            let filePath = values.deed;
+            let pathToAdd = filePath.replace('public/', '');
+            values.deedURL = process.env.BASE_URL_PATH + pathToAdd;
+        }
+        if (values.logo) {
+            let filePath = values.logo;
+            let pathToAdd = filePath.replace('public/', '');
+            values.logoURL = process.env.BASE_URL_PATH + pathToAdd;
+        }
+        if (values.panCard) {
+            let filePath = values.panCard;
+            let pathToAdd = filePath.replace('public/', '');
+            values.panCardURL = process.env.BASE_URL_PATH + pathToAdd;
+        }
+        return values;
     }
     return ngo;
 }

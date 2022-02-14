@@ -15,17 +15,17 @@ exports.addProjectValidation = [
     body('description')
         .exists().withMessage('Description is Required')
         .notEmpty().withMessage('Description is Required')
-        .isLength({ min: 1, max: 200 }).withMessage('Max length of description is 200'),
+        .isLength({ min: 1, max: 144 }).withMessage('Max length of description is 144'),
 
     body('longDesc')
         .exists().withMessage('Long Description is Required')
         .notEmpty().withMessage('Long Description is Required'),
 
-    body('videoLink')
-        .exists().withMessage('Video Url is Required')
-        .notEmpty().withMessage('Video Url is Required')
-        .isURL()
-        .withMessage('is invalid'),
+    // body('videoLink')
+    //     .exists().withMessage('Video Url is Required')
+    //     .notEmpty().withMessage('Video Url is Required')
+    //     .isURL()
+    //     .withMessage('is invalid'),
 
     body('goal')
         .exists().withMessage('Goal is Required')
@@ -50,7 +50,7 @@ exports.addProjectValidation = [
     body('endDate')
         .exists().withMessage('EndDate is Required')
         .notEmpty().withMessage('EndDate is Required'),
-    // .isDate().withMessage('Invalid! Enter date in YY-MM-DD Format'),
+    
 
     body('isRecurring')
         .exists().withMessage('isRecurring is Required')
@@ -75,8 +75,6 @@ exports.addProjectValidation = [
 
 
 ]
-
-
 
 exports.projectImageValidation = [
 
@@ -147,7 +145,7 @@ exports.updateProjectValidation = [
     body('description')
         .exists().withMessage('Description is Required')
         .notEmpty().withMessage('Description is Required')
-        .isLength({ min: 1, max: 200 }).withMessage('Max length of description is 200'),
+        .isLength({ min: 1, max: 144 }).withMessage('Max length of description is 200'),
 
     body('longDesc')
         .exists().withMessage('Long Description is Required')
