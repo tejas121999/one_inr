@@ -56,17 +56,17 @@ exports.addProjects = async (req, res) => {
         projects = await models.projects.create({ userId, title, slogan, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring, isActive },
             { transaction: t }
         )
-        projectImage = await models.project_image.create({ projectId: projects.dataValues.id, isActive, banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 }, { transaction: t })
-        if (isRecurring == true) {
-            projectInterval = await models.projectInterval.create({ projectId: projects.dataValues.id, startDate, endDate: projectIntervalEndDate, goal, commission, target }, { transaction: t })
+        const projectImage = await models.project_image.create({ projectId: projects.dataValues.id, isActive, banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 }, { transaction: t })
+        if (isRecurring) {
+           let projectInterval = await models.projectInterval.create({ projectId: projects.dataValues.id, startDate : startDate, endDate: projectIntervalEndDate, goal, commission, target }, { transaction: t })
         }
-        if (!(projects && projectImage)) {
-            return true
-        } else {
+        if (check.isEmpty(projects) && check.isEmpty(projectImage)) {
             return false
+        } else {
+            return true
         }
     })
-    if (data) {
+    if (!data) {
         return res.status(400).json({ message: "Failed to create Project." })
     }
     return res.status(201).json({ message: "Success", projects })
@@ -467,4 +467,29 @@ exports.updateProjectInformation = async (req, res) => {
     } else {
         return res.status(404).json({ message: "Poject not updated" });
     }
+}
+
+//get home Project
+exports.getHomeProjectInfo = async (req, res, next) => {
+    const id = req.params.id;
+    const checkHomeProject = await models.projects.findOne({
+        attributes: ['id', 'userId', 'goal', 'commission', 'target', 'funded', 'displayOnHomeStatus'],
+        where: { id: id }
+    });
+    if (!check.isEmpty(checkHomeProject)) {
+        if (checkHomeProject.displayOnHomeStatus) {
+            return res.status(200).json({ message: `You can't disable all the home project` });
+        }
+    } else {
+        return res.status(404).json({ message: "Project not found" });
+    }
+    const findHomeProject = await models.projects.findOne({
+        attributes: ['id', 'userId', 'goal', 'commission', 'target', 'funded', 'displayOnHomeStatus'],
+        where: { displayOnHomeStatus: true }
+    });
+
+    if (check.isEmpty(findHomeProject)) {
+        return res.status(404).json({ message: "Home Project not found" });
+    }
+    return res.status(200).json({ message: "Project data found", oldHomeProjectData: findHomeProject, newHomeProjectData: checkHomeProject });
 }
