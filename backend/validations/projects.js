@@ -40,7 +40,7 @@ exports.addProjectValidation = [
             if (value > req.body.endDate) {
                 return Promise.reject("Project endDate Cannot be greater than startDate")
             }
-            startDate = moment(value).format('YYYY-MM-DD')
+            const startDate = moment(value).format('YYYY-MM-DD')
             if (startDate < moment().format('YYYY-MM-DD')) {
                 return Promise.reject("Project cannot be created in past days")
             }
@@ -56,6 +56,9 @@ exports.addProjectValidation = [
         .exists().withMessage('isRecurring is Required')
         .isBoolean().withMessage('Must be a boolean true or false')
         .custom(async (value, { req }) => {
+            if (!(value === true || value === false )){
+               return Promise.reject("Recurring value should be true or false");
+            }
             if (value === true) {
                 if (!req.body.recurringDays || req.body.recurringDays === undefined || req.body.recurringDays.length === 0) {
                     return Promise.reject("Recurring Days is Required");
