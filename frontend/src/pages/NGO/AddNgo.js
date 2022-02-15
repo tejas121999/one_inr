@@ -284,7 +284,11 @@ const AddNgo = props => {
                       <label style={{ fontWeight: 'bold' }}>
                         Logo<label style={{ color: 'red' }}>*</label>
                       </label>
-                      <DropzoneComponent onChangeImage={onlogoImageAdd} />
+                      <form class="form">
+                        <div class="file-upload-wrapper" data-text="Select your file!">
+                          <input name="file-upload-field" type="file" class="file-upload-field" value="" style={{ width: "400px" }} />
+                        </div>
+                      </form>
                       <ErrorMessage name="logo_img" component={TextError} />
                     </div>
                   </div>
@@ -471,9 +475,8 @@ const AddNgo = props => {
                         value={values.password}
                       />
                       <i
-                        className={`fa ${
-                          show ? 'fa-eye-slash' : 'fa-eye'
-                        } login-password-icon`}
+                        className={`fa ${show ? 'fa-eye-slash' : 'fa-eye'
+                          } login-password-icon`}
                         onClick={() => setShow(!show)}
                         style={{
                           float: 'right',
@@ -561,13 +564,11 @@ const AddNgo = props => {
                   className="row"
                   style={{ margin: '0rem 0 1.5rem', flex: 'auto' }}
                 >
-                  <div
-                    className="col-sm-3 col-xs-3 "
-                    style={{ paddingLeft: '0' }}
-                  >
-                    <DropzoneComponent onChangeImage={onPanCardImageAdd} />
-                    <ErrorMessage name="pancard_img" component={TextError} />
-                  </div>
+                  <form class="form">
+                    <div class="file-upload-wrapper" data-text="Select your file!">
+                      <input name="file-upload-field" type="file" class="file-upload-field" value="" />
+                    </div>
+                  </form>
 
                   <div
                     className="col-sm-3 col-xs-3 "
