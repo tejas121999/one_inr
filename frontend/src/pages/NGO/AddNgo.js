@@ -12,7 +12,6 @@ import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
-import '../'
 
 const AddNgo = props => {
   const dispatch = useDispatch();
