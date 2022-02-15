@@ -15,18 +15,10 @@ export const getAllProjectAction = value => {
       projectServices
         .getAllProject(value)
         .then(res => {
-<<<<<<< HEAD
-          // alert(res.data.message)
-          dispatch(getAllProjects(res.data.result));
-        })
-        .catch(e => {
-          // alert(e.response.request.statusText)
-=======
           dispatch(getAllProjects(res.data.result));
         })
         .catch(e => {
           alert(e.response.request.statusText);
->>>>>>> 069938aae12adabcfb2fa90278f38997f796dbab
         });
     };
   } else {
@@ -53,13 +45,8 @@ export const addProjectAction = (body, history) => {
             history.push('/view_all_project');
           }, 2000);
         })
-<<<<<<< HEAD
-        .catch((e) => {
-          // alert(e.response.request.statusText)
-=======
         .catch(e => {
           alert(e.response.request.statusText);
->>>>>>> 069938aae12adabcfb2fa90278f38997f796dbab
         });
     };
   } else {
@@ -75,20 +62,11 @@ export const getProjectByIdAction = id => {
       projectServices
         .getProjectByID(id)
         .then(res => {
-<<<<<<< HEAD
-          // alert(res.data.message)
-          console.log(res)
-          dispatch(getProjectData(res.data.result));
-        })
-        .catch(e => {
-          // alert(e.response.request.statusText)
-=======
           alert(res.data.message);
           dispatch(getProjectData(res.data.result));
         })
         .catch(e => {
           alert(e.response.request.statusText);
->>>>>>> 069938aae12adabcfb2fa90278f38997f796dbab
         });
     };
   } else {
@@ -116,15 +94,9 @@ export const updateProjectAction = (id, data, history) => {
           }, 2000);
         })
         .catch(e => {
-<<<<<<< HEAD
-          // alert(e.response.request.statusText)
-        })
-    }
-=======
           alert(e.response.request.statusText);
         });
     };
->>>>>>> 069938aae12adabcfb2fa90278f38997f796dbab
   }
 };
 
@@ -141,15 +113,9 @@ export const CommitionUpdateAction = (id, data, history) => {
           }, 2000);
         })
         .catch(e => {
-<<<<<<< HEAD
-          // alert(e.response.request.statusText)
-        })
-    }
-=======
           alert(e.response.request.statusText);
         });
     };
->>>>>>> 069938aae12adabcfb2fa90278f38997f796dbab
   } else {
     //
   }
@@ -168,15 +134,9 @@ export const addFundAction = (id, data, history) => {
           }, 2000);
         })
         .catch(e => {
-<<<<<<< HEAD
-          // alert(e.response.request.statusText)
-        })
-    }
-=======
           alert(e.response.request.statusText);
         });
     };
->>>>>>> 069938aae12adabcfb2fa90278f38997f796dbab
   }
 };
 
