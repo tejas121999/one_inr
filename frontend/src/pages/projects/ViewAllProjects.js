@@ -14,9 +14,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { visuallyHidden } from '@mui/utils';
 import Paper from '@mui/material/Paper';
-import { FaRegEdit, FaRegEye } from 'react-icons/fa';
-import { BiLink } from 'react-icons/bi';
-import { AiOutlineDollarCircle } from 'react-icons/ai';
 import { ReactComponent as Edit } from '../../assets/icons/edit.svg';
 import { ReactComponent as View } from '../../assets/icons/view.svg';
 import { ReactComponent as AutoDonate } from '../../assets/icons/Autodonate.svg';
@@ -40,7 +37,6 @@ const ViewAllProjects = () => {
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [viewModal, setViewModal] = React.useState(false);
   const [viewData, setViewData] = React.useState('');
@@ -343,15 +339,23 @@ const ViewAllProjects = () => {
                           <TableCell align="left">{row.goal}</TableCell>
                           <TableCell align="left">{row.target}</TableCell>
                           <TableCell align="left">{row.funded}</TableCell>
-                          <TableCell align="left">{row.days_left}</TableCell>
-                          <TableCell align="left">{row.recurring}</TableCell>
+                          <TableCell align="left">{row.DaysLeft}</TableCell>
                           <TableCell align="left">
-                            {/* <div className="container"> */}
-                            <Switch color="primary" size="medium" />
-                            {/* </div> */}
+                            {row.isRecurring === true ? 'Yes' : 'No'}
                           </TableCell>
                           <TableCell align="left">
-                            <Switch color="primary" size="medium" />
+                            <Switch
+                              color="primary"
+                              checked={row.isActive}
+                              size="medium"
+                            />
+                          </TableCell>
+                          <TableCell align="left">
+                            <Switch
+                              color="primary"
+                              checked={row.displayOnHomeStatus}
+                              size="medium"
+                            />
                           </TableCell>
                           <TableCell align="left">
                             <button

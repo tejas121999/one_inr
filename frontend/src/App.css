@@ -38,6 +38,7 @@
 .nav-item :hover {
   transform: translate(0px, 0px);
 }
+
 .overview {
   text-align: 'left';
   font-size: 25;
@@ -60,13 +61,13 @@
 
 .BankDet {
   position: relative;
-  text-align: 'left';
-  font-weight: 'bold';
+  text-align: left;
+  font-weight: bold;
   font-size: 25;
 }
 .BankDet::after {
   content: '';
-  height: 4px;
+  height: 5px;
   width: 40px;
   background-color: #3b7cff;
   position: absolute;
@@ -75,6 +76,26 @@
   left: 0px;
   border-radius: 10px;
 }
+
+.donate {
+  position: relative;
+  text-align: left;
+  font-weight: bold;
+
+  padding-bottom: 1.4em;
+}
+.donate:after {
+  content: '';
+  height: 5px;
+  width: 40px;
+  background-color: #3b7cff;
+  position: absolute;
+  bottom: 0;
+  top: 1.5em;
+  right: 50%;
+  border-radius: 10px;
+}
+
 .modal-content {
   /* width: 70% !important; */
   border-radius: 1rem !important;

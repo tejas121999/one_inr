@@ -6,7 +6,7 @@ const baseStyle = {
   //   flexDirection: 'column',
   //   alignItems: 'center',
   cursor: 'pointer',
-  width: '10em',
+  // width: '10em',
   height: '10em',
   padding: '0',
   //   borderWidth: 2,
@@ -108,10 +108,11 @@ function DropzoneComponent(props) {
         ) : (
           <span
             style={{
-              padding: '65px 22px',
+              padding: '65px 0',
               gridColumn: '1/2',
               gridRow: '1/2',
               zIndex: '1',
+              textAlign: 'center',
             }}
           >
             Upload Image

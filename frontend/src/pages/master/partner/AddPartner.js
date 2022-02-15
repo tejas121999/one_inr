@@ -15,18 +15,28 @@ const AddPartner = props => {
   const [panImgUrl, setPanImgUrl] = useState('');
   const [gstImgUrl, setGstImgUrl] = useState('');
   const validationSchema = yup.object({
-    fName: yup.string().required('Required'),
-    lName: yup.string().required('Required'),
-    company: yup.string().required('required'),
-    email: yup.string().email('Invalide Email Format').required('Required'),
-    mobile: yup.string().required('required').min(10, 'Please enter 10 digits'),
+    fName: yup.string().required('Required Field'),
+    lName: yup.string().required('Required field'),
+    company: yup.string().required('Required Field'),
+    email: yup
+      .string()
+      .email('Invalid Email Format')
+      .required('Required Field'),
+    mobile: yup
+      .string()
+      .required('Required Field')
+      .min(10, 'Please enter 10 digits'),
     gst: yup
       .string()
+      .required('Required Field')
       .matches(
         /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
         'Invalid Format',
       ),
-    pan: yup.string().matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format'),
+    pan: yup
+      .string()
+      .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid Format')
+      .required('Required Field'),
   });
   const onAddPartner = values => {
     const obj = {
@@ -73,36 +83,29 @@ const AddPartner = props => {
       <br />
       <br />
       <br />
-      <br />
       <ToastContainer hideProgressBar />
-
       <div
         className="row"
         style={{
-          backgroundColor: 'white',
-          margin: '0 1.2em',
-          borderRadius: '1em',
+          margin: '1em',
+          padding: '0.8em 2em',
         }}
       >
         <p
           style={{
             textAlign: 'left',
-            fontSize: '1.25rem',
-            fontWeight: '600',
-            margin: '20px',
-            width: '100%',
-            marginLeft: '20px',
+            fontSize: '25',
+            fontWeight: 'bold',
+            marginBottom: '0',
           }}
         >
           Add Partner
         </p>
       </div>
+      <hr style={{ margin: '0' }} />
       <div
         style={{
-          margin: '20px',
-          backgroundColor: 'white',
-          marginBottom: '5em',
-          borderRadius: '1.5em',
+          marginBottom: '2.5em',
         }}
       >
         <Formik
@@ -111,8 +114,8 @@ const AddPartner = props => {
             lName: '',
             mobile: '',
             email: '',
-            gst: '22AAAAA0000A1Z5',
-            pan: 'EGZPP5822A',
+            gst: '',
+            pan: '',
             company: '',
             address: '',
           }}
@@ -121,15 +124,21 @@ const AddPartner = props => {
           enableReinitialize={true}
         >
           {({ values, errors, touched }) => (
-            <div className="w-100 mx-auto" style={{ padding: '4rem 10rem' }}>
+            <div className="w-100 mx-auto" style={{ padding: '3rem 8rem' }}>
               <div className="row">
                 <div className="col-12">
                   <Form>
                     <div className="row">
                       <div className="col-6 ">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>
-                            First Name
+                        <div style={{ padding: '15px 5px 5px 15px' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0',
+                            }}
+                          >
+                            First Name<label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
                             className="form-control"
@@ -150,9 +159,15 @@ const AddPartner = props => {
                         </div>
                       </div>
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>
-                            Last Name
+                        <div style={{ padding: '15px 15px 5px 5px' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0',
+                            }}
+                          >
+                            Last Name<label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
                             className="form-control"
@@ -175,9 +190,16 @@ const AddPartner = props => {
                     </div>
                     <div className="row">
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>
+                        <div style={{ padding: '15px 5px 5px 15px' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0',
+                            }}
+                          >
                             Mobile Number
+                            <label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
                             className="form-control"
@@ -199,8 +221,16 @@ const AddPartner = props => {
                         </div>
                       </div>
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>Email Id</label>
+                        <div style={{ padding: '15px 15px 5px 5px' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0',
+                            }}
+                          >
+                            Email ID<label style={{ color: 'red' }}>*</label>
+                          </label>
                           <Field
                             type="text"
                             className="form-control"
@@ -221,8 +251,16 @@ const AddPartner = props => {
                     </div>
                     <div className="row">
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>GST No</label>
+                        <div style={{ padding: '15px 5px 5px 15px' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0',
+                            }}
+                          >
+                            GST Number<label style={{ color: 'red' }}>*</label>
+                          </label>
                           <Field
                             type="text"
                             placeholder="Please Enter GST No"
@@ -239,9 +277,15 @@ const AddPartner = props => {
                         </div>
                       </div>
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>
-                            GST image
+                        <div style={{ padding: '15px 15px 5px 5px' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0.6em',
+                            }}
+                          >
+                            GST Image
                           </label>
                           <input
                             type="file"
@@ -256,8 +300,16 @@ const AddPartner = props => {
                     </div>
                     <div className="row">
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>Pan No</label>
+                        <div style={{ padding: '15px 5px 5px 15px' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0',
+                            }}
+                          >
+                            Pan Number<label style={{ color: 'red' }}>*</label>
+                          </label>
                           <Field
                             type="text"
                             placeholder="Please Enter PAN No"
@@ -274,9 +326,15 @@ const AddPartner = props => {
                         </div>
                       </div>
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>
-                            Pan image
+                        <div style={{ padding: '15px 15px 5px 5px' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0.6em',
+                            }}
+                          >
+                            Pan Image
                           </label>
                           <input
                             type="file"
@@ -291,9 +349,16 @@ const AddPartner = props => {
                     </div>
                     <div className="row">
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>
+                        <div style={{ padding: '15px 5px 5px 15px' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0',
+                            }}
+                          >
                             Company Name
+                            <label style={{ color: 'red' }}>*</label>
                           </label>
                           <Field
                             type="text"
@@ -313,8 +378,16 @@ const AddPartner = props => {
                         </div>
                       </div>
                       <div className="col-6">
-                        <div style={{ padding: '15px', paddingBottom: '10px' }}>
-                          <label style={{ fontWeight: 'bold' }}>Address </label>
+                        <div style={{ padding: '15px 15px 5px 5px' }}>
+                          <label
+                            style={{
+                              fontSize: '20',
+                              fontWeight: 'bold',
+                              marginBottom: '0.4em',
+                            }}
+                          >
+                            Address
+                          </label>
                           <Field
                             as="textarea"
                             className="form-control"
@@ -338,7 +411,7 @@ const AddPartner = props => {
                       <div className="col-6">
                         <div
                           style={{
-                            padding: '15px',
+                            padding: '15px 5px 5px 15px',
                             display: 'flex',
                             justifyContent: 'end',
                           }}
@@ -355,12 +428,11 @@ const AddPartner = props => {
                       <div className="col-6">
                         <div
                           style={{
-                            padding: '15px',
+                            padding: '15px 15px 5px 5px',
                             display: 'flex',
                             justifyContent: 'start',
                           }}
                         >
-                          {' '}
                           <Link to="/partner">
                             <button
                               className="btn"

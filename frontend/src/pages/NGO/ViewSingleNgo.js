@@ -29,7 +29,6 @@ import {
 } from '../../Redux/Actions/NgoActions';
 import { Local } from '../../API/APIEndpoints';
 import moment from 'moment';
-import { Checkbox } from 'material-ui';
 
 const ViewSingleNgo = props => {
   const [key, setKey] = React.useState('details');
@@ -546,6 +545,10 @@ const ViewSingleNgo = props => {
                 </div>
               </div>
               <br />
+              <br />
+              <div>
+                <p className="BankDet">Bank Details</p>
+              </div>
               <br />
 
               {ngoById.length === 0 ? (

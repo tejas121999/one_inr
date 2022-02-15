@@ -53,20 +53,20 @@ exports.addProjects = async (req, res) => {
     }
     let slogan = title.split(" ").join('-').toLowerCase()   //Slogan in DB contains all lower case letter seperated by dash.
     let data = await sequelize.transaction(async (t) => {
-        projects = await models.projects.create({ userId, title, slogan, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring, isActive },
+        projects = await models.projects.create({ userId, title, slogan, description, longDesc, videoLink, goal, commission, target, funded, startDate, endDate, recurringDays, isRecurring, isActive,isArchived:false },
             { transaction: t }
         )
-        projectImage = await models.project_image.create({ projectId: projects.dataValues.id, isActive, banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 }, { transaction: t })
-        if (isRecurring == true) {
-            projectInterval = await models.projectInterval.create({ projectId: projects.dataValues.id, startDate, endDate: projectIntervalEndDate, goal, commission, target }, { transaction: t })
+        const projectImage = await models.project_image.create({ projectId: projects.dataValues.id, isActive, banner, cover, mobile, slider1, slider2, slider3, slider4, slider5, slider6 }, { transaction: t })
+        if (isRecurring) {
+           let projectInterval = await models.projectInterval.create({ projectId: projects.dataValues.id, startDate : startDate, endDate: projectIntervalEndDate, goal, commission, target }, { transaction: t })
         }
-        if (!(projects && projectImage)) {
-            return true
-        } else {
+        if (check.isEmpty(projects) && check.isEmpty(projectImage)) {
             return false
+        } else {
+            return true
         }
     })
-    if (data) {
+    if (!data) {
         return res.status(400).json({ message: "Failed to create Project." })
     }
     return res.status(201).json({ message: "Success", projects })
@@ -197,9 +197,9 @@ exports.getProjectById = async (req, res) => {
     if (!project) {
         return res.status(400).json({ message: "No data Found" })
     } else {
-        const completion=(project.dataValues.funded)/(project.dataValues.goal)*100;
+        const completion = (project.dataValues.funded) / (project.dataValues.goal) * 100;
         console.log(completion)
-        project.dataValues.completion= completion;
+        project.dataValues.completion = completion;
         return res.status(200).json({ message: "Project fetched", result: project })
     }
 
@@ -208,15 +208,15 @@ exports.getProjectById = async (req, res) => {
 //update project status 
 exports.updateStatus = async (req, res) => {
     const id = req.params.id;
-    const checkProject = await models.projects.findOne({ where :{id: id}});
-    if(check.isEmpty(checkProject)){
-       return res.status(404).json({message :"Project not found"});
+    const checkProject = await models.projects.findOne({ where: { id: id } });
+    if (check.isEmpty(checkProject)) {
+        return res.status(404).json({ message: "Project not found" });
     }
     const project = await models.projects.update({ isActive: req.body.status }, { where: { id: id } })
     if (project[0] == 1) {
         return res.status(200).json({ message: "Status Updated Successfully", project })
     } else {
-        return res.status(200).json({ message: "Status not updated ",project })
+        return res.status(200).json({ message: "Status not updated ", project })
     }
 }
 
@@ -311,14 +311,71 @@ exports.addFunds = async (req, res) => {
 }
 
 
-exports.getCompletedProject = async (req, res) => {
-    let projects = await models.projects.findAll({ where: { isActive: false } });
+exports.getCompletedProjects = async (req, res) => {
+    let projects = await models.projects.findAll({ where: { isActive: false, isArchived: false } });
+
+    if (projects.length==0) {
+
+        return res.status(200).json({ message: "No Projects found " })
+    }
     if (projects) {
+
         return res.status(200).json({ message: "Project Data", result: projects })
     } else {
         return res.status(400).json({ message: "data not found" })
 
     }
+}
+
+
+exports.getArchivedProjects = async (req, res) => {
+    
+    let projects = await models.projects.findAll({ where: { isActive: false, isArchived: true } });
+    
+    if (projects.length==0) {
+
+        return res.status(200).json({ message: "No Projects found in archive" })
+    }
+    if (projects) {
+
+        return res.status(200).json({ message: "Archived Projects", result: projects })
+    }
+
+}
+
+exports.archiveProject = async (req, res) => {
+    let id = req.params.id
+    let projectExists = await models.projects.findOne({
+        where: { id: id, isActive: false }
+    })
+    if (!projectExists) {
+        return res.status(400).json({
+            message: "Project not found in archive"
+        })
+    }
+    if (projectExists.isArchived) {
+        return res.status(200).json({ message: "Project is already Archived" })
+    }
+    let data = await models.projects.update({ isArchived: true }, { where: { id: id } });
+    if (data[0] == 1) {
+        return res.status(200).json({ message: "Project Archived" })
+    }
+}
+
+exports.unArchiveProject = async (req, res) => {
+    let id = req.params.id
+
+    let checkData=await models.projects.findOne({ where: { id: id,isArchived:true } });
+    if(!checkData){
+        return res.status(404).json({ message: "Project not found" })
+    }
+
+    let data = await models.projects.update({ isArchived: false }, { where: { id: id } });
+
+    
+    if (data) {
+        return res.status(200).json({ message: "Project Unarchived" })
+    } 
 }
 
 exports.createRecuringProject = async (req, res) => {
@@ -467,4 +524,29 @@ exports.updateProjectInformation = async (req, res) => {
     } else {
         return res.status(404).json({ message: "Poject not updated" });
     }
+}
+
+//get home Project
+exports.getHomeProjectInfo = async (req, res, next) => {
+    const id = req.params.id;
+    const checkHomeProject = await models.projects.findOne({
+        attributes: ['id', 'userId', 'goal', 'commission', 'target', 'funded', 'displayOnHomeStatus'],
+        where: { id: id }
+    });
+    if (!check.isEmpty(checkHomeProject)) {
+        if (checkHomeProject.displayOnHomeStatus) {
+            return res.status(200).json({ message: `You can't disable all the home project` });
+        }
+    } else {
+        return res.status(404).json({ message: "Project not found" });
+    }
+    const findHomeProject = await models.projects.findOne({
+        attributes: ['id', 'userId', 'goal', 'commission', 'target', 'funded', 'displayOnHomeStatus'],
+        where: { displayOnHomeStatus: true }
+    });
+
+    if (check.isEmpty(findHomeProject)) {
+        return res.status(404).json({ message: "Home Project not found" });
+    }
+    return res.status(200).json({ message: "Project data found", oldHomeProjectData: findHomeProject, newHomeProjectData: checkHomeProject });
 }

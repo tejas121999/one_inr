@@ -11,11 +11,17 @@ import NgoServices from '../Services/NgoServices';
 
 export const createNGOAction = (body, history) => {
   if (navigator.onLine) {
-    return dispatch => {
+    return async dispatch => {
       NgoServices.createNGO(body)
         .then(res => {
           //need to add toaster here
-          history.push('/view_all_ngo');
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+          setTimeout(function () {
+            history.push('/view_all_ngo');
+          }, 2000);
         })
         .catch(e => {
           // alert(e.response.data.message);
@@ -26,15 +32,15 @@ export const createNGOAction = (body, history) => {
   }
 };
 
-export const getAllNGOAction = () => {
+export const getAllNGOAction = value => {
   if (navigator.onLine) {
     return dispatch => {
-      NgoServices.GetAllNgoList()
+      NgoServices.GetAllNgoList(value)
         .then(res => {
           dispatch(GetAllNGO(res.data.data));
         })
         .catch(e => {
-          alert(e.response.data.message);
+          // alert(e.response.data.message);
         });
     };
   } else {
@@ -150,11 +156,10 @@ export const DeleteNgoByIdAction = id => {
         dispatch(getAllNGOAction());
         toast.success('User Deleted', {
           position: 'top-center',
-          autoClose: 1000,
+          autoClose: 2000,
         });
+        dispatch(getAllNGOAction(''));
       })
-      .catch(e => {
-        // alert(e.response.data.message);
-      });
+      .catch(err => {});
   };
 };
