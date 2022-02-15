@@ -9,17 +9,24 @@ import projectServices from '../Services/projectServices';
 
 // Get ALl
 
-export const getAllProjectAction = (value) => {
+export const getAllProjectAction = value => {
   if (navigator.onLine) {
     return dispatch => {
       projectServices
         .getAllProject(value)
         .then(res => {
+<<<<<<< HEAD
           // alert(res.data.message)
           dispatch(getAllProjects(res.data.result));
         })
         .catch(e => {
           // alert(e.response.request.statusText)
+=======
+          dispatch(getAllProjects(res.data.result));
+        })
+        .catch(e => {
+          alert(e.response.request.statusText);
+>>>>>>> 069938aae12adabcfb2fa90278f38997f796dbab
         });
     };
   } else {
@@ -41,13 +48,18 @@ export const addProjectAction = (body, history) => {
       projectServices
         .createProject(body)
         .then(res => {
-          alert(res.data.message)
+          alert(res.data.message);
           setTimeout(function () {
-            history.push('/view_all_project')
+            history.push('/view_all_project');
           }, 2000);
         })
+<<<<<<< HEAD
         .catch((e) => {
           // alert(e.response.request.statusText)
+=======
+        .catch(e => {
+          alert(e.response.request.statusText);
+>>>>>>> 069938aae12adabcfb2fa90278f38997f796dbab
         });
     };
   } else {
@@ -63,12 +75,20 @@ export const getProjectByIdAction = id => {
       projectServices
         .getProjectByID(id)
         .then(res => {
+<<<<<<< HEAD
           // alert(res.data.message)
           console.log(res)
           dispatch(getProjectData(res.data.result));
         })
         .catch(e => {
           // alert(e.response.request.statusText)
+=======
+          alert(res.data.message);
+          dispatch(getProjectData(res.data.result));
+        })
+        .catch(e => {
+          alert(e.response.request.statusText);
+>>>>>>> 069938aae12adabcfb2fa90278f38997f796dbab
         });
     };
   } else {
@@ -83,61 +103,82 @@ export const getProjectData = data => {
   };
 };
 
-// update project 
+// update project
 export const updateProjectAction = (id, data, history) => {
   if (navigator.onLine) {
     return dispatch => {
-      projectServices.updateProject(id, data)
+      projectServices
+        .updateProject(id, data)
         .then(res => {
-          alert(res.data.message)
-          setTimeout(function () {
-            history.push('#')
-          }, 2000);
-        })
-        .catch(e => {
-          // alert(e.response.request.statusText)
-        })
-    }
-  }
-}
-
-// commition update
-export const CommitionUpdateAction = (id, data, history) => {
-  if (navigator.onLine) {
-    return dispatch => {
-      projectServices.updateCommition(id, data)
-        .then(res => {
-          alert(res.data.message)
+          alert(res.data.message);
           setTimeout(function () {
             history.push('#');
           }, 2000);
         })
         .catch(e => {
+<<<<<<< HEAD
           // alert(e.response.request.statusText)
         })
     }
-  } else {
-    // 
+=======
+          alert(e.response.request.statusText);
+        });
+    };
+>>>>>>> 069938aae12adabcfb2fa90278f38997f796dbab
   }
-}
+};
+
+// commition update
+export const CommitionUpdateAction = (id, data, history) => {
+  if (navigator.onLine) {
+    return dispatch => {
+      projectServices
+        .updateCommition(id, data)
+        .then(res => {
+          alert(res.data.message);
+          setTimeout(function () {
+            history.push('#');
+          }, 2000);
+        })
+        .catch(e => {
+<<<<<<< HEAD
+          // alert(e.response.request.statusText)
+        })
+    }
+=======
+          alert(e.response.request.statusText);
+        });
+    };
+>>>>>>> 069938aae12adabcfb2fa90278f38997f796dbab
+  } else {
+    //
+  }
+};
 
 // add fund by id
 export const addFundAction = (id, data, history) => {
   if (navigator.onLine) {
     return dispatch => {
-      projectServices.addFund(id, data)
+      projectServices
+        .addFund(id, data)
         .then(res => {
-          alert(res.data.message)
+          alert(res.data.message);
           setTimeout(function () {
-            history.push('#')
+            history.push('#');
           }, 2000);
         })
         .catch(e => {
+<<<<<<< HEAD
           // alert(e.response.request.statusText)
         })
     }
+=======
+          alert(e.response.request.statusText);
+        });
+    };
+>>>>>>> 069938aae12adabcfb2fa90278f38997f796dbab
   }
-}
+};
 
 // Copleted projects
 
@@ -147,11 +188,11 @@ export const getAllCompletedProjectAction = () => {
       projectServices
         .getAllCompletedProject()
         .then(res => {
-          alert(res.data.message)
+          alert(res.data.message);
           dispatch(getCompletedProjects(res.data));
         })
         .catch(e => {
-          // alert(e.response.request.statusText)
+          alert(e.response.request.statusText);
         });
     };
   } else {
@@ -164,11 +205,11 @@ export const getCompletedProjectByValueAction = value => {
     projectServices
       .getCompletedProjectByValue(value)
       .then(res => {
-        alert(res.data.message)
+        alert(res.data.message);
         dispatch(getCompletedProjects(res.data));
       })
       .catch(e => {
-        // alert(e.response.request.statusText)
+        alert(e.response.request.statusText);
       });
   };
 };
@@ -188,11 +229,11 @@ export const getAllArchivedProjectAction = () => {
       projectServices
         .getAllArchivedProject()
         .then(res => {
-          alert(res.data.message)
+          alert(res.data.message);
           dispatch(getArchivedProjects(res.data));
         })
         .catch(e => {
-          // alert(e.response.request.statusText)
+          alert(e.response.request.statusText);
         });
     };
   } else {

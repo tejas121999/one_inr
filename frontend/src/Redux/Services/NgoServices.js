@@ -13,7 +13,7 @@ function NgoServices() {
 
   this.GetAllNgoList = async () => await axios.get(BASE_URL + 'ngo');
 
-  this.updateNgo = async (body, id) =>
+  this.updateNgoById = async (body, id) =>
     await axios.put(BASE_URL + `ngo/${id}`, body);
   this.deleteNgo = async id => await axios.delete(BASE_URL + `ngo/${id}`);
 

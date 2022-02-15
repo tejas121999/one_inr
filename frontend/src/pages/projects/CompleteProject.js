@@ -12,9 +12,10 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
 // import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { FcMoneyTransfer } from 'react-icons/fc';
-import { RiRefund2Line } from 'react-icons/ri';
-import { BsArchive, BsEye } from 'react-icons/bs';
+import { ReactComponent as View } from '../../assets/icons/view.svg';
+import { ReactComponent as Transfer } from '../../assets/icons/transfer.svg';
+import { ReactComponent as Archieve } from '../../assets/icons/archieve.svg';
+import { ReactComponent as Refund } from '../../assets/icons/refund.svg';
 import { useHistory } from 'react-router-dom';
 import Loader from '../Loader';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,6 +23,7 @@ import {
   getAllCompletedProjectAction,
   getCompletedProjectByValueAction,
 } from '../../Redux/Actions/ProjectActions';
+import moment from 'moment';
 
 const CompleteProject = () => {
   const [order, setOrder] = React.useState('asc');
@@ -161,19 +163,7 @@ const CompleteProject = () => {
             className="row"
             style={{ margin: '1em 0', padding: '0em 2em 1em' }}
           >
-            <p
-              style={{
-                textAlign: 'left',
-                fontSize: '25',
-                marginBottom: '0',
-                paddingTop: '0.5em',
-                borderBottomStyle: 'solid',
-                borderBottomWidth: 'medium',
-                borderColor: '#63b8ec',
-              }}
-            >
-              Overview
-            </p>
+            <p className="overview">Overview</p>
           </div>
           {/* <hr style={{ margin: '0' }} /> */}
           <Paper
@@ -214,7 +204,10 @@ const CompleteProject = () => {
                             <TableCell id={labelId} align="left">
                               {row.title}
                             </TableCell>
-                            <TableCell align="left">{row.date}</TableCell>
+                            <TableCell align="left">
+                              {moment(row.startDate).format('ll')} To{' '}
+                              {moment(row.endDate).format('ll')}
+                            </TableCell>
                             <TableCell align="left">{row.goal}</TableCell>
                             <TableCell align="left">{row.funded}</TableCell>
                             <TableCell align="left">{row.paid}</TableCell>
@@ -224,17 +217,17 @@ const CompleteProject = () => {
                                 data-bs-toggle="tooltip"
                                 title="Archive"
                                 className="btn"
-                                //   onClick={() => history.push('/edit_ngo', row)}
                               >
-                                <BsArchive size={20} />
+                                <Archieve
+                                  style={{ width: '24', height: '24' }}
+                                />{' '}
                               </button>
                               <button
                                 data-bs-toggle="tooltip"
                                 title="Refund"
                                 className="btn"
-                                //   onClick={() => fundModaOpen(row)}
                               >
-                                <RiRefund2Line size={23} />
+                                <Refund style={{ width: '20', height: '20' }} />
                               </button>
                               <button
                                 data-bs-toggle="tooltip"
@@ -244,7 +237,9 @@ const CompleteProject = () => {
                                   history.push('/payments/transfer', row)
                                 }
                               >
-                                <FcMoneyTransfer size={21} />
+                                <Transfer
+                                  style={{ width: '20', height: '20' }}
+                                />{' '}
                               </button>
                               <button
                                 data-bs-toggle="tooltip"
@@ -254,8 +249,9 @@ const CompleteProject = () => {
                                   () => history.push(`/payments/view`, row)
                                   // history.push(`/payments/${id}`, row)
                                 }
+                                style={{ padding: '0 0.5em 0 0' }}
                               >
-                                <BsEye size={21} />
+                                <View style={{ width: '25', height: '20' }} />
                               </button>
                             </TableCell>
                           </TableRow>

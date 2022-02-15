@@ -14,8 +14,7 @@
   position: absolute;
   bottom: 0;
   left: 15px;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
+  border-radius: 10px;
 }
 
 .nav-tabs {
@@ -40,14 +39,91 @@
   transform: translate(0px, 0px);
 }
 
+.overview {
+  text-align: 'left';
+  font-size: 25;
+  margin-bottom: '0';
+  padding-top: '0.5em';
+  position: relative;
+}
+.overview::after {
+  content: '';
+  height: 6px;
+  width: 40px;
+  background-color: #63b8ec;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  position: absolute;
+  bottom: 0;
+  top: 27px;
+  left: 0px;
+}
+
+.BankDet {
+  position: relative;
+  text-align: left;
+  font-weight: bold;
+  font-size: 25;
+}
 .BankDet::after {
   content: '';
-  height: 4px;
+  height: 5px;
   width: 40px;
   background-color: #3b7cff;
   position: absolute;
   bottom: 0;
-  left: 15px;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
+  top: 1.5em;
+  left: 0px;
+  border-radius: 10px;
 }
+
+.donate {
+  position: relative;
+  text-align: left;
+  font-weight: bold;
+
+  padding-bottom: 1.4em;
+}
+.donate:after {
+  content: '';
+  height: 5px;
+  width: 40px;
+  background-color: #3b7cff;
+  position: absolute;
+  bottom: 0;
+  top: 1.5em;
+  right: 50%;
+  border-radius: 10px;
+}
+
+.modal-content {
+  /* width: 70% !important; */
+  border-radius: 1rem !important;
+}
+
+.Edit-NGO-logo-img {
+  grid-row: 1/2;
+  width: 200px;
+  height: 10em;
+  z-index: 200;
+  grid-column: 1/2;
+  border-radius: 50%;
+}
+.Edit-NGO-logo-img:hover {
+  z-index: 50;
+  opacity: 0.2;
+  /* filter: grayscale(1); */
+}
+/* .Edit-NGO-logo-img:hover .Edit-NGO-logo-p {
+  z-index: 200;
+} */
+.Edit-NGO-logo-p {
+  grid-row: 1/2;
+  z-index: 100;
+  grid-column: 1/2;
+  /* color: white; */
+}
+
+/* .Edit-NGO-logo-p:hover .Edit-NGO-logo-img {
+  opacity: 0.7;
+} */

@@ -5,20 +5,26 @@ import {
   GET_ALL_NGOS,
   GET_NGO,
   GET_NGO_PROJECT,
+  UPDATE_NGO_BY_ID,
 } from '../constTypes';
 import NgoServices from '../Services/NgoServices';
 
 export const createNGOAction = (body, history) => {
   if (navigator.onLine) {
-    return dispatch => {
+    return async dispatch => {
       NgoServices.createNGO(body)
         .then(res => {
           //need to add toaster here
-          history.push('/view_all_ngo');
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+          setTimeout(function () {
+            history.push('/view_all_ngo');
+          }, 2000);
         })
         .catch(e => {
-          alert(e.response.data.message)
-          console.log(e.response.data.message)
+          // alert(e.response.data.message);
         });
     };
   } else {
@@ -26,15 +32,15 @@ export const createNGOAction = (body, history) => {
   }
 };
 
-export const getAllNGOAction = () => {
+export const getAllNGOAction = value => {
   if (navigator.onLine) {
     return dispatch => {
-      NgoServices.GetAllNgoList()
+      NgoServices.GetAllNgoList(value)
         .then(res => {
           dispatch(GetAllNGO(res.data.data));
         })
         .catch(e => {
-          alert(e.response.data.message)
+          // alert(e.response.data.message);
         });
     };
   } else {
@@ -50,9 +56,7 @@ export const getNgoProjectAction = id => {
           console.log('shivani', res.data);
           dispatch(getNgoProject(res.data));
         })
-        .catch(e => {
-          alert(e.response.data.message)
-        });
+        .catch(e => {});
     };
   } else {
     alert('No network');
@@ -74,7 +78,7 @@ export const getNgoByIdAction = id => {
           dispatch(getNgoById(res.data.data));
         })
         .catch(e => {
-          alert(e.response.request.statusText)
+          alert(e.response.request.statusText);
         });
     };
   } else {
@@ -98,7 +102,7 @@ export const getAllNGOByValueAction = value => {
           dispatch(GetAllNGO(res.data.data));
         })
         .catch(e => {
-          alert(e.response.data.message)
+          alert(e.response.data.message);
         });
     };
   } else {
@@ -114,21 +118,23 @@ export const GetAllNGO = data => {
 };
 
 // update ngo
-export const updateNgoAction = (body, id, history) => {
+export const updateNgoAction = (id, data, history) => {
   if (navigator.onLine) {
     return dispatch => {
-      NgoServices.updateNgo(body, id)
+      NgoServices.updateNgoById(id, data)
         .then(res => {
+          dispatch(UpdateNgoByIdData(res.data.data));
           toast.success(res.data.message, {
             position: 'top-center',
             autoClose: 2000,
           });
-          setTimeout(function () {
-            history.push('/view_all_ngo');
-          }, 2000);
+          // setTimeout(function () {
+          dispatch(getAllNGOAction());
+          // }, 2000);
         })
         .catch(e => {
-          alert(e.response.data.message)
+          // alert(e.response.data.message)
+          window.history.back();
         });
     };
   } else {
@@ -136,19 +142,24 @@ export const updateNgoAction = (body, id, history) => {
   }
 };
 
+export const UpdateNgoByIdData = data => {
+  return {
+    type: UPDATE_NGO_BY_ID,
+    payload: data,
+  };
+};
 //delete Ngo
 export const DeleteNgoByIdAction = id => {
   return dispatch => {
     NgoServices.deleteNgo(id)
       .then(res => {
+        dispatch(getAllNGOAction());
         toast.success('User Deleted', {
           position: 'top-center',
-          autoClose: 3000,
+          autoClose: 2000,
         });
-        dispatch(getAllNGOAction());
+        dispatch(getAllNGOAction(''));
       })
-      .catch(e => {
-        alert(e.response.data.message)
-      });
+      .catch(err => {});
   };
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import '../../pages/master/vendor/vendor.css';
 
 import { BASE_URL } from '../../API/APIEndpoints';
 import { useDispatch } from 'react-redux';
@@ -16,16 +15,45 @@ const Partnerdelete = props => {
   };
   return (
     <React.Fragment>
-      <Modal centered show={props.show} onHide={props.onHide}>
+      <Modal centered show={props.show} onHide={props.onHide} size="sm">
         <Modal.Body>
-          <h3 style={{ textAlign: 'center' }}>Are You Sure?</h3>
-          <p style={{ textAlign: 'center' }}>You want to delete Partner?</p>
+          <h3
+            style={{
+              textAlign: 'center',
+              fontSize: 20,
+              fontWeight: 'bold',
+              marginTop: '1.5rem',
+            }}
+          >
+            Are You Sure?
+          </h3>
+          <p style={{ textAlign: 'center', fontSize: 20 }}>
+            You want to delete Partner?
+          </p>
           <div className="Del-btn">
-            <button onClick={() => props.onHide()} className="btn btn-light">
-              No!
-            </button>
-            <button onClick={() => onDelete()} className="btn btn-danger">
+            <button
+              onClick={() => onDelete()}
+              className="btn"
+              style={{
+                color: 'white',
+                backgroundColor: '#65AC12',
+                width: '6em',
+                borderRadius: '7px',
+              }}
+            >
               Yes!
+            </button>
+            <button
+              onClick={() => props.onHide()}
+              className="btn"
+              style={{
+                color: 'white',
+                backgroundColor: '#AFAFAF',
+                width: '6em',
+                borderRadius: '7px',
+              }}
+            >
+              No!
             </button>
           </div>
         </Modal.Body>

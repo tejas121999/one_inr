@@ -5,16 +5,18 @@
     "database": "local_oneinr",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "port": "3306"
+    "port": "3306",
+    "operatorAliases":false
   },
 
   "test": {
     "username": "admin",
     "password": "root",
-    "database": "newOneInr",
+    "database": "one_inr_new",
     "host": "144.91.79.237",
     "port": "3307",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "operatorAliases":false
   },
 
   "production": {
@@ -22,6 +24,7 @@
     "password": null,
     "database": "database_production",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "operatorAliases":false
   }
 }

@@ -16,7 +16,6 @@ import { ReactComponent as Edit } from '../../assets/icons/edit.svg';
 import { ReactComponent as View } from '../../assets/icons/view.svg';
 import { ReactComponent as Cross } from '../../assets/icons/cross.svg';
 import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
-import './ngo.css';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import Loader from '../Loader';
@@ -165,7 +164,7 @@ const ViewAllNgo = () => {
               paddingTop: '5px',
             }}
           >
-            List Of All Ngo
+            View All NGO
           </p>
         </div>
         <div
@@ -205,23 +204,11 @@ const ViewAllNgo = () => {
               style={{
                 display: 'flex',
                 width: '50%',
-                padding: '0em 2em 1em',
+                padding: '0.2em 2em 1em',
                 justifyContent: 'flex-start',
               }}
             >
-              <p
-                style={{
-                  textAlign: 'left',
-                  fontSize: '25',
-                  marginBottom: '0',
-                  paddingTop: '0.5em',
-                  borderBottomStyle: 'solid',
-                  borderBottomWidth: 'medium',
-                  borderColor: '#63b8ec',
-                }}
-              >
-                Overview
-              </p>
+              <p className="overview">Overview</p>
             </div>
             <div
               style={{
@@ -327,23 +314,16 @@ const ViewAllNgo = () => {
                             <TableCell id={labelId} align="left">
                               {row.user.name}
                             </TableCell>
-                            <TableCell align="left">{row.pending}</TableCell>
-                            <TableCell align="left">{row.active}</TableCell>
                             <TableCell align="left">
-                              {row.actionRequired}
+                              {row.projectDeactiveCount}
                             </TableCell>
                             <TableCell align="left">
-                              <button
-                                data-bs-toggle="tooltip"
-                                title="Add project"
-                                className="btn"
-                                onClick={() =>
-                                  history.push('/add_project', row)
-                                }
-                                style={{ padding: '0 0.5em 0 0' }}
-                              >
-                                <Plus style={{ width: '21', height: '21' }} />
-                              </button>
+                              {row.projectActiveCount}
+                            </TableCell>
+                            {/* <TableCell align="left">
+                              {row.actionRequired}
+                        </TableCell> */}
+                            <TableCell align="left">
                               <button
                                 data-bs-toggle="tooltip"
                                 title="View Details"
@@ -355,6 +335,17 @@ const ViewAllNgo = () => {
                               >
                                 {/* <FaRegEye /> */}
                                 <View style={{ width: '25', height: '20' }} />
+                              </button>
+                              <button
+                                data-bs-toggle="tooltip"
+                                title="Add project"
+                                className="btn"
+                                onClick={() =>
+                                  history.push('/add_project', row)
+                                }
+                                style={{ padding: '0 0.5em 0 0' }}
+                              >
+                                <Plus style={{ width: '21', height: '21' }} />
                               </button>
                               <button
                                 data-bs-toggle="tooltip"
@@ -391,7 +382,7 @@ const ViewAllNgo = () => {
                 count={allNgoList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                pageSize={10}
+                // pageSize={10}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
                 showLastButton={true}
@@ -459,12 +450,12 @@ const headCells = [
     disablePadding: false,
     label: 'Active',
   },
-  {
-    id: 'actionRequired',
-    numeric: false,
-    disablePadding: false,
-    label: 'ActionRequired',
-  },
+  // {
+  //   id: 'actionRequired',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   label: 'ActionRequired',
+  // },
   {
     id: 'action',
     numeric: false,

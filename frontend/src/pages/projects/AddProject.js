@@ -14,9 +14,8 @@ import moment from 'moment';
 import * as yup from 'yup';
 import { getAllNGOAction } from '../../Redux/Actions/NgoActions';
 import { Link } from 'react-router-dom';
-import SunEditor from 'suneditor-react'
-import "suneditor/dist/css/suneditor.min.css";
-
+import SunEditor from 'suneditor-react';
+import 'suneditor/dist/css/suneditor.min.css';
 
 const AddProject = props => {
   useEffect(() => {
@@ -31,17 +30,16 @@ const AddProject = props => {
   const [date, setDate] = useState(new Date());
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-  const [longDesc, setLongDesc] = useState("")
+  const [longDesc, setLongDesc] = useState('');
   const [recurring, setRecurring] = useState('select');
   const [recurringDays, setRecurringDays] = useState();
 
-  const [sliderone, setSliderone] = useState('')
-  const [slidertwo, setSlidertwo] = useState('')
-  const [sliderthree, setSliderthree] = useState('')
-  const [sliderfour, setSliderfour] = useState('')
-  const [sliderfive, setSliderfive] = useState('')
-  const [slidersix, setSlidersix] = useState('')
-
+  const [sliderone, setSliderone] = useState('');
+  const [slidertwo, setSlidertwo] = useState('');
+  const [sliderthree, setSliderthree] = useState('');
+  const [sliderfour, setSliderfour] = useState('');
+  const [sliderfive, setSliderfive] = useState('');
+  const [slidersix, setSlidersix] = useState('');
 
   console.log('recurringdays', recurringDays);
 
@@ -57,7 +55,6 @@ const AddProject = props => {
     goal: yup.string().required('Required Field'),
     title: yup.string().required('Required Field'),
     description: yup.string().required('Required Field'),
-
   });
 
   // console.log('Images', sliderone);
@@ -93,7 +90,7 @@ const AddProject = props => {
       slider3: sliderthree,
       slider4: sliderfour,
       slider5: sliderfive,
-      slider6: slidersix
+      slider6: slidersix,
     };
     console.log('value', object);
     dispatch(addProjectAction(object, props.history));
@@ -141,7 +138,7 @@ const AddProject = props => {
       data,
     );
     if (result && result.data && result.data.pathtoUpload) {
-      setSliderone(result.data.pathtoUpload)
+      setSliderone(result.data.pathtoUpload);
     }
   };
 
@@ -154,7 +151,7 @@ const AddProject = props => {
       data,
     );
     if (result && result.data && result.data.pathtoUpload) {
-      setSlidertwo(result.data.pathtoUpload)
+      setSlidertwo(result.data.pathtoUpload);
     }
   };
 
@@ -167,7 +164,7 @@ const AddProject = props => {
       data,
     );
     if (result && result.data && result.data.pathtoUpload) {
-      setSliderthree(result.data.pathtoUpload)
+      setSliderthree(result.data.pathtoUpload);
     }
   };
 
@@ -180,7 +177,7 @@ const AddProject = props => {
       data,
     );
     if (result && result.data && result.data.pathtoUpload) {
-      setSliderfour(result.data.pathtoUpload)
+      setSliderfour(result.data.pathtoUpload);
     }
   };
 
@@ -193,7 +190,7 @@ const AddProject = props => {
       data,
     );
     if (result && result.data && result.data.pathtoUpload) {
-      setSliderfive(result.data.pathtoUpload)
+      setSliderfive(result.data.pathtoUpload);
     }
   };
 
@@ -206,7 +203,7 @@ const AddProject = props => {
       data,
     );
     if (result && result.data && result.data.pathtoUpload) {
-      setSlidersix(result.data.pathtoUpload)
+      setSlidersix(result.data.pathtoUpload);
     }
   };
   return (
@@ -214,63 +211,59 @@ const AddProject = props => {
       <br />
       <br />
       <br />
-      <br />
       <div
         className="row"
         style={{
-          backgroundColor: 'white',
-          margin: '0 1.2em',
-          borderRadius: '1em',
+          margin: '1em',
+          padding: '0.8em 2em',
         }}
       >
         <p
           style={{
             textAlign: 'left',
-            fontSize: '1.25rem',
-            fontWeight: '600',
-            margin: '20px',
-            width: '100%',
-            marginLeft: '20px',
+            fontSize: '25',
+            fontWeight: 'bold',
+            marginBottom: '0',
           }}
         >
           Add Project
         </p>
       </div>
+      <hr style={{ margin: '0' }} />
 
       <div
         style={{
-          margin: '20px',
-          backgroundColor: 'white',
-          marginBottom: '5em',
-          borderRadius: '1.5em',
+          marginBottom: '2.5em',
         }}
       >
-        <div style={{ padding: '5rem 10rem' }}>
-          <Formik
-            initialValues={{
-              recurring: 'false',
-              recurringDays: '',
-              title: '',
-              description: '',
-              goal: '',
-              startDate: '',
-              endDate: '',
-              ngo: '',
-              commission: '',
-              recuringType: '',
-              days: '',
-              videoLink: '',
-              longDesc: '',
-            }}
-            validationSchema={validationSchema}
-            enableReinitialize={true}
-            onSubmit={values => onProjectAdd(values)}
-          >
-            {({ values, errors, touched }) => (
+        <Formik
+          initialValues={{
+            recurring: 'false',
+            recurringDays: '',
+            title: '',
+            description: '',
+            goal: '',
+            startDate: '',
+            endDate: '',
+            ngo: '',
+            commission: '',
+            recuringType: '',
+            days: '',
+            videoLink: '',
+            longDesc: '',
+          }}
+          validationSchema={validationSchema}
+          enableReinitialize={true}
+          onSubmit={values => onProjectAdd(values)}
+        >
+          {({ values, errors, touched }) => (
+            <div className="w-100 mx-auto" style={{ padding: '3rem 8rem' }}>
               <Form>
                 <div>
                   <div className="col-sm-12 col-xs-12">
-                    <label style={{ fontWeight: 'bold' }}>Title:<label style={{ color: 'red' }}>*</label></label>
+                    <label style={{ fontWeight: 'bold' }}>
+                      Title:<label style={{ color: 'red' }}>*</label>
+                    </label>
                     <Field
                       type="text"
                       name="title"
@@ -286,7 +279,7 @@ const AddProject = props => {
                   </div>
                   <div className="col-sm-12 col-xs-12 mt-3">
                     <label style={{ fontWeight: 'bold' }}>
-                      Description: (Max 144 char)
+                      Description(Max 144 char):
                       <label style={{ color: 'red' }}>*</label>
                     </label>
                     <Field
@@ -361,7 +354,9 @@ const AddProject = props => {
 
                   <div className="row mt-3">
                     <div className="col-sm-4 col-xs-12">
-                      <label style={{ fontWeight: 'bold' }}>Goal:<label style={{ color: 'red' }}>*</label></label>
+                      <label style={{ fontWeight: 'bold' }}>
+                        Goal:<label style={{ color: 'red' }}>*</label>
+                      </label>
                       <Field
                         type="text"
                         name="goal"
@@ -376,12 +371,14 @@ const AddProject = props => {
                       )}
                     </div>
                     <div className="col-sm-4 col-xs-12">
-                      <label style={{ fontWeight: 'bold' }}>Start Date:<label style={{ color: 'red' }}>*</label></label>
+                      <label style={{ fontWeight: 'bold' }}>
+                        Start Date:<label style={{ color: 'red' }}>*</label>
+                      </label>
                       <input
                         type="date"
                         id="start"
                         name="trip-start"
-                        className='form-control'
+                        className="form-control"
                         selected={startDate}
                         selectsStart
                         startDate={startDate}
@@ -395,12 +392,14 @@ const AddProject = props => {
                       />
                     </div>
                     <div className="col-sm-4 col-xs-12">
-                      <label style={{ fontWeight: 'bold' }}>End Date:<label style={{ color: 'red' }}>*</label></label>
+                      <label style={{ fontWeight: 'bold' }}>
+                        End Date:<label style={{ color: 'red' }}>*</label>
+                      </label>
                       <input
                         type="date"
                         id="end"
                         name="trip-end"
-                        className='form-control'
+                        className="form-control"
                         selected={startDate}
                         selectsEnd
                         startDate={startDate}
@@ -416,7 +415,6 @@ const AddProject = props => {
                     <div className="col-sm-12 col-xs-12 mt-3">
                       <label style={{ fontWeight: 'bold' }}>
                         Video Embed Link:
-                        <label style={{ color: 'red' }}>*</label>
                       </label>
                       <Field
                         type="text"
@@ -436,30 +434,31 @@ const AddProject = props => {
                         value={longDesc}
                         showToolbar={true}
                         onChange={Desc => {
-                          setLongDesc(Desc)
+                          setLongDesc(Desc);
                         }}
                         setDefaultStyle="height: auto"
                         setOptions={{
                           buttonList: [
                             [
-                              "bold",
-                              "underline",
-                              "italic",
-                              "strike",
-                              "list",
-                              "align",
-                              "fontSize",
-                              "formatBlock",
-                              "table",
-                              "image"
-                            ]
-                          ]
+                              'bold',
+                              'underline',
+                              'italic',
+                              'strike',
+                              'list',
+                              'align',
+                              'fontSize',
+                              'formatBlock',
+                              'table',
+                              'image',
+                            ],
+                          ],
                         }}
                       />
-
                     </div>
                     <div className="col-sm-12 col-xs-12 mt-3">
-                      <label style={{ fontWeight: 'bold' }}>Select NGO:<label style={{ color: 'red' }}>*</label></label>
+                      <label style={{ fontWeight: 'bold' }}>
+                        Select NGO:<label style={{ color: 'red' }}>*</label>
+                      </label>
                       <Field
                         className="form-control"
                         list="datalistOptions"
@@ -477,37 +476,35 @@ const AddProject = props => {
                           ))}
                       </datalist>
                     </div>
-                    <div className="row" style={{ margin: '1.5rem 0 1em' }}>
+                    {/* <div className="row" style={{ margin: '1.5rem 0 0' }}>
+                    <div className="col-sm-4 col-xs-4">
+                      <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
+                        Feature Image (Image on banner):
+                        <label style={{ color: 'red' }}>*</label>
+                      </label>
+                    </div>
+                    <div className="col-sm-4 col-xs-4">
+                      <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
+                        Cover Image (Image in tile):
+                        <label style={{ color: 'red' }}>*</label>
+                      </label>
+                    </div>
+                    <div className="col-sm-4 col-xs-4">
+                      <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
+                        Mobile Image (Image on Mobile):
+                        <label style={{ color: 'red' }}>*</label>
+                      </label>
+                    </div>
+                  </div> */}
+                    <div
+                      className="row mt-3"
+                      style={{ margin: '0', flex: 'auto' }}
+                    >
                       <div className="col-sm-4 col-xs-4">
-                        <label
-                          style={{ fontWeight: 'bold', marginBottom: '0' }}
-                        >
+                        <label style={{ fontWeight: 'bold' }}>
                           Feature Image (Image on banner):
                           <label style={{ color: 'red' }}>*</label>
                         </label>
-                      </div>
-                      <div className="col-sm-4 col-xs-4">
-                        <label
-                          style={{ fontWeight: 'bold', marginBottom: '0' }}
-                        >
-                          Cover Image (Image in tile):<label style={{ color: 'red' }}>*</label>
-                        </label>
-                        
-                      </div>
-                      <div className="col-sm-4 col-xs-4">
-                        <label
-                          style={{ fontWeight: 'bold', marginBottom: '0' }}
-                        >
-                          Mobile Image (Image on Mobile):<label style={{ color: 'red' }}>*</label>
-                        </label>
-                        
-                      </div>
-                    </div>
-                    <div
-                      className="row"
-                      style={{ margin: '0rem 0 1.5rem', flex: 'auto' }}
-                    >
-                      <div className="col-sm-4 col-xs-4">
                         <DropzoneComponent onChangeImage={onFeatureImgAdd} />
                         <ErrorMessage
                           name="feature image"
@@ -515,6 +512,10 @@ const AddProject = props => {
                         />
                       </div>
                       <div className="col-sm-4 col-xs-4">
+                        <label style={{ fontWeight: 'bold' }}>
+                          Cover Image (Image in tile):
+                          <label style={{ color: 'red' }}>*</label>
+                        </label>
                         <DropzoneComponent onChangeImage={onCoverImgAdd} />
                         <ErrorMessage
                           name="feature image"
@@ -522,6 +523,10 @@ const AddProject = props => {
                         />
                       </div>
                       <div className="col-sm-4 col-xs-4">
+                        <label style={{ fontWeight: 'bold' }}>
+                          Mobile Image (Image on Mobile):
+                          <label style={{ color: 'red' }}>*</label>
+                        </label>
                         <DropzoneComponent onChangeImage={onMobileImgAdd} />
                         <ErrorMessage
                           name="feature image"
@@ -529,13 +534,16 @@ const AddProject = props => {
                         />
                       </div>
                     </div>
-                    <div className="col-sm-12 col-xs-12">
-                      <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
-                        Slider Images (Images on detailed page):<label style={{ color: 'red' }}>*</label>
+                    <div className="col-sm-12 col-xs-12 mt-3">
+                      <label style={{ fontWeight: 'bold', fontSize: '20' }}>
+                        Slider Images (Images on detailed page):
                       </label>
-                      
                     </div>
-                    <div className="row" style={{ margin: '0rem 0 1.5rem' }}>
+                    <div className="row" style={{ margin: '0', flex: 'auto' }}>
+                      {/* <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
+                      Slider Images (Images on detailed page):
+                      <label style={{ color: 'red' }}>*</label>
+                    </label> */}
                       <div className="col-sm-4 col-xs-4">
                         <DropzoneComponent onChangeImage={onSliderone} />
                       </div>
@@ -555,7 +563,7 @@ const AddProject = props => {
                         <DropzoneComponent onChangeImage={onSlidersix} />
                       </div>
                     </div>
-                    <div className="col-sm-12 col-xs-12">
+                    <div className="col-sm-12 col-xs-12 mt-3">
                       <label style={{ fontWeight: 'bold' }}>
                         Commision (%):
                         <label style={{ color: 'red' }}>*</label>
@@ -611,9 +619,9 @@ const AddProject = props => {
                   </div>
                 </div>
               </Form>
-            )}
-          </Formik>
-        </div>
+            </div>
+          )}
+        </Formik>
       </div>
     </>
   );

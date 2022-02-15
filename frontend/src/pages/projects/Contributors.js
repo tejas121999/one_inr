@@ -146,19 +146,7 @@ const Contributors = () => {
                 justifyContent: 'flex-start',
               }}
             >
-              <p
-                style={{
-                  textAlign: 'left',
-                  fontSize: '25',
-                  marginBottom: '0',
-                  paddingTop: '0.5em',
-                  borderBottomStyle: 'solid',
-                  borderBottomWidth: 'medium',
-                  borderColor: '#63b8ec',
-                }}
-              >
-                Overview
-              </p>
+              <p className="overview">Overview</p>
             </div>
             <div
               style={{

@@ -42,16 +42,26 @@ exports.addNgo = async (req, res) => {
             if (!element.bankName || element.bankName.length === 0) {
                 return res.status(403).json({ message: 'Bank Name is required' })
             }
-            // validation for IFSC Code 
-            if (!element.ifsc || element.ifsc.length === 0) {
+
+            if (!element.accountNumber||element.accountNumber.length === 0) {
+                return res.status(403).json({ message: 'Account number is required'})
+            }
+            //console.log(element.accountNumber.length)
+            // if (element.accountNumber.length >12) {
+
+            //     return res.status(403).json({ message: 'Account number should be max 12 digit' })
+            // }
+
+        
+            if (!element.ifscCode || element.ifscCode.length === 0) {
                 return res.status(403).json({ message: 'IFSC Code required' })
             }
-            // let ifscRegex = /^([A-Z|a-z]){4}([0-9]){7}$/i;
+          
 
-            // if (element.ifsc != ifscRegex) {
+            if ( !/^[A-Z|a-z]{4}0[0-9]{6}$/i.test(element.ifscCode)) {
 
-            //     return res.status(403).json({ message: 'Invalid IFS Code' })
-            // }
+                return res.status(403).json({ message: 'Invalid IFS Code' })
+            }
         }
     }
 
@@ -70,7 +80,7 @@ exports.addNgo = async (req, res) => {
 
         if (req.body.bankDetails) {
             for (const item of req.body.bankDetails) {
-                cBankData = await createBankData({ userId: data.id, bankName: item.bankName, accountNumber: item.accountNumber, beneficiaryName: item.beneficiaryName, ifsc: item.ifsc }, t)
+                cBankData = await createBankData({ userId: data.id, bankName: item.bankName, accountNumber: item.accountNumber, beneficiaryName: item.beneficiaryName, ifsc: item.ifscCode }, t)
             }
         }
     })
@@ -95,7 +105,7 @@ exports.updateNgo = async (req, res) => {
         //FINDING USER ID THROUGH NGO
         let getUser = await models.ngo.findOne({
             where: { id: id },
-            include: { model: models.users, attributes: ['id', 'name'] }
+            include: { model: models.users,  as:'user', attributes: ['id', 'name'] }
         })
         let userId = req.userData.id  //User ID
         const hash = await twinBcrypt.hashSync(password, saltRounds);
@@ -118,15 +128,16 @@ exports.updateNgo = async (req, res) => {
                     return res.status(403).json({ message: 'Beneficiary Name is required' })
                 }
 
-                if (!element.ifsc || element.ifsc.length === 0) {
+                if (!element.ifscCode || element.ifscCode.length === 0) {
                     return res.status(403).json({ message: 'IFSC Code required' })
                 }
-                // let ifscRegex = /^([A-Z|a-z]){4}([0-9]){7}$/i;
+                 
+                 
+                 
+                 if ( !/^[A-Z|a-z]{4}0[0-9]{6}$/i.test(element.ifscCode)) {
 
-                // if (!element.ifsc == ifscRegex) {
-
-                //     return res.status(403).json({ message: 'Invalid IFSC Code' })
-                // }
+                    return res.status(403).json({ message: 'Invalid IFS Code' })
+                }
                
                 const existingBankAccount = await models.bankDetails.findOne({
                     where: {
@@ -143,7 +154,7 @@ exports.updateNgo = async (req, res) => {
 
         await sequelize.transaction(async (t) => {
             data = await models.users.update(
-                { name, email, mobile, password: hash }, { where: { id: userId } },
+                { name, email, mobile, password: hash }, { where: { id: getUser.userId } },
                 { transaction: t }
             )
             updateNgo = await models.ngo.update(
@@ -187,6 +198,15 @@ exports.getAllNgo = async (req, res) => {
         req.query.from,
         req.query.to
     )
+    // includeArray = [
+    //     { 
+    //         model: models.users,
+    //          as: 'user'
+    //     },
+    //     { 
+    //         model: models.projects 
+    //     },
+    // ]
     //SEARCH QUERY
     const searchQuery = {
         [Op.and]: [query, {
@@ -196,6 +216,8 @@ exports.getAllNgo = async (req, res) => {
                 registrationNumber: { [Op.like]: '%' + search + '%' },
                 landline: { [Op.like]: '%' + search + '%' },
                 panNumber: { [Op.like]: '%' + search + '%' },
+                '$user.email$' : { [Op.like]:'%'+ search + '%' },
+                '$user.name$' : {[Op.like]: '%' + search +'%' }
             },
         }],
     }
@@ -208,22 +230,48 @@ exports.getAllNgo = async (req, res) => {
     //     ]
     // }
     const data = await models.ngo.findAll({
+         attributes : ['id','userId','address'],
         limit: pageSize,
         offset: offset,
-        where: searchQuery,
-        include: [
-            { model: models.users },
-            { model: models.projects },
+         where: searchQuery, 
+         subQuery:false,
+         include: [
+            {
+                model: models.users,
+                as: 'user',
+                subQuery:false,
+                attributes: ['id', 'name', 'email', 'isActive']
+            },
+            {
+                model: models.projects,
+                attributes: ['id','title','slogan','isActive']
+            },
         ],
+        //  include : includeArray,
         // where: searchQueryForUser,
         order: [
             ['id', 'DESC']
         ]
     });
 
+        for (let i = 0; i < data.length; i++) {
+            let projectActiveCount = 0
+            let projectDeactiveCount = 0
+            const element = data[i];
+            for (let j = 0; j < element.projects.length; j++) {
+                const singleProject = element.projects[j];
+                if (singleProject.isActive) {
+                    projectActiveCount++;
+                } else {
+                    projectDeactiveCount++;
+                }
+            }
+            data[i].dataValues.projectActiveCount = projectActiveCount
+            data[i].dataValues.projectDeactiveCount = projectDeactiveCount
+        }
 
-    if (!data) {
-        return res.status(400).json({
+    if (data.length == 0) {
+        return res.status(404).json({
             message: "Failed to get all data."
         })
     }
@@ -236,12 +284,14 @@ exports.getAllNgo = async (req, res) => {
 
 
 
+
 exports.getNgoById = async (req, res) => {
     let id = req.params.id
     let data = await models.ngo.findOne({
         where: { id: id },
         include: [{
             model: models.users,
+            as :'user',
             attributes: ['name', 'email', 'mobile'],
             include: [{
                 model: models.bankDetails,
@@ -314,4 +364,27 @@ exports.getNgoProjectDetails = async (req, res) => {
         }
     });
     return res.status(200).json({ pendingCount, activeCount, fullFilledCount, partialFullfilled, data, message: "success" })
+}
+
+//update ngo kyc
+exports.updateNgoKyc = async (req, res) => {
+    const { isKyc } = req.body;
+    const id = req.params.id;
+
+    const findNgo = await models.ngo.findOne({ where: { id: id } });
+
+    if (!findNgo) {
+        return res.status(404).json({ message: "Ngo not found" });
+    }
+    if (findNgo.isKyc) {
+        return res.status(400).json({ message: "Kyc already approved" });
+    }
+
+    const updateNgo = await models.ngo.update({ isKyc: isKyc }, { where: { id: id } });
+
+    if (updateNgo[0] == 0) {
+        return res.status(200).json({ message: "Kyc not updated" });
+    } else {
+        return res.status(200).json({ message: "kyc updated successfully" });
+    }
 }

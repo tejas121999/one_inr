@@ -14,11 +14,10 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { visuallyHidden } from '@mui/utils';
 import Paper from '@mui/material/Paper';
-import { FaRegEdit, FaRegEye } from 'react-icons/fa';
-import { BiLink } from 'react-icons/bi';
-import { AiOutlineDollarCircle } from 'react-icons/ai';
 import { ReactComponent as Edit } from '../../assets/icons/edit.svg';
 import { ReactComponent as View } from '../../assets/icons/view.svg';
+import { ReactComponent as AutoDonate } from '../../assets/icons/Autodonate.svg';
+import { ReactComponent as Contribute } from '../../assets/icons/Contribute.svg';
 import Switch from '@material-ui/core/Switch';
 import './project.css';
 import { getAllProjectAction } from '../../Redux/Actions/ProjectActions';
@@ -38,7 +37,6 @@ const ViewAllProjects = () => {
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [viewModal, setViewModal] = React.useState(false);
   const [viewData, setViewData] = React.useState('');
@@ -184,23 +182,11 @@ const ViewAllProjects = () => {
               style={{
                 display: 'flex',
                 width: '30%',
-                padding: '0 0 1em 2em',
+                padding: '0.2em 0 1em 2em',
                 justifyContent: 'flex-start',
               }}
             >
-              <p
-                style={{
-                  textAlign: 'left',
-                  fontSize: '25',
-                  marginBottom: '0',
-                  paddingTop: '0.5em',
-                  borderBottomStyle: 'solid',
-                  borderBottomWidth: 'medium',
-                  borderColor: '#63b8ec',
-                }}
-              >
-                Overview
-              </p>
+              <p className="overview">Overview</p>
             </div>
             <div
               style={{
@@ -353,15 +339,23 @@ const ViewAllProjects = () => {
                           <TableCell align="left">{row.goal}</TableCell>
                           <TableCell align="left">{row.target}</TableCell>
                           <TableCell align="left">{row.funded}</TableCell>
-                          <TableCell align="left">{row.days_left}</TableCell>
-                          <TableCell align="left">{row.recurring}</TableCell>
+                          <TableCell align="left">{row.DaysLeft}</TableCell>
                           <TableCell align="left">
-                            {/* <div className="container"> */}
-                            <Switch color="primary" size="medium" />
-                            {/* </div> */}
+                            {row.isRecurring === true ? 'Yes' : 'No'}
                           </TableCell>
                           <TableCell align="left">
-                            <Switch color="primary" size="medium" />
+                            <Switch
+                              color="primary"
+                              checked={row.isActive}
+                              size="medium"
+                            />
+                          </TableCell>
+                          <TableCell align="left">
+                            <Switch
+                              color="primary"
+                              checked={row.displayOnHomeStatus}
+                              size="medium"
+                            />
                           </TableCell>
                           <TableCell align="left">
                             <button
@@ -373,7 +367,6 @@ const ViewAllProjects = () => {
                               }
                               style={{ padding: '0 0.5em 0 0' }}
                             >
-                              {/* <FaRegEye /> */}
                               <View style={{ width: '25', height: '20' }} />
                             </button>
                             <button
@@ -391,16 +384,22 @@ const ViewAllProjects = () => {
                               title="Auto donate"
                               className="btn"
                               onClick={() => history.push('/auto_donate', row)}
+                              style={{ padding: '0 0.4em' }}
                             >
-                              <AiOutlineDollarCircle />
+                              <AutoDonate
+                                style={{ width: '22', height: '23' }}
+                              />
                             </button>
                             <button
                               data-bs-toggle="tooltip"
                               title="Contributors"
                               className="btn"
                               onClick={() => history.push('/Contributors', row)}
+                              style={{ padding: '0' }}
                             >
-                              <BiLink />
+                              <Contribute
+                                style={{ width: '24', height: '23' }}
+                              />
                             </button>
                           </TableCell>
                         </TableRow>

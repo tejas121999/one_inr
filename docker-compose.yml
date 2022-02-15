@@ -22,7 +22,7 @@ services:
       image: one_inr_db:latest
       environment:
         MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: newOneInr
+        MYSQL_DATABASE: one_inr_new
         MYSQL_PASSWORD: root
         MYSQL_USER: admin
       ports:

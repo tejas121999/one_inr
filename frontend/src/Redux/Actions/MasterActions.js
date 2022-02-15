@@ -48,7 +48,6 @@ export const CreateVendorAction = (body, history) => {
           }, 2000);
         })
         .catch(err => {
-          console.log('Vendor add', err);
           //need to add toster here
         });
     };
