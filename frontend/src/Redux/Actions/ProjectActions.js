@@ -19,7 +19,7 @@ export const getAllProjectAction = (value) => {
           dispatch(getAllProjects(res.data.result));
         })
         .catch(e => {
-          alert(e.response.request.statusText)
+          // alert(e.response.request.statusText)
         });
     };
   } else {
@@ -47,7 +47,7 @@ export const addProjectAction = (body, history) => {
           }, 2000);
         })
         .catch((e) => {
-          alert(e.response.request.statusText)
+          // alert(e.response.request.statusText)
         });
     };
   } else {
@@ -64,10 +64,11 @@ export const getProjectByIdAction = id => {
         .getProjectByID(id)
         .then(res => {
           // alert(res.data.message)
+          console.log(res)
           dispatch(getProjectData(res.data.result));
         })
         .catch(e => {
-          alert(e.response.request.statusText)
+          // alert(e.response.request.statusText)
         });
     };
   } else {
@@ -94,7 +95,7 @@ export const updateProjectAction = (id, data, history) => {
           }, 2000);
         })
         .catch(e => {
-          alert(e.response.request.statusText)
+          // alert(e.response.request.statusText)
         })
     }
   }
@@ -112,7 +113,7 @@ export const CommitionUpdateAction = (id, data, history) => {
           }, 2000);
         })
         .catch(e => {
-          alert(e.response.request.statusText)
+          // alert(e.response.request.statusText)
         })
     }
   } else {
@@ -132,7 +133,7 @@ export const addFundAction = (id, data, history) => {
           }, 2000);
         })
         .catch(e => {
-          alert(e.response.request.statusText)
+          // alert(e.response.request.statusText)
         })
     }
   }
@@ -150,7 +151,7 @@ export const getAllCompletedProjectAction = () => {
           dispatch(getCompletedProjects(res.data));
         })
         .catch(e => {
-          alert(e.response.request.statusText)
+          // alert(e.response.request.statusText)
         });
     };
   } else {
@@ -167,7 +168,7 @@ export const getCompletedProjectByValueAction = value => {
         dispatch(getCompletedProjects(res.data));
       })
       .catch(e => {
-        alert(e.response.request.statusText)
+        // alert(e.response.request.statusText)
       });
   };
 };
@@ -191,7 +192,7 @@ export const getAllArchivedProjectAction = () => {
           dispatch(getArchivedProjects(res.data));
         })
         .catch(e => {
-          alert(e.response.request.statusText)
+          // alert(e.response.request.statusText)
         });
     };
   } else {
