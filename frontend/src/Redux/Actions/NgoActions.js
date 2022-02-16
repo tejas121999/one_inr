@@ -134,7 +134,7 @@ export const updateNgoAction = (id, data, history) => {
         })
         .catch(e => {
           // alert(e.response.data.message)
-          window.history.back();
+          // window.history.back();
         });
     };
   } else {

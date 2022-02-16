@@ -21,9 +21,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 
 const EditNgo = props => {
+  let ngoById = useSelector(state => state.ngo.ngoData);
   const dispatch = useDispatch();
   const [endPoint] = useState('http://144.91.79.237:8901/');
-  const [logoImgUrl, setLogoImgUrl] = useState('');
+  const [logoImgUrl, setLogoImgUrl] = useState();
   const [panCardImgUrl, setPanCardImgUrl] = useState('');
   const [certificateImgUrl, setCertificateImgUrl] = useState('');
   const [charityCertificateImgUrl, setCharityCertificateImgUrl] = useState('');
@@ -39,10 +40,14 @@ const EditNgo = props => {
   const [bankName, setBankName] = useState([]);
   const [id, setCount] = useState(0);
 
+  const [visible, setVisible] = useState(false);
+
   useEffect(() => {
+    setLogoImgUrl(ngoById.logoURL);
     dispatch(getNgoByIdAction(props.location.state.id));
   }, []);
-  let ngoById = useSelector(state => state.ngo.ngoData);
+
+  console.log('logoImgUrl :>> ', logoImgUrl);
   console.log('acc', ngoById);
   const handleDropzone = () => {
     setDropCondition(true);
@@ -137,6 +142,7 @@ const EditNgo = props => {
 
   const onlogoImageAdd = async imgData => {
     const data = new FormData();
+    console.log('imgData', imgData);
     data.append('avatar', imgData[0]);
     const result = await axios.post(
       BASE_URL + 'fileupload?reason=ngo_logo',
@@ -191,6 +197,7 @@ const EditNgo = props => {
 
   const onDeedImageAdd = async imgData => {
     const data = new FormData();
+
     data.append('avatar', imgData[0]);
     const result = await axios.post(
       BASE_URL + 'fileupload?reason=ngo_deed',
@@ -200,9 +207,34 @@ const EditNgo = props => {
       setDeedImgUrl(result.data.pathtoUpload);
     }
   };
+  const handlefileUpload = async event => {
+    const formData = new FormData();
+    formData.append('avatar', event.target.files[0]);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=ngo_logo',
+      formData,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setLogoImgUrl(result.data.path);
+    }
+  };
+  console.log('logoImgUrl :>> ', logoImgUrl);
+
+  const handlePancardUpload = async event => {
+    const formData = new FormData();
+    formData.append('avatar', event.target.files[0]);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=ngo_pancard',
+      formData,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setPanCardImgUrl(result.data.path);
+    }
+  };
 
   const onEditNgo = values => {
     let newDate = moment(date).format('LL');
+    console.log('panCardImgUrl', panCardImgUrl);
     const obj = {
       logo: logoImgUrl,
       name: values.name,
@@ -220,8 +252,9 @@ const EditNgo = props => {
       deed: deedImgUrl,
       bankDetails: addBankDetailsValues,
     };
+    console.log('shivani', props);
 
-    dispatch(updateNgoAction(obj, props.data.id, props.history));
+    dispatch(updateNgoAction(props.location.state.id, obj, props.history));
   };
 
   return (
@@ -272,7 +305,7 @@ const EditNgo = props => {
             password: ngoById.password,
             panNumber: ngoById.panNumber,
           }}
-          validationSchema={validationSchema}
+          //validationSchema={validationSchema}
           onSubmit={values => onEditNgo(values)}
           enableReinitialize={true}
         >
@@ -288,7 +321,7 @@ const EditNgo = props => {
                       {dropCondition && (
                         <DropzoneComponent
                           onChangeImage={onlogoImageAdd}
-                          value={logoImgUrl}
+                          // value={logoImgUrl}
                         />
                       )}
                       <div
@@ -310,18 +343,11 @@ const EditNgo = props => {
                                 gridTemplateRows: '1fr',
                                 gridTemplateColumns: '1fr',
                               }}
+                              onClick={handleDropzone}
                             >
                               <img
                                 className="Edit-NGO-logo-img"
                                 style={{ gridRow: '1/2' }}
-                                // onMouseOver={() => {
-                                //   setLogoCondition(!LogoCondition);
-                                //   console.log(LogoCondition, 'LOGO CONDITION');
-                                // }}
-                                // onMouseLeave={() => {
-                                //   setLogoCondition(!LogoCondition);
-                                //   console.log(LogoCondition, 'LOGO CONDITION');
-                                // }}
                                 src={`${ngoById.logoURL}`}
                               ></img>
                               <p
@@ -333,6 +359,18 @@ const EditNgo = props => {
                             </button>
                           </div>
                         )}
+                        <img
+                          src={`${logoImgUrl}`}
+                          alt="no img"
+                          height={'100px'}
+                          width={'100px'}
+                        />
+                        <input
+                          type="file"
+                          onChange={handlefileUpload}
+                          name="file"
+                          id=""
+                        />
                       </div>
                       <ErrorMessage name="logo_img" component={TextError} />
                     </div>
@@ -571,126 +609,147 @@ const EditNgo = props => {
                   </div>
                 </div>
 
-                <div className="row" style={{ margin: '1.5rem 0 0.5em' }}>
-                  <div
-                    className="col-sm-3 col-xs-3"
-                    style={{ paddingLeft: '0' }}
-                  >
-                    <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
+                <div className="row">
+                  <div className="col-3 ">
+                    <label
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: '1em',
+                        margin: '0.8em 0 0',
+                      }}
+                    >
                       Pancard<label style={{ color: 'red' }}>*</label>
                     </label>
-                  </div>
-
-                  <div
-                    className="col-sm-3 col-xs-3 "
-                    style={{ paddingLeft: '0' }}
-                  >
-                    <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
-                      Certificate<label style={{ color: 'red' }}>*</label>
-                    </label>
-                  </div>
-
-                  <div
-                    className="col-sm-3 col-xs-3 "
-                    style={{ paddingLeft: '0' }}
-                  >
-                    <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
-                      Charity Registration Certificate
-                      <label style={{ color: 'red' }}>*</label>
-                    </label>
-                  </div>
-
-                  <div className="col-sm-3 col-xs-3 " style={{ padding: '0' }}>
-                    <label style={{ fontWeight: 'bold', marginBottom: '0' }}>
-                      Deed<label style={{ color: 'red' }}>*</label>
-                    </label>
-                  </div>
-                </div>
-                <div
-                  className="row"
-                  style={{ margin: '0rem 0 1.5rem', flex: 'auto' }}
-                >
-                  <div
-                    className="col-sm-3 col-xs-3 "
-                    style={{ paddingLeft: '0' }}
-                  >
+                    {dropCondition && (
+                      <DropzoneComponent
+                        onChangeImage={onPanCardImageAdd}
+                        value={panCardImgUrl}
+                      />
+                    )}
                     <div
-                      style={{
-                        padding: '0.5em 1em 1.5em',
-                        textAlign: 'center',
-                      }}
+                      style={{ padding: '15px 0 10px', textAlign: 'center' }}
+                    >
+                      {!dropCondition && (
+                        <div className="image-upload">
+                          <button
+                            style={{
+                              border: 'none',
+                              background: 'none',
+                              display: 'grid',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              alignContent: 'center',
+                              gridTemplateRows: '1fr',
+                              gridTemplateColumns: '1fr',
+                            }}
+                            onClick={handleDropzone}
+                          >
+                            <img
+                              className="Edit-NGO-logo-img"
+                              style={{ gridRow: '1/2' }}
+                              src={`${ngoById.panCardURL}`}
+                            ></img>
+                            <p
+                              className="Edit-NGO-logo-p"
+                              onClick={handleDropzone}
+                            >
+                              Upload Pancard
+                            </p>
+                          </button>
+                        </div>
+                      )}
+                      <img
+                        src={`${panCardImgUrl}`}
+                        alt="no img"
+                        height={'100px'}
+                        width={'100px'}
+                      />
+                      <input
+                        type="file"
+                        onChange={handlePancardUpload}
+                        name="file"
+                        id=""
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-3 ">
+                    <div
+                      style={{ padding: '15px 0 10px', textAlign: 'center' }}
                     >
                       <div className="image-upload">
                         <img
-                          style={{ width: '200px', borderRadius: '10em' }}
-                          src={`${ngoById.panCardURL}`}
+                          style={{
+                            height: '235px',
+                            width: '100%',
+                            borderRadius: '1.5em',
+                          }}
+                          src={`${ngoById.certificateURL}`}
                         />
                       </div>
+                      <label
+                        style={{
+                          fontWeight: 'bold',
+                          fontSize: '1em',
+                          margin: '0.8em 0 0',
+                        }}
+                      >
+                        Certificate<label style={{ color: 'red' }}>*</label>
+                      </label>
                     </div>
-                    <ErrorMessage name="pancard_img" component={TextError} />
                   </div>
 
-                  <div
-                    className="col-sm-3 col-xs-3 "
-                    style={{ paddingLeft: '0' }}
-                  >
+                  <div className="col-3 ">
                     <div
-                      style={{
-                        padding: '0.5em 1em 1.5em',
-                        textAlign: 'center',
-                      }}
+                      style={{ padding: '15px 0 10px', textAlign: 'center' }}
                     >
                       <div className="image-upload">
                         <img
-                          style={{ width: '200px', borderRadius: '10em' }}
-                          src={`${ngoById.charityURL}`}
+                          style={{
+                            height: '235px',
+                            width: '100%',
+                            borderRadius: '1.5em',
+                          }}
+                          src={`${ngoById.charityRegistrationCertificateURL}`}
                         />
                       </div>
+                      <label
+                        style={{
+                          fontWeight: 'bold',
+                          fontSize: '1em',
+                          margin: '0.8em 0 0',
+                        }}
+                      >
+                        Charity Registration Certificate
+                        <label style={{ color: 'red' }}>*</label>
+                      </label>
                     </div>
-                    <ErrorMessage
-                      name="certificate_img"
-                      component={TextError}
-                    />
                   </div>
 
-                  <div
-                    className="col-sm-3 col-xs-3 "
-                    style={{ paddingLeft: '0' }}
-                  >
+                  <div className="col-3 ">
                     <div
-                      style={{
-                        padding: '0.5em 1em 1.5em',
-                        textAlign: 'center',
-                      }}
+                      style={{ padding: '15px 0 10px ', textAlign: 'center' }}
                     >
                       <div className="image-upload">
                         <img
-                          style={{ width: '200px', borderRadius: '10em' }}
-                          src={`${ngoById.charityCertificateURL}`}
-                        />
-                      </div>
-                    </div>
-                    <ErrorMessage
-                      name="charityCertificate_img"
-                      component={TextError}
-                    />
-                  </div>
-
-                  <div className="col-sm-3 col-xs-3 " style={{ padding: '0' }}>
-                    <div
-                      style={{
-                        padding: '0.5em 1em 1.5em',
-                        textAlign: 'center',
-                      }}
-                    >
-                      <div className="imageupload">
-                        <img
-                          style={{ width: '200px', borderRadius: '10em' }}
+                          style={{
+                            height: '235px',
+                            width: '100%',
+                            borderRadius: '1.5em',
+                          }}
                           src={`${ngoById.deedURL}`}
                         />
                       </div>
+                      <label
+                        style={{
+                          fontWeight: 'bold',
+                          fontSize: '1em',
+                          margin: '0.8em 0 0',
+                        }}
+                      >
+                        Deed<label style={{ color: 'red' }}>*</label>
+                      </label>
                     </div>
-                    <ErrorMessage name="deed_img" component={TextError} />
                   </div>
                 </div>
 

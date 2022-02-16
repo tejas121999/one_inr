@@ -12,6 +12,7 @@ import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
+import { element } from 'prop-types';
 
 const AddNgo = props => {
   const dispatch = useDispatch();
@@ -29,6 +30,8 @@ const AddNgo = props => {
   const [addBankDetailsValues, setAddBankDetailsValues] = useState([]);
   const [date, setDate] = useState(new Date());
   console.log('panCardImgUrl', panCardImgUrl);
+
+  const [visible, setVisible] = useState(false);
 
   let handleChangeForAddBankDetails = (e, i) => {
     let newFormValues = [...addBankDetailsValues];
@@ -74,7 +77,7 @@ const AddNgo = props => {
       .required('Required Field')
       .max(50, 'Max limit is 50 characters'),
     accountNumber: yup
-      .string()
+      .number()
       .required('Required Field')
       .min(12, 'Please enter 12 digits'),
     beneficiaryName: yup
@@ -204,7 +207,6 @@ const AddNgo = props => {
   const onAddNgo = values => {
     console.log('abc', values);
     let newDate = moment(date).format('LL');
-
     const obj = {
       logo: logoImgUrl,
       name: values.ngoName,
@@ -620,7 +622,7 @@ const AddNgo = props => {
                   </button>
                       </div> */}
                 <br />
-                <div className="row">
+                {/*            <div className="row">
                   <div className="col-6" style={{ paddingRight: '8px' }}>
                     <div
                       style={{
@@ -660,26 +662,11 @@ const AddNgo = props => {
                       </Link>
                     </div>
                   </div>
-                </div>
+                        </div>                         */}
               </Form>
             </div>
           )}
         </Formik>
-
-        {addBankDetailsValues.map(element => (
-          <div key={element.id}>
-            <p>Bank name : {element.bankName}</p>
-            <p>Acc no : {element.accountNumber}</p>
-            <p>Bene name : {element.beneficiaryName}</p>
-            <p>IFSC name : {element.ifscCode}</p>
-            <button
-              id={element.id}
-              onClick={element => deleteBankDetail(element)}
-            >
-              Delete
-            </button>
-          </div>
-        ))}
 
         <Formik
           initialValues={{
@@ -689,7 +676,9 @@ const AddNgo = props => {
             ifscCode: '',
           }}
           validationSchema={newvalidationSchema}
-          onSubmit={values => {
+          onSubmit={(values, { resetForm }) => {
+            resetForm({ values: '' });
+            setVisible(true);
             var obj = {
               id,
               bankName: values.bankName,
@@ -704,7 +693,110 @@ const AddNgo = props => {
         >
           {({ errors, values, touched }) => (
             <Form>
-              {JSON.stringify(errors)}
+              {visible
+                ? addBankDetailsValues.map(element => (
+                    <div className="row" key={element.id}>
+                      <div className="col-6 ">
+                        <div style={{ padding: '15px 0 10px' }}>
+                          <label style={{ fontWeight: 'bold' }}>
+                            Bank Name<label style={{ color: 'red' }}>*</label>
+                          </label>
+                          <Field
+                            className="form-control"
+                            placeholder="Please enter your Bank Name"
+                            name="bankName"
+                            autocomplete="off"
+                            required
+                            disabled
+                            // value={addBankDetailsValues[index].bankName}
+                            value={element.bankName}
+                            // onChange={e =>
+                            //   // handleChangeForAddBankDetails(e, index)
+                            //   setBankName(e.target.value)
+                            // }
+                          />
+                        </div>
+                      </div>
+
+                      <div className="col-6 ">
+                        <div style={{ padding: '15px 0 10px' }}>
+                          <label style={{ fontWeight: 'bold' }}>
+                            Account Number
+                            <label style={{ color: 'red' }}>*</label>
+                          </label>
+                          <Field
+                            className="form-control"
+                            placeholder="Please enter Account Number"
+                            name="accountNumber"
+                            autocomplete="off"
+                            required
+                            disabled
+                            // value={addBankDetailsValues[index].accountNumber}
+                            value={element.accountNumber}
+                            // onChange={e =>
+                            //   // handleChangeForAddBankDetails(e, index)
+
+                            //   setAccNo(e.target.value)
+                            // }
+                          />
+                        </div>
+                      </div>
+
+                      <div className="col-6 ">
+                        <div style={{ padding: '15px 0 10px' }}>
+                          <label style={{ fontWeight: 'bold' }}>
+                            Beneficiary Name
+                            <label style={{ color: 'red' }}>*</label>
+                          </label>
+                          <Field
+                            className="form-control"
+                            placeholder="Please enter Beneficiary Name"
+                            name="beneficiaryName"
+                            autocomplete="off"
+                            required
+                            disabled
+                            // value={addBankDetailsValues[index].beneficiaryName}
+                            b
+                            // onChange={e =>
+                            //   // handleChangeForAddBankDetails(e, index)
+
+                            //   setBeneNAme(e.target.value)
+                            // }
+                          />
+                        </div>
+                      </div>
+
+                      <div className="col-6">
+                        <div style={{ padding: '15px 0 10px' }}>
+                          <label style={{ fontWeight: 'bold' }}>
+                            IFSC Code<label style={{ color: 'red' }}>*</label>
+                          </label>
+                          <Field
+                            className="form-control"
+                            placeholder="Please enter IFSC Code"
+                            name="ifscCode"
+                            autocomplete="off"
+                            required
+                            disabled
+                            value={element.ifscCode}
+                            // value={addBankDetailsValues[index].ifscCode}
+                            // onChange={e =>
+                            //   // handleChangeForAddBankDetails(e, index)
+
+                            //   setIfsc(e.target.value)
+                            // }
+                          />
+                        </div>
+                      </div>
+                      <button
+                        id={element.id}
+                        onClick={element => deleteBankDetail(element)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  ))
+                : ''}
               <div className="row">
                 <div className="col-6 ">
                   <div style={{ padding: '15px 0 10px' }}>

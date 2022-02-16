@@ -546,9 +546,9 @@ const ViewSingleNgo = props => {
               </div>
               <br />
               <br />
-              <div>
+              {/*  <div>
                 <p className="BankDet">Bank Details</p>
-              </div>
+                   </div>     */}
               <br />
 
               {ngoById.length === 0 ? (
