@@ -116,7 +116,7 @@ exports.ImageUpload = async (req, res) => {
         return res.status(201).json({
             type: fileFor,
             url: req.file.url,
-            path: process.env.BASE_URL+process.env.PORT+`/`+req.file.path,
+            path: process.env.BASE_URL_PATH + req.file.path,
             pathtoUpload: req.file.path,
             filename: req.file.filename,
             message: "File Uploaded Successfully"
