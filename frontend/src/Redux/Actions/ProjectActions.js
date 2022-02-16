@@ -18,7 +18,7 @@ export const getAllProjectAction = value => {
           dispatch(getAllProjects(res.data.result));
         })
         .catch(e => {
-          alert(e.response.request.statusText);
+          alert(e.response.data.message);
         });
     };
   } else {
@@ -40,13 +40,14 @@ export const addProjectAction = (body, history) => {
       projectServices
         .createProject(body)
         .then(res => {
-          alert(res.data.message);
+          // alert(res.data.message);
           setTimeout(function () {
             history.push('/view_all_project');
           }, 2000);
         })
         .catch(e => {
-          alert(e.response.request.statusText);
+          // console.log(e.response.data.message)
+          alert(e.response.data.message);
         });
     };
   } else {
@@ -62,11 +63,11 @@ export const getProjectByIdAction = id => {
       projectServices
         .getProjectByID(id)
         .then(res => {
-          alert(res.data.message);
+          // alert(res.data.message);
           dispatch(getProjectData(res.data.result));
         })
         .catch(e => {
-          alert(e.response.request.statusText);
+          alert(e.response.data.message);
         });
     };
   } else {
@@ -88,13 +89,13 @@ export const updateProjectAction = (id, data, history) => {
       projectServices
         .updateProject(id, data)
         .then(res => {
-          alert(res.data.message);
+          // alert(res.data.message);
           setTimeout(function () {
             history.push('#');
           }, 2000);
         })
         .catch(e => {
-          alert(e.response.request.statusText);
+          alert(e.response.data.message);
         });
     };
   }
@@ -107,13 +108,13 @@ export const CommitionUpdateAction = (id, data, history) => {
       projectServices
         .updateCommition(id, data)
         .then(res => {
-          alert(res.data.message);
+          // alert(res.data.message);
           setTimeout(function () {
             history.push('#');
           }, 2000);
         })
         .catch(e => {
-          alert(e.response.request.statusText);
+          alert(e.response.data.message);
         });
     };
   } else {
@@ -128,13 +129,13 @@ export const addFundAction = (id, data, history) => {
       projectServices
         .addFund(id, data)
         .then(res => {
-          alert(res.data.message);
+          // alert(res.data.message);
           setTimeout(function () {
             history.push('#');
           }, 2000);
         })
         .catch(e => {
-          alert(e.response.request.statusText);
+          alert(e.response.data.message);
         });
     };
   }
@@ -148,11 +149,11 @@ export const getAllCompletedProjectAction = () => {
       projectServices
         .getAllCompletedProject()
         .then(res => {
-          alert(res.data.message);
+          // alert(res.data.message);
           dispatch(getCompletedProjects(res.data));
         })
         .catch(e => {
-          alert(e.response.request.statusText);
+          alert(e.response.data.message);
         });
     };
   } else {
@@ -165,11 +166,11 @@ export const getCompletedProjectByValueAction = value => {
     projectServices
       .getCompletedProjectByValue(value)
       .then(res => {
-        alert(res.data.message);
+        // alert(res.data.message);
         dispatch(getCompletedProjects(res.data));
       })
       .catch(e => {
-        alert(e.response.request.statusText);
+        alert(e.response.data.message);
       });
   };
 };
@@ -193,7 +194,7 @@ export const getAllArchivedProjectAction = () => {
           dispatch(getArchivedProjects(res.data));
         })
         .catch(e => {
-          alert(e.response.request.statusText);
+          alert(e.response.data.message);
         });
     };
   } else {
