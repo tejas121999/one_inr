@@ -24,7 +24,10 @@ export const createNGOAction = (body, history) => {
           }, 2000);
         })
         .catch(e => {
-          // alert(e.response.data.message);
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
         });
     };
   } else {
@@ -56,7 +59,7 @@ export const getNgoProjectAction = id => {
           console.log('shivani', res.data);
           dispatch(getNgoProject(res.data));
         })
-        .catch(e => {});
+        .catch(e => { });
     };
   } else {
     alert('No network');
@@ -134,8 +137,10 @@ export const updateNgoAction = (id, data, history) => {
           }, 2000);
         })
         .catch(e => {
-          // alert(e.response.data.message)
-          // window.history.back();
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
         });
     };
   } else {
@@ -161,6 +166,6 @@ export const DeleteNgoByIdAction = id => {
         });
         dispatch(getAllNGOAction(''));
       })
-      .catch(err => {});
+      .catch(err => { });
   };
 };
