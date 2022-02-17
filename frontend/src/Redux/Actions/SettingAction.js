@@ -29,8 +29,17 @@ export const getAllProfileAction = () => {
       SettingsServices.getProfile()
         .then(res => {
           dispatch(getAllProfiles(res.data.data));
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
         })
-        .catch(err => {});
+        .catch(e => {
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+        });
     };
   } else {
     alert('No network');
@@ -58,8 +67,11 @@ export const updateProfileAction = (data, history) => {
             history.push('/my_profile');
           }, 1000);
         })
-        .catch(err => {
-          // window.history.back();
+        .catch(e => {
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
         });
     };
   } else {
@@ -80,8 +92,11 @@ export const updateProfileImgAction = (data, history) => {
             history.push('#');
           }, 2000);
         })
-        .catch(err => {
-          // window.history.back();
+        .catch(e => {
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
         });
     };
   } else {
@@ -102,8 +117,11 @@ export const changePassword = (data, history) => {
           // history.push('/my_Profile');
         }, 1000);
       })
-      .catch(err => {
-        // window.history.back();
+      .catch(e => {
+        toast.error(e.response.data.message, {
+          position: 'top-center',
+          autoClose: 2000,
+        });
       });
   };
 };
@@ -117,7 +135,12 @@ export const getRoleListAction = () => {
         .then(res => {
           dispatch(getAllRoleList(res.data.data));
         })
-        .catch(err => {});
+        .catch(e => {
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+        });
     };
   } else {
     alert('No network');
@@ -130,7 +153,12 @@ export const getRoleListByValueAction = value => {
       .then(res => {
         dispatch(getAllRoleList(res.data.data));
       })
-      .catch(err => {});
+      .catch(e => {
+        toast.error(e.response.data.message, {
+          position: 'top-center',
+          autoClose: 2000,
+        });
+      });
   };
 };
 
@@ -157,7 +185,12 @@ export const addRollListAction = (body, history) => {
             history.push('#');
           }, 2000);
         })
-        .catch(err => {});
+        .catch(e => {
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+        });
     };
   } else {
     alert('No network');
@@ -180,7 +213,12 @@ export const editRollListAction = (body, history) => {
             history.push('#');
           }, 2000);
         })
-        .catch(err => {});
+        .catch(e => {
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+        });
     };
   } else {
     alert('No network');
@@ -198,7 +236,12 @@ export const DeleteRoleAction = id => {
         });
         dispatch(getAllProfileAction(''));
       })
-      .catch(err => {});
+      .catch(e => {
+        toast.error(e.response.data.message, {
+          position: 'top-center',
+          autoClose: 2000,
+        });
+      });
   };
 };
 
@@ -211,7 +254,12 @@ export const getUserListAction = () => {
         .then(res => {
           dispatch(getUserLists(res.data.data));
         })
-        .catch(err => {});
+        .catch(e => {
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+        });
     };
   } else {
     alert('No network');
@@ -224,7 +272,12 @@ export const getUserListByValueAction = value => {
       .then(res => {
         dispatch(getUserLists(res.data.data));
       })
-      .catch(err => {});
+      .catch(e => {
+        toast.error(e.response.data.message, {
+          position: 'top-center',
+          autoClose: 2000,
+        });
+      });
   };
 };
 
@@ -257,7 +310,12 @@ export const addUserListAction = (body, history) => {
             history.push('/users');
           }, 1000);
         })
-        .catch(err => {});
+        .catch(e => {
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+        });
     };
   } else {
     alert('no network');
@@ -287,8 +345,11 @@ export const GetUserByIdAction = id => {
           dispatch(GetUserByIdData(res.data.data));
           //need to add toster here
         })
-        .catch(err => {
-          //need to add toster here
+        .catch(e => {
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
         });
     };
   } else {
@@ -325,7 +386,7 @@ export const updateUserByIdAction = (id, data, history) => {
           dispatch(getUserListAction());
           // });
         })
-        .catch(err => {
+        .catch(e => {
           window.history.back();
           //need to add toster here
         });
@@ -360,7 +421,12 @@ export const DeleteUserByIdACtion = id => {
         });
         dispatch(getUserListAction());
       })
-      .catch(err => {});
+      .catch(e => {
+        toast.error(e.response.data.message, {
+          position: 'top-center',
+          autoClose: 2000,
+        });
+      });
   };
 };
 
@@ -386,7 +452,12 @@ export const getConfigAction = () => {
         .then(res => {
           dispatch(getConfig(res.data));
         })
-        .catch(err => {});
+        .catch(e => {
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+        });
     };
   } else {
     alert('no network');
@@ -412,7 +483,12 @@ export const updateConfigAction = body => {
             autoClose: 2000,
           });
         })
-        .catch(err => {});
+        .catch(e => {
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+        });
     };
   } else {
     alert('no network');
@@ -428,7 +504,12 @@ export const getRazorpayAction = () => {
         .then(res => {
           dispatch(getRazorpay(res.data.result));
         })
-        .catch(err => {});
+        .catch(e => {
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+        });
     };
   } else {
     alert('No Network');
@@ -441,7 +522,12 @@ export const getRazorpayByValueAction = value => {
       .then(res => {
         dispatch(getRazorpay(res.data.result));
       })
-      .catch(err => {});
+      .catch(e => {
+        toast.error(e.response.data.message, {
+          position: 'top-center',
+          autoClose: 2000,
+        });
+      });
   };
 };
 
@@ -489,7 +575,7 @@ export const addRazorpayAction = body => {
           });
           // dispatch(getRazorpayAction());
         })
-        .catch(err => {});
+        .catch(err => { });
     };
   } else {
     alert('no network');

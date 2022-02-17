@@ -1,3 +1,4 @@
+import cogoToast from 'cogo-toast';
 import { toast } from 'react-toastify';
 import {
   GET_ALL_PROJECTS,
@@ -40,14 +41,21 @@ export const addProjectAction = (body, history) => {
       projectServices
         .createProject(body)
         .then(res => {
-          // alert(res.data.message);
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
+          // cogoToast.success(res.data.message)
           setTimeout(function () {
             history.push('/view_all_project');
           }, 2000);
         })
         .catch(e => {
           // console.log(e.response.data.message)
-          alert(e.response.data.message);
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
         });
     };
   } else {
@@ -63,11 +71,17 @@ export const getProjectByIdAction = id => {
       projectServices
         .getProjectByID(id)
         .then(res => {
-          // alert(res.data.message);
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
           dispatch(getProjectData(res.data.result));
         })
         .catch(e => {
-          alert(e.response.data.message);
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
         });
     };
   } else {
@@ -89,13 +103,19 @@ export const updateProjectAction = (id, data, history) => {
       projectServices
         .updateProject(id, data)
         .then(res => {
-          // alert(res.data.message);
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
           setTimeout(function () {
             history.push('#');
           }, 2000);
         })
         .catch(e => {
-          alert(e.response.data.message);
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
         });
     };
   }
@@ -108,13 +128,19 @@ export const CommitionUpdateAction = (id, data, history) => {
       projectServices
         .updateCommition(id, data)
         .then(res => {
-          // alert(res.data.message);
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
           setTimeout(function () {
             history.push('#');
           }, 2000);
         })
         .catch(e => {
-          alert(e.response.data.message);
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
         });
     };
   } else {
@@ -129,13 +155,19 @@ export const addFundAction = (id, data, history) => {
       projectServices
         .addFund(id, data)
         .then(res => {
-          // alert(res.data.message);
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
           setTimeout(function () {
             history.push('#');
           }, 2000);
         })
         .catch(e => {
-          alert(e.response.data.message);
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
         });
     };
   }
@@ -149,11 +181,17 @@ export const getAllCompletedProjectAction = () => {
       projectServices
         .getAllCompletedProject()
         .then(res => {
-          // alert(res.data.message);
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
           dispatch(getCompletedProjects(res.data));
         })
         .catch(e => {
-          alert(e.response.data.message);
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
         });
     };
   } else {
@@ -166,11 +204,17 @@ export const getCompletedProjectByValueAction = value => {
     projectServices
       .getCompletedProjectByValue(value)
       .then(res => {
-        // alert(res.data.message);
+        toast.success(res.data.message, {
+          position: 'top-center',
+          autoClose: 2000,
+        });
         dispatch(getCompletedProjects(res.data));
       })
       .catch(e => {
-        alert(e.response.data.message);
+        toast.error(e.response.data.message, {
+          position: 'top-center',
+          autoClose: 2000,
+        });
       });
   };
 };
@@ -190,11 +234,17 @@ export const getAllArchivedProjectAction = () => {
       projectServices
         .getAllArchivedProject()
         .then(res => {
-          alert(res.data.message);
+          toast.success(res.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
           dispatch(getArchivedProjects(res.data));
         })
         .catch(e => {
-          alert(e.response.data.message);
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
         });
     };
   } else {

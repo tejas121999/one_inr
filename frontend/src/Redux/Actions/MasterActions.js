@@ -16,9 +16,11 @@ export const getAllVEndorAction = value => {
           //need to add toster here
           dispatch(GetAllVendors(res.data.data));
         })
-        .catch(err => {
-          // dispatch(GetAllVendors(value));
-          //need to add toster here
+        .catch(e => {
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
         });
     };
   } else {
@@ -47,8 +49,12 @@ export const CreateVendorAction = (body, history) => {
             history.push('/Vendor');
           }, 2000);
         })
-        .catch(err => {
+        .catch(e => {
           //need to add toster here
+          toast.error(e.response.data.message, {
+            position: 'top-center',
+            autoClose: 2000,
+          });
         });
     };
   } else {
@@ -59,16 +65,16 @@ export const CreateVendorAction = (body, history) => {
 export const panImgAdd = body => {
   return dispatch => {
     MasterServices.addPanImage(body)
-      .then(res => {})
-      .catch(err => {});
+      .then(res => { })
+      .catch(err => { });
   };
 };
 
 export const gstImgAdd = body => {
   return dispatch => {
     MasterServices.addGstImage(body)
-      .then(res => {})
-      .catch(err => {});
+      .then(res => { })
+      .catch(err => { });
   };
 };
 
@@ -80,7 +86,7 @@ export const getVendorByID = id => {
       .then(res => {
         dispatch(vendorById(res.data.data));
       })
-      .catch(err => {});
+      .catch(err => { });
   };
 };
 
@@ -103,7 +109,7 @@ export const updateVendorById = (id, data, history) => {
           history.push('/Vendor');
         }, 2000);
       })
-      .catch(err => {});
+      .catch(err => { });
   };
 };
 // delete vendor
@@ -118,7 +124,7 @@ export const DeleteVendorByIdAction = id => {
         });
         dispatch(getAllVEndorAction(''));
       })
-      .catch(err => {});
+      .catch(err => { });
   };
 };
 // Get All PArtner
@@ -221,6 +227,6 @@ export const DeletePartnerByIdAction = id => {
         });
         dispatch(getAllVEndorAction(''));
       })
-      .catch(err => {});
+      .catch(err => { });
   };
 };

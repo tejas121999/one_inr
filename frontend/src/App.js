@@ -56,6 +56,7 @@ import Transfer from './pages/projects/Complete_Project/Transfer';
 import ViewCompleteProject from './pages/projects/Complete_Project/ViewCompleteProject';
 import AutoDonate from './pages/projects/AutoDonate';
 import Contributors from './pages/projects/Contributors';
+import { ToastContainer } from 'react-toastify';
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -69,123 +70,126 @@ if (token) {
 
 function App(props) {
   return (
-    <BrowserRouter basename={getBasename()}>
-      <Switch>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/forgot_password" component={Forgot} />
-        <Route exact path="/otp" component={OTPScreen} />
-        <Route exact path="/changePassword" component={ChangePassword} />
-        <div>
-          <MainLayout breakpoint={props.breakpoint}>
-            <React.Suspense fallback={<PageSpinner />}>
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+    <>
+      <ToastContainer hideProgressBar style={{ marginTop: '60px' }} />
+      <BrowserRouter basename={getBasename()}>
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Route exact path="/forgot_password" component={Forgot} />
+          <Route exact path="/otp" component={OTPScreen} />
+          <Route exact path="/changePassword" component={ChangePassword} />
+          <div>
+            <MainLayout breakpoint={props.breakpoint}>
+              <React.Suspense fallback={<PageSpinner />}>
+                <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
-              {/*master route*/}
-              <PrivateRoute exact path="/Vendor" component={Vendor} />
-              <PrivateRoute exact path="/addvendor" component={AddVendor} />
-              <PrivateRoute exact path="/editvendor" component={EditVendor} />
-              <PrivateRoute exact path="/partner" component={Partner} />
-              <PrivateRoute exact path="/addpartner" component={AddPartner} />
-              <PrivateRoute exact path="/editpartner" component={EditPartner} />
-              {/*doner route*/}
-              <PrivateRoute exact path="/add_doner" component={AddDoner} />
-              <PrivateRoute exact path="/edit_doner" component={EditDoner} />
-              <PrivateRoute exact path="/view_recept" component={ViewRecept} />
-              <PrivateRoute
-                exact
-                path="/view_all_doner"
-                component={ViewAllDoner}
-              />
-              <PrivateRoute
-                exact
-                path="/upcoming_doner_renewal"
-                component={UpcomingDonerRenewal}
-              />
-              <PrivateRoute exact path="/forgot" component={Forgot} />
-              {/*NGO route*/}
-              <PrivateRoute exact path="/add_ngo" component={AddNgo} />
-              <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />
-              <PrivateRoute exact path="/edit_ngo" component={EditNgo} />
-              <PrivateRoute
-                exact
-                path="/view_single_ngo"
-                component={ViewSingleNgo}
-              />
-              {/*project route*/}
-              <PrivateRoute
-                exact
-                path="/complete_project"
-                component={CompleteProject}
-              />
-              <PrivateRoute
-                exact
-                path="/payments/transfer"
-                component={Transfer}
-              />
-              <PrivateRoute
-                exact
-                path={`/payments/view`}
-                component={ViewCompleteProject}
-              />
-              <PrivateRoute exact path="/add_project" component={AddProject} />
-              <PrivateRoute
-                exact
-                path="/view_all_project"
-                component={ViewAllProjects}
-              />
-              <PrivateRoute
-                exact
-                path="/edit_project"
-                component={EditProject}
-              />
-              <PrivateRoute exact path="/auto_donate" component={AutoDonate} />
-              <PrivateRoute
-                exact
-                path="/Contributors"
-                component={Contributors}
-              />
-              <PrivateRoute
-                exact
-                path="/project_details"
-                component={ProjectDetails}
-              />
-              <PrivateRoute
-                exact
-                path="/archive_project"
-                component={ArchivedProject}
-              />
-              {/*Account route*/}
-              <PrivateRoute exact path="/payments" component={Payments} />
-              {/*Setting route*/}
-              <PrivateRoute exact path="/my_profile" component={MyProfile} />
-              <PrivateRoute exact path="/editProfile" component={EditProfile} />
-              <PrivateRoute exact path="/roles" component={Roles} />
-              <PrivateRoute exact path="/users" component={Users} />
-              <PrivateRoute exact path="/config" component={Config} />
-              <PrivateRoute
-                exact
-                path="/razorpay_credentials"
-                component={RazorpayCredentials}
-              />
-              <PrivateRoute
-                exact
-                path="/razorpay_credentials/create"
-                component={AddRazorpay}
-              />
-              <PrivateRoute exact path="/id/edit" component={EditRazorpay} />
-              {/*Donor Email route*/}
-              <PrivateRoute
-                exact
-                path="/donor_email"
-                component={DonorDetails}
-              />
-            </React.Suspense>
-          </MainLayout>
-        </div>
-        {/* <Route path="/404" component={Four_Zero_Foure} />
+                {/*master route*/}
+                <PrivateRoute exact path="/Vendor" component={Vendor} />
+                <PrivateRoute exact path="/addvendor" component={AddVendor} />
+                <PrivateRoute exact path="/editvendor" component={EditVendor} />
+                <PrivateRoute exact path="/partner" component={Partner} />
+                <PrivateRoute exact path="/addpartner" component={AddPartner} />
+                <PrivateRoute exact path="/editpartner" component={EditPartner} />
+                {/*doner route*/}
+                <PrivateRoute exact path="/add_doner" component={AddDoner} />
+                <PrivateRoute exact path="/edit_doner" component={EditDoner} />
+                <PrivateRoute exact path="/view_recept" component={ViewRecept} />
+                <PrivateRoute
+                  exact
+                  path="/view_all_doner"
+                  component={ViewAllDoner}
+                />
+                <PrivateRoute
+                  exact
+                  path="/upcoming_doner_renewal"
+                  component={UpcomingDonerRenewal}
+                />
+                <PrivateRoute exact path="/forgot" component={Forgot} />
+                {/*NGO route*/}
+                <PrivateRoute exact path="/add_ngo" component={AddNgo} />
+                <PrivateRoute exact path="/view_all_ngo" component={ViewAllNgo} />
+                <PrivateRoute exact path="/edit_ngo" component={EditNgo} />
+                <PrivateRoute
+                  exact
+                  path="/view_single_ngo"
+                  component={ViewSingleNgo}
+                />
+                {/*project route*/}
+                <PrivateRoute
+                  exact
+                  path="/complete_project"
+                  component={CompleteProject}
+                />
+                <PrivateRoute
+                  exact
+                  path="/payments/transfer"
+                  component={Transfer}
+                />
+                <PrivateRoute
+                  exact
+                  path={`/payments/view`}
+                  component={ViewCompleteProject}
+                />
+                <PrivateRoute exact path="/add_project" component={AddProject} />
+                <PrivateRoute
+                  exact
+                  path="/view_all_project"
+                  component={ViewAllProjects}
+                />
+                <PrivateRoute
+                  exact
+                  path="/edit_project"
+                  component={EditProject}
+                />
+                <PrivateRoute exact path="/auto_donate" component={AutoDonate} />
+                <PrivateRoute
+                  exact
+                  path="/Contributors"
+                  component={Contributors}
+                />
+                <PrivateRoute
+                  exact
+                  path="/project_details"
+                  component={ProjectDetails}
+                />
+                <PrivateRoute
+                  exact
+                  path="/archive_project"
+                  component={ArchivedProject}
+                />
+                {/*Account route*/}
+                <PrivateRoute exact path="/payments" component={Payments} />
+                {/*Setting route*/}
+                <PrivateRoute exact path="/my_profile" component={MyProfile} />
+                <PrivateRoute exact path="/editProfile" component={EditProfile} />
+                <PrivateRoute exact path="/roles" component={Roles} />
+                <PrivateRoute exact path="/users" component={Users} />
+                <PrivateRoute exact path="/config" component={Config} />
+                <PrivateRoute
+                  exact
+                  path="/razorpay_credentials"
+                  component={RazorpayCredentials}
+                />
+                <PrivateRoute
+                  exact
+                  path="/razorpay_credentials/create"
+                  component={AddRazorpay}
+                />
+                <PrivateRoute exact path="/id/edit" component={EditRazorpay} />
+                {/*Donor Email route*/}
+                <PrivateRoute
+                  exact
+                  path="/donor_email"
+                  component={DonorDetails}
+                />
+              </React.Suspense>
+            </MainLayout>
+          </div>
+          {/* <Route path="/404" component={Four_Zero_Foure} />
             <Redirect to="/404">{Four_Zero_Foure}</Redirect> */}
-      </Switch>
-    </BrowserRouter>
+        </Switch>
+      </BrowserRouter>
+    </>
   );
 }
 
