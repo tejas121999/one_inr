@@ -107,7 +107,7 @@ export const updateProjectAction = (id, data, history) => {
             autoClose: 2000,
           });
           setTimeout(function () {
-            history.push('#');
+            history.push('/view_all_project');
           }, 2000);
         })
         .catch(e => {
