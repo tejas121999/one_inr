@@ -16,9 +16,11 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import Loader from '../Loader';
 import { Link, useHistory } from 'react-router-dom';
 import { visuallyHidden } from '@mui/utils';
 import { getProjectByIdAction } from '../../Redux/Actions/ProjectActions';
+import moment from 'moment';
 
 const projectDetails = props => {
   //  console.log("ss", props)
@@ -159,186 +161,221 @@ const projectDetails = props => {
       date: '26-Dec-2021 To 27-Dec-2021',
       goal: '310',
       funded: '0',
-      completion: '0.oo1%',
+      completion: '0.001%',
     },
   ];
 
   return (
     <>
-      <Paper sx={{ width: '100%', mb: 2 }}>
-        <div>
-          <br />
-          <br />
-          <br />
-          <div className="card">
-            <p
-              style={{
-                textAlign: 'left',
-                fontWeight: 'bold',
-                margin: '20px',
-                width: '100%',
-                marginLeft: '20px',
-              }}
-            >
-              Project Details
-            </p>
-          </div>
-        </div>
-
-        <div
+      <br />
+      <br />
+      <br />
+      <div
+        className="row"
+        style={{
+          backgroundColor: 'white',
+          margin: '0 1.2em',
+          borderRadius: '1em',
+        }}
+      >
+        <p
           style={{
-            padding: '20px',
+            textAlign: 'left',
+            fontSize: '25',
+            fontWeight: 'bold',
             margin: '20px',
+            width: '100%',
+            marginLeft: '20px',
           }}
         >
-          <div>
-            <Tabs
-              id="controlled-tab-example"
-              activeKey={key}
-              onSelect={k => setKey(k)}
-              className="mb-3"
-            >
-              <Tab eventKey="details" title="Details">
-                <div className="row">
-                  <div className="col-12">
-                    <Carousel nextLabel={null} prevLabel={null}>
-                      {data.map(item => (
-                        <Carousel.Item interval={2000}>
-                          <img
-                            // className="row"
-                            style={{
-                              height: '400px',
-                              width: '100%',
-                              borderRadius: '1.5em',
-                            }}
-                            src={item.img}
-                            alt={item.alt}
-                          />
-                        </Carousel.Item>
-                      ))}
-                    </Carousel>
+          Project Details
+        </p>
+      </div>
+      <hr style={{ margin: '0' }} />
+
+      <div
+        style={{
+          padding: '20px',
+          margin: '20px',
+        }}
+      >
+        <div>
+          <Tabs
+            id="controlled-tab-example"
+            activeKey={key}
+            onSelect={k => setKey(k)}
+            className="mb-3"
+          >
+            <Tab eventKey="details" title="Details">
+              <div className="row">
+                <div className="col-12">
+                  <Carousel nextLabel={null} prevLabel={null}>
+                    {data.map(item => (
+                      <Carousel.Item interval={2000}>
+                        <img
+                          // className="row"
+                          style={{
+                            height: '400px',
+                            width: '100%',
+                            borderRadius: '1.5em',
+                          }}
+                          src={item.img}
+                          alt={item.alt}
+                        />
+                      </Carousel.Item>
+                    ))}
+                  </Carousel>
+                </div>
+
+                <div className="col-12">
+                  <br />
+                  <br />
+                  <div className="row">
+                    <div className="col-12">
+                      <label style={{ fontWeight: 'bold', fontSize: '25px' }}>
+                        {projectById.title}
+                      </label>
+                      <p style={{ marginBottom: '1em' }}>
+                        {projectById && projectById.description}
+                      </p>
+                    </div>
                   </div>
-
-                  <div className="col-12">
-                    <br />
-                    <br />
-                    <div className="row">
-                      <div className="col-6">
-                        <p style={{ fontWeight: 'bold' }}>
-                          Feeding Street Dogs
-                        </p>
-                      </div>
-                      <div className="col-12">
-                        <p> {projectById && projectById.description} </p>
-                      </div>
+                  <br />
+                  <div className="row">
+                    <div className="col-12">
+                      <label className="BankDet">About</label>
+                      <p style={{ marginTop: '1em', marginBottom: '1em' }}>
+                        Lorem Ipsum is simply dummy text of the printing and
+                        typesetting industry. Lorem Ipsum has been the
+                        industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and
+                        scrambled it to make a type specimen book. It has
+                        survived not only five centuries, but also the leap into
+                        electronic typesetting, remaining essentially unchanged.
+                        It was popularised in the 1960s with the release of
+                        Letraset sheets containing Lorem Ipsum passages
+                      </p>
                     </div>
-                    <br />
-                    <div className="row">
-                      <div className="col-6">
-                        <p style={{ fontWeight: 'bold' }}>About</p>
-                        <hr style={{ height: '40px', color: 'blue' }} />
-                      </div>
-                      <div className="col-12">
-                        <p>
-                          Lorem Ipsum is simply dummy text of the printing and
-                          typesetting industry. Lorem Ipsum has been the
-                          industry's standard dummy text ever since the 1500s,
-                          when an unknown printer took a galley of type and
-                          scrambled it to make a type specimen book. It has
-                          survived not only five centuries, but also the leap
-                          into electronic typesetting, remaining essentially
-                          unchanged. It was popularised in the 1960s with the
-                          release of Letraset sheets containing Lorem Ipsum
-                          passages{' '}
-                        </p>
-                      </div>
+                  </div>
+                  <br />
+                  <div
+                    className="row"
+                    style={{ marginTop: '1em', marginBottom: '1em' }}
+                  >
+                    <div className="col-12">
+                      <p style={{ fontSize: '20px' }}>Recurring</p>
+                      <p style={{ fontWeight: 'bold', fontSize: '20px' }}>
+                        {projectById && projectById.recurringDays}Days
+                      </p>
                     </div>
-                    <br />
-                    <div className="row">
-                      <div className="col-12">
-                        <p>Recurring</p>
-                      </div>
-                      <div className="col-6">
-                        <p style={{ fontWeight: 'bold' }}>
-                          {projectById && projectById.recurringDays}Days
-                        </p>
-                      </div>
-                    </div>
-                    <br />
-                    <div className="row">
-                      <div className="col-12">
-                        <p style={{ fontWeight: 'bold' }}> Goal </p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-6">
-                        <p style={{ fontsize: '20px' }}>
-                          <h1> {projectById && projectById.goal}INR </h1>
-                        </p>
-                      </div>
-                    </div>
-                    <br />
-                    <div className="row">
-                      <div className="col-12">
-                        <p>
-                          {' '}
-                          <b> Dates </b>{' '}
-                        </p>
-                        <br />
-                      </div>
-                    </div>
-                    <div className="row">
-                      <br />
-                      <br />
-
-                      <div className="col-2">
-                        <p>Start Date</p>
-                        <p style={{ fontWeight: 'bold' }}>12 january 2022</p>
-                      </div>
-                      <div className="col-2">
-                        <p>End Date</p>
-                        <p style={{ fontWeight: 'bold' }}>25 May 2022</p>
-                      </div>
-                      <div className="col-2">
-                        <p>Days Left</p>
-                        <p style={{ fontWeight: 'bold' }}>46</p>
-                      </div>
-                    </div>
-                    <br />
-                    <br />
-
-                    <Paper
-                      sx={{ width: '100%', mb: 2 }}
-                      style={{ borderRadius: '1.5em' }}
-                    >
-                      <div
+                  </div>
+                  <br />
+                  <div className="row">
+                    <div className="col-12">
+                      <label className="BankDet">Goal</label>
+                      <p
                         style={{
-                          display: 'flex',
-                          justifyContent: 'flex-end',
-                          padding: '20px',
+                          fontSize: '3em',
+                          fontWeight: 'bold',
+                          marginTop: '5px',
+                          marginBottom: '0.5em',
                         }}
                       >
-                        <input
-                          type="search"
-                          placeholder="Search"
-                          onChange={e => handleChange(e)}
+                        {projectById && projectById.goal} INR
+                      </p>
+                    </div>
+                  </div>
+                  <br />
+                  <div className="row">
+                    <div className="col-12">
+                      <label className="BankDet">Dates</label>
+                    </div>
+                  </div>
+                  <div
+                    className="row"
+                    style={{ marginTop: '5px', marginBottom: '0.5em' }}
+                  >
+                    <div className="col-3">
+                      <p style={{ fontSize: '20px' }}>Start Date</p>
+                      <p style={{ fontWeight: 'bold', fontSize: '20px' }}>
+                        {moment(projectById && projectById.startDate).format(
+                          'LL',
+                        )}
+                      </p>
+                    </div>
+                    <div className="col-3">
+                      <p style={{ fontSize: '20px' }}>End Date</p>
+                      <p style={{ fontWeight: 'bold', fontSize: '20px' }}>
+                        {moment(projectById && projectById.endDate).format(
+                          'LL',
+                        )}
+                      </p>
+                    </div>
+                    <div className="col-3">
+                      <p style={{ fontSize: '20px' }}>Days Left</p>
+                      <p style={{ fontWeight: 'bold', fontSize: '20px' }}>46</p>
+                    </div>
+                  </div>
+                  <br />
+                  <br />
+                  {constHeadcellsData && constHeadcellsData.length > 0 ? (
+                    <div
+                      style={{
+                        margin: '1em 0 5em',
+                        borderRadius: '1.5em',
+                        border: '1px solid #63b8ec',
+                      }}
+                    >
+                      <div className="row" style={{ margin: '1em 0' }}>
+                        <div
                           style={{
-                            paddingLeft: '1em',
-                            border: '1px solid #ced4da',
-                            borderRadius: '1.5em',
-                            height: '2.2em',
-                            marginRight: '10px',
+                            display: 'flex',
+                            width: '50%',
+                            padding: '0.2em 2em 1em',
+                            justifyContent: 'flex-start',
                           }}
-                        />
-                        <button
-                          style={{ alignSelf: 'flex-start' }}
-                          className="btn btn-primary"
                         >
-                          Export
-                        </button>
+                          <p className="overview">Overview</p>
+                        </div>
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            width: '50%',
+                            padding: '0.5rem 1.5rem',
+                          }}
+                        >
+                          <input
+                            placeholder="Search"
+                            onChange={e => handleChange(e)}
+                            type="search"
+                            style={{
+                              paddingLeft: '1em',
+                              border: '1px solid #ced4da',
+                              borderRadius: '1.5em',
+                              height: '2.2em',
+                            }}
+                          />
+                          <button
+                            style={{
+                              marginLeft: '1em',
+                              borderRadius: '2em',
+                              fontSize: '20',
+                            }}
+                            className="btn btn-primary"
+                            // onClick={e => handleClick(e)}
+                          >
+                            Export
+                          </button>
+                        </div>
                       </div>
-                      <br />
-                      <>
+                      <Paper
+                        sx={{
+                          width: '96%',
+                          marginBottom: '2em',
+                          marginLeft: '1.5em',
+                        }}
+                      >
                         <TableContainer>
                           <Table
                             sx={{ minWidth: 750 }}
@@ -374,21 +411,16 @@ const projectDetails = props => {
                                       key={row.date}
                                       selected={isItemSelected}
                                     >
-                                      <TableCell
-                                        id={labelId}
-                                        align="center"
-                                        scope="row"
-                                        padding="none"
-                                      >
+                                      <TableCell id={labelId} align="left">
                                         {row.date}
                                       </TableCell>
-                                      <TableCell align="center">
+                                      <TableCell align="left">
                                         {row.goal}
                                       </TableCell>
-                                      <TableCell align="center">
+                                      <TableCell align="left">
                                         {row.funded}
                                       </TableCell>
-                                      <TableCell align="center">
+                                      <TableCell align="left">
                                         {row.completion}
                                       </TableCell>
                                     </TableRow>
@@ -409,22 +441,24 @@ const projectDetails = props => {
                           showLastButton={true}
                           showFirstButton={true}
                         />
-                      </>
-                    </Paper>
-                  </div>
+                      </Paper>
+                    </div>
+                  ) : (
+                    <Loader />
+                  )}
                 </div>
-              </Tab>
+              </div>
+            </Tab>
 
-              <Tab eventKey="contributors" title="Contributors">
-                <br />
-                <div>
-                  <h1 align={'center'}>NO CONTRIBUTION YET</h1>
-                </div>
-              </Tab>
-            </Tabs>
-          </div>
+            <Tab eventKey="contributors" title="Contributors">
+              <br />
+              <div>
+                <h1 align={'center'}>NO CONTRIBUTION YET</h1>
+              </div>
+            </Tab>
+          </Tabs>
         </div>
-      </Paper>
+      </div>
     </>
   );
 };
@@ -483,7 +517,7 @@ function EnhancedTableHead(props) {
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
-            align="center"
+            align="left"
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >

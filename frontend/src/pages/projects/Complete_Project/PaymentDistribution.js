@@ -20,8 +20,9 @@ function PaymentDistribution() {
   return (
     <div
       style={{
-        padding: '25px',
-        backgroundColor: 'white',
+        padding: '1.5em 3em',
+        borderRadius: '1.5em',
+        border: '1px solid #63b8ec',
       }}
     >
       {/* <Tabs
@@ -123,7 +124,7 @@ function PaymentDistribution() {
             validationSchema={schema}
             onSubmit={console.log}
             initialValues={{
-              firstName: 'sHIVAM',
+              firstName: '',
               lastName: '',
               username: '',
               city: '',
@@ -147,7 +148,7 @@ function PaymentDistribution() {
                 <Tab.Pane eventKey="vendor" title="Vendor Payment"> */}
                 <Form noValidate onSubmit={handleSubmit}>
                   <Form.Group controlId="validationFormik01" className="mb-3">
-                    <Form.Label>Vendor List:</Form.Label>
+                    <Form.Label>Vendor List</Form.Label>
                     <br />
                     <Form.Select
                       name="vendor"
@@ -171,7 +172,7 @@ function PaymentDistribution() {
                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group controlId="validationFormik02" className="mb-3">
-                    <Form.Label>Amount To Pay:</Form.Label>
+                    <Form.Label>Amount To Pay</Form.Label>
                     <Form.Control
                       type="text"
                       name="amount"
@@ -182,18 +183,28 @@ function PaymentDistribution() {
                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group controlId="validationFormik03" className="mb-3">
-                    <Form.Label>Payment Description:</Form.Label>
+                    <Form.Label>Payment Description</Form.Label>
                     <Form.Control
                       value={values.description}
                       onChange={handleChange}
                       isValid={touched.description && !errors.description}
                       as="textarea"
                       name="description"
-                      rows={5}
+                      rows={3}
                     />
                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                   </Form.Group>
-                  <Button type="submit">Submit</Button>
+                  <button
+                    className="btn"
+                    type="submit"
+                    style={{
+                      width: '100%',
+                      backgroundColor: '#65AC12',
+                      color: 'white',
+                    }}
+                  >
+                    Submit
+                  </button>
                 </Form>
                 {/* </Tab.Pane>
               </Tab.Content>
@@ -223,7 +234,7 @@ function PaymentDistribution() {
               <div>
                 <Form noValidate onSubmit={handleSubmit}>
                   <Form.Group controlId="validationFormik01" className="mb-3">
-                    <Form.Label>Partner List:</Form.Label>
+                    <Form.Label>Partner List</Form.Label>
                     <br />
                     <Form.Select
                       name="vendor"
@@ -245,7 +256,7 @@ function PaymentDistribution() {
                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group controlId="validationFormik02" className="mb-3">
-                    <Form.Label>Amount To Pay:</Form.Label>
+                    <Form.Label>Amount To Pay</Form.Label>
                     <Form.Control
                       type="text"
                       name="amount"
@@ -256,18 +267,28 @@ function PaymentDistribution() {
                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group controlId="validationFormik03" className="mb-3">
-                    <Form.Label>Payment Description:</Form.Label>
+                    <Form.Label>Payment Description</Form.Label>
                     <Form.Control
                       value={values.description}
                       onChange={handleChange}
                       isValid={touched.description && !errors.description}
                       as="textarea"
                       name="description"
-                      rows={5}
+                      rows={3}
                     />
                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                   </Form.Group>
-                  <Button type="submit">Submit</Button>
+                  <button
+                    className="btn"
+                    type="submit"
+                    style={{
+                      width: '100%',
+                      backgroundColor: '#65AC12',
+                      color: 'white',
+                    }}
+                  >
+                    Submit
+                  </button>
                 </Form>
               </div>
             )}

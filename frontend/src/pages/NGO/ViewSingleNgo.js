@@ -328,8 +328,8 @@ const ViewSingleNgo = props => {
         <p
           style={{
             textAlign: 'left',
-            fontSize: '1.25rem',
-            fontWeight: '600',
+            fontSize: '25',
+            fontWeight: 'bold',
             margin: '20px',
             width: '100%',
             marginLeft: '20px',
@@ -558,16 +558,7 @@ const ViewSingleNgo = props => {
                   <>
                     <div>
                       {console.log('el', el)}
-                      <p
-                        className="BankDet"
-                        style={{
-                          textAlign: 'left',
-                          fontWeight: 'bold',
-                          fontSize: '25',
-                        }}
-                      >
-                        Bank Details
-                      </p>
+                      <p className="BankDet">Bank Details</p>
                     </div>
                     <br />
                     <div className="row" style={{ display: 'flex' }}>

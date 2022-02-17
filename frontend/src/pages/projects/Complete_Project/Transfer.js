@@ -173,30 +173,32 @@ const Transfer = () => {
       <br />
       <br />
       <br />
-      <br />
-      <div className="card" style={{ border: '0' }}>
-        <div
+      <div
+        className="row"
+        style={{
+          margin: '1em',
+          padding: '0.8em 2em',
+        }}
+      >
+        <p
           style={{
-            display: 'flex',
-            padding: '15px',
+            textAlign: 'left',
+            fontSize: '25',
+            fontWeight: 'bold',
+            marginBottom: '0',
           }}
         >
-          <p
-            style={{
-              textAlign: 'left',
-              fontSize: '1.25rem',
-              marginBottom: '0',
-            }}
-          >
-            STARTER PAGE
-          </p>
-        </div>
+          Starter Page
+        </p>
       </div>
+      <hr style={{ margin: '0' }} />
+
       <div className="row" style={{ flexWrap: 'nowrap', margin: '0' }}>
         <div
           className="col-md-6"
           style={{
-            marginTop: '20px',
+            paddingTop: '0.5em',
+            paddingRight: '0',
           }}
         >
           <PaymentInfo />
@@ -204,7 +206,8 @@ const Transfer = () => {
         <div
           className="col-md-6"
           style={{
-            marginTop: '20px',
+            paddingTop: '2em',
+            paddingRight: '2.5em',
           }}
         >
           <PaymentDistribution />
@@ -212,9 +215,7 @@ const Transfer = () => {
       </div>
       <div
         style={{
-          margin: '20px',
-          backgroundColor: 'white',
-          marginBottom: '5em',
+          marginBottom: '3em',
         }}
       >
         <div style={{ marginTop: '1.5em' }}>
