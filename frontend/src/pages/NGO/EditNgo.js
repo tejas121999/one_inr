@@ -315,7 +315,7 @@ const EditNgo = props => {
             email: ngoById && ngoById.user && ngoById.user.email,
             registrationDate: ngoById && ngoById.registrationDate,
             registrationNumber: ngoById.registrationNumber,
-            mobile: ngoById && ngoById.user && ngoById.mobile,
+            mobile: ngoById && ngoById.user && ngoById.user.mobile,
             landline: ngoById.landline,
             password: ngoById.password,
             panNumber: ngoById.panNumber,
@@ -333,9 +333,7 @@ const EditNgo = props => {
                 <div className="row" style={{ justifyContent: 'center' }}>
                   <div className="col-3">
                     <div style={{ padding: '15px 15px -2px' }}>
-                      <label style={{ fontWeight: 'bold' }}>
-                        Logo<label style={{ color: 'red' }}>*</label>
-                      </label>
+                      <label style={{ fontWeight: 'bold' }}>Logo</label>
                       {/*   {dropCondition && (
                         <DropzoneComponent
                           onChangeImage={onlogoImageAdd}
@@ -646,7 +644,7 @@ const EditNgo = props => {
                         margin: '0.8em 0 0',
                       }}
                     >
-                      Pancard<label style={{ color: 'red' }}>*</label>
+                      Pancard
                     </label>
                     {/*      {dropCondition && (
                       <DropzoneComponent
@@ -732,7 +730,7 @@ const EditNgo = props => {
                           margin: '0.8em 0 0',
                         }}
                       >
-                        Certificate<label style={{ color: 'red' }}>*</label>
+                        Certificate
                       </label>
                     </div>
                     <img
@@ -781,7 +779,6 @@ const EditNgo = props => {
                         }}
                       >
                         Charity Registration Certificate
-                        <label style={{ color: 'red' }}>*</label>
                       </label>
                     </div>
                     <img
@@ -829,7 +826,7 @@ const EditNgo = props => {
                           margin: '0.8em 0 0',
                         }}
                       >
-                        Deed<label style={{ color: 'red' }}>*</label>
+                        Deed
                       </label>
                     </div>
                     <img
@@ -859,102 +856,87 @@ const EditNgo = props => {
 
                 <br />
 
-                <div
-                  className="row"
-                  key={element.id}
-                  style={{ padding: '3rem 8rem' }}
-                >
-                  <div className="col-6 ">
-                    <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold' }}>
-                        Bank Name<label style={{ color: 'red' }}>*</label>
+                {ngoById &&
+                  ngoById.user &&
+                  ngoById.user.bankDetails.map(element => (
+                    <div>
+                      <label
+                        style={{
+                          fontWeight: 'bold',
+                          marginBottom: '0',
+                          // padding: '0 8rem',
+                        }}
+                      >
+                        Bank Details
                       </label>
-                      <Field
-                        className="form-control"
-                        placeholder="Please enter your Bank Name"
-                        name="bankName"
-                        autocomplete="off"
-                        required
-                        // value={addBankDetailsValues[index].bankName}
-                        value={element.bankName}
-                        // onChange={e =>
-                        //   // handleChangeForAddBankDetails(e, index)
-                        //   setBankName(e.target.value)
-                        // }
-                      />
+                      <div
+                        className="row"
+                        key={element.id}
+                        style={{ paddingBottom: '3rem' }}
+                      >
+                        <div className="col-6 ">
+                          <div style={{ padding: '15px 0 10px' }}>
+                            <label style={{ fontWeight: 'bold' }}>
+                              Bank Name
+                            </label>
+                            <Field
+                              className="form-control"
+                              placeholder="Please enter your Bank Name"
+                              name="bankName"
+                              autocomplete="off"
+                              required
+                              value={element.bankName}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-6 ">
+                          <div style={{ padding: '15px 0 10px' }}>
+                            <label style={{ fontWeight: 'bold' }}>
+                              Account Number
+                            </label>
+                            <Field
+                              className="form-control"
+                              placeholder="Please enter Account Number"
+                              name="accountNumber"
+                              autocomplete="off"
+                              required
+                              value={element.accountNumber}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-6 ">
+                          <div style={{ padding: '15px 0 10px' }}>
+                            <label style={{ fontWeight: 'bold' }}>
+                              Beneficiary Name
+                            </label>
+                            <Field
+                              className="form-control"
+                              placeholder="Please enter Beneficiary Name"
+                              name="beneficiaryName"
+                              autocomplete="off"
+                              required
+                              value={element.beneficiaryName}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-6">
+                          <div style={{ padding: '15px 0 10px' }}>
+                            <label style={{ fontWeight: 'bold' }}>
+                              IFSC Code
+                            </label>
+                            <Field
+                              className="form-control"
+                              placeholder="Please enter IFSC Code"
+                              name="ifscCode"
+                              autocomplete="off"
+                              required
+                              value={element.ifsc}
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-
-                  <div className="col-6 ">
-                    <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold' }}>
-                        Account Number
-                        <label style={{ color: 'red' }}>*</label>
-                      </label>
-                      <Field
-                        className="form-control"
-                        placeholder="Please enter Account Number"
-                        name="accountNumber"
-                        autocomplete="off"
-                        required
-                        // value={addBankDetailsValues[index].accountNumber}
-                        value={element.accountNumber}
-                        // onChange={e =>
-                        //   // handleChangeForAddBankDetails(e, index)
-
-                        //   setAccNo(e.target.value)
-                        // }
-                      />
-                    </div>
-                  </div>
-
-                  <div className="col-6 ">
-                    <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold' }}>
-                        Beneficiary Name
-                        <label style={{ color: 'red' }}>*</label>
-                      </label>
-                      <Field
-                        className="form-control"
-                        placeholder="Please enter Beneficiary Name"
-                        name="beneficiaryName"
-                        autocomplete="off"
-                        required
-                        value={element.beneficiaryName}
-
-                        // value={addBankDetailsValues[index].beneficiaryName}
-
-                        // onChange={e =>
-                        //   // handleChangeForAddBankDetails(e, index)
-
-                        //   setBeneNAme(e.target.value)
-                        // }
-                      />
-                    </div>
-                  </div>
-
-                  <div className="col-6">
-                    <div style={{ padding: '15px 0 10px' }}>
-                      <label style={{ fontWeight: 'bold' }}>
-                        IFSC Code<label style={{ color: 'red' }}>*</label>
-                      </label>
-                      <Field
-                        className="form-control"
-                        placeholder="Please enter IFSC Code"
-                        name="ifscCode"
-                        autocomplete="off"
-                        required
-                        value={element.ifscCode}
-                        // value={addBankDetailsValues[index].ifscCode}
-                        // onChange={e =>
-                        //   // handleChangeForAddBankDetails(e, index)
-
-                        //   setIfsc(e.target.value)
-                        // }
-                      />
-                    </div>
-                  </div>
-                </div>
+                  ))}
 
                 <div className="row">
                   <div className="col-6" style={{ paddingRight: '8px' }}>

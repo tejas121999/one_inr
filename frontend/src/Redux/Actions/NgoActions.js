@@ -128,9 +128,10 @@ export const updateNgoAction = (id, data, history) => {
             position: 'top-center',
             autoClose: 2000,
           });
-          // setTimeout(function () {
-          dispatch(getAllNGOAction());
-          // }, 2000);
+          setTimeout(function () {
+            dispatch(getAllNGOAction());
+            history.push('/view_all_ngo');
+          }, 2000);
         })
         .catch(e => {
           // alert(e.response.data.message)
