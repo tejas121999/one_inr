@@ -18,6 +18,8 @@ const config = require('./configs');
 const razorpayCredentials = require('./razorpayCredential');
 const cron = require('./cron');
 const donate = require('./donate');
+const userOtp=require('./userOtp')
+
 
 
 router.use('/vendor',vendor)
@@ -37,6 +39,7 @@ router.use('/configs',config)
 router.use('/razorpay',razorpayCredentials)
 router.use('/cron',cron)
 router.use('/donate',donate)
+router.use('/mobile-otp',userOtp)
 
 
 module.exports = router;
