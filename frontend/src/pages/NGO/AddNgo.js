@@ -286,12 +286,14 @@ const AddNgo = props => {
                       <label style={{ fontWeight: 'bold' }}>
                         Logo<label style={{ color: 'red' }}>*</label>
                       </label>
-                      <form class="form">
-                        <div class="file-upload-wrapper" data-text="Select your file!">
-                          <input name="file-upload-field" type="file" class="file-upload-field" value="" style={{ width: "400px" }} />
-                        </div>
-                      </form>
-                      <ErrorMessage name="logo_img" component={TextError} />
+
+                      <DropzoneComponent
+                        onChangeImage={onCertificateImageAdd}
+                      />
+                      <ErrorMessage
+                        name="certificate_img"
+                        component={TextError}
+                      />
                     </div>
                   </div>
                 </div>
@@ -477,8 +479,9 @@ const AddNgo = props => {
                         value={values.password}
                       />
                       <i
-                        className={`fa ${show ? 'fa-eye-slash' : 'fa-eye'
-                          } login-password-icon`}
+                        className={`fa ${
+                          show ? 'fa-eye-slash' : 'fa-eye'
+                        } login-password-icon`}
                         onClick={() => setShow(!show)}
                         style={{
                           float: 'right',
@@ -566,11 +569,13 @@ const AddNgo = props => {
                   className="row"
                   style={{ margin: '0rem 0 1.5rem', flex: 'auto' }}
                 >
-                  <form class="form">
-                    <div class="file-upload-wrapper" data-text="Select your file!">
-                      <input name="file-upload-field" type="file" class="file-upload-field" value="" />
-                    </div>
-                  </form>
+                  <div
+                    className="col-sm-3 col-xs-3 "
+                    style={{ paddingLeft: '0' }}
+                  >
+                    <DropzoneComponent onChangeImage={onPanCardImageAdd} />
+                    <ErrorMessage name="pancard_img" component={TextError} />
+                  </div>
 
                   <div
                     className="col-sm-3 col-xs-3 "
@@ -696,7 +701,11 @@ const AddNgo = props => {
             <Form>
               {visible
                 ? addBankDetailsValues.map(element => (
-                    <div className="row" key={element.id}>
+                    <div
+                      className="row"
+                      key={element.id}
+                      style={{ padding: '3rem 8rem' }}
+                    >
                       <div className="col-6 ">
                         <div style={{ padding: '15px 0 10px' }}>
                           <label style={{ fontWeight: 'bold' }}>
@@ -755,9 +764,10 @@ const AddNgo = props => {
                             name="beneficiaryName"
                             autocomplete="off"
                             required
+                            value={element.beneficiaryName}
                             disabled
                             // value={addBankDetailsValues[index].beneficiaryName}
-                            b
+
                             // onChange={e =>
                             //   // handleChangeForAddBankDetails(e, index)
 
@@ -798,7 +808,7 @@ const AddNgo = props => {
                     </div>
                   ))
                 : ''}
-              <div className="row">
+              <div className="row" style={{ padding: '3rem 8rem' }}>
                 <div className="col-6 ">
                   <div style={{ padding: '15px 0 10px' }}>
                     <label style={{ fontWeight: 'bold' }}>
@@ -888,7 +898,7 @@ const AddNgo = props => {
                   </div>
                 </div>
               </div>
-              <div style={{ textAlign: 'end' }}>
+              <div style={{ textAlign: 'end', padding: '0 8rem' }}>
                 <button
                   type="submit"
                   className="btn btn-danger"
