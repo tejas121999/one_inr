@@ -4,70 +4,123 @@ function PaymentInfo() {
   return (
     <div
       style={{
-        padding: '25px',
-        backgroundColor: 'white',
+        padding: '2em 1.5em 1.5em 2em',
       }}
     >
-      <table style={{ width: '100%' }}>
-        <tbody>
-          <tr>
-            <th>Title:</th>
-            <td>Behatar Swaasthay, Behatar Desh</td>
-          </tr>
-          <tr>
-            <th>Target:</th>
-            <td>456</td>
-          </tr>
-          <tr>
-            <th>Funded:</th>
-            <td>287</td>
-          </tr>
-          <tr>
-            <th>10% Commision:</th>
-            <td>26 (+1)</td>
-          </tr>
-          <tr>
-            <th>18% GST:</th>
-            <td>5</td>
-          </tr>
-          <tr>
-            <th>2% PG Charges:</th>
-            <td>6</td>
-          </tr>
-          <tr>
-            <th>Total amt to pay (Vendor):</th>
-
-            <td>252</td>
-          </tr>
-          <tr>
-            <th>Amt Paid (Vendor):</th>
-            <td>1</td>
-          </tr>
-          <tr>
-            <th>Amt to Pay (Vendor):</th>
-            <td>251</td>
-          </tr>
-
-          <tr style={{ height: '10px' }}>
-            <th></th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Total amt to pay (Partner):</th>
-            <td>31</td>
-          </tr>
-          <tr>
-            <th>Amt Paid (Partner):</th>
-            <td>12</td>
-          </tr>
-          <tr>
-            <th>Amt to Pay (Partner):</th>
-            <td>19</td>
-          </tr>
-        </tbody>
-      </table>
-      <hr />
-      {/* <br /> */}
+      <div className="row" style={{ display: 'flex' }}>
+        <div className="col-6" style={{ padding: '0 0 1.2em 1em' }}>
+          <label style={{ fontSize: '25' }}>Title</label>
+          <br />
+          <label style={{ fontSize: '25' }}>Target</label>
+          <br />
+          <label style={{ fontSize: '25' }}>Funded</label>
+          <br />
+          <label style={{ fontSize: '25' }}>10% Commision</label>
+          <br />
+          <label style={{ fontSize: '25' }}>18% GST</label>
+          <br />
+          <label style={{ fontSize: '25' }}>2% PG Charges</label>
+          <br />
+          <label style={{ fontSize: '25' }}>Total Amt to Pay (Vendor)</label>
+          <br />
+          <label style={{ fontSize: '25' }}>Amt Paid (Vendor)</label>
+          <br />
+          <label style={{ fontSize: '25' }}>Pending Amt (Vendor)</label>
+          <br />
+          <label style={{ fontSize: '25' }}>Total Amt to Pay (Partner)</label>
+          <br />
+          <label style={{ fontSize: '25' }}>Amt Paid (Partner)</label>
+          <br />
+          <label style={{ fontSize: '25' }}>Pending Amt (Partner)</label>
+        </div>
+        <div className="col-6" style={{ padding: '0 0 1.2em 1em' }}>
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>
+            DOG FEEDER FOUNDATION
+          </label>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>456</label>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>287</label>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>26(+1)</label>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>5</label>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>6</label>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>256</label>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>6</label>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>250</label>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>31</label>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>12</label>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>19</label>
+        </div>
+      </div>
+      {/* <div className="row" style={{ display: 'flex' }}>
+        <div className="col-6" style={{ padding: '0 0 1.2em 1em' }}>
+          <span style={{ fontSize: '25' }}>Funded</span>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>287</label>
+        </div>
+        <div className="col-6" style={{ padding: '0 0 1.2em 1em' }}>
+          <span style={{ fontSize: '25' }}>10% Commision</span>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>26(+1)</label>
+        </div>
+      </div>
+      <div className="row" style={{ display: 'flex' }}>
+        <div className="col-6" style={{ padding: '0 0 1.2em 1em' }}>
+          <span style={{ fontSize: '25' }}>18% GST</span>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>5</label>
+        </div>
+        <div className="col-6" style={{ padding: '0 0 1.2em 1em' }}>
+          <span style={{ fontSize: '25' }}>2% PG Charges</span>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>6</label>
+        </div>
+      </div>
+      <div className="row" style={{ display: 'flex' }}>
+        <div className="col-6" style={{ padding: '0 0 1.2em 1em' }}>
+          <span style={{ fontSize: '25' }}>Total Amt to Pay (Vendor)</span>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>256</label>
+        </div>
+        <div className="col-6" style={{ padding: '0 0 1.2em 1em' }}>
+          <span style={{ fontSize: '25' }}>Total Amt to Pay (Partner)</span>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>31</label>
+        </div>
+      </div>
+      <div className="row" style={{ display: 'flex' }}>
+        <div className="col-6" style={{ padding: '0 0 1.2em 1em' }}>
+          <span style={{ fontSize: '25' }}>Amt Paid (Vendor)</span>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>6</label>
+        </div>
+        <div className="col-6" style={{ padding: '0 0 1.2em 1em' }}>
+          <span style={{ fontSize: '25' }}>Amt Paid (Partner)</span>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>12</label>
+        </div>
+      </div>
+      <div className="row" style={{ display: 'flex' }}>
+        <div className="col-6" style={{ padding: '0 0 1.2em 1em' }}>
+          <span style={{ fontSize: '25' }}>Pending Amt (Vendor)</span>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>250</label>
+        </div>
+        <div className="col-6" style={{ padding: '0 0 1.2em 1em' }}>
+          <span style={{ fontSize: '25' }}>Pending Amt (Partner)</span>
+          <br />
+          <label style={{ fontSize: '25', fontWeight: 'bold' }}>19</label>
+        </div>
+      </div> */}
     </div>
   );
 }
