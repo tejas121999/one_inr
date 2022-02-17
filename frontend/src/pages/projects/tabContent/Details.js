@@ -43,7 +43,7 @@ const Details = () => {
                                                     style={{ width: '6rem', borderRadius: '0.4em' }}
                                                     type="submit"
                                                 >
-                                                    Add
+                                                    update
                                                 </button>
                                             </div>
                                         </div>
@@ -98,7 +98,7 @@ const Details = () => {
                                             style={{ width: '6rem', borderRadius: '0.4em' }}
                                             type="submit"
                                         >
-                                            Add
+                                            update
                                         </button>
                                     </div>
                                 </div>
@@ -131,7 +131,7 @@ const Details = () => {
                                             style={{ width: '6rem', borderRadius: '0.4em' }}
                                             type="submit"
                                         >
-                                            Add
+                                            update
                                         </button>
                                     </div>
                                 </div>
@@ -208,7 +208,7 @@ const Details = () => {
                                             style={{ width: '6rem', borderRadius: '0.4em' }}
                                             type="submit"
                                         >
-                                            Add
+                                            update
                                         </button>
                                     </div>
                                 </div>
