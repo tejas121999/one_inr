@@ -1,4 +1,3 @@
-import cogoToast from 'cogo-toast';
 import { toast } from 'react-toastify';
 import {
   GET_ALL_PROJECTS,
