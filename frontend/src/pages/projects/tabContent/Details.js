@@ -1,12 +1,51 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import TextEditor from '../TextEditor';
 import { Field, Form, Formik } from 'formik';
 import NumericInput from 'react-numeric-input';
 import SunEditor from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
+import { updateProjectAction, getProjectByIdAction } from '../../../Redux/Actions/ProjectActions';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Details = () => {
+const Details = (props) => {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getProjectByIdAction(props.location.state.id));
+    }, []);
+
+    let projectById = useSelector(state => state.project.projectDetails);
+    console.log('s', projectById);
+
+    // Extend date 
+    const [endDates, setEndDates] = useState('')
+    const { endDate } = endDates
+    const onEndDateChange = e => {
+        setEndDates({ ...endDates, [e.target.name]: e.target.value });
+    }
+    const submitEndDate = (e) => {
+        e.preventDefault();
+        dispatch(updateProjectAction(endDate))
+    }
+
+    // gol Commission Target
+    const [SecondField, setSecondField] = useState({
+        goal: '',
+        commition: '',
+        target: ''
+    })
+    const { goal, commition, target } = SecondField
+    const onSecondField = (e) => {
+        setSecondField({ ...SecondField, [e.target.value]: e.target.value })
+    }
+    const submitSecondField = (e) => {
+        e.preventDefault();
+        dispatch(updateProjectAction(SecondField))
+    }
+
+
     return (
         <div>
             <div className='tab-content'>
@@ -14,12 +53,8 @@ const Details = () => {
                     <div className='col-4'>
                         <div className='row'>
                             <div className='col'>
-                                <Formik
-                                    initialValues={{
-                                        endDate: ''
-                                    }}
-                                >
-                                    <Form>
+                                <Formik>
+                                    <Form onSubmit={submitEndDate}>
                                         <div className="input-box">
                                             <label style={{ fontWeight: 'bold' }}>
                                                 Extend Date:
@@ -27,9 +62,11 @@ const Details = () => {
                                             <Field
                                                 className="form-control"
                                                 name="endDate"
+                                                value={endDate}
                                                 type="date"
                                                 required
                                                 autocomplete="off"
+                                                onChange={onEndDateChange}
                                             />
                                             <div
                                                 style={{
@@ -54,6 +91,7 @@ const Details = () => {
                         </div>
                         <div className='row'>
                             <div className='col'>
+                            
                                 <div className='input-box'>
                                     <label style={{ fontWeight: 'bold' }}>
                                         goal
@@ -61,7 +99,8 @@ const Details = () => {
                                     <NumericInput
                                         className="form-control"
                                         min='1'
-                                        value='401'
+                                        value={goal}
+                                        name='goal'
                                     />
                                 </div>
                                 <div className='input-box'>
@@ -71,7 +110,8 @@ const Details = () => {
                                     <NumericInput
                                         className="form-control"
                                         min='1'
-                                        value='10'
+                                        value={commition}
+                                        name='commition'
                                     />
                                 </div>
                                 <div className='input-box'>
@@ -81,7 +121,7 @@ const Details = () => {
                                     <NumericInput
                                         className="form-control"
                                         style={false}
-                                        value='501'
+                                        value={target}
                                         readOnly
                                     />
                                 </div>

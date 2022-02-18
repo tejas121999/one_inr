@@ -5,6 +5,8 @@ import Details from './tabContent/Details';
 import DropzoneComponent from '../../components/Layout/DropzoneComponent';
 import { updateProjectAction, getProjectByIdAction } from '../../Redux/Actions/ProjectActions';
 import { useDispatch, useSelector } from 'react-redux';
+import { BASE_URL } from '../../API/APIEndpoints';
+import axios from 'axios';
 
 const EditProject = (props) => {
   const [key, setKey] = React.useState('details');
@@ -28,20 +30,114 @@ const EditProject = (props) => {
   let projectById = useSelector(state => state.project.projectDetails.project_image);
   console.log('s', projectById);
 
-  const onEdit = values => {
-    const obj = {
-      banner: bannerImgURL,
-      cover: coverImgURL,
-      mobile: mobileImgURL,
-      slider1: sliderone,
-      slider2: slidertwo,
-      slider3: sliderthree,
-      slider4: sliderfour,
-      slider5: sliderfive,
-      slider6: slidersix
-    };
-    dispatch(updateProjectAction(props.location.state.id, obj))
-  }
+  const handleBannerImg = async event => {
+    const formData = new FormData();
+    formData.append('avatar', event.target.files[0]);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=banner',
+      formData,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setbannerImgURL(result.data.path);
+    }
+  };
+
+  const handleCoverImg = async event => {
+    const formData = new FormData();
+    formData.append('avatar', event.target.files[0]);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=cover',
+      formData,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setCoverImg(result.data.path);
+    }
+  };
+
+  const handleMobileImg = async event => {
+    const formData = new FormData();
+    formData.append('avatar', event.target.files[0]);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=mobile',
+      formData,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setMoileImg(result.data.path);
+    }
+  };
+
+  const handleSliderOne = async event => {
+    const formData = new FormData();
+    formData.append('avatar', event.target.files[0]);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=slider',
+      formData,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setSliderone(result.data.path);
+    }
+  };
+
+  const handleSliderTwo = async event => {
+    const formData = new FormData();
+    formData.append('avatar', event.target.files[0]);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=slider',
+      formData,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setSlidertwo(result.data.path);
+    }
+  };
+
+  const handleSliderThree = async event => {
+    const formData = new FormData();
+    formData.append('avatar', event.target.files[0]);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=slider',
+      formData,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setSliderthree(result.data.path);
+    }
+  };
+
+  const handleSliderFour = async event => {
+    const formData = new FormData();
+    formData.append('avatar', event.target.files[0]);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=slider',
+      formData,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setSliderfour(result.data.path);
+    }
+  };
+
+  const handleSliderFive = async event => {
+    const formData = new FormData();
+    formData.append('avatar', event.target.files[0]);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=slider',
+      formData,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setSliderfive(result.data.path);
+    }
+  };
+
+  const handleSlidersix = async event => {
+    const formData = new FormData();
+    formData.append('avatar', event.target.files[0]);
+    const result = await axios.post(
+      BASE_URL + 'fileupload?reason=slider',
+      formData,
+    );
+    if (result && result.data && result.data.pathtoUpload) {
+      setSlidersix(result.data.path);
+    }
+  };
+
 
   return (
     <div>
@@ -99,6 +195,18 @@ const EditProject = (props) => {
                           : `${bannerImgURL}`
                       }
                     />
+                    <input
+                      type='file'
+                      name='file'
+                      id='bannerImg'
+                      onChange={handleBannerImg}
+                      style={{ display: 'none' }}
+                    />
+                    <div className="label">
+                      <label htmlFor="panCardname" className="file">
+                        <i className="bi bi-camera"></i>
+                      </label>
+                    </div>
                     <div className="input-box">
                       <Button variant="success">Update</Button>
                     </div>
@@ -113,11 +221,23 @@ const EditProject = (props) => {
                     <label style={{ fontWeight: 'bold' }}>Cover Image:</label>
                     <img
                       src={
-                        bannerImgURL === undefined
+                        coverImgURL === undefined
                           ? `${projectById.coverURL}`
-                          : `${bannerImgURL}`
+                          : `${coverImgURL}`
                       }
                     />
+                    <input
+                      type='file'
+                      name='file'
+                      id='coverImg'
+                      onChange={handleCoverImg}
+                      style={{ display: 'none' }}
+                    />
+                    <div className="label">
+                      <label htmlFor="coverImg" className="file">
+                        <i className="bi bi-camera"></i>
+                      </label>
+                    </div>
                     <div className="input-box">
                       <Button variant="success">Update</Button>
                     </div>
@@ -130,7 +250,25 @@ const EditProject = (props) => {
                 <div className="col-sm-12">
                   <div className="col-sm-4">
                     <label style={{ fontWeight: 'bold' }}>Mobile Image:</label>
-                    <DropzoneComponent />
+                    <img
+                      src={
+                        mobileImgURL === undefined
+                          ? `${projectById.mobileURL}`
+                          : `${mobileImgURL}`
+                      }
+                    />
+                    <input
+                      type='file'
+                      name='file'
+                      id='mobileImg'
+                      onChange={handleMobileImg}
+                      style={{ display: 'none' }}
+                    />
+                    <div className="label">
+                      <label htmlFor="mobileImg" className="file">
+                        <i className="bi bi-camera"></i>
+                      </label>
+                    </div>
                     <div className="input-box">
                       <Button variant="success">Update</Button>
                     </div>
@@ -142,22 +280,130 @@ const EditProject = (props) => {
               <label style={{ fontWeight: 'bold' }}>Slider Image:</label>
               <div className="row">
                 <div className="col-sm-4 col-xs-4 mt-3">
-                  <DropzoneComponent />
+                  <img
+                    src={
+                      sliderone === undefined
+                        ? `${projectById.slider1URL}`
+                        : `${sliderone}`
+                    }
+                  />
+                  <input
+                    type='file'
+                    name='file'
+                    id='sliderOneImg'
+                    onChange={handleSliderOne}
+                    style={{ display: 'none' }}
+                  />
+                  <div className="label">
+                    <label htmlFor="panCardname" className="file">
+                      <i className="bi bi-camera"></i>
+                    </label>
+                  </div>
                 </div>
                 <div className="col-sm-4 col-xs-4 mt-3">
-                  <DropzoneComponent />
+                  <img
+                    src={
+                      slidertwo === undefined
+                        ? `${projectById.slider2URL}`
+                        : `${slidertwo}`
+                    }
+                  />
+                  <input
+                    type='file'
+                    name='file'
+                    id='sliderTwoImg'
+                    onChange={handleSliderTwo}
+                    style={{ display: 'none' }}
+                  />
+                  <div className="label">
+                    <label htmlFor="sliderTwoImg" className="file">
+                      <i className="bi bi-camera"></i>
+                    </label>
+                  </div>
                 </div>
                 <div className="col-sm-4 col-xs-4 mt-3">
-                  <DropzoneComponent />
+                  <img
+                    src={
+                      sliderthree === undefined
+                        ? `${projectById.slider3URL}`
+                        : `${sliderthree}`
+                    }
+                  />
+                  <input
+                    type='file'
+                    name='file'
+                    id='sliderThreeImg'
+                    onChange={handleSliderThree}
+                    style={{ display: 'none' }}
+                  />
+                  <div className="label">
+                    <label htmlFor="sliderThreeImg" className="file">
+                      <i className="bi bi-camera"></i>
+                    </label>
+                  </div>
                 </div>
                 <div className="col-sm-4 col-xs-4 mt-3">
-                  <DropzoneComponent />
+                  <img
+                    src={
+                      sliderfour === undefined
+                        ? `${projectById.slider4URL}`
+                        : `${sliderfour}`
+                    }
+                  />
+                  <input
+                    type='file'
+                    name='file'
+                    id='sliderFourImg'
+                    onChange={handleSliderFour}
+                    style={{ display: 'none' }}
+                  />
+                  <div className="label">
+                    <label htmlFor="sliderFourImg" className="file">
+                      <i className="bi bi-camera"></i>
+                    </label>
+                  </div>
                 </div>
                 <div className="col-sm-4 col-xs-4 mt-3">
-                  <DropzoneComponent />
+                  <img
+                    src={
+                      sliderfive === undefined
+                        ? `${projectById.slider5URL}`
+                        : `${sliderfive}`
+                    }
+                  />
+                  <input
+                    type='file'
+                    name='file'
+                    id='sliderFiveImg'
+                    onChange={handleSliderFive}
+                    style={{ display: 'none' }}
+                  />
+                  <div className="label">
+                    <label htmlFor="sliderFiveImg" className="file">
+                      <i className="bi bi-camera"></i>
+                    </label>
+                  </div>
                 </div>
                 <div className="col-sm-4 col-xs-4 mt-3">
-                  <DropzoneComponent />
+                  <img
+                    src={
+                      slidersix === undefined
+                        ? `${projectById.slider6URL}`
+                        : `${slidersix}`
+                    }
+                  />
+                  <input
+                    type='file'
+                    name='file'
+                    id='sliderSixImg'
+                    onChange={handleSlidersix}
+                    style={{ display: 'none' }}
+                  />
+                  <div className="label">
+                    <label htmlFor="sliderSixImg" className="file">
+                      <i className="bi bi-camera"></i>
+                    </label>
+                  </div>
                 </div>
               </div>
               <div className="input-box">
